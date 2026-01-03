@@ -252,13 +252,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#333', color: 'white', padding: '60px 0 30px' }}>
+    <footer style={{ background: '#333', color: 'white', padding: '60px 0 30px' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
-            <div><h4>ServiziSalute</h4><p style={{fontSize: '13px', color: '#ccc'}}>Sanità a Roma e provincia.</p></div>
+            {/* PRIMA COLONNA */}
             <div>
-             <div>
+              <h4>ServiziSalute</h4>
+              <p style={{fontSize: '13px', color: '#ccc', marginTop: '10px'}}>Il punto di riferimento per la sanità a Roma.</p>
+            </div>
+
+            {/* SECONDA COLONNA - QUELLA CHE STAVI MODIFICANDO */}
+            <div>
               <h4>Link Rapidi</h4>
               <ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2.2'}}>
                 <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Farmacie</a></li>
@@ -267,16 +271,31 @@ export default function Home() {
                 <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Specialisti</a></li>
                 <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Servizi a Domicilio</a></li>
               </ul>
-            
-            <div><h4>Supporto</h4><ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2'}}><li>Contatti</li><li>Privacy</li><li>Termini</li></ul></div>
-            <div><h4>Contatti</h4><p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p></div>
+            </div>
+
+            {/* TERZA COLONNA */}
+            <div>
+              <h4>Supporto</h4>
+              <ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2'}}>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Contatti</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Privacy</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Termini</a></li>
+              </ul>
+            </div>
+
+            {/* QUARTA COLONNA */}
+            <div>
+              <h4>Contatti</h4>
+              <p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p>
+            </div>
           </div>
+
+          {/* RIGA FINALE COPYRIGHT */}
           <div style={{ marginTop: '50px', borderTop: '1px solid #444', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#888' }}>
             &copy; 2024 ServiziSalute - Tutti i diritti riservati.
           </div>
         </div>
       </footer>
-
       <style jsx>{`
         .icon-circle { width: 70px; height: 70px; border: 2px solid; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; background: white; transition: all 0.3s ease; }
         .cat-item-bordered { text-decoration: none; color: #333; font-size: 14px; font-weight: 600; text-align: center; }
