@@ -267,11 +267,7 @@ export default function Home() {
                 <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Specialisti</a></li>
                 <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Servizi a Domicilio</a></li>
               </ul>
-            </div>
-              <ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2.2'}}>
-                <li>Farmacie</li><li>Dentisti</li><li>Diagnostica</li>
-              </ul>
-            </div>
+            
             <div><h4>Supporto</h4><ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2'}}><li>Contatti</li><li>Privacy</li><li>Termini</li></ul></div>
             <div><h4>Contatti</h4><p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p></div>
           </div>
