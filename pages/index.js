@@ -1,5 +1,3 @@
-import './globals.css';
-
 export default function Home() {
   const categories = [
     { name: 'Farmacie', icon: 'fa-pills' },
