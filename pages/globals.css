@@ -1,34 +1,50 @@
-/* Struttura Base */
+/* IMPORTAZIONE ICONE E FONT */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: sans-serif; background: #f3f4f6; color: #111827; }
+body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #111827; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Top Bar Scura */
-.top-bar { background: #111827; color: white; padding: 10px 0; font-size: 13px; }
+/* 1. TOP BAR SCURA */
+.top-bar { background: #111827; color: white; padding: 12px 0; font-size: 13px; font-weight: 500; }
 .top-bar-content { display: flex; justify-content: space-between; }
 
-/* Header e Ricerca */
+/* 2. HEADER E RICERCA */
 .header-main { background: white; padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
-.header-flex { display: flex; align-items: center; gap: 30px; }
-.search-input { flex: 1; padding: 12px 20px; border: 2px solid #e5e7eb; border-radius: 50px; max-width: 600px; }
+.header-flex { display: flex; align-items: center; gap: 40px; }
+.logo { font-size: 26px; font-weight: 800; color: #0066CC; text-decoration: none; }
+.search-input { flex: 1; padding: 14px 25px; border: 2px solid #e5e7eb; border-radius: 50px; font-size: 16px; outline: none; transition: 0.3s; }
+.search-input:focus { border-color: #0066CC; }
 
-/* Statistiche (Richiamo primo codice) */
-.stats-strip { background: #1f2937; color: white; padding: 30px 0; text-align: center; }
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-.stat-item h3 { color: #00A86B; font-size: 28px; }
+/* 3. STRISCIA STATISTICHE (RICHIAMO PRIMO CODICE) */
+.stats-strip { background: #1f2937; color: white; padding: 35px 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+.stat-item h3 { color: #00A86B; font-size: 32px; font-weight: 800; }
+.stat-item p { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
 
-/* Categorie Stile Subito (Icone tonde in rettangolo) */
-.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; padding: 40px 0; }
-.cat-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; text-align: center; }
-.cat-circle { width: 50px; height: 50px; background: white; border-radius: 50%; margin: 0 auto 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+/* 4. CATEGORIE STILE SUBITO (Icona tonda in rettangolo) */
+.section-title { margin: 40px 0 25px; font-size: 22px; font-weight: 700; }
+.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+.cat-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
+.cat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+.cat-circle { width: 65px; height: 65px; background: #f3f4f6; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #0066CC; }
+.cat-card p { font-weight: 600; font-size: 15px; }
 
-/* Griglia 5 Box Annunci */
-.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 50px; }
-.card { background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; }
-.card-img { height: 120px; background: #eee; }
+/* 5. GRIGLIA 5 BOX ANNUNCI */
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 60px; }
+.card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; transition: 0.3s; }
+.card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.card-img { height: 140px; background: #ddd; background-image: linear-gradient(45deg, #e2e2e2, #f9f9f9); display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 30px; }
 .card-body { padding: 15px; }
+.price-tag { color: #00A86B; font-weight: 800; font-size: 18px; margin-bottom: 5px; }
+.card-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; line-height: 1.3; }
+.card-loc { font-size: 12px; color: #6b7280; display: flex; align-items: center; gap: 5px; }
 
-/* Differenziazione Colori Sezioni */
-.box-scelta { background: #0066CC; color: white; padding: 30px; border-radius: 15px; }
-.box-pubblica { background: #00A86B; color: white; padding: 30px; border-radius: 15px; }
+/* 6. BOX DIFFERENZIATI PER COLORE */
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 80px; }
+.box { padding: 45px; border-radius: 20px; color: white; }
+.box-scelta { background: #0066CC; }
+.box-pubblica { background: #00A86B; }
+.box h2 { font-size: 28px; margin-bottom: 15px; }
