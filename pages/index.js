@@ -127,34 +127,99 @@ export default function Home() {
             </a>
         </div>
       </div>
-
-      {/* ULTIMI ANNUNCI */}
+{/* ULTIMI ANNUNCI CON TASTI CONTATTO (Sostituzione) */}
       <section className="container" style={{padding: '40px 0'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Ultimi annunci pubblicati</h2>
         <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '15px' }}>
+          
+          {/* Card 1 - Farmacia */}
           <div className="ann-card">
             <img className="ann-img" src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400" alt="Farmacia" />
-            <div className="ann-info"><small>FARMACIE</small><h4>Farmacia H24 Centro</h4></div>
+            <div className="ann-info">
+              <small>FARMACIE</small>
+              <h4 style={{fontSize: '14px', margin: '5px 0'}}>Farmacia H24 Centro</h4>
+              <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
+                <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>
+                  <i className="fas fa-phone"></i> Chiama
+                </a>
+                <a href="https://wa.me/3912345678" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none'}}>
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
           </div>
+
+          {/* Card 2 - Diagnostica */}
           <div className="ann-card">
             <img className="ann-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400" alt="Diagnostica" />
-            <div className="ann-info"><small>DIAGNOSTICA</small><h4>Centro RX Prati</h4></div>
+            <div className="ann-info">
+              <small>DIAGNOSTICA</small>
+              <h4 style={{fontSize: '14px', margin: '5px 0'}}>Centro RX Prati</h4>
+              <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
+                <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>
+                  <i className="fas fa-phone"></i> Chiama
+                </a>
+                <a href="https://wa.me/3912345678" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none'}}>
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
           </div>
+
+          {/* Card 3 - Dentisti */}
           <div className="ann-card">
             <img className="ann-img" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400" alt="Dentisti" />
-            <div className="ann-info"><small>DENTISTI</small><h4>Studio Dentistico Eur</h4></div>
+            <div className="ann-info">
+              <small>DENTISTI</small>
+              <h4 style={{fontSize: '14px', margin: '5px 0'}}>Studio Dentistico Eur</h4>
+              <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
+                <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>
+                  <i className="fas fa-phone"></i> Chiama
+                </a>
+                <a href="https://wa.me/3912345678" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none'}}>
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
           </div>
+
+          {/* Card 4 - Specialisti */}
           <div className="ann-card">
             <img className="ann-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400" alt="Visita" />
-            <div className="ann-info"><small>SPECIALISTI</small><h4>Dermatologo Roma</h4></div>
+            <div className="ann-info">
+              <small>SPECIALISTI</small>
+              <h4 style={{fontSize: '14px', margin: '5px 0'}}>Dermatologo Roma</h4>
+              <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
+                <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>
+                  <i className="fas fa-phone"></i> Chiama
+                </a>
+                <a href="https://wa.me/3912345678" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none'}}>
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
           </div>
+
+          {/* Card 5 - Domicilio */}
           <div className="ann-card">
             <img className="ann-img" src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400" alt="Domicilio" />
-            <div className="ann-info"><small>DOMICILIO</small><h4>Infermiere a Casa</h4></div>
+            <div className="ann-info">
+              <small>DOMICILIO</small>
+              <h4 style={{fontSize: '14px', margin: '5px 0'}}>Infermiere a Casa</h4>
+              <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
+                <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>
+                  <i className="fas fa-phone"></i> Chiama
+                </a>
+                <a href="https://wa.me/3912345678" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none'}}>
+                  <i className="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
           </div>
+
         </div>
       </section>
-
+     
       {/* SERVIZI PIÙ RICHIESTI - BOX CON FOTO */}
       <section className="container" style={{padding: '40px 0', borderTop: '1px solid #eee'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Servizi più richiesti</h2>
