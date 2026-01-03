@@ -14,10 +14,12 @@ export default function Home() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </Head>
 
+      {/* TOP BAR */}
       <div className="top-bar">
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
+      {/* HEADER */}
       <header className="header">
         <div className="container">
           <div style={{fontSize: '24px', fontWeight: '800', color: '#0070f3'}}>ServiziSalute</div>
@@ -67,7 +69,7 @@ export default function Home() {
             <button className="btn-search">CERCA</button>
           </div>
 
-          {/* FASCIA STATISTICHE STILIZZATA */}
+          {/* STATISTICHE IMPILATE IN VERDE */}
           <div style={{ 
             marginTop: '50px', 
             background: 'rgba(255,255,255,0.5)', 
@@ -153,7 +155,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVIZI PIÙ RICHIESTI - 4 BOX CON FOTO */}
+      {/* SERVIZI PIÙ RICHIESTI - BOX CON FOTO */}
       <section className="container" style={{padding: '40px 0', borderTop: '1px solid #eee'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Servizi più richiesti</h2>
         <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
@@ -176,37 +178,82 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SEZIONI PERCHÉ - VERTICALE (Testi Codice 1) */}
+      {/* SEZIONE PERCHÉ SCEGLIERE (CODICE N.1 ORIGINALE) */}
       <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché scegliere ServiziSalute?</h2>
+            <p style={{ fontSize: '18px', color: '#666' }}>Trovi i migliori servizi sanitari a Roma in pochi click</p>
+          </div>
           
-          <div style={{ background: 'white', padding: '40px', borderRadius: '12px', borderLeft: '6px solid #0070f3', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-            <h3 style={{fontSize: '24px', color: '#0070f3', marginBottom: '10px'}}>Perché scegliere ServiziSalute?</h3>
-            <p style={{fontWeight: '600', marginBottom: '20px'}}>Trovi i migliori servizi sanitari a Roma in pochi click</p>
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', fontSize: '14px'}}>
-              <div><strong>Trovi subito ciò che ti serve</strong><br/>Ricerca per zona, categoria e servizio specifico. Trovi i professionisti sanitari più vicini a casa tua.</div>
-              <div><strong>Solo professionisti verificati</strong><br/>Tutti i servizi sono offerti da professionisti qualificati e strutture sanitarie autorizzate.</div>
-              <div><strong>Gratuito e senza commissioni</strong><br/>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+              <i className="fas fa-search-location" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Trovi subito ciò che ti serve</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Ricerca per zona, categoria e servizio specifico. Trovi i professionisti sanitari più vicini a casa tua.</p>
+            </div>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+              <i className="fas fa-user-check" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Solo professionisti verificati</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Tutti i servizi sono offerti da professionisti qualificati e strutture sanitarie autorizzate.</p>
+            </div>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+              <i className="fas fa-hand-holding-usd" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Gratuito e senza commissioni</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</p>
             </div>
           </div>
-
-          <div style={{ background: 'white', padding: '40px', borderRadius: '12px', borderLeft: '6px solid #28a745', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-            <h3 style={{fontSize: '24px', color: '#28a745', marginBottom: '10px'}}>Perché pubblicare su ServiziSalute?</h3>
-            <p style={{fontWeight: '600', marginBottom: '20px'}}>Raggiungi nuovi pazienti nella tua zona</p>
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', fontSize: '14px'}}>
-              <div><strong>Pubblicazione gratuita</strong><br/>Pubblica i tuoi servizi senza costi iniziali. Nessuna commissione sulle prenotazioni ricevute.</div>
-              <div><strong>Visibilità su Roma</strong><br/>Raggiungi migliaia di utenti che cercano servizi sanitari ogni giorno nella capitale.</div>
-              <div><strong>Opzioni premium disponibili</strong><br/>Sponsorizza i tuoi annunci per apparire in cima ai risultati. Pubblica il tuo annuncio gratis.</div>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* SEZIONE SEO STILOSA */}
-      <section style={{ padding: '60px 0', background: 'white' }}>
+      {/* SEZIONE PERCHÉ PUBBLICARE (CODICE N.1 ORIGINALE) */}
+      <section style={{ background: 'white', padding: '70px 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché pubblicare su ServiziSalute?</h2>
+            <p style={{ fontSize: '18px', color: '#666' }}>Raggiungi nuovi pazienti nella tua zona</p>
+          </div>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', marginBottom: '50px' }}>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+              <i className="fas fa-bullhorn" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Pubblicazione gratuita</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Pubblica i tuoi servizi senza costi iniziali. Nessuna commissione sulle prenotazioni ricevute.</p>
+            </div>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+              <i className="fas fa-map-marked-alt" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Visibilità su Roma</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Raggiungi migliaia di utenti che cercano servizi sanitari ogni giorno nella capitale.</p>
+            </div>
+            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+              <i className="fas fa-chart-line" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
+              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Cresci la Tua Visibilità</h4>
+              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Con più contatti puoi far crescere il tuo business sanitario a Roma.</p>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <a href="#" style={{ 
+              backgroundColor: '#0070f3', 
+              color: 'white', 
+              padding: '18px 40px', 
+              borderRadius: '50px', 
+              textDecoration: 'none', 
+              fontWeight: '700',
+              fontSize: '18px',
+              display: 'inline-block',
+              boxShadow: '0 4px 15px rgba(0,112,243,0.3)'
+            }}>
+              Pubblica il tuo annuncio gratis
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* SEZIONE SEO ROMA */}
+      <section style={{ padding: '60px 0', background: '#f8fbff' }}>
         <div className="container" style={{ 
-          background: '#f8fbff', 
+          background: 'white', 
           padding: '40px', 
           borderRadius: '20px', 
           border: '1px solid #e1e8f0',
@@ -217,11 +264,12 @@ export default function Home() {
         }}>
           <p>
             <span style={{fontSize: '18px', fontWeight: 'bold', color: '#0070f3', display: 'block', marginBottom: '10px'}}>ServiziSalute Roma</span>
-            è il portale di riferimento per trovare <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella capitale. Il nostro motore di ricerca ti permette di individuare rapidamente i migliori <strong>servizi sanitari Roma</strong> in base alla zona e alla categoria di tuo interesse. Che tu stia cercando una farmacia di turno, un dentista di fiducia o un centro per <strong>visite specialistiche Roma</strong>, il nostro portale ti mette in contatto diretto con i professionisti sanitari della tua zona. <strong>Farmacie Roma</strong>, studi dentistici, laboratori di analisi e specialisti: tutto in un unico posto, gratuito e sempre aggiornato.
+            <strong>ServiziSalute Roma</strong> è il portale di riferimento per trovare <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella capitale. Il nostro motore di ricerca ti permette di individuare rapidamente i migliori <strong>servizi sanitari Roma</strong> in base alla zona e alla categoria di tuo interesse. Che tu stia cercando una farmacia di turno, un dentista di fiducia o un centro per <strong>visite specialistiche Roma</strong>, il nostro portale ti mette in contatto diretto con i professionisti sanitari della tua zona. <strong>Farmacie Roma</strong>, studi dentistici, laboratori di analisi e specialisti: tutto in un unico posto, gratuito e sempre aggiornato.
           </p>
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer style={{ background: '#333', color: 'white', padding: '60px 0 30px' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px', textAlign: 'left' }}>
@@ -237,8 +285,9 @@ export default function Home() {
       </footer>
 
       <style jsx>{`
-        .icon-circle { width: 70px; height: 70px; border: 2px solid; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; background: white; }
+        .icon-circle { width: 70px; height: 70px; border: 2px solid; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; background: white; transition: all 0.3s ease; }
         .cat-item-bordered { text-decoration: none; color: #333; font-size: 14px; font-weight: 600; text-align: center; }
+        .cat-item-bordered:hover .icon-circle { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
       `}</style>
     </div>
   );
