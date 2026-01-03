@@ -1,0 +1,34 @@
+/* Struttura Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; background: #f3f4f6; color: #111827; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Top Bar Scura */
+.top-bar { background: #111827; color: white; padding: 10px 0; font-size: 13px; }
+.top-bar-content { display: flex; justify-content: space-between; }
+
+/* Header e Ricerca */
+.header-main { background: white; padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
+.header-flex { display: flex; align-items: center; gap: 30px; }
+.search-input { flex: 1; padding: 12px 20px; border: 2px solid #e5e7eb; border-radius: 50px; max-width: 600px; }
+
+/* Statistiche (Richiamo primo codice) */
+.stats-strip { background: #1f2937; color: white; padding: 30px 0; text-align: center; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.stat-item h3 { color: #00A86B; font-size: 28px; }
+
+/* Categorie Stile Subito (Icone tonde in rettangolo) */
+.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; padding: 40px 0; }
+.cat-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; text-align: center; }
+.cat-circle { width: 50px; height: 50px; background: white; border-radius: 50%; margin: 0 auto 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+/* Griglia 5 Box Annunci */
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 50px; }
+.card { background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; }
+.card-img { height: 120px; background: #eee; }
+.card-body { padding: 15px; }
+
+/* Differenziazione Colori Sezioni */
+.box-scelta { background: #0066CC; color: white; padding: 30px; border-radius: 15px; }
+.box-pubblica { background: #00A86B; color: white; padding: 30px; border-radius: 15px; }
