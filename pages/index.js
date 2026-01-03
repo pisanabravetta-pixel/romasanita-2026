@@ -351,7 +351,16 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px', textAlign: 'left' }}>
             <div><h4 style={{marginBottom: '20px'}}>ServiziSalute</h4><p style={{fontSize: '13px', color: '#ccc'}}>Sanità a Roma e provincia.</p></div>
-            <div><h4 style={{marginBottom: '20px'}}>Link Rapidi</h4><ul style={{listStyle: 'none', fontSize: '13px', color: '#ccc', lineHeight: '2'}}><li>Farmacie</li><li>Dentisti</li><li>Diagnostica</li></ul></div>
+           <div>
+              <h4 style={{marginBottom: '20px'}}>Link Rapidi</h4>
+              <ul style={{listStyle: 'none', fontSize: '13px', color: '#ccc', lineHeight: '2.2'}}>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Farmacie</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Dentisti</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Diagnostica</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Visite Specialistiche</a></li>
+                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Servizi a Domicilio</a></li>
+              </ul>
+            </div>
             <div><h4 style={{marginBottom: '20px'}}>Supporto</h4><ul style={{listStyle: 'none', fontSize: '13px', color: '#ccc', lineHeight: '2'}}><li>Contatti</li><li>Privacy</li><li>Termini</li></ul></div>
             <div><h4 style={{marginBottom: '20px'}}>Contatti</h4><p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p></div>
           </div>
