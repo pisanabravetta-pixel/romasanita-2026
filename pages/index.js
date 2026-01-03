@@ -306,8 +306,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <a href="#" style={{ 
+         <div style={{ textAlign: 'center' }}>
+            <a href="/pubblica-annuncio" style={{ 
               backgroundColor: '#0070f3', 
               color: 'white', 
               padding: '18px 40px', 
@@ -321,9 +321,6 @@ export default function Home() {
               Pubblica il tuo annuncio gratis
             </a>
           </div>
-        </div>
-      </section>
-
       {/* SEZIONE SEO ROMA */}
       <section style={{ padding: '60px 0', background: '#f8fbff' }}>
         <div className="container" style={{ 
