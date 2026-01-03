@@ -18,24 +18,36 @@ export default function Home() {
       <div className="top-bar">
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
-
-      {/* HEADER */}
-      <header className="header">
-        <div className="container">
-          <div style={{fontSize: '24px', fontWeight: '800', color: '#0070f3'}}>ServiziSalute</div>
-          <ul className="nav-links">
-            <li><a href="#">Farmacie</a></li>
-            <li><a href="#">Dentisti</a></li>
-            <li><a href="#">Diagnostica</a></li>
-            <li><a href="#">Specialisti</a></li>
-            <li><a href="#">Domicilio</a></li>
+{/* HEADER CORRETTO */}
+      <header className="header" style={{ background: 'white', padding: '15px 0', borderBottom: '1px solid #eee' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ fontSize: '24px', fontWeight: '800', color: '#0070f3' }}>ServiziSalute</div>
+          
+          <ul className="nav-links" style={{ display: 'flex', gap: '20px', listStyle: 'none', margin: 0, padding: 0 }}>
+            <li><a href="#" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '600' }}>Farmacie</a></li>
+            <li><a href="#" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '600' }}>Dentisti</a></li>
+            <li><a href="#" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '600' }}>Diagnostica</a></li>
+            <li><a href="#" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '600' }}>Specialisti</a></li>
+            <li><a href="#" style={{ textDecoration: 'none', color: '#555', fontSize: '14px', fontWeight: '600' }}>Domicilio</a></li>
           </ul>
-          <div className="nav-right">
-            <a href="#" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
-            <a href="#" className="btn-search" style={{padding: '10px 22px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px'}}>Pubblica annuncio</a>
+
+          <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <a href="#" style={{ textDecoration: 'none', color: '#333', fontWeight: '500', fontSize: '14px' }}>Accedi</a>
+            <a href="#" style={{ 
+              padding: '10px 22px', 
+              borderRadius: '20px', 
+              textDecoration: 'none', 
+              fontSize: '14px', 
+              backgroundColor: '#0070f3', 
+              color: 'white', 
+              fontWeight: 'bold' 
+            }}>
+              Pubblica annuncio
+            </a>
           </div>
         </div>
       </header>
+      
 
       {/* HERO SECTION */}
       <section className="hero" style={{ backgroundColor: '#d0e3ff', paddingBottom: '0' }}>
