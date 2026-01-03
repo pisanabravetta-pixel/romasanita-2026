@@ -33,7 +33,7 @@ export default function Home() {
 
           <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <a href="#" style={{ textDecoration: 'none', color: '#333', fontWeight: '500', fontSize: '14px' }}>Accedi</a>
-            <a href="#" style={{ 
+            <a href="/pubblica-annuncio" className="btn-search" style={{ 
               padding: '10px 22px', 
               borderRadius: '20px', 
               textDecoration: 'none', 
@@ -45,9 +45,6 @@ export default function Home() {
               Pubblica annuncio
             </a>
           </div>
-        </div>
-      </header>
-      
 
       {/* HERO SECTION */}
       <section className="hero" style={{ backgroundColor: '#d0e3ff', paddingBottom: '0' }}>
