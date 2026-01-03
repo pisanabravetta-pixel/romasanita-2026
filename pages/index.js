@@ -37,7 +37,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO SECTION (Sfondo leggermente più scuro + Barra Codice 1) */}
+      {/* HERO SECTION (Codice 1 con sfondo leggermente scuro) */}
       <section className="hero" style={{ backgroundColor: '#d0e3ff' }}>
         <div className="container">
           <h1>Trova servizi sanitari a Roma, vicino a te</h1>
@@ -69,59 +69,59 @@ export default function Home() {
             <button className="btn-search">CERCA</button>
           </div>
 
-          <div style={{ marginTop: '25px', display: 'flex', justifyContent: 'center', gap: '20px', fontWeight: '700', color: '#0056b3', fontSize: '15px' }}>
-            <span><i className="fas fa-check-circle"></i> +1500 annunci attivi</span>
-            <span><i className="fas fa-user-md"></i> +850 professionisti</span>
-            <span><i className="fas fa-chart-line"></i> 15k visitatori/mese</span>
+          <div style={{ marginTop: '25px', display: 'flex', justifyContent: 'center', gap: '25px', fontWeight: '700', color: '#0056b3', fontSize: '15px' }}>
+            <span>+ 1500 annunci attivi</span>
+            <span>+ 850 professionisti</span>
+            <span>15k visitatori/mese</span>
           </div>
         </div>
       </section>
 
-      {/* CATEGORIE (Stile Codice 1) */}
+      {/* ICONE (Codice 1 con colori diversi) */}
       <div className="categories-subito">
-        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '40px'}}>
-            <a href="#" className="cat-item"><i className="fas fa-pills"></i><span>Farmacie</span></a>
-            <a href="#" className="cat-item"><i className="fas fa-tooth"></i><span>Dentisti</span></a>
-            <a href="#" className="cat-item"><i className="fas fa-microscope"></i><span>Diagnostica</span></a>
-            <a href="#" className="cat-item"><i className="fas fa-user-md"></i><span>Specialisti</span></a>
-            <a href="#" className="cat-item"><i className="fas fa-home"></i><span>Domicilio</span></a>
+        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '45px'}}>
+            <a href="#" className="cat-item"><i className="fas fa-pills" style={{color: '#e91e63'}}></i><span>Farmacie</span></a>
+            <a href="#" className="cat-item"><i className="fas fa-tooth" style={{color: '#2196f3'}}></i><span>Dentisti</span></a>
+            <a href="#" className="cat-item"><i className="fas fa-microscope" style={{color: '#9c27b0'}}></i><span>Diagnostica</span></a>
+            <a href="#" className="cat-item"><i className="fas fa-user-md" style={{color: '#4caf50'}}></i><span>Specialisti</span></a>
+            <a href="#" className="cat-item"><i className="fas fa-home" style={{color: '#ff9800'}}></i><span>Domicilio</span></a>
         </div>
       </div>
 
-      {/* ULTIMI ANNUNCI (5 Annunci su una riga) */}
+      {/* ULTIMI ANNUNCI (5 card con foto corretta) */}
       <section className="container" style={{padding: '50px 0'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Ultimi annunci pubblicati</h2>
-        <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)' }}>
+        <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '15px' }}>
           <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=300" alt="Farmacia" />
+            <img className="ann-img" src="https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400" alt="Farmacia" />
             <div className="ann-info">
               <small style={{color: '#0070f3', fontWeight: 'bold'}}>FARMACIE</small>
               <h4 style={{fontSize: '14px', margin: '5px 0'}}>Farmacia H24 Centro</h4>
             </div>
           </div>
           <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1579152276506-448c37c67126?w=300" alt="Diagnostica" />
+            <img className="ann-img" src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400" alt="Diagnostica" />
             <div className="ann-info">
               <small style={{color: '#0070f3', fontWeight: 'bold'}}>DIAGNOSTICA</small>
               <h4 style={{fontSize: '14px', margin: '5px 0'}}>Centro RX Prati</h4>
             </div>
           </div>
           <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=300" alt="Dentisti" />
+            <img className="ann-img" src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400" alt="Dentisti" />
             <div className="ann-info">
               <small style={{color: '#0070f3', fontWeight: 'bold'}}>DENTISTI</small>
               <h4 style={{fontSize: '14px', margin: '5px 0'}}>Studio Dentistico Eur</h4>
             </div>
           </div>
           <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=300" alt="Visita" />
+            <img className="ann-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400" alt="Visita" />
             <div className="ann-info">
               <small style={{color: '#0070f3', fontWeight: 'bold'}}>SPECIALISTI</small>
               <h4 style={{fontSize: '14px', margin: '5px 0'}}>Dermatologo Roma</h4>
             </div>
           </div>
           <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=300" alt="Domicilio" />
+            <img className="ann-img" src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400" alt="Domicilio" />
             <div className="ann-info">
               <small style={{color: '#0070f3', fontWeight: 'bold'}}>DOMICILIO</small>
               <h4 style={{fontSize: '14px', margin: '5px 0'}}>Infermiere a Casa</h4>
@@ -130,44 +130,60 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVIZI PIÙ RICHIESTI (Codice 1) */}
+      {/* SERVIZI PIÙ RICHIESTI (Struttura Codice 1) */}
       <section className="container" style={{ padding: '40px 0', borderTop: '1px solid #eee' }}>
         <h3 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '20px' }}>Servizi più richiesti</h3>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
-          {['Tamponi Rapidi', 'Fisioterapia', 'Pulizia Denti', 'Certificati Sportivi', 'Oculista', 'Psicologo', 'Cardiologo', 'Ortopedico', 'Ginecologo', 'Nutrizionista'].map(s => (
-            <span key={s} style={{ background: '#eee', padding: '8px 18px', borderRadius: '4px', fontSize: '13px', fontWeight: '500' }}>{s}</span>
+          {['Fisioterapista', 'Oculista', 'Psicologo', 'Cardiologo', 'Ortopedico', 'Ginecologo', 'Urologo', 'Pediatra', 'Dermatologo', 'Nutrizionista'].map(s => (
+            <span key={s} style={{ background: '#eee', padding: '10px 20px', borderRadius: '4px', fontSize: '14px', fontWeight: '500' }}>{s}</span>
           ))}
         </div>
       </section>
 
-      {/* SEZIONI PERCHÉ SCEGLIERE / PUBBLICARE (Codice 1 con colori diversi) */}
-      <section style={{ background: '#f8fbff', padding: '60px 0' }}>
+      {/* PERCHÉ SCEGLIERE / PUBBLICARE (Struttura Codice 1 con colori differenziati) */}
+      <section style={{ background: '#f9f9f9', padding: '60px 0' }}>
         <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
-          <div style={{ background: 'white', padding: '40px', borderRadius: '12px', borderLeft: '5px solid #0070f3', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-            <h3 style={{fontSize: '22px', marginBottom: '15px', color: '#0070f3'}}>Perché scegliere ServiziSalute?</h3>
-            <p style={{ fontSize: '15px', color: '#555', lineHeight: '1.7' }}>
-              Mettiamo in contatto diretto pazienti e strutture senza alcuna commissione. 
-              La nostra piattaforma è ottimizzata per trovare il servizio più vicino a te in pochi secondi, 
-              garantendo trasparenza e velocità di contatto.
-            </p>
+          <div style={{ background: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', borderTop: '4px solid #0070f3' }}>
+            <h3 style={{marginBottom: '15px'}}>Perché scegliere ServiziSalute?</h3>
+            <p style={{fontSize: '15px', color: '#666'}}>Mettiamo in contatto diretto pazienti e strutture senza alcuna commissione. La nostra piattaforma è ottimizzata per trovare il servizio più vicino a te in pochi secondi, garantendo trasparenza e velocità di contatto.</p>
           </div>
-          <div style={{ background: '#eef6ff', padding: '40px', borderRadius: '12px', borderLeft: '5px solid #00a86b', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-            <h3 style={{fontSize: '22px', marginBottom: '15px', color: '#00a86b'}}>Perché pubblicare su ServiziSalute?</h3>
-            <p style={{ fontSize: '15px', color: '#555', lineHeight: '1.7' }}>
-              Se sei un professionista o gestisci una struttura sanitaria a Roma, ServiziSalute ti offre 
-              la massima visibilità locale. Pubblicare è gratuito, veloce e ti permette di ricevere 
-              contatti diretti via telefono o email senza intermediari.
-            </p>
+          <div style={{ background: '#eef6ff', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)', borderTop: '4px solid #00a86b' }}>
+            <h3 style={{marginBottom: '15px'}}>Perché pubblicare su ServiziSalute?</h3>
+            <p style={{fontSize: '15px', color: '#666'}}>Se sei un professionista o gestisci una struttura sanitaria a Roma, ServiziSalute ti offre la massima visibilità locale. Pubblicare è gratuito, veloce e ti permette di ricevere contatti diretti senza intermediari.</p>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#222', color: 'white', padding: '50px 0 20px', textAlign: 'center' }}>
+      {/* FOOTER (Struttura Codice 1) */}
+      <footer style={{ background: '#333', color: 'white', padding: '60px 0 30px' }}>
         <div className="container">
-          <p style={{fontSize: '16px', fontWeight: 'bold'}}>ServiziSalute.it</p>
-          <p style={{color: '#888', fontSize: '14px', marginTop: '10px'}}>Il punto di riferimento per la sanità a Roma</p>
-          <div style={{ marginTop: '30px', borderTop: '1px solid #444', paddingTop: '20px', fontSize: '12px', color: '#666' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px', textAlign: 'left' }}>
+            <div>
+              <h4 style={{marginBottom: '20px'}}>ServiziSalute</h4>
+              <p style={{fontSize: '13px', color: '#ccc'}}>Il portale di riferimento per la sanità a Roma e provincia.</p>
+            </div>
+            <div>
+              <h4 style={{marginBottom: '20px'}}>Link Rapidi</h4>
+              <ul style={{listStyle: 'none', fontSize: '13px', color: '#ccc', lineHeight: '2'}}>
+                <li>Farmacie</li>
+                <li>Dentisti</li>
+                <li>Diagnostica</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{marginBottom: '20px'}}>Supporto</h4>
+              <ul style={{listStyle: 'none', fontSize: '13px', color: '#ccc', lineHeight: '2'}}>
+                <li>Contatti</li>
+                <li>Privacy Policy</li>
+                <li>Termini e Condizioni</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{marginBottom: '20px'}}>Contatti</h4>
+              <p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p>
+            </div>
+          </div>
+          <div style={{ marginTop: '50px', borderTop: '1px solid #444', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#888' }}>
             &copy; 2024 ServiziSalute - Tutti i diritti riservati.
           </div>
         </div>
