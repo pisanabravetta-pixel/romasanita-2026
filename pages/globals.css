@@ -1,50 +1,252 @@
-/* IMPORTAZIONE ICONE E FONT */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #111827; }
+:root {
+    --primary: #0066CC;
+    --primary-dark: #004C99;
+    --topbar-bg: #002244; /* Azzurro scuro richiesto */
+    --secondary: #00A86B;
+    --dark: #1A1A2E;
+    --hero-bg: #0d1321; /* Sfondo hero più scuro richiesto */
+    --gray-100: #F8FAFC;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-400: #94A3B8;
+    --gray-500: #64748B;
+    --white: #FFFFFF;
+}
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gray-100);
+    color: var(--dark);
+    line-height: 1.6;
+}
 
-/* 1. TOP BAR SCURA */
-.top-bar { background: #111827; color: white; padding: 12px 0; font-size: 13px; font-weight: 500; }
-.top-bar-content { display: flex; justify-content: space-between; }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-/* 2. HEADER E RICERCA */
-.header-main { background: white; padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
-.header-flex { display: flex; align-items: center; gap: 40px; }
-.logo { font-size: 26px; font-weight: 800; color: #0066CC; text-decoration: none; }
-.search-input { flex: 1; padding: 14px 25px; border: 2px solid #e5e7eb; border-radius: 50px; font-size: 16px; outline: none; transition: 0.3s; }
-.search-input:focus { border-color: #0066CC; }
+/* Top Bar */
+.top-bar {
+    background: var(--topbar-bg);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
 
-/* 3. STRISCIA STATISTICHE (RICHIAMO PRIMO CODICE) */
-.stats-strip { background: #1f2937; color: white; padding: 35px 0; }
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
-.stat-item h3 { color: #00A86B; font-size: 32px; font-weight: 800; }
-.stat-item p { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+/* Header */
+.header {
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-/* 4. CATEGORIE STILE SUBITO (Icona tonda in rettangolo) */
-.section-title { margin: 40px 0 25px; font-size: 22px; font-weight: 700; }
-.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
-.cat-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
-.cat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-.cat-circle { width: 65px; height: 65px; background: #f3f4f6; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #0066CC; }
-.cat-card p { font-weight: 600; font-size: 15px; }
+.header-main {
+    padding: 15px 0;
+}
 
-/* 5. GRIGLIA 5 BOX ANNUNCI */
-.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 60px; }
-.card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; transition: 0.3s; }
-.card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-.card-img { height: 140px; background: #ddd; background-image: linear-gradient(45deg, #e2e2e2, #f9f9f9); display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 30px; }
-.card-body { padding: 15px; }
-.price-tag { color: #00A86B; font-weight: 800; font-size: 18px; margin-bottom: 5px; }
-.card-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; line-height: 1.3; }
-.card-loc { font-size: 12px; color: #6b7280; display: flex; align-items: center; gap: 5px; }
+.header-main .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
 
-/* 6. BOX DIFFERENZIATI PER COLORE */
-.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 80px; }
-.box { padding: 45px; border-radius: 20px; color: white; }
-.box-scelta { background: #0066CC; }
-.box-pubblica { background: #00A86B; }
-.box h2 { font-size: 28px; margin-bottom: 15px; }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--dark);
+}
+
+/* Hero Section */
+.hero {
+    background: var(--hero-bg);
+    padding: 80px 0;
+    text-align: center;
+    color: var(--white);
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--primary);
+}
+
+.search-bar {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 18px 20px 18px 55px;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.search-bar i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.hero-stats-inline {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 15px;
+    color: var(--gray-300);
+}
+
+.hero-stats-inline span {
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+/* Categories */
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.cat-card {
+    background: var(--white);
+    padding: 30px 20px;
+    border-radius: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    border: 1px solid var(--gray-200);
+}
+
+.cat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-color: var(--primary);
+}
+
+.cat-card i {
+    font-size: 32px;
+    color: var(--primary);
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Announcements */
+.announcements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.ann-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--gray-200);
+}
+
+.ann-img {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.ann-content {
+    padding: 20px;
+}
+
+/* Info Sections */
+.info-section {
+    background: white;
+    padding: 80px 0;
+    border-top: 1px solid var(--gray-200);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+/* Footer */
+.footer {
+    background: var(--dark);
+    color: white;
+    padding: 60px 0 30px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
+    .hero-stats-inline { flex-direction: column; gap: 10px; }
+}
