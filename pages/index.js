@@ -1,90 +1,280 @@
-import Head from 'next/head';
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RomaSanità - Portale Annunci Sanitari</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #004C99;
+            --secondary: #00A86B;
+            --dark: #111827;
+            --dark-light: #1F2937;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --white: #FFFFFF;
+        }
 
-export default function Home() {
-  const categorie = [
-    { nome: 'FARMACIE', icona: 'fa-pills', colore: 'bg-blue-100', text: 'text-blue-600' },
-    { nome: 'DENTISTI', icona: 'fa-tooth', colore: 'bg-green-100', text: 'text-green-600' },
-    { nome: 'VISITE', icona: 'fa-user-md', colore: 'bg-red-100', text: 'text-red-600' },
-    { nome: 'ESAMI', icona: 'fa-microscope', colore: 'bg-purple-100', text: 'text-purple-600' },
-    { nome: 'FISIO', icona: 'fa-hands-helping', colore: 'bg-orange-100', text: 'text-orange-600' },
-  ];
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--gray-100); color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-  const annunci = [
-    { id: 1, titolo: "Farmacia Aperta H24 - Zona Prati", prezzo: "Turno", location: "Roma (Prati)", img: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?w=400", cat: "FARMACIE" },
-    { id: 2, titolo: "Pulizia Denti + Sbiancamento", prezzo: "59 €", location: "Roma (Eur)", img: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400", cat: "DENTISTI" },
-    { id: 3, titolo: "Visita Cardiologica Urgente", prezzo: "120 €", location: "Roma (Trastevere)", img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400", cat: "VISITE" },
-    { id: 4, titolo: "Ecografia Addome Completo", prezzo: "85 €", location: "Roma (Appia)", img: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400", cat: "ESAMI" },
-    { id: 5, titolo: "Fisioterapia Riabilitativa", prezzo: "45 €", location: "Roma (Ostiense)", img: "https://images.unsplash.com/photo-1576091160550-2173dad99901?w=400", cat: "FISIO" },
-    { id: 6, titolo: "Test Intolleranze Alimentari", prezzo: "70 €", location: "Roma (Centro)", img: "https://images.unsplash.com/photo-1584362917165-526a968579e8?w=400", cat: "ESAMI" },
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#F2F4F5] text-slate-900 font-sans">
-      <Head>
-        <title>RomaSanità | Annunci Sanitari Roma</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        <script src="https://cdn.tailwindcss.com"></script>
-      </Head>
-
-      {/* HEADER STILE SUBITO */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="text-2xl font-black text-[#ff5a00] italic">Roma<span className="text-[#004C99]">Sanità</span></div>
-          <div className="flex gap-4">
-            <button className="hidden md:block font-bold text-gray-600">I miei annunci</button>
-            <button className="bg-[#ff5a00] text-white px-4 py-2 rounded font-bold hover:bg-[#e65100] transition">Inserisci</button>
-          </div>
-        </div>
-      </header>
-
-      {/* SEARCH BAR FOCUS */}
-      <section className="bg-[#004C99] py-8 px-4">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-2">
-          <input type="text" placeholder="Cosa cerchi? (es. Dentista)" className="flex-1 p-4 rounded-md focus:outline-none" />
-          <input type="text" placeholder="In quale zona di Roma?" className="md:w-1/3 p-4 rounded-md focus:outline-none" />
-          <button className="bg-[#ff5a00] text-white px-8 py-4 rounded-md font-bold uppercase tracking-wider"><i className="fas fa-search"></i></button>
-        </div>
-      </section>
-
-      {/* CATEGORIE ORIZZONTALI */}
-      <div className="max-w-7xl mx-auto px-4 py-6 overflow-x-auto">
-        <div className="flex gap-4">
-          {categorie.map((c, i) => (
-            <button key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-300 whitespace-nowrap hover:border-[#ff5a00] transition group">
-              <i className={`fas ${c.icona} ${c.text}`}></i>
-              <span className="text-sm font-bold text-gray-600 group-hover:text-[#ff5a00]">{c.nome}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* GRIGLIA ANNUNCI */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-6 uppercase tracking-tight">Annunci in evidenza a Roma</h2>
+        /* --- TOP BAR & HEADER --- */
+        .top-bar {
+            background: var(--dark);
+            color: var(--white);
+            padding: 10px 0;
+            font-size: 13px;
+        }
+        .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {annunci.map((a) => (
-            <div key={a.id} className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-xl transition cursor-pointer group">
-              <div className="relative h-48 overflow-hidden">
-                <img src={a.img} alt={a.titolo} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
-                <div className="absolute top-2 left-2 bg-black/50 text-white text-[10px] font-bold px-2 py-1 rounded uppercase">{a.cat}</div>
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-[#004C99] leading-snug h-12 overflow-hidden mb-2">{a.titolo}</h3>
-                <div className="text-[#ff5a00] text-xl font-black mb-2">{a.prezzo}</div>
-                <div className="flex justify-between items-center text-gray-400 text-xs font-medium">
-                  <span>{a.location}</span>
-                  <span>Oggi, 14:30</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
+        .header-main {
+            background: var(--white);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-main .container { display: flex; align-items: center; gap: 30px; }
+        
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--dark); }
 
-      <footer className="bg-white border-t border-gray-200 py-8 mt-20 text-center">
-        <p className="text-gray-400 text-sm font-bold">ROMA SANITÀ - IL MERCATO DELLA SALUTE NELLA CAPITALE</p>
-      </footer>
+        .search-container { flex: 1; position: relative; max-width: 600px; }
+        .search-container input {
+            width: 100%; padding: 12px 20px 12px 45px;
+            border: 2px solid var(--gray-200); border-radius: 50px;
+            font-size: 15px; transition: 0.3s;
+        }
+        .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gray-400); }
+
+        /* --- HERO & STATS --- */
+        .hero { background: var(--white); padding: 40px 0 20px; text-align: center; }
+        .hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; }
+        .hero h1 span { color: var(--primary); }
+        
+        .stats-strip { 
+            background: var(--dark-light); color: white; padding: 20px 0; margin-top: 30px;
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+        .stat-item h3 { font-size: 28px; color: var(--secondary); }
+        .stat-item p { font-size: 14px; opacity: 0.8; }
+
+        /* --- CATEGORIES (STILE SUBITO.IT) --- */
+        .categories { padding: 60px 0; background: var(--white); }
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+        .cat-card {
+            background: var(--gray-100); border-radius: 12px; padding: 20px;
+            text-align: center; text-decoration: none; color: var(--dark);
+            transition: 0.3s; border: 1px solid transparent;
+        }
+        .cat-card:hover { transform: translateY(-5px); border-color: var(--primary); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .cat-circle {
+            width: 60px; height: 60px; background: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px; font-size: 24px; color: var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .cat-card h4 { font-weight: 600; font-size: 15px; }
+
+        /* --- ANNUNCI (5 BOX) --- */
+        .announcements { padding: 60px 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-200); transition: 0.3s; }
+        .card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card-img { height: 140px; background: #ddd; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 10px; left: 10px; background: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+        .card-content { padding: 15px; }
+        .card-price { color: var(--secondary); font-weight: 700; font-size: 18px; }
+        .card-title { font-size: 14px; font-weight: 600; margin: 5px 0; height: 40px; overflow: hidden; }
+        .card-loc { font-size: 12px; color: #666; }
+
+        /* --- PERCHÉ SCEGLIERCI (DIFFERENZIATI) --- */
+        .features { padding: 80px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .feat-box { padding: 40px; border-radius: 20px; color: white; }
+        .feat-blue { background: var(--primary); }
+        .feat-green { background: var(--secondary); }
+        .feat-box h2 { margin-bottom: 20px; }
+        .feat-box ul { list-style: none; }
+        .feat-box li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--dark); color: white; padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; margin-bottom: 40px; }
+        .footer-bottom { border-top: 1px solid #333; pt: 30px; text-align: center; font-size: 13px; opacity: 0.6; padding-top: 20px; }
+
+        @media (max-width: 1024px) {
+            .grid-5 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-map-marker-alt"></i> Roma e Provincia</span>
+            <span><i class="fas fa-phone"></i> Emergenze: 118</span>
+        </div>
     </div>
-  );
-}
+
+    <header class="header-main">
+        <div class="container">
+            <a href="#" class="logo"><i class="fas fa-heartbeat"></i> Roma<span>Sanità</span></a>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cerca farmacie, dentisti, medici...">
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn" style="background: none; border: none; font-weight: 600; cursor:pointer;">Accedi</button>
+                <button style="background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor:pointer;">Inserisci Annuncio</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Cerca il tuo <span>Servizio Sanitario</span> a Roma</h1>
+            <p>La salute a portata di click. Prenota visite ed esami nelle migliori strutture della capitale.</p>
+        </div>
+        <div class="stats-strip">
+            <div class="container stats-grid">
+                <div class="stat-item"><h3>+1.250</h3><p>Annunci Attivi</p></div>
+                <div class="stat-item"><h3>+850</h3><p>Professionisti</p></div>
+                <div class="stat-item"><h3>15k</h3><p>Visitatori / Mese</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <div class="cat-grid">
+                <a href="#" class="cat-card">
+                    <div class="cat-circle"><i class="fas fa-pills"></i></div>
+                    <h4>Farmacie</h4>
+                </a>
+                <a href="#" class="cat-card">
+                    <div class="cat-circle"><i class="fas fa-tooth"></i></div>
+                    <h4>Dentisti</h4>
+                </a>
+                <a href="#" class="cat-card">
+                    <div class="cat-circle"><i class="fas fa-microscope"></i></div>
+                    <h4>Diagnostica</h4>
+                </a>
+                <a href="#" class="cat-card">
+                    <div class="cat-circle"><i class="fas fa-user-md"></i></div>
+                    <h4>Specialisti</h4>
+                </a>
+                <a href="#" class="cat-card">
+                    <div class="cat-circle"><i class="fas fa-ambulance"></i></div>
+                    <h4>Emergenze</h4>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="announcements">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ultimi Annunci pubblicati</h2>
+                <a href="#" style="color: var(--primary); font-weight: 600;">Vedi tutti</a>
+            </div>
+            <div class="grid-5">
+                <div class="card">
+                    <div class="card-img">
+                        <span class="badge">PREMIUM</span>
+                        <img src="https://images.unsplash.com/photo-1586773860418-d374a5514175?auto=format&fit=crop&w=300&q=80" alt="Farmacia">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-price">H24</div>
+                        <div class="card-title">Farmacia Centro Storico - Turno Notturno</div>
+                        <div class="card-loc">Roma Centro</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=300&q=80" alt="Specialista"></div>
+                    <div class="card-content">
+                        <div class="card-price">€80</div>
+                        <div class="card-title">Visita Cardiologica + ECG Immediato</div>
+                        <div class="card-loc">Roma Nord</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=300&q=80" alt="Dentista"></div>
+                    <div class="card-content">
+                        <div class="card-price">€50</div>
+                        <div class="card-title">Pulizia Denti e Sbiancamento Led</div>
+                        <div class="card-loc">Eur</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img"><img src="https://images.unsplash.com/photo-1579154235884-332c397e32d2?auto=format&fit=crop&w=300&q=80" alt="Laboratorio"></div>
+                    <div class="card-content">
+                        <div class="card-price">€35</div>
+                        <div class="card-title">Analisi del Sangue senza Prenotazione</div>
+                        <div class="card-loc">Ostia</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img"><img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=300&q=80" alt="Farmacia"></div>
+                    <div class="card-content">
+                        <div class="card-price">Gratis</div>
+                        <div class="card-title">Consegna Farmaci a Domicilio Anziani</div>
+                        <div class="card-loc">Roma Est</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container features">
+        <div class="feat-box feat-blue">
+            <h2>Perché scegliere noi</h2>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Oltre 1000 professionisti verificati</li>
+                <li><i class="fas fa-check-circle"></i> Prenotazione diretta senza costi</li>
+                <li><i class="fas fa-check-circle"></i> Recensioni reali certificate</li>
+            </ul>
+        </div>
+        <div class="feat-box feat-green">
+            <h2>Perché pubblicare qui</h2>
+            <ul>
+                <li><i class="fas fa-rocket"></i> Visibilità immediata su tutta Roma</li>
+                <li><i class="fas fa-chart-line"></i> Pannello statistiche avanzato</li>
+                <li><i class="fas fa-user-plus"></i> Nuovi pazienti ogni giorno</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>RomaSanità</h3>
+                    <p style="opacity: 0.6; margin-top: 15px;">Il primo portale dedicato esclusivamente alla salute nella Capitale. Troviamo la soluzione medica più vicina a te.</p>
+                </div>
+                <div>
+                    <h4>Link Utili</h4>
+                    <p>Come funziona</p>
+                    <p>Prezzi Premium</p>
+                    <p>Contatti</p>
+                </div>
+                <div>
+                    <h4>Contatti</h4>
+                    <p>info@romasanita.it</p>
+                    <p>Via del Corso, Roma</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 RomaSanità - Tutti i diritti riservati.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
