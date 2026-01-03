@@ -44,3 +44,28 @@ body { background-color: #f4f7f6; color: #333; }
     .stat-item div:first-child { font-size: 20px !important; }
     .grid-3-col { grid-template-columns: 1fr !important; } /* Box perché scegliere uno sotto l'altro */
 }
+/* FIX ALLINEAMENTO HEADER */
+.header .container {
+  display: flex !important;
+  flex-direction: row !important; /* Forza la riga */
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important; /* Impedisce di andare a capo */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 20px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+}
