@@ -1,61 +1,46 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-    --primary: #0070f3;
-    --primary-dark: #0056b3;
-    --topbar-bg: #004a99; /* Azzurro scuro richiesto */
-    --hero-bg: #e9f2ff; /* Azzurrino di base */
-    --hero-bg-darker: #d0e3ff; /* Azzurrino leggermente più scuro richiesto */
-    --dark: #333;
-    --white: #ffffff;
-}
+/* STILI GENERALI */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #f4f7f6; color: #333; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-body { font-family: 'Inter', sans-serif; color: var(--dark); background: #f9f9f9; }
+/* HEADER & TOP BAR */
+.top-bar { background-color: #0070f3; color: white; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; }
+.header { background: white; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+.nav-links { list-style: none; display: flex; gap: 20px; }
+.nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
 
-/* Top Bar */
-.top-bar { background: var(--topbar-bg); color: white; padding: 8px 0; text-align: center; font-weight: bold; font-size: 14px; }
-
-/* Header & Menu */
-.header { background: white; border-bottom: 1px solid #eee; padding: 15px 0; }
-.header .container { display: flex; justify-content: space-between; align-items: center; }
-.nav-links { display: flex; gap: 20px; list-style: none; }
-.nav-links a { text-decoration: none; color: #555; font-weight: 500; font-size: 15px; }
-.nav-right { display: flex; gap: 15px; align-items: center; }
-
-/* Hero con barra di ricerca Codice 1 */
-.hero { background: var(--hero-bg-darker); padding: 60px 0; text-align: center; }
-.hero h1 { font-size: 32px; margin-bottom: 10px; }
-.hero p { color: #666; margin-bottom: 30px; }
-
-.search-box-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    gap: 10px;
-    max-width: 1000px;
-    margin: 0 auto;
+/* HERO */
+.hero { text-align: center; padding: 60px 0 0 0; }
+.hero h1 { fontSize: 36px; margin-bottom: 10px; }
+.search-box-container { 
+    background: white; padding: 20px; border-radius: 10px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    display: flex; gap: 15px; margin-top: 30px;
 }
 .search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #888; }
-.search-input-group select, .search-input-group input { 
-    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; outline: none; 
+.search-input-group label { display: block; font-size: 11px; font-weight: bold; color: #888; margin-bottom: 5px; }
+.search-input-group input, .search-input-group select { 
+    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; 
 }
+.btn-search { background: #0070f3; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-.btn-search { background: var(--primary); color: white; border: none; padding: 0 30px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+/* ANNUNCI */
+.announcements-grid { display: grid; gap: 15px; }
+.ann-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: 0.3s; }
+.ann-card:hover { transform: translateY(-5px); }
+.ann-img { width: 100%; height: 150px; object-fit: cover; }
+.ann-info { padding: 12px; text-align: left; }
+.ann-info small { color: #0070f3; font-weight: bold; font-size: 10px; text-transform: uppercase; }
+.ann-info h4 { margin: 5px 0; font-size: 14px; }
 
-.hero-stats { margin-top: 20px; font-weight: bold; color: var(--primary); }
-
-/* Categorie stile Subito.it (piccole) */
-.categories-subito { display: flex; justify-content: center; gap: 40px; padding: 40px 0; background: white; }
-.cat-item { text-align: center; text-decoration: none; color: var(--dark); }
-.cat-item i { font-size: 24px; color: var(--primary); display: block; margin-bottom: 8px; }
-.cat-item span { font-size: 13px; font-weight: 500; }
-
-/* Annunci Card */
-.announcements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 30px; }
-.ann-card { background: white; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
-.ann-img { width: 100%; height: 150px; object-fit: cover; background: #eee; }
-.ann-info { padding: 12px; }
-
-.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+/* --- RESPONSIVE (MOBILE) --- */
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* Nasconde menu su mobile per ora */
+    .search-box-container { flex-direction: column; }
+    .hero h1 { font-size: 26px; }
+    .announcements-grid { grid-template-columns: repeat(2, 1fr) !important; } /* 2 card per riga su cellulare */
+    .stat-box { gap: 20px !important; }
+    .stat-item div:first-child { font-size: 20px !important; }
+    .grid-3-col { grid-template-columns: 1fr !important; } /* Box perché scegliere uno sotto l'altro */
+}
