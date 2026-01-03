@@ -1,75 +1,77 @@
 import './globals.css';
 
 export default function Home() {
+  const categories = [
+    { name: 'Farmacie', icon: 'fa-pills' },
+    { name: 'Dentisti', icon: 'fa-tooth' },
+    { name: 'Diagnostica', icon: 'fa-microscope' },
+    { name: 'Specialisti', icon: 'fa-user-md' },
+    { name: 'Emergenze', icon: 'fa-ambulance' }
+  ];
+
   return (
     <div>
-      {/* 1. TOP BAR */}
       <div className="top-bar">
         <div className="container top-bar-content">
-          <span>Roma e Provincia</span>
-          <span>Emergenze: 118</span>
+          <span><i className="fas fa-map-marker-alt"></i> Roma e Provincia</span>
+          <span><i className="fas fa-phone"></i> Emergenze: 118</span>
         </div>
       </div>
 
-      {/* 2. HEADER CON RICERCA */}
       <header className="header-main">
         <div className="container header-flex">
-          <h1 style={{color: '#0066CC'}}>RomaSanità</h1>
-          <input type="text" className="search-input" placeholder="Cerca farmacie, medici..." />
+          <a href="#" className="logo">Roma<span>Sanità</span></a>
+          <input type="text" className="search-input" placeholder="Cerca farmacie, specialisti, cliniche..." />
         </div>
       </header>
 
-      {/* 3. STATISTICHE */}
       <section className="stats-strip">
         <div className="container stats-grid">
-          <div className="stat-item"><h3>+1250</h3><p>Annunci attivi</p></div>
+          <div className="stat-item"><h3>+1.250</h3><p>Annunci Attivi</p></div>
           <div className="stat-item"><h3>+850</h3><p>Professionisti</p></div>
-          <div className="stat-item"><h3>15k</h3><p>Visitatori al mese</p></div>
+          <div className="stat-item"><h3>15k</h3><p>Visitatori / Mese</p></div>
         </div>
       </section>
 
-      {/* 4. CATEGORIE (Stile Subito) */}
       <div className="container">
-        <h2 style={{marginTop: '40px'}}>Esplora le categorie</h2>
+        <h2 className="section-title">Esplora le categorie</h2>
         <div className="cat-grid">
-          {['Farmacie', 'Dentisti', 'Medici', 'Esami', 'Cliniche'].map(cat => (
-            <div key={cat} className="cat-card">
-              <div className="cat-circle"></div>
-              <p>{cat}</p>
+          {categories.map((cat) => (
+            <div key={cat.name} className="cat-card">
+              <div className="cat-circle"><i className={`fas ${cat.icon}`}></i></div>
+              <p>{cat.name}</p>
             </div>
           ))}
         </div>
 
-        {/* 5. ULTIMI ANNUNCI (5 BOX) */}
-        <h2>Ultimi annunci pubblicati</h2>
-        <div className="grid-5" style={{marginTop: '20px'}}>
-          {[1, 2, 3, 4, 5].map(n => (
+        <h2 className="section-title">Ultimi Annunci pubblicati</h2>
+        <div className="grid-5">
+          {[1, 2, 3, 4, 5].map((n) => (
             <div key={n} className="card">
-              <div className="card-img"></div>
+              <div className="card-img"><i className="fas fa-image"></i></div>
               <div className="card-body">
-                <p style={{fontWeight: 'bold'}}>Servizio {n}</p>
-                <p style={{fontSize: '12px'}}>Roma Centro</p>
+                <div className="price-tag">{n === 1 ? 'H24' : '€ 50'}</div>
+                <div className="card-title">Servizio Sanitario Professionale {n}</div>
+                <div className="card-loc"><i className="fas fa-location-dot"></i> Roma Centro</div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* 6. PERCHÉ SCEGLIERE / PUBBLICARE */}
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '50px'}}>
-          <div className="box-scelta">
-            <h3>Perché sceglierci</h3>
-            <p>Sicurezza e velocità nel trovare il medico giusto.</p>
+        <div className="features-grid">
+          <div className="box box-scelta">
+            <h2>Perché sceglierci</h2>
+            <p>Trova rapidamente i migliori professionisti sanitari a Roma, con recensioni verificate e prenotazione immediata.</p>
           </div>
-          <div className="box-pubblica">
-            <h3>Perché pubblicare</h3>
-            <p>Raggiungi migliaia di pazienti ogni giorno.</p>
+          <div className="box box-pubblica">
+            <h2>Perché pubblicare</h2>
+            <p>Aumenta la tua visibilità nella Capitale. Raggiungi migliaia di potenziali pazienti ogni giorno con un profilo dedicato.</p>
           </div>
         </div>
       </div>
 
-      {/* 7. FOOTER */}
-      <footer style={{background: '#111827', color: 'white', padding: '40px 0', textAlign: 'center'}}>
-        <p>© 2026 RomaSanità - Portale Sanitario</p>
+      <footer style={{background: '#111827', color: 'white', padding: '50px 0', textAlign: 'center'}}>
+        <p style={{opacity: 0.6}}>© 2026 RomaSanità - Il portale della salute a Roma</p>
       </footer>
     </div>
   );
