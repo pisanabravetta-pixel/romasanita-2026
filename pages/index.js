@@ -10,20 +10,17 @@ export default function Home() {
     "Portuense", "Gianicolense", "Trionfale", "Popolo", "Eur", "Monteverde", "Flaminio"
   ];
 const eseguiRicerca = () => {
-    // Se l'utente non ha scritto nulla, lo fermiamo
     if(!ricerca) {
       alert("Per favore, scrivi cosa stai cercando.");
       return;
     }
 
     const cosa = ricerca.toLowerCase();
-    // Trasformiamo "San Giovanni" in "san-giovanni" per leggere i nomi dei tuoi file
     const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
     const parametri = "?zona=" + zonaScelta + "&cerca=" + encodeURIComponent(cosa);
 
-    // --- AREA DENTISTI ---
-    if (cosa.includes("dent") || cosa.includes("odont")) {
-      // Controlliamo se hai creato il file specifico per quella zona
+    // --- AREA DENTISTI (Ora include Carie e Pulizia) ---
+    if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("pulizia") || cosa.includes("apparecch")) {
       if (zonaKebab === "prati" || zonaKebab === "eur" || zonaKebab === "san-giovanni") {
         window.location.href = "/dentisti-roma-" + zonaKebab;
       } else {
@@ -36,13 +33,13 @@ const eseguiRicerca = () => {
       if (zonaKebab === "prati") {
         window.location.href = "/cardiologi-roma-prati";
       } else {
+        // Se non è a Prati, mandiamolo alla categoria generale
         window.location.href = "/visite-specialistiche-roma" + parametri;
       }
     }
 
     // --- AREA DIAGNOSTICA ---
-    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi")) {
-      // Se hai il file specifico per Roma Nord, usiamolo
+    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
       if (zonaKebab === "roma-nord") {
         window.location.href = "/diagnostica-roma-nord";
       } else {
@@ -50,15 +47,18 @@ const eseguiRicerca = () => {
       }
     }
 
-    // --- TUTTE LE ALTRE RICERCHE (Farmacia, Domicilio, ecc.) ---
-    else if (cosa.includes("farmac") || cosa.includes("holter")) {
+    // --- FARMACIE ---
+    else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio")) {
       window.location.href = "/farmacie-roma" + parametri;
     }
+
+    // --- SERVIZI A DOMICILIO ---
     else if (cosa.includes("domicilio") || cosa.includes("infermier") || cosa.includes("fisio")) {
       window.location.href = "/servizi-domicilio-roma" + parametri;
     }
+
+    // --- TUTTO IL RESTO ---
     else {
-      // Se non capisce, lo manda nel "sacco" grande delle visite
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
   };
