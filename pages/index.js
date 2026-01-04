@@ -252,7 +252,7 @@ export default function Home() {
         </div>
       </section>
 
-   <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+  <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             
@@ -270,10 +270,10 @@ export default function Home() {
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche a Roma</a></li>
               </ul>
             </div>
 
@@ -307,11 +307,5 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      <style jsx>{`
-        .icon-circle { width: 70px; height: 70px; border: 2px solid; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; background: white; transition: all 0.3s ease; }
-        .cat-item-bordered { text-decoration: none; color: #333; font-size: 14px; font-weight: 600; text-align: center; }
-        .cat-item-bordered:hover .icon-circle { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-      `}</style>
-    </div>
-  );
+);
 }
