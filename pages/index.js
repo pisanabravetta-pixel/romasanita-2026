@@ -10,37 +10,55 @@ export default function Home() {
     "Portuense", "Gianicolense", "Trionfale", "Popolo", "Eur", "Monteverde", "Flaminio"
   ];
 const eseguiRicerca = () => {
+    // Se l'utente non ha scritto nulla, lo fermiamo
     if(!ricerca) {
       alert("Per favore, scrivi cosa stai cercando.");
       return;
     }
 
     const cosa = ricerca.toLowerCase();
-    // Prepariamo l'indirizzo con zona e parola cercata
+    // Trasformiamo "San Giovanni" in "san-giovanni" per leggere i nomi dei tuoi file
+    const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
     const parametri = "?zona=" + zonaScelta + "&cerca=" + encodeURIComponent(cosa);
 
-    // 1. DENTISTI
-    if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("apparecch") || cosa.includes("impiant") || cosa.includes("igien")) {
-      window.location.href = "/dentisti-roma" + parametri;
+    // --- AREA DENTISTI ---
+    if (cosa.includes("dent") || cosa.includes("odont")) {
+      // Controlliamo se hai creato il file specifico per quella zona
+      if (zonaKebab === "prati" || zonaKebab === "eur" || zonaKebab === "san-giovanni") {
+        window.location.href = "/dentisti-roma-" + zonaKebab;
+      } else {
+        window.location.href = "/dentisti-roma" + parametri;
+      }
     } 
-    // 2. DIAGNOSTICA
-    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("rmn") || cosa.includes("ecograf") || cosa.includes("analisi") || cosa.includes("preliev") || cosa.includes("sangue") || cosa.includes("rx") || cosa.includes("radiograf") || cosa.includes("moc")) {
-      window.location.href = "/diagnostica-roma" + parametri;
+
+    // --- AREA CARDIOLOGI ---
+    else if (cosa.includes("cardiol")) {
+      if (zonaKebab === "prati") {
+        window.location.href = "/cardiologi-roma-prati";
+      } else {
+        window.location.href = "/visite-specialistiche-roma" + parametri;
+      }
     }
-    // 3. SERVIZI A DOMICILIO
-    else if (cosa.includes("domicilio") || cosa.includes("casa") || cosa.includes("infermier") || cosa.includes("fisio") || cosa.includes("massagg") || cosa.includes("assistenz") || cosa.includes("badante")) {
-      window.location.href = "/servizi-a-domicilio-roma" + parametri;
+
+    // --- AREA DIAGNOSTICA ---
+    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi")) {
+      // Se hai il file specifico per Roma Nord, usiamolo
+      if (zonaKebab === "roma-nord") {
+        window.location.href = "/diagnostica-roma-nord";
+      } else {
+        window.location.href = "/diagnostica-roma" + parametri;
+      }
     }
-    // 4. FARMACIE
-    else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio") || cosa.includes("vaccin") || cosa.includes("tampone") || cosa.includes("glicem")) {
+
+    // --- TUTTE LE ALTRE RICERCHE (Farmacia, Domicilio, ecc.) ---
+    else if (cosa.includes("farmac") || cosa.includes("holter")) {
       window.location.href = "/farmacie-roma" + parametri;
     }
-    // 5. VISITE SPECIALISTICHE
-    else if (cosa.includes("visit") || cosa.includes("medico") || cosa.includes("dottor") || cosa.includes("specialista") || cosa.includes("dermat") || cosa.includes("oculist") || cosa.includes("cardiol") || cosa.includes("ginec") || cosa.includes("urol") || cosa.includes("ortop") || cosa.includes("nutrizion") || cosa.includes("psicol")) {
-      window.location.href = "/visite-specialistiche-roma" + parametri;
+    else if (cosa.includes("domicilio") || cosa.includes("infermier") || cosa.includes("fisio")) {
+      window.location.href = "/servizi-domicilio-roma" + parametri;
     }
-    // DEFAULT
     else {
+      // Se non capisce, lo manda nel "sacco" grande delle visite
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
   };
