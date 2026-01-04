@@ -14,7 +14,7 @@ export default function VisiteSpecialisticheRoma() {
         <h1 style={{ color: '#1a365d', fontSize: '32px', marginBottom: '10px', fontWeight: '800' }}>Visite Specialistiche a Roma</h1>
         <p style={{ fontSize: '18px', color: '#4a5568', marginBottom: '30px' }}>Prenota visite mediche specialistiche nei migliori studi privati e centri medici della Capitale.</p>
 
-        {/* TESTO SEO CATEGORIA (Step 2) */}
+        {/* TESTO SEO CATEGORIA */}
         <div style={{ lineHeight: '1.8', color: '#4a5568', backgroundColor: '#f8fafc', padding: '25px', borderRadius: '12px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '22px', color: '#2d3748', marginBottom: '15px' }}>I migliori medici specialisti a Roma</h2>
           <p>
@@ -43,8 +43,11 @@ export default function VisiteSpecialisticheRoma() {
             <div>
               <h3 style={{ margin: '0 0 5px 0', color: '#2563eb', fontSize: '19px' }}>Dr.ssa Elena Bianchi - Dermatologa</h3>
               <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>📍 Roma (Zona Quartiere Trieste) - Mappatura nei e acne</p>
-</div>
-          </section>
+            </div>
+            <a href="tel:061234567" style={{ backgroundColor: '#0070f3', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama Ora</a>
+          </div>
         </div>
-      );
-    }
+      </div>
+    </div>
+  );
+}
