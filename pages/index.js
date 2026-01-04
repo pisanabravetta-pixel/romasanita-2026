@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useState } from 'react';
 
 export default function Home() {
   const zoneRoma = [
@@ -6,7 +7,16 @@ export default function Home() {
     "Ostiense", "Tiburtino", "San Giovanni", "Prati", "Villa Borghese", "Nomentano", "Parioli", 
     "Portuense", "Gianicolense", "Trionfale", "Popolo", "Eur", "Monteverde", "Flaminio"
   ];
+const [ricerca, setRicerca] = useState("");
+  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
 
+  const eseguiRicerca = () => {
+    if(!ricerca) {
+      alert("Per favore, scrivi cosa stai cercando.");
+      return;
+    }
+    alert("Ricerca in corso per: " + ricerca + " a " + zonaScelta);
+  };
   return (
     <div>
       <Head>
@@ -45,15 +55,16 @@ export default function Home() {
           <div className="search-box-container">
             <div className="search-input-group">
               <label>COSA CERCHI</label>
-              <input type="text" placeholder="Es: Pulizia denti, Tachipirina..." />
+              <input type="text" placeholder="Es: Pulizia denti, Tachipirina..."value={ricerca}
+  onChange={(e) => setRicerca(e.target.value)} />
             </div>
             <div className="search-input-group">
-              <label>ZONA / QUARTIERE</label>
-              <select>
-                <option>Tutta Roma</option>
-                {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
-              </select>
-            </div>
+  <label>ZONA / QUARTIERE</label>
+  <select value={zonaScelta} onChange={(e) => setZonaScelta(e.target.value)}>
+    <option>Tutta Roma</option>
+    {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
+  </select>
+</div>
             <div className="search-input-group">
               <label>CATEGORIA</label>
               <select>
@@ -65,7 +76,7 @@ export default function Home() {
                 <option>Servizi a Domicilio</option>
               </select>
             </div>
-            <button className="btn-search">CERCA</button>
+           <button className="btn-search" onClick={eseguiRicerca}>CERCA</button>
           </div>
         </div>
       </section>
