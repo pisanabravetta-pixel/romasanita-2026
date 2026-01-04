@@ -1,75 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function DentistiRoma() {
-  const [zonaFiltrata, setZonaFiltrata] = React.useState("Roma");
+  const [zonaFiltrata, setZonaFiltrata] = useState("Roma");
+  const [cosaCercata, setCosaCercata] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const z = params.get('zona');
-    if (z && z !== "Tutta Roma") {
-      setZonaFiltrata(z);
-    } else {
-      setZonaFiltrata("Roma");
-    }
+    const c = params.get('cerca');
+    if (z && z !== "Tutta Roma") setZonaFiltrata(z);
+    if (c) setCosaCercata(c);
   }, []);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
-      {/* Header compatto */}
-      <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute Roma</a>
-        <a href="/pubblica-annuncio" style={{ backgroundColor: '#48bb78', color: '#fff', padding: '8px 15px', borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>Pubblica Gratis</a>
-      </nav>
-
-      <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px' }}>
-        {/* H1 SEO - DINAMICO */}
-        <h1 style={{ color: '#1a365d', fontSize: '32px', marginBottom: '10px', fontWeight: '800' }}>
-          I Migliori Dentisti a {zonaFiltrata}
-        </h1>
-        <p style={{ fontSize: '18px', color: '#4a5568', marginBottom: '30px' }}>
-          Trova i professionisti odontoiatrici più qualificati a {zonaFiltrata}: dalla pulizia dei denti all'implantologia avanzata.
-        </p>
-
-        {/* CONTENUTO SEO DINAMICO */}
-        <div style={{ lineHeight: '1.8', color: '#4a5568', backgroundColor: '#f8fafc', padding: '25px', borderRadius: '12px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '22px', color: '#2d3748', marginBottom: '15px' }}>Come trovare il dentista giusto a {zonaFiltrata}</h2>
-          <p>
-            Scegliere un <strong>dentista a {zonaFiltrata}</strong> richiede attenzione. La zona offre studi odontoiatrici specializzati in diversi settori: dall'estetica dentale (sbiancamento e faccette) all'ortodonzia invisibile, fino alla chirurgia orale complessa. Che tu cerchi un centro in <strong>{zonaFiltrata}</strong> o nelle zone limitrofe, è importante affidarsi a professionisti qualificati.
-          </p>
-          <p>
-            Su <strong>ServiziSalute</strong>, facilitiamo la tua ricerca catalogando i migliori studi per zona e specializzazione. Molti dei dentisti che operano a <strong>{zonaFiltrata}</strong> offrono la prima visita di controllo gratuita.
-          </p>
-        </div>
-
-        {/* LISTA ANNUNCI */}
-        <h2 style={{ marginBottom: '20px', fontSize: '24px', fontWeight: '700' }}>Studi Dentistici disponibili a {zonaFiltrata}:</h2>
-        
-        <div style={{ display: 'grid', gap: '20px' }}>
-          
-          {/* Annuncio 1 - Dinamico per Prati */}
-          <div style={{ border: '1px solid #e2e8f0', padding: '20px', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-            <div>
-              <h3 style={{ margin: '0 0 5px 0', color: '#2563eb', fontSize: '19px' }}>Centro Odontoiatrico {zonaFiltrata}</h3>
-              <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>📍 Zona {zonaFiltrata} - Roma</p>
-              <div style={{ marginTop: '8px' }}>
-                <span style={{ fontSize: '11px', background: '#e0e7ff', color: '#4338ca', padding: '4px 10px', borderRadius: '20px', fontWeight: '600', marginRight: '5px' }}>IMPLANTOLOGIA</span>
-                <span style={{ fontSize: '11px', background: '#dcfce7', color: '#15803d', padding: '4px 10px', borderRadius: '20px', fontWeight: '600' }}>PRIMA VISITA GRATIS</span>
-              </div>
-            </div>
-            <button style={{ backgroundColor: '#48bb78', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Vedi Telefono</button>
-          </div>
-
-        </div>
-
-        {/* CTA PER IL PROFESSIONISTA */}
-        <div style={{ marginTop: '60px', textAlign: 'center', backgroundColor: '#1a365d', color: '#fff', padding: '40px', borderRadius: '20px' }}>
-          <h2 style={{ fontSize: '26px', marginBottom: '10px' }}>Sei un Dentista a {zonaFiltrata}?</h2>
-          <p style={{ fontSize: '16px', opacity: '0.9', marginBottom: '25px' }}>Ricevi contatti diretti dai pazienti in zona {zonaFiltrata}.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#48bb78', color: '#fff', padding: '16px 35px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold', fontSize: '18px' }}>
-            Inserisci il tuo Studio Ora - È GRATIS
-          </a>
-        </div>
-      </div>
+    <div style={{ fontFamily: 'sans-serif', padding: '20px', maxWidth: '900px', margin: 'auto' }}>
+      <h1 style={{ color: '#2b6cb0', textTransform: 'capitalize' }}>
+        {cosaCercata || "Dentista"} a {zonaFiltrata}
+      </h1>
+      <p>Studi odontoiatrici specializzati in <strong>{cosaCercata || "cure dentali"}</strong> a {zonaFiltrata}.</p>
+      <br /><a href="/">← Torna alla Home</a>
     </div>
   );
 }
