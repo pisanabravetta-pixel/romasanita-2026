@@ -265,7 +265,7 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 2️⃣ BLOCCO 2 – LINK UTENTI */}
+           {/* 2️⃣ BLOCCO 2 – LINK UTENTI (COMPLETO) */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
@@ -274,6 +274,8 @@ export default function Home() {
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
 
