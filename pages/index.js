@@ -96,43 +96,43 @@ export default function Home() {
           </div>
         </div>
       </section>
-{/* ESPLORA LE CATEGORIE STILE SUBITO.IT */}
+{/* ESPLORA LE CATEGORIE STILE SUBITO.IT (RETTANGOLARI) */}
       <section className="container" style={{padding: '50px 0 20px', textAlign: 'center'}}>
         <h2 style={{fontSize: '28px', fontWeight: '700'}}>Esplora le Categorie</h2>
         <p style={{color: '#666'}}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
       </section>
 
       <div style={{paddingBottom: '50px', backgroundColor: '#f6f7f9'}}>
-        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', padding: '20px'}}>
+        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap', padding: '20px'}}>
             
-            {/* CARD FARMACIE */}
-            <a href="/farmacie-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '140px', transition: 'transform 0.2s'}}>
-              <div style={{backgroundColor: '#fff0f3', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '28px', border: '2px solid #e91e63'}}>💊</div>
-              <span style={{fontWeight: '600', fontSize: '14px', display: 'block'}}>Farmacie</span>
+            {/* CARD FARMACIE - RETTANGOLARE ALLINEATA A SX */}
+            <a href="/farmacie-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', border: '1px solid #e2e8f0'}}>
+              <div style={{backgroundColor: '#fff0f3', width: '45px', height: '45px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', fontSize: '22px', border: '1px solid #e91e63'}}>💊</div>
+              <span style={{fontWeight: '600', fontSize: '15px'}}>Farmacie</span>
             </a>
 
             {/* CARD DENTISTI */}
-            <a href="/dentisti-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '140px', transition: 'transform 0.2s'}}>
-              <div style={{backgroundColor: '#e3f2fd', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '28px', border: '2px solid #2196f3'}}>🦷</div>
-              <span style={{fontWeight: '600', fontSize: '14px', display: 'block'}}>Dentisti</span>
+            <a href="/dentisti-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', border: '1px solid #e2e8f0'}}>
+              <div style={{backgroundColor: '#e3f2fd', width: '45px', height: '45px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', fontSize: '22px', border: '1px solid #2196f3'}}>🦷</div>
+              <span style={{fontWeight: '600', fontSize: '15px'}}>Dentisti</span>
             </a>
 
             {/* CARD DIAGNOSTICA */}
-            <a href="/diagnostica-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '140px', transition: 'transform 0.2s'}}>
-              <div style={{backgroundColor: '#f3e5f5', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '28px', border: '2px solid #9c27b0'}}>🔬</div>
-              <span style={{fontWeight: '600', fontSize: '14px', display: 'block'}}>Diagnostica</span>
+            <a href="/diagnostica-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', border: '1px solid #e2e8f0'}}>
+              <div style={{backgroundColor: '#f3e5f5', width: '45px', height: '45px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', fontSize: '22px', border: '1px solid #9c27b0'}}>🔬</div>
+              <span style={{fontWeight: '600', fontSize: '15px'}}>Diagnostica</span>
             </a>
 
             {/* CARD SPECIALISTI */}
-            <a href="/visite-specialistiche-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '140px', transition: 'transform 0.2s'}}>
-              <div style={{backgroundColor: '#e8f5e9', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '28px', border: '2px solid #4caf50'}}>👨‍⚕️</div>
-              <span style={{fontWeight: '600', fontSize: '14px', display: 'block'}}>Specialisti</span>
+            <a href="/visite-specialistiche-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', border: '1px solid #e2e8f0'}}>
+              <div style={{backgroundColor: '#e8f5e9', width: '45px', height: '45px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', fontSize: '22px', border: '1px solid #4caf50'}}>👨‍⚕️</div>
+              <span style={{fontWeight: '600', fontSize: '15px'}}>Specialisti</span>
             </a>
 
             {/* CARD DOMICILIO */}
-            <a href="/servizi-domicilio-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '140px', transition: 'transform 0.2s'}}>
-              <div style={{backgroundColor: '#fff3e0', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '28px', border: '2px solid #ff9800'}}>🏠</div>
-              <span style={{fontWeight: '600', fontSize: '14px', display: 'block'}}>Domicilio</span>
+            <a href="/servizi-domicilio-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '200px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', border: '1px solid #e2e8f0'}}>
+              <div style={{backgroundColor: '#fff3e0', width: '45px', height: '45px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', fontSize: '22px', border: '1px solid #ff9800'}}>🏠</div>
+              <span style={{fontWeight: '600', fontSize: '15px'}}>Domicilio</span>
             </a>
 
         </div>
