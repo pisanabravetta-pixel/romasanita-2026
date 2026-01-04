@@ -7,34 +7,45 @@ export default function Home() {
     "Ostiense", "Tiburtino", "San Giovanni", "Prati", "Villa Borghese", "Nomentano", "Parioli", 
     "Portuense", "Gianicolense", "Trionfale", "Popolo", "Eur", "Monteverde", "Flaminio"
   ];
-const [ricerca, setRicerca] = useState("");
-  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
-
- const eseguiRicerca = () => {
+const eseguiRicerca = () => {
     if(!ricerca) {
       alert("Per favore, scrivi cosa stai cercando.");
       return;
     }
 
     const cosa = ricerca.toLowerCase();
+    // Prepariamo l'indirizzo con zona e parola cercata
+    const parametri = "?zona=" + zonaScelta + "&cerca=" + encodeURIComponent(cosa);
 
-    if (cosa.includes("dentista") || cosa.includes("denti")) {
-      window.location.href = "/dentisti-roma?zona=" + zonaScelta;
+    // 1. DENTISTI (Denti, carie, apparecchio, pulizia, impianti)
+    if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("apparecch") || cosa.includes("impiant") || cosa.includes("igien")) {
+      window.location.href = "/dentisti-roma" + parametri;
     } 
-    else if (cosa.includes("specialista") || cosa.includes("visita") || cosa.includes("medico")) {
-      window.location.href = "/visite-specialistiche-roma?zona=" + zonaScelta;
-    } 
-    else if (cosa.includes("farmacia") || cosa.includes("farmaco")) {
-      window.location.href = "/farmacie-roma?zona=" + zonaScelta;
-    } 
-    else if (cosa.includes("domicilio") || cosa.includes("infermiere") || cosa.includes("assistenza")) {
-      window.location.href = "/servizi-a-domicilio-roma?zona=" + zonaScelta;
-    } 
-    else if (cosa.includes("diagnostica") || cosa.includes("analisi") || cosa.includes("ecografia") || cosa.includes("rx")) {
-      window.location.href = "/diagnostica-roma?zona=" + zonaScelta;
-    } 
+    
+    // 2. DIAGNOSTICA (Esami strumentali: TAC, Risonanza, Ecografia, Analisi, MOC, RX)
+    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("rmn") || cosa.includes("ecograf") || cosa.includes("analisi") || cosa.includes("preliev") || cosa.includes("sangue") || cosa.includes("rx") || cosa.includes("radiograf") || cosa.includes("moc")) {
+      window.location.href = "/diagnostica-roma" + parametri;
+    }
+
+    // 3. SERVIZI A DOMICILIO (Vince la parola "domicilio" o servizi tipici: Fisio, Infermiere, Assistenza)
+    else if (cosa.includes("domicilio") || cosa.includes("casa") || cosa.includes("infermier") || cosa.includes("fisio") || cosa.includes("massagg") || cosa.includes("assistenz") || cosa.includes("badante")) {
+      window.location.href = "/servizi-a-domicilio-roma" + parametri;
+    }
+
+    // 4. FARMACIE (Holter, Pressione, Vaccini, Tamponi, Farmaci)
+    else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio") || cosa.includes("vaccin") || cosa.includes("tampone") || cosa.includes("glicem")) {
+      window.location.href = "/farmacie-roma" + parametri;
+    }
+
+    // 5. VISITE SPECIALISTICHE (Tutti i medici: Dermatologo, Oculista, Cardiologo, ecc.)
+    else if (cosa.includes("visit") || cosa.includes("medico") || cosa.includes("dottor") || cosa.includes("specialista") || cosa.includes("dermat") || cosa.includes("oculist") || cosa.includes("cardiol") || cosa.includes("ginec") || cosa.includes("urol") || cosa.includes("ortop") || cosa.includes("nutrizion") || cosa.includes("psicol")) {
+      window.location.href = "/visite-specialistiche-roma" + parametri;
+    }
+
+    // DEFAULT: Se scrive qualcosa che non riconosciamo, lo mandiamo comunque alle visite specialistiche
+    // perché è la categoria più ampia e probabilmente troverà quello che cerca.
     else {
-      alert("Stai cercando: " + ricerca + ". Prova con 'Dentista', 'Domicilio', 'Diagnostica' o 'Farmacia'!");
+      window.location.href = "/visite-specialistiche-roma" + parametri;
     }
   };
   return (
