@@ -55,8 +55,12 @@ const [ricerca, setRicerca] = useState("");
           <div className="search-box-container">
             <div className="search-input-group">
               <label>COSA CERCHI</label>
-              <input type="text" placeholder="Es: Pulizia denti, Tachipirina..."value={ricerca}
-  onChange={(e) => setRicerca(e.target.value)} />
+             <input 
+  type="text" 
+  placeholder="Es: Pulizia denti, Tachipirina..." 
+  value={ricerca}
+  onChange={(e) => setRicerca(e.target.value)} 
+/>
             </div>
             <div className="search-input-group">
   <label>ZONA / QUARTIERE</label>
