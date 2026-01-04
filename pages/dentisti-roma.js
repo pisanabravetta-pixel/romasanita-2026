@@ -1,6 +1,13 @@
 import React from 'react';
 
 export default function DentistiRoma() {
+  const [zonaFiltrata, setZonaFiltrata] = React.useState("Roma");
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const z = params.get('zona');
+    if (z) setZonaFiltrata(z);
+  }, []);
   return (
     <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
       {/* Header compatto */}
