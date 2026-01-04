@@ -69,31 +69,52 @@ export default function Home() {
             <button className="btn-search">CERCA</button>
           </div>
 
-          {/* STATISTICHE IMPILATE IN VERDE */}
+    {/* SEZIONE STATISTICHE - BOX RETTANGOLARI AZZURRO SCURO */}
+      <section style={{ padding: '60px 0', backgroundColor: '#fff' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          
+          {/* BOX ANNUNCI */}
           <div style={{ 
-            marginTop: '50px', 
-            background: 'rgba(255,255,255,0.5)', 
-            padding: '20px', 
-            borderRadius: '15px 15px 0 0',
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: '80px',
-            border: '1px solid rgba(255,255,255,0.8)',
-            borderBottom: 'none'
+            backgroundColor: '#1a365d', 
+            color: 'white', 
+            padding: '20px 30px', 
+            borderRadius: '10px', 
+            width: '220px', 
+            textAlign: 'center', 
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
           }}>
-            <div style={{ textAlign: 'center', color: '#28a745' }}>
-              <div style={{ fontSize: '28px', fontWeight: '800' }}>+ 1500</div>
-              <div style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: '#155724' }}>Annunci</div>
-            </div>
-            <div style={{ textAlign: 'center', color: '#28a745' }}>
-              <div style={{ fontSize: '28px', fontWeight: '800' }}>+ 850</div>
-              <div style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: '#155724' }}>Professionisti</div>
-            </div>
-            <div style={{ textAlign: 'center', color: '#28a745' }}>
-              <div style={{ fontSize: '28px', fontWeight: '800' }}>15k</div>
-              <div style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: '#155724' }}>Visitatori/Mese</div>
-            </div>
+            <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>+1.500</div>
+            <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Annunci Online</div>
           </div>
+
+          {/* BOX UTENTI */}
+          <div style={{ 
+            backgroundColor: '#1a365d', 
+            color: 'white', 
+            padding: '20px 30px', 
+            borderRadius: '10px', 
+            width: '220px', 
+            textAlign: 'center', 
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
+          }}>
+            <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>+5.000</div>
+            <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Utenti al Mese</div>
+          </div>
+
+          {/* BOX ZONE ROMA */}
+          <div style={{ 
+            backgroundColor: '#1a365d', 
+            color: 'white', 
+            padding: '20px 30px', 
+            borderRadius: '10px', 
+            width: '220px', 
+            textAlign: 'center', 
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
+          }}>
+            <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>15+</div>
+            <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Zone di Roma</div>
+          </div>
+
         </div>
       </section>
 {/* ESPLORA LE CATEGORIE STILE SUBITO.IT (RETTANGOLARI CENTRATI) */}
