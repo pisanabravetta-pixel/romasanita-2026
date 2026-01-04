@@ -19,16 +19,22 @@ const [ricerca, setRicerca] = useState("");
     const cosa = ricerca.toLowerCase();
 
     if (cosa.includes("dentista") || cosa.includes("denti")) {
-      // MODIFICA QUI SOTTO:
       window.location.href = "/dentisti-roma?zona=" + zonaScelta;
-    } else if (cosa.includes("specialista") || cosa.includes("visita") || cosa.includes("medico")) {
-      // MODIFICA QUI SOTTO:
+    } 
+    else if (cosa.includes("specialista") || cosa.includes("visita") || cosa.includes("medico")) {
       window.location.href = "/visite-specialistiche-roma?zona=" + zonaScelta;
-    } else if (cosa.includes("farmacia") || cosa.includes("farmaco")) {
-      // MODIFICA QUI SOTTO:
+    } 
+    else if (cosa.includes("farmacia") || cosa.includes("farmaco")) {
       window.location.href = "/farmacie-roma?zona=" + zonaScelta;
-    } else {
-      alert("Stai cercando: " + ricerca + ". Questa categoria non è ancora attiva, prova con 'Dentista' o 'Specialista'!");
+    } 
+    else if (cosa.includes("domicilio") || cosa.includes("infermiere") || cosa.includes("assistenza")) {
+      window.location.href = "/servizi-a-domicilio-roma?zona=" + zonaScelta;
+    } 
+    else if (cosa.includes("diagnostica") || cosa.includes("analisi") || cosa.includes("ecografia") || cosa.includes("rx")) {
+      window.location.href = "/diagnostica-roma?zona=" + zonaScelta;
+    } 
+    else {
+      alert("Stai cercando: " + ricerca + ". Prova con 'Dentista', 'Domicilio', 'Diagnostica' o 'Farmacia'!");
     }
   };
   return (
