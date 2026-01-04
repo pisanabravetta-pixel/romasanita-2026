@@ -100,34 +100,39 @@ export default function Home() {
       {/* ESPLORA LE CATEGORIE */}
       <section className="container" style={{padding: '50px 0 20px', textAlign: 'center'}}>
         <h2 style={{fontSize: '28px', fontWeight: '700'}}>Esplora le Categorie</h2>
-        <p style={{color: '#666'}}>Trova il servizio sanitario di cui hai bisogno</p>
+        <p style={{color: '#666'}}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
       </section>
 
       <div className="categories-subito" style={{paddingBottom: '50px'}}>
-        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '35px'}}>
-            <a href="#" className="cat-item-bordered">
-              <div className="icon-circle" style={{borderColor: '#e91e63'}}><i className="fas fa-pills" style={{color: '#e91e63'}}></i></div>
-              <span>Farmacie</span>
+        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '35px', flexWrap: 'wrap'}}>
+            
+            <a href="/farmacie-roma" className="cat-item-bordered" style={{textDecoration: 'none', color: 'inherit'}}>
+              <div className="icon-circle" style={{borderColor: '#e91e63', width: '70px', height: '70px', borderRadius: '50%', border: '2px solid', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px'}}>💊</div>
+              <span style={{fontWeight: '600'}}>Farmacie</span>
             </a>
-            <a href="#" className="cat-item-bordered">
-              <div className="icon-circle" style={{borderColor: '#2196f3'}}><i className="fas fa-tooth" style={{color: '#2196f3'}}></i></div>
-              <span>Dentisti</span>
+
+            <a href="/dentisti-roma" className="cat-item-bordered" style={{textDecoration: 'none', color: 'inherit'}}>
+              <div className="icon-circle" style={{borderColor: '#2196f3', width: '70px', height: '70px', borderRadius: '50%', border: '2px solid', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px'}}>🦷</div>
+              <span style={{fontWeight: '600'}}>Dentisti</span>
             </a>
-            <a href="#" className="cat-item-bordered">
-              <div className="icon-circle" style={{borderColor: '#9c27b0'}}><i className="fas fa-microscope" style={{color: '#9c27b0'}}></i></div>
-              <span>Diagnostica</span>
+
+            <a href="/diagnostica-roma" className="cat-item-bordered" style={{textDecoration: 'none', color: 'inherit'}}>
+              <div className="icon-circle" style={{borderColor: '#9c27b0', width: '70px', height: '70px', borderRadius: '50%', border: '2px solid', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px'}}>🔬</div>
+              <span style={{fontWeight: '600'}}>Diagnostica</span>
             </a>
-            <a href="#" className="cat-item-bordered">
-              <div className="icon-circle" style={{borderColor: '#4caf50'}}><i className="fas fa-user-md" style={{color: '#4caf50'}}></i></div>
-              <span>Specialisti</span>
+
+            <a href="/visite-specialistiche-roma" className="cat-item-bordered" style={{textDecoration: 'none', color: 'inherit'}}>
+              <div className="icon-circle" style={{borderColor: '#4caf50', width: '70px', height: '70px', borderRadius: '50%', border: '2px solid', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px'}}>👨‍⚕️</div>
+              <span style={{fontWeight: '600'}}>Specialisti</span>
             </a>
-            <a href="#" className="cat-item-bordered">
-              <div className="icon-circle" style={{borderColor: '#ff9800'}}><i className="fas fa-home" style={{color: '#ff9800'}}></i></div>
-              <span>Domicilio</span>
+
+            <a href="/servizi-domicilio-roma" className="cat-item-bordered" style={{textDecoration: 'none', color: 'inherit'}}>
+              <div className="icon-circle" style={{borderColor: '#ff9800', width: '70px', height: '70px', borderRadius: '50%', border: '2px solid', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px'}}>🏠</div>
+              <span style={{fontWeight: '600'}}>Domicilio</span>
             </a>
+
         </div>
       </div>
-
       {/* ULTIMI ANNUNCI CON TASTI CONTATTO AGGIUNTI */}
       <section className="container" style={{padding: '40px 0'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Ultimi annunci pubblicati</h2>
