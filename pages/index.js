@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { useState } from 'react';
 
 export default function Home() {
-  const [ricerca, setRicerca] = React.useState(""); 
-  const [zonaScelta, setZonaScelta] = React.useState("Tutta Roma");
+  const [ricerca, setRicerca] = useState(""); 
+  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
   const zoneRoma = [
     "Centro Storico", "Testaccio", "Trastevere", "Monti", "San Lorenzo", "Pigneto", "Garbatella", 
     "Ostiense", "Tiburtino", "San Giovanni", "Prati", "Villa Borghese", "Nomentano", "Parioli", 
