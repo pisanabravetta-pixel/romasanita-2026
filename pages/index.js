@@ -10,12 +10,23 @@ export default function Home() {
 const [ricerca, setRicerca] = useState("");
   const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
 
-  const eseguiRicerca = () => {
+ const eseguiRicerca = () => {
     if(!ricerca) {
       alert("Per favore, scrivi cosa stai cercando.");
       return;
     }
-    alert("Ricerca in corso per: " + ricerca + " a " + zonaScelta);
+
+    const cosa = ricerca.toLowerCase();
+
+    if (cosa.includes("dentista") || cosa.includes("denti")) {
+      window.location.href = "/dentisti-roma";
+    } else if (cosa.includes("specialista") || cosa.includes("visita") || cosa.includes("medico")) {
+      window.location.href = "/visite-specialistiche-roma";
+    } else if (cosa.includes("farmacia") || cosa.includes("farmaco")) {
+      window.location.href = "/farmacie-roma";
+    } else {
+      alert("Stai cercando: " + ricerca + ". Questa categoria non è ancora attiva, prova con 'Dentista' o 'Specialista'!");
+    }
   };
   return (
     <div>
