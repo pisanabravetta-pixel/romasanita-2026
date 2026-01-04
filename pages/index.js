@@ -17,33 +17,27 @@ const eseguiRicerca = () => {
     // Prepariamo l'indirizzo con zona e parola cercata
     const parametri = "?zona=" + zonaScelta + "&cerca=" + encodeURIComponent(cosa);
 
-    // 1. DENTISTI (Denti, carie, apparecchio, pulizia, impianti)
+    // 1. DENTISTI
     if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("apparecch") || cosa.includes("impiant") || cosa.includes("igien")) {
       window.location.href = "/dentisti-roma" + parametri;
     } 
-    
-    // 2. DIAGNOSTICA (Esami strumentali: TAC, Risonanza, Ecografia, Analisi, MOC, RX)
+    // 2. DIAGNOSTICA
     else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("rmn") || cosa.includes("ecograf") || cosa.includes("analisi") || cosa.includes("preliev") || cosa.includes("sangue") || cosa.includes("rx") || cosa.includes("radiograf") || cosa.includes("moc")) {
       window.location.href = "/diagnostica-roma" + parametri;
     }
-
-    // 3. SERVIZI A DOMICILIO (Vince la parola "domicilio" o servizi tipici: Fisio, Infermiere, Assistenza)
+    // 3. SERVIZI A DOMICILIO
     else if (cosa.includes("domicilio") || cosa.includes("casa") || cosa.includes("infermier") || cosa.includes("fisio") || cosa.includes("massagg") || cosa.includes("assistenz") || cosa.includes("badante")) {
       window.location.href = "/servizi-a-domicilio-roma" + parametri;
     }
-
-    // 4. FARMACIE (Holter, Pressione, Vaccini, Tamponi, Farmaci)
+    // 4. FARMACIE
     else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio") || cosa.includes("vaccin") || cosa.includes("tampone") || cosa.includes("glicem")) {
       window.location.href = "/farmacie-roma" + parametri;
     }
-
-    // 5. VISITE SPECIALISTICHE (Tutti i medici: Dermatologo, Oculista, Cardiologo, ecc.)
+    // 5. VISITE SPECIALISTICHE
     else if (cosa.includes("visit") || cosa.includes("medico") || cosa.includes("dottor") || cosa.includes("specialista") || cosa.includes("dermat") || cosa.includes("oculist") || cosa.includes("cardiol") || cosa.includes("ginec") || cosa.includes("urol") || cosa.includes("ortop") || cosa.includes("nutrizion") || cosa.includes("psicol")) {
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
-
-    // DEFAULT: Se scrive qualcosa che non riconosciamo, lo mandiamo comunque alle visite specialistiche
-    // perché è la categoria più ampia e probabilmente troverà quello che cerca.
+    // DEFAULT
     else {
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
