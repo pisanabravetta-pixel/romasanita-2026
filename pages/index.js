@@ -68,12 +68,10 @@ export default function Home() {
             </div>
             <button className="btn-search">CERCA</button>
           </div>
-
-    {/* SEZIONE STATISTICHE - BOX RETTANGOLARI AZZURRO SCURO */}
+{/* SEZIONE STATISTICHE - BOX RETTANGOLARI AZZURRO SCURO */}
       <section style={{ padding: '60px 0', backgroundColor: '#fff' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
           
-          {/* BOX ANNUNCI */}
           <div style={{ 
             backgroundColor: '#1a365d', 
             color: 'white', 
@@ -87,7 +85,6 @@ export default function Home() {
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Annunci Online</div>
           </div>
 
-          {/* BOX UTENTI */}
           <div style={{ 
             backgroundColor: '#1a365d', 
             color: 'white', 
@@ -101,7 +98,6 @@ export default function Home() {
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Utenti al Mese</div>
           </div>
 
-          {/* BOX ZONE ROMA */}
           <div style={{ 
             backgroundColor: '#1a365d', 
             color: 'white', 
@@ -117,6 +113,7 @@ export default function Home() {
 
         </div>
       </section>
+   
 {/* ESPLORA LE CATEGORIE STILE SUBITO.IT (RETTANGOLARI CENTRATI) */}
       <section className="container" style={{padding: '50px 0 20px', textAlign: 'center'}}>
         <h2 style={{fontSize: '28px', fontWeight: '700'}}>Esplora le Categorie</h2>
