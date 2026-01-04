@@ -252,47 +252,58 @@ export default function Home() {
         </div>
       </section>
 
-    <footer style={{ background: '#333', color: 'white', padding: '60px 0 30px' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
-            {/* PRIMA COLONNA */}
+   <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+            
+            {/* 1️⃣ BLOCCO 1 – LOGO + TESTO (SEO) */}
             <div>
-              <h4>ServiziSalute</h4>
-              <p style={{fontSize: '13px', color: '#ccc', marginTop: '10px'}}>Il punto di riferimento per la sanità a Roma.</p>
+              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+              </p>
             </div>
 
-            {/* SECONDA COLONNA - QUELLA CHE STAVI MODIFICANDO */}
+            {/* 2️⃣ BLOCCO 2 – LINK UTENTI */}
             <div>
-              <h4>Link Rapidi</h4>
-              <ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2.2'}}>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Farmacie</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Dentisti</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Diagnostica</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Specialisti</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Servizi a Domicilio</a></li>
+              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche a Roma</a></li>
               </ul>
             </div>
 
-            {/* TERZA COLONNA */}
+            {/* 3️⃣ BLOCCO 3 – LINK PROFESSIONISTI */}
             <div>
-              <h4>Supporto</h4>
-              <ul style={{listStyle: 'none', padding: 0, fontSize: '13px', color: '#ccc', lineHeight: '2'}}>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Contatti</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Privacy</a></li>
-                <li><a href="#" style={{color: '#ccc', textDecoration: 'none'}}>Termini</a></li>
+              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/pubblica" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
 
-            {/* QUARTA COLONNA */}
+            {/* 4️⃣ BLOCCO 4 – NOTE LEGALI + DISCLAIMER */}
             <div>
-              <h4>Contatti</h4>
-              <p style={{fontSize: '13px', color: '#ccc'}}>Email: info@servizisalute.it<br/>Roma, Italia</p>
+              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+              </ul>
+              <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
+                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+              </p>
             </div>
           </div>
 
-          {/* RIGA FINALE COPYRIGHT */}
-          <div style={{ marginTop: '50px', borderTop: '1px solid #444', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#888' }}>
-            &copy; 2024 ServiziSalute - Tutti i diritti riservati.
+          {/* 🔒 COPYRIGHT */}
+          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
+            © 2026 ServiziSalute – Tutti i diritti riservati
           </div>
         </div>
       </footer>
