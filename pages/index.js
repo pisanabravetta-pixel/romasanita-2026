@@ -36,12 +36,11 @@ export default function Home() {
           </div>
         </div>
       </header>
-
-      {/* HERO SECTION */}
-      <section className="hero" style={{ backgroundColor: '#d0e3ff', paddingBottom: '0' }}>
+{/* HERO SECTION */}
+      <section className="hero" style={{ backgroundColor: '#d0e3ff', paddingBottom: '50px' }}>
         <div className="container">
           <h1>Trova servizi sanitari a Roma, vicino a te</h1>
-          <p style={{marginBottom: '40px'}}>Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto</p>
+          <p style={{ marginBottom: '40px' }}>Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto</p>
 
           <div className="search-box-container">
             <div className="search-input-group">
@@ -68,51 +67,31 @@ export default function Home() {
             </div>
             <button className="btn-search">CERCA</button>
           </div>
-{/* SEZIONE STATISTICHE - BOX RETTANGOLARI AZZURRO SCURO */}
+        </div>
+      </section>
+
+      {/* SEZIONE STATISTICHE - BOX RETTANGOLARI AZZURRO SCURO */}
       <section style={{ padding: '60px 0', backgroundColor: '#fff' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
           
-          <div style={{ 
-            backgroundColor: '#1a365d', 
-            color: 'white', 
-            padding: '20px 30px', 
-            borderRadius: '10px', 
-            width: '220px', 
-            textAlign: 'center', 
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
-          }}>
+          <div style={{ backgroundColor: '#1a365d', color: 'white', padding: '20px 30px', borderRadius: '10px', width: '220px', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
             <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>+1.500</div>
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Annunci Online</div>
           </div>
 
-          <div style={{ 
-            backgroundColor: '#1a365d', 
-            color: 'white', 
-            padding: '20px 30px', 
-            borderRadius: '10px', 
-            width: '220px', 
-            textAlign: 'center', 
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
-          }}>
+          <div style={{ backgroundColor: '#1a365d', color: 'white', padding: '20px 30px', borderRadius: '10px', width: '220px', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
             <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>+5.000</div>
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Utenti al Mese</div>
           </div>
 
-          <div style={{ 
-            backgroundColor: '#1a365d', 
-            color: 'white', 
-            padding: '20px 30px', 
-            borderRadius: '10px', 
-            width: '220px', 
-            textAlign: 'center', 
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)' 
-          }}>
+          <div style={{ backgroundColor: '#1a365d', color: 'white', padding: '20px 30px', borderRadius: '10px', width: '220px', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
             <div style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '5px' }}>15+</div>
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', opacity: '0.9' }}>Zone di Roma</div>
           </div>
 
         </div>
       </section>
+      
    
 {/* ESPLORA LE CATEGORIE STILE SUBITO.IT (RETTANGOLARI CENTRATI) */}
       <section className="container" style={{padding: '50px 0 20px', textAlign: 'center'}}>
