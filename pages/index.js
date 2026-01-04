@@ -70,30 +70,30 @@ export default function Home() {
         </div>
       </section>
 
-{/* SEZIONE STATISTICHE - STILE MODERNO E COMPATTO */}
+{/* SEZIONE STATISTICHE - DATI CORRETTI E STILE COMPATTO */}
       <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
           
-          {/* BOX ANNUNCI */}
-          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '180px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+          {/* BOX 1 - ANNUNCI */}
+          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
             <div style={{ fontSize: '24px' }}>📢</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+1.500</div>
-              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Annunci</div>
+              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Annunci Online</div>
             </div>
           </div>
 
-          {/* BOX UTENTI */}
-          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '180px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-            <div style={{ fontSize: '24px' }}>👥</div>
+          {/* BOX 2 - PROFESSIONISTI (CORRETTO) */}
+          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+            <div style={{ fontSize: '24px' }}>👨‍⚕️</div>
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+5.000</div>
-              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Utenti</div>
+              <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+850</div>
+              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Professionisti</div>
             </div>
           </div>
 
-          {/* BOX VISITE (CORRETTO) */}
-          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '180px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+          {/* BOX 3 - VISITE (CORRETTO) */}
+          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
             <div style={{ fontSize: '24px' }}>📈</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+15K</div>
