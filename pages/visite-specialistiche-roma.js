@@ -1,46 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function VisiteSpecialisticheRoma() {
-  const [zonaFiltrata, setZonaFiltrata] = React.useState("Roma");
-  const [cosaCercata, setCosaCercata] = React.useState("");
+  const [zonaFiltrata, setZonaFiltrata] = useState("Roma");
+  const [cosaCercata, setCosaCercata] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const z = params.get('zona');
-    const c = params.get('cerca'); // Legge "ginecologo"
-    
+    const c = params.get('cerca');
     if (z && z !== "Tutta Roma") setZonaFiltrata(z);
     if (c) setCosaCercata(c);
   }, []);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
+    <div style={{ fontFamily: 'sans-serif', color: '#333', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0' }}>
         <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none' }}>ServiziSalute Roma</a>
       </nav>
 
-      <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px' }}>
-        {/* TITOLO DINAMICO E POTENTE */}
-        <h1 style={{ color: '#1a365d', fontSize: '32px', marginBottom: '10px', fontWeight: '800', textTransform: 'capitalize' }}>
-          {cosaCercata ? cosaCercata : "Visite Specialistiche"} a {zonaFiltrata}
-        </h1>
-        
-        <p style={{ fontSize: '18px', color: '#4a5568', marginBottom: '30px' }}>
-          Migliori professionisti per <strong>{cosaCercata || "visite mediche"}</strong> in zona {zonaFiltrata}.
-        </p>
+      <div style={{ maxWidth: '800px', margin: '40px auto', padding: '0 20px' }}>
+        <header style={{ marginBottom: '30px' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', textTransform: 'capitalize', marginBottom: '10px' }}>
+            {cosaCercata || "Visita Medica"} a {zonaFiltrata}
+          </h1>
+          <p style={{ fontSize: '18px', color: '#4b5563' }}>
+            Prenota la tua visita per <strong>{cosaCercata || "specialisti medici"}</strong> a {zonaFiltrata}.
+          </p>
+        </header>
 
-        <div style={{ padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
-          <p style={{ margin: 0 }}>
-            📍 Stai visualizzando i risultati per <strong>{cosaCercata}</strong> nel quartiere <strong>{zonaFiltrata}</strong>. 
-            Contatta direttamente lo studio per prenotare un appuntamento.
+        <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '25px' }}>
+          <h2 style={{ fontSize: '20px', color: '#1e3a8a' }}>Prenotazione rapida a {zonaFiltrata}</h2>
+          <p style={{ color: '#4b5563' }}>
+            Trova medici competenti per <strong>{cosaCercata}</strong>. Confronta i profili, leggi le recensioni e contatta lo studio più vicino a <strong>{zonaFiltrata}</strong>.
           </p>
         </div>
 
-        {/* Qui sotto andranno i medici veri */}
-        <div style={{ marginTop: '30px' }}>
-             <h2 style={{ fontSize: '20px' }}>Specialisti disponibili:</h2>
-             <p style={{ color: '#64748b' }}>Nessun medico ha ancora pubblicato un annuncio specifico per "{cosaCercata}". Sei un medico? <a href="/pubblica-annuncio">Pubblica ora</a></p>
-        </div>
+        <footer style={{ marginTop: '50px', textAlign: 'center' }}>
+          <p style={{ fontSize: '14px', color: '#94a3b8' }}>Specialità cercate spesso:</p>
+          <a href="/cardiologi-roma" style={{ color: '#2563eb', fontSize: '14px' }}>Cardiologia Roma</a>
+        </footer>
       </div>
     </div>
   );
