@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function ServiziDomicilio() {
-  const [zonaFiltrata, setZonaFiltrata] = React.useState("Roma");
+  const [zonaFiltrata, setZonaFiltrata] = useState("Roma");
+  const [cosaCercata, setCosaCercata] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const z = params.get('zona');
+    const c = params.get('cerca');
     if (z && z !== "Tutta Roma") setZonaFiltrata(z);
+    if (c) setCosaCercata(c);
   }, []);
 
   return (
     <div style={{ fontFamily: 'sans-serif', padding: '20px', maxWidth: '900px', margin: 'auto' }}>
-      <h1 style={{ color: '#1a365d' }}>Servizi a Domicilio a {zonaFiltrata}</h1>
-      <p>Assistenza infermieristica e medica direttamente a casa tua a {zonaFiltrata}.</p>
-      <div style={{ padding: '20px', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
-        <h3>Assistenza Professionale {zonaFiltrata}</h3>
-        <p>📍 Copertura totale zona {zonaFiltrata}</p>
-        <button style={{ backgroundColor: '#48bb78', color: '#fff', padding: '10px', border: 'none', borderRadius: '5px' }}>Prenota Assistenza</button>
-      </div>
-      <br />
-      <a href="/" style={{ color: '#2563eb' }}>← Torna alla Home</a>
+      <h1 style={{ color: '#2c7a7b', textTransform: 'capitalize' }}>
+        {cosaCercata || "Assistenza"} a Domicilio: {zonaFiltrata}
+      </h1>
+      <p>Servizi professionali di <strong>{cosaCercata || "cura e assistenza"}</strong> direttamente a casa tua.</p>
+      <br /><a href="/">← Torna alla Home</a>
     </div>
   );
 }
