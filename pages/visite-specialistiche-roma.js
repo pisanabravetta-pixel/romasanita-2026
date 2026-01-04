@@ -43,3 +43,8 @@ export default function VisiteSpecialisticheRoma() {
             <div>
               <h3 style={{ margin: '0 0 5px 0', color: '#2563eb', fontSize: '19px' }}>Dr.ssa Elena Bianchi - Dermatologa</h3>
               <p style={{ margin: 0, fontSize: '14px', color: '#64748b' }}>📍 Roma (Zona Quartiere Trieste) - Mappatura nei e acne</p>
+</div>
+          </section>
+        </div>
+      );
+    }
