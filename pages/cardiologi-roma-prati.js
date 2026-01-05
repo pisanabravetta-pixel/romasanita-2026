@@ -1,25 +1,45 @@
 import React from 'react';
+import Head from 'next/head';
 
 export default function CardiologiRomaPrati() {
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
-      <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute Roma</a>
-      </nav>
+    <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
+      <Head>
+        <title>Cardiologo Roma Prati | Visite Cardiologiche Private</title>
+        <meta name="description" content="Cerchi un cardiologo a Roma Prati? Trova specialisti per visite cardiologiche, ECG ed ecocardiogramma nel quartiere Prati." />
+      </Head>
 
-      <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px' }}>
-        <h1 style={{ color: '#1a365d', fontSize: '30px', marginBottom: '10px', fontWeight: '800' }}>Cardiologi a Roma Prati: Visite ed ECG</h1>
-        
-        <div style={{ backgroundColor: '#ebf8ff', padding: '20px', borderRadius: '12px', marginBottom: '30px', border: '1px solid #bee3f8' }}>
-          <p>Cerchi un <strong>cardiologo nel quartiere Prati o zona Vaticano</strong>? In questa zona si concentrano i migliori centri per la prevenzione cardiaca, ecocardiogrammi e check-up completi per sportivi e anziani.</p>
-        </div>
-
-        <div style={{ border: '1px solid #e2e8f0', padding: '20px', borderRadius: '12px', backgroundColor: '#fff' }}>
-          <h3 style={{ color: '#2b6cb0' }}>Centro Cuore Prati</h3>
-          <p>📍 Via Cola di Rienzo, Roma (Prati) - Dr. Rossi e associati.</p>
-          <button style={{ backgroundColor: '#48bb78', color: '#fff', border: 'none', padding: '10px 15px', borderRadius: '5px', fontWeight: 'bold', marginTop: '10px' }}>Prenota Ora</button>
-        </div>
+      <div style={{ marginBottom: '20px' }}>
+        <a href="/cardiologi-roma" style={{ color: "#2563eb", textDecoration: "none" }}>← Torna a Cardiologi Roma</a>
       </div>
-    </div>
+      
+      <h1 style={{ color: "#1e3a8a" }}>Cardiologo a Roma Prati</h1>
+
+      <p>
+        Hai bisogno di una visita specialistica al cuore? Trovare un <strong>cardiologo a Roma Prati</strong> è fondamentale per la prevenzione e la cura delle patologie cardiovascolari. Su ServiziSalute elenchiamo i professionisti che operano negli studi privati di zona.
+      </p>
+
+      <h2>Servizi Cardiologici in zona Prati</h2>
+      <ul>
+        <li>Visita cardiologica con ECG (Elettrocardiogramma)</li>
+        <li>Ecocardiogramma color doppler</li>
+        <li>Monitoraggio Holter h24</li>
+        <li>Controllo della pressione arteriosa</li>
+      </ul>
+
+      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#f0f7ff", borderRadius: "12px", border: "1px solid #dbeafe", textAlign: "center" }}>
+        <h3 style={{ color: "#1e3e8a", marginTop: 0 }}>Sei un Cardiologo a Roma Prati?</h3>
+        <p>Inserisci il tuo studio su ServiziSalute. Ricevi contatti da pazienti che cercano uno specialista nel quartiere Prati.</p>
+        <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#2563eb", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
+          Pubblica Annuncio Gratis
+        </a>
+      </div>
+
+      <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+        <p style={{ fontSize: '14px', color: '#666' }}>Cerca anche in altre zone: 
+          <a href="/cardiologi-roma" style={{ marginLeft: '10px', color: '#2563eb' }}>Tutta Roma</a>
+        </p>
+      </div>
+    </main>
   );
 }
