@@ -31,4 +31,12 @@ export const DENTISTI = [
     slug: "/dentisti-roma-eur",
     isTop: false
   }
+  {
+    id: 5,
+    nome: "Studio Dentistico Roma Nord",
+    zona: "Roma Nord",
+    indirizzo: "Via Flaminia, 450",
+    slug: "/dentisti-roma-nord",
+    isTop: true
+  }
 ];
