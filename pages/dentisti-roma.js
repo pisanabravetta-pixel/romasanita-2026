@@ -41,7 +41,30 @@ export default function DentistiRoma() {
             <a href="/dentisti-roma-nord" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma Nord</a>
           </div>
         </section>
+{/* 🏆 VETRINA TOP DENTISTI ROMA - ANNUNCI REALI */}
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '22px', color: '#1e3a8a', marginBottom: '20px' }}>Studi in evidenza</h2>
 
+          {/* DENTISTA PRATI - REALE */}
+          <div style={{ backgroundColor: 'white', border: '2px solid #2563eb', borderRadius: '15px', padding: '20px', marginBottom: '20px', position: 'relative', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.08)' }}>
+            <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: '#2563eb', color: 'white', padding: '2px 12px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold' }}>TOP PRATI</span>
+            <h3 style={{ margin: '0', fontSize: '18px', color: '#1e3a8a' }}>Studio Dentistico dr Marco Bazzucchi</h3>
+            <p style={{ margin: '5px 0', fontSize: '14px', color: '#64748b' }}>📍 Via dei Gracchi, 151 (Roma Prati)</p>
+            <div style={{ marginTop: '10px' }}>
+              <a href="/dentisti-roma-prati" style={{ fontSize: '14px', color: '#2563eb', fontWeight: 'bold', textDecoration: 'none' }}>Vedi scheda e contatti →</a>
+            </div>
+          </div>
+
+          {/* DENTISTA EUR - REALE (Anticipazione) */}
+          <div style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '20px', marginBottom: '20px' }}>
+            <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '2px 10px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold' }}>TOP EUR</span>
+            <h3 style={{ margin: '10px 0 0 0', fontSize: '18px', color: '#1e3a8a' }}>De Sanctis Odontoiatria Digitale</h3>
+            <p style={{ margin: '5px 0', fontSize: '14px', color: '#64748b' }}>📍 Viale Europa, 64 (Roma Eur)</p>
+            <div style={{ marginTop: '10px' }}>
+              <a href="/dentisti-roma-eur" style={{ fontSize: '14px', color: '#2563eb', fontWeight: 'bold', textDecoration: 'none' }}>Vedi scheda e contatti →</a>
+            </div>
+          </div>
+        </section>
         <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
           <p style={{ color: '#64748b' }}>Stiamo selezionando nuovi studi per <strong>{cosaCercata || "odontoiatria"}</strong> a {zonaFiltrata}.</p>
           <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>Sei un dentista? Pubblica il tuo studio gratis</a>
