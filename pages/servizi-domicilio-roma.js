@@ -23,51 +23,32 @@ export default function ServiziDomicilioRoma() {
           <h1 style={{ color: '#1e3a8a', fontSize: '32px', textTransform: 'capitalize', marginBottom: '10px' }}>
             {cosaCercata || "Servizio Domiciliare"} a {zonaFiltrata}
           </h1>
-          <p style={{ fontSize: '18px', color: '#4b5563' }}>
-            Infermieri, fisioterapisti e <strong>assistenza a domicilio</strong> in zona {zonaFiltrata}.
-          </p>
+          <p style={{ fontSize: '18px', color: '#4b5563' }}>Infermieri e assistenza a domicilio a {zonaFiltrata}.</p>
         </header>
 
         <section style={{ marginBottom: '40px', lineHeight: '1.8', color: '#4b5563' }}>
-          <h2 style={{ fontSize: '22px', color: '#1e3a8a' }}>Assistenza Sanitaria e Infermieristica a Domicilio a Roma</h2>
-          <p>
-            Hai bisogno di assistenza professionale direttamente a casa? <strong>ServiziSalute</strong> ti aiuta a trovare i migliori 
-            <strong>servizi a domicilio a Roma</strong>. Mettiamo in contatto cittadini con infermieri, fisioterapisti e operatori sanitari 
-            qualificati pronti a intervenire presso la tua abitazione.
-          </p>
-          <p>
-            Dalle medicazioni post-operatorie alle sedute di fisioterapia riabilitativa, copriamo ogni zona di Roma per garantirti 
-            cure rapide e professionali senza doverti spostare. Cerca i servizi disponibili nel tuo quartiere e contatta 
-            immediatamente il professionista più adatto alle tue esigenze assistenziali.
-          </p>
+          <h2 style={{ fontSize: '22px', color: '#1e3a8a' }}>Assistenza Sanitaria Domiciliare a Roma</h2>
+          <p>Hai bisogno di un infermiere o un fisioterapista a casa? <strong>ServiziSalute</strong> ti aiuta a trovare professionisti per <strong>servizi a domicilio a Roma</strong> in modo rapido e sicuro.</p>
+        </section>
+
+        <section style={{ marginBottom: '40px', padding: '20px', backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ fontSize: '18px', color: '#1e3a8a', marginBottom: '15px' }}>Cerca assistenza nei quartieri:</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+            <a href="/servizi-domicilio-roma-prati" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma Prati</a>
+            <a href="/servizi-domicilio-roma-eur" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma EUR</a>
+            <a href="/servizi-domicilio-roma-centro" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma Centro</a>
+            <a href="/servizi-domicilio-roma-nord" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma Nord</a>
+          </div>
         </section>
 
         <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
-          <p style={{ color: '#64748b' }}>
-            Stiamo selezionando nuovi professionisti per <strong>{cosaCercata || "assistenza domiciliare"}</strong> a {zonaFiltrata}.
-            <br />A breve l'elenco dei servizi sarà disponibile!
-          </p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>
-            Offri servizi a domicilio? Pubblica qui gratuitamente
-          </a>
+          <p style={{ color: '#64748b' }}>Stiamo selezionando nuovi professionisti per {zonaFiltrata}.</p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>Offri servizi a domicilio? Pubblica qui gratis</a>
         </div>
 
-        {/* --- INIZIO DISCLAIMER OBBLIGATORIO --- */}
-        <div style={{ 
-          marginTop: '50px', 
-          padding: '20px', 
-          backgroundColor: '#f1f5f9', 
-          borderRadius: '8px', 
-          border: '1px solid #e2e8f0' 
-        }}>
-          <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
-            <strong>Nota Legale:</strong> ServiziSalute è una piattaforma informativa di annunci. 
-            Non fornisce consulenze mediche e non sostituisce il rapporto diretto tra paziente e professionista sanitario. 
-            Le informazioni pubblicate sono fornite dagli inserzionisti.
-          </p>
+        <div style={{ marginTop: '50px', padding: '20px', backgroundColor: '#f1f5f9', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+          <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}><strong>Nota Legale:</strong> ServiziSalute è un portale di annunci informativi.</p>
         </div>
-        {/* --- FINE DISCLAIMER OBBLIGATORIO --- */}
-
       </div>
     </div>
   );
