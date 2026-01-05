@@ -31,24 +31,28 @@ export default function FarmacieRoma() {
         <section style={{ marginBottom: '40px', lineHeight: '1.8', color: '#4b5563' }}>
           <h2 style={{ fontSize: '22px', color: '#1e3a8a' }}>Farmacie a Roma: Servizi e Turni</h2>
           <p>
-            Su <strong>ServiziSalute</strong> puoi trovare rapidamente una <strong>farmacia a Roma</strong> vicina alla tua posizione. 
-            Il nostro portale raccoglie i riferimenti delle farmacie di quartiere che offrono servizi essenziali come la misurazione della pressione, 
-            test diagnostici rapidi, ECG, Holter pressorio e consulenze farmacologiche personalizzate.
+            Su <strong>ServiziSalute</strong> trovi rapidamente una <strong>farmacia a Roma</strong> vicino a te. 
+            Il nostro portale raccoglie farmacie che offrono servizi come test diagnostici rapidi, misurazione pressione e consulenze farmacologiche.
           </p>
           <p>
-            Che tu sia alla ricerca di una farmacia a <strong>Roma Prati</strong>, all'<strong>EUR</strong> o in zona <strong>San Giovanni</strong>, 
-            qui potrai trovare i recapiti e i servizi offerti da ogni struttura sanitaria locale. Facilitiamo la ricerca di farmaci, integratori e servizi sanitari di prossimità per tutti i cittadini romani.
+            Cerca farmacie a <strong>Roma Prati</strong>, <strong>EUR</strong> o <strong>San Giovanni</strong> per trovare recapiti e servizi di prossimità per ogni cittadino romano.
           </p>
         </section>
 
         <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
           <p style={{ color: '#64748b' }}>
-            Stiamo aggiornando l'elenco delle farmacie partner per <strong>{cosaCercata || "servizi farmaceutici"}</strong> a {zonaFiltrata}.
-            <br />Torna presto per consultare la lista completa degli annunci!
+            Stiamo aggiornando l'elenco delle farmacie partner a {zonaFiltrata}.
+            <br />Torna presto per consultare la lista completa!
           </p>
           <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>
             Sei una Farmacia? Pubblica qui il tuo profilo gratis
           </a>
+        </div>
+
+        <div style={{ marginTop: '50px', padding: '20px', backgroundColor: '#f1f5f9', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+          <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+            <strong>Nota Legale:</strong> ServiziSalute è una piattaforma informativa di annunci. Non fornisce consulenze mediche e non sostituisce il rapporto diretto tra paziente e professionista sanitario.
+          </p>
         </div>
       </div>
     </div>
