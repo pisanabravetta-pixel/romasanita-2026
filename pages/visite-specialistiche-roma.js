@@ -39,6 +39,17 @@ export default function VisiteSpecialisticheRoma() {
           </p>
         </section>
 
+        {/* --- NUOVA SEZIONE LINK AI QUARTIERI (FONDAMENTALE PER SEO) --- */}
+        <section style={{ marginBottom: '40px', padding: '20px', backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ fontSize: '18px', color: '#1e3a8a', marginBottom: '15px' }}>Cerca specialisti nei quartieri di Roma:</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+            <a href="/visite-specialistiche-roma-prati" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '15px' }}>• Roma Prati</a>
+            <a href="/visite-specialistiche-roma-eur" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '15px' }}>• Roma EUR</a>
+            <a href="/visite-specialistiche-roma-centro" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '15px' }}>• Roma Centro</a>
+            <a href="/visite-specialistiche-roma-nord" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '15px' }}>• Roma Nord</a>
+          </div>
+        </section>
+
         <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
           <p style={{ color: '#64748b' }}>
             Stiamo selezionando nuovi medici specialisti a {zonaFiltrata}.
