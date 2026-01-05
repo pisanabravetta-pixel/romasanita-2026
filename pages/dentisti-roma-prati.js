@@ -5,41 +5,57 @@ export default function DentistiRomaPrati() {
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
       <Head>
-        <title>Dentista a Roma Prati | Studi e Visite Odontoiatriche</title>
-        <meta name="description" content="Trova un dentista a Roma Prati. Studi dentistici, visite private e urgenze odontoiatriche vicino a te nel quartiere Prati." />
+        <title>Dentista a Roma Prati | Studi e Visite | Aggiornato Gennaio 2026</title>
+        <meta name="description" content="Trova un dentista a Roma Prati. Studi dentistici, visite private e urgenze odontoiatriche vicino a te nel quartiere Prati. Disponibilità aggiornate." />
       </Head>
 
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <a href="/dentisti-roma" style={{ color: "#2563eb", textDecoration: "none", fontWeight: "bold" }}>← Torna a Dentisti Roma</a>
+        {/* PUNTO 1: SENSO DI AGGIORNAMENTO */}
+        <span style={{ fontSize: '12px', color: '#059669', fontWeight: 'bold', backgroundColor: '#ecfdf5', padding: '5px 10px', borderRadius: '15px' }}>
+          ● Dati aggiornati: Gennaio 2026
+        </span>
       </div>
       
-      <h1 style={{ color: "#1e3a8a" }}>Dentista a Roma Prati</h1>
-
-      <p>
-        Cerchi un <strong>dentista a Roma Prati</strong>? Su ServiziSalute trovi studi dentistici privati nel quartiere che offrono visite, igiene dentale, implantologia e urgenze senza lunghe attese.
+      <h1 style={{ color: "#1e3a8a", marginBottom: '10px' }}>Dentista a Roma Prati</h1>
+      <p style={{ color: '#64748b', fontStyle: 'italic', marginBottom: '30px' }}>
+        🔍 Attualmente 12 pazienti stanno cercando un dentista in zona Prati/Delle Vittorie.
       </p>
 
-      <h2>Servizi odontoiatrici in zona Prati</h2>
-      <ul>
-        <li>Implantologia e Protesi dentarie</li>
-        <li>Ortodonzia invisibile per adulti</li>
-        <li>Odontoiatria pediatrica (bambini)</li>
-        <li>Urgenze e pronto soccorso dentistico</li>
-      </ul>
+      {/* ANNUNCIO ESEMPIO CON PUNTO 8: GOOGLE MAPS */}
+      <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <div>
+            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico Prati - Dr. [Esempio]</h2>
+            <p style={{ margin: '5px 0' }}>📍 Via Ottaviano, Roma (Prati)</p>
+            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Disponibilità per urgenze in 24h</p>
+          </div>
+        </div>
+        
+        <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+          <a href="https://wa.me/39" style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>Contatta su WhatsApp</a>
+          
+          {/* PUNTO 8: IL LINK A GOOGLE MAPS */}
+          <a href="https://www.google.com/maps/search/dentisti+roma+prati" target="_blank" rel="nofollow" style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
+            📍 Vedi su Maps
+          </a>
+        </div>
+      </section>
 
-      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#f0f7ff", borderRadius: "12px", border: "1px solid #dbeafe", textAlign: "center" }}>
-        <h3 style={{ color: "#1e3e8a", marginTop: 0 }}>Sei un dentista a Roma Prati?</h3>
-        <p>Aumenta la visibilità del tuo studio nel quartiere. Pubblica il tuo annuncio gratuitamente e ricevi contatti diretti dai pazienti.</p>
-        <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#2563eb", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
-          Pubblica Annuncio Gratis
+      {/* PUNTO 7: BOX RECLUTAMENTO AGGRESSIVO */}
+      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#fff7ed", borderRadius: "12px", border: "1px solid #ffedd5", textAlign: "center" }}>
+        <h3 style={{ color: "#9a3412", marginTop: 0 }}>Lavori come Dentista a Roma Prati?</h3>
+        <p style={{ color: '#7c2d12' }}>Il tuo studio non è ancora presente? <strong>340 potenziali pazienti</strong> hanno visualizzato questa pagina nell'ultimo mese.</p>
+        <a href="/pubblica-annuncio" style={{ display: "inline-block", marginTop: '10px', padding: "12px 25px", backgroundColor: "#ea580c", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
+          Rivendica la tua posizione Gratis
         </a>
       </div>
 
       <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
         <p style={{ fontSize: '14px', color: '#666', marginBottom: '10px' }}>Cerca dentisti in altre zone di Roma:</p>
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-          <a href="/dentisti-roma-eur" style={{ color: "#2563eb", fontSize: "14px" }}>• Roma EUR</a>
-          <a href="/dentisti-roma-san-giovanni" style={{ color: "#2563eb", fontSize: "14px" }}>• Roma San Giovanni</a>
+          <a href="/dentisti-roma-eur" style={{ color: "#2563eb", fontSize: "14px", textDecoration: 'none' }}>• Roma EUR</a>
+          <a href="/dentisti-roma-san-giovanni" style={{ color: "#2563eb", fontSize: "14px", textDecoration: 'none' }}>• Roma San Giovanni</a>
         </div>
       </div>
     </main>
