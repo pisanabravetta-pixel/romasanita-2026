@@ -9,16 +9,17 @@ export default function DentistiRomaEur() {
         <meta name="description" content="Trova il tuo dentista a Roma EUR. Studi professionali per cure dentali, implantologia e igiene orale nel quartiere EUR." />
       </Head>
 
-      <a href="/dentisti-roma" style={{ color: "#2563eb", textDecoration: "none" }}>← Torna a Dentisti Roma</a>
+      <div style={{ marginBottom: '20px' }}>
+        <a href="/dentisti-roma" style={{ color: "#2563eb", textDecoration: "none", fontWeight: "bold" }}>← Torna a Dentisti Roma</a>
+      </div>
       
-      <h1 style={{ color: "#1e3a8a", marginTop: "20px" }}>Dentista a Roma EUR</h1>
+      <h1 style={{ color: "#1e3a8a" }}>Dentista a Roma EUR</h1>
 
       <p>
         Stai cercando uno studio <strong>dentistico a Roma EUR</strong>? ServiziSalute ti aiuta a trovare i migliori professionisti dell'odontoiatria attivi nella zona Sud di Roma per visite di controllo e trattamenti specialistici.
       </p>
 
       <h2>Cure Dentali all'EUR</h2>
-      <p>I professionisti che pubblicano su questo portale offrono servizi di:</p>
       <ul>
         <li>Estetica dentale e sbiancamento</li>
         <li>Chirurgia orale e implantologia</li>
@@ -31,6 +32,14 @@ export default function DentistiRomaEur() {
         <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#2563eb", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
           Inizia Ora - È Gratis
         </a>
+      </div>
+
+      <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+        <p style={{ fontSize: '14px', color: '#666', marginBottom: '10px' }}>Altre zone per dentisti:</p>
+        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+          <a href="/dentisti-roma-prati" style={{ color: "#2563eb", fontSize: "14px" }}>• Roma Prati</a>
+          <a href="/dentisti-roma-san-giovanni" style={{ color: "#2563eb", fontSize: "14px" }}>• Roma San Giovanni</a>
+        </div>
       </div>
     </main>
   );
