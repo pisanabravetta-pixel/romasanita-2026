@@ -1,102 +1,41 @@
 import React from 'react';
 import Head from 'next/head';
+import { DENTISTI } from '../database'; 
 
-export default function DentistiRomaeur() {
+export default function DentistiRomaEur() {
+  // FILTRO: Solo EUR
+  const dentistiEur = DENTISTI.filter(studio => studio.zona === "Eur");
+
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
       <Head>
-        <title>Dentista a Roma Eur | Studi e Visite | Aggiornato Gennaio 2026</title>
-        <meta name="description" content="Trova un dentista a Roma Prati. Studi dentistici, visite private e urgenze odontoiatriche vicino a te nel quartiere Prati. Disponibilità aggiornate." />
+        <title>Dentista a Roma EUR | Studi e Visite | 2026</title>
       </Head>
 
-      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ marginBottom: '20px' }}>
         <a href="/dentisti-roma" style={{ color: "#2563eb", textDecoration: "none", fontWeight: "bold" }}>← Torna a Dentisti Roma</a>
-        {/* PUNTO 1 DELLA LISTA: SENSO DI AGGIORNAMENTO */}
-        <span style={{ fontSize: '12px', color: '#059669', fontWeight: 'bold', backgroundColor: '#ecfdf5', padding: '5px 10px', borderRadius: '15px' }}>
-          ● Dati aggiornati: Gennaio 2026
-        </span>
       </div>
       
-      <h1 style={{ color: "#1e3a8a", marginBottom: '10px' }}>Dentista a Roma Prati</h1>
-      <p style={{ color: '#64748b', fontStyle: 'italic', marginBottom: '30px' }}>
-        🔍 Attualmente 12 pazienti stanno cercando un dentista in zona Prati/Delle Vittorie su questo portale.
+      <h1 style={{ color: "#1e3a8a", marginBottom: '10px' }}>Dentista a Roma EUR</h1>
+      <p style={{ color: '#64748b', marginBottom: '30px' }}>
+        I migliori studi odontoiatrici selezionati nel quartiere EUR.
       </p>
 
-    {/* ANNUNCIO REALE 1: DE SANCTIS ODONTOIATRIA (EUR) */}
-      <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          <div>
-            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>De Sanctis Odontoiatria Digitale</h2>
-            <p style={{ margin: '5px 0' }}>📍 Viale Europa, 64, Roma (EUR)</p>
-            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Tecnologia 3D e Scanner Intraorale</p>
+      {dentistiEur.map((studio) => (
+        <section key={studio.id} style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+          <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>{studio.nome}</h2>
+          <p style={{ margin: '5px 0' }}>📍 {studio.indirizzo} (EUR)</p>
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <a href={`https://wa.me/39?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma`} style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>WhatsApp</a>
+            <a href="#" style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>Mappa</a>
           </div>
-        </div>
-        
-        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
-          Eccellenza all'EUR per l'estetica dentale e l'implantologia computer assistita. Uno studio di riferimento per chi cerca soluzioni mininvasive e digitali.
-        </p>
+        </section>
+      ))}
 
-        <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-          <a href="https://wa.me/39065914580?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma" 
-             target="_blank"
-             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
-             Contatta su WhatsApp
-          </a>
-          
-          <a href="https://www.google.com/maps5" 
-             target="_blank" 
-             rel="nofollow" 
-             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
-            📍 Vedi su Maps
-          </a>
-        </div>
-      </section> 
-{/* ANNUNCIO REALE 2: STUDIO GIOVANNINI LUDOVICI (EUR) */}
-      <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          <div>
-            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico Giovannini Ludovici</h2>
-            <p style={{ margin: '5px 0' }}>📍 Viale Ludwig Van Beethoven, 70, Roma (EUR)</p>
-            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● ⭐ 4.9 su Google</p>
-          </div>
-        </div>
-        
-        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
-          Studio multidisciplinare d'eccellenza. Specializzati in parodontologia, igiene dentale avanzata e cure conservative per adulti e bambini.
-        </p>
-
-        <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-          <a href="https://wa.me/39065912447?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma" 
-             target="_blank"
-             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
-             Contatta su WhatsApp
-          </a>
-          
-          <a href="https://www.google.com/maps6" 
-             target="_blank" 
-             rel="nofollow" 
-             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
-            📍 Vedi su Maps
-          </a>
-        </div>
-      </section>
-      {/* PUNTO 7 DELLA LISTA: BOX RECLUTAMENTO AGGRESSIVO */}
-      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#fff7ed", borderRadius: "12px", border: "1px solid #ffedd5", textAlign: "center" }}>
-        <h3 style={{ color: "#9a3412", marginTop: 0 }}>Lavori come Dentista a Roma Prati?</h3>
-        <p style={{ color: '#7c2d12' }}>Il tuo studio non è ancora presente? <strong>340 potenziali pazienti</strong> hanno visualizzato le ricerche in questa zona nell'ultimo mese.</p>
-        <a href="/pubblica-annuncio" style={{ display: "inline-block", marginTop: '10px', padding: "12px 25px", backgroundColor: "#ea580c", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
-          Rivendica la tua posizione Gratis
-        </a>
-      </div>
-
-      {/* LINK AI QUARTIERI - EFFETTO DOMINO */}
-      <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
-        <p style={{ fontSize: '14px', color: '#666', marginBottom: '10px' }}>Cerca dentisti in altre zone di Roma:</p>
-        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-          <a href="/dentisti-roma-eur" style={{ color: "#2563eb", fontSize: "14px", textDecoration: 'none', fontWeight: '500' }}>• Roma EUR</a>
-          <a href="/dentisti-roma-san-giovanni" style={{ color: "#2563eb", fontSize: "14px", textDecoration: 'none', fontWeight: '500' }}>• Roma San Giovanni</a>
-          <a href="/dentisti-roma" style={{ color: "#2563eb", fontSize: "14px", textDecoration: 'none', fontWeight: '500' }}>• Tutta Roma</a>
-        </div>
+      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#f0fdf4", borderRadius: "12px", textAlign: "center", border: "1px solid #dcfce7" }}>
+        <h3 style={{ color: "#166534" }}>Lavori all'EUR?</h3>
+        <p>Entra nel database dei professionisti di Roma Sud.</p>
+        <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#22c55e", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>Iscriviti Gratis</a>
       </div>
     </main>
   );
