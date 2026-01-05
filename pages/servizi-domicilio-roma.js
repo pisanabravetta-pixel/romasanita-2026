@@ -51,6 +51,23 @@ export default function ServiziDomicilioRoma() {
             Offri servizi a domicilio? Pubblica qui gratuitamente
           </a>
         </div>
+
+        {/* --- INIZIO DISCLAIMER OBBLIGATORIO --- */}
+        <div style={{ 
+          marginTop: '50px', 
+          padding: '20px', 
+          backgroundColor: '#f1f5f9', 
+          borderRadius: '8px', 
+          border: '1px solid #e2e8f0' 
+        }}>
+          <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+            <strong>Nota Legale:</strong> ServiziSalute è una piattaforma informativa di annunci. 
+            Non fornisce consulenze mediche e non sostituisce il rapporto diretto tra paziente e professionista sanitario. 
+            Le informazioni pubblicate sono fornite dagli inserzionisti.
+          </p>
+        </div>
+        {/* --- FINE DISCLAIMER OBBLIGATORIO --- */}
+
       </div>
     </div>
   );
