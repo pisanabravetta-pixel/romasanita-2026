@@ -41,27 +41,39 @@ export default function DentistiRoma() {
             <a href="/dentisti-roma-nord" style={{ color: '#2563eb', textDecoration: 'none' }}>• Roma Nord</a>
           </div>
         </section>
-{/* 🏆 VETRINA TOP DENTISTI ROMA - ANNUNCI REALI */}
+{/* 🏆 VETRINA AGGIORNATA - TUTTI I TOP DENTISTI */}
         <section style={{ marginBottom: '40px' }}>
-          <h2 style={{ fontSize: '22px', color: '#1e3a8a', marginBottom: '20px' }}>Studi in evidenza</h2>
+          <h2 style={{ fontSize: '22px', color: '#1e3a8a', marginBottom: '25px' }}>Studi in evidenza a Roma</h2>
 
-          {/* DENTISTA PRATI - REALE */}
-          <div style={{ backgroundColor: 'white', border: '2px solid #2563eb', borderRadius: '15px', padding: '20px', marginBottom: '20px', position: 'relative', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.08)' }}>
-            <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: '#2563eb', color: 'white', padding: '2px 12px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold' }}>TOP PRATI</span>
-            <h3 style={{ margin: '0', fontSize: '18px', color: '#1e3a8a' }}>Studio Dentistico dr Marco Bazzucchi</h3>
-            <p style={{ margin: '5px 0', fontSize: '14px', color: '#64748b' }}>📍 Via dei Gracchi, 151 (Roma Prati)</p>
-            <div style={{ marginTop: '10px' }}>
-              <a href="/dentisti-roma-prati" style={{ fontSize: '14px', color: '#2563eb', fontWeight: 'bold', textDecoration: 'none' }}>Vedi scheda e contatti →</a>
+          {/* GRUPPO PRATI */}
+          <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#f8fafc', borderRadius: '12px' }}>
+            <h4 style={{ color: '#64748b', fontSize: '13px', textTransform: 'uppercase', marginBottom: '15px', letterSpacing: '1px' }}>Quartiere Prati</h4>
+            <div style={{ display: 'grid', gap: '15px' }}>
+               <div style={{ padding: '15px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <strong style={{ color: '#1e3a8a' }}>Dr. Marco Bazzucchi</strong>
+                  <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#64748b' }}>📍 Via dei Gracchi, 151</p>
+               </div>
+               <div style={{ padding: '15px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <strong style={{ color: '#1e3a8a' }}>Centro Dentistico Cavour</strong>
+                  <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#64748b' }}>📍 Via Pietro Cossa, 28</p>
+               </div>
+               <a href="/dentisti-roma-prati" style={{ color: '#2563eb', fontSize: '14px', fontWeight: 'bold', textDecoration: 'none', textAlign: 'right', display: 'block' }}>Vedi tutti a Prati →</a>
             </div>
           </div>
 
-          {/* DENTISTA EUR - REALE (Anticipazione) */}
-          <div style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '20px', marginBottom: '20px' }}>
-            <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '2px 10px', borderRadius: '10px', fontSize: '12px', fontWeight: 'bold' }}>TOP EUR</span>
-            <h3 style={{ margin: '10px 0 0 0', fontSize: '18px', color: '#1e3a8a' }}>De Sanctis Odontoiatria Digitale</h3>
-            <p style={{ margin: '5px 0', fontSize: '14px', color: '#64748b' }}>📍 Viale Europa, 64 (Roma Eur)</p>
-            <div style={{ marginTop: '10px' }}>
-              <a href="/dentisti-roma-eur" style={{ fontSize: '14px', color: '#2563eb', fontWeight: 'bold', textDecoration: 'none' }}>Vedi scheda e contatti →</a>
+          {/* GRUPPO EUR */}
+          <div style={{ marginBottom: '30px', padding: '15px', backgroundColor: '#f0f7ff', borderRadius: '12px', border: '1px dotted #bfdbfe' }}>
+            <h4 style={{ color: '#64748b', fontSize: '13px', textTransform: 'uppercase', marginBottom: '15px', letterSpacing: '1px' }}>Quartiere EUR</h4>
+            <div style={{ display: 'grid', gap: '15px' }}>
+               <div style={{ padding: '15px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <strong style={{ color: '#1e3a8a' }}>De Sanctis Odontoiatria Digitale</strong>
+                  <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#64748b' }}>📍 Viale Europa, 64</p>
+               </div>
+               <div style={{ padding: '15px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <strong style={{ color: '#1e3a8a' }}>Studio Giovannini Ludovici</strong>
+                  <p style={{ margin: '5px 0 0 0', fontSize: '14px', color: '#64748b' }}>📍 Viale Beethoven, 70</p>
+               </div>
+               <a href="/dentisti-roma-eur" style={{ color: '#2563eb', fontSize: '14px', fontWeight: 'bold', textDecoration: 'none', textAlign: 'right', display: 'block' }}>Vedi tutti all'EUR →</a>
             </div>
           </div>
         </section>
