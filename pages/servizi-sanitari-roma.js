@@ -32,6 +32,13 @@ export default function MappaServizi() {
       quartieri: [
         { nome: "Cardiologia Prati", link: "/cardiologi-roma-prati" }
       ]
+    },
+    {
+      titolo: "🏠 Servizi a Domicilio", // AGGIUNTO
+      linkCategoria: "/servizi-domicilio-roma",
+      quartieri: [
+        { nome: "Roma Sud", link: "/servizi-domicilio-roma-sud" }
+      ]
     }
   ];
 
@@ -42,6 +49,10 @@ export default function MappaServizi() {
         <meta name="description" content="Indice completo dei servizi sanitari a Roma divisi per quartiere: dentisti, farmacie e centri diagnostici." />
       </Head>
 
+      <div style={{ marginBottom: '20px' }}>
+        <a href="/" style={{ color: "#2563eb", textDecoration: "none", fontWeight: "bold" }}>← Torna alla Home</a>
+      </div>
+
       <h1 style={{ color: '#1e3a8a', borderBottom: '2px solid #2563eb', paddingBottom: '10px' }}>Indice Servizi Sanitari Roma</h1>
       <p style={{ color: '#666', marginBottom: '30px' }}>Esplora tutti i servizi disponibili nei quartieri di Roma. Trova lo studio medico o la farmacia più vicina a te.</p>
 
@@ -49,7 +60,7 @@ export default function MappaServizi() {
         {sezioni.map((sez, i) => (
           <div key={i} style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
             <h2 style={{ fontSize: '18px', marginBottom: '15px' }}>
-              <a href={sez.linkCategoria} style={{ color: '#1e3a8a', textDecoration: 'none' }}>{sez.titolo}</a>
+              <a href={sez.linkCategoria} style={{ color: '#1e3a8a', textDecoration: 'none', fontWeight: 'bold' }}>{sez.titolo}</a>
             </h2>
             <ul style={{ listStyle: 'none', padding: 0 }}>
               {sez.quartieri.map((q, idx) => (
@@ -62,11 +73,14 @@ export default function MappaServizi() {
         ))}
       </div>
 
-      <div style={{ marginTop: '50px', padding: '20px', backgroundColor: '#eff6ff', borderRadius: '8px' }}>
-        <p style={{ margin: 0, fontSize: '14px' }}>
-          <strong>Sei un professionista?</strong> Se la tua zona o specializzazione non è ancora presente, 
-          <a href="/pubblica-annuncio" style={{ color: '#2563eb', fontWeight: 'bold', marginLeft: '5px' }}>pubblica il tuo annuncio gratuitamente</a> e creeremo noi la pagina dedicata.
+      <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#eff6ff', borderRadius: '12px', textAlign: 'center' }}>
+        <h3 style={{ margin: '0 0 10px 0', color: '#1e3a8a' }}>Sei un professionista sanitario?</h3>
+        <p style={{ margin: '0 0 20px 0', fontSize: '14px' }}>
+          Se la tua zona o specializzazione non è ancora presente, pubblica il tuo annuncio gratuitamente.
         </p>
+        <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-block' }}>
+          Pubblica il tuo annuncio gratis
+        </a>
       </div>
     </main>
   );
