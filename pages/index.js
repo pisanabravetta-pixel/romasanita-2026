@@ -346,6 +346,15 @@ const eseguiRicerca = () => {
           {/* 2️⃣ BLOCCO 2 – LINK UTENTI (AGGIORNATO) */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+
+{/* INCOLLA DA QUI */}
+<p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
+  ● Disponibilità aggiornate: Gennaio 2026
+</p>
+{/* A QUI */}
+
+<ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 {/* Nuovi link strategici per SEO e Utenti */}
