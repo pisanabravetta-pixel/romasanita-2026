@@ -1,25 +1,39 @@
 import React from 'react';
+import Head from 'next/head';
 
-export default function DomicilioRomaSud() {
+export default function ServiziDomicilioRomaSud() {
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
-      <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between' }}>
-        <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute Roma</a>
-      </nav>
-      <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px' }}>
-        <h1 style={{ color: '#1a365d', fontSize: '30px', fontWeight: '800' }}>Assistenza Sanitaria a Domicilio Roma Sud</h1>
-        <p style={{ fontSize: '18px', color: '#4a5568', marginBottom: '30px' }}>Infermieri, fisioterapisti e medici a domicilio in zona Eur, Garbatella e Laurentina.</p>
-        
-        <div style={{ backgroundColor: '#fffaf0', padding: '25px', borderRadius: '12px', border: '1px solid #feebc8' }}>
-          <p>I <strong>servizi a domicilio a Roma Sud</strong> sono ideali per chi cerca assistenza infermieristica o fisioterapia post-operatoria senza spostarsi da casa, garantendo massima professionalità e rapidità.</p>
-        </div>
+    <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
+      <Head>
+        <title>Servizi a Domicilio Roma Sud | Assistenza Infermieristica</title>
+        <meta name="description" content="Assistenza sanitaria a domicilio a Roma Sud. Infermieri, fisioterapisti e operatori socio-sanitari direttamente a casa tua." />
+      </Head>
 
-        <div style={{ marginTop: '30px', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '12px' }}>
-          <h3 style={{ color: '#dd6b20' }}>Assistenza Sanitaria Eur</h3>
-          <p>📍 Copertura totale Roma Sud - Interventi entro 2 ore.</p>
-          <button style={{ backgroundColor: '#48bb78', color: '#fff', border: 'none', padding: '10px 15px', borderRadius: '5px', fontWeight: 'bold' }}>Contatta Ora</button>
-        </div>
+      <div style={{ marginBottom: '20px' }}>
+        <a href="/servizi-domicilio-roma" style={{ color: "#2563eb", textDecoration: "none" }}>← Torna a Servizi a Domicilio</a>
       </div>
-    </div>
+      
+      <h1 style={{ color: "#1e3a8a" }}>Servizi a Domicilio Roma Sud</h1>
+
+      <p>
+        Necessiti di <strong>assistenza a domicilio a Roma Sud</strong>? Che si tratti di cure infermieristiche post-operatorie o di fisioterapia riabilitativa, trovare professionisti che raggiungono la tua abitazione nella zona Sud di Roma è oggi più semplice.
+      </p>
+
+      <h2>Assistenza Privata a Roma Sud</h2>
+      <ul>
+        <li>Infermieri per medicazioni e iniezioni</li>
+        <li>Fisioterapia domiciliare</li>
+        <li>Prelievi del sangue a casa</li>
+        <li>Assistenza anziani e malati</li>
+      </ul>
+
+      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#f0f7ff", borderRadius: "12px", border: "1px solid #dbeafe", textAlign: "center" }}>
+        <h3 style={{ color: "#1e3e8a", marginTop: 0 }}>Offri servizi sanitari a Roma Sud?</h3>
+        <p>Entra nel network di ServiziSalute. Molti pazienti a Roma Sud cercano assistenza domiciliare qualificata.</p>
+        <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#2563eb", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
+          Pubblica Profilo Gratis
+        </a>
+      </div>
+    </main>
   );
 }
