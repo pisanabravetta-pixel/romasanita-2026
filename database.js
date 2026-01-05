@@ -30,7 +30,7 @@ export const DENTISTI = [
     indirizzo: "Viale Beethoven, 70",
     slug: "/dentisti-roma-eur",
     isTop: false
-  }
+  }, // <--- QUESTA VIRGOLA MANCAVA!
   {
     id: 5,
     nome: "Studio Dentistico Roma Nord",
