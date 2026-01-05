@@ -13,51 +13,44 @@ export default function DiagnosticaRoma() {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', backgroundColor: '#f4f7f6', minHeight: '100vh' }}>
-      {/* Barra di Navigazione */}
+    <div style={{ fontFamily: 'sans-serif', color: '#333', backgroundColor: '#f9fafb', minHeight: '100vh', paddingBottom: '50px' }}>
       <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0' }}>
-        <a href="/" style={{ fontWeight: 'bold', color: '#1a365d', textDecoration: 'none' }}>ServiziSalute Roma</a>
+        <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none' }}>ServiziSalute Roma</a>
       </nav>
 
       <div style={{ maxWidth: '800px', margin: '40px auto', padding: '0 20px' }}>
-        
-        {/* Intestazione */}
         <header style={{ marginBottom: '30px' }}>
-          <h1 style={{ color: '#1a365d', fontSize: '32px', textTransform: 'capitalize', marginBottom: '10px' }}>
-            {cosaCercata || "Diagnostica"} a {zonaFiltrata}
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', textTransform: 'capitalize', marginBottom: '10px' }}>
+            {cosaCercata || "Centro Diagnostico"} a {zonaFiltrata}
           </h1>
           <p style={{ fontSize: '18px', color: '#4b5563' }}>
-            Centri radiologici e laboratori specializzati in <strong>{cosaCercata || "esami diagnostici"}</strong> a {zonaFiltrata}.
+            Laboratori di analisi, <strong>TAC e Risonanze</strong> in zona {zonaFiltrata}.
           </p>
         </header>
 
-        {/* Box informativo specifico per Diagnostica */}
-        <div style={{ backgroundColor: '#fff', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '25px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-          <h2 style={{ fontSize: '20px', color: '#1a365d', marginBottom: '15px' }}>Esami disponibili a {zonaFiltrata}</h2>
-          <p style={{ color: '#4b5563', lineHeight: '1.7' }}>
-            I nostri centri partner a <strong>{zonaFiltrata}</strong> offrono tecnologie di ultima generazione per <strong>{cosaCercata}</strong>. 
-            Puoi prenotare esami con tempi di attesa ridotti sia in regime privato che convenzionato.
+        <section style={{ marginBottom: '40px', lineHeight: '1.8', color: '#4b5563' }}>
+          <h2 style={{ fontSize: '22px', color: '#1e3a8a' }}>Centri Diagnostici e Analisi a Roma</h2>
+          <p>
+            Benvenuto su <strong>ServiziSalute</strong>, la tua guida ai <strong>centri diagnostici a Roma</strong>. 
+            Il nostro obiettivo è aiutarti a trovare rapidamente strutture private per esami come risonanza magnetica, TAC, ecografie, 
+            e laboratori di analisi cliniche in ogni zona di Roma. 
           </p>
-        </div>
-
-        {/* Placeholder Risultati */}
-        <div style={{ marginTop: '30px', textAlign: 'center', padding: '50px', backgroundColor: '#f8fafc', border: '2px dashed #94a3b8', borderRadius: '12px' }}>
-          <div style={{ fontSize: '40px', marginBottom: '15px' }}>🔬</div>
-          <p style={{ color: '#64748b', fontSize: '16px' }}>
-            Stiamo aggiornando l'elenco dei macchinari e delle disponibilità per <strong>{cosaCercata}</strong>.
-            <br />Controlla tra poche ore per i nuovi orari disponibili.
+          <p>
+            Dall'analisi del sangue specialistica alla diagnostica per immagini avanzata, puoi filtrare i centri per quartiere 
+            (es. <strong>Roma Nord</strong>, <strong>Ostia</strong> o <strong>Centro</strong>) per trovare l'appuntamento più vicino e veloce. 
+            Tutti i centri pubblicati offrono tecnologie all'avanguardia per garantirti risultati precisi e tempi di attesa ridotti.
           </p>
-        </div>
+        </section>
 
-        {/* Ponte SEO per la Diagnostica */}
-        <div style={{ marginTop: '50px', paddingTop: '20px', borderTop: '1px solid #cbd5e1', textAlign: 'center' }}>
-          <p style={{ fontSize: '14px', color: '#94a3b8' }}>Altre zone coperte:</p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '14px' }}>
-            <a href="/diagnostica-roma-nord" style={{ color: '#1a365d', fontWeight: 'bold' }}>Diagnostica Roma Nord</a>
-            <a href="/visite-specialistiche-roma" style={{ color: '#1a365d' }}>Altre Specialistiche</a>
-          </div>
+        <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
+          <p style={{ color: '#64748b' }}>
+            Nuovi centri di <strong>{cosaCercata || "diagnostica"}</strong> a {zonaFiltrata} in fase di inserimento.
+            <br />Controlla tra pochi giorni per vedere le strutture disponibili.
+          </p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>
+            Gestisci un centro diagnostico? Pubblicalo qui
+          </a>
         </div>
-
       </div>
     </div>
   );
