@@ -384,10 +384,7 @@ const eseguiRicerca = () => {
           </div>
         </div>
       </section>
-
-      {/* QUI INIZIA IL TUO FOOTER ESISTENTE */}
-      <footer style={{ backgroundColor: '#1a202c', color: 'white', padding: '60px 0 20px' }}>
-        ...
+                
   <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
