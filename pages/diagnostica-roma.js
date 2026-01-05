@@ -31,25 +31,27 @@ export default function DiagnosticaRoma() {
         <section style={{ marginBottom: '40px', lineHeight: '1.8', color: '#4b5563' }}>
           <h2 style={{ fontSize: '22px', color: '#1e3a8a' }}>Centri Diagnostici e Analisi a Roma</h2>
           <p>
-            Benvenuto su <strong>ServiziSalute</strong>, la tua guida ai <strong>centri diagnostici a Roma</strong>. 
-            Il nostro obiettivo è aiutarti a trovare rapidamente strutture private per esami come risonanza magnetica, TAC, ecografie, 
-            e laboratori di analisi cliniche in ogni zona di Roma. 
+            <strong>ServiziSalute</strong> è la tua guida ai <strong>centri diagnostici a Roma</strong>. Trova strutture per risonanza magnetica, TAC ed ecografie in ogni quartiere di Roma, da <strong>Roma Nord</strong> a <strong>Ostia</strong>.
           </p>
           <p>
-            Dall'analisi del sangue specialistica alla diagnostica per immagini avanzata, puoi filtrare i centri per quartiere 
-            (es. <strong>Roma Nord</strong>, <strong>Ostia</strong> o <strong>Centro</strong>) per trovare l'appuntamento più vicino e veloce. 
-            Tutti i centri pubblicati offrono tecnologie all'avanguardia per garantirti risultati precisi e tempi di attesa ridotti.
+            I centri pubblicati offrono tecnologie avanzate per garantirti risultati precisi e tempi di attesa ridotti per la tua salute.
           </p>
         </section>
 
         <div style={{ marginTop: '30px', textAlign: 'center', padding: '40px', border: '2px dashed #cbd5e1', borderRadius: '12px', backgroundColor: '#fff' }}>
           <p style={{ color: '#64748b' }}>
             Nuovi centri di <strong>{cosaCercata || "diagnostica"}</strong> a {zonaFiltrata} in fase di inserimento.
-            <br />Controlla tra pochi giorni per vedere le strutture disponibili.
+            <br />Controlla tra pochi giorni le strutture disponibili.
           </p>
           <a href="/pubblica-annuncio" style={{ display: 'inline-block', marginTop: '20px', color: '#2563eb', fontWeight: 'bold' }}>
             Gestisci un centro diagnostico? Pubblicalo qui
           </a>
+        </div>
+
+        <div style={{ marginTop: '50px', padding: '20px', backgroundColor: '#f1f5f9', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+          <p style={{ fontSize: '13px', color: '#64748b', margin: 0, lineHeight: '1.6' }}>
+            <strong>Nota Legale:</strong> ServiziSalute è una piattaforma informativa di annunci. Non fornisce consulenze mediche e non sostituisce il rapporto medico-paziente.
+          </p>
         </div>
       </div>
     </div>
