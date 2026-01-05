@@ -383,7 +383,7 @@ const eseguiRicerca = () => {
                   ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
                 </p>
               </div>
-      
+      </div>
 
             {/* 4️⃣ BLOCCO 4 – NOTE LEGALI + DISCLAIMER */}
             <div>
