@@ -343,35 +343,32 @@ const eseguiRicerca = () => {
               </p>
             </div>
 
-          {/* 2️⃣ BLOCCO 2 – LINK UTENTI (AGGIORNATO) */}
+          {/* 2️⃣ BLOCCO 2 – LINK UTENTI (AGGIORNATO CON MARKETING E FOMO) */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
+                ● Disponibilità aggiornate: Gennaio 2026
+              </p>
 
-{/* INCOLLA DA QUI */}
-<p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
-  ● Disponibilità aggiornate: Gennaio 2026
-</p>
-{/* A QUI */}
-
-<ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                {/* Nuovi link strategici per SEO e Utenti */}
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
                 <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                {/* AGGIUNTA NUOVE GUIDE */}
                 <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
                 <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
-                
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
                 <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
+
+              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
+                🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
+              </p>
             </div>
-            {/* 3️⃣ BLOCCO 3 – LINK PROFESSIONISTI */}
+          {/* 3️⃣ BLOCCO 3 – LINK PROFESSIONISTI (CON URGENZA FOMO) */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
@@ -379,7 +376,14 @@ const eseguiRicerca = () => {
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
-            </div>
+              
+              {/* MESSAGGIO FOMO STRATEGICO PER MEDICI */}
+              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
+                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
+                  ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
+                </p>
+              </div>
+      
 
             {/* 4️⃣ BLOCCO 4 – NOTE LEGALI + DISCLAIMER */}
             <div>
