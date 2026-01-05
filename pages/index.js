@@ -79,12 +79,12 @@ const eseguiRicerca = () => {
         <div className="container">
           <div style={{fontSize: '24px', fontWeight: '800', color: '#0070f3'}}>ServiziSalute</div>
           <ul className="nav-links">
-            <li><a href="#">Farmacie</a></li>
-            <li><a href="#">Dentisti</a></li>
-            <li><a href="#">Diagnostica</a></li>
-            <li><a href="#">Specialisti</a></li>
-            <li><a href="#">Domicilio</a></li>
-          </ul>
+  <li><a href="/farmacie-roma">Farmacie</a></li>
+  <li><a href="/dentisti-roma">Dentisti</a></li>
+  <li><a href="/diagnostica-roma">Diagnostica</a></li>
+  <li><a href="/visite-specialistiche-roma">Specialisti</a></li>
+  <li><a href="/servizi-domicilio-roma">Domicilio</a></li>
+</ul>
           <div className="nav-right">
             <a href="#" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
             <a href="/pubblica-annuncio" className="btn-search" style={{padding: '10px 22px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px'}}>Pubblica annuncio</a>
