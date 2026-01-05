@@ -5,7 +5,7 @@ export default function DentistiRomaeur() {
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
       <Head>
-        <title>Dentista a Roma Prati | Studi e Visite | Aggiornato Gennaio 2026</title>
+        <title>Dentista a Roma Eur | Studi e Visite | Aggiornato Gennaio 2026</title>
         <meta name="description" content="Trova un dentista a Roma Prati. Studi dentistici, visite private e urgenze odontoiatriche vicino a te nel quartiere Prati. Disponibilità aggiornate." />
       </Head>
 
