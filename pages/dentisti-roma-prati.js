@@ -51,7 +51,35 @@ export default function DentistiRomaPrati() {
           </a>
         </div>
       </section>
+{/* ANNUNCIO REALE 2: CENTRO DENTISTICO CAVOUR */}
+      <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <div>
+            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Centro Dentistico Cavour</h2>
+            <p style={{ margin: '5px 0' }}>📍 Via Pietro Cossa, 28, Roma (Prati)</p>
+            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Centro Multidisciplinare</p>
+          </div>
+        </div>
+        
+        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
+          Ampia struttura specializzata in chirurgia implantare, protesi e igiene dentale. Ideale per famiglie e urgenze odontoiatriche in zona Piazza Cavour.
+        </p>
 
+        <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+          <a href="https://wa.me/39063201452?text=Salve,%20ho%20visto%20il%20vostro%20centro%20su%20ServiziSalute%20Roma" 
+             target="_blank"
+             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
+             Contatta su WhatsApp
+          </a>
+          
+          <a href="https://maps.app.goo.gl/vP3Z3L1Yh6Qv8vGq8" 
+             target="_blank" 
+             rel="nofollow" 
+             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
+            📍 Vedi su Maps
+          </a>
+        </div>
+      </section>
       {/* PUNTO 7 DELLA LISTA: BOX RECLUTAMENTO AGGRESSIVO */}
       <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#fff7ed", borderRadius: "12px", border: "1px solid #ffedd5", textAlign: "center" }}>
         <h3 style={{ color: "#9a3412", marginTop: 0 }}>Lavori come Dentista a Roma Prati?</h3>
