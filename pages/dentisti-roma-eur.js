@@ -22,26 +22,35 @@ export default function DentistiRomaeur() {
         🔍 Attualmente 12 pazienti stanno cercando un dentista in zona Prati/Delle Vittorie su questo portale.
       </p>
 
-      {/* ANNUNCIO ESEMPIO CON PUNTO 8: GOOGLE MAPS */}
+    {/* ANNUNCIO REALE 1: DE SANCTIS ODONTOIATRIA (EUR) */}
       <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
           <div>
-            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico Prati - Dr. [Esempio]</h2>
-            <p style={{ margin: '5px 0' }}>📍 Via Ottaviano, Roma (Prati)</p>
-            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Disponibilità per urgenze in 24h</p>
+            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>De Sanctis Odontoiatria Digitale</h2>
+            <p style={{ margin: '5px 0' }}>📍 Viale Europa, 64, Roma (EUR)</p>
+            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Tecnologia 3D e Scanner Intraorale</p>
           </div>
         </div>
         
+        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
+          Eccellenza all'EUR per l'estetica dentale e l'implantologia computer assistita. Uno studio di riferimento per chi cerca soluzioni mininvasive e digitali.
+        </p>
+
         <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-          <a href="https://wa.me/39" style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>Contatta su WhatsApp</a>
+          <a href="https://wa.me/39065914580?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma" 
+             target="_blank"
+             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
+             Contatta su WhatsApp
+          </a>
           
-          {/* PUNTO 8 DELLA LISTA: Sfruttiamo Maps */}
-          <a href="https://www.google.com/maps" target="_blank" rel="nofollow" style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
+          <a href="https://www.google.com/maps5" 
+             target="_blank" 
+             rel="nofollow" 
+             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
             📍 Vedi su Maps
           </a>
         </div>
-      </section>
-
+      </section> 
       {/* PUNTO 7 DELLA LISTA: BOX RECLUTAMENTO AGGRESSIVO */}
       <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#fff7ed", borderRadius: "12px", border: "1px solid #ffedd5", textAlign: "center" }}>
         <h3 style={{ color: "#9a3412", marginTop: 0 }}>Lavori come Dentista a Roma Prati?</h3>
