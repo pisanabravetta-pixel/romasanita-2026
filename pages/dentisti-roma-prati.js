@@ -22,21 +22,31 @@ export default function DentistiRomaPrati() {
         🔍 Attualmente 12 pazienti stanno cercando un dentista in zona Prati/Delle Vittorie su questo portale.
       </p>
 
-      {/* ANNUNCIO ESEMPIO CON PUNTO 8: GOOGLE MAPS */}
+    {/* ANNUNCIO REALE 1: STUDIO BAZZUCCHI */}
       <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
           <div>
-            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico Prati - Dr. [Esempio]</h2>
-            <p style={{ margin: '5px 0' }}>📍 Via Ottaviano, Roma (Prati)</p>
-            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● Disponibilità per urgenze in 24h</p>
+            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico dr Marco Bazzucchi</h2>
+            <p style={{ margin: '5px 0' }}>📍 Via dei Gracchi, 151, Roma (Prati)</p>
+            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● ⭐ 5.0 su Google Maps</p>
           </div>
         </div>
         
+        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
+          Specializzato in ortodonzia invisibile (Invisalign) e odontoiatria estetica. Uno degli studi più tecnologici nel quartiere Prati.
+        </p>
+
         <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-          <a href="https://wa.me/39" style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>Contatta su WhatsApp</a>
+          <a href="https://wa.me/39063234119?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma" 
+             target="_blank"
+             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
+             Contatta su WhatsApp
+          </a>
           
-          {/* PUNTO 8 DELLA LISTA: Sfruttiamo Maps */}
-          <a href="https://www.google.com/maps" target="_blank" rel="nofollow" style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
+          <a href="https://www.google.com/maps/search/?api=1&query=Studio+Dentistico+dr+Marco+Bazzucchi+Roma" 
+             target="_blank" 
+             rel="nofollow" 
+             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
             📍 Vedi su Maps
           </a>
         </div>
