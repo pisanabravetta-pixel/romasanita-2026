@@ -130,6 +130,11 @@ const eseguiRicerca = () => {
           </div>
         </div>
       </section>
+     <div className="container" style={{ textAlign: 'center', marginTop: '-20px', marginBottom: '20px' }}>
+  <p style={{ fontSize: '13px', color: '#dc2626', fontWeight: 'bold', backgroundColor: '#fff', display: 'inline-block', padding: '5px 15px', borderRadius: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+    ⚠️ Oltre 500 pazienti hanno cercato uno specialista a Roma nelle ultime 24 ore
+  </p>
+</div>
 
 {/* SEZIONE STATISTICHE - DATI CORRETTI E STILE COMPATTO */}
       <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
@@ -155,7 +160,9 @@ const eseguiRicerca = () => {
 
           {/* BOX 3 - VISITE (CORRETTO) */}
           <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-            <div style={{ fontSize: '24px' }}>📈</div>
+           <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>
+  Visite/Mese (Agg. Gennaio 2026)
+</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+15K</div>
               <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Visite/Mese</div>
