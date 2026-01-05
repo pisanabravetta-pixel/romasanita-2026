@@ -51,6 +51,35 @@ export default function DentistiRomaeur() {
           </a>
         </div>
       </section> 
+{/* ANNUNCIO REALE 2: STUDIO GIOVANNINI LUDOVICI (EUR) */}
+      <section style={{ backgroundColor: 'white', border: '1px solid #e2e8f0', borderRadius: '15px', padding: '25px', marginBottom: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <div>
+            <h2 style={{ color: '#1e3a8a', margin: '0 0 10px 0', fontSize: '20px' }}>Studio Dentistico Giovannini Ludovici</h2>
+            <p style={{ margin: '5px 0' }}>📍 Viale Ludwig Van Beethoven, 70, Roma (EUR)</p>
+            <p style={{ fontSize: '14px', color: '#059669', fontWeight: 'bold' }}>● ⭐ 4.9 su Google</p>
+          </div>
+        </div>
+        
+        <p style={{ fontSize: '14px', color: '#475569', marginTop: '15px' }}>
+          Studio multidisciplinare d'eccellenza. Specializzati in parodontologia, igiene dentale avanzata e cure conservative per adulti e bambini.
+        </p>
+
+        <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+          <a href="https://wa.me/39065912447?text=Salve,%20ho%20visto%20il%20vostro%20studio%20su%20ServiziSalute%20Roma" 
+             target="_blank"
+             style={{ backgroundColor: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
+             Contatta su WhatsApp
+          </a>
+          
+          <a href="https://www.google.com/maps6" 
+             target="_blank" 
+             rel="nofollow" 
+             style={{ border: '1px solid #cbd5e1', color: '#64748b', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px' }}>
+            📍 Vedi su Maps
+          </a>
+        </div>
+      </section>
       {/* PUNTO 7 DELLA LISTA: BOX RECLUTAMENTO AGGRESSIVO */}
       <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#fff7ed", borderRadius: "12px", border: "1px solid #ffedd5", textAlign: "center" }}>
         <h3 style={{ color: "#9a3412", marginTop: 0 }}>Lavori come Dentista a Roma Prati?</h3>
