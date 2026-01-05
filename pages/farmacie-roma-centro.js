@@ -1,25 +1,39 @@
 import React from 'react';
+import Head from 'next/head';
 
 export default function FarmacieRomaCentro() {
   return (
-    <div style={{ fontFamily: 'sans-serif', color: '#333', lineHeight: '1.6' }}>
-      <nav style={{ padding: '15px 20px', backgroundColor: '#fff', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="/" style={{ fontWeight: 'bold', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute Roma</a>
-      </nav>
+    <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", lineHeight: "1.6", color: "#333" }}>
+      <Head>
+        <title>Farmacia Roma Centro | Servizi e Prodotti Farmaceutici</title>
+        <meta name="description" content="Trova una farmacia a Roma Centro. Elenco delle farmacie nel centro storico di Roma con servizi di autoanalisi e prodotti sanitari." />
+      </Head>
 
-      <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 20px' }}>
-        <h1 style={{ color: '#1a365d', fontSize: '30px', marginBottom: '10px', fontWeight: '800' }}>Farmacie a Roma Centro: Orari e Turni</h1>
-        
-        <div style={{ backgroundColor: '#fff5f5', padding: '20px', borderRadius: '12px', marginBottom: '30px', border: '1px solid #feb2b2' }}>
-          <p>Trova la <strong>farmacia aperta in Centro Storico a Roma</strong>. Copertura zone: Pantheon, Piazza Navona, Via del Corso e Trastevere. Consulta gli orari delle farmacie di turno e i servizi di consegna farmaci a domicilio.</p>
-        </div>
-
-        <div style={{ border: '1px solid #e2e8f0', padding: '20px', borderRadius: '12px', backgroundColor: '#fff' }}>
-          <h3 style={{ color: '#c53030' }}>Antica Farmacia del Corso</h3>
-          <p>📍 Via del Corso, Roma (Centro) - Aperta 24h per emergenze.</p>
-          <button style={{ backgroundColor: '#48bb78', color: '#fff', border: 'none', padding: '10px 15px', borderRadius: '5px', fontWeight: 'bold', marginTop: '10px' }}>Vedi Posizione</button>
-        </div>
+      <div style={{ marginBottom: '20px' }}>
+        <a href="/farmacie-roma" style={{ color: "#2563eb", textDecoration: "none" }}>← Torna a Farmacie Roma</a>
       </div>
-    </div>
+      
+      <h1 style={{ color: "#1e3a8a" }}>Farmacia a Roma Centro</h1>
+
+      <p>
+        Cerchi una <strong>farmacia a Roma Centro</strong>? Nel cuore della Capitale, le farmacie offrono non solo medicinali, ma una vasta gamma di servizi per la salute e il benessere del cittadino e del turista.
+      </p>
+
+      <h2>Cosa offrono le farmacie in Centro Storico</h2>
+      <ul>
+        <li>Autoanalisi del sangue (Glicemia, Colesterolo)</li>
+        <li>Misurazione della pressione arteriosa</li>
+        <li>Prodotti omeopatici e fitoterapici</li>
+        <li>Consulenze dermocosmetiche</li>
+      </ul>
+
+      <div style={{ marginTop: "40px", padding: "30px", backgroundColor: "#f0f7ff", borderRadius: "12px", border: "1px solid #dbeafe", textAlign: "center" }}>
+        <h3 style={{ color: "#1e3e8a", marginTop: 0 }}>Gestisci una Farmacia in Centro?</h3>
+        <p>Rendi visibili i tuoi servizi ai residenti e ai visitatori del Centro Storico di Roma. Pubblica il tuo profilo gratuitamente.</p>
+        <a href="/pubblica-annuncio" style={{ display: "inline-block", padding: "12px 25px", backgroundColor: "#2563eb", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: "bold" }}>
+          Iscriviti Ora
+        </a>
+      </div>
+    </main>
   );
 }
