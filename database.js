@@ -31,12 +31,12 @@ export const DENTISTI = [
     slug: "/dentisti-roma-eur",
     isTop: false
   }, // <--- QUESTA VIRGOLA MANCAVA!
-  {
+ {
     id: 5,
-    nome: "Studio Dentistico Roma Nord",
-    zona: "Roma Nord",
-    indirizzo: "Via Flaminia, 450",
-    slug: "/dentisti-roma-nord",
+    nome: "Studio Dentistico Appio - Dr. Gazzardi",
+    zona: "San Giovanni",
+    indirizzo: "Via Appia Nuova, 103",
+    slug: "/dentisti-roma-san-giovanni",
     isTop: true
   }
 ];
