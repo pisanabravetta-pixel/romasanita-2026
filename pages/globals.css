@@ -1,71 +1,171 @@
-/* STILI GENERALI */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #f4f7f6; color: #333; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* HEADER & TOP BAR */
-.top-bar { background-color: #0070f3; color: white; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; }
-.header { background: white; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-.nav-links { list-style: none; display: flex; gap: 20px; }
-.nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 600; }
-.nav-right { display: flex; align-items: center; gap: 20px; }
-
-/* HERO */
-.hero { text-align: center; padding: 60px 0 0 0; }
-.hero h1 { fontSize: 36px; margin-bottom: 10px; }
-.search-box-container { 
-    background: white; padding: 20px; border-radius: 10px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-    display: flex; gap: 15px; margin-top: 30px;
+/* --- STILI GENERALI & RESET --- */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
 }
-.search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: bold; color: #888; margin-bottom: 5px; }
-.search-input-group input, .search-input-group select { 
-    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; 
-}
-.btn-search { background: #0070f3; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-/* ANNUNCI */
-.announcements-grid { display: grid; gap: 15px; }
-.ann-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: 0.3s; }
-.ann-card:hover { transform: translateY(-5px); }
-.ann-img { width: 100%; height: 150px; object-fit: cover; }
-.ann-info { padding: 12px; text-align: left; }
-.ann-info small { color: #0070f3; font-weight: bold; font-size: 10px; text-transform: uppercase; }
-.ann-info h4 { margin: 5px 0; font-size: 14px; }
-
-/* --- RESPONSIVE (MOBILE) --- */
-@media (max-width: 768px) {
-    .nav-links { display: none; } /* Nasconde menu su mobile per ora */
-    .search-box-container { flex-direction: column; }
-    .hero h1 { font-size: 26px; }
-    .announcements-grid { grid-template-columns: repeat(2, 1fr) !important; } /* 2 card per riga su cellulare */
-    .stat-box { gap: 20px !important; }
-    .stat-item div:first-child { font-size: 20px !important; }
-    .grid-3-col { grid-template-columns: 1fr !important; } /* Box perché scegliere uno sotto l'altro */
+body { 
+  /* Usiamo Inter come font principale come impostato nel Document */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+  background-color: #f8fafc; /* Grigio più freddo e moderno */
+  color: #1e293b; /* Blu/Grigio scuro per migliore leggibilità */
+  -webkit-font-smoothing: antialiased;
 }
+
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+/* --- HEADER & TOP BAR --- */
+.top-bar { 
+  background-color: #2563eb; 
+  color: white; 
+  text-align: center; 
+  padding: 8px; 
+  font-size: 12px; 
+  font-weight: 600; 
+  letter-spacing: 0.5px;
+}
+
+.header { 
+  background: rgba(255, 255, 255, 0.95); 
+  backdrop-filter: blur(10px); /* Effetto vetro moderno */
+  padding: 15px 0; 
+  border-bottom: 1px solid #e2e8f0; 
+  position: sticky; 
+  top: 0; 
+  z-index: 100; 
+}
+
 /* FIX ALLINEAMENTO HEADER */
 .header .container {
   display: flex !important;
-  flex-direction: row !important; /* Forza la riga */
+  flex-direction: row !important;
   justify-content: space-between !important;
   align-items: center !important;
-  flex-wrap: nowrap !important; /* Impedisce di andare a capo */
-  max-width: 1200px;
-  margin: 0 auto;
+  flex-wrap: nowrap !important;
 }
 
 .nav-links {
   display: flex !important;
   flex-direction: row !important;
-  gap: 20px !important;
+  gap: 25px !important;
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-.nav-right {
-  display: flex !important;
-  align-items: center !important;
-  gap: 15px !important;
+.nav-links a { 
+  text-decoration: none; 
+  color: #64748b; 
+  font-size: 14px; 
+  font-weight: 500; 
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #2563eb; }
+
+/* --- HERO & SEARCH --- */
+.hero { text-align: center; padding: 80px 0 40px 0; }
+
+.hero h1 { 
+  font-size: 42px; 
+  font-weight: 800; 
+  color: #1e3a8a; 
+  margin-bottom: 15px; 
+  letter-spacing: -1px;
+}
+
+.search-box-container { 
+  background: white; 
+  padding: 25px; 
+  border-radius: 16px; 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+  display: flex; 
+  gap: 15px; 
+  margin: 40px auto 0;
+  max-width: 900px;
+  border: 1px solid #f1f5f9;
+}
+
+.search-input-group { flex: 1; text-align: left; }
+.search-input-group label { 
+  display: block; 
+  font-size: 11px; 
+  font-weight: 700; 
+  color: #64748b; 
+  margin-bottom: 6px; 
+  text-transform: uppercase;
+}
+
+.search-input-group input, 
+.search-input-group select { 
+  width: 100%; 
+  padding: 12px; 
+  border: 1px solid #e2e8f0; 
+  border-radius: 8px; 
+  font-size: 14px;
+  background-color: #f8fafc;
+}
+
+.btn-search { 
+  background: #2563eb; 
+  color: white; 
+  border: none; 
+  padding: 0 35px; 
+  border-radius: 8px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: all 0.2s;
+}
+
+.btn-search:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+/* --- ANNUNCI (GRID) --- */
+.announcements-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 24px; 
+  margin-top: 40px;
+}
+
+.ann-card { 
+  background: white; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.ann-card:hover { 
+  transform: translateY(-8px); 
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1); 
+}
+
+.ann-img { width: 100%; height: 180px; object-fit: cover; }
+.ann-info { padding: 20px; }
+.ann-info small { color: #2563eb; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.ann-info h4 { margin: 8px 0; font-size: 18px; color: #1e293b; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .nav-links { display: none !important; } /* Nascondiamo menu per hamburger su mobile */
+  
+  .search-box-container { 
+    flex-direction: column; 
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .hero h1 { font-size: 30px; padding: 0 10px; }
+  
+  .announcements-grid { 
+    grid-template-columns: 1fr !important; /* Su mobile meglio 1 colonna intera per leggibilità */
+    padding: 0 10px;
+  }
+  
+  .btn-search { padding: 15px; width: 100%; }
 }
