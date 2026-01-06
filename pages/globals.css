@@ -1,54 +1,66 @@
-/* --- STILI ORIGINALI (IL TUO SITO) --- */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-body { background-color: #f4f7f6; color: #333; overflow-x: hidden; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* HEADER E BARRE (POSIZIONI ORIGINALI) */
-.top-bar { background-color: #0070f3; color: white; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; }
-.header { background: white; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-.header .container { display: flex; justify-content: space-between; align-items: center; }
-.nav-links { list-style: none; display: flex; gap: 20px; }
-.nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 600; }
-.nav-right { display: flex; align-items: center; gap: 20px; }
-
-/* HERO E RICERCA ORIGINALE */
-.hero { text-align: center; padding: 60px 0 0 0; }
-.hero h1 { font-size: 36px; margin-bottom: 10px; }
-.search-box-container { 
-    background: white; padding: 20px; border-radius: 10px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-    display: flex; gap: 15px; margin-top: 30px;
+/* --- RESET E FONT --- */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  font-family: 'Inter', sans-serif; 
 }
-.search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: bold; color: #888; margin-bottom: 5px; }
-.search-input-group input, .search-input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-.btn-search { background: #0070f3; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-/* ANNUNCI E GRIGLIE */
-.announcements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.ann-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: 0.3s; }
-.ann-img { width: 100%; height: 150px; object-fit: cover; }
+body { 
+  background-color: #f4f7f6; 
+  color: #333; 
+  overflow-x: hidden; 
+}
 
-/* --- SEZIONE MOBILE (SOLO PER CELLULARI) --- */
+/* --- REGOLE PER PC (MANTERRE ORIGINALI) --- */
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+/* --- REGOLE SOLO PER CELLULARE (NON TOCCANO IL PC) --- */
 @media (max-width: 768px) {
-    /* Top Bar e Header */
-    .nav-links { display: none; } /* Nasconde i link del PC, usa l'hamburger */
-    
-    /* La barra di ricerca si mette in verticale */
+    /* Blocca lo scivolamento laterale */
+    html, body { 
+      width: 100%; 
+      overflow-x: hidden; 
+    }
+
+    /* SISTEMA LA BARRA DI RICERCA: mette i campi uno sotto l'altro */
     .search-box-container { 
         flex-direction: column !important; 
-        margin: 20px 10px !important; 
-    }
-    
-    /* Gli annunci e le sezioni diventano 1 colonna (niente più schiacciamenti) */
-    .announcements-grid, .grid-3-col, .stat-box { 
-        grid-template-columns: 1fr !important; 
-        display: grid !important;
+        gap: 10px !important;
+        margin: 20px 10px !important;
+        display: flex !important;
     }
 
-    .hero h1 { font-size: 26px !important; }
+    /* SISTEMA I BOX (Annunci, Perchè sceglierci, ecc.): 
+       li mette in fila indiana invece di schiacciarli */
+    .announcements-grid, 
+    .grid-3-col, 
+    .features-grid, 
+    [style*="display: grid"], 
+    [style*="display: flex"] { 
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important; 
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    /* Sistema le immagini degli annunci così non escono dallo schermo */
+    .ann-img, img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Sistema i titoli troppo grandi */
+    h1 { font-size: 26px !important; padding: 0 10px; text-align: center; }
     
-    /* Impedisce alle immagini e ai box di andare fuori dallo schermo */
-    .container { padding: 0 15px !important; }
-    .ann-card, .search-input-group { width: 100% !important; }
+    /* Forza i singoli box a prendersi tutta la larghezza disponibile */
+    .ann-card, .feature-box, .search-input-group {
+        width: 100% !important;
+        margin: 0 auto !important;
+    }
 }
