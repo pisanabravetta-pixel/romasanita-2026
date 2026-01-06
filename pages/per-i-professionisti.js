@@ -6,95 +6,127 @@ export default function PerIProfessionisti() {
     <div style={{ fontFamily: 'sans-serif', color: '#333', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Head>
         <title>Visibilità Online per Medici e Professionisti Sanitari Roma | ServiziSalute</title>
-        <meta name="description" content="Aumenta la visibilità del tuo studio medico a Roma. Scopri come trovare nuovi pazienti e pubblicizzare la tua attività sanitaria gratuitamente." />
+        <meta name="description" content="Aumenta la visibilità del tuo studio medico a Roma. Scopri come trovare nuovi pazienti e pubblicizzare la tua attività sanitaria gratuitamente nel 2026." />
       </Head>
 
-      {/* HEADER COERENTE CON IL RESTO DEL SITO */}
-      <header style={{ background: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0' }}>
+      {/* HEADER COERENTE */}
+      <header style={{ background: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
            <a href="/" style={{ fontWeight: '800', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute</a>
-           <a href="/servizi-sanitari-roma" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: 'bold' }}>Mappa Servizi</a>
+           <nav style={{ display: 'flex', gap: '20px' }}>
+             <a href="/servizi-sanitari-roma" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: 'bold' }}>Mappa Servizi</a>
+             <a href="/pubblica-annuncio" style={{ fontSize: '13px', color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>Inizia Ora</a>
+           </nav>
         </div>
       </header>
 
       <main style={{ maxWidth: '900px', margin: '60px auto', padding: '0 20px' }}>
         
-        {/* SEZIONE HERO */}
-        <section style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h1 style={{ fontSize: '42px', color: '#1e3a8a', marginBottom: '20px', lineHeight: '1.2' }}>
-            Come trovare nuovi pazienti a Roma nel 2026
+        {/* SEZIONE HERO STRATEGICA */}
+        <section style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <span style={{ backgroundColor: '#dbeafe', color: '#2563eb', padding: '5px 15px', borderRadius: '30px', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            Edizione 2026
+          </span>
+          <h1 style={{ fontSize: '46px', color: '#1e3a8a', marginTop: '20px', marginBottom: '25px', lineHeight: '1.1', fontWeight: '900' }}>
+            Fai crescere il tuo studio medico a Roma
           </h1>
-          <p style={{ fontSize: '20px', color: '#64748b', maxWidth: '700px', margin: '0 auto' }}>
-            Unisciti al network di <strong>ServiziSalute</strong>. Ti diamo visibilità locale dove i pazienti cercano davvero: nel tuo quartiere.
+          <p style={{ fontSize: '21px', color: '#64748b', maxWidth: '750px', margin: '0 auto', lineHeight: '1.5' }}>
+            Non servono grandi budget pubblicitari. Ti serve essere presente dove i pazienti del tuo quartiere stanno cercando oggi stesso.
           </p>
         </section>
 
-        {/* I 3 VANTAGGI */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '70px' }}>
-          <div style={{ padding: '30px', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-            <div style={{ fontSize: '40px', marginBottom: '15px' }}>📍</div>
-            <h3 style={{ color: '#1e3a8a', marginBottom: '10px' }}>Posizionamento Locale</h3>
-            <p style={{ fontSize: '15px', color: '#4b5563' }}>Compari nelle ricerche specifiche per il tuo quartiere (Prati, EUR, Roma Nord, ecc.) migliorando la tua Local SEO.</p>
+        {/* I VANTAGGI COMPETITIVI */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', marginBottom: '80px' }}>
+          <div style={{ padding: '35px', borderRadius: '24px', background: '#f8fafc', border: '1px solid #e2e8f0', transition: '0.3s' }}>
+            <div style={{ fontSize: '45px', marginBottom: '20px' }}>📍</div>
+            <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px' }}>Local SEO Dominance</h3>
+            <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: '1.6' }}>Ottimizziamo il tuo profilo per le ricerche locali: EUR, Prati, Parioli o Roma Sud. I pazienti ti trovano per vicinanza.</p>
           </div>
           
-          <div style={{ padding: '30px', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-            <div style={{ fontSize: '40px', marginBottom: '15px' }}>🚀</div>
-            <h3 style={{ color: '#1e3a8a', marginBottom: '10px' }}>Zero Costi Pubblicitari</h3>
-            <p style={{ fontSize: '15px', color: '#4b5563' }}>Nessun abbonamento forzato. La pubblicazione dell'annuncio base su ServiziSalute è e rimarrà gratuita.</p>
+          <div style={{ padding: '35px', borderRadius: '24px', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+            <div style={{ fontSize: '45px', marginBottom: '20px' }}>💬</div>
+            <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px' }}>Contatto WhatsApp</h3>
+            <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: '1.6' }}>Abbatti le barriere. Ricevi richieste dirette sul tuo numero, facilitando la prenotazione rapida senza intermediari.</p>
           </div>
           
-          <div style={{ padding: '30px', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-            <div style={{ fontSize: '40px', marginBottom: '15px' }}>📈</div>
-            <h3 style={{ color: '#1e3a8a', marginBottom: '10px' }}>Target Qualificato</h3>
-            <p style={{ fontSize: '15px', color: '#4b5563' }}>Connettiti con persone che cercano attivamente assistenza medica immediata o specialistica vicino casa.</p>
+          <div style={{ padding: '35px', borderRadius: '24px', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+            <div style={{ fontSize: '45px', marginBottom: '20px' }}>🛡️</div>
+            <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px' }}>Autorevolezza</h3>
+            <p style={{ fontSize: '15px', color: '#4b5563', lineHeight: '1.6' }}>Essere presenti in un network sanitario dedicato aumenta la percezione di fiducia e professionalità della tua struttura.</p>
           </div>
         </div>
 
-        {/* GUIDA STRATEGICA */}
-        <section style={{ background: '#eff6ff', padding: '40px', borderRadius: '20px', border: '1px solid #dbeafe', marginBottom: '70px' }}>
-          <h2 style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '15px' }}>Perché la visibilità del tuo studio dipende dai dati</h2>
-          <p style={{ fontSize: '16px', color: '#1e40af', lineHeight: '1.7' }}>
-            Google premia le strutture che offrono informazioni strutturate: orari aggiornati, servizi specifici e geolocalizzazione precisa. 
-            Registrandoti su <strong>ServiziSalute</strong>, crei un "backlink" autorevole e un segnale di rilevanza locale che aiuta il tuo studio a scalare le classifiche di ricerca a Roma.
-          </p>
+        {/* SCHEMA DI FUNZIONAMENTO */}
+        <section style={{ marginBottom: '80px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '28px', color: '#1e3a8a', marginBottom: '40px' }}>Come funziona il network?</h2>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '30px' }}>
+            {[
+              { s: '1', t: 'Ti registri', d: 'Inserisci i tuoi dati' },
+              { s: '2', t: 'Validiamo', d: 'Verifichiamo il profilo' },
+              { s: '3', t: 'Sei Online', d: 'Ricevi nuovi pazienti' }
+            ].map((step, idx) => (
+              <div key={idx} style={{ flex: '1', minWidth: '200px', padding: '20px' }}>
+                <div style={{ width: '40px', height: '40px', background: '#2563eb', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px', fontWeight: 'bold' }}>{step.s}</div>
+                <h4 style={{ color: '#1e3a8a', margin: '0 0 5px 0' }}>{step.t}</h4>
+                <p style={{ fontSize: '14px', color: '#64748b' }}>{step.d}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* CALL TO ACTION FINALE */}
-        <div style={{ textAlign: 'center', padding: '60px 40px', background: '#2563eb', borderRadius: '24px', color: 'white', boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.2)' }}>
-          <h2 style={{ fontSize: '32px', margin: '0 0 15px 0' }}>Ricevi subito nuovi contatti</h2>
-          <p style={{ marginBottom: '35px', fontSize: '18px', opacity: '0.9' }}>La registrazione è rapida e non richiede carta di credito.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: 'white', color: '#2563eb', padding: '16px 45px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', fontSize: '18px', display: 'inline-block', transition: '0.3s' }}>
-            Pubblica Annuncio Gratis
+        {/* GUIDA STRATEGICA SEO */}
+        <section style={{ background: '#f0f9ff', padding: '45px', borderRadius: '32px', border: '1px solid #bae6fd', marginBottom: '80px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <h2 style={{ fontSize: '24px', color: '#0369a1', marginBottom: '20px' }}>Perché la visibilità del tuo studio dipende dai dati</h2>
+            <p style={{ fontSize: '16px', color: '#0c4a6e', lineHeight: '1.8' }}>
+              Nel 2026, Google premia le strutture che offrono <strong>informazioni strutturate</strong>: orari aggiornati, servizi specifici e geolocalizzazione precisa. 
+              Registrandoti su <strong>ServiziSalute</strong>, crei un segnale di rilevanza locale che aiuta il tuo studio a comparire nelle prime posizioni quando qualcuno cerca un professionista nel tuo quartiere di Roma.
+            </p>
+          </div>
+        </section>
+
+        {/* CTA FINALE IMPATTANTE */}
+        <div style={{ textAlign: 'center', padding: '70px 40px', background: 'linear-gradient(135deg, #2563eb 0%, #1e40af 100%)', borderRadius: '32px', color: 'white', boxShadow: '0 20px 25px -5px rgba(37, 99, 235, 0.3)' }}>
+          <h2 style={{ fontSize: '36px', margin: '0 0 20px 0', fontWeight: '800' }}>Inizia oggi stesso</h2>
+          <p style={{ marginBottom: '40px', fontSize: '19px', opacity: '0.9', maxWidth: '600px', margin: '0 auto 40px' }}>
+            Bastano 2 minuti per creare la tua scheda professionale e iniziare a ricevere contatti diretti dai pazienti di Roma.
+          </p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: 'white', color: '#2563eb', padding: '18px 50px', borderRadius: '15px', textDecoration: 'none', fontWeight: '800', fontSize: '18px', display: 'inline-block', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+            PUBBLICA IL TUO STUDIO GRATIS
           </a>
+          <p style={{ marginTop: '20px', fontSize: '13px', opacity: '0.7' }}>Nessun costo nascosto. Nessun impegno.</p>
         </div>
 
       </main>
 
-      {/* FOOTER PROFESSIONALE (Lo stesso della Mappa Servizi) */}
-      <footer style={{ background: '#0f172a', color: 'white', padding: '60px 0 30px', marginTop: '80px' }}>
+      {/* FOOTER PROFESSIONALE */}
+      <footer style={{ background: '#0f172a', color: 'white', padding: '80px 0 40px', marginTop: '100px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '50px' }}>
             <div>
-              <h4 style={{ color: '#3b82f6', marginBottom: '20px' }}>ServiziSalute Roma</h4>
-              <p style={{ fontSize: '14px', color: '#94a3b8' }}>Il portale di riferimento per la sanità locale.</p>
+              <h4 style={{ color: '#3b82f6', marginBottom: '25px', fontSize: '18px' }}>ServiziSalute Roma</h4>
+              <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.6' }}>Il network nato per connettere la salute e il territorio a Roma.</p>
             </div>
             <div>
-              <h4 style={{ marginBottom: '20px' }}>Link</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+              <h4 style={{ marginBottom: '25px', fontSize: '18px' }}>Navigazione</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.8' }}>
                 <li><a href="/" style={{ color: '#94a3b8', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#94a3b8', textDecoration: 'none' }}>Mappa Servizi</a></li>
+                <li><a href="/contatti" style={{ color: '#94a3b8', textDecoration: 'none' }}>Supporto</a></li>
               </ul>
             </div>
             <div>
-              <h4 style={{ marginBottom: '20px' }}>Professionisti</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/pubblica-annuncio" style={{ color: '#4ade80', textDecoration: 'none', fontWeight: 'bold' }}>Aggiungi Studio</a></li>
-                <li><a href="/contatti" style={{ color: '#94a3b8', textDecoration: 'none' }}>Contatti</a></li>
+              <h4 style={{ marginBottom: '25px', fontSize: '18px' }}>Area Professionale</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.8' }}>
+                <li><a href="/pubblica-annuncio" style={{ color: '#4ade80', textDecoration: 'none', fontWeight: 'bold' }}>Aggiungi il tuo Studio</a></li>
+                <li><a href="/guida-seo-medici" style={{ color: '#94a3b8', textDecoration: 'none' }}>Blog per Professionisti</a></li>
+                <li><a href="/termini" style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</a></li>
               </ul>
             </div>
           </div>
-          <div style={{ marginTop: '60px', borderTop: '1px solid #1e293b', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#64748b' }}>
-            © 2026 ServiziSalute Roma – Portale per la Sanità Professionale
+          <div style={{ marginTop: '80px', borderTop: '1px solid #1e293b', paddingTop: '30px', textAlign: 'center', fontSize: '12px', color: '#475569' }}>
+            © 2026 ServiziSalute Roma – Network Indipendente di Professionisti della Salute
           </div>
         </div>
       </footer>
