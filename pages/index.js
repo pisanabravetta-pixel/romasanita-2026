@@ -47,14 +47,22 @@ const eseguiRicerca = () => {
       }
     }
 
-    // --- FARMACIE ---
+    // --- FARMACIE (Aggiornato per Centro Storico) ---
     else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio")) {
-      window.location.href = "/farmacie-roma" + parametri;
+      if (zonaKebab === "centro-storico") {
+        window.location.href = "/farmacie-roma-centro";
+      } else {
+        window.location.href = "/farmacie-roma" + parametri;
+      }
     }
 
-    // --- SERVIZI A DOMICILIO ---
+    // --- SERVIZI A DOMICILIO (Aggiornato per Roma Sud) ---
     else if (cosa.includes("domicilio") || cosa.includes("infermier") || cosa.includes("fisio")) {
-      window.location.href = "/servizi-domicilio-roma" + parametri;
+      if (zonaKebab === "eur" || zonaKebab === "ostiense" || zonaKebab === "garbatella") {
+        window.location.href = "/servizi-domicilio-roma-sud";
+      } else {
+        window.location.href = "/servizi-domicilio-roma" + parametri;
+      }
     }
 
     // --- TUTTO IL RESTO ---
