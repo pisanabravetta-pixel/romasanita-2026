@@ -1,63 +1,54 @@
-/* --- 1. STILI PER PC (Quelli che avevi prima e che funzionavano) --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { 
-  font-family: 'Inter', sans-serif; 
-  background-color: #f4f7f6; 
-  color: #333; 
-  overflow-x: hidden; 
-}
+/* --- STILI ORIGINALI (IL TUO SITO) --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background-color: #f4f7f6; color: #333; overflow-x: hidden; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* Header e Navigazione PC */
+/* HEADER E BARRE (POSIZIONI ORIGINALI) */
+.top-bar { background-color: #0070f3; color: white; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; }
 .header { background: white; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
 .header .container { display: flex; justify-content: space-between; align-items: center; }
-.nav-links { display: flex; list-style: none; gap: 20px; }
+.nav-links { list-style: none; display: flex; gap: 20px; }
+.nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 600; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
 
-/* Hero e Ricerca PC */
-.hero { text-align: center; padding: 60px 0; }
+/* HERO E RICERCA ORIGINALE */
+.hero { text-align: center; padding: 60px 0 0 0; }
+.hero h1 { font-size: 36px; margin-bottom: 10px; }
 .search-box-container { 
-  background: white; padding: 25px; border-radius: 10px; 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; gap: 15px; margin-top: 30px; 
+    background: white; padding: 20px; border-radius: 10px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    display: flex; gap: 15px; margin-top: 30px;
 }
 .search-input-group { flex: 1; text-align: left; }
+.search-input-group label { display: block; font-size: 11px; font-weight: bold; color: #888; margin-bottom: 5px; }
+.search-input-group input, .search-input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+.btn-search { background: #0070f3; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-/* Griglie PC */
-.announcements-grid, .grid-3-col { 
-  display: grid; 
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 20px; 
-}
+/* ANNUNCI E GRIGLIE */
+.announcements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.ann-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: 0.3s; }
+.ann-img { width: 100%; height: 150px; object-fit: cover; }
 
-/* --- 2. FIX SOLO PER CELLULARE (Si attiva solo sotto i 768px) --- */
+/* --- SEZIONE MOBILE (SOLO PER CELLULARI) --- */
 @media (max-width: 768px) {
-  /* Blocca il sito così non scivola a sinistra */
-  html, body { width: 100%; overflow-x: hidden; position: relative; }
+    /* Top Bar e Header */
+    .nav-links { display: none; } /* Nasconde i link del PC, usa l'hamburger */
+    
+    /* La barra di ricerca si mette in verticale */
+    .search-box-container { 
+        flex-direction: column !important; 
+        margin: 20px 10px !important; 
+    }
+    
+    /* Gli annunci e le sezioni diventano 1 colonna (niente più schiacciamenti) */
+    .announcements-grid, .grid-3-col, .stat-box { 
+        grid-template-columns: 1fr !important; 
+        display: grid !important;
+    }
 
-  /* Nascondi il menu vecchio del PC che fa casino */
-  .nav-links { display: none !important; }
-
-  /* La barra di ricerca: metti gli elementi uno sotto l'altro */
-  .search-box-container { 
-    flex-direction: column !important; 
-    margin: 20px 10px !important; 
-    width: auto !important; 
-  }
-
-  /* I BOX: Invece di 3 vicini (schiacciati), ne mettiamo uno sotto l'altro */
-  .announcements-grid, .grid-3-col, .stat-box { 
-    grid-template-columns: 1fr !important; 
-    display: grid !important; 
-    gap: 15px !important;
-    padding: 0 10px !important;
-  }
-
-  /* Titoli e Immagini: non devono uscire dai bordi */
-  h1 { font-size: 26px !important; padding: 0 10px; }
-  img, .ann-img { max-width: 100% !important; height: auto !important; }
-
-  /* Forza i box a non essere "schiacciati" ma larghi tutto lo schermo */
-  .ann-card, .feature-box, .stat-item {
-    width: 100% !important;
-    margin: 0 auto !important;
-  }
+    .hero h1 { font-size: 26px !important; }
+    
+    /* Impedisce alle immagini e ai box di andare fuori dallo schermo */
+    .container { padding: 0 15px !important; }
+    .ann-card, .search-input-group { width: 100% !important; }
 }
