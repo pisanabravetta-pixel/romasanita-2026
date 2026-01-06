@@ -6,11 +6,11 @@
 }
 
 body { 
+  /* Usiamo Inter come font principale come impostato nel Document */
   font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-  background-color: #f8fafc; 
-  color: #1e293b; 
+  background-color: #f8fafc; /* Grigio più freddo e moderno */
+  color: #1e293b; /* Blu/Grigio scuro per migliore leggibilità */
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; /* Impedisce al sito di scivolare a destra/sinistra */
 }
 
 .container { 
@@ -32,7 +32,7 @@ body {
 
 .header { 
   background: rgba(255, 255, 255, 0.95); 
-  backdrop-filter: blur(10px); 
+  backdrop-filter: blur(10px); /* Effetto vetro moderno */
   padding: 15px 0; 
   border-bottom: 1px solid #e2e8f0; 
   position: sticky; 
@@ -40,6 +40,7 @@ body {
   z-index: 100; 
 }
 
+/* FIX ALLINEAMENTO HEADER */
 .header .container {
   display: flex !important;
   flex-direction: row !important;
@@ -149,40 +150,46 @@ body {
 .ann-info small { color: #2563eb; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
 .ann-info h4 { margin: 8px 0; font-size: 18px; color: #1e293b; }
 
-/* --- OTTIMIZZAZIONE UNIFICATA PER CELLULARE --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-  .nav-links { display: none !important; }
+  .nav-links { display: none !important; } /* Nascondiamo menu per hamburger su mobile */
   
-  /* Sistema il contenitore principale per non farlo scivolare */
-  .container { padding: 0 15px !important; }
-
-  /* Mette la ricerca in verticale */
   .search-box-container { 
-    flex-direction: column !important; 
-    margin: 20px 15px !important; 
-    padding: 20px !important;
-    width: auto !important;
+    flex-direction: column; 
+    margin: 20px;
+    padding: 20px;
   }
-
-  /* Forza i box a stare uno sotto l'altro (Risolve lo schiacciamento) */
-  .announcements-grid, .features-grid, .grid-3-col { 
-    grid-template-columns: 1fr !important; 
-    display: grid !important;
-    gap: 20px !important;
-  }
-
-  /* Sistema i titoli e i testi */
-  .hero h1 { font-size: 28px !important; line-height: 1.2 !important; padding: 0 10px; }
   
-  /* Sistema i bottoni */
-  .btn-search, .btn-nav { 
-    width: 100% !important; 
-    padding: 15px !important; 
-    height: auto !important;
+  .hero h1 { font-size: 30px; padding: 0 10px; }
+  
+  .announcements-grid { 
+    grid-template-columns: 1fr !important; /* Su mobile meglio 1 colonna intera per leggibilità */
+    padding: 0 10px;
+  }
+  
+  .btn-search { padding: 15px; width: 100%; }
+}
+
+/* --- OTTIMIZZAZIONE FINALE PER CELLULARE --- */
+
+@media (max-width: 768px) {
+  /* Abbassiamo un po' il contenuto delle pagine per non farlo finire sotto l'header fisso */
+  main {
+    padding-top: 20px !important;
   }
 
-  /* Impedisce alle immagini di uscire dai bordi */
-  img, .ann-img { max-width: 100% !important; height: auto !important; }
+  /* Rimpiccioliamo i titoli grandi (H1) che altrimenti uscirebbero dallo schermo */
+  h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Rendiamo i bottoni più facili da cliccare con il pollice */
+  .btn-search, .btn-nav {
+    width: 100%;
+    padding: 15px !important;
+    text-align: center;
+  }
 }
 
 /* Stile per l'icona del menu (le 3 linee) */
