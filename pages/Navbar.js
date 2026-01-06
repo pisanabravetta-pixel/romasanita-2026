@@ -11,16 +11,20 @@ export default function Navbar() {
           ServiziSalute
         </a>
 
-        {/* BOTTONE HAMBURGER (Le 3 linee che vedi sul cellulare) */}
+        {/* BOTTONE HAMBURGER (Le 3 linee sul cellulare) */}
         <div className="hamburger" onClick={() => setIsOpen(!isOpen)} style={{ cursor: 'pointer', fontSize: '24px' }}>
           <i className={isOpen ? "fas fa-times" : "fas fa-bars"}></i>
         </div>
 
-        {/* MENU CHE APPARE E SCOMPARE */}
+        {/* MENU */}
         <nav className={`nav-menu ${isOpen ? 'active' : ''}`}>
           <a href="/chi-siamo">Chi Siamo</a>
           <a href="/come-funziona">Come Funziona</a>
           <a href="/contatti">Contatti</a>
+          
+          {/* LINK ACCEDI AGGIUNTO QUI */}
+          <a href="/login" style={{ color: '#2563eb' }}>Accedi</a>
+          
           <a href="/pubblica-annuncio" className="btn-nav">Area Medici</a>
         </nav>
       </div>
@@ -40,9 +44,11 @@ export default function Navbar() {
             position: absolute; 
             top: 60px; left: 0; width: 100%; 
             background: white; padding: 20px; border-bottom: 1px solid #eee;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
           }
           .nav-menu.active { display: flex; }
           .hamburger { display: block; }
+          .nav-menu a { width: 100%; text-align: center; padding: 10px 0; }
         }
         @media (min-width: 769px) {
           .hamburger { display: none; }
