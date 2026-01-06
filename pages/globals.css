@@ -1,66 +1,58 @@
-/* --- RESET E FONT --- */
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
-  font-family: 'Inter', sans-serif; 
-}
-
+/* --- 1. RESET E FONT (Fondamentali per tutti) --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
+  font-family: 'Inter', sans-serif; 
   background-color: #f4f7f6; 
   color: #333; 
   overflow-x: hidden; 
 }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* --- REGOLE PER PC (MANTERRE ORIGINALI) --- */
-.container { 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
+/* --- 2. IL TUO STILE ORIGINALE (Quello che andava bene) --- */
+.header { background: white; padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+.header .container { display: flex; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; list-style: none; gap: 20px; }
+.nav-links a { text-decoration: none; color: #555; font-weight: 600; }
+
+.hero { text-align: center; padding: 60px 0; }
+.search-box-container { 
+  background: white; padding: 25px; border-radius: 10px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; gap: 15px; margin-top: 30px; 
+}
+.search-input-group { flex: 1; text-align: left; }
+.search-input-group label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #888; }
+.search-input-group input, .search-input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+.btn-search { background: #0070f3; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+
+/* Griglie per PC (3 colonne) */
+.announcements-grid, .grid-3-col, .features-grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
 }
 
-/* --- REGOLE SOLO PER CELLULARE (NON TOCCANO IL PC) --- */
+/* --- 3. FIX CHIRURGICO PER CELLULARE (Sotto i 768px) --- */
 @media (max-width: 768px) {
-    /* Blocca lo scivolamento laterale */
-    html, body { 
-      width: 100%; 
-      overflow-x: hidden; 
-    }
+  /* Impedisce al sito di scivolare lateralmente */
+  html, body { width: 100%; overflow-x: hidden; }
 
-    /* SISTEMA LA BARRA DI RICERCA: mette i campi uno sotto l'altro */
-    .search-box-container { 
-        flex-direction: column !important; 
-        gap: 10px !important;
-        margin: 20px 10px !important;
-        display: flex !important;
-    }
+  /* Mette la ricerca in verticale */
+  .search-box-container { 
+    flex-direction: column !important; 
+    margin: 20px 10px !important; 
+    width: auto !important; 
+  }
 
-    /* SISTEMA I BOX (Annunci, Perchè sceglierci, ecc.): 
-       li mette in fila indiana invece di schiacciarli */
-    .announcements-grid, 
-    .grid-3-col, 
-    .features-grid, 
-    [style*="display: grid"], 
-    [style*="display: flex"] { 
-        display: flex !important;
-        flex-direction: column !important;
-        grid-template-columns: 1fr !important; 
-        gap: 15px !important;
-        width: 100% !important;
-    }
+  /* RADDRIZZA I BOX: da 3 colonne a 1 colonna (niente più schiacciamenti) */
+  .announcements-grid, .grid-3-col, .features-grid { 
+    grid-template-columns: 1fr !important; 
+    display: grid !important; 
+    gap: 15px !important;
+  }
 
-    /* Sistema le immagini degli annunci così non escono dallo schermo */
-    .ann-img, img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
+  /* Evita che le foto escano dallo schermo */
+  img, .ann-img { max-width: 100% !important; height: auto !important; }
 
-    /* Sistema i titoli troppo grandi */
-    h1 { font-size: 26px !important; padding: 0 10px; text-align: center; }
-    
-    /* Forza i singoli box a prendersi tutta la larghezza disponibile */
-    .ann-card, .feature-box, .search-input-group {
-        width: 100% !important;
-        margin: 0 auto !important;
-    }
+  /* Centra i titoli */
+  h1 { font-size: 26px !important; padding: 0 10px; }
 }
