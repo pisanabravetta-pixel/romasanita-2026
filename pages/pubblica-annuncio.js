@@ -10,10 +10,19 @@ export default function PubblicaAnnuncio() {
     e.preventDefault();
     setCaricamento(true);
 
+    // 1. Controllo se l'utente è loggato (Necessario per le tue regole SQL)
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      alert("Attenzione: Devi aver effettuato l'accesso per poter pubblicare. Se non hai un account, registrati o accedi prima.");
+      setCaricamento(false);
+      return;
+    }
+
     const formData = new FormData(e.target);
     const dati = Object.fromEntries(formData);
 
-    // Salvataggio su Supabase
+    // 2. Salvataggio su Supabase
     const { error } = await supabase
       .from('annunci')
       .insert([
@@ -24,8 +33,9 @@ export default function PubblicaAnnuncio() {
           indirizzo: dati.indirizzo,
           descrizione: dati.descrizione,
           whatsapp: dati.whatsapp,
-          telefono: dati.whatsapp, // Usiamo lo stesso numero per chiamate e WA come default
-          approvato: false // Resta invisibile finché non lo approvi tu manualmente su Supabase
+          telefono: dati.whatsapp, 
+          approvato: false,
+          user_id: session.user.id // Importante: collega l'annuncio all'utente
         }
       ]);
 
