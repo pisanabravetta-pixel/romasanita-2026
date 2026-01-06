@@ -1,0 +1,2 @@
+https://mkmyadztjcnebrhuzdka.supabase.co
+sb_publishable_HetGXnk4p_KXZNOlCAmf3w_SW2iJ_ya
