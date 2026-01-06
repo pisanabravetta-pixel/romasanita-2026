@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { supabase } from '../supabaseClient'; // Assicurati che il file sia nella cartella principale
+import { supabase } from '../supabaseClient'; 
 
 export default function PubblicaAnnuncio() {
   const [caricamento, setCaricamento] = useState(false);
@@ -10,11 +10,9 @@ export default function PubblicaAnnuncio() {
     e.preventDefault();
     setCaricamento(true);
 
-    // Recuperiamo i dati dal form
     const formData = new FormData(e.target);
     const dati = Object.fromEntries(formData);
 
-    // Invio a Supabase
     const { error } = await supabase
       .from('annunci')
       .insert([
@@ -24,7 +22,7 @@ export default function PubblicaAnnuncio() {
           zona: dati.zona, 
           descrizione: dati.descrizione,
           whatsapp: dati.whatsapp,
-          approvato: false // Rimane nascosto finché non lo attivi tu su Supabase
+          approvato: false 
         }
       ]);
 
@@ -68,7 +66,6 @@ export default function PubblicaAnnuncio() {
             <p style={{ fontSize: '17px', color: '#4b5563' }}>Inserimento gratuito per i professionisti sanitari.</p>
           </div>
 
-          {/* BOX VANTAGGI FLASH */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px', marginBottom: '40px' }}>
             <div style={{ textAlign: 'center', padding: '15px', border: '1px solid #f1f5f9', borderRadius: '12px', background: '#f8fafc' }}>
               <div style={{ fontSize: '24px', marginBottom: '5px' }}>🚀</div>
@@ -84,9 +81,61 @@ export default function PubblicaAnnuncio() {
             </div>
           </div>
 
-          {/* FORM DI ISCRIZIONE */}
           <form onSubmit={gestisciInvio} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Nome Struttura o Professionista</label>
-              <input name="nome" type="text" placeholder="Es: Farmacia Centrale, Dr. Mario Rossi..." style={{ padding:
+              <input name="nome" type="text" placeholder="Es: Farmacia Centrale..." style={{ padding: '14px', borderRadius: '10px', border: '1px solid #cbd5e1' }} required />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Categoria</label>
+                <select name="categoria" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}>
+                  <option value="Dentista">Dentista</option>
+                  <option value="Farmacia">Farmacia</option>
+                  <option value="Centro Diagnostico">Centro Diagnostico</option>
+                  <option value="Medico Specialista">Medico Specialista</option>
+                  <option value="Assistenza Domiciliare">Assistenza Domiciliare</option>
+                  <option value="Altro">Altro</option>
+                </select>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Zona di Roma</label>
+                <input name="zona" type="text" placeholder="Es: Prati..." style={{ padding: '14px', borderRadius: '10px', border: '1px solid #cbd5e1' }} required />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Descrizione Servizi</label>
+              <textarea name="descrizione" placeholder="Descrivi brevemente..." style={{ padding: '14px', borderRadius: '10px', border: '1px solid #cbd5e1', minHeight: '120px', fontFamily: 'inherit' }}></textarea>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Cellulare/WhatsApp</label>
+              <input name="whatsapp" type="tel" placeholder="Es: 3331234567" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #cbd5e1' }} required />
+            </div>
+
+            <div style={{ marginTop: '10px' }}>
+               <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#64748b', cursor: 'pointer' }}>
+                 <input type="checkbox" required />
+                 Accetto la Privacy Policy.
+               </label>
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={caricamento}
+              style={{ 
+                background: caricamento ? '#94a3b8' : '#2563eb', 
+                color: 'white', padding: '18px', borderRadius: '12px', border: 'none', fontWeight: '800', cursor: 'pointer', fontSize: '16px'
+              }}
+            >
+              {caricamento ? 'Invio in corso...' : 'PUBBLICA ANNUNCIO GRATIS'}
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+  );
+}
