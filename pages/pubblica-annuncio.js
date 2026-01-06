@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { supabase } from '../supabaseClient'; 
+import { supabase } from '../lib/supabaseClient';
 
 export default function PubblicaAnnuncio() {
   const [caricamento, setCaricamento] = useState(false);
