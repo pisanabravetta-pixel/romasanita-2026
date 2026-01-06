@@ -5,10 +5,11 @@ body {
   background-color: #f8fafc; 
   color: #1e293b; 
   overflow-x: hidden; 
+  width: 100%;
 }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
-/* --- TOP BAR (PC E CELLULARE) --- */
+/* --- TOP BAR SEMPRE BLU E CENTRATA --- */
 .top-bar { 
   background-color: #2563eb !important; 
   color: white !important; 
@@ -20,91 +21,91 @@ body {
 }
 
 /* --- HEADER PC --- */
-.header { background: white; border-bottom: 1px solid #e2e8f0; padding: 15px 0; }
-.header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.header { background: white; border-bottom: 1px solid #e2e8f0; padding: 15px 0; width: 100%; }
+.header .container { display: flex; justify-content: space-between; align-items: center; }
 .nav-links { display: flex; gap: 25px; list-style: none; }
 .nav-links a { text-decoration: none; color: #64748b; font-size: 14px; font-weight: 500; }
 .nav-right { display: flex; align-items: center; gap: 30px; }
 
 /* --- HERO PC --- */
-.hero { text-align: center; padding: 60px 0; background-color: #d0e3ff; }
+.hero { text-align: center; padding: 80px 0; background-color: #d0e3ff; width: 100%; }
 .hero h1 { font-size: 42px; font-weight: 800; color: #1e3a8a; margin-bottom: 15px; text-align: center; }
 
-/* --- BARRA RICERCA PC --- */
+/* --- BARRA RICERCA PC (Orizzontale) --- */
 .search-box-container {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   gap: 15px;
   background: white;
   padding: 25px;
   border-radius: 16px;
   max-width: 900px;
-  margin: 40px auto 0;
+  margin: -40px auto 0; /* Sale sopra la hero */
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
 }
 .search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px; }
+.search-input-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px; text-transform: uppercase; }
+.search-input-group input, .search-input-group select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; }
 .btn-search { background: #2563eb; color: white; border: none; padding: 0 35px; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
 /* --- GRIGLIE PC (3 Colonne) --- */
 .announcements-grid, .features-grid, .grid-3-col, .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 25px;
   margin-top: 40px;
 }
 
-/* --- FIX CELLULARE (Sotto 768px) --- */
+/* --- FIX SOLO PER CELLULARE (Sotto 768px) --- */
 @media (max-width: 768px) {
   
-  /* Top Bar sempre blu e centrata */
-  .top-bar { display: block !important; width: 100% !important; }
-
-  /* Header a piani centrato */
+  /* 1. Header: Logo, Menu e Tasti incolonnati e centrati */
   .header .container { flex-direction: column !important; gap: 15px !important; text-align: center !important; }
   .nav-links { justify-content: center !important; flex-wrap: wrap !important; gap: 10px !important; }
   .nav-right { justify-content: center !important; width: 100% !important; gap: 20px !important; }
 
-  /* Titolo Hero Centrato */
-  .hero h1 { font-size: 28px !important; text-align: center !important; padding: 0 10px; }
+  /* 2. Titolo Hero più piccolo */
+  .hero h1 { font-size: 26px !important; }
 
-  /* Barra Ricerca: Uno sotto l'altro con SPAZIO */
+  /* 3. BARRA RICERCA MOBILE: Verticale, Spaziata e Bottone Largo */
   .search-box-container { 
     flex-direction: column !important; 
-    margin: 20px 10px !important; 
+    margin: 20px 15px !important; 
     gap: 20px !important; 
-  }
-
-  /* STATISTICHE CENTRATE */
-  .stats-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  .stat-item {
-    width: 100% !important;
-    text-align: center !important;
     padding: 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    max-width: none !important;
+  }
+  .btn-search { 
+    width: 100% !important; 
+    padding: 18px !important; 
+    font-size: 16px !important; 
   }
 
-  /* BOX PERCHÉ SCEGLIERE / PUBBLICARE (Uno sotto l'altro - Come richiesto) */
-  .features-grid, .grid-3-col, .announcements-grid {
+  /* 4. BOX E GRIGLIE: Uno sotto l'altro al 100% (Risolve tagli e allineamento a SX) */
+  .announcements-grid, .features-grid, .grid-3-col, .stats-grid {
     display: flex !important;
     flex-direction: column !important;
     gap: 20px !important;
     align-items: center !important;
+    width: 100% !important;
   }
 
-  .feature-box, .ann-card { 
+  .feature-box, .ann-card, .stat-item { 
     width: 100% !important; 
     max-width: 100% !important;
-    display: block !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centra tutto il contenuto */
     text-align: center !important;
+    padding: 25px !important;
+  }
+
+  /* 5. STATISTICHE: Centratura forzata di icone e numeri */
+  .stat-item i, .stat-item h3, .stat-item p {
+    margin: 5px auto !important;
+    display: block !important;
   }
 }
