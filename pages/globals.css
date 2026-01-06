@@ -1,198 +1,102 @@
-/* --- STILI GENERALI & RESET --- */
+/* 1. RESET TOTALE: Blocca il sito dentro i bordi del telefono */
 * { 
   box-sizing: border-box; 
   margin: 0; 
   padding: 0; 
 }
 
-body { 
-  /* Usiamo Inter come font principale come impostato nel Document */
-  font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-  background-color: #f8fafc; /* Grigio più freddo e moderno */
-  color: #1e293b; /* Blu/Grigio scuro per migliore leggibilità */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; /* Fondamentale: impedisce al sito di scivolare a sinistra/destra */
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
   -webkit-font-smoothing: antialiased;
 }
 
+/* 2. IL CONTENITORE: Si adatta allo schermo senza uscire dai bordi */
 .container { 
+  width: 100%;
   max-width: 1200px; 
   margin: 0 auto; 
   padding: 0 20px; 
 }
 
-/* --- HEADER & TOP BAR --- */
-.top-bar { 
-  background-color: #2563eb; 
-  color: white; 
-  text-align: center; 
-  padding: 8px; 
-  font-size: 12px; 
-  font-weight: 600; 
-  letter-spacing: 0.5px;
-}
-
+/* 3. L'HEADER (MENU): Pulito e non invasivo */
 .header { 
-  background: rgba(255, 255, 255, 0.95); 
-  backdrop-filter: blur(10px); /* Effetto vetro moderno */
-  padding: 15px 0; 
+  width: 100%;
+  background: white; 
   border-bottom: 1px solid #e2e8f0; 
+  padding: 15px 0; 
   position: sticky; 
   top: 0; 
-  z-index: 100; 
+  z-index: 1000; 
 }
 
-/* FIX ALLINEAMENTO HEADER */
 .header .container {
   display: flex !important;
-  flex-direction: row !important;
   justify-content: space-between !important;
   align-items: center !important;
-  flex-wrap: nowrap !important;
 }
 
-.nav-links {
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 25px !important;
-  list-style: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.nav-links a { 
-  text-decoration: none; 
-  color: #64748b; 
-  font-size: 14px; 
-  font-weight: 500; 
-  transition: color 0.2s;
-}
-
-.nav-links a:hover { color: #2563eb; }
-
-/* --- HERO & SEARCH --- */
-.hero { text-align: center; padding: 80px 0 40px 0; }
-
-.hero h1 { 
-  font-size: 42px; 
-  font-weight: 800; 
-  color: #1e3a8a; 
-  margin-bottom: 15px; 
-  letter-spacing: -1px;
-}
-
-.search-box-container { 
-  background: white; 
-  padding: 25px; 
-  border-radius: 16px; 
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-  display: flex; 
-  gap: 15px; 
-  margin: 40px auto 0;
-  max-width: 900px;
-  border: 1px solid #f1f5f9;
-}
-
-.search-input-group { flex: 1; text-align: left; }
-.search-input-group label { 
-  display: block; 
-  font-size: 11px; 
-  font-weight: 700; 
-  color: #64748b; 
-  margin-bottom: 6px; 
-  text-transform: uppercase;
-}
-
-.search-input-group input, 
-.search-input-group select { 
-  width: 100%; 
-  padding: 12px; 
-  border: 1px solid #e2e8f0; 
-  border-radius: 8px; 
-  font-size: 14px;
-  background-color: #f8fafc;
-}
-
-.btn-search { 
-  background: #2563eb; 
-  color: white; 
-  border: none; 
-  padding: 0 35px; 
-  border-radius: 8px; 
-  font-weight: 700; 
-  cursor: pointer; 
-  transition: all 0.2s;
-}
-
-.btn-search:hover { background: #1d4ed8; transform: translateY(-1px); }
-
-/* --- ANNUNCI (GRID) --- */
-.announcements-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-  gap: 24px; 
-  margin-top: 40px;
-}
-
-.ann-card { 
-  background: white; 
-  border-radius: 12px; 
-  overflow: hidden; 
-  border: 1px solid #e2e8f0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-}
-
-.ann-card:hover { 
-  transform: translateY(-8px); 
-  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1); 
-}
-
-.ann-img { width: 100%; height: 180px; object-fit: cover; }
-.ann-info { padding: 20px; }
-.ann-info small { color: #2563eb; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-.ann-info h4 { margin: 8px 0; font-size: 18px; color: #1e293b; }
-
-/* --- RESPONSIVE --- */
+/* 4. REGOLE SPECIFICHE PER IL CELLULARE (Qui sistemiamo la "merda") */
 @media (max-width: 768px) {
-  .nav-links { display: none !important; } /* Nascondiamo menu per hamburger su mobile */
-  
-  .search-box-container { 
-    flex-direction: column; 
-    margin: 20px;
-    padding: 20px;
-  }
-  
-  .hero h1 { font-size: 30px; padding: 0 10px; }
-  
-  .announcements-grid { 
-    grid-template-columns: 1fr !important; /* Su mobile meglio 1 colonna intera per leggibilità */
-    padding: 0 10px;
-  }
-  
-  .btn-search { padding: 15px; width: 100%; }
-}
-/* --- OTTIMIZZAZIONE FINALE PER CELLULARE --- */
-
-@media (max-width: 768px) {
-  /* Abbassiamo un po' il contenuto delle pagine per non farlo finire sotto l'header fisso */
+  /* Forza tutto il contenuto a stare dritto */
   main {
-    padding-top: 20px !important;
+    width: 100% !important;
+    padding: 20px 0 !important;
+    display: block !important;
   }
 
-  /* Rimpiccioliamo i titoli grandi (H1) che altrimenti uscirebbero dallo schermo */
-  h1 {
-    font-size: 28px !important;
-    line-height: 1.2 !important;
+  /* Titoli rimpiccioliti così non spingono il sito a sinistra */
+  h1 { 
+    font-size: 26px !important; 
+    text-align: center; 
+    padding: 0 15px;
+    margin-bottom: 20px;
   }
 
-  /* Rendiamo i bottoni più facili da cliccare con il pollice */
-  .btn-search, .btn-nav {
-    width: 100%;
+  /* SISTEMIAMO I BOTTONI E IL "PUBBLICA ANNUNCIO" */
+  /* Li mettiamo uno sotto l'altro, larghi quanto lo schermo */
+  .search-box-container {
+    flex-direction: column !important;
+    margin: 20px 15px !important;
     padding: 15px !important;
-    text-align: center;
+    width: auto !important;
+  }
+
+  .btn-search, .btn-nav, .btn-small, a[href="/pubblica-annuncio"] {
+    display: block !important;
+    width: 100% !important;
+    padding: 15px !important;
+    margin: 10px 0 !important;
+    text-align: center !important;
+    position: static !important; /* Toglie ogni sovrapposizione */
+  }
+
+  /* Gli annunci: una sola colonna perfetta */
+  .announcements-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 0 15px !important;
+  }
+
+  .ann-card {
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Nascondi il menu vecchio, usa solo quello nuovo (hamburger) */
+  .nav-links {
+    display: none !important;
   }
 }
 
-/* Stile per l'icona del menu (le 3 linee) */
-.hamburger i {
+/* Stile per il pulsante del menu (le 3 linee) */
+.hamburger {
+  display: block;
+  padding: 5px;
   color: #2563eb;
-  padding: 10px;
 }
