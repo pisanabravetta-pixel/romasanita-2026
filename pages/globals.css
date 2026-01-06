@@ -9,7 +9,7 @@ body {
 }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
-/* --- TOP BAR SEMPRE BLU E CENTRATA --- */
+/* --- TOP BAR BLU --- */
 .top-bar { 
   background-color: #2563eb !important; 
   color: white !important; 
@@ -21,15 +21,15 @@ body {
 }
 
 /* --- HEADER PC --- */
-.header { background: white; border-bottom: 1px solid #e2e8f0; padding: 15px 0; width: 100%; }
+.header { background: white; border-bottom: 1px solid #e2e8f0; padding: 15px 0; }
 .header .container { display: flex; justify-content: space-between; align-items: center; }
 .nav-links { display: flex; gap: 25px; list-style: none; }
 .nav-links a { text-decoration: none; color: #64748b; font-size: 14px; font-weight: 500; }
 .nav-right { display: flex; align-items: center; gap: 30px; }
 
 /* --- HERO PC --- */
-.hero { text-align: center; padding: 80px 0; background-color: #d0e3ff; width: 100%; }
-.hero h1 { font-size: 42px; font-weight: 800; color: #1e3a8a; margin-bottom: 15px; text-align: center; }
+.hero { text-align: center; padding: 80px 0; background-color: #d0e3ff; }
+.hero h1 { font-size: 42px; font-weight: 800; color: #1e3a8a; text-align: center; }
 
 /* --- BARRA RICERCA PC (Orizzontale) --- */
 .search-box-container {
@@ -40,72 +40,64 @@ body {
   padding: 25px;
   border-radius: 16px;
   max-width: 900px;
-  margin: -40px auto 0; /* Sale sopra la hero */
+  margin: -40px auto 40px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   position: relative;
   z-index: 10;
 }
 .search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 5px; text-transform: uppercase; }
-.search-input-group input, .search-input-group select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; }
 .btn-search { background: #2563eb; color: white; border: none; padding: 0 35px; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-/* --- GRIGLIE PC (3 Colonne) --- */
+/* --- GRIGLIE PC (3 Colonne distinte) --- */
 .announcements-grid, .features-grid, .grid-3-col, .stats-grid {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 25px;
-  margin-top: 40px;
+  margin-bottom: 50px;
 }
 
-/* --- FIX SOLO PER CELLULARE (Sotto 768px) --- */
+/* --- FIX CELLULARE (Sotto 768px) --- */
 @media (max-width: 768px) {
   
-  /* 1. Header: Logo, Menu e Tasti incolonnati e centrati */
+  /* 1. Header Centrato a Piani */
   .header .container { flex-direction: column !important; gap: 15px !important; text-align: center !important; }
   .nav-links { justify-content: center !important; flex-wrap: wrap !important; gap: 10px !important; }
   .nav-right { justify-content: center !important; width: 100% !important; gap: 20px !important; }
 
-  /* 2. Titolo Hero più piccolo */
-  .hero h1 { font-size: 26px !important; }
-
-  /* 3. BARRA RICERCA MOBILE: Verticale, Spaziata e Bottone Largo */
+  /* 2. Barra Ricerca Mobile: Verticale e Spaziata */
   .search-box-container { 
     flex-direction: column !important; 
     margin: 20px 15px !important; 
-    gap: 20px !important; 
+    gap: 15px !important; 
     padding: 20px !important;
-    max-width: none !important;
   }
-  .btn-search { 
-    width: 100% !important; 
-    padding: 18px !important; 
-    font-size: 16px !important; 
-  }
+  .btn-search { width: 100% !important; padding: 18px !important; font-size: 16px !important; }
 
-  /* 4. BOX E GRIGLIE: Uno sotto l'altro al 100% (Risolve tagli e allineamento a SX) */
+  /* 3. TUTTO IN COLONNA AL 100% (Evita che il sito vada a sinistra) */
   .announcements-grid, .features-grid, .grid-3-col, .stats-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
-    align-items: center !important;
     width: 100% !important;
+    align-items: center !important;
   }
 
+  /* 4. I BOX (Uno sotto l'altro, larghi quanto lo schermo) */
   .feature-box, .ann-card, .stat-item { 
     width: 100% !important; 
     max-width: 100% !important;
-    margin: 0 !important;
+    margin-bottom: 20px !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important; /* Centra tutto il contenuto */
+    align-items: center !important; 
     text-align: center !important;
-    padding: 25px !important;
+    padding: 30px 20px !important;
   }
 
-  /* 5. STATISTICHE: Centratura forzata di icone e numeri */
+  /* 5. STATISTICHE (Centratura icone/numeri) */
   .stat-item i, .stat-item h3, .stat-item p {
-    margin: 5px auto !important;
+    margin: 0 auto 10px auto !important;
     display: block !important;
   }
+
+  h1 { font-size: 26px !important; text-align: center !important; }
 }
