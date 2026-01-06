@@ -1,9 +1,5 @@
 /* --- STILI GENERALI & RESET --- */
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
   font-family: 'Inter', system-ui, -apple-system, sans-serif; 
@@ -13,21 +9,10 @@ body {
   overflow-x: hidden;
 }
 
-.container { 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* --- HEADER & TOP BAR --- */
-.top-bar { 
-  background-color: #2563eb; 
-  color: white; 
-  text-align: center; 
-  padding: 8px; 
-  font-size: 12px; 
-  font-weight: 600; 
-}
+.top-bar { background-color: #2563eb; color: white; text-align: center; padding: 8px; font-size: 12px; font-weight: 600; }
 
 .header { 
   background: rgba(255, 255, 255, 0.95); 
@@ -45,12 +30,7 @@ body {
   align-items: center !important;
 }
 
-.nav-links {
-  display: flex !important;
-  gap: 25px !important;
-  list-style: none !important;
-}
-
+.nav-links { display: flex !important; gap: 25px !important; list-style: none !important; }
 .nav-links a { text-decoration: none; color: #64748b; font-size: 14px; font-weight: 500; }
 
 .nav-right {
@@ -64,83 +44,73 @@ body {
 .hero h1 { font-size: 42px; font-weight: 800; color: #1e3a8a; margin-bottom: 15px; }
 
 .search-box-container { 
-  background: white; 
-  padding: 25px; 
-  border-radius: 16px; 
+  background: white; padding: 25px; border-radius: 16px; 
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-  display: flex; 
-  gap: 15px; 
-  margin: 40px auto 0;
-  max-width: 900px;
+  display: flex; gap: 15px; margin: 40px auto 0; max-width: 900px;
 }
 
 .search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; }
-.search-input-group input, .search-input-group select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; }
+.btn-search { background: #2563eb; color: white; border: none; padding: 0 35px; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-.btn-search { 
-  background: #2563eb; 
-  color: white; 
-  border: none; 
-  padding: 0 35px; 
-  border-radius: 8px; 
-  font-weight: 700; 
-  cursor: pointer; 
-}
-
-/* --- ANNUNCI --- */
-.announcements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
-.ann-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
-
-/* --- FIX CELLULARE - RIGOROSO --- */
+/* --- FIX CELLULARE - VERSIONE FINALE --- */
 @media (max-width: 768px) {
-  /* 1. Header: Accedi distanziato dal logo */
+  /* 1. Header: Logo a sinistra, Tasti a destra */
   .header .container {
-    flex-direction: column !important; /* Mette logo sopra e tasti sotto se non c'è spazio */
-    gap: 10px !important;
+    flex-direction: row !important; /* Torna in riga */
+    justify-content: space-between !important;
+    padding: 0 10px !important;
   }
+  
+  /* Menu "Farmacie, Dentisti..." - Lo rendiamo scorrevole o più piccolo per non tagliarlo */
+  .nav-links { 
+    display: flex !important; 
+    gap: 10px !important; 
+    overflow-x: auto !important; /* Permette di scorrere se è troppo lungo */
+    padding-bottom: 5px;
+    margin: 10px 0;
+  }
+  .nav-links a { font-size: 12px !important; white-space: nowrap; }
+
+  /* Sposta Accedi e Pubblica più a destra */
   .nav-right {
-    gap: 20px !important; /* Spazio tra Accedi e Pubblica anche su mobile */
-  }
-
-  /* 2. BARRA DI RICERCA: Pulsante Largo e Pieno */
-  .search-box-container { 
-    flex-direction: column !important; 
-    padding: 15px !important;
     gap: 15px !important;
-  }
-  .btn-search { 
-    width: 100% !important; 
-    padding: 18px !important; /* Più alto e facile da cliccare */
-    font-size: 16px !important;
+    margin-left: auto !important; 
   }
 
-  /* 3. BOX "PERCHÉ SCEGLIERE" E "PUBBLICARE" - RISOLUZIONE TAGLIO */
-  /* Colpiamo tutte le griglie e i contenitori di box */
-  .features-grid, .grid-3-col, .grid-2-col, .announcements-grid,
-  section .container > div {
-    display: block !important; /* Forza la caduta verticale totale */
-    width: 100% !important;
-  }
-
-  /* Ogni box deve prendere il 100% della larghezza */
-  .feature-box, .ann-card, .stat-item, [class*="card"], [class*="item"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 20px !important;
-    display: block !important;
-  }
-
-  /* 4. STATISTICHE CENTRATE */
-  .stat-item, .stats-grid div {
-    text-align: center !important;
+  /* 2. STATISTICHE: Centratura totale icone e testo */
+  .stat-item, .stats-grid > div, [class*="stat"] {
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: center !important; /* Centra icone */
+    text-align: center !important;  /* Centra testo */
     justify-content: center !important;
+    width: 100% !important;
     padding: 20px !important;
   }
 
-  /* 5. Titoli */
-  h1 { font-size: 26px !important; }
+  /* Centra specificamente le icone FontAwesome se presenti */
+  .stat-item i, [class*="stat"] i {
+    margin: 0 auto 10px auto !important;
+    display: block !important;
+  }
+
+  /* 3. BOX "PERCHÉ SCEGLIERE" - Risoluzione definitiva taglio */
+  .features-grid, .grid-3-col, .grid-2-col, .announcements-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  .feature-box, .ann-card, [class*="card"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  /* 4. Barra di ricerca e Bottoni */
+  .search-box-container { flex-direction: column !important; width: auto !important; margin: 20px 10px !important; }
+  .btn-search { width: 100% !important; padding: 18px !important; }
+  
+  h1 { font-size: 24px !important; }
+  html, body { overflow-x: hidden !important; }
 }
