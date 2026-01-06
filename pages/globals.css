@@ -169,3 +169,29 @@ body {
   
   .btn-search { padding: 15px; width: 100%; }
 }
+/* --- FIX SOLO PER CELLULARE (Non tocca il PC) --- */
+@media (max-width: 768px) {
+  /* 1. Mette la ricerca in verticale (niente più schiacciamenti) */
+  .search-box-container { 
+    flex-direction: column !important; 
+    gap: 10px !important;
+    padding: 15px !important;
+    margin: 20px 10px !important;
+  }
+
+  /* 2. Forza le griglie di annunci e servizi a 1 colonna sola */
+  .announcements-grid, .grid-3-col, .features-grid, [style*="display: grid"] { 
+    grid-template-columns: 1fr !important; 
+    display: grid !important;
+    gap: 20px !important;
+  }
+
+  /* 3. Evita che i titoli escano dai bordi */
+  h1 { font-size: 26px !important; line-height: 1.2 !important; }
+  
+  /* 4. Sistema i bottoni della ricerca */
+  .btn-search { width: 100% !important; padding: 15px !important; }
+
+  /* 5. Impedisce al sito di scivolare a destra/sinistra */
+  html, body { overflow-x: hidden !important; width: 100% !important; }
+}
