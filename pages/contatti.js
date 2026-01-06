@@ -14,7 +14,7 @@ export default function Contatti() {
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
            <a href="/" style={{ fontWeight: '800', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute</a>
            <nav>
-             <a href="/servizi-sanitari-roma" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: 'bold' }}>Mappa Servizi</a>
+             <a href="/" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: 'bold' }}>Torna alla Home</a>
            </nav>
         </div>
       </header>
@@ -62,4 +62,15 @@ export default function Contatti() {
             <p style={{ fontSize: '15px', color: '#475569' }}>Certamente. Inviaci una mail indicando le modifiche e procederemo all'aggiornamento dopo una breve verifica.</p>
           </div>
           <div style={{ marginBottom: '20px' }}>
-            <p style={{ fontWeight: 'bold',
+            <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>Quanto costa pubblicare un profilo?</p>
+            <p style={{ fontSize: '15px', color: '#475569' }}>Il servizio base di ServiziSalute Roma è completamente gratuito per tutti i professionisti sanitari della capitale.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer style={{ textAlign: 'center', padding: '40px 20px', fontSize: '13px', color: '#94a3b8', borderTop: '1px solid #f1f5f9', marginTop: '60px' }}>
+        © 2026 ServiziSalute Roma - Tutti i diritti riservati.
+      </footer>
+    </div>
+  );
+}
