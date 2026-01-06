@@ -32,3 +32,17 @@ export default function Disclaimer() {
           <p>È importante sottolineare che:</p>
           
           <ul style={{ paddingLeft: '20px', marginBottom: '30px' }}>
+            <li><strong>Non è un servizio medico:</strong> Le informazioni contenute non costituiscono consulenza medica, diagnosi o piani terapeutici.</li>
+            <li><strong>Responsabilità dei dati:</strong> I dati riportati negli annunci (orari, tariffe, specializzazioni) sono forniti dai rispettivi inserzionisti. Non garantiamo l'assoluta precisione o l'aggiornamento in tempo reale.</li>
+            <li><strong>Emergenze:</strong> In caso di emergenza sanitaria, chiamare immediatamente il 112 o il 118 o recarsi al Pronto Soccorso più vicino. Non utilizzare questo portale per situazioni critiche.</li>
+            <li><strong>Rapporto Medico-Paziente:</strong> Il portale facilita solo il contatto. Ogni rapporto professionale avviene al di fuori della nostra piattaforma e sotto la responsabilità del professionista e del paziente.</li>
+          </ul>
+        </div>
+      </main>
+
+      <footer style={{ textAlign: 'center', padding: '40px 20px', fontSize: '12px', color: '#94a3b8' }}>
+        Ultimo aggiornamento: Gennaio 2026
+      </footer>
+    </div>
+  );
+}
