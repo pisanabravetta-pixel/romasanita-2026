@@ -1,134 +1,98 @@
-/* --- STILI GENERALI & RESET --- */
+/* --- STILI GENERALI --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body { 
-  font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+  font-family: 'Inter', sans-serif; 
   background-color: #f8fafc; 
   color: #1e293b; 
-  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-/* --- HEADER & TOP BAR --- */
-.top-bar { background-color: #2563eb; color: white; text-align: center; padding: 8px; font-size: 12px; font-weight: 600; }
-
-.header { 
-  background: rgba(255, 255, 255, 0.95); 
-  backdrop-filter: blur(10px); 
-  padding: 15px 0; 
-  border-bottom: 1px solid #e2e8f0; 
-  position: sticky; 
-  top: 0; 
-  z-index: 100; 
-}
-
+/* --- PC: HEADER (RIFATTO PULITO) --- */
 .header .container {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
+  flex-direction: row !important;
 }
-
 .nav-links { display: flex !important; gap: 25px !important; list-style: none !important; }
-.nav-links a { text-decoration: none; color: #64748b; font-size: 14px; font-weight: 500; }
+.nav-right { display: flex !important; align-items: center !important; gap: 30px !important; }
 
-.nav-right {
-  display: flex !important;
-  align-items: center !important;
-  gap: 30px !important; 
+/* --- PC: GRIGLIE (TORNA TUTTO IN RIGA) --- */
+.announcements-grid { 
+  display: grid !important; 
+  grid-template-columns: repeat(3, 1fr) !important; 
+  gap: 24px; 
+}
+.features-grid, .grid-3-col { 
+  display: grid !important; 
+  grid-template-columns: repeat(3, 1fr) !important; 
+  gap: 30px; 
+}
+.stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
 }
 
-/* --- HERO & SEARCH --- */
-.hero { text-align: center; padding: 60px 0 40px 0; }
-.hero h1 { font-size: 42px; font-weight: 800; color: #1e3a8a; margin-bottom: 15px; }
-
+/* --- PC: BARRA RICERCA --- */
 .search-box-container { 
-  background: white; padding: 25px; border-radius: 16px; 
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-  display: flex; gap: 15px; margin: 40px auto 0; max-width: 900px;
+  display: flex !important; 
+  flex-direction: row !important;
+  gap: 15px; 
+  background: white; 
+  padding: 25px; 
+  border-radius: 16px;
+  max-width: 900px; 
+  margin: 40px auto 0;
 }
 
-.search-input-group { flex: 1; text-align: left; }
-.search-input-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; }
-.search-input-group input, .search-input-group select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; }
-
-.btn-search { background: #2563eb; color: white; border: none; padding: 0 35px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-
-/* --- FIX CELLULARE - RIGOROSO --- */
+/* --- FIX CELLULARE (SOLO SOTTO I 768px) --- */
 @media (max-width: 768px) {
-  
-  /* 1. HEADER A PIANI (Come piaceva a te) */
-  .header .container {
-    flex-direction: column !important; 
-    gap: 15px !important;
-    text-align: center !important;
-  }
-  
-  .nav-links { 
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important; 
-  }
-  
-  .nav-right {
-    justify-content: center !important;
-    width: 100% !important;
-    gap: 20px !important;
-  }
+  /* 1. Header a piani centrato */
+  .header .container { flex-direction: column !important; gap: 15px !important; }
+  .nav-links { justify-content: center !important; flex-wrap: wrap !important; gap: 10px !important; }
+  .nav-right { justify-content: center !important; width: 100% !important; gap: 20px !important; }
 
-  /* 2. BARRA DI RICERCA (Più respiro) */
+  /* 2. BARRA RICERCA: Distanziata e Centrata */
   .search-box-container { 
     flex-direction: column !important; 
-    padding: 25px !important; /* Più spazio interno */
-    gap: 20px !important;
-    margin: 20px 15px !important;
-  }
-  
-  .btn-search { 
-    width: 100% !important; 
     padding: 20px !important; 
-    font-size: 16px !important;
+    margin: 20px 15px !important;
+    gap: 20px !important; /* Spazio tra Cosa Cerchi, Zona e Categoria */
   }
+  .search-input-group { 
+    width: 100% !important; 
+    margin-bottom: 5px !important; /* Ulteriore respiro tra i campi */
+  }
+  .btn-search { width: 100% !important; padding: 18px !important; }
 
-  /* 3. STATISTICHE (Centratura Totale) */
-  .stats-grid, [class*="stats"] {
+  /* 3. STATISTICHE: Centratura Totale (Reset di ogni spazio a sinistra) */
+  .stats-grid, .stats-container {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-  }
-
-  .stat-item, [class*="stat-box"] {
     width: 100% !important;
+  }
+  .stat-item, [class*="stat"] {
+    width: 100% !important;
+    padding: 30px 10px !important;
+    margin: 0 !important;
+    text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important; /* Centra orizzontale */
-    justify-content: center !important; /* Centra verticale */
-    text-align: center !important;
-    padding: 25px !important;
-    margin-bottom: 10px !important;
+    align-items: center !important; /* Centra icone */
+    justify-content: center !important;
+    border-left: none !important; /* Toglie eventuali bordi che spostano il testo */
   }
+  .stat-item * { margin-left: 0 !important; margin-right: 0 !important; text-align: center !important; }
 
-  /* Centra le icone e i numeri dentro le stats */
-  .stat-item i, .stat-item span, .stat-item h3, .stat-item p {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: block !important;
+  /* 4. BOX BASSI (Uno sotto l'altro senza tagli) */
+  .features-grid, .grid-3-col, .announcements-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
   }
-
-  /* 4. PARTE BASSA (Quella che andava bene) */
-  .features-grid, .grid-3-col, .grid-2-col, .announcements-grid,
-  section .container > div {
-    display: block !important; 
-    width: 100% !important;
-  }
-
-  .feature-box, .ann-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 25px !important;
-    display: block !important;
-  }
-
-  h1 { font-size: 26px !important; padding: 0 10px; }
+  .feature-box, .ann-card { width: 100% !important; margin-bottom: 10px !important; }
+  
+  h1 { font-size: 24px !important; }
 }
