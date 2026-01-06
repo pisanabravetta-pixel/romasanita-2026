@@ -10,7 +10,7 @@ export default function ChiSiamo() {
       </Head>
 
       {/* HEADER GLOBALE */}
-      <header style={{ background: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0' }}>
+      <header style={{ background: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
            <a href="/" style={{ fontWeight: '800', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute</a>
            <nav>
@@ -19,58 +19,71 @@ export default function ChiSiamo() {
         </div>
       </header>
 
-      <main style={{ maxWidth: '800px', margin: '50px auto', padding: '0 20px', lineHeight: '1.7' }}>
-        <nav style={{ marginBottom: '20px' }}>
+      <main style={{ maxWidth: '800px', margin: '50px auto', padding: '0 20px', lineHeight: '1.8' }}>
+        <nav style={{ marginBottom: '30px' }}>
           <a href="/" style={{ textDecoration: 'none', color: '#2563eb', fontWeight: 'bold', fontSize: '14px' }}>← Torna alla Home</a>
         </nav>
         
-        <h1 style={{ fontSize: '36px', color: '#1e3a8a', marginBottom: '20px', borderBottom: '4px solid #3b82f6', paddingBottom: '10px', display: 'inline-block' }}>
-          Chi Siamo
-        </h1>
+        <header style={{ marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '40px', color: '#1e3a8a', marginBottom: '10px', fontWeight: '900', letterSpacing: '-1px' }}>
+            Chi Siamo
+          </h1>
+          <div style={{ width: '60px', height: '5px', backgroundColor: '#3b82f6', borderRadius: '10px' }}></div>
+        </header>
         
-        <p style={{ fontSize: '19px', color: '#475569', marginBottom: '30px', fontWeight: '500' }}>
-          <strong>ServiziSalute</strong> è il primo portale di annunci indipendente dedicato interamente al settore sanitario nella città di <strong>Roma</strong>.
+        <p style={{ fontSize: '20px', color: '#475569', marginBottom: '35px', fontWeight: '400', lineHeight: '1.6' }}>
+          <strong>ServiziSalute</strong> è il portale indipendente nato per mappare l'eccellenza sanitaria e la capillarità dei servizi medici nella città di <strong>Roma</strong>.
         </p>
 
-        <section style={{ marginBottom: '40px' }}>
-          <h3 style={{ color: '#1e40af', fontSize: '22px', marginTop: '30px' }}>La nostra missione</h3>
-          <p>
-            Nasciamo con un obiettivo chiaro: semplificare l'incontro tra i cittadini romani e i professionisti della salute. 
-            In una metropoli come Roma, trovare una farmacia di turno, un dentista specializzato o un centro diagnostico nel proprio quartiere può essere dispersivo. 
-            ServiziSalute centralizza queste informazioni in un'unica piattaforma intuitiva e veloce.
+        <section style={{ marginBottom: '50px' }}>
+          <h3 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '15px', fontWeight: '700' }}>La nostra visione</h3>
+          <p style={{ color: '#4b5563' }}>
+            In una metropoli vasta e complessa come la Capitale, l'accesso alle informazioni sanitarie può risultare frammentato. Spesso il professionista di cui abbiamo bisogno si trova a pochi isolati da noi, ma è difficile da individuare rapidamente. 
+          </p>
+          <p style={{ color: '#4b5563', marginTop: '15px' }}>
+            La nostra missione è **abbattere la distanza tra medico e paziente**, centralizzando i dati di studi medici, farmacie e centri diagnostici in un'unica piattaforma intuitiva, geolocalizzata e gratuita.
           </p>
         </section>
 
-        <section style={{ marginBottom: '40px' }}>
-          <h3 style={{ color: '#1e40af', fontSize: '22px', marginTop: '30px' }}>Cosa offriamo</h3>
-          <ul style={{ paddingLeft: '20px' }}>
-            <li style={{ marginBottom: '15px' }}>
-              <strong>Per i cittadini:</strong> Uno strumento completamente gratuito per individuare velocemente presidi sanitari e medici vicino a casa (Prati, EUR, Trastevere, Roma Nord, ecc.), con contatti diretti via WhatsApp o telefono.
-            </li>
-            <li style={{ marginBottom: '15px' }}>
-              <strong>Per i professionisti:</strong> Una vetrina specializzata e gratuita per migliorare il proprio posizionamento locale (Local SEO) e connettersi con nuovi pazienti nella propria zona di operatività.
-            </li>
-          </ul>
+        <section style={{ marginBottom: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+          <div style={{ padding: '25px', backgroundColor: '#f8fafc', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ color: '#2563eb', margin: '0 0 10px 0' }}>Per i Cittadini</h4>
+            <p style={{ fontSize: '15px', color: '#64748b', margin: 0 }}>
+              Offriamo uno strumento rapido per trovare assistenza immediata nel proprio quartiere, con la possibilità di contattare i professionisti direttamente su WhatsApp per ridurre i tempi di attesa.
+            </p>
+          </div>
+          <div style={{ padding: '25px', backgroundColor: '#f8fafc', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ color: '#2563eb', margin: '0 0 10px 0' }}>Per i Professionisti</h4>
+            <p style={{ fontSize: '15px', color: '#64748b', margin: 0 }}>
+              Forniamo una vetrina digitale ad alto impatto locale (Local SEO), aiutando medici e strutture a farsi conoscere dai residenti della propria zona (Prati, EUR, Roma Nord, ecc.).
+            </p>
+          </div>
         </section>
 
         {/* BOX NOTA LEGALE / DISCLAIMER */}
-        <div style={{ backgroundColor: '#f0f9ff', padding: '30px', borderRadius: '16px', marginTop: '50px', border: '1px solid #bae6fd' }}>
-          <h4 style={{ margin: '0 0 12px 0', color: '#0369a1', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span>ℹ️</span> Nota Importante
+        <div style={{ backgroundColor: '#fff7ed', padding: '30px', borderRadius: '20px', marginTop: '60px', border: '1px solid #ffedd5' }}>
+          <h4 style={{ margin: '0 0 12px 0', color: '#9a3412', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '16px' }}>
+            <span>⚠️</span> Disclaimer Legale
           </h4>
-          <p style={{ margin: 0, fontSize: '14px', color: '#0c4a6e' }}>
-            ServiziSalute è una piattaforma di annunci informativi. Non siamo una struttura sanitaria, non eroghiamo prestazioni mediche e non sostituiamo il parere del medico curante o dei servizi di emergenza (118). 
-            Il nostro compito è puramente tecnologico: connettere chi cerca un servizio con chi lo offre, promuovendo la trasparenza e la prossimità dei servizi sul territorio romano.
+          <p style={{ margin: 0, fontSize: '14px', color: '#7c2d12', opacity: 0.9 }}>
+            ServiziSalute è un aggregatore informativo di annunci. Non costituisce una struttura sanitaria, non eroga direttamente prestazioni mediche e non si assume responsabilità sulla qualità delle prestazioni fornite dai terzi inserzionisti. 
+          </p>
+          <p style={{ margin: '10px 0 0 0', fontSize: '14px', color: '#7c2d12', opacity: 0.9, fontWeight: 'bold' }}>
+            In caso di emergenza, contattare sempre il Numero Unico di Emergenza 112 o il 118.
           </p>
         </div>
       </main>
 
-      {/* FOOTER COERENTE */}
-      <footer style={{ background: '#0f172a', color: 'white', padding: '40px 20px', textAlign: 'center', marginTop: '80px' }}>
-        <p style={{ fontSize: '14px', margin: 0, opacity: 0.8 }}>© 2026 ServiziSalute – Il portale della sanità a Roma</p>
-        <div style={{ marginTop: '10px' }}>
-          <a href="/privacy-policy" style={{ color: '#94a3b8', fontSize: '12px', textDecoration: 'none', margin: '0 10px' }}>Privacy Policy</a>
-          <a href="/pubblica-annuncio" style={{ color: '#4ade80', fontSize: '12px', textDecoration: 'none', margin: '0 10px', fontWeight: 'bold' }}>Iscriviti come Medico</a>
+      {/* FOOTER */}
+      <footer style={{ background: '#0f172a', color: 'white', padding: '60px 20px', textAlign: 'center', marginTop: '100px' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <p style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#3b82f6' }}>ServiziSalute Roma</p>
+          <p style={{ fontSize: '13px', opacity: 0.6, marginBottom: '25px' }}>Il network tecnologico per la sanità di prossimità nella Capitale.</p>
+          <div style={{ borderTop: '1px solid #1e293b', paddingTop: '25px' }}>
+            <a href="/privacy-policy" style={{ color: '#94a3b8', fontSize: '12px', textDecoration: 'none', margin: '0 15px' }}>Privacy Policy</a>
+            <a href="/pubblica-annuncio" style={{ color: '#4ade80', fontSize: '12px', textDecoration: 'none', margin: '0 15px', fontWeight: 'bold' }}>Iscrivi il tuo Studio</a>
+          </div>
+          <p style={{ marginTop: '30px', fontSize: '11px', color: '#475569' }}>© 2026 Tutti i diritti riservati.</p>
         </div>
       </footer>
     </div>
