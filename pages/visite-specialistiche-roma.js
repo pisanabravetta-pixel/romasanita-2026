@@ -96,4 +96,40 @@ export default function VisiteSpecialisticheRoma() {
                 <a href={`https://wa.me/${v.whatsapp}`} target="_blank" rel="noreferrer" style={{ flex: 1, textAlign: 'center', backgroundColor: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
                   WhatsApp
                 </a>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', border: '1px solid #3b82f6', color: '#3b82f6', padding: '12px', borderRadius: '10px',
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', border: '1px solid #3b82f6', color: '#3b82f6', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
+                  Chiama Studio
+                </a>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#fff', borderRadius: '16px', border: '1px dashed #cbd5e1' }}>
+            <p style={{ color: '#64748b' }}>Nessuno specialista ancora registrato per questa categoria.</p>
+          </div>
+        )}
+
+        {/* CTA PER MEDICI */}
+        <div style={{ marginTop: '60px', textAlign: 'center', padding: '40px', backgroundColor: '#1e40af', borderRadius: '24px', color: 'white' }}>
+          <h2 style={{ margin: '0 0 12px 0', fontSize: '24px' }}>Sei un Medico Specialista?</h2>
+          <p style={{ fontSize: '16px', marginBottom: '25px', opacity: '0.9' }}>
+            Unisciti al network di ServiziSalute Roma e rendi il tuo studio facilmente reperibile dai pazienti della Capitale.
+          </p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#fff', color: '#1e40af', padding: '15px 35px', borderRadius: '50px', textDecoration: 'none', fontWeight: '800', display: 'inline-block' }}>
+            Registra il tuo Studio Gratis
+          </a>
+        </div>
+      </main>
+
+      {/* FOOTER SEO */}
+      <footer style={{ background: '#0f172a', color: 'white', padding: '60px 20px', marginTop: '80px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h3 style={{ color: '#3b82f6', fontSize: '18px', marginBottom: '15px' }}>I migliori specialisti di Roma a portata di click</h3>
+          <p style={{ fontSize: '14px', opacity: '0.7', lineHeight: '1.6', marginBottom: '20px' }}>
+            ServiziSalute Roma è il portale dedicato alla sanità romana. Qui puoi trovare medici per ogni branca: dalla cardiologia all'odontoiatria, coprendo zone come EUR, Prati, Centro Storico e Roma Nord. La tua salute è la nostra priorità.
+          </p>
+          <p style={{ fontSize: '12px', opacity: '0.5' }}>© 2026 ServiziSalute Roma - Tutti i diritti riservati.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
