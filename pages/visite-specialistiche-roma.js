@@ -6,14 +6,16 @@ export default function VisiteSpecialisticheRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. MOTORE DINAMICO: Recupera tutti i medici specialisti dal Database
+  // 1. MOTORE DINAMICO POTENZIATO
   useEffect(() => {
     async function fetchSpecialisti() {
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        // Filtriamo per categorie che contengono "Medico" o "Visita"
-        .or('categoria.ilike.%Medico%,categoria.ilike.%Visita%')
+        // Abbiamo allargato il filtro: ora prende tutto ciò che è medico o specialistico
+        .or('categoria.ilike.%Medico%,categoria.ilike.%Visita%,categoria.ilike.%Cardiologi%,categoria.ilike.%Dentisti%,categoria.ilike.%Diagnostica%')
+        .eq('approvato', true) // Mostra solo quelli approvati
+        .order('is_top', { ascending: false }) // I "TOP" appaiono per primi
         .order('created_at', { ascending: false });
 
       if (!error && data) {
@@ -50,12 +52,12 @@ export default function VisiteSpecialisticheRoma() {
           Ricerca rapida di <strong>medici specialisti nella Capitale</strong>. Contatta direttamente gli studi medici per prenotare visite cliniche, esami diagnostici e consulenze specialistiche.
         </p>
         
-        {/* MENU FILTRI PER SPECIALITÀ */}
+        {/* MENU FILTRI PER SPECIALITÀ - LINK DI RICHIAMO */}
         <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '35px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
           <h4 style={{ margin: '0 0 15px 0', color: '#1e40af', fontSize: '15px' }}>Filtra per branca medica:</h4>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <a href="/cardiologi-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Cardiologia</a>
-            {/* Qui potrai aggiungere /dermatologi-roma, /ginecologi-roma, ecc. */}
+            <a href="/dentisti-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Dentisti</a>
             <span style={{ fontSize: '13px', color: '#94a3b8', padding: '8px' }}>Altre specialità in arrivo...</span>
           </div>
         </div>
@@ -70,16 +72,20 @@ export default function VisiteSpecialisticheRoma() {
               padding: '25px', 
               borderRadius: '16px', 
               marginBottom: '20px', 
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+              border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              position: 'relative'
             }}>
+              {v.is_top && (
+                <span style={{ position: 'absolute', top: '-10px', right: '20px', backgroundColor: '#3b82f6', color: 'white', padding: '2px 10px', borderRadius: '10px', fontSize: '10px', fontWeight: 'bold' }}>TOP PARTNER</span>
+              )}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <span style={{ fontSize: '11px', color: '#3b82f6', textTransform: 'uppercase', fontWeight: '900', backgroundColor: '#eff6ff', padding: '4px 10px', borderRadius: '6px' }}>
                     {v.categoria}
                   </span>
                   <h3 style={{ margin: '12px 0 5px 0', color: '#1e3a8a', fontSize: '22px' }}>{v.nome}</h3>
-                  <p style={{ margin: '0', fontSize: '15px', color: '#64748b' }}>📍 {v.indirizzo} ({v.zona})</p>
+                  <p style={{ margin: '0', fontSize: '15px', color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
                   <p style={{ fontSize: '15px', color: '#475569', marginTop: '12px', lineHeight: '1.5' }}>
                     {v.descrizione}
                   </p>
@@ -90,34 +96,4 @@ export default function VisiteSpecialisticheRoma() {
                 <a href={`https://wa.me/${v.whatsapp}`} target="_blank" rel="noreferrer" style={{ flex: 1, textAlign: 'center', backgroundColor: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
                   WhatsApp
                 </a>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', border: '1px solid #3b82f6', color: '#3b82f6', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>
-                  Chiama Studio
-                </a>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#fff', borderRadius: '16px', border: '1px dashed #cbd5e1' }}>
-            <p style={{ color: '#64748b' }}>Nessuno specialista ancora registrato per questa categoria.</p>
-          </div>
-        )}
-
-        {/* CTA PER MEDICI */}
-        <div style={{ marginTop: '60px', textAlign: 'center', padding: '40px', backgroundColor: '#1e40af', borderRadius: '24px', color: 'white' }}>
-          <h2 style={{ margin: '0 0 12px 0', fontSize: '24px' }}>Sei un Medico Specialista?</h2>
-          <p style={{ fontSize: '16px', marginBottom: '25px', opacity: '0.9' }}>
-            Unisciti al network di ServiziSalute Roma e rendi il tuo studio facilmente reperibile dai pazienti della Capitale.
-          </p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#fff', color: '#1e40af', padding: '15px 35px', borderRadius: '50px', textDecoration: 'none', fontWeight: '800', display: 'inline-block' }}>
-            Registra il tuo Studio Gratis
-          </a>
-        </div>
-      </main>
-
-      {/* FOOTER */}
-      <footer style={{ background: '#0f172a', color: 'white', padding: '60px 20px', marginTop: '80px', textAlign: 'center' }}>
-        <p style={{ fontSize: '14px', opacity: '0.7' }}>© 2026 ServiziSalute Roma - Il network dei medici specialisti a Roma.</p>
-      </footer>
-    </div>
-  );
-}
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', border: '1px solid #3b82f6', color: '#3b82f6', padding: '12px', borderRadius: '10px',
