@@ -6,16 +6,16 @@ export default function VisiteSpecialisticheRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. MOTORE DINAMICO POTENZIATO
+  // 1. MOTORE DINAMICO CORRETTO (Solo Medici e Specialistica)
   useEffect(() => {
     async function fetchSpecialisti() {
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        // Abbiamo allargato il filtro: ora prende tutto ciò che è medico o specialistico
-        .or('categoria.ilike.%Medico%,categoria.ilike.%Visita%,categoria.ilike.%Cardiologi%,categoria.ilike.%Dentisti%,categoria.ilike.%Diagnostica%')
-        .eq('approvato', true) // Mostra solo quelli approvati
-        .order('is_top', { ascending: false }) // I "TOP" appaiono per primi
+        // Filtro mirato: NO Dentisti, NO Farmacie. Solo specialistica medica.
+        .or('categoria.ilike.%Medico%,categoria.ilike.%Visita%,categoria.ilike.%Cardiologi%,categoria.ilike.%Diagnostica%')
+        .eq('approvato', true)
+        .order('is_top', { ascending: false })
         .order('created_at', { ascending: false });
 
       if (!error && data) {
@@ -30,7 +30,7 @@ export default function VisiteSpecialisticheRoma() {
     <div style={{ fontFamily: 'sans-serif', color: '#333', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Head>
         <title>Visite Specialistiche Roma | Prenota il tuo Medico Specialista</title>
-        <meta name="description" content="Trova i migliori medici specialisti a Roma. Prenota visite cardiologiche, dermatologiche e oculistiche nei principali quartieri della Capitale." />
+        <meta name="description" content="Trova i migliori medici specialisti a Roma. Prenota visite cardiologiche, dermatologiche e diagnostica nei principali quartieri della Capitale." />
       </Head>
 
       {/* HEADER */}
@@ -57,8 +57,8 @@ export default function VisiteSpecialisticheRoma() {
           <h4 style={{ margin: '0 0 15px 0', color: '#1e40af', fontSize: '15px' }}>Filtra per branca medica:</h4>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <a href="/cardiologi-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Cardiologia</a>
-            <a href="/dentisti-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Dentisti</a>
-            <span style={{ fontSize: '13px', color: '#94a3b8', padding: '8px' }}>Altre specialità in arrivo...</span>
+            <a href="/diagnostica-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Diagnostica</a>
+            <span style={{ fontSize: '13px', color: '#94a3b8', padding: '8px' }}>Altre specialità (Dermatologia, Ginecologia) in arrivo...</span>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export default function VisiteSpecialisticheRoma() {
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h3 style={{ color: '#3b82f6', fontSize: '18px', marginBottom: '15px' }}>I migliori specialisti di Roma a portata di click</h3>
           <p style={{ fontSize: '14px', opacity: '0.7', lineHeight: '1.6', marginBottom: '20px' }}>
-            ServiziSalute Roma è il portale dedicato alla sanità romana. Qui puoi trovare medici per ogni branca: dalla cardiologia all'odontoiatria, coprendo zone come EUR, Prati, Centro Storico e Roma Nord. La tua salute è la nostra priorità.
+            ServiziSalute Roma è il portale dedicato alla sanità romana. Qui puoi trovare medici specialisti, centri diagnostici e cliniche d'eccellenza, coprendo zone come EUR, Prati, Centro Storico e Roma Nord.
           </p>
           <p style={{ fontSize: '12px', opacity: '0.5' }}>© 2026 ServiziSalute Roma - Tutti i diritti riservati.</p>
         </div>
