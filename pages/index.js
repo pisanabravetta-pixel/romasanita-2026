@@ -95,9 +95,10 @@ const eseguiRicerca = () => {
             <li><a href="/servizi-domicilio-roma">Domicilio</a></li>
           </ul>
           <div className="nav-right">
-            <a href="#" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
-            <a href="/pubblica-annuncio" className="btn-search" style={{padding: '10px 22px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px'}}>Pubblica annuncio</a>
-          </div>
+  {/* Modificato qui: rimosso # e messo /login */}
+  <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
+  <a href="/pubblica-annuncio" className="btn-search" style={{padding: '10px 22px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px'}}>Pubblica annuncio</a>
+</div>
         </div>
       </header>
 {/* HERO SECTION */}
