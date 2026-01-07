@@ -12,7 +12,7 @@ export default function VisiteSpecialisticheRoma() {
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        // Filtriamo solo per categorie che riguardano strettamente le visite mediche
+        // Filtra solo medici/specialisti
         .or('categoria.ilike.%Medico%,categoria.ilike.%Visita%,categoria.ilike.%Cardiologi%')
         .eq('approvato', true)
         .order('is_top', { ascending: false })
@@ -49,16 +49,17 @@ export default function VisiteSpecialisticheRoma() {
         {/* TITOLO E INTRO SEO */}
         <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px' }}>Visite Specialistiche a Roma</h1>
         <p style={{ color: '#475569', fontSize: '18px', lineHeight: '1.6', marginBottom: '30px' }}>
-          Ricerca rapida di <strong>medici specialisti nella Capitale</strong>. Contatta direttamente gli studi medici per prenotare visite cliniche e consulenze specialistiche.
+          Ricerca rapida di <strong>medici specialisti nella Capitale</strong>. Contatta direttamente gli studi medici per prenotare visite cliniche e consulenze specialistiche nei principali quartieri.
         </p>
         
-        {/* MENU FILTRI - LINK DI RICHIAMO ALLE ALTRE CATEGORIE (PER SEO) */}
+        {/* MENU FILTRI - LINK DI RICHIAMO ALLE ZONE (CORRETTO) */}
         <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '35px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
-          <h4 style={{ margin: '0 0 15px 0', color: '#1e40af', fontSize: '15px' }}>Naviga per categoria:</h4>
+          <h4 style={{ margin: '0 0 15px 0', color: '#1e40af', fontSize: '15px' }}>Cerca uno specialista vicino a te:</h4>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <a href="/cardiologi-roma" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Cardiologia</a>
-            <a href="/dentisti-roma" style={{ color: '#64748b', fontSize: '13px', textDecoration: 'none', backgroundColor: '#f1f5f9', padding: '8px 18px', borderRadius: '25px', border: '1px solid #e2e8f0' }}>Dentisti</a>
-            <a href="/diagnostica-roma" style={{ color: '#64748b', fontSize: '13px', textDecoration: 'none', backgroundColor: '#f1f5f9', padding: '8px 18px', borderRadius: '25px', border: '1px solid #e2e8f0' }}>Diagnostica</a>
+            <a href="/medici-roma-centro" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Roma Centro</a>
+            <a href="/medici-roma-prati" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Prati</a>
+            <a href="/medici-roma-eur" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>EUR</a>
+            <a href="/medici-roma-nord" style={{ color: '#3b82f6', fontSize: '13px', textDecoration: 'none', backgroundColor: '#eff6ff', padding: '8px 18px', borderRadius: '25px', border: '1px solid #dbeafe', fontWeight: '600' }}>Roma Nord</a>
           </div>
         </div>
 
@@ -123,9 +124,9 @@ export default function VisiteSpecialisticheRoma() {
       {/* FOOTER SEO */}
       <footer style={{ background: '#0f172a', color: 'white', padding: '60px 20px', marginTop: '80px', textAlign: 'center' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h3 style={{ color: '#3b82f6', fontSize: '18px', marginBottom: '15px' }}>Assistenza Specialistica di Qualità a Roma</h3>
+          <h3 style={{ color: '#3b82f6', fontSize: '18px', marginBottom: '15px' }}>Esperti in Medicina Specialistica a Roma</h3>
           <p style={{ fontSize: '14px', opacity: '0.7', lineHeight: '1.6', marginBottom: '20px' }}>
-            ServiziSalute Roma è il network dei medici specialisti. Trova il professionista più vicino a te in pochi clic, dal centro storico alle zone residenziali come EUR e Prati.
+            Il portale di riferimento per le visite specialistiche a Roma. Mettiamo in contatto pazienti e medici nei quartieri EUR, Prati, Centro e Roma Nord per garantire un'assistenza sanitaria d'eccellenza.
           </p>
           <p style={{ fontSize: '12px', opacity: '0.5' }}>© 2026 ServiziSalute Roma - Tutti i diritti riservati.</p>
         </div>
