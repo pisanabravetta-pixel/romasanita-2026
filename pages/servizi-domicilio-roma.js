@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 import { supabase } from '../lib/supabaseClient';
 
 export default function ServiziDomicilioRoma() {
@@ -25,52 +26,34 @@ export default function ServiziDomicilioRoma() {
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Head>
         <title>Servizi Sanitari a Domicilio Roma | Assistenza e Cure | ServiziSalute</title>
-        <meta name="description" content="Trova servizi sanitari a domicilio a Roma: infermieri, fisioterapisti e medici pronti ad assisterti direttamente a casa tua nei quartieri di Roma." />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "MedicalOrganization",
-          "name": "Servizi a Domicilio Roma - ServiziSalute",
-          "description": "Elenco dei professionisti che offrono assistenza sanitaria domiciliare a Roma.",
-          "areaServed": "Roma"
-        })}} />
+        <meta name="description" content="Trova assistenza sanitaria a domicilio a Roma: infermieri, fisioterapisti e medici pronti ad assisterti direttamente a casa tua." />
       </Head>
 
+      <Script id="breadcrumb-domicilio" type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
+            { "@type": "ListItem", "position": 2, "name": "Servizi a Domicilio Roma", "item": "https://www.servizisalute.it/servizi-domicilio-roma" }
+          ]
+        })
+      }} />
+
       <main style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
-        <h1 style={{ color: '#1e40af', fontSize: '32px' }}>Servizi a Domicilio Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '30px' }}>
-          Ricerca <strong>assistenza sanitaria a casa tua</strong>. Trova infermieri, fisioterapisti e medici specialisti che effettuano visite domiciliari a Roma.
-        </p>
-
-        {/* SEO ZONE - Navigazione per zone per servizi a domicilio */}
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '30px', border: '1px solid #e2e8f0' }}>
-          <h4 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#1e40af' }}>Filtra per zona di intervento:</h4>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <a href="/servizi-domicilio-roma-sud" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Roma Sud</a>
-            <a href="/servizi-domicilio-roma-nord" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Roma Nord</a>
-            <a href="/servizi-domicilio-roma-centro" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Centro</a>
-          </div>
-        </div>
-
-        {loading ? (
-          <p>Ricerca professionisti a domicilio...</p>
-        ) : servizi.length > 0 ? (
-          servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
-              <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
-              <p style={{ color: '#64748b' }}>📍 Copertura: <strong>{v.zona}</strong> — {v.indirizzo}</p>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-                <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              </div>
+        <h1 style={{ color: '#1e40af', fontSize: '32px' }}>Assistenza a Domicilio Roma</h1>
+        
+        {loading ? <p>Caricamento...</p> : servizi.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
+            <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
+            <p style={{ color: '#64748b' }}>📍 Zona operativa: <strong>{v.zona}</strong> — {v.indirizzo}</p>
+            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
+              <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Mappa</a>
             </div>
-          ))
-        ) : (
-          <p>Nessun servizio a domicilio trovato.</p>
-        )}
-
-        <footer style={{ marginTop: '60px', padding: '20px', borderTop: '1px solid #e2e8f0', color: '#94a3b8', fontSize: '12px' }}>
-          <p><strong>Disclaimer:</strong> ServiziSalute Roma facilita il contatto con i professionisti ma non è responsabile della qualità delle prestazioni erogate a domicilio. In caso di emergenza medica acuta, contattare sempre il 118.</p>
-        </footer>
+          </div>
+        ))}
       </main>
     </div>
   );
