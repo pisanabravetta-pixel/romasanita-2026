@@ -17,11 +17,11 @@ const eseguiRicerca = () => {
 
     const cosa = ricerca.toLowerCase();
     const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
-    const parametri = "?zona=" + zonaScelta + "&cerca=" + encodeURIComponent(cosa);
+    const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
 
-    // --- AREA DENTISTI (Ora include Carie e Pulizia) ---
+    // --- AREA DENTISTI ---
     if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("pulizia") || cosa.includes("apparecch")) {
-      if (zonaKebab === "prati" || zonaKebab === "eur" || zonaKebab === "san-giovanni") {
+      if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
         window.location.href = "/dentisti-roma-" + zonaKebab;
       } else {
         window.location.href = "/dentisti-roma" + parametri;
@@ -33,21 +33,20 @@ const eseguiRicerca = () => {
       if (zonaKebab === "prati") {
         window.location.href = "/cardiologi-roma-prati";
       } else {
-        // Se non è a Prati, mandiamolo alla categoria generale
         window.location.href = "/visite-specialistiche-roma" + parametri;
       }
     }
 
-    // --- AREA DIAGNOSTICA ---
+    // --- AREA DIAGNOSTICA (Aggiunto Roma Nord per Parioli/Flaminio) ---
     else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
-      if (zonaKebab === "roma-nord") {
+      if (zonaKebab === "parioli" || zonaKebab === "flaminio") {
         window.location.href = "/diagnostica-roma-nord";
       } else {
         window.location.href = "/diagnostica-roma" + parametri;
       }
     }
 
-    // --- FARMACIE (Aggiornato per Centro Storico) ---
+    // --- AREA FARMACIE ---
     else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio")) {
       if (zonaKebab === "centro-storico") {
         window.location.href = "/farmacie-roma-centro";
@@ -56,9 +55,9 @@ const eseguiRicerca = () => {
       }
     }
 
-    // --- SERVIZI A DOMICILIO (Aggiornato per Roma Sud) ---
+    // --- SERVIZI A DOMICILIO (Aggiunto Roma Sud per Magliana/Ostiense) ---
     else if (cosa.includes("domicilio") || cosa.includes("infermier") || cosa.includes("fisio")) {
-      if (zonaKebab === "eur" || zonaKebab === "ostiense" || zonaKebab === "garbatella") {
+      if (["eur", "ostiense", "magliana"].includes(zonaKebab)) {
         window.location.href = "/servizi-domicilio-roma-sud";
       } else {
         window.location.href = "/servizi-domicilio-roma" + parametri;
