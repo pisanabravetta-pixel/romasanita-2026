@@ -26,7 +26,7 @@ export default function PaginaDinamicaSalute() {
         query = query.ilike('categoria', `%${categoriaCercata}%`);
 
         if (zonaCercata && zonaCercata.toLowerCase() !== 'roma') {
-          query = query.ilike('zona', `%${zonaCercata}%`);
+          query = query.ilike('categoria', `%${categoriaCercata}%`);
         }
 
         const { data, error } = await query.order('is_top', { ascending: false });
