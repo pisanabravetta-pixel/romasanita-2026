@@ -87,13 +87,13 @@ const eseguiRicerca = () => {
       <header className="header">
         <div className="container">
           <div style={{fontSize: '24px', fontWeight: '800', color: '#0070f3'}}>ServiziSalute</div>
-          <ul className="nav-links">
-            <li><a href="/farmacie-roma">Farmacie</a></li>
-            <li><a href="/dentisti-roma">Dentisti</a></li>
-            <li><a href="/diagnostica-roma">Diagnostica</a></li>
-            <li><a href="/visite-specialistiche-roma">Specialisti</a></li>
-            <li><a href="/servizi-domicilio-roma">Domicilio</a></li>
-          </ul>
+         <ul className="nav-links">
+  <li><a href="/farmacie-roma">Farmacie</a></li>
+  <li><a href="/dentisti-roma">Dentisti</a></li>
+  <li><a href="/diagnostica-roma">Diagnostica</a></li>
+  <li><a href="/visite-specialistiche-roma">Specialisti</a></li>
+  <li><a href="/servizi-domicilio-roma">Domicilio</a></li>
+</ul>
           <div className="nav-right">
   {/* Modificato qui: rimosso # e messo /login */}
   <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
