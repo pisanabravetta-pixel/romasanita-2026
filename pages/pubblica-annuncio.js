@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 
 export default function PubblicaAnnuncio() {
   const [caricamento, setCaricamento] = useState(false);
   const [inviato, setInviato] = useState(false);
+  const [sessione, setSessione] = useState(null);
+
+  // 1. Controllo sessione all'avvio
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSessione(session);
+    });
+  }, []);
 
   const gestisciInvio = async (e) => {
     e.preventDefault();
     setCaricamento(true);
 
-    // 1. Controllo se l'utente è loggato (Necessario per le tue regole SQL)
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
-      alert("Attenzione: Devi aver effettuato l'accesso per poter pubblicare. Se non hai un account, registrati o accedi prima.");
+    if (!sessione) {
+      alert("Devi effettuare l'accesso per pubblicare un annuncio.");
       setCaricamento(false);
       return;
     }
@@ -33,33 +38,44 @@ export default function PubblicaAnnuncio() {
           indirizzo: dati.indirizzo,
           descrizione: dati.descrizione,
           whatsapp: dati.whatsapp,
-          telefono: dati.whatsapp, 
-          approvato: false,
-          user_id: session.user.id // Importante: collega l'annuncio all'utente
+          telefono: dati.whatsapp, // Salviamo lo stesso numero per entrambi i campi
+          approvato: false, // Necessita di revisione manuale
+          is_top: false,
+          user_id: sessione.user.id 
         }
       ]);
 
     setCaricamento(false);
 
     if (error) {
-      alert("Errore tecnico: " + error.message);
+      alert("Errore durante l'invio: " + error.message);
     } else {
       setInviato(true);
       window.scrollTo(0, 0);
     }
   };
 
+  // Schermata di successo
   if (inviato) {
     return (
       <div style={{ textAlign: 'center', padding: '100px 20px', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
         <div style={{ fontSize: '60px', marginBottom: '20px' }}>🚀</div>
-        <h1 style={{ color: '#1e3a8a', fontSize: '32px' }}>Richiesta Ricevuta!</h1>
+        <h1 style={{ color: '#1e3a8a', fontSize: '32px' }}>Richiesta in Revisione</h1>
         <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '500px', margin: '10px auto 30px auto' }}>
-          Grazie per esserti unito a <strong>ServiziSalute Roma</strong>. Il tuo profilo è in fase di revisione tecnica e sarà online entro poche ore.
+          Grazie! Il tuo profilo professionale è stato inviato. Verrà verificato dal nostro team e pubblicato entro 24 ore.
         </p>
-        <a href="/" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
-          Torna alla Home
-        </a>
+        <a href="/" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Torna alla Home</a>
+      </div>
+    );
+  }
+
+  // Schermata se NON loggato
+  if (!sessione) {
+    return (
+      <div style={{ textAlign: 'center', padding: '100px 20px', fontFamily: 'sans-serif' }}>
+        <h2>Accesso richiesto</h2>
+        <p>Devi essere registrato per pubblicare un annuncio.</p>
+        <a href="/login" style={{ color: '#2563eb', fontWeight: 'bold' }}>Vai al Login →</a>
       </div>
     );
   }
@@ -67,107 +83,87 @@ export default function PubblicaAnnuncio() {
   return (
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f1f5f9', minHeight: '100vh' }}>
       <Head>
-        <title>Pubblica il tuo profilo sanitario gratis | ServiziSalute Roma</title>
-        <meta name="description" content="Sei un medico, un farmacista o un fisioterapista a Roma? Iscriviti gratis al portale ServiziSalute e raggiungi nuovi pazienti nel tuo quartiere." />
+        <title>Inserisci il tuo Studio Medico | ServiziSalute Roma</title>
       </Head>
 
       <header style={{ background: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
            <a href="/" style={{ fontWeight: '800', color: '#2563eb', textDecoration: 'none', fontSize: '20px' }}>ServiziSalute</a>
-           <a href="/" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: 'bold' }}>← Esci</a>
+           <span style={{ fontSize: '13px', color: '#64748b' }}>Area Professionisti</span>
         </div>
       </header>
 
       <main style={{ maxWidth: '700px', margin: '40px auto', padding: '0 20px' }}>
         <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '24px', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
           
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <h1 style={{ color: '#1e3a8a', fontSize: '28px', marginBottom: '10px' }}>Unisciti al Network Sanitario</h1>
-            <p style={{ fontSize: '16px', color: '#64748b' }}>Inserimento gratuito per medici e strutture di Roma.</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '40px' }}>
-            <div style={{ textAlign: 'center', padding: '10px', border: '1px solid #f1f5f9', borderRadius: '12px', background: '#f8fafc' }}>
-              <div style={{ fontSize: '20px' }}>🎯</div>
-              <h3 style={{ fontSize: '10px', color: '#1e3a8a', margin: '5px 0 0 0', fontWeight: '900' }}>TARGET LOCALE</h3>
-            </div>
-            <div style={{ textAlign: 'center', padding: '10px', border: '1px solid #f1f5f9', borderRadius: '12px', background: '#f8fafc' }}>
-              <div style={{ fontSize: '20px' }}>⚡</div>
-              <h3 style={{ fontSize: '10px', color: '#1e3a8a', margin: '5px 0 0 0', fontWeight: '900' }}>CONTATTO DIRETTO</h3>
-            </div>
-            <div style={{ textAlign: 'center', padding: '10px', border: '1px solid #f1f5f9', borderRadius: '12px', background: '#f8fafc' }}>
-              <div style={{ fontSize: '20px' }}>💰</div>
-              <h3 style={{ fontSize: '10px', color: '#1e3a8a', margin: '5px 0 0 0', fontWeight: '900' }}>100% GRATIS</h3>
-            </div>
-          </div>
+          <h1 style={{ color: '#1e3a8a', fontSize: '28px', marginBottom: '30px', textAlign: 'center' }}>Crea il tuo Profilo Professionale</h1>
 
           <form onSubmit={gestisciInvio} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Nome Struttura o Professionista *</label>
-              <input name="nome" type="text" placeholder="Esempio: Dr. Mario Rossi / Farmacia Trastevere" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '16px' }} required />
+              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Nome Struttura o Medico *</label>
+              <input name="nome" type="text" placeholder="Es: Studio Dentistico Rossi" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Categoria *</label>
-                <select name="categoria" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '16px' }} required>
+                <select name="categoria" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
                   <option value="">Seleziona...</option>
-                  <option value="Medico Specialista">Medico Specialista</option>
-                  <option value="Farmacia">Farmacia</option>
                   <option value="Dentista">Dentista</option>
-                  <option value="Centro Diagnostico">Centro Diagnostico</option>
-                  <option value="Assistenza Domiciliare">Assistenza Domiciliare</option>
-                  <option value="Fisioterapista">Fisioterapista</option>
+                  <option value="Cardiologo">Cardiologo</option>
+                  <option value="Farmacia">Farmacia</option>
+                  <option value="Diagnostica">Diagnostica / Laboratorio</option>
+                  <option value="Domicilio">Servizi a Domicilio</option>
+                  <option value="Medico Specialista">Altro Specialista</option>
                 </select>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Zona di Roma *</label>
-                <input name="zona" type="text" placeholder="Es: EUR, Prati, Centro..." style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '16px' }} required />
+                <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Quartiere / Zona *</label>
+                <select name="zona" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
+                    <option value="">Scegli zona...</option>
+                    <option value="Prati">Prati / Ottaviano</option>
+                    <option value="EUR">EUR / Laurentina</option>
+                    <option value="Centro">Centro Storico</option>
+                    <option value="Parioli">Parioli / Flaminio</option>
+                    <option value="San Giovanni">San Giovanni / Appio</option>
+                    <option value="Trastevere">Trastevere / Testaccio</option>
+                    <option value="Ostiense">Ostiense / Garbatella</option>
+                    <option value="Monteverde">Monteverde</option>
+                    <option value="Tiburtina">Tiburtina / Nomentana</option>
+                </select>
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Indirizzo Completo *</label>
-              <input name="indirizzo" type="text" placeholder="Via, Piazza, Numero Civico..." style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '16px' }} required />
+              <input name="indirizzo" type="text" placeholder="Es: Via Giulio Cesare, 10" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Descrizione Professionalità / Servizi</label>
-              <textarea name="descrizione" placeholder="Descrivi i tuoi servizi, orari o specializzazioni..." style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', minHeight: '120px', fontFamily: 'inherit', fontSize: '16px' }}></textarea>
+              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>WhatsApp / Cellulare *</label>
+              <input name="whatsapp" type="tel" placeholder="Es: 3330000000" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Cellulare / WhatsApp (Per contatti diretti) *</label>
-              <input name="whatsapp" type="tel" placeholder="Es: 3331234567" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '16px' }} required />
-              <small style={{ color: '#64748b', fontSize: '12px' }}>Verrà utilizzato per permettere ai pazienti di scriverti su WhatsApp.</small>
-            </div>
-
-            <div style={{ marginTop: '10px', padding: '15px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-               <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: '#475569', cursor: 'pointer' }}>
-                 <input type="checkbox" required style={{ width: '18px', height: '18px' }} />
-                 <span>Autorizzo il trattamento dei dati e confermo la veridicità delle informazioni.</span>
-               </label>
+              <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Descrizione Servizi</label>
+              <textarea name="descrizione" placeholder="Descrivi brevemente specializzazioni o orari..." style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', minHeight: '100px' }} />
             </div>
 
             <button 
               type="submit" 
               disabled={caricamento}
               style={{ 
-                background: caricamento ? '#94a3b8' : '#2563eb', 
-                color: 'white', padding: '20px', borderRadius: '15px', border: 'none', fontWeight: '800', cursor: 'pointer', fontSize: '18px', boxShadow: '0 4px 14px 0 rgba(37,99,235,0.39)', transition: 'all 0.2s'
+                background: caricamento ? '#94a3b8' : '#2563eb', color: 'white', padding: '18px', 
+                borderRadius: '15px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px'
               }}
             >
-              {caricamento ? 'Elaborazione in corso...' : 'PUBBLICA PROFILO ORA'}
+              {caricamento ? 'Invio in corso...' : 'INVIA PER APPROVAZIONE'}
             </button>
-            <p style={{ textAlign: 'center', fontSize: '12px', color: '#94a3b8' }}>Nessuna carta di credito richiesta. Il servizio è gratuito.</p>
+
           </form>
         </div>
       </main>
-
-      <footer style={{ textAlign: 'center', padding: '40px 20px', color: '#94a3b8', fontSize: '13px' }}>
-        © 2026 ServiziSalute Roma — Area Professionisti
-      </footer>
     </div>
   );
 }
