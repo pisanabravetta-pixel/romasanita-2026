@@ -102,6 +102,7 @@ export default function PubblicaAnnuncio() {
               <input name="nome" type="text" placeholder="Es: Studio Medico Rossi" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
             </div>
 
+            {/* SEZIONE CATEGORIA E ZONA UNIFICATE PER IL DATABASE */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Categoria *</label>
@@ -110,24 +111,24 @@ export default function PubblicaAnnuncio() {
                   <option value="Dentista">Dentista</option>
                   <option value="Cardiologo">Cardiologo</option>
                   <option value="Farmacia">Farmacia</option>
-                  <option value="Diagnostica">Diagnostica / Laboratorio</option>
-                  <option value="Domicilio">Servizi a Domicilio</option>
-                  <option value="Medico Specialista">Altro Specialista</option>
+                  <option value="Diagnostica">Diagnostica</option>
+                  <option value="Domicilio">Domicilio</option>
+                  <option value="Medico Specialista">Medico Specialista</option>
                 </select>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontWeight: '700', fontSize: '14px', color: '#1e3a8a' }}>Quartiere *</label>
                 <select name="zona" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
                     <option value="">Scegli zona...</option>
-                    <option value="Prati">Prati / Ottaviano</option>
-                    <option value="EUR">EUR / Laurentina</option>
-                    <option value="Centro">Centro Storico</option>
-                    <option value="Parioli">Parioli / Flaminio</option>
-                    <option value="San Giovanni">San Giovanni / Appio</option>
-                    <option value="Trastevere">Trastevere / Testaccio</option>
-                    <option value="Ostiense">Ostiense / Garbatella</option>
+                    <option value="Centro Storico">Centro Storico</option>
+                    <option value="Prati">Prati</option>
+                    <option value="EUR">EUR</option>
+                    <option value="Parioli">Parioli</option>
+                    <option value="San Giovanni">San Giovanni</option>
+                    <option value="Trastevere">Trastevere</option>
+                    <option value="Ostiense">Ostiense</option>
                     <option value="Monteverde">Monteverde</option>
-                    <option value="Tiburtina">Tiburtina / Nomentana</option>
+                    <option value="Tiburtina">Tiburtina</option>
                 </select>
               </div>
             </div>
