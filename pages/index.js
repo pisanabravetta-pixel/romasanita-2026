@@ -3,11 +3,10 @@ import { useState } from 'react';
 
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
-  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
+ const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
   const zoneRoma = [
-    "Centro Storico", "Testaccio", "Trastevere", "Monti", "San Lorenzo", "Pigneto", "Garbatella", 
-    "Ostiense", "Tiburtino", "San Giovanni", "Prati", "Villa Borghese", "Nomentano", "Parioli", 
-    "Portuense", "Gianicolense", "Trionfale", "Popolo", "Eur", "Monteverde", "Flaminio"
+    "Centro Storico", "Prati", "EUR", "Parioli", "San Giovanni", 
+    "Trastevere", "Ostiense", "Monteverde", "Tiburtina"
   ];
 const eseguiRicerca = () => {
     if(!ricerca) {
