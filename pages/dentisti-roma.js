@@ -12,7 +12,7 @@ export default function DentistiRoma() {
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .ilike('categoria', 'Dentist%')
+        .ilike('categoria', 'dentisti%')
         .eq('approvato', true)
         .order('is_top', { ascending: false });
 
