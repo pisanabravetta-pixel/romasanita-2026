@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 import { supabase } from '../lib/supabaseClient';
 
 export default function DiagnosticaRoma() {
@@ -8,13 +9,7 @@ export default function DiagnosticaRoma() {
 
   useEffect(() => {
     async function fetchDiagnostica() {
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .ilike('categoria', '%Diagnostica%') 
-        .eq('approvato', true)
-        .order('is_top', { ascending: false });
-
+      const { data, error } = await supabase.from('annunci').select('*').ilike('categoria', '%Diagnostica%').eq('approvato', true).order('is_top', { ascending: false });
       if (!error && data) setCentri(data);
       setLoading(false);
     }
@@ -25,52 +20,35 @@ export default function DiagnosticaRoma() {
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Head>
         <title>Centri Diagnostici Roma | Analisi e Radiologia | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori centri diagnostici a Roma. Laboratori di analisi, ecografie e radiologia nei principali quartieri della Capitale." />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "MedicalOrganization",
-          "name": "Diagnostica Roma - ServiziSalute",
-          "description": "Elenco dei centri diagnostici e laboratori di analisi a Roma.",
-          "areaServed": "Roma"
-        })}} />
       </Head>
+
+      {/* 🧭 SCHEMA BREADCRUMB */}
+      <Script id="breadcrumb-diagnostica" type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
+            { "@type": "ListItem", "position": 2, "name": "Diagnostica a Roma", "item": "https://www.servizisalute.it/diagnostica-roma" }
+          ]
+        })
+      }} />
 
       <main style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
         <h1 style={{ color: '#1e40af', fontSize: '32px' }}>Diagnostica a Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '30px' }}>
-          Ricerca un <strong>centro diagnostico o laboratorio</strong> a Roma. Contatta le strutture per analisi, ecografie e diagnostica per immagini.
-        </p>
 
-        {/* SEO ZONE - Collegamento alle zone per diagnostica */}
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '30px', border: '1px solid #e2e8f0' }}>
-          <h4 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#1e40af' }}>Filtra per zona:</h4>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            <a href="/diagnostica-roma-nord" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Roma Nord</a>
-            <a href="/diagnostica-roma-eur" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>EUR</a>
-            <a href="/diagnostica-roma-centro" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Centro</a>
-          </div>
-        </div>
-
-        {loading ? (
-          <p>Caricamento centri...</p>
-        ) : centri.length > 0 ? (
-          centri.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
-              <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
-              <p style={{ color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-                <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              </div>
+        {loading ? <p>Caricamento...</p> : centri.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
+            <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
+            <p style={{ color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
+              <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
+              {/* 🗺️ MAPPA */}
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Mappa</a>
             </div>
-          ))
-        ) : (
-          <p>Nessun centro diagnostico trovato.</p>
-        )}
-
-        <footer style={{ marginTop: '60px', padding: '20px', borderTop: '1px solid #e2e8f0', color: '#94a3b8', fontSize: '12px' }}>
-          <p><strong>Disclaimer:</strong> ServiziSalute Roma fornisce solo informazioni di contatto. Verificare sempre orari e modalità di prenotazione direttamente con il centro diagnostico.</p>
-        </footer>
+          </div>
+        ))}
       </main>
     </div>
   );
