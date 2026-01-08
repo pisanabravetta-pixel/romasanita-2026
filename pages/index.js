@@ -5,8 +5,9 @@ export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
   const zoneRoma = [
-    "Centro Storico", "Prati", "EUR", "Parioli", "San Giovanni", 
-    "Trastevere", "Ostiense", "Monteverde", "Tiburtina"
+    "Appio Latino", "Cassia", "Centro Storico", "EUR", "Flaminio", 
+    "Magliana", "Monteverde", "Nomentano", "Ostiense", "Parioli", 
+    "Prati", "San Giovanni", "Tiburtina", "Trastevere"
   ];
 const eseguiRicerca = () => {
     if(!ricerca) {
