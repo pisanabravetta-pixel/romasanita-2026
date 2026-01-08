@@ -29,19 +29,19 @@ export default function FarmacieRoma() {
         <meta name="description" content="Trova le farmacie a Roma nel tuo quartiere. Orari, numeri di telefono e posizione delle farmacie aperte nella Capitale." />
       </Head>
 
-      {/* 🧭 SCHEMA BREADCRUMB */}
+      {/* 🧭 SCHEMA BREADCRUMB (SEO) */}
       <Script id="breadcrumb-farmacie" type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
-            { "@type": "ListItem", "position": 2, "name": "Farmacie a Roma", "item": "https://www.servizisalute.it/farmacie-roma" }
+            { "@type": "ListItem", "position": 2, "name": "Farmacie a Roma", "item": "https://www.servizisalute.it/farmacie" }
           ]
         })
       }} />
 
-      <main style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
+      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
         <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px' }}>Farmacie a Roma</h1>
         <p style={{ fontSize: '18px', color: '#475569', marginBottom: '30px' }}>Cerca la farmacia più vicina nel tuo quartiere.</p>
 
@@ -64,31 +64,34 @@ export default function FarmacieRoma() {
                 <p style={{ color: '#64748b', margin: '5px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               </div>
               
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                 {v.urgenza_24h && (
                   <span style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #fee2e2' }}>🌙 H24 / NOTTURNA</span>
                 )}
                 {v.vicino_metro && (
                   <span style={{ backgroundColor: '#eff6ff', color: '#1e40af', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #dbeafe' }}>🚇 METRO</span>
                 )}
+                {v.primo_sconto && (
+                   <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #dcfce7' }}>✨ PROMO</span>
+                )}
               </div>
             </div>
 
-            {/* 📝 DESCRIZIONE (Servizi come tamponi, autoanalisi, ecc.) */}
+            {/* 📝 DESCRIZIONE */}
             <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6', margin: '15px 0' }}>
               {v.descrizione || "Servizi farmaceutici, farmaci da banco e consulenza professionale. Contatta la farmacia per conoscere gli orari di apertura e la disponibilità di prodotti."}
             </p>
 
-            {/* 💸 OFFERTA PROMOZIONALE */}
+            {/* 💸 AREA SERVIZI/PROMO */}
             {v.primo_sconto && (
               <div style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '12px', borderRadius: '12px', fontSize: '14px', marginBottom: '20px', border: '1px dashed #22c55e', fontWeight: '500' }}>
-                ✨ <strong>Servizio:</strong> Prenota farmaci o invia ricetta tramite WhatsApp per ritiro rapido.
+                ✨ <strong>Servizio Smart:</strong> Prenota farmaci o invia ricetta tramite WhatsApp per ritiro rapido.
               </div>
             )}
             
             {/* 📱 TASTI AZIONE */}
             <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
+              <a href={`tel:${v.whatsapp}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
                 Chiama
               </a>
               <a href={`https://wa.me/${v.whatsapp}?text=Buongiorno, vorrei informazioni sulla disponibilità di un farmaco.`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
@@ -101,8 +104,21 @@ export default function FarmacieRoma() {
           </div>
         ))}
 
-        <footer style={{ marginTop: '60px', borderTop: '1px solid #e2e8f0', padding: '20px 0', textAlign: 'center' }}>
-          <p style={{ color: '#64748b', fontSize: '14px' }}>Cerchi altro? <a href="/diagnostica-roma" style={{ color: '#2563eb', fontWeight: 'bold' }}>Diagnostica e Analisi Roma</a></p>
+        {/* 🔗 LINK DI RICHIAMO PER PROFESSIONISTI */}
+        <div style={{ marginTop: '50px', textAlign: 'center', padding: '30px', backgroundColor: '#e0e7ff', borderRadius: '24px', border: '1px solid #c7d2fe' }}>
+          <h3 style={{ color: '#1e3a8a', margin: '0 0 10px 0' }}>Sei il titolare di una Farmacia?</h3>
+          <p style={{ color: '#475569', marginBottom: '20px' }}>Inserisci la tua attività su ServiziSalute Roma per farti trovare dai pazienti della tua zona.</p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>
+            Pubblica il tuo profilo gratis →
+          </a>
+        </div>
+
+        {/* 🧱 FOOTER CON DISCLAIMER LEGALE */}
+        <footer style={{ marginTop: '80px', borderTop: '1px solid #e2e8f0', padding: '40px 0' }}>
+          <div style={{ fontSize: '12px', color: '#64748b', textAlign: 'justify', lineHeight: '1.5' }}>
+            <p><strong>Disclaimer Medico:</strong> Le informazioni contenute su ServiziSalute.it sono fornite a solo scopo informativo e non intendono sostituire il parere del medico curante o di altri professionisti sanitari. Nonostante l'impegno nel verificare i dati, la redazione non garantisce l'accuratezza o la completezza delle informazioni fornite dai singoli inserzionisti. ServiziSalute non risponde di eventuali ritardi o inesattezze riguardanti gli orari delle farmacie di turno. In caso di emergenza medica, contattare immediatamente il 118 o recarsi al Pronto Soccorso.</p>
+            <p style={{ marginTop: '20px', textAlign: 'center' }}>© 2026 ServiziSalute Roma — Tutti i diritti riservati.</p>
+          </div>
         </footer>
       </main>
     </div>
