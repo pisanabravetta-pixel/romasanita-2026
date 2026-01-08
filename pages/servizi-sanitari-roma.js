@@ -36,7 +36,7 @@ export default function ServiziSanitariRoma() {
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
-            { "@type": "ListItem", "position": 2, "name": "Servizi Sanitari Roma", "item": "https://www.servizisalute.it/servizi-sanitari" }
+            { "@type": "ListItem", "position": 2, "name": "Servizi Sanitari Roma", "item": "https://www.servizisalute.it/servizi-sanitari-roma" }
           ]
         })
       }} />
@@ -51,7 +51,7 @@ export default function ServiziSanitariRoma() {
           Guida completa ai professionisti e alle strutture sanitarie della Capitale.
         </p>
 
-        {/* 🗺️ GRIGLIA NAVIGAZIONE CATEGORIE (SEO & UX) */}
+        {/* 🗺️ GRIGLIA NAVIGAZIONE CATEGORIE (LINK CORRETTI) */}
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
@@ -59,12 +59,12 @@ export default function ServiziSanitariRoma() {
           marginBottom: '40px' 
         }}>
           {[
-            { n: 'Dentisti', l: '/dentisti' },
-            { n: 'Diagnostica', l: '/diagnostica' },
-            { n: 'Specialisti', l: '/visite-specialistiche' },
-            { n: 'Domicilio', l: '/servizi-domicilio' },
-            { n: 'Farmacie', l: '/farmacie' },
-            { n: 'Cardiologi', l: '/cardiologi' }
+            { n: 'Dentisti', l: '/dentisti-roma' },
+            { n: 'Diagnostica', l: '/diagnostica-roma' },
+            { n: 'Specialisti', l: '/visite-specialistiche-roma' },
+            { n: 'Domicilio', l: '/servizi-domicilio-roma' },
+            { n: 'Farmacie', l: '/farmacie-roma' },
+            { n: 'Cardiologi', l: '/cardiologi-roma-prati' }
           ].map((cat) => (
             <a key={cat.n} href={cat.l} style={{ 
               backgroundColor: 'white', 
@@ -124,10 +124,10 @@ export default function ServiziSanitariRoma() {
               {v.descrizione ? v.descrizione.substring(0, 160) + '...' : "Professionista sanitario selezionato a Roma. Contatta la struttura per maggiori informazioni su orari e prestazioni."}
             </p>
             
-            {/* 📱 TASTI AZIONE */}
+            {/* 📱 TASTI AZIONE (LINK GOOGLE MAPS CORRETTO) */}
             <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <a href={`tel:${v.telefono}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-              <a href={`https://wa.me/${v.whatsapp}?text=Salve, la contatto da ServiziSalute Roma.`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
+              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}?text=Salve, la contatto da ServiziSalute Roma.`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
               <a 
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} 
                 target="_blank" 
