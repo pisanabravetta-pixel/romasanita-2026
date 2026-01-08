@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Script from 'next/script'; // Importante per lo schema
 import { supabase } from '../lib/supabaseClient';
 
 export default function DentistiRoma() {
@@ -11,7 +12,7 @@ export default function DentistiRoma() {
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .ilike('categoria', 'Dentist%') // Trova Dentista e Dentisti
+        .ilike('categoria', 'Dentist%')
         .eq('approvato', true)
         .order('is_top', { ascending: false });
 
@@ -25,51 +26,69 @@ export default function DentistiRoma() {
     <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Head>
         <title>Dentisti a Roma | Studi Odontoiatrici e Urgenze | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori dentisti a Roma. Studi dentistici specializzati in implantologia e ortodonzia nei principali quartieri della Capitale." />
+        <meta name="description" content="Trova i migliori dentisti a Roma. Studi dentistici specializzati in implantologia e ortodonzia nei quartieri della Capitale." />
+        
+        {/* SCHEMA MEDICAL ORGANIZATION */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "MedicalOrganization",
           "name": "Dentisti Roma - ServiziSalute",
-          "description": "Elenco dei migliori studi dentistici a Roma suddivisi per quartiere.",
           "areaServed": "Roma"
         })}} />
       </Head>
 
+      {/* SCHEMA BREADCRUMB - Aiuta Google a capire il percorso */}
+      <Script
+        id="breadcrumb-dentisti"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
+              { "@type": "ListItem", "position": 2, "name": "Dentisti a Roma", "item": "https://www.servizisalute.it/dentisti-roma" }
+            ]
+          }),
+        }}
+      />
+
       <main style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
         <h1 style={{ color: '#1e40af', fontSize: '32px' }}>Dentisti a Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '30px' }}>
-          Ricerca il tuo <strong>studio dentistico a Roma</strong>. Contatta direttamente i professionisti per visite di controllo e interventi specialistici.
-        </p>
-
-        {/* SEO ZONE - Navigazione locale */}
+        
+        {/* FILTRI ZONE */}
         <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '16px', marginBottom: '30px', border: '1px solid #e2e8f0' }}>
           <h4 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#1e40af' }}>Filtra per zona:</h4>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <a href="/dentisti-roma-prati" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>Prati</a>
             <a href="/dentisti-roma-eur" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>EUR</a>
-            <a href="/dentisti-roma-san-giovanni" style={{ padding: '8px 15px', backgroundColor: '#eff6ff', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', color: '#3b82f6', fontWeight: '600' }}>San Giovanni</a>
           </div>
         </div>
 
-        {loading ? (
-          <p>Caricamento studi...</p>
-        ) : medici.length > 0 ? (
-          medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
-              <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
-              <p style={{ color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-                <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              </div>
+        {loading ? <p>Caricamento...</p> : medici.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', marginBottom: '20px', border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0' }}>
+            <h3 style={{ margin: '0', color: '#1e3a8a' }}>{v.nome}</h3>
+            <p style={{ color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+            
+            <div style={{ marginTop: '20px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: '1 1 120px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
+              <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: '1 1 120px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
+              
+              {/* COLLEGAMENTO GOOGLE MAPS DINAMICO */}
+              <a 
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ flex: '1 1 120px', textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '12px', borderRadius: '10px', textDecoration: 'none', fontWeight: 'bold' }}
+              >
+                📍 Mappa
+              </a>
             </div>
-          ))
-        ) : (
-          <p>Nessun dentista trovato.</p>
-        )}
+          </div>
+        ))}
 
         <footer style={{ marginTop: '60px', padding: '20px', borderTop: '1px solid #e2e8f0', color: '#94a3b8', fontSize: '12px' }}>
-          <p><strong>Disclaimer:</strong> ServiziSalute Roma è un portale di annunci informativi. In caso di urgenza odontoiatrica, contattare direttamente la struttura o il pronto soccorso odontoiatrico più vicino.</p>
+          <p><strong>Disclaimer:</strong> ServiziSalute Roma è un portale informativo...</p>
         </footer>
       </main>
     </div>
