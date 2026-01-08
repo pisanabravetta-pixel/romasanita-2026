@@ -57,14 +57,18 @@ export default function DentistiRoma() {
         <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px', marginTop: '10px' }}>Dentisti a Roma</h1>
         <p style={{ fontSize: '18px', color: '#475569', marginBottom: '20px' }}>I migliori studi odontoiatrici della Capitale selezionati per zona.</p>
 
-        {/* 🔗 LINK RAPIDI ZONE (SEO) */}
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
-          {['Prati', 'EUR', 'Parioli', 'San Giovanni', 'Centro Storico'].map((zona) => (
-            <a key={zona} href={`/dentisti/${zona.toLowerCase().replace(' ', '-')}`} style={{ backgroundColor: '#fff', border: '1px solid #cbd5e1', padding: '8px 15px', borderRadius: '20px', fontSize: '13px', color: '#1e40af', textDecoration: 'none', fontWeight: '500' }}>
-              Dentisti {zona}
-            </a>
-          ))}
-        </div>
+        {/* 🔗 LINK RAPIDI ZONE (SEO) - CORRETTO */}
+<div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
+  {['Prati', 'EUR', 'Parioli', 'San Giovanni', 'Centro Storico'].map((zona) => (
+    <a 
+      key={zona} 
+      href={`/dentisti-roma-${zona.toLowerCase().replace(' ', '-')}`} 
+      style={{ backgroundColor: '#fff', border: '1px solid #cbd5e1', padding: '8px 15px', borderRadius: '20px', fontSize: '13px', color: '#1e40af', textDecoration: 'none', fontWeight: '500' }}
+    >
+      Dentisti {zona}
+    </a>
+  ))}
+</div>
 
         {loading ? (
           <p>Caricamento dentisti...</p>
