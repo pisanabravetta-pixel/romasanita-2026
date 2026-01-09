@@ -16,39 +16,44 @@ export default function PaginaDinamicaSalute() {
     async function fetchDati() {
       try {
         setLoading(true);
-        // ESEMPIO: slug = "dentisti-roma-prati"
+        
+        // Dividiamo lo slug (es: "dentisti-roma-prati" oppure solo "prati")
         const parti = slug.split('-'); 
         
-        // 1. Identifichiamo la categoria (la prima parola: "dentisti")
-        const categoriaCercata = parti[0]; 
-        
-        // 2. Identifichiamo la zona (l'ultima parola: "prati")
-        const zonaCercata = parti.length > 1 ? parti[parti.length - 1] : null;
+        // Se è un link lungo (es. dentisti-roma-prati) prendiamo la prima e l'ultima parola
+        // Se è un link corto (es. prati) la categoria diventa nulla e cerchiamo solo la zona
+        const categoriaCercata = parti.length > 1 ? parti[0] : null; 
+        const zonaCercata = parti[parti.length - 1];
 
-        // Formattiamo il titolo per l'utente
-        const catBella = categoriaCercata.charAt(0).toUpperCase() + categoriaCercata.slice(1);
-        const zonaBella = zonaCercata ? zonaCercata.charAt(0).toUpperCase() + zonaCercata.slice(1) : "";
+        // Formattazione Titolo
+        const catBella = categoriaCercata ? categoriaCercata.charAt(0).toUpperCase() + categoriaCercata.slice(1) : "Servizi";
+        const zonaBella = zonaCercata.charAt(0).toUpperCase() + zonaCercata.slice(1);
         setTitolo(`${catBella} a Roma ${zonaBella}`);
 
-        // 3. COSTRUIAMO LA QUERY
+        // COSTRUZIONE QUERY
         let query = supabase
           .from('annunci')
           .select('*')
-          .eq('approvato', true)
-          .ilike('categoria', `%${categoriaCercata}%`); // Cerca "dentisti" in categoria
+          .eq('approvato', true);
 
-        // 4. FILTRIAMO PER ZONA (Se presente nello slug)
-        if (zonaCercata && zonaCercata.toLowerCase() !== 'roma') {
-          query = query.ilike('zona', zonaCercata); // Cerca "prati" in zona (senza badare a maiuscole)
+        // Se abbiamo una categoria nello slug (es. dentisti), filtriamo
+        if (categoriaCercata && categoriaCercata !== 'roma') {
+          query = query.ilike('categoria', `%${categoriaCercata}%`);
+        }
+
+        // FILTRO ZONA "INTELLIGENTE"
+        // Il simbolo % permette di trovare "Prati" anche se nel DB hai scritto "Roma Prati"
+        if (zonaCercata && zonaCercata !== 'roma') {
+          query = query.ilike('zona', `%${zonaCercata}%`);
         }
 
         const { data, error } = await query.order('is_top', { ascending: false });
         
         if (error) throw error;
-        if (data) setServizi(data);
+        setServizi(data || []);
 
       } catch (err) {
-        console.error("Errore recupero dati:", err);
+        console.error("Errore:", err);
       } finally {
         setLoading(false);
       }
@@ -69,7 +74,7 @@ export default function PaginaDinamicaSalute() {
         
         <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginTop: '20px', marginBottom: '30px' }}>
             <h1 style={{ color: '#1e40af', margin: 0, fontSize: '28px' }}>{titolo}</h1>
-            <p style={{ color: '#64748b', marginTop: '10px' }}>Risultati verificati per la zona di {titolo.split('Roma')[1] || 'Roma'}.</p>
+            <p style={{ color: '#64748b', marginTop: '10px' }}>Lista aggiornata dei professionisti in zona {titolo.split('Roma')[1] || 'Roma'}.</p>
         </div>
 
         {loading ? (
@@ -94,8 +99,8 @@ export default function PaginaDinamicaSalute() {
           ))
         ) : (
           <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>
-            <p style={{ fontSize: '18px', color: '#64748b' }}>Nessun annuncio trovato per questa ricerca.</p>
-            <p style={{ fontSize: '14px', color: '#94a3b8' }}>Suggerimento: Verifica che l'annuncio nel database abbia "approvato" su true e la zona scritta correttamente.</p>
+            <p style={{ fontSize: '18px', color: '#64748b' }}>Nessun risultato in questa zona.</p>
+            <p style={{ fontSize: '14px', color: '#94a3b8' }}>Verifica su Supabase che l'annuncio abbia <b>approvato: true</b> e che la zona contenga la parola cercata.</p>
           </div>
         )}
       </main>
