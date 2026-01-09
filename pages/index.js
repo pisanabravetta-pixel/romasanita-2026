@@ -71,13 +71,13 @@ const eseguiRicerca = () => {
   };
   return (
     <div>
-      <Head>
+     <Head>
         <title>ServiziSalute - Il Portale della Sanità a Roma</title>
         <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-        {/* --- INIZIO SCHEMA ORGANIZATION (Dati per Google) --- */}
+        {/* --- INIZIO SCHEMA ORGANIZATION --- */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -85,8 +85,8 @@ const eseguiRicerca = () => {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "ServiziSalute",
-              "url": "https://www.servizisalute.it",
-              "logo": "https://www.servizisalute.it/favicon.ico",
+              "url": typeof window !== 'undefined' ? window.location.origin : "https://servizisalute.it",
+              "logo": typeof window !== 'undefined' ? `${window.location.origin}/favicon.ico` : "",
               "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
               "address": {
                 "@type": "PostalAddress",
@@ -98,8 +98,7 @@ const eseguiRicerca = () => {
           }}
         />
         {/* --- FINE SCHEMA ORGANIZATION --- */}
-      </Head>
-
+      </Head> 
      {/* TOP BAR */}
       <div className="top-bar">
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
