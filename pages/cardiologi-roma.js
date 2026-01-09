@@ -73,7 +73,7 @@ export default function CardiologiRoma() {
         ) : (
           medici.map((v) => (
             <div key={v.id} style={{ 
-              backgroundColor: 'red', padding: '30px', borderRadius: '24px', marginBottom: '20px', 
+               backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px',
               border: v.is_top ? '3px solid #3b82f6' : '1px solid #e2e8f0',
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
             }}>
