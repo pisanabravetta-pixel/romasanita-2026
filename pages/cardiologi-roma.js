@@ -7,7 +7,7 @@ export default function CardiologiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Recupera Schemi (FAQ + MedicalBusiness) dal motore SEO
+  // Generiamo gli schemi SEO e le FAQ dal nostro file logic
   const schemas = getSchemas('cardiologi', 'roma');
 
   useEffect(() => {
@@ -27,103 +27,118 @@ export default function CardiologiRoma() {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
         <title>Cardiologi a Roma | Visite e Screening Cuore | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori cardiologi a Roma. Prenota visite, ECG ed ecocardiogrammi nei migliori studi della Capitale. Contatto diretto." />
+        <meta name="description" content="Trova i migliori cardiologi a Roma. Prenota visite, ECG ed ecocardiogrammi. Contatto diretto e ricerca per zona." />
         <link rel="canonical" href="https://www.servizisalute.it/cardiologi-roma" />
         <meta name="robots" content="index, follow" />
         
-        {/* SCHEMI SEO (Invisibili per Google) */}
+        {/* SCHEMI SEO PER GOOGLE */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
+      {/* HEADER BAR */}
+      <div style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '10px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        🚀 PORTALE SANITARIO ROMA - RICERCA SPECIALISTI
+      </div>
+
+      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
         
-        <a href="/" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>← Torna alla Home</a>
+        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
+          ← Torna alla Home
+        </a>
 
-        <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px', marginTop: '10px' }}>Cardiologi a Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '20px' }}>Specialisti in cardiologia selezionati per zona e competenza.</p>
-
-        {/* 🔗 LINK RAPIDI ZONE (Internal Linking per far scalare Google) */}
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
-          {['Prati', 'EUR', 'Parioli', 'San Giovanni', 'Centro'].map((zona) => (
-            <a key={zona} href={`/cardiologi-roma-${zona.toLowerCase()}`} style={{ backgroundColor: '#fff', border: '1px solid #cbd5e1', padding: '8px 15px', borderRadius: '20px', fontSize: '13px', color: '#1e40af', textDecoration: 'none', fontWeight: '500' }}>
-              Cardiologi {zona}
-            </a>
-          ))}
+        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0' }}>Cardiologi a Roma</h1>
+          <p style={{ color: '#64748b', fontSize: '18px', margin: '0' }}>Trova lo specialista più vicino a te tra i migliori studi cardiologici della Capitale.</p>
+          
+          {/* INTERNAL LINKING ZONE */}
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Tiburtina'].map(z => (
+              <a key={z} href={`/cardiologi-roma-${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#eff6ff', color: '#1e40af', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', fontWeight: '500', border: '1px solid #dbeafe' }}>
+                Cardiologi {z}
+              </a>
+            ))}
+          </div>
         </div>
 
         {loading ? (
-          <p>Caricamento cardiologi...</p>
+          <div style={{ textAlign: 'center', padding: '50px' }}>Caricamento specialisti...</div>
         ) : medici.length === 0 ? (
-          <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '15px', textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', padding: '50px', backgroundColor: 'white', borderRadius: '24px' }}>
             <p>Nessun cardiologo trovato in questa categoria.</p>
           </div>
-        ) : medici.map((v) => (
-          <div key={v.id} style={{ 
-            backgroundColor: 'white', padding: '25px', borderRadius: '24px', marginBottom: '20px', 
-            border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0',
-            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' 
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <h3 style={{ margin: '0', color: '#1e3a8a', fontSize: '22px' }}>{v.nome}</h3>
-                <p style={{ color: '#64748b', margin: '5px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+        ) : (
+          medici.map((v) => (
+            <div key={v.id} style={{ 
+              backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', 
+              border: v.is_top ? '3px solid #3b82f6' : '1px solid #e2e8f0',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <h2 style={{ margin: '0', color: '#1e3a8a', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                <div style={{ display: 'flex', gap: '5px' }}>
+                   {v.urgenza_24h && <span style={{ backgroundColor: '#fee2e2', color: '#991b1b', padding: '4px 8px', borderRadius: '6px', fontSize: '10px', fontWeight: 'bold' }}>🚨 URGENZE</span>}
+                   {v.vicino_metro && <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 8px', borderRadius: '6px', fontSize: '10px', fontWeight: 'bold' }}>🚇 METRO</span>}
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                {v.urgenza_24h && <span style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #fee2e2' }}>🚨 URGENZE</span>}
-                {v.vicino_metro && <span style={{ backgroundColor: '#eff6ff', color: '#1e40af', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #dbeafe' }}>🚇 METRO</span>}
+              
+              <p style={{ color: '#4b5563', fontSize: '16px', margin: '10px 0' }}>
+                📍 {v.indirizzo} — <strong style={{ color: '#1e3a8a' }}>{v.zona}</strong>
+              </p>
+
+              <p style={{ color: '#6b7280', fontSize: '15px', lineHeight: '1.6', margin: '15px 0' }}>
+                {v.descrizione || "Specialista in Cardiologia. Per prenotare una visita cardiologica o un esame strumentale (ECG, Ecocardio), contatta lo studio tramite i pulsanti sottostanti."}
+              </p>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>Chiama</a>
+                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>WhatsApp</a>
+                <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '0.5', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold' }}>📍</a>
               </div>
             </div>
+          ))
+        )}
 
-            <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6', margin: '15px 0' }}>
-              {v.descrizione || "Specialista in Cardiologia. Contatta la struttura per prenotare visite ed esami diagnostici."}
-            </p>
-
-            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #e2e8f0' }}>📍 Mappa</a>
-            </div>
-          </div>
-        ))}
-
-        {/* ❓ FAQ VISIVE (Fondamentali per scalare su Google) */}
-        <section style={{ marginTop: '50px', padding: '30px', backgroundColor: '#fff', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti sui Cardiologi a Roma</h2>
-          {schemas.faq.mainEntity.map((item, index) => (
-            <div key={index} style={{ marginBottom: '20px' }}>
-              <h4 style={{ color: '#1e40af', marginBottom: '5px', fontSize: '17px' }}>{item.name}</h4>
-              <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.5' }}>{item.acceptedAnswer.text}</p>
+        {/* ❓ FAQ SECTION (Richiesta dai suggerimenti) */}
+        <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', marginTop: '40px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '25px' }}>Domande Frequenti sui Cardiologi a Roma</h2>
+          {schemas.faq.mainEntity.map((faq, i) => (
+            <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f3f4f6', paddingBottom: '15px' }}>
+              <h3 style={{ fontSize: '18px', color: '#1e40af', marginBottom: '8px' }}>{faq.name}</h3>
+              <p style={{ color: '#4b5563', fontSize: '15px', lineHeight: '1.6' }}>{faq.acceptedAnswer.text}</p>
             </div>
           ))}
-        </section>
-
-        {/* 🔗 SEZIONE PROFESSIONISTI */}
-        <div style={{ marginTop: '50px', textAlign: 'center', padding: '40px 30px', backgroundColor: '#e0e7ff', borderRadius: '24px', border: '1px solid #c7d2fe' }}>
-          <h3 style={{ color: '#1e3a8a', margin: '0 0 10px 0' }}>Sei un Cardiologo o titolare di uno Studio a Roma?</h3>
-          <p style={{ color: '#475569', marginBottom: '20px' }}>Pubblica gratuitamente il tuo servizio su ServiziSalute e fatti trovare da nuovi pazienti.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo studio gratis →</a>
         </div>
 
-        {/* 🧱 FOOTER UNIFICATO (Internal Linking + Disclaimer) */}
-        <footer style={{ marginTop: '80px', borderTop: '1px solid #e2e8f0', padding: '40px 0' }}>
-          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <p style={{ fontWeight: 'bold', color: '#1e3a8a', marginBottom: '15px' }}>Altre Categorie a Roma:</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-              <a href="/dentisti-roma" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Dentisti Roma</a>
-              <a href="/farmacie-roma" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Farmacie Roma</a>
-              <a href="/diagnostica-roma" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Centri Diagnostici</a>
+        {/* 📢 INVITO PROFESSIONISTI (Il punto 9 dei suggerimenti) */}
+        <div style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '40px', borderRadius: '24px', marginTop: '40px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '26px', margin: '0 0 10px 0' }}>Sei un Cardiologo a Roma?</h2>
+          <p style={{ fontSize: '17px', opacity: '0.9', marginBottom: '25px' }}>Aggiungi il tuo studio al portale gratuitamente e raggiungi nuovi pazienti nella tua zona.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: 'white', color: '#1e3a8a', padding: '15px 35px', borderRadius: '14px', textDecoration: 'none', fontWeight: '800', fontSize: '16px' }}>Pubblica il tuo annuncio →</a>
+        </div>
+
+        {/* 🧱 FOOTER PROFESSIONALE (Punto 5 e 9) */}
+        <footer style={{ marginTop: '80px', paddingBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <p style={{ fontWeight: 'bold', color: '#1e3a8a', marginBottom: '20px' }}>CATEGORIE PRINCIPALI</p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
+              <a href="/dentisti-roma" style={{ color: '#4b5563', textDecoration: 'none' }}>Dentisti</a>
+              <a href="/farmacie-roma" style={{ color: '#4b5563', textDecoration: 'none' }}>Farmacie</a>
+              <a href="/diagnostica-roma" style={{ color: '#4b5563', textDecoration: 'none' }}>Diagnostica</a>
+              <a href="/visite-specialistiche-roma" style={{ color: '#4b5563', textDecoration: 'none' }}>Specialisti</a>
             </div>
           </div>
-
-          <div style={{ fontSize: '12px', color: '#64748b', textAlign: 'justify', lineHeight: '1.5', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>
-            <p><strong>Disclaimer:</strong> Le informazioni contenute su ServiziSalute.it hanno scopo puramente informativo. Il portale non garantisce l'accuratezza delle prestazioni dei singoli professionisti. In caso di emergenza cardiaca o dolori al petto, contattare immediatamente il numero unico di emergenza 112 o recarsi al pronto soccorso più vicino.</p>
-            <p style={{ marginTop: '20px', textAlign: 'center' }}>© 2026 ServiziSalute Roma — Il tuo portale sanitario locale.</p>
+          
+          <div style={{ backgroundColor: '#fff', padding: '30px', borderRadius: '20px', fontSize: '13px', color: '#6b7280', lineHeight: '1.6', border: '1px solid #e2e8f0' }}>
+            <p><strong>Disclaimer Medico:</strong> Le informazioni su ServiziSalute sono a scopo puramente informativo. Il portale non effettua diagnosi né prescrive cure. In caso di dolore al petto, fiato corto o sospetto infarto, non usare il sito e contatta immediatamente il 112.</p>
+            <hr style={{ border: '0', borderTop: '1px solid #f3f4f6', margin: '20px 0' }} />
+            <p style={{ textAlign: 'center' }}>© 2026 ServiziSalute Roma - Portale Indipendente di Servizi Sanitari.</p>
           </div>
         </footer>
+
       </main>
     </div>
   );
