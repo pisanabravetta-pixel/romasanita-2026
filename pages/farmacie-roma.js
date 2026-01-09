@@ -135,4 +135,16 @@ export default function FarmacieRoma() {
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
               <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
-                ServiziSalute è un portale di annunci e
+                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+              </p>
+            </div>
+          </div>
+
+          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
+            © 2026 ServiziSalute – Tutti i diritti riservati
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
