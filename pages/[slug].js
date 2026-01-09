@@ -66,21 +66,23 @@ export default function PaginaQuartiereDinamica() {
           <h1 style={{ color: tema.primario, fontSize: '32px', margin: '0', fontWeight: '800' }}>{meta.titolo}</h1>
           
           {/* LINK DI RICHIAMO RAPIDO E NAVIGAZIONE */}
-          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
-              <a href="#lista" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Vedi Annunci</a>
-              <a href="#faq" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Domande Frequenti</a>
-            </div>
-            
-            <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
-              Esplora anche: 
-              <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline' }}>
-                Tutte le {meta.label} a Roma
-              </a>
-              <span style={{ margin: '0 8px' }}>|</span>
-              <a href="/" style={{ color: tema.primario, textDecoration: 'underline' }}>Mappa Servizi</a>
-            </div>
-          </div>
+<div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+  <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
+    <a href="#lista" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Vedi Annunci</a>
+    <a href="#faq" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Domande Frequenti</a>
+  </div>
+  
+  <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
+    Esplora anche: 
+    <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline', textTransform: 'capitalize' }}>
+      Tutte le {meta.cat.replace('-', ' ')} a Roma
+    </a>
+    <span style={{ margin: '0 8px' }}>|</span>
+    <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'underline' }}>
+      📍 Mappa Servizi per Quartiere
+    </a>
+  </div>
+</div>
         </div>
 
         <div id="lista" style={{ paddingTop: '20px' }}>
