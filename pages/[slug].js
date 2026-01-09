@@ -98,6 +98,7 @@ export default function PaginaDinamicaSalute() {
           ))
         )}
 
+        {/* FAQ SECTION */}
         <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', marginTop: '40px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ color: tema.primario, fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h2>
           {schemas.faq.mainEntity.slice(0, 3).map((faq, i) => (
@@ -108,22 +109,43 @@ export default function PaginaDinamicaSalute() {
           ))}
         </div>
 
-        {/* FOOTER DELLA HOME (NAVIGAZIONE CATEGORIE) */}
-        <footer style={{ marginTop: '60px', paddingBottom: '60px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <p style={{ fontWeight: 'bold', color: '#1e3a8a', marginBottom: '20px', fontSize: '14px', letterSpacing: '1px' }}>ESPLORA ALTRE CATEGORIE</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '25px', flexWrap: 'wrap' }}>
-              <a href="/farmacie-roma" style={{ color: '#4b5563', textDecoration: 'none', fontWeight: '500' }}>Farmacie</a>
-              <a href="/dentisti-roma" style={{ color: '#4b5563', textDecoration: 'none', fontWeight: '500' }}>Dentisti</a>
-              <a href="/cardiologi-roma" style={{ color: '#4b5563', textDecoration: 'none', fontWeight: '500' }}>Cardiologi</a>
-              <a href="/diagnostica-roma" style={{ color: '#4b5563', textDecoration: 'none', fontWeight: '500' }}>Diagnostica</a>
+        {/* FOOTER IDENTICO ALLA HOME */}
+        <footer style={{ marginTop: '80px', backgroundColor: '#1e293b', color: '#f8fafc', borderRadius: '32px 32px 0 0', padding: '60px 40px 20px 40px', marginLeft: '-20px', marginRight: '-20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', marginBottom: '40px' }}>
+            
+            {/* Colonna 1: Info */}
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px', fontSize: '18px' }}>ServiziSalute Roma</h4>
+              <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.6' }}>Il portale di riferimento per trovare medici, farmacie e specialisti nella Capitale. Informazioni verificate e contatti diretti.</p>
+            </div>
+
+            {/* Colonna 2: Categorie */}
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px', fontSize: '16px' }}>Categorie</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2' }}>
+                <li><a href="/farmacie-roma" style={{ color: '#94a3b8', textDecoration: 'none' }}>Farmacie</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#94a3b8', textDecoration: 'none' }}>Dentisti</a></li>
+                <li><a href="/cardiologi-roma" style={{ color: '#94a3b8', textDecoration: 'none' }}>Cardiologi</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#94a3b8', textDecoration: 'none' }}>Diagnostica</a></li>
+              </ul>
+            </div>
+
+            {/* Colonna 3: Legale */}
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px', fontSize: '16px' }}>Legale</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2' }}>
+                <li><a href="/privacy-policy" style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#94a3b8', textDecoration: 'none' }}>Cookie Policy</a></li>
+                <li><a href="/termini-condizioni" style={{ color: '#94a3b8', textDecoration: 'none' }}>Termini e Condizioni</a></li>
+              </ul>
             </div>
           </div>
-          
-          <div style={{ backgroundColor: '#fff', padding: '30px', borderRadius: '24px', fontSize: '13px', color: '#6b7280', lineHeight: '1.6', border: '1px solid #e2e8f0' }}>
-            <p><strong>Disclaimer:</strong> ServiziSalute Roma è un portale informativo. Verificare sempre le informazioni telefonicamente.</p>
-            <hr style={{ border: '0', borderTop: '1px solid #f3f4f6', margin: '20px 0' }} />
-            <p style={{ textAlign: 'center' }}>© 2026 ServiziSalute Roma</p>
+
+          <div style={{ borderTop: '1px solid #334155', paddingTop: '30px', textAlign: 'center' }}>
+            <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '10px' }}>
+              <strong>Disclaimer Medico:</strong> Le informazioni su questo sito sono a scopo puramente informativo e non sostituiscono il parere del medico.
+            </p>
+            <p style={{ fontSize: '12px', color: '#64748b' }}>© 2026 ServiziSalute Roma. Tutti i diritti riservati.</p>
           </div>
         </footer>
       </main>
