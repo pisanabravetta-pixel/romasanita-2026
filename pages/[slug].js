@@ -16,44 +16,28 @@ export default function PaginaDinamicaSalute() {
     async function fetchDati() {
       try {
         setLoading(true);
-        
-        // Dividiamo lo slug (es: "dentisti-roma-prati" oppure solo "prati")
         const parti = slug.split('-'); 
-        
-        // Se è un link lungo (es. dentisti-roma-prati) prendiamo la prima e l'ultima parola
-        // Se è un link corto (es. prati) la categoria diventa nulla e cerchiamo solo la zona
         const categoriaCercata = parti.length > 1 ? parti[0] : null; 
         const zonaCercata = parti[parti.length - 1];
 
-        // Formattazione Titolo
         const catBella = categoriaCercata ? categoriaCercata.charAt(0).toUpperCase() + categoriaCercata.slice(1) : "Servizi";
         const zonaBella = zonaCercata.charAt(0).toUpperCase() + zonaCercata.slice(1);
         setTitolo(`${catBella} a Roma ${zonaBella}`);
 
-        // COSTRUZIONE QUERY
-        let query = supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
+        let query = supabase.from('annunci').select('*').eq('approvato', true);
 
-        // Se abbiamo una categoria nello slug (es. dentisti), filtriamo
         if (categoriaCercata && categoriaCercata !== 'roma') {
           query = query.ilike('categoria', `%${categoriaCercata}%`);
         }
-
-        // FILTRO ZONA "INTELLIGENTE"
-        // Il simbolo % permette di trovare "Prati" anche se nel DB hai scritto "Roma Prati"
         if (zonaCercata && zonaCercata !== 'roma') {
           query = query.ilike('zona', `%${zonaCercata}%`);
         }
 
         const { data, error } = await query.order('is_top', { ascending: false });
-        
         if (error) throw error;
         setServizi(data || []);
-
       } catch (err) {
-        console.error("Errore:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -64,45 +48,68 @@ export default function PaginaDinamicaSalute() {
   if (!slug) return null;
 
   return (
-    <div style={{ fontFamily: '-apple-system, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', padding: '20px' }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>{titolo} | ServiziSalute</title>
+        <title>{titolo} | ServiziSalute Roma</title>
+        <meta name="description" content={`Trova i migliori servizi di ${titolo} a Roma. Contatti, orari e indirizzi verificati.`} />
       </Head>
-      
-      <main style={{ maxWidth: '800px', margin: '0 auto' }}>
-        <a href="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>← Torna alla Home</a>
-        
-        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginTop: '20px', marginBottom: '30px' }}>
-            <h1 style={{ color: '#1e40af', margin: 0, fontSize: '28px' }}>{titolo}</h1>
-            <p style={{ color: '#64748b', marginTop: '10px' }}>Lista aggiornata dei professionisti in zona {titolo.split('Roma')[1] || 'Roma'}.</p>
+
+      {/* Header colorato coerente */}
+      <div style={{ backgroundColor: '#1e40af', color: 'white', padding: '10px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        📍 RICERCA LOCALIZZATA: {titolo.toUpperCase()}
+      </div>
+
+      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
+        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#1e40af', textDecoration: 'none', fontWeight: '600' }}>
+          ← Torna alla Home
+        </a>
+
+        {/* Box Titolo con stile Modello Oro */}
+        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0' }}>{titolo}</h1>
+          <p style={{ color: '#64748b', fontSize: '18px', margin: '0' }}>Risultati trovati per la tua ricerca nei quartieri di Roma.</p>
         </div>
 
         {loading ? (
-          <p style={{ textAlign: 'center', padding: '20px' }}>Ricerca in corso...</p>
-        ) : servizi.length > 0 ? (
+          <div style={{ textAlign: 'center', padding: '50px' }}>Ricerca in corso...</div>
+        ) : servizi.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '50px', backgroundColor: 'white', borderRadius: '24px' }}>
+            <p style={{ fontSize: '18px', color: '#64748b' }}>Nessun risultato trovato in questa zona.</p>
+          </div>
+        ) : (
           servizi.map((v) => (
             <div key={v.id} style={{ 
-                backgroundColor: 'white', padding: '25px', borderRadius: '20px', marginBottom: '15px', 
-                border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+              backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', 
+              border: v.is_top ? '3px solid #3b82f6' : '1px solid #e2e8f0',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
             }}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#1e3a8a', fontSize: '20px' }}>{v.nome}</h3>
-              <p style={{ color: '#4b5563', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <h2 style={{ margin: '0', color: '#1e3a8a', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                {v.is_top && <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+              </div>
               
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, background: '#3b82f6', color: 'white', padding: '12px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold' }}>Chiama</a>
+              <p style={{ color: '#4b5563', fontSize: '16px', margin: '10px 0' }}>
+                📍 {v.indirizzo} — <strong style={{ color: '#1e3a8a' }}>{v.zona}</strong>
+              </p>
+
+              <p style={{ color: '#6b7280', fontSize: '15px', lineHeight: '1.6', margin: '15px 0' }}>
+                {v.descrizione || `Specialista in ${v.categoria} a Roma zona ${v.zona}. Contatta per orari e disponibilità.`}
+              </p>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#1e40af', color: 'white', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>Chiama</a>
                 {v.whatsapp && (
-                    <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, background: '#22c55e', color: 'white', padding: '12px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold' }}>WhatsApp</a>
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>WhatsApp</a>
                 )}
+                <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '0.5', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '15px', borderRadius: '14px', textDecoration: 'none', textAlign: 'center', fontWeight: 'bold' }}>📍</a>
               </div>
             </div>
           ))
-        ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>
-            <p style={{ fontSize: '18px', color: '#64748b' }}>Nessun risultato in questa zona.</p>
-            <p style={{ fontSize: '14px', color: '#94a3b8' }}>Verifica su Supabase che l'annuncio abbia <b>approvato: true</b> e che la zona contenga la parola cercata.</p>
-          </div>
         )}
+
+        <footer style={{ marginTop: '60px', paddingBottom: '40px', textAlign: 'center' }}>
+          <p style={{ fontSize: '13px', color: '#94a3b8' }}>© 2026 ServiziSalute Roma - Ricerca Quartieri</p>
+        </footer>
       </main>
     </div>
   );
