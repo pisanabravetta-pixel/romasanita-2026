@@ -54,7 +54,7 @@ export default function FarmacieRoma() {
           
           <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Tiburtina'].map(z => (
-              <a key={z} href={`/farmacie-roma-${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', fontWeight: '500', border: '1px solid #d1fae5' }}>
+              <a key={z} href={/${z.toLowerCase()}}`} style={{ padding: '8px 16px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', fontWeight: '500', border: '1px solid #d1fae5' }}>
                 Farmacie {z}
               </a>
             ))}
