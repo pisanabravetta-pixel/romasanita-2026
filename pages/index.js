@@ -73,9 +73,31 @@ const eseguiRicerca = () => {
     <div>
       <Head>
         <title>ServiziSalute - Il Portale della Sanità a Roma</title>
-    <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
+        <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+        {/* --- INIZIO SCHEMA ORGANIZATION (Dati per Google) --- */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "ServiziSalute",
+              "url": "https://www.servizisalute.it",
+              "logo": "https://www.servizisalute.it/favicon.ico",
+              "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Roma",
+                "addressRegion": "RM",
+                "addressCountry": "IT"
+              }
+            }),
+          }}
+        />
+        {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head>
 
      {/* TOP BAR */}
