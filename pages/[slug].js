@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 import { getSchemas } from '../lib/seo-logic';
 
-export default function PaginaDinamicaQuartiere() {
+export default function PaginaQuartiere() {
   const router = useRouter();
   const { slug } = router.query;
   const [servizi, setServizi] = useState([]);
@@ -14,22 +14,16 @@ export default function PaginaDinamicaQuartiere() {
 
   useEffect(() => {
     if (!slug) return;
-
     async function fetchDati() {
       try {
         setLoading(true);
-        const parti = slug.split('-'); // es: farmacie-roma-prati
+        const parti = slug.split('-'); // farmacie-roma-prati
         const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
-        let nomeCat = "Specialisti";
-        if (catSlug.includes('farmac')) {
-          setTema({ primario: '#059669', chiaro: '#ecfdf5', label: 'FARMACIE' });
-          nomeCat = "Farmacie";
-        } else if (catSlug.includes('dentist')) {
-          setTema({ primario: '#2563eb', chiaro: '#eff6ff', label: 'DENTISTI' });
-          nomeCat = "Dentisti";
-        }
+        let nomeCat = catSlug.includes('farmac') ? "Farmacie" : "Dentisti";
+        let color = catSlug.includes('farmac') ? "#059669" : "#2563eb";
+        setTema({ primario: color, label: nomeCat.toUpperCase() });
 
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1);
         setMeta({ titolo: `${nomeCat} a Roma ${zonaBella}`, zona: zonaBella, cat: catSlug });
@@ -54,68 +48,81 @@ export default function PaginaDinamicaQuartiere() {
   if (!slug) return null;
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh' }}>
       <Head>
-        <title>{meta.titolo} | ServiziSalute Roma</title>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
+        <title>{meta.titolo} | ServiziSalute</title>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
 
-      <div style={{ backgroundColor: tema.primario, color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+      <div style={{ backgroundColor: tema.primario, color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold' }}>
         🟢 {tema.label} : {meta.zona.toUpperCase()}
       </div>
 
-      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: tema.primario, textDecoration: 'none', fontWeight: '600' }}>← Home</a>
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
+        <a href="/" style={{ color: tema.primario, textDecoration: 'none', fontWeight: 'bold' }}>← Home</a>
 
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, marginTop: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: tema.primario, fontSize: '32px', margin: '0', fontWeight: '800' }}>{meta.titolo}</h1>
-          <p style={{ color: '#64748b', fontSize: '18px', marginTop: '10px' }}>Risultati verificati per {meta.zona}.</p>
         </div>
 
-        {/* LISTA ANNUNCI MODELLO ORO */}
-        {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : servizi.length === 0 ? <p style={{textAlign:'center', padding:'50px'}}>Nessun annuncio trovato.</p> : (
-          servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? `3px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h2 style={{ color: tema.primario, margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-                {v.is_top && <span style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
-              </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: tema.primario, color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-                {v.whatsapp && <a href={`https://wa.me/${v.whatsapp}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>}
-              </div>
+        {/* LISTA ORO QUARTIERE */}
+        {loading ? <p>...</p> : servizi.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', margin: '20px 0', border: v.is_top ? `3px solid ${tema.primario}` : '1px solid #e2e8f0' }}>
+            <h2 style={{ color: tema.primario, margin: '0' }}>{v.nome}</h2>
+            <p style={{ margin: '15px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: tema.primario, color: 'white', padding: '16px', borderRadius: '14px', textAlign: 'center', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
+              {v.whatsapp && <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '14px', textAlign: 'center', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>}
             </div>
-          ))
-        )}
+          </div>
+        ))}
 
-        {/* FAQ SEO */}
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px' }}>
-           <h3 style={{ color: tema.primario, fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti</h3>
-           {schemas.faq.mainEntity.map((item, idx) => (
-             <div key={idx} style={{ marginBottom: '15px' }}>
-               <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{item.name}</p>
-               <p style={{ color: '#64748b' }}>{item.acceptedAnswer.text}</p>
-             </div>
+        {/* FAQ */}
+        <section style={{ margin: '50px 0', backgroundColor: 'white', padding: '30px', borderRadius: '24px' }}>
+           <h3 style={{ color: tema.primario }}>Domande Frequenti</h3>
+           {schemas.faq.mainEntity.slice(0,3).map((f, i) => (
+             <div key={i} style={{ marginBottom: '15px' }}><p><strong>{f.name}</strong></p><p>{f.acceptedAnswer.text}</p></div>
            ))}
         </section>
-
-        {/* FOOTER COMPLETO IDENTICO ALLA HOME */}
-        <footer style={{ marginTop: '80px', backgroundColor: '#1e293b', color: '#f8fafc', borderRadius: '32px 32px 0 0', padding: '60px 40px', marginLeft: '-20px', marginRight: '-20px' }}>
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
-             <div><h4 style={{ color: 'white' }}>ServiziSalute Roma</h4></div>
-             <div><h4 style={{ color: 'white' }}>Legale</h4>
-                <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                  <li><a href="/privacy-policy" style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</a></li>
-                </ul>
-             </div>
-           </div>
-           <div style={{ borderTop: '1px solid #334155', marginTop: '40px', paddingTop: '20px', textAlign: 'center' }}>
-             <p style={{ fontSize: '11px', color: '#64748b' }}><strong>DISCLAIMER:</strong> Portale informativo.</p>
-           </div>
-        </footer>
       </main>
+
+      {/* FOOTER IDENTICO ALLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+            <div>
+              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.</p>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+              </ul>
+              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
+                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold' }}>⚠️ ATTENZIONE: Richieste in aumento nei quartieri Prati, Eur e Roma Centro.</p>
+              </div>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>© 2026 ServiziSalute – Tutti i diritti riservati</div>
+        </div>
+      </footer>
     </div>
   );
 }
