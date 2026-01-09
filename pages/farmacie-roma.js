@@ -7,7 +7,6 @@ export default function FarmacieRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Recupera Schemi e FAQ specifiche per Farmacie
   const schemas = getSchemas('farmacie', 'roma');
 
   useEffect(() => {
@@ -33,7 +32,6 @@ export default function FarmacieRoma() {
         <meta name="description" content="Trova le farmacie a Roma vicino a te. Orari, turni, farmacie aperte H24 e parafarmacie nei quartieri della Capitale." />
         <link rel="canonical" href="https://www.servizisalute.it/farmacie-roma" />
         <meta name="robots" content="index, follow" />
-        
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
@@ -54,7 +52,7 @@ export default function FarmacieRoma() {
           
           <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Tiburtina'].map(z => (
-              <a key={z} href={/${z.toLowerCase()}}`} style={{ padding: '8px 16px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', fontWeight: '500', border: '1px solid #d1fae5' }}>
+              <a key={z} href={`/${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '13px', textDecoration: 'none', fontWeight: '500', border: '1px solid #d1fae5' }}>
                 Farmacie {z}
               </a>
             ))}
