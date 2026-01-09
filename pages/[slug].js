@@ -65,23 +65,23 @@ export default function PaginaQuartiereDinamica() {
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, marginTop: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: tema.primario, fontSize: '32px', margin: '0', fontWeight: '800' }}>{meta.titolo}</h1>
           
-         {/* LINK DI RICHIAMO RAPIDO E NAVIGAZIONE */}
-<div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-  <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
-    <a href="#lista" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Vedi Annunci</a>
-    <a href="#faq" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Domande Frequenti</a>
-  </div>
-  
-  <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
-    Esplora anche: 
-    <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline' }}>
-      Tutte le {meta.label} a Roma
-    </a>
-    {/* Esempio di link dinamico a un quartiere vicino se vuoi aggiungerlo manualmente o tramite logica */}
-    <span style={{ margin: '0 8px' }}>|</span>
-    <a href="/" style={{ color: tema.primario, textDecoration: 'underline' }}>Mappa Servizi</a>
-  </div>
-</div>
+          {/* LINK DI RICHIAMO RAPIDO E NAVIGAZIONE */}
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
+              <a href="#lista" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Vedi Annunci</a>
+              <a href="#faq" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Domande Frequenti</a>
+            </div>
+            
+            <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
+              Esplora anche: 
+              <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline' }}>
+                Tutte le {meta.label} a Roma
+              </a>
+              <span style={{ margin: '0 8px' }}>|</span>
+              <a href="/" style={{ color: tema.primario, textDecoration: 'underline' }}>Mappa Servizi</a>
+            </div>
+          </div>
+        </div>
 
         <div id="lista" style={{ paddingTop: '20px' }}>
           {loading ? (
@@ -97,6 +97,7 @@ export default function PaginaQuartiereDinamica() {
                 <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
                   <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: tema.primario, color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
                   {v.whatsapp && <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>}
+                  {/* CORRETTO ERRORE SINTASSI MAPPA QUI SOTTO */}
                   <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" style={{ flex: '0.4', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>📍</a>
                 </div>
               </div>
@@ -106,7 +107,7 @@ export default function PaginaQuartiereDinamica() {
           )}
         </div>
 
-        {/* SEZIONE FAQ MANCANTE */}
+        {/* SEZIONE FAQ */}
         <section id="faq" style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
           <h3 style={{ color: tema.primario, fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti</h3>
           {schemas.faq.mainEntity.map((item, i) => (
@@ -141,7 +142,6 @@ export default function PaginaQuartiereDinamica() {
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
                 <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
-              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.</p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
