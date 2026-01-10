@@ -129,7 +129,20 @@ if (!slug) return null;
   </div>
             ))
           ) : (
-            <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Nessun risultato trovato in questa zona al momento.</p>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '60px', backgroundColor: 'white', borderRadius: '32px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px dashed #cbd5e0' }}>
+              <div style={{ fontSize: '40px', marginBottom: '20px' }}>📍</div>
+              <h3 style={{ color: '#2d3748', fontSize: '22px', fontWeight: '700', marginBottom: '10px' }}>
+                Ancora nessun professionista a {meta.zona}
+              </h3>
+              <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto 30px' }}>
+                Stiamo aggiornando le disponibilità per il quartiere <strong>{meta.zona}</strong>. Se sei un professionista sanitario, non perdere l'opportunità di essere il primo nella tua zona.
+              </p>
+              <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: tema.primario, color: 'white', padding: '16px 32px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+                Pubblica il tuo studio ora
+              </a>
+              <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8' }}>Tempo di attivazione stimato: 24 ore.</p>
+            </div>
           )}
         </div>
 
