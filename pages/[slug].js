@@ -42,12 +42,24 @@ setMeta({
   specialista_cercato: filtri.spec,
   zona_cercata: zonaSlug
 });
-       const { data, error } = await supabase
+       console.log("DEBUG - Sto cercando:", { catSlug, zonaSlug, filtri });
+
+        const { data, error } = await supabase
           .from('annunci')
-          .select('*')
-          .ilike('categoria', `%${catSlug}%`)
-          .ilike('zona', `%${zonaSlug}%`)
-          .order('is_top', { ascending: false });
+          .select('*'); // Prendiamo TUTTO senza filtri per un istante
+
+        console.log("DEBUG - Dati trovati nel DB:", data);
+
+        if (error) console.error("ERRORE SUPABASE:", error);
+        
+        // Filtriamo a mano per capire dove fallisce
+        const filtrati = data?.filter(f => 
+          String(f.categoria).toLowerCase().includes(catSlug.toLowerCase()) &&
+          String(f.zona).toLowerCase().includes(zonaSlug.toLowerCase())
+        );
+
+        console.log("DEBUG - Risultati dopo il filtro:", filtrati);
+        setServizi(filtrati || []);
 
         if (error) throw error;
         setServizi(data || []);
