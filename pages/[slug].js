@@ -36,11 +36,13 @@ setMeta({
   zona: zonaBella, 
   cat: catSlug 
 });
+        const filtri = getDBQuery(catSlug);
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          .ilike('categoria', `%${catSlug}%`)
+          .eq('categoria', filtri.cat)
+          .ilike('specialista', `%${filtri.spec}%`)
           .ilike('zona', `%${zonaSlug}%`)
           .order('is_top', { ascending: false });
 
