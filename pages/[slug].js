@@ -27,8 +27,15 @@ export default function PaginaQuartiereDinamica() {
         
         setTema({ primario: color, chiaro: colorChiaro, label: nomeCat.toUpperCase() });
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1);
-        setMeta({ titolo: `${nomeCat} a Roma ${zonaBella}`, zona: zonaBella, cat: catSlug });
+       // Se la zona è già "Roma", evita di scriverlo due volte
+const zonaSenzaRoma = zonaBella.toLowerCase() === 'roma' ? '' : ` ${zonaBella}`;
+const titoloCorretto = `${nomeCat} a Roma${zonaSenzaRoma}`;
 
+setMeta({ 
+  titolo: titoloCorretto, 
+  zona: zonaBella, 
+  cat: catSlug 
+});
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
