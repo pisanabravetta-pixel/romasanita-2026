@@ -1,136 +1,102 @@
 import React from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 
 export default function PerIProfessionisti() {
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Per i Professionisti della Salute a Roma | ServiziSalute</title>
-        <meta name="description" content="Pubblica il tuo profilo professionale su ServiziSalute Roma. Aumenta la tua visibilità nel tuo quartiere e ricevi contatti diretti dai pazienti." />
+        <title>Per i Professionisti | Pubblica il tuo Studio Medico | ServiziSalute</title>
+        <meta name="description" content="Sei un medico, un farmacista o un professionista sanitario a Roma? Scopri come pubblicare il tuo annuncio su ServiziSalute e raggiungere migliaia di pazienti." />
       </Head>
 
-      {/* 🧭 SCHEMA BREADCRUMB (SEO) */}
-      <Script id="breadcrumb-professionisti" type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
-            { "@type": "ListItem", "position": 2, "name": "Per i Professionisti", "item": "https://www.servizisalute.it/per-i-professionisti" }
-          ]
-        })
-      }} />
+      {/* HEADER PROFESSIONISTI */}
+      <div style={{ backgroundColor: '#2d3748', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        💼 AREA PROFESSIONISTI SANITARI - ROMA
+      </div>
 
-      {/* 🟦 HERO SECTION - Layout Premium */}
-      <section style={{ backgroundColor: '#1e40af', color: 'white', padding: '100px 20px', textAlign: 'center', backgroundImage: 'radial-gradient(circle at top right, #1e3a8a, #1e40af)' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <span style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '5px 15px', borderRadius: '20px', fontSize: '13px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Porta il tuo studio online a Roma
-          </span>
-          <h1 style={{ fontSize: '42px', fontWeight: '800', margin: '20px 0', lineHeight: '1.1' }}>
-            Fatti trovare dai pazienti del tuo quartiere
-          </h1>
-          <p style={{ fontSize: '20px', marginBottom: '40px', opacity: '0.9', lineHeight: '1.6' }}>
-            Unisciti al network di <strong>ServiziSalute Roma</strong>. L'unica piattaforma dedicata esclusivamente alla medicina di prossimità nella Capitale.
-          </p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#22c55e', color: 'white', padding: '18px 45px', borderRadius: '15px', 
-              textDecoration: 'none', fontWeight: 'bold', fontSize: '19px', display: 'inline-block', 
-              boxShadow: '0 10px 15px -3px rgba(34, 197, 94, 0.4)'
-            }}>
-              Pubblica Profilo Gratis
-            </a>
-            <a href="#come-funziona" style={{ 
-              backgroundColor: 'transparent', color: 'white', padding: '18px 45px', borderRadius: '15px', 
-              textDecoration: 'none', fontWeight: 'bold', fontSize: '19px', display: 'inline-block', 
-              border: '2px solid rgba(255,255,255,0.3)'
-            }}>
-              Scopri di più
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <main style={{ maxWidth: '1000px', margin: '0 auto', padding: '80px 20px' }}>
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 20px' }}>
         
-        {/* 🛠️ VANTAGGI CHIAVE */}
-        <div id="come-funziona" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', marginBottom: '100px' }}>
+        {/* HERO SECTION */}
+        <div style={{ backgroundColor: 'white', padding: '45px', borderRadius: '32px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', marginBottom: '40px', textAlign: 'center' }}>
+          <h1 style={{ color: '#2d3748', fontSize: '36px', marginBottom: '20px', fontWeight: '800' }}>Raggiungi nuovi pazienti a Roma</h1>
+          <p style={{ color: '#4a5568', lineHeight: '1.8', fontSize: '18px', maxWidth: '800px', margin: '0 auto 30px' }}>
+            ServiziSalute è il portale di riferimento per chi cerca assistenza sanitaria nella Capitale. 
+            Metti in evidenza la tua professionalità e ricevi contatti diretti via Telefono o WhatsApp senza intermediari.
+          </p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#48bb78', color: 'white', padding: '18px 35px', borderRadius: '16px', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none', boxShadow: '0 10px 15px -3px rgba(72, 187, 120, 0.3)' }}>
+            Pubblica il tuo annuncio ora
+          </a>
+        </div>
+
+        {/* VANTAGGI */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px', marginBottom: '50px' }}>
           {[
-            { icon: '📍', title: 'Visibilità di Quartiere', desc: 'Ti posizioniamo per ricerche specifiche come "Dentista Prati" o "Fisioterapista EUR" per darti contatti realmente raggiungibili.' },
-            { icon: '📱', title: 'Zero Intermediari', desc: 'I pazienti cliccano e ti chiamano. Non tratteniamo commissioni sulle visite e non gestiamo la tua agenda: il rapporto è diretto.' },
-            { icon: '🚀', title: 'SEO Localizzata', desc: 'Sfrutta la forza del nostro portale per apparire su Google quando qualcuno cerca assistenza sanitaria nella tua zona di Roma.' }
-          ].map((item, i) => (
-            <div key={i} style={{ textAlign: 'center', padding: '30px', borderRadius: '24px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
-              <div style={{ fontSize: '50px', marginBottom: '20px' }}>{item.icon}</div>
-              <h3 style={{ color: '#1e3a8a', fontSize: '20px', marginBottom: '15px' }}>{item.title}</h3>
-              <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6' }}>{item.desc}</p>
+            { t: "Contatto Diretto", d: "I pazienti ti contattano direttamente sul tuo numero o su WhatsApp. Nessuna commissione sulle visite." },
+            { t: "SEO Ottimizzata", d: "Il tuo studio apparirà nelle ricerche locali di Google grazie ai nostri schemi MedicalBusiness aggiornati." },
+            { t: "Zero Gestionali", d: "Non devi gestire calendari complicati. Ricevi le richieste e gestisci i tuoi appuntamenti come preferisci." }
+          ].map((v, i) => (
+            <div key={i} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+              <h3 style={{ color: '#2d3748', marginBottom: '15px', fontWeight: '700' }}>{v.t}</h3>
+              <p style={{ color: '#64748b', lineHeight: '1.6' }}>{v.d}</p>
             </div>
           ))}
         </div>
 
-        {/* 💡 SEZIONE DETTAGLIO - L'ESCLUSIVA ROMANA */}
-        <section style={{ backgroundColor: '#eff6ff', padding: '60px', borderRadius: '40px', border: '1px solid #dbeafe', display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ color: '#1e3a8a', fontSize: '32px', marginBottom: '15px' }}>Perché scegliere ServiziSalute Roma?</h2>
-            <p style={{ color: '#475569', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
-              Valorizziamo la tua presenza sul territorio romano, combattendo la dispersione dei grandi portali nazionali.
-            </p>
-          </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', marginTop: '20px' }}>
-            {[
-              'Profilo Base Sempre Gratuito',
-              'Caricamento in 2 minuti',
-              'Badge "Vicino Metro" automatico',
-              'Nessuna carta di credito richiesta',
-              'Supporto dedicato via WhatsApp',
-              'Promozioni stagionali attivabili'
-            ].map((text, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e40af', fontWeight: '600', fontSize: '15px' }}>
-                <span style={{ color: '#22c55e', fontSize: '20px' }}>✓</span> {text}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ❓ FAQ RAPIDE */}
-        <section style={{ marginTop: '100px' }}>
-          <h2 style={{ color: '#1e3a8a', fontSize: '28px', textAlign: 'center', marginBottom: '40px' }}>Domande Frequenti</h2>
-          <div style={{ display: 'grid', gap: '20px' }}>
-            {[
-              { q: 'È davvero gratuito?', a: 'Sì, l\'inserimento base su ServiziSalute Roma è gratuito. Potrai essere trovato dai pazienti senza alcun costo fisso o commissione.' },
-              { q: 'Come ricevo le prenotazioni?', a: 'I pazienti ti contattano direttamente tramite i pulsanti "Chiama" o "WhatsApp" presenti sulla tua scheda. Sei tu a gestire la tua agenda.' },
-              { q: 'Posso modificare il mio profilo?', a: 'Certamente. Potrai aggiornare orari, descrizione e servizi in qualsiasi momento contattando il nostro supporto.' }
-            ].map((faq, i) => (
-              <div key={i} style={{ padding: '20px', borderBottom: '1px solid #f1f5f9' }}>
-                <h4 style={{ color: '#1e3a8a', marginBottom: '10px' }}>{faq.q}</h4>
-                <p style={{ color: '#64748b', fontSize: '15px' }}>{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 📢 CALL TO ACTION FINALE */}
-        <div style={{ textAlign: 'center', marginTop: '100px', padding: '60px 20px', backgroundColor: '#1e40af', borderRadius: '40px', color: 'white' }}>
-          <h2 style={{ fontSize: '32px', marginBottom: '15px' }}>Pronto a ricevere nuovi pazienti?</h2>
-          <p style={{ marginBottom: '40px', opacity: '0.9', fontSize: '18px' }}>Unisciti oggi a centinaia di professionisti che hanno già scelto la prossimità.</p>
-          <a href="/pubblica-annuncio" style={{ 
-            backgroundColor: 'white', color: '#1e40af', fontWeight: 'bold', fontSize: '20px', textDecoration: 'none',
-            padding: '20px 45px', borderRadius: '15px', display: 'inline-block'
-          }}>
-            Inizia Ora Gratis →
-          </a>
+        {/* STATISTICHE AGGIORNATE 2026 */}
+        <div style={{ backgroundColor: '#ebf8ff', padding: '30px', borderRadius: '24px', textAlign: 'center', marginBottom: '60px', border: '1px solid #bee3f8' }}>
+          <p style={{ margin: 0, color: '#2b6cb0', fontWeight: 'bold', fontSize: '16px' }}>
+            📈 Oltre 15.000 pazienti cercano specialisti su ServiziSalute ogni mese. Gennaio 2026.
+          </p>
         </div>
+
       </main>
 
-      <footer style={{ textAlign: 'center', padding: '60px 20px', color: '#94a3b8', fontSize: '14px', borderTop: '1px solid #f1f5f9' }}>
-        <p>© 2026 <strong>ServiziSalute Roma</strong> - Il network dell'eccellenza sanitaria locale.</p>
-        <p style={{ marginTop: '10px' }}>
-          <a href="/termini" style={{ color: '#94a3b8', marginRight: '15px' }}>Termini e Condizioni</a>
-          <a href="/privacy" style={{ color: '#94a3b8' }}>Privacy Policy</a>
-        </p>
+      {/* FOOTER IDENTICO ALLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+            <div>
+              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+              </p>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
+            © 2026 ServiziSalute – Tutti i diritti riservati
+          </div>
+        </div>
       </footer>
     </div>
   );
