@@ -42,12 +42,10 @@ setMeta({
   specialista_cercato: filtri.spec,
   zona_cercata: zonaSlug
 });
-        const { data, error } = await supabase
+       const { data, error } = await supabase
           .from('annunci')
           .select('*')
-          .eq('approvato', true) // Questo lascialo se vuoi che siano visibili solo quelli approvati
-          .ilike('categoria', `%${filtri.cat}%`) // <--- Usiamo ILIKE così ignora le maiuscole
-          .ilike('specialista', `%${filtri.spec}%`) // <--- Usiamo ILIKE
+          .ilike('categoria', `%${catSlug}%`)
           .ilike('zona', `%${zonaSlug}%`)
           .order('is_top', { ascending: false });
 
