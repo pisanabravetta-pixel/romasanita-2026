@@ -1,160 +1,106 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
-import { supabase } from '../lib/supabaseClient';
 
 export default function ServiziSanitariRoma() {
-  const [servizi, setServizi] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchTuttiServizi() {
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .limit(50) 
-        .order('is_top', { ascending: false });
-
-      if (!error && data) setServizi(data);
-      setLoading(false);
-    }
-    fetchTuttiServizi();
-  }, []);
+  const categorie = [
+    { nome: "Farmacie", slug: "farmacie-roma", icon: "💊", desc: "Farmacie di turno e parafarmacie." },
+    { nome: "Dentisti", slug: "dentisti-roma", icon: "🦷", desc: "Studi dentistici e pronto soccorso odontoiatrico." },
+    { nome: "Cardiologi", slug: "cardiologi-roma", icon: "❤️", desc: "Specialisti in cardiologia ed ECG." },
+    { nome: "Diagnostica", slug: "diagnostica-roma", icon: "🔬", desc: "Centri analisi, TAC e risonanze." },
+    { nome: "Visite Specialistiche", slug: "visite-specialistiche-roma", icon: "👨‍⚕️", desc: "Dermatologi, Oculisti e altri specialisti." },
+    { nome: "Servizi a Domicilio", slug: "servizi-domicilio-roma", icon: "🏠", desc: "Infermieri e fisioterapia a domicilio." }
+  ];
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Servizi Sanitari Roma | Guida alla Salute Locale | ServiziSalute</title>
-        <meta name="description" content="Esplora la rete completa dei servizi sanitari a Roma. Dai medici specialisti alle farmacie di quartiere, tutto in un unico portale." />
+        <title>Servizi Sanitari a Roma per Quartiere | Mappa Completa | ServiziSalute</title>
+        <meta name="description" content="Esplora tutti i servizi sanitari disponibili a Roma suddivisi per categoria e quartiere. Trova rapidamente il professionista di cui hai bisogno vicino a te." />
       </Head>
 
-      {/* 🧭 SCHEMA BREADCRUMB (SEO) */}
-      <Script id="breadcrumb-generale" type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
-            { "@type": "ListItem", "position": 2, "name": "Servizi Sanitari Roma", "item": "https://www.servizisalute.it/servizi-sanitari-roma" }
-          ]
-        })
-      }} />
+      {/* HEADER */}
+      <div style={{ backgroundColor: '#3182ce', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        📍 MAPPA COMPLETA DEI SERVIZI SANITARI A ROMA
+      </div>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
-        
-        {/* LINK DI RITORNO ALLA HOME */}
-        <a href="/" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>← Torna alla Home</a>
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 20px' }}>
+        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#3182ce', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
 
-        <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px', marginTop: '10px' }}>Tutti i Servizi Sanitari a Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '30px' }}>
-          Guida completa ai professionisti e alle strutture sanitarie della Capitale.
-        </p>
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h1 style={{ color: '#2c5282', fontSize: '36px', fontWeight: '800', marginBottom: '15px' }}>Servizi Sanitari a Roma</h1>
+          <p style={{ color: '#4a5568', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
+            Seleziona una categoria per visualizzare i professionisti e le strutture disponibili nei vari quartieri della Capitale.
+          </p>
+        </div>
 
-        {/* 🗺️ GRIGLIA NAVIGAZIONE CATEGORIE (LINK CORRETTI) */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
-          gap: '12px', 
-          marginBottom: '40px' 
-        }}>
-          {[
-            { n: 'Dentisti', l: '/dentisti-roma' },
-            { n: 'Diagnostica', l: '/diagnostica-roma' },
-            { n: 'Specialisti', l: '/visite-specialistiche-roma' },
-            { n: 'Domicilio', l: '/servizi-domicilio-roma' },
-            { n: 'Farmacie', l: '/farmacie-roma' },
-            { n: 'Cardiologi', l: '/cardiologi-roma-prati' }
-          ].map((cat) => (
-            <a key={cat.n} href={cat.l} style={{ 
-              backgroundColor: 'white', 
-              padding: '12px', 
-              borderRadius: '16px', 
-              textAlign: 'center', 
-              textDecoration: 'none', 
-              color: '#1e40af', 
-              fontSize: '14px', 
-              fontWeight: 'bold', 
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-            }}>
-              {cat.n}
+        {/* GRID CATEGORIE */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '60px' }}>
+          {categorie.map((cat, i) => (
+            <a key={i} href={`/${cat.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', transition: 'transform 0.2s', textAlign: 'center' }}>
+                <div style={{ fontSize: '40px', marginBottom: '15px' }}>{cat.icon}</div>
+                <h2 style={{ color: '#2c5282', fontSize: '22px', fontWeight: '700', marginBottom: '10px' }}>{cat.nome}</h2>
+                <p style={{ color: '#718096', fontSize: '15px' }}>{cat.desc}</p>
+              </div>
             </a>
           ))}
         </div>
 
-        {loading ? (
-          <p>Caricamento servizi...</p>
-        ) : servizi.map((v) => (
-          <div key={v.id} style={{ 
-            backgroundColor: 'white', 
-            padding: '25px', 
-            borderRadius: '24px', 
-            marginBottom: '20px', 
-            border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0',
-            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
-            position: 'relative'
-          }}>
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <span style={{ 
-                  backgroundColor: '#eff6ff', 
-                  color: '#2563eb', 
-                  padding: '4px 12px', 
-                  borderRadius: '20px', 
-                  fontSize: '11px', 
-                  fontWeight: '800', 
-                  textTransform: 'uppercase'
-                }}>
-                  {v.categoria}
-                </span>
-                <h3 style={{ margin: '10px 0 5px 0', color: '#1e3a8a', fontSize: '22px' }}>{v.nome}</h3>
-                <p style={{ color: '#64748b', margin: 0 }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              </div>
-
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                {v.urgenza_24h && <span style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '5px 10px', borderRadius: '8px', fontSize: '10px', fontWeight: '900', border: '1px solid #fee2e2' }}>🚨 H24</span>}
-                {v.vicino_metro && <span style={{ backgroundColor: '#f0f9ff', color: '#0369a1', padding: '5px 10px', borderRadius: '8px', fontSize: '10px', fontWeight: '900', border: '1px solid #e0f2fe' }}>🚇 METRO</span>}
-                {v.primo_sconto && <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '5px 10px', borderRadius: '8px', fontSize: '10px', fontWeight: '900', border: '1px solid #dcfce7' }}>✨ PROMO</span>}
-              </div>
-            </div>
-
-            <p style={{ color: '#475569', fontSize: '14px', lineHeight: '1.5', margin: '15px 0' }}>
-              {v.descrizione ? v.descrizione.substring(0, 160) + '...' : "Professionista sanitario selezionato a Roma. Contatta la struttura per maggiori informazioni su orari e prestazioni."}
-            </p>
-            
-            {/* 📱 TASTI AZIONE (LINK GOOGLE MAPS CORRETTO) */}
-            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}?text=Salve, la contatto da ServiziSalute Roma.`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              <a 
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                style={{ flex: 0.4, minWidth: '60px', textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #e2e8f0' }}
-              >
-                📍
-              </a>
-            </div>
-          </div>
-        ))}
-
-        {/* 🔗 CTA PROFESSIONISTI */}
-        <div style={{ marginTop: '50px', textAlign: 'center', padding: '30px', backgroundColor: '#e0e7ff', borderRadius: '24px', border: '1px solid #c7d2fe' }}>
-          <h3 style={{ color: '#1e3a8a', margin: '0 0 10px 0' }}>Sei un operatore sanitario a Roma?</h3>
-          <p style={{ color: '#475569', marginBottom: '20px' }}>Inserisci la tua attività o il tuo studio nella nostra guida gratuita.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Aggiungi la tua attività →</a>
+        {/* INFO EXTRA */}
+        <div style={{ backgroundColor: '#ebf8ff', padding: '35px', borderRadius: '24px', border: '1px solid #bee3f8', textAlign: 'center' }}>
+          <h3 style={{ color: '#2b6cb0', marginBottom: '10px' }}>Sei un professionista sanitario?</h3>
+          <p style={{ color: '#2c5282', marginBottom: '20px' }}>Aumenta la tua visibilità a Roma e ricevi contatti diretti dai pazienti.</p>
+          <a href="/per-i-professionisti" style={{ color: '#3182ce', fontWeight: 'bold', textDecoration: 'underline' }}>Scopri i vantaggi dell'iscrizione</a>
         </div>
-
-        {/* 🧱 FOOTER LEGALE */}
-        <footer style={{ marginTop: '80px', borderTop: '1px solid #e2e8f0', padding: '40px 0' }}>
-          <div style={{ fontSize: '12px', color: '#64748b', textAlign: 'justify', lineHeight: '1.5' }}>
-            <p><strong>Disclaimer:</strong> ServiziSalute.it è un aggregatore di servizi sanitari locali a Roma. Le informazioni fornite (indirizzi, orari, disponibilità) possono subire variazioni senza preavviso. Si raccomanda di confermare sempre telefonicamente prima di recarsi in struttura. In caso di emergenza medica, chiamare il 112 o il 118.</p>
-            <p style={{ marginTop: '20px', textAlign: 'center' }}>© 2026 ServiziSalute Roma — Indice Generale della Salute.</p>
-          </div>
-        </footer>
       </main>
+
+      {/* FOOTER IDENTICO ALLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+            <div>
+              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+              </p>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
+            © 2026 ServiziSalute – Tutti i diritti riservati
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
