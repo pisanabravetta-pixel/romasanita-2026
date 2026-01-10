@@ -1,132 +1,102 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 import { supabase } from '../lib/supabaseClient';
+import { getDBQuery, getSchemas } from '../lib/seo-logic';
 
 export default function DiagnosticaRoma() {
-  const [centri, setCentri] = useState([]);
+  const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
+  const schemas = getSchemas('diagnostica', 'roma');
 
   useEffect(() => {
-    async function fetchDiagnostica() {
+    async function fetchDati() {
+      const queryBusca = getDBQuery('diagnostica');
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .ilike('categoria', '%Diagnostica%') 
+        .ilike('categoria', queryBusca)
         .eq('approvato', true)
         .order('is_top', { ascending: false });
-
-      if (!error && data) setCentri(data);
+      if (!error && data) setMedici(data);
       setLoading(false);
     }
-    fetchDiagnostica();
+    fetchDati();
   }, []);
 
   return (
-    <div style={{ fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Centri Diagnostici Roma | Analisi e Radiologia | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori centri diagnostici a Roma. Analisi del sangue, radiologia, ecografie e check-up completi nei principali quartieri della Capitale." />
+        <title>Centri Diagnostici a Roma | TAC e Risonanze | ServiziSalute</title>
+        <meta name="description" content="Trova i migliori centri diagnostici a Roma per esami del sangue, TAC, risonanze e radiografie. Prenota la tua visita nei centri convenzionati e privati." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
 
-      {/* 🧭 SCHEMA BREADCRUMB (SEO) */}
-      <Script id="breadcrumb-diagnostica" type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.it" },
-            { "@type": "ListItem", "position": 2, "name": "Diagnostica a Roma", "item": "https://www.servizisalute.it/diagnostica" }
-          ]
-        })
-      }} />
+      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        🔵 CENTRI DIAGNOSTICI E ANALISI A ROMA
+      </div>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
-        
-        {/* LINK DI RITORNO ALLA HOME */}
-        <a href="/" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>← Torna alla Home</a>
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
+        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
 
-        <h1 style={{ color: '#1e40af', fontSize: '32px', marginBottom: '10px', marginTop: '10px' }}>Diagnostica e Analisi a Roma</h1>
-        <p style={{ fontSize: '18px', color: '#475569', marginBottom: '20px' }}>Centri convenzionati e laboratori d'eccellenza per i tuoi esami clinici.</p>
-
-        {/* 🔗 LINK RAPIDI ZONE (SEO) */}
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
-          {['Prati', 'EUR', 'Parioli', 'San Giovanni', 'Centro Storico'].map((zona) => (
-            <a key={zona} href={`/diagnostica/${zona.toLowerCase().replace(' ', '-')}`} style={{ backgroundColor: '#fff', border: '1px solid #cbd5e1', padding: '8px 15px', borderRadius: '20px', fontSize: '13px', color: '#1e40af', textDecoration: 'none', fontWeight: '500' }}>
-              Diagnostica {zona}
-            </a>
-          ))}
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #2563eb' }}>
+          <h1 style={{ color: '#1e40af', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Centri Diagnostici a Roma</h1>
+          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
+            Hai bisogno di una risonanza magnetica, una TAC o semplici analisi del sangue? Esplora i centri diagnostici più all'avanguardia di <strong>Roma</strong>, suddivisi per quartiere.
+          </p>
         </div>
 
-        {loading ? (
-          <p>Caricamento centri...</p>
-        ) : centri.map((v) => (
-          <div key={v.id} style={{ 
-            backgroundColor: 'white', 
-            padding: '25px', 
-            borderRadius: '24px', 
-            marginBottom: '20px', 
-            border: v.is_top ? '2px solid #3b82f6' : '1px solid #e2e8f0',
-            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
-          }}>
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <h3 style={{ margin: '0', color: '#1e3a8a', fontSize: '22px' }}>{v.nome}</h3>
-                <p style={{ color: '#64748b', margin: '5px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              </div>
-              
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                {v.urgenza_24h && <span style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #fee2e2' }}>⚡ REFERTI VELOCI</span>}
-                {v.vicino_metro && <span style={{ backgroundColor: '#eff6ff', color: '#1e40af', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #dbeafe' }}>🚇 METRO</span>}
-                {v.primo_sconto && <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '900', border: '1px solid #dcfce7' }}>✨ PROMO</span>}
-              </div>
-            </div>
-
-            <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6', margin: '15px 0' }}>
-              {v.descrizione || "Centro diagnostico specializzato in analisi cliniche e diagnostica per immagini. Contatta la struttura per prenotazioni e informazioni."}
-            </p>
-
-            {/* 📱 TASTI AZIONE */}
-            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <a href={`tel:${v.whatsapp}`} style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#3b82f6', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Chiama</a>
-              <a href={`https://wa.me/${v.whatsapp}?text=Buongiorno, vorrei informazioni sulle prestazioni del centro (da ServiziSalute).`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>WhatsApp</a>
-              <a 
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                style={{ flex: 1, minWidth: '100px', textAlign: 'center', background: '#f1f5f9', color: '#1e40af', padding: '14px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #e2e8f0' }}
-              >
-                📍 Mappa
-              </a>
+        {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : medici.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+            <h2 style={{ color: '#1e40af', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+            <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
+              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
             </div>
           </div>
         ))}
 
-        {/* 🔗 LINK DI RICHIAMO PROFESSIONISTI */}
-        <div style={{ marginTop: '50px', textAlign: 'center', padding: '30px', backgroundColor: '#e0e7ff', borderRadius: '24px', border: '1px solid #c7d2fe' }}>
-          <h3 style={{ color: '#1e3a8a', margin: '0 0 10px 0' }}>Gestisci un Centro Diagnostico?</h3>
-          <p style={{ color: '#475569', marginBottom: '20px' }}>Ricevi più prenotazioni dai pazienti di Roma. Inserisci la tua struttura su ServiziSalute.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo centro gratis →</a>
-        </div>
-
-        {/* 🧱 FOOTER CON LINK CORRELATI E DISCLAIMER */}
-        <footer style={{ marginTop: '80px', borderTop: '1px solid #e2e8f0', padding: '40px 0' }}>
-          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-            <p style={{ fontWeight: 'bold', color: '#1e3a8a', marginBottom: '15px' }}>Altre Categorie a Roma:</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-              <a href="/dentisti" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Dentisti Roma</a>
-              <a href="/cardiologi" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Cardiologi Roma</a>
-              <a href="/farmacie" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px' }}>Farmacie Roma</a>
+        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+          <h3 style={{ color: '#1e40af', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti</h3>
+          {schemas.faq.mainEntity.map((item, i) => (
+            <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{item.name}</p>
+              <p style={{ color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
             </div>
-          </div>
-
-          <div style={{ fontSize: '12px', color: '#64748b', textAlign: 'justify', lineHeight: '1.5', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>
-            <p><strong>Disclaimer:</strong> Le informazioni contenute su ServiziSalute.it hanno scopo puramente informativo. I referti e le prestazioni mediche devono essere valutati dal proprio medico curante. ServiziSalute non è responsabile per la qualità dei servizi erogati dai centri inserzionisti.</p>
-            <p style={{ marginTop: '20px', textAlign: 'center' }}>© 2026 ServiziSalute Roma — Tutti i diritti riservati.</p>
-          </div>
-        </footer>
+          ))}
+        </section>
       </main>
+
+      {/* FOOTER UFFICIALE 2026 */}
+      {renderFooter()}
     </div>
+  );
+}
+
+// Funzione helper per il footer (per non appesantire il codice)
+function renderFooter() {
+  return (
+    <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+          <div>
+            <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+            <p style={{ fontSize: '14px', color: '#a0aec0' }}>Portata di annunci sanitari a Roma.</p>
+          </div>
+          <div>
+            <h4 style={{ marginBottom: '15px' }}>Link Rapidi</h4>
+            <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+              <li><a href="/farmacie-roma" style={{ color: '#a0aec0' }}>Farmacie Roma</a></li>
+              <li><a href="/dentisti-roma" style={{ color: '#a0aec0' }}>Dentisti Roma</a></li>
+              <li><a href="/diagnostica-roma" style={{ color: '#a0aec0' }}>Diagnostica Roma</a></li>
+            </ul>
+          </div>
+        </div>
+        <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
+          © 2026 ServiziSalute – Tutti i diritti riservati
+        </div>
+      </div>
+    </footer>
   );
 }
