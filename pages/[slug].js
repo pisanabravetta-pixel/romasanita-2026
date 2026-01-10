@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
-import { getSchemas } from '../lib/seo-logic';
+import { getSchemas, getDBQuery } from '../lib/seo-logic';
 
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
