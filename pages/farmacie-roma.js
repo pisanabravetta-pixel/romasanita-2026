@@ -27,6 +27,7 @@ export default function FarmacieRoma() {
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
         <title>Farmacie a Roma | Turni e Orari | ServiziSalute</title>
+        <meta name="description" content="Cerca farmacie e parafarmacie aperte a Roma. Consultazione gratuita di orari, turni e contatti diretti nei principali quartieri della Capitale." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
@@ -40,6 +41,12 @@ export default function FarmacieRoma() {
 
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #059669' }}>
           <h1 style={{ color: '#065f46', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Farmacie a Roma</h1>
+          
+          {/* TESTO LOCALE POTENZIATO (Appunto 7-8) */}
+          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
+            Trova le farmacie e parafarmacie aperte a <strong>Roma</strong>. In questa pagina puoi consultare i servizi sanitari disponibili nei principali snodi della Capitale, da <strong>Roma Centro a zone come Prati, EUR, San Giovanni e Tiburtina</strong>. ServiziSalute ti aiuta a trovare il presidio farmaceutico più vicino per farmaci da banco, turni notturni e consulenze rapide.
+          </p>
+
           <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Tiburtina'].map(z => (
               <a key={z} href={`/farmacie-roma-${z.toLowerCase()}`} style={{ padding: '10px 18px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '14px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #d1fae5' }}>{z}</a>
@@ -62,12 +69,19 @@ export default function FarmacieRoma() {
           </div>
         ))}
 
+        {/* INTERLINKING TRA CATEGORIE (Appunto 5-6) */}
+        <div style={{ backgroundColor: '#fff', padding: '25px', borderRadius: '20px', border: '1px solid #e2e8f0', marginTop: '30px' }}>
+          <p style={{ margin: 0, color: '#4a5568', fontSize: '15px' }}>
+            <strong>Cerchi altri specialisti a Roma?</strong> Consulta anche i <a href="/dentisti-roma" style={{ color: '#059669', textDecoration: 'underline' }}>Dentisti a Roma</a> o scopri le <a href="/visite-specialistiche-roma" style={{ color: '#059669', textDecoration: 'underline' }}>Visite Specialistiche</a> disponibili oggi.
+          </p>
+        </div>
+
         <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#065f46', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti</h3>
+          <h3 style={{ color: '#065f46', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti (FAQ)</h3>
           {schemas.faq.mainEntity.map((item, i) => (
-            <div key={i} style={{ marginBottom: '20px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>{item.name}</p>
-              <p style={{ color: '#64748b' }}>{item.acceptedAnswer.text}</p>
+            <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <p style={{ fontWeight: 'bold', marginBottom: '5px', color: '#1a202c' }}>{item.name}</p>
+              <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.5' }}>{item.acceptedAnswer.text}</p>
             </div>
           ))}
         </section>
