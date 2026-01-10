@@ -124,14 +124,13 @@ if (!slug) return null;
       )}
       
       {/* 3. PULSANTE MAPPA (Sintassi corretta) */}
-      <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '0.4', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>📍</a>
+     <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '0.4', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>📍</a>
     </div>
   </div>
-            ))
-          ) : (
-          ) : (
-            <div style={{ textAlign: 'center', padding: '60px', backgroundColor: 'white', borderRadius: '32px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px dashed #cbd5e0' }}>
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>📍</div>
+))
+) : (
+  <div style={{ textAlign: 'center', padding: '60px', backgroundColor: 'white', borderRadius: '32px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px dashed #cbd5e0' }}>
+    <div style={{ fontSize: '40px', marginBottom: '20px' }}>📍</div>
               <h3 style={{ color: '#2d3748', fontSize: '22px', fontWeight: '700', marginBottom: '10px' }}>
                 Ancora nessun professionista a {meta.zona}
               </h3>
