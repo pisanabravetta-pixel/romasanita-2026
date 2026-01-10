@@ -51,8 +51,16 @@ setMeta({
     fetchDati();
   }, [slug]);
 
-  const schemas = getSchemas(meta.cat || 'farmacie', slug || 'roma');
-  if (!slug) return null;
+  // Recuperiamo l'indirizzo del primo servizio della lista, se non c'è usiamo "Roma"
+const indirizzoPrimoServizio = servizi.length > 0 ? servizi[0].indirizzo : "Roma";
+
+const schemas = getSchemas(
+  meta.cat || 'farmacie', 
+  meta.zona || 'Roma', 
+  indirizzoPrimoServizio
+);
+
+if (!slug) return null;
 
   return (
     <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh' }}>
