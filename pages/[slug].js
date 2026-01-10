@@ -74,9 +74,11 @@ export default function PaginaQuartiereDinamica() {
   
   <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
     Esplora anche: 
-    <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline', textTransform: 'capitalize' }}>
-      Tutte le {meta.cat.replace('-', ' ')} a Roma
-    </a>
+    <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline' }}>
+  {meta.cat.includes('dentisti') ? 'Tutti i dentisti' : 
+   meta.cat.includes('farmac') ? 'Tutte le farmacie' : 
+   `Tutte le ${meta.cat.replace('-', ' ')}`} a Roma
+</a>
     <span style={{ margin: '0 8px' }}>|</span>
     <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'underline' }}>
       📍 Mappa Servizi per Quartiere
