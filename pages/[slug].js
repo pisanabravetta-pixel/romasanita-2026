@@ -37,6 +37,11 @@ setMeta({
   cat: catSlug 
 });
         const filtri = getDBQuery(catSlug);
+        console.log("DEBUG FILTRI:", {
+  categoria_cercata: filtri.cat,
+  specialista_cercato: filtri.spec,
+  zona_cercata: zonaSlug
+});
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
