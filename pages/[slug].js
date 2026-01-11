@@ -42,23 +42,35 @@ setMeta({
   specialista_cercato: filtri.spec,
   zona_cercata: zonaSlug
 });
-      const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .ilike('categoria', `%${filtri.cat}%`)
-  .ilike('specialista', `%${filtri.spec}%`)
-  .ilike('zona', `%${zonaSlug}%`)
-  .order('is_top', { ascending: false });
+   const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .ilike('categoria', `%${filtri.cat}%`)
+        .ilike('specialista', `%${filtri.spec}%`)
+        .ilike('zona', `%${zonaSlug}%`)
+        .order('is_top', { ascending: false });
 
-  // Recuperiamo l'indirizzo del primo servizio della lista, se non c'è usiamo "Roma"
+      if (error) throw error;
+      setServizi(data || []);
+
+    } catch (err) { 
+      console.error(err); 
+    } finally { 
+      setLoading(false); 
+    }
+  }
+  fetchDati();
+}, [slug]); // <--- QUI CHIUDIAMO TUTTO IL CARICAMENTO DATI
+
+// DA QUI IN POI DEFINIAMO LE VARIABILI PER LA PAGINA
 const indirizzoPrimoServizio = servizi.length > 0 ? servizi[0].indirizzo : "Roma";
 
 const schemas = getSchemas(
   meta.cat || 'farmacie', 
   meta.zona || 'Roma', 
   indirizzoPrimoServizio
-);
-
+); 
 if (!slug) return null;
 
   return (
