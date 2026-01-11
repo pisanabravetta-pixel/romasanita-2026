@@ -42,24 +42,13 @@ setMeta({
   specialista_cercato: filtri.spec,
   zona_cercata: zonaSlug
 });
-       // TEST DI EMERGENZA
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          // .eq('approvato', true) <--- LASCIALO COMMENTATO
-          // .ilike('categoria', `%${filtri.cat}%`) <--- COMMENTA
-          // .ilike('specialista', `%${filtri.spec}%`) <--- COMMENTA
-          // .ilike('zona', `%${zonaSlug}%`) <--- COMMENTA
-
-        console.log("DEBUG - Risultati dopo il filtro:", filtrati);
-        setServizi(filtrati || []);
-
-        if (error) throw error;
-        setServizi(data || []);
-      } catch (err) { console.error(err); } finally { setLoading(false); }
-    }
-    fetchDati();
-  }, [slug]);
+      const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .ilike('categoria', `%${filtri.cat}%`)
+  .ilike('specialista', `%${filtri.spec}%`)
+  .ilike('zona', `%${zonaSlug}%`)
+  .order('is_top', { ascending: false });
 
   // Recuperiamo l'indirizzo del primo servizio della lista, se non c'è usiamo "Roma"
 const indirizzoPrimoServizio = servizi.length > 0 ? servizi[0].indirizzo : "Roma";
