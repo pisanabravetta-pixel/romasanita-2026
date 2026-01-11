@@ -91,6 +91,52 @@ export default function ServiziSanitariRoma() {
           <h2 style={{ color: '#0f172a', fontSize: '24px' }}>La tua guida alla sanità locale a Roma</h2>
           <p>Roma è una metropoli complessa e trovare il servizio sanitario giusto vicino a casa può fare la differenza, specialmente in situazioni di urgenza o per visite frequenti. <strong>ServiziSalute</strong> nasce per mappare ogni angolo della Capitale, offrendo una panoramica trasparente e immediata su ciò che ogni quartiere offre, migliorando l'accessibilità alle cure per tutti i cittadini (Gennaio 2026).</p>
         </div>
+        {/* 🔹 SEZIONE CTA HUB GEOGRAFICO (SERVIZI SANITARI ROMA) */}
+        <section style={{ 
+          backgroundColor: '#ffffff', 
+          padding: '50px 30px', 
+          borderRadius: '32px', 
+          marginTop: '60px', 
+          textAlign: 'center', 
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
+        }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
+            La tua attività non è ancora sulla mappa?
+          </h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
+            Migliaia di cittadini a Roma cercano servizi sanitari nel proprio quartiere ogni giorno. Non perdere l'opportunità di essere trovato da chi vive vicino al tuo studio o alla tua struttura.
+          </p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ 
+              backgroundColor: '#10b981', 
+              color: 'white', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
+            }}>
+              📍 Inserisci la tua attività
+            </a>
+            <a href="/per-i-professionisti" style={{ 
+              backgroundColor: 'white', 
+              color: '#0f172a', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              border: '1px solid #e2e8f0'
+            }}>
+              Vantaggi per le strutture
+            </a>
+          </div>
+          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
+            Ottimizzazione SEO locale inclusa • Presenza su Roma Gennaio 2026
+          </p>
+        </section>
       </main>
 
       {/* FOOTER IDENTICO ALLA HOME */}
