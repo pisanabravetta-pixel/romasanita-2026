@@ -41,7 +41,7 @@ export default function NutrizionistiRoma() {
   }, []);
 
   return (
-    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f7fee7', minHeight: '100vh' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f7fee7', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
         <title>Nutrizionisti a Roma – Dieta e Benessere Alimentare | ServiziSalute</title>
         <meta name="description" content="Trova i migliori biologi nutrizionisti a Roma. Piani alimentari personalizzati e diete per salute e sport nei principali quartieri della capitale." />
@@ -53,22 +53,27 @@ export default function NutrizionistiRoma() {
         )}
       </Head>
 
+      {/* BARRA SUPERIORE TESTO IN GRASSETTO */}
       <div style={{ backgroundColor: '#65a30d', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        🥗 NUTRIZIONISTI E DIETISTI A ROMA
+        🥗 NUTRIZIONISTI E DIETISTI A ROMA – GENNAIO 2026
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
+        {/* LINK PER TORNARE A TUTTE LE SPECIALISTICHE */}
         <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#65a30d', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
 
+        {/* DIV CON TITOLO H1, DESCRIZIONE E QUARTIERI */}
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #65a30d', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
-          <h1 style={{ color: '#365314', fontSize: '32px', fontWeight: '800' }}>Nutrizionisti a Roma</h1>
-          <p>Migliora il tuo stile di vita e la tua salute. Trova un <strong>nutrizionista esperto a Roma</strong> per piani alimentari personalizzati, gestione del peso e nutrizione sportiva.</p>
+          <h1 style={{ color: '#365314', fontSize: '32px', fontWeight: '800', margin: '0 0 10px 0' }}>Nutrizionisti a Roma</h1>
+          <p style={{ lineHeight: '1.6', fontSize: '16px', color: '#4b5563' }}>
+            Migliora il tuo stile di vita e la tua salute attraverso l'alimentazione. Trova un <strong>nutrizionista esperto a Roma</strong> per piani alimentari personalizzati, gestione del peso, intolleranze e nutrizione sportiva.
+          </p>
           
-          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #ecfccb' }}>
             <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#6b7280', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {quartieriDoc.map(q => (
-                <a key={q} href={`/nutrizionisti-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#f7fee7', color: '#4d7c0f', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #d9f99d' }}>
+                <a key={q} href={`/nutrizionisti-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#f7fee7', color: '#4d7c0f', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #d9f99d', fontWeight: '600' }}>
                   {q}
                 </a>
               ))}
@@ -76,9 +81,10 @@ export default function NutrizionistiRoma() {
           </div>
         </div>
 
-        <h2 style={{ color: '#365314', marginBottom: '20px' }}>Specialisti disponibili</h2>
+        {/* LISTA NUTRIZIONISTI DISPONIBILI */}
+        <h2 style={{ color: '#365314', marginBottom: '20px', fontSize: '22px' }}>Specialisti disponibili</h2>
         {loading ? (
-          <p style={{ textAlign: 'center' }}>Caricamento...</p>
+          <p style={{ textAlign: 'center' }}>Caricamento specialisti...</p>
         ) : medici.length > 0 ? (
           medici.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #65a30d' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
@@ -94,11 +100,13 @@ export default function NutrizionistiRoma() {
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun nutrizionista trovato a Roma.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>
+             Nessun nutrizionista trovato a Roma. Stiamo aggiornando il database.
+          </div>
         )}
 
-        {/* SEZIONE ALTRE SPECIALISTICHE */}
-        <section style={{ marginTop: '40px', padding: '20px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #65a30d' }}>
+        {/* SEZIONE ALTRE SPECIALISTICHE (CROSS-LINKING) */}
+        <section style={{ marginTop: '40px', padding: '25px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #65a30d' }}>
           <h4 style={{ color: '#365314', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
             {altreSpecialistiche.map(s => (
@@ -107,59 +115,20 @@ export default function NutrizionistiRoma() {
           </div>
         </section>
 
-        <section style={{ marginTop: '30px', backgroundColor: '#ecfccb', padding: '30px', borderRadius: '24px' }}>
-          <h3 style={{ color: '#365314' }}>Domande Frequenti (FAQ)</h3>
-          <div style={{ marginTop: '20px' }}>
-            <p><strong>Cosa portare alla prima visita nutrizionale?</strong><br/>È utile portare le analisi del sangue più recenti e un eventuale diario alimentare di 3 giorni.</p>
-            <p style={{ marginTop: '15px' }}><strong>Il nutrizionista può prescrivere farmaci?</strong><br/>No, il biologo nutrizionista può prescrivere solo integratori alimentari, non farmaci.</p>
+        {/* FAQ SECTION */}
+        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+          <h3 style={{ color: '#365314', fontSize: '24px', fontWeight: '800', marginBottom: '20px' }}>Domande Frequenti</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Cosa portare alla prima visita nutrizionale?</p>
+              <p style={{ color: '#64748b' }}>È consigliabile portare le ultime analisi del sangue (non più vecchie di 6 mesi) e un eventuale diario alimentare di 3-5 giorni per analizzare le abitudini correnti.</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Il nutrizionista può prescrivere farmaci?</p>
+              <p style={{ color: '#64748b' }}>No. Il biologo nutrizionista può elaborare diete e consigliare integratori alimentari, ma la prescrizione di farmaci spetta esclusivamente al medico.</p>
+            </div>
           </div>
         </section>
-        {/* 🔹 SEZIONE CTA PROFESSIONISTI UNIVERSALE */}
-        <section style={{ 
-          backgroundColor: '#ffffff', 
-          padding: '50px 30px', 
-          borderRadius: '32px', 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-        }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            Sei un professionista sanitario a Roma?
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-            Aumenta la tua visibilità locale. Posiziona il tuo studio o la tua attività nei primi risultati del tuo quartiere e ricevi contatti diretti dai pazienti.
-          </p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#10b981', 
-              color: 'white', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
-            }}>
-              🚀 Pubblica il tuo profilo
-            </a>
-            <a href="/per-i-professionisti" style={{ 
-              backgroundColor: 'white', 
-              color: '#0f172a', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              border: '1px solid #e2e8f0'
-            }}>
-              Scopri come funziona
-            </a>
-          </div>
-          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
-            Punto di riferimento per la sanità a Roma • Gennaio 2026
-          </p>
-        </section>    
       </main>
 
       {/* FOOTER INTEGRALE DELLA HOME */}
@@ -179,21 +148,15 @@ export default function NutrizionistiRoma() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
               <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
@@ -202,9 +165,7 @@ export default function NutrizionistiRoma() {
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
