@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
@@ -45,11 +44,6 @@ export default function DermatologiRoma() {
           <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
             La salute della tua pelle è importante. Trova <strong>dermatologi esperti a Roma</strong> per controlli preventivi, cura dell'acne e trattamenti dermatologici avanzati.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
-            {['Mappatura Nei', 'Dermatologia Estetica', 'Cura Acne', 'Controllo Capelli'].map(s => (
-              <span key={s} style={{ backgroundColor: '#f3e8ff', color: '#9333ea', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: 'bold' }}>{s}</span>
-            ))}
-          </div>
         </div>
 
         <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Dermatologi disponibili</h2>
@@ -68,7 +62,7 @@ export default function DermatologiRoma() {
         )) : (
           <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun dermatologo trovato.</div>
         )}
-
+      </main>
         {/* FOOTER IDENTICO ALLA HOME */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
