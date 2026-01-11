@@ -181,7 +181,6 @@ export default function PubblicaAnnuncio() {
         </div>
       </main>
 
-      {/* FOOTER IDENTICO ALLA HOME (ESTRATTO DALLE TUE ISTRUZIONI) */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '80px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -189,16 +188,20 @@ export default function PubblicaAnnuncio() {
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
               <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
                 ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti e visite specialistiche vicino a te.
+                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
               </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi</a></li>
+                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
               </ul>
             </div>
             <div>
@@ -206,13 +209,16 @@ export default function PubblicaAnnuncio() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
                 <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
             </div>
           </div>
