@@ -8,21 +8,32 @@ export default function DentistiRoma() {
   const [loading, setLoading] = useState(true);
   const schemas = getSchemas('dentisti', 'roma');
 
-  useEffect(() => {
+ useEffect(() => {
     async function fetchDentisti() {
-      const queryBusca = getDBQuery('dentisti');
-     const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .ilike('zona', `%${variabileZona}%`) // Il % dice: cerca la parola ovunque nella cella
-  .eq('approvato', true)
-  .order('is_top', { ascending: false });
-      if (!error && data) setMedici(data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        // Recuperiamo i filtri (cat e spec) definiti in seo-logic.js
+        const queryBusca = getDBQuery('dentisti'); 
+
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          // Usiamo i dati di queryBusca per filtrare correttamente
+          .ilike('categoria', `%${queryBusca.cat}%`)
+          .ilike('specialista', `%${queryBusca.spec}%`)
+          .order('is_top', { ascending: false });
+
+        if (!error && data) setMedici(data);
+        if (error) console.error("Errore database:", error);
+      } catch (err) {
+        console.error("Errore caricamento:", err);
+      } finally {
+        setLoading(false); // <--- Questo sblocca la scritta "Caricamento"
+      }
     }
     fetchDentisti();
   }, []);
-
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
