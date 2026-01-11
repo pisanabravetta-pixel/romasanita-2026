@@ -88,8 +88,25 @@ export default function PaginaQuartiereDinamica() {
 
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, marginTop: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: tema.primario, fontSize: '32px', margin: '0', fontWeight: '800' }}>{meta.titolo}</h1>
+          
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '15px', fontSize: '14px' }}>
+              <a href="#lista" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Vedi Annunci</a>
+              <a href="#faq" style={{ color: tema.primario, fontWeight: '600', textDecoration: 'none' }}>↓ Domande Frequenti</a>
+            </div>
+            
+            <div style={{ borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '5px', fontSize: '13px', color: '#64748b' }}>
+              Esplora anche: 
+              <a href={`/${meta.cat}-roma`} style={{ marginLeft: '8px', color: tema.primario, textDecoration: 'underline' }}>
+                Tutti i {meta.cat.replace('-', ' ')} a Roma
+              </a>
+              <span style={{ margin: '0 8px' }}>|</span>
+              <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'underline' }}>
+                📍 Mappa Servizi per Quartiere
+              </a>
+            </div>
+          </div>
         </div>
-
         <div id="lista" style={{ paddingTop: '20px' }}>
           {loading ? (
             <p style={{ textAlign: 'center', padding: '40px' }}>Caricamento...</p>
