@@ -81,6 +81,7 @@ export default function OrtopediciRoma() {
         </div>
 
         <h2 style={{ color: '#1e3a8a', marginBottom: '20px', fontSize: '22px' }}>Specialisti disponibili ora</h2>
+        
         {loading ? (
           <p style={{ textAlign: 'center', padding: '40px' }}>Caricamento medici...</p>
         ) : medici.length > 0 ? (
@@ -94,7 +95,7 @@ export default function OrtopediciRoma() {
                 {v.is_top && <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
               </div>
 
-              {/* 🔹 BADGE PER ORTOPEDIA */}
+              {/* BADGE SPECIALISTICI */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                 <span style={{ backgroundColor: '#f0f7ff', color: '#1e40af', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #bfdbfe' }}>🦴 PROTESI ANCA/GINOCCHIO</span>
                 <span style={{ backgroundColor: '#f0f7ff', color: '#1e40af', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #bfdbfe' }}>🏃 MEDICINA SPORTIVA</span>
@@ -122,33 +123,44 @@ export default function OrtopediciRoma() {
         </section>
 
         {/* FAQ */}
-        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '30px' }}>
           <h3 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginBottom: '20px' }}>Domande Frequenti</h3>
-          <div>
-            <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Quando rivolgersi a un ortopedico?</p>
-            <p style={{ color: '#64748b' }}>In caso di dolori articolari persistenti, traumi sportivi, limitazioni nel movimento o sospette patologie degenerative come l'artrosi.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Quando rivolgersi a un ortopedico?</p>
+              <p style={{ color: '#64748b' }}>In caso di dolori articolari persistenti, traumi sportivi, limitazioni nel movimento o sospette patologie degenerative come l'artrosi.</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Quanto costa una visita ortopedica a Roma?</p>
+              <p style={{ color: '#64748b' }}>Le tariffe medie a Roma variano tra i 90€ e i 160€, a seconda dell'esperienza del chirurgo e del centro specialistico.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA PROFESSIONISTI */}
+        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)', marginBottom: '50px' }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Sei un ortopedico a Roma?</h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px' }}>Raggiungi nuovi pazienti nella capitale. Posiziona il tuo studio in cima ai risultati del tuo quartiere.</p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none' }}>🚀 Inizia ora</a>
           </div>
         </section>
       </main>
 
       {/* FOOTER INTEGRALE */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-              </p>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>Portale di riferimento per la sanità privata a Roma.</p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Aggiornato: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
-                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
               </ul>
             </div>
@@ -156,12 +168,9 @@ export default function OrtopediciRoma() {
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
               <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
-                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
-                  ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
-                </p>
+                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>⚠️ ATTENZIONE: Richieste di ortopedici e fisioterapisti in forte aumento a Roma Nord ed Eur.</p>
               </div>
             </div>
             <div>
