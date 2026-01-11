@@ -8,39 +8,51 @@ export default function DentistiRoma() {
   const [loading, setLoading] = useState(true);
   const schemas = getSchemas('dentisti', 'roma');
 
- useEffect(() => {
+  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+
+  const altreSpecialistiche = [
+    { nome: "Dermatologi", url: "/dermatologi-roma" },
+    { nome: "Cardiologi", url: "/cardiologi-roma" },
+    { nome: "Oculisti", url: "/oculisti-roma" },
+    { nome: "Ortopedici", url: "/ortopedici-roma" },
+    { nome: "Psicologi", url: "/psicologi-roma" },
+    { nome: "Nutrizionisti", url: "/nutrizionisti-roma" }
+  ];
+
+  useEffect(() => {
     async function fetchDentisti() {
       try {
         setLoading(true);
-        // Recuperiamo i filtri (cat e spec) definiti in seo-logic.js
         const queryBusca = getDBQuery('dentisti'); 
-
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          // Usiamo i dati di queryBusca per filtrare correttamente
           .ilike('categoria', `%${queryBusca.cat}%`)
           .ilike('specialista', `%${queryBusca.spec}%`)
           .order('is_top', { ascending: false });
 
         if (!error && data) setMedici(data);
-        if (error) console.error("Errore database:", error);
       } catch (err) {
         console.error("Errore caricamento:", err);
       } finally {
-        setLoading(false); // <--- Questo sblocca la scritta "Caricamento"
+        setLoading(false);
       }
     }
     fetchDentisti();
   }, []);
+
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
         <title>Dentisti a Roma | Studi Odontoiatrici per Quartiere | ServiziSalute</title>
-        <meta name="description" content="Cerchi un dentista a Roma? Trova i migliori studi dentistici privati per pulizia denti, impianti e ortodonzia nei quartieri di Roma con contatti diretti." />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
+        <meta name="description" content="Cerchi un dentista a Roma? Trova i migliori studi dentistici per pulizia denti, impianti e ortodonzia nei quartieri di Roma con contatti diretti." />
+        {schemas && (
+          <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
+          </>
+        )}
       </Head>
 
       <div style={{ backgroundColor: '#3182ce', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
@@ -48,48 +60,60 @@ export default function DentistiRoma() {
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
-        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#3182ce', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
+        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#3182ce', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
 
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #3182ce' }}>
           <h1 style={{ color: '#2c5282', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Dentisti a Roma</h1>
-          
-          {/* TESTO SEO POTENZIATO (Appunto 7-8) */}
-          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
-            Trova i migliori <strong>studi dentistici a Roma</strong> suddivisi per quartiere. Che tu stia cercando un dentista a <strong>Prati, EUR, San Giovanni o Trastevere</strong>, su ServiziSalute puoi confrontare profili professionali per igiene dentale, carie, impianti e ortodonzia. Contatta direttamente lo specialista più vicino per richiedere disponibilità e costi senza intermediari.
+          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px' }}>
+            Trova i migliori <strong>studi dentistici a Roma</strong> suddivisi per quartiere. Confronta i professionisti per igiene dentale, carie, impianti e ortodonzia a <strong>Prati, EUR, San Giovanni o Parioli</strong>.
           </p>
 
-          <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Trastevere'].map(z => (
-              <a key={z} href={`/dentisti-roma-${z.toLowerCase()}`} style={{ padding: '10px 18px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '20px', fontSize: '14px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #bee3f8' }}>{z}</a>
+          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#64748b', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {quartieriDoc.map(q => (
+                <a key={q} href={`/dentisti-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#ebf8ff', color: '#2c5282', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #bee3f8', fontWeight: '600' }}>
+                  {q}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Studi disponibili</h2>
+        {loading ? (
+          <p style={{textAlign:'center'}}>Caricamento...</p>
+        ) : medici.length > 0 ? (
+          medici.map((v) => (
+            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #3182ce' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h2 style={{ color: '#2c5282', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                {v.is_top && <span style={{ backgroundColor: '#ebf8ff', color: '#3182ce', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+              </div>
+              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#3182ce', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama Ora</a>
+                {v.whatsapp && <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessuno studio dentistico trovato a Roma.</div>
+        )}
+
+        {/* SEZIONE ALTRE SPECIALISTICHE (CROSS-LINKING) */}
+        <section style={{ marginTop: '40px', padding: '20px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #3182ce' }}>
+          <h4 style={{ color: '#2c5282', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+            {altreSpecialistiche.map(s => (
+              <a key={s.nome} href={s.url} style={{ color: '#3182ce', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
             ))}
           </div>
-        </div>
+        </section>
 
-        {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : medici.map((v) => (
-          <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #3182ce' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h2 style={{ color: '#2c5282', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-              {v.is_top && <span style={{ backgroundColor: '#ebf8ff', color: '#3182ce', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
-            </div>
-            <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-            <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#3182ce', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-              {v.whatsapp && <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>}
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" style={{ flex: '0.4', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>📍</a>
-            </div>
-          </div>
-        ))}
-
-        {/* INTERLINKING TRA CATEGORIE (Appunto 5-6) */}
-        <div style={{ backgroundColor: '#fff', padding: '25px', borderRadius: '20px', border: '1px solid #e2e8f0', marginTop: '30px' }}>
-          <p style={{ margin: 0, color: '#4a5568', fontSize: '15px' }}>
-            <strong>Altre necessità sanitarie a Roma?</strong> Consulta le <a href="/farmacie-roma" style={{ color: '#3182ce', textDecoration: 'underline' }}>Farmacie a Roma</a> o esplora le <a href="/visite-specialistiche-roma" style={{ color: '#3182ce', textDecoration: 'underline' }}>Visite Specialistiche</a> nei quartieri limitrofi.
-          </p>
-        </div>
-
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#2c5282', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti (FAQ)</h3>
-          {schemas.faq.mainEntity.map((item, i) => (
+        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+          <h3 style={{ color: '#2c5282', fontSize: '24px', marginBottom: '20px', fontWeight: '800' }}>Domande Frequenti (FAQ)</h3>
+          {schemas.faq?.mainEntity.map((item, i) => (
             <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
               <p style={{ fontWeight: 'bold', marginBottom: '5px', color: '#1a202c' }}>{item.name}</p>
               <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.5' }}>{item.acceptedAnswer.text}</p>
@@ -98,8 +122,7 @@ export default function DentistiRoma() {
         </section>
       </main>
 
-      {/* FOOTER IDENTICO ALLA HOME */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
@@ -124,9 +147,6 @@ export default function DentistiRoma() {
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
                 <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
-              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
-                🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
-              </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
@@ -135,11 +155,6 @@ export default function DentistiRoma() {
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
-              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
-                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
-                  ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
-                </p>
-              </div>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
@@ -149,9 +164,6 @@ export default function DentistiRoma() {
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
-              <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
-                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
-              </p>
             </div>
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
