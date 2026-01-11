@@ -114,6 +114,52 @@ export default function OrtopediciRoma() {
             <p style={{ marginTop: '15px' }}><strong>Serve la lastra prima della visita?</strong><br/>Dipende dal caso, spesso lo specialista preferisce valutare prima clinicamente il paziente.</p>
           </div>
         </section>
+        {/* 🔹 SEZIONE CTA PROFESSIONISTI UNIVERSALE */}
+        <section style={{ 
+          backgroundColor: '#ffffff', 
+          padding: '50px 30px', 
+          borderRadius: '32px', 
+          marginTop: '60px', 
+          textAlign: 'center', 
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
+        }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
+            Sei un professionista sanitario a Roma?
+          </h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
+            Aumenta la tua visibilità locale. Posiziona il tuo studio o la tua attività nei primi risultati del tuo quartiere e ricevi contatti diretti dai pazienti.
+          </p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ 
+              backgroundColor: '#10b981', 
+              color: 'white', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
+            }}>
+              🚀 Pubblica il tuo profilo
+            </a>
+            <a href="/per-i-professionisti" style={{ 
+              backgroundColor: 'white', 
+              color: '#0f172a', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              border: '1px solid #e2e8f0'
+            }}>
+              Scopri come funziona
+            </a>
+          </div>
+          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
+            Punto di riferimento per la sanità a Roma • Gennaio 2026
+          </p>
+        </section>    
       </main>
 
       {/* FOOTER INTEGRALE DELLA HOME */}
