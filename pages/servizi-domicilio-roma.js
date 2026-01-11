@@ -21,6 +21,7 @@ export default function ServiziDomicilioRoma() {
   useEffect(() => {
     async function fetchDomicilio() {
       try {
+        setLoading(true);
         const queryBusca = getDBQuery('servizi-domicilio'); 
         const { data, error } = await supabase
           .from('annunci')
@@ -82,19 +83,41 @@ export default function ServiziDomicilioRoma() {
 
         {/* 🔹 LISTA PROFESSIONISTI DISPONIBILI */}
         <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px', fontWeight: '700' }}>Professionisti disponibili a casa</h2>
+        
         {loading ? (
           <p style={{textAlign:'center', padding: '40px'}}>Ricerca servizi attivi...</p>
         ) : servizi.length > 0 ? (
           servizi.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #ea580c' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h2 style={{ color: '#9a3412', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                <div>
+                  <h2 style={{ color: '#9a3412', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                  <p style={{ fontSize: '17px', margin: '8px 0' }}>📍 Disponibile in: <strong>{v.zona}</strong> — {v.indirizzo}</p>
+                </div>
                 {v.is_top && <span style={{ backgroundColor: '#fff7ed', color: '#ea580c', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
               </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 Disponibile in: <strong>{v.zona}</strong> — {v.indirizzo}</p>
+
+              {/* --- BADGE DINAMICI DOMICILIO --- */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                {v.uscita_immediata && (
+                  <span style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #fecaca' }}>⚡ USCITA IMMEDIATA</span>
+                )}
+                {v.festivi_attivi && (
+                  <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #fde68a' }}>🗓️ ANCHE FESTIVI</span>
+                )}
+                {v.prelievi_casa && (
+                  <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #bae6fd' }}>💉 PRELIEVI A CASA</span>
+                )}
+                {v.h24_assistenza && (
+                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>🌙 ASSISTENZA H24</span>
+                )}
+              </div>
+
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#ea580c', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama Ora</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                {v.whatsapp && (
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                )}
               </div>
             </div>
           ))
@@ -116,28 +139,44 @@ export default function ServiziDomicilioRoma() {
         <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
           <h3 style={{ color: '#9a3412', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Quali zone di Roma sono coperte?</p>
-              <p style={{ color: '#64748b' }}>La maggior parte dei professionisti copre l'intero territorio all'interno del GRA, inclusi i quartieri centrali (ZTL) e le zone periferiche.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>È possibile richiedere analisi del sangue a domicilio?</p>
-              <p style={{ color: '#64748b' }}>Sì, molti centri e infermieri privati offrono il servizio di prelievo domiciliare con consegna dei campioni ai laboratori di riferimento.</p>
-            </div>
+            {schemas.faq?.mainEntity.map((item, i) => (
+              <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+                <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>{item.name}</p>
+                <p style={{ color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
+              </div>
+            )) || (
+              <>
+                <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+                  <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Quali zone di Roma sono coperte?</p>
+                  <p style={{ color: '#64748b' }}>La maggior parte dei professionisti copre l'intero territorio all'interno del GRA, inclusi i quartieri centrali (ZTL) e le zone periferiche.</p>
+                </div>
+                <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+                  <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>È possibile richiedere analisi del sangue a domicilio?</p>
+                  <p style={{ color: '#64748b' }}>Sì, molti centri e infermieri privati offrono il servizio di prelievo domiciliare con consegna dei campioni ai laboratori di riferimento.</p>
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+
+        {/* --- CTA PROFESSIONISTI --- */}
+        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Offri servizi sanitari a domicilio a Roma?</h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>Unisciti al network di <strong>ServiziSalute</strong>. Ricevi chiamate dirette da pazienti che cercano assistenza nella tua zona.</p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>🚀 Pubblica il tuo servizio</a>
+            <a href="/per-i-professionisti" style={{ backgroundColor: 'white', color: '#0f172a', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', border: '1px solid #e2e8f0' }}>Area Professionisti</a>
           </div>
         </section>
       </main>
 
       {/* FOOTER INTEGRALE DELLA HOME */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
-              </p>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.</p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
