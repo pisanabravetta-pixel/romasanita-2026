@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; // <--- IMPORTANTE: Assicurati che ci sia questo
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
@@ -6,36 +6,34 @@ import { getDBQuery, getSchemas } from '../lib/seo-logic';
 export default function DermatologiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Gestione sicura degli schemi
-  const schemas = getSchemas ? getSchemas('dermatologia', 'roma') : null;
+  const schemas = getSchemas('dermatologia', 'roma');
 
   useEffect(() => {
-    async function fetchDermatologi() {
+    async function fetchData() {
       try {
-        const queryBusca = getDBQuery('dermatologia'); 
+        // Cerchiamo sia "dermatologia" che "dermatologo" per sicurezza
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
-          .ilike('categoria', `%${queryBusca.cat}%`)
+          .or('categoria.ilike.%dermatologia%,categoria.ilike.%dermatologo%')
           .eq('approvato', true)
           .order('is_top', { ascending: false });
-          
+        
         if (!error && data) setMedici(data);
       } catch (err) {
-        console.error("Errore caricamento dermatologi:", err);
+        console.error("Errore fetch:", err);
       } finally {
         setLoading(false);
       }
     }
-    fetchDermatologi();
+    fetchData();
   }, []);
 
   return (
-    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#faf5ff', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Head>
         <title>Dermatologi a Roma – Visita Dermatologica e Mappatura Nei | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori dermatologi a Roma. Prenota visite specialistiche per pelle, capelli e mappatura nei nei principali quartieri di Roma." />
+        <meta name="description" content="Trova i migliori dermatologi a Roma. Prenota una visita dermatologica per acne, psoriasi o mappatura nei nei migliori centri della capitale." />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -44,67 +42,73 @@ export default function DermatologiRoma() {
         )}
       </Head>
 
-      <div style={{ backgroundColor: '#9333ea', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        ✨ SPECIALISTI IN DERMATOLOGIA A ROMA
+      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        🩺 SPECIALISTI IN DERMATOLOGIA A ROMA
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
-        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#9333ea', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
+        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
 
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #9333ea' }}>
-          <h1 style={{ color: '#581c87', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Dermatologi a Roma</h1>
-          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
-            La salute della tua pelle è importante. Trova <strong>dermatologi esperti a Roma</strong> per controlli preventivi, cura dell'acne e trattamenti dermatologici avanzati.
-          </p>
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #2563eb', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', fontWeight: '800' }}>Dermatologi a Roma</h1>
+          <p>La salute della tua pelle è importante. Trova <strong>dermatologi esperti a Roma</strong> per controlli preventivi, cura dell'acne e trattamenti avanzati.</p>
         </div>
 
-        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Dermatologi disponibili</h2>
+        {/* LISTA MEDICI */}
+        <h2 style={{ color: '#1e3a8a', marginBottom: '20px' }}>Dermatologi disponibili</h2>
         {loading ? (
-          <p style={{textAlign:'center'}}>Caricamento...</p>
+          <p>Caricamento...</p>
         ) : medici.length > 0 ? (
           medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #9333ea' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h2 style={{ color: '#581c87', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-                {v.is_top && <span style={{ backgroundColor: '#f3e8ff', color: '#9333ea', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
-              </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#9333ea', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Prenota Visita</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0' }}>
+              <h2 style={{ color: '#1e3a8a', margin: 0 }}>{v.nome}</h2>
+              <p>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
+                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
               </div>
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun dermatologo trovato.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>
+            <p>Nessun dermatologo trovato con questi criteri.</p>
+            <a href="/pubblica-annuncio" style={{ color: '#2563eb', fontWeight: 'bold' }}>Sei un dermatologo? Registrati ora</a>
+          </div>
         )}
+
+        {/* SEZIONE FAQ SEO */}
+        <section style={{ marginTop: '50px', backgroundColor: '#f1f5f9', padding: '30px', borderRadius: '24px' }}>
+          <h3 style={{ color: '#1e3a8a' }}>Domande Frequenti (FAQ)</h3>
+          <div style={{ marginTop: '20px' }}>
+            <p><strong>Quanto costa una visita dermatologica a Roma?</strong><br/>Il prezzo medio varia tra gli 80€ e i 150€ a seconda dello specialista e della zona.</p>
+            <p style={{ marginTop: '15px' }}><strong>Quando fare la mappatura dei nei?</strong><br/>Si consiglia un controllo annuale per prevenire melanomi e altre patologie della pelle.</p>
+          </div>
+        </section>
       </main>
 
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      {/* FOOTER COMPLETO IDENTICO ALLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
               <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma.
               </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
-                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Specialistiche</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti</a></li>
               </ul>
             </div>
             <div>
-              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+              <h4 style={{ marginBottom: '15px' }}>Professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica annuncio</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
