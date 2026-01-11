@@ -3,40 +3,49 @@ import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
 
-export default function VisiteSpecialisticheRoma() {
-  const [medici, setMedici] = useState([]);
+export default function DermatologiRoma() {
+  const [dermatologi, setDermatologi] = useState([]);
   const [loading, setLoading] = useState(true);
-  const schemas = getSchemas('visite-specialistiche', 'roma');
+  const schemas = getSchemas('dermatologi', 'roma');
 
-  const quartieriDoc = ['Prati', 'Trastevere', 'EUR', 'Parioli', 'Tiburtina', 'San Giovanni', 'Flaminio', 'Monteverde'];
-  const specialitaCorrelate = ['Psicologo', 'Cardiologo', 'Dermatologo', 'Ortopedico', 'Ginecologo', 'Nutrizionista'];
+  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+  
+  const specialisticheRoma = [
+    { nome: "Cardiologi Roma", url: "/cardiologi-roma" },
+    { nome: "Ortopedici Roma", url: "/ortopedici-roma" },
+    { nome: "Ginecologi Roma", url: "/ginecologi-roma" },
+    { nome: "Oculisti Roma", url: "/oculisti-roma" },
+    { nome: "Psicologi Roma", url: "/psicologi-roma" },
+    { nome: "Dentisti Roma", url: "/dentisti-roma" }
+  ];
 
   useEffect(() => {
-    async function fetchSpecialisti() {
+    async function fetchDermatologi() {
       try {
-        const queryBusca = getDBQuery('visite-specialistiche'); 
+        setLoading(true);
+        const queryBusca = getDBQuery('dermatologi'); 
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
-          .ilike('categoria', `%${queryBusca.cat}%`)
           .eq('approvato', true)
+          .ilike('categoria', `%${queryBusca.cat}%`)
           .order('is_top', { ascending: false });
           
-        if (!error && data) setMedici(data);
+        if (!error && data) setDermatologi(data);
       } catch (err) {
-        console.error("Errore fetch specialisti:", err);
+        console.error("Errore fetch dermatologi:", err);
       } finally {
         setLoading(false);
       }
     }
-    fetchSpecialisti();
+    fetchDermatologi();
   }, []);
 
   return (
-    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', color: '#1e293b' }}>
       <Head>
-        <title>Visite Specialistiche a Roma – Prenota Psicologi, Cardiologi e Dermatologi | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori medici specialisti a Roma. Consulta profili di psicologi, cardiologi, dermatologi e ortopedici nei quartieri di Roma." />
+        <title>Dermatologi a Roma | Migliori Specialisti in Dermatologia | ServiziSalute</title>
+        <meta name="description" content="Cerchi un dermatologo a Roma? Trova i migliori specialisti per mappatura nei, acne e patologie della pelle nei quartieri di Roma con contatti diretti." />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -45,100 +54,93 @@ export default function VisiteSpecialisticheRoma() {
         )}
       </Head>
 
-      {/* BARRA SUPERIORE TESTO IN GRASSETTO */}
-      <div style={{ backgroundColor: '#4f46e5', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        💜 VISITE SPECIALISTICHE E PROFESSIONISTI A ROMA - GENNAIO 2026
+      {/* BARRA SUPERIORE CON TESTO IN GRASSETTO */}
+      <div style={{ backgroundColor: '#be185d', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        🌸 MIGLIORI DERMATOLOGI E STUDI DERMATOLOGICI A ROMA - GENNAIO 2026
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
-        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#4f46e5', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
+        {/* LINK PER TORNARE A TUTTE LE SPECIALISTICHE */}
+        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#be185d', textDecoration: 'none', fontWeight: '600' }}>← Torna a tutte le Specialistiche</a>
 
-        {/* 🔹 HERO HUB CON TITOLO H1 E CERCA PER SPECIALITÀ */}
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #4f46e5' }}>
-          <h1 style={{ color: '#312e81', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Visite Specialistiche a Roma</h1>
-          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px' }}>
-            Accedi alle migliori cure specialistiche della Capitale. Trova il professionista giusto tra <strong>psicologi, dermatologi, cardiologi e ortopedici</strong> a Roma.
+        {/* DIV CON TITOLO H1 E DESCRIZIONE */}
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #be185d' }}>
+          <h1 style={{ color: '#831843', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Dermatologi a Roma</h1>
+          <p style={{ color: '#475569', lineHeight: '1.6', fontSize: '16px' }}>
+            Hai bisogno di una visita dermatologica? Trova i migliori <strong>dermatologi a Roma</strong> specializzati in controllo nei, dermatologia oncologica, cura dell'acne e trattamenti estetici a <strong>Prati, EUR, San Giovanni o Parioli</strong>.
           </p>
 
-          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
-            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#64748b', display: 'block', marginBottom: '10px' }}>CERCA PER SPECIALITÀ:</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {specialitaCorrelate.map(spec => (
-                <a key={spec} href={`/${spec.toLowerCase()}-roma`} style={{ backgroundColor: '#f5f3ff', padding: '10px 18px', borderRadius: '12px', textAlign: 'center', border: '1px solid #ddd6fe', fontSize: '14px', fontWeight: '600', color: '#4f46e5', textDecoration: 'none' }}>
-                  {spec}
+          {/* SEZIONE CERCA PER QUARTIERE */}
+          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #f1f5f9' }}>
+            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#64748b', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {quartieriDoc.map(q => (
+                <a key={q} href={`/dermatologi-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#fdf2f8', color: '#be185d', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #fce7f3', fontWeight: '600' }}>
+                  {q}
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        {/* 🔹 LISTA ANNUNCI */}
-        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px', fontWeight: '700' }}>Medici disponibili ora</h2>
+        {/* LISTA DEI DERMATOLOGI DISPONIBILI */}
+        <h2 style={{ fontSize: '22px', color: '#1e293b', marginBottom: '20px', fontWeight: '700' }}>Specialisti disponibili</h2>
+        
         {loading ? (
-          <p style={{textAlign:'center', padding: '40px'}}>Caricamento specialisti...</p>
-        ) : medici.length > 0 ? (
-          medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #4f46e5' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <p style={{textAlign:'center', padding: '40px'}}>Ricerca medici in corso...</p>
+        ) : dermatologi.length > 0 ? (
+          dermatologi.map((v) => (
+            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #be185d' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <h2 style={{ color: '#312e81', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-                  <span style={{ fontSize: '14px', color: '#6366f1', fontWeight: 'bold', textTransform: 'uppercase' }}>{v.specialista || v.categoria}</span>
+                  <h2 style={{ color: '#831843', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                  <p style={{ fontSize: '17px', margin: '8px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
                 </div>
-                {v.is_top && <span style={{ backgroundColor: '#f5f3ff', color: '#4f46e5', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+                {v.is_top && <span style={{ backgroundColor: '#fdf2f8', color: '#be185d', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP SPECIALISTA</span>}
               </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>🔬 MAPPATURA NEI</span>
+                <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>✨ DERMATOLOGIA ESTETICA</span>
+              </div>
+
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#4f46e5', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Prenota Visita</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#be185d', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama Studio</a>
+                {v.whatsapp && (
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                )}
               </div>
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessuno specialista trovato. Prova a cambiare quartiere.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun dermatologo trovato a Roma al momento.</div>
         )}
 
-        {/* 🔹 CERCA PER QUARTIERE */}
-        <div style={{ marginTop: '50px', backgroundColor: 'white', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ color: '#312e81', fontSize: '20px', marginBottom: '15px', fontWeight: '700' }}>Specialisti nei quartieri di Roma</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {quartieriDoc.map(z => (
-              <a key={z} href={`/visite-specialistiche-roma-${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#f5f3ff', color: '#4f46e5', borderRadius: '10px', textDecoration: 'none', fontSize: '14px', fontWeight: '600', border: '1px solid #ddd6fe' }}>
-                {z}
-              </a>
+        {/* SEZIONE ALTRE SPECIALISTICHE A ROMA */}
+        <section style={{ marginTop: '40px', padding: '25px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #be185d' }}>
+          <h4 style={{ color: '#831843', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
+            {specialisticheRoma.map(s => (
+              <a key={s.nome} href={s.url} style={{ color: '#be185d', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
             ))}
-          </div>
-        </div>
-
-        {/* 🔹 FAQ */}
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#312e81', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Come posso scegliere lo specialista giusto?</p>
-              <p style={{ color: '#64748b', fontSize: '15px' }}>Puoi consultare le specializzazioni e i quartieri di competenza direttamente negli annunci e contattare il medico per una prima valutazione telefonica.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>I contatti sono diretti?</p>
-              <p style={{ color: '#64748b', fontSize: '15px' }}>Sì, ServiziSalute fornisce i recapiti diretti (telefono e WhatsApp) per fissare un appuntamento senza costi di intermediazione.</p>
-            </div>
           </div>
         </section>
 
-        {/* 🔹 CTA PROFESSIONISTI */}
-        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Gestisci una struttura o uno studio a Roma?</h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-            Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
-          </p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>
-              🚀 Inserisci la tua attività
-            </a>
+        {/* FAQ */}
+        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+          <h3 style={{ color: '#831843', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {schemas.faq?.mainEntity.map((item, i) => (
+              <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+                <p style={{ fontWeight: 'bold', color: '#1e293b', marginBottom: '8px' }}>{item.name}</p>
+                <p style={{ color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>
 
-      {/* FOOTER INTEGRALE */}
+      {/* FOOTER INTEGRALE DELLA HOME */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -158,7 +160,6 @@ export default function VisiteSpecialisticheRoma() {
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
