@@ -10,13 +10,17 @@ export default function FarmacieRoma() {
 
   useEffect(() => {
     async function fetchFarmacie() {
-      const queryBusca = getDBQuery('farmacie');
+      // Recuperiamo l'oggetto con cat e spec
+      const queryBusca = getDBQuery('farmacie'); 
+      
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .ilike('categoria', queryBusca)
+        // USIAMO queryBusca.cat PER LA CATEGORIA
+        .ilike('categoria', `%${queryBusca.cat}%`)
         .eq('approvato', true)
         .order('is_top', { ascending: false });
+        
       if (!error && data) setMedici(data);
       setLoading(false);
     }
@@ -26,8 +30,8 @@ export default function FarmacieRoma() {
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Farmacie a Roma | Turni e Orari | ServiziSalute</title>
-        <meta name="description" content="Cerca farmacie e parafarmacie aperte a Roma. Consultazione gratuita di orari, turni e contatti diretti nei principali quartieri della Capitale." />
+        <title>Farmacie a Roma – Servizi, offerte e prenotazioni | ServiziSalute</title>
+        <meta name="description" content="Trova farmacie a Roma che offrono servizi sanitari, analisi e test. Consulta orari e contatti diretti." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
@@ -40,20 +44,23 @@ export default function FarmacieRoma() {
         <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#059669', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
 
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #059669' }}>
-          <h1 style={{ color: '#065f46', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Farmacie a Roma</h1>
-          
-          {/* TESTO LOCALE POTENZIATO (Appunto 7-8) */}
+          <h1 style={{ color: '#065f46', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Farmacie a Roma – Servizi e Prenotazioni</h1>
           <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
-            Trova le farmacie e parafarmacie aperte a <strong>Roma</strong>. In questa pagina puoi consultare i servizi sanitari disponibili nei principali snodi della Capitale, da <strong>Roma Centro a zone come Prati, EUR, San Giovanni e Tiburtina</strong>. ServiziSalute ti aiuta a trovare il presidio farmaceutico più vicino per farmaci da banco, turni notturni e consulenze rapide.
+            Trova farmacie che offrono analisi, test e consulenze professionali a <strong>Roma</strong>.
           </p>
 
-          <div style={{ marginTop: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-            {['Prati', 'EUR', 'San Giovanni', 'Parioli', 'Tiburtina'].map(z => (
-              <a key={z} href={`/farmacie-roma-${z.toLowerCase()}`} style={{ padding: '10px 18px', backgroundColor: '#ecfdf5', color: '#065f46', borderRadius: '20px', fontSize: '14px', textDecoration: 'none', fontWeight: 'bold', border: '1px solid #d1fae5' }}>{z}</a>
+          {/* 🔹 SEZIONE CATEGORIE INTERNE (Appunto 2) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '25px' }}>
+            {['Farmacie h24', 'Test Rapidi', 'Servizi Diagnostici', 'Consegna a Domicilio'].map(cat => (
+              <div key={cat} style={{ backgroundColor: '#f8fafc', padding: '12px', borderRadius: '12px', textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '14px', fontWeight: '600', color: '#059669' }}>
+                {cat}
+              </div>
             ))}
           </div>
         </div>
 
+        {/* 🔹 LISTA ANNUNCI */}
+        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Risultati disponibili oggi</h2>
         {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : medici.map((v) => (
           <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #059669' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -63,28 +70,23 @@ export default function FarmacieRoma() {
             <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
             <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
               <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#059669', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-              {v.whatsapp && <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>}
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" style={{ flex: '0.4', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>📍</a>
+              <a href={`https://wa.me/${v.whatsapp}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
             </div>
           </div>
         ))}
 
-        {/* INTERLINKING TRA CATEGORIE (Appunto 5-6) */}
-        <div style={{ backgroundColor: '#fff', padding: '25px', borderRadius: '20px', border: '1px solid #e2e8f0', marginTop: '30px' }}>
-          <p style={{ margin: 0, color: '#4a5568', fontSize: '15px' }}>
-            <strong>Cerchi altri specialisti a Roma?</strong> Consulta anche i <a href="/dentisti-roma" style={{ color: '#059669', textDecoration: 'underline' }}>Dentisti a Roma</a> o scopri le <a href="/visite-specialistiche-roma" style={{ color: '#059669', textDecoration: 'underline' }}>Visite Specialistiche</a> disponibili oggi.
-          </p>
+        {/* 🔹 TESTO SEO (Appunto 4) */}
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginTop: '40px', lineHeight: '1.8' }}>
+          <h2 style={{ color: '#065f46' }}>Come trovare una farmacia a Roma?</h2>
+          <p>Cercare una <strong>farmacia a Roma</strong> su ServiziSalute ti permette di accedere rapidamente ai servizi di zone come Prati, EUR o San Giovanni. Siamo un portale informativo e non sanitario, nato per semplificare il contatto tra cittadino e professionista.</p>
         </div>
 
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#065f46', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti (FAQ)</h3>
-          {schemas.faq.mainEntity.map((item, i) => (
-            <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '5px', color: '#1a202c' }}>{item.name}</p>
-              <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.5' }}>{item.acceptedAnswer.text}</p>
-            </div>
-          ))}
-        </section>
+        {/* 🔹 CTA INSERZIONISTI (Appunto 8) */}
+        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '40px', borderRadius: '24px', textAlign: 'center', marginTop: '50px' }}>
+          <h2 style={{ margin: 0 }}>Sei una farmacia a Roma?</h2>
+          <p style={{ opacity: 0.9, marginBottom: '20px' }}>Pubblica il tuo servizio gratuitamente su ServiziSalute.</p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: 'white', color: '#065f46', padding: '15px 40px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>Pubblica gratis</a>
+        </div>
       </main>
 
       {/* FOOTER IDENTICO ALLA HOME */}
