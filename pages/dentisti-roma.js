@@ -80,22 +80,43 @@ export default function DentistiRoma() {
         </div>
 
         <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Studi disponibili oggi</h2>
+        
         {loading ? (
           <p style={{textAlign:'center'}}>Caricamento...</p>
         ) : medici.length > 0 ? (
           medici.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #3182ce' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h2 style={{ color: '#2c5282', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                  <h2 style={{ color: '#2c5282', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                  <p style={{ fontSize: '17px', margin: '8px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+                </div>
                 {v.is_top && <span style={{ backgroundColor: '#ebf8ff', color: '#3182ce', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
               </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+
+              {/* --- BADGE DINAMICI --- */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                {v.urgenza_24h && (
+                  <span style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #fecaca' }}>🚨 URGENZE H24</span>
+                )}
+                {v.primo_sconto && (
+                  <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #fde68a' }}>✨ PROMO PORTALE</span>
+                )}
+                {v.parcheggio_privato && (
+                  <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #e2e8f0' }}>🚗 PARCHEGGIO</span>
+                )}
+                {v.senza_barriere && (
+                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>♿ ACCESSIBILE</span>
+                )}
+                {v.vicino_metro && (
+                  <span style={{ backgroundColor: '#faf5ff', color: '#7e22ce', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #f3e8ff' }}>🚇 METRO</span>
+                )}
+              </div>
+
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#3182ce', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama Ora</a>
                 {v.whatsapp && (
-                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>
-                    WhatsApp
-                  </a>
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
                 )}
               </div>
             </div>
@@ -125,46 +146,12 @@ export default function DentistiRoma() {
           </div>
         </section>
 
-        <section style={{ 
-          backgroundColor: '#ffffff', 
-          padding: '50px 30px', 
-          borderRadius: '32px', 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-        }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            Gestisci uno studio dentistico a Roma?
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-            Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
-          </p>
+        {/* --- CTA PROFESSIONISTI --- */}
+        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Gestisci uno studio dentistico a Roma?</h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi nuovi pazienti nel tuo quartiere.</p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#10b981', 
-              color: 'white', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
-            }}>
-              🚀 Inizia a ricevere contatti
-            </a>
-            <a href="/per-i-professionisti" style={{ 
-              backgroundColor: 'white', 
-              color: '#0f172a', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              border: '1px solid #e2e8f0'
-            }}>
-              Soluzioni Business
-            </a>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>🚀 Inizia ora</a>
           </div>
         </section>
       </main>
@@ -174,10 +161,7 @@ export default function DentistiRoma() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti e centri specialistici vicino a te.
-              </p>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>ServiziSalute è il portale dedicato ai servizi sanitari a Roma. Trova i migliori professionisti vicino a te.</p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
