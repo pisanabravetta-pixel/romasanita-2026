@@ -88,7 +88,44 @@ export default function FarmacieRoma() {
           <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: 'white', color: '#065f46', padding: '15px 40px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>Pubblica gratis</a>
         </div>
       </main>
+{/* 🔹 LINK AI QUARTIERI (Appunto 6) */}
+        <div style={{ marginTop: '50px', backgroundColor: 'white', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ color: '#065f46', fontSize: '20px', marginBottom: '15px' }}>Farmacie nei quartieri di Roma</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {['Prati', 'Trastevere', 'EUR', 'Parioli', 'Tiburtina', 'San Giovanni', 'Ostiense', 'Testaccio'].map(z => (
+              <a key={z} href={`/farmacie-roma-${z.toLowerCase().replace(/\s+/g, '-')}`} style={{ padding: '8px 16px', backgroundColor: '#f0fdf4', color: '#166534', borderRadius: '10px', textDecoration: 'none', fontSize: '14px', fontWeight: '600', border: '1px solid #dcfce7' }}>
+                {z}
+              </a>
+            ))}
+          </div>
+        </div>
 
+        {/* 🔹 FAQ + SCHEMA (Appunto 7) */}
+        <section id="faq" style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+          <h3 style={{ color: '#065f46', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Come trovare una farmacia a Roma su ServiziSalute?</p>
+              <p style={{ color: '#64748b', fontSize: '15px' }}>Basta inserire il proprio quartiere nella barra di ricerca in alto o cliccare su uno dei quartieri suggeriti per visualizzare l'elenco dei professionisti disponibili nella zona selezionata.</p>
+            </div>
+
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Che servizi offrono le farmacie presenti?</p>
+              <p style={{ color: '#64748b', fontSize: '15px' }}>Oltre alla vendita di farmaci, molte farmacie a Roma offrono test rapidi, analisi del sangue, servizi diagnostici di base, consegna a domicilio e consulenze specialistiche.</p>
+            </div>
+
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Posso contattare la farmacia direttamente?</p>
+              <p style={{ color: '#64748b', fontSize: '15px' }}>Certamente. Ogni annuncio include i pulsanti diretti per chiamare la farmacia o inviare un messaggio WhatsApp per richiedere informazioni o prenotare un servizio.</p>
+            </div>
+
+            <div>
+              <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>Il servizio di ricerca è gratuito?</p>
+              <p style={{ color: '#64748b', fontSize: '15px' }}>Sì, l'utilizzo del portale ServiziSalute per la ricerca di professionisti e farmacie a Roma è completamente gratuito per tutti gli utenti.</p>
+            </div>
+          </div>
+        </section>
       {/* FOOTER IDENTICO ALLA HOME */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
