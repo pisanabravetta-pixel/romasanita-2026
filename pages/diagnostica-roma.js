@@ -6,20 +6,18 @@ import { getDBQuery, getSchemas } from '../lib/seo-logic';
 export default function DiagnosticaRoma() {
   const [centri, setCentri] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Recupera schemi e FAQ per Diagnostica a Roma
   const schemas = getSchemas('diagnostica', 'roma');
 
   useEffect(() => {
     async function fetchDiagnostica() {
-      const queryBusca = getDBQuery('diagnostica');
+      const queryBusca = getDBQuery('diagnostica'); 
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .ilike('categoria', queryBusca)
+        .ilike('categoria', `%${queryBusca.cat}%`)
         .eq('approvato', true)
         .order('is_top', { ascending: false });
-      
+        
       if (!error && data) setCentri(data);
       setLoading(false);
     }
@@ -27,63 +25,93 @@ export default function DiagnosticaRoma() {
   }, []);
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Centri Diagnostici a Roma | Esami, TAC e Risonanze | ServiziSalute</title>
-        <meta name="description" content="Cerca i migliori centri diagnostici a Roma. Trova laboratori per analisi del sangue, risonanza magnetica, TAC ed ecografie nei quartieri di Roma con contatti diretti." />
+        <title>Centri Diagnostici a Roma – Analisi, Risonanze e Screening | ServiziSalute</title>
+        <meta name="description" content="Trova i migliori centri diagnostici a Roma. Prenota analisi del sangue, ecografie, risonanze e screening preventivi nei principali quartieri." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
 
-      {/* HEADER CATEGORIA */}
-      <div style={{ backgroundColor: '#1e40af', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        🔬 CENTRI DIAGNOSTICI E LABORATORI ANALISI A ROMA
+      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+        🔵 CENTRI DIAGNOSTICI E LABORATORI ANALISI A ROMA
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
-        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#1e40af', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
+        <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
 
-        {/* BOX INTRODUTTIVO */}
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #1e40af' }}>
-          <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Centri Diagnostici a Roma</h1>
+        {/* 🔹 HERO HUB */}
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #2563eb' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Diagnostica a Roma</h1>
           <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
-            Hai bisogno di esami specialistici? Esplora i <strong>centri diagnostici a Roma</strong> per effettuare risonanze magnetiche, TAC, ecografie o analisi del sangue. Trova la struttura più vicina al tuo quartiere e contatta direttamente il centro per una prenotazione rapida.
+            Trova centri d'eccellenza per <strong>analisi cliniche, diagnostica per immagini e screening</strong> a Roma. Dai laboratori in centro alle grandi strutture di EUR e Prati.
           </p>
+
+          {/* 🔹 SEZIONE CATEGORIE INTERNE */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '25px' }}>
+            {['Analisi del Sangue', 'Ecografie', 'Risonanza Magnetica', 'Check-up Completo'].map(cat => (
+              <div key={cat} style={{ backgroundColor: '#f1f5f9', padding: '12px', borderRadius: '12px', textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '14px', fontWeight: '600', color: '#2563eb' }}>
+                {cat}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* LISTA RISULTATI */}
-        {loading ? (
-          <p style={{ textAlign: 'center', padding: '50px' }}>Caricamento centri diagnostici...</p>
-        ) : centri.length > 0 ? (
-          centri.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #1e40af' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h2 style={{ color: '#1e3a8a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-                {v.is_top && <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
-              </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#1e40af', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-                {v.whatsapp && (
-                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
-                )}
-              </div>
+        {/* 🔹 LISTA ANNUNCI */}
+        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Centri disponibili a Roma</h2>
+        {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : centri.length > 0 ? centri.map((v) => (
+          <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h2 style={{ color: '#1e3a8a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+              {v.is_top && <span style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
             </div>
-          ))
-        ) : (
-          <p style={{ textAlign: 'center' }}>Nessun centro diagnostico trovato al momento.</p>
+            <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+              <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
+              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+            </div>
+          </div>
+        )) : (
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro diagnostico trovato.</div>
         )}
 
-        {/* FAQ SECTION */}
+        {/* 🔹 TESTO SEO */}
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginTop: '40px', lineHeight: '1.8' }}>
+          <h2 style={{ color: '#1e3a8a' }}>L'importanza della prevenzione e della diagnostica a Roma</h2>
+          <p>Scegliere il giusto <strong>centro diagnostico a Roma</strong> è fondamentale per ottenere referti precisi in tempi brevi. ServiziSalute aggrega i laboratori più affidabili della capitale, permettendoti di filtrare per quartiere e tipologia di esame, garantendo un accesso rapido alle prestazioni di cui hai bisogno.</p>
+        </div>
+
+        {/* 🔹 LINK AI QUARTIERI */}
+        <div style={{ marginTop: '50px', backgroundColor: 'white', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ color: '#1e3a8a', fontSize: '20px', marginBottom: '15px' }}>Centri Diagnostici nei quartieri</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {['Prati', 'Trastevere', 'EUR', 'Parioli', 'Tiburtina', 'San Giovanni', 'Ostiense', 'Testaccio'].map(z => (
+              <a key={z} href={`/diagnostica-roma-${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#eff6ff', color: '#1e3a8a', borderRadius: '10px', textDecoration: 'none', fontSize: '14px', fontWeight: '600', border: '1px solid #dbeafe' }}>{z}</a>
+            ))}
+          </div>
+        </div>
+
+        {/* 🔹 FAQ */}
         <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '20px' }}>Domande Frequenti (FAQ)</h3>
-          {schemas.faq.mainEntity.map((item, i) => (
-            <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '5px', color: '#1a202c' }}>{item.name}</p>
-              <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.5' }}>{item.acceptedAnswer.text}</p>
+          <h3 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <p style={{ fontWeight: 'bold', color: '#1a202c' }}>Come prenotare un esame diagnostico?</p>
+              <p style={{ color: '#64748b' }}>Puoi contattare direttamente i centri tramite i pulsanti Chiama o WhatsApp presenti in ogni annuncio su ServiziSalute.</p>
             </div>
-          ))}
+            <div>
+              <p style={{ fontWeight: 'bold', color: '#1a202c' }}>Quali sono i tempi medi di attesa?</p>
+              <p style={{ color: '#64748b' }}>I centri privati presenti sul portale offrono solitamente disponibilità nell'arco di 24-48 ore.</p>
+            </div>
+          </div>
         </section>
+
+        {/* 🔹 CTA INSERZIONISTI */}
+        <div style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '40px', borderRadius: '24px', textAlign: 'center', marginTop: '50px' }}>
+          <h2 style={{ margin: 0 }}>Gestisci un Centro Diagnostico?</h2>
+          <p style={{ opacity: 0.9, marginBottom: '20px' }}>Inserisci la tua struttura su ServiziSalute e raggiungi nuovi pazienti ogni giorno.</p>
+          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: 'white', color: '#1e3a8a', padding: '15px 40px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>Pubblica la tua struttura</a>
+        </div>
       </main>
 
       {/* FOOTER IDENTICO ALLA HOME */}
