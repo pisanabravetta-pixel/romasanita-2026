@@ -118,53 +118,8 @@ export default function FarmacieRoma() {
             ))}
           </div>
         </section>
-        {/* 🔹 SEZIONE CTA HUB PRINCIPALI (STRUTTURE E PROFESSIONISTI) */}
-        <section style={{ 
-          backgroundColor: '#ffffff', 
-          padding: '50px 30px', 
-          borderRadius: '32px', 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-        }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            Gestisci una struttura sanitaria o uno studio a Roma?
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-            Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
-          </p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#10b981', 
-              color: 'white', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
-            }}>
-              🚀 Inizia a ricevere contatti
-            </a>
-            <a href="/per-i-professionisti" style={{ 
-              backgroundColor: 'white', 
-              color: '#0f172a', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              border: '1px solid #e2e8f0'
-            }}>
-              Soluzioni Business
-            </a>
-          </div>
-          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
-            Nessun intermediario • Contatto diretto Paziente-Medico
-          </p>
-        </section>
-        {/* 🔹 SEZIONE CTA HUB PRINCIPALI (STRUTTURE E PROFESSIONISTI) */}
+
+        {/* 🔹 SEZIONE CTA PROFESSIONISTI (UNICA E CORRETTA) */}
         <section style={{ 
           backgroundColor: '#ffffff', 
           padding: '50px 30px', 
@@ -228,14 +183,8 @@ export default function FarmacieRoma() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
@@ -243,16 +192,13 @@ export default function FarmacieRoma() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
-                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
-                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
               </ul>
             </div>
           </div>
