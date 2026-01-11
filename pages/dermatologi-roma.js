@@ -8,8 +8,17 @@ export default function DermatologiRoma() {
   const [loading, setLoading] = useState(true);
   const schemas = getSchemas('dermatologia', 'roma');
 
-  // Elenco quartieri per i link rapidi
   const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+  
+  // Lista per il cross-linking ad altri specialisti
+  const altreSpecialistiche = [
+    { nome: "Cardiologi", url: "/cardiologi-roma" },
+    { nome: "Ginecologi", url: "/ginecologi-roma" },
+    { nome: "Ortopedici", url: "/ortopedici-roma" },
+    { nome: "Psicologi", url: "/psicologi-roma" },
+    { nome: "Nutrizionisti", url: "/nutrizionisti-roma" },
+    { nome: "Dentisti", url: "/dentisti-roma" }
+  ];
 
   useEffect(() => {
     async function fetchData() {
@@ -53,9 +62,8 @@ export default function DermatologiRoma() {
 
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #7c3aed', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
           <h1 style={{ color: '#4c1d95', fontSize: '32px', fontWeight: '800' }}>Dermatologi a Roma</h1>
-          <p>La salute della tua pelle è importante. Trova <strong>dermatologi esperti a Roma</strong> per controlli preventivi, cura dell'acne e trattamenti avanzati.</p>
+          <p>La salute della tua pelle è importante. Trova <strong>dermatologi esperti a Roma</strong> per controlli preventivi e trattamenti avanzati.</p>
           
-          {/* LINK AI QUARTIERI */}
           <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
             <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#6b7280', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -89,16 +97,27 @@ export default function DermatologiRoma() {
           </div>
         )}
 
-        <section style={{ marginTop: '50px', backgroundColor: '#ede9fe', padding: '30px', borderRadius: '24px' }}>
+        {/* SEZIONE ALTRE SPECIALISTICHE (CROSS-LINKING) */}
+        <section style={{ marginTop: '40px', padding: '20px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #7c3aed' }}>
+          <h4 style={{ color: '#4c1d95', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+            {altreSpecialistiche.map(s => (
+              <a key={s.nome} href={s.url} style={{ color: '#7c3aed', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
+            ))}
+          </div>
+        </section>
+
+        <section style={{ marginTop: '30px', backgroundColor: '#ede9fe', padding: '30px', borderRadius: '24px' }}>
           <h3 style={{ color: '#4c1d95' }}>Domande Frequenti (FAQ)</h3>
           <div style={{ marginTop: '20px' }}>
-            <p><strong>Quanto costa una visita dermatologica a Roma?</strong><br/>Il prezzo medio varia tra gli 80€ e i 150€ a seconda dello specialista.</p>
-            <p style={{ marginTop: '15px' }}><strong>Quando fare la mappatura dei nei?</strong><br/>Si consiglia un controllo annuale per la prevenzione.</p>
+            <p><strong>Quanto costa una visita dermatologica a Roma?</strong><br/>Il prezzo medio varia tra gli 80€ e i 150€.</p>
+            <p style={{ marginTop: '15px' }}><strong>Quando fare la mappatura dei nei?</strong><br/>Si consiglia un controllo annuale preventivo.</p>
           </div>
         </section>
       </main>
 
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      {/* FOOTER INTEGRALE DELLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
@@ -143,9 +162,6 @@ export default function DermatologiRoma() {
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
-              <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
-                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
-              </p>
             </div>
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
