@@ -11,7 +11,9 @@ export default function PerIProfessionisti() {
 
       {/* 🔹 NAVBAR SEMPLIFICATA */}
       <nav style={{ backgroundColor: 'white', padding: '15px 20px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href="/" style={{ fontSize: '20px', fontWeight: '800', color: '#065f46', textDecoration: 'none' }}>ServiziSalute <span style={{fontSize: '12px', color: '#64748b'}}>Business</span></a>
+        <a href="/" style={{ fontSize: '20px', fontWeight: '800', color: '#065f46', textDecoration: 'none' }}>
+          ServiziSalute <span style={{fontSize: '12px', color: '#64748b'}}>Business</span>
+        </a>
         <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '10px 20px', borderRadius: '10px', fontSize: '14px', fontWeight: 'bold', textDecoration: 'none' }}>Inizia ora</a>
       </nav>
 
@@ -112,6 +114,7 @@ export default function PerIProfessionisti() {
             </div>
           </div>
         </section>
+
         {/* 🔹 FINAL CTA PER PAGINA PROFESSIONISTI */}
         <section style={{ 
           marginTop: '60px', 
@@ -144,8 +147,6 @@ export default function PerIProfessionisti() {
             Nessun costo nascosto • Procedura guidata semplice
           </p>
         </section>
-
-      </main>
       </main>
 
       {/* FOOTER INTEGRALE DELLA HOME */}
@@ -165,14 +166,9 @@ export default function PerIProfessionisti() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
               <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
                 🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
@@ -194,8 +190,6 @@ export default function PerIProfessionisti() {
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
