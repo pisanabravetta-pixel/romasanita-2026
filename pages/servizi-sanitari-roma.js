@@ -39,11 +39,13 @@ export default function ServiziSanitariRoma() {
         <meta name="description" content="Mappa completa dei servizi sanitari a Roma. Trova farmacie, dentisti e specialisti nel tuo quartiere. La guida alla salute zona per zona aggiornata al 2026." />
       </Head>
 
+      {/* BARRA SUPERIORE TESTO IN GRASSETTO */}
       <div style={{ backgroundColor: '#334155', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
         📍 MAPPA COMPLETA DEI SERVIZI SANITARI A ROMA - GENNAIO 2026
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
+        {/* LINK PER TORNARE ALLA HOME */}
         <a href="/" style={{ display: 'inline-block', marginBottom: '20px', color: '#334155', textDecoration: 'none', fontWeight: '600' }}>← Home</a>
 
         {/* 🔹 HERO HUB GEOGRAFICO */}
@@ -58,7 +60,7 @@ export default function ServiziSanitariRoma() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '50px' }}>
           {quartieri.map(q => (
             <div key={q} style={{ backgroundColor: 'white', borderRadius: '20px', padding: '20px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-              <h3 style={{ fontSize: '18px', marginBottom: '15px', color: '#0f172a', borderBottom: '2px solid #f1f5f9', paddingBottom: '8px' }}>{q}</h3>
+              <h3 style={{ fontSize: '18px', marginBottom: '15px', color: '#0f172a', borderBottom: '2px solid #f1f5f9', paddingBottom: '8px', fontWeight: '700' }}>{q}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <a href={`/farmacie-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#059669', textDecoration: 'none', fontWeight: 'bold' }}>• Farmacie {q}</a>
                 <a href={`/dentisti-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>• Dentisti {q}</a>
@@ -73,7 +75,7 @@ export default function ServiziSanitariRoma() {
         <h2 style={{ fontSize: '22px', color: '#0f172a', marginBottom: '20px', fontWeight: '800' }}>Professionisti in evidenza a Roma</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
           {loading ? (
-            <p>Caricamento...</p>
+            <p>Caricamento contenuti...</p>
           ) : annunci.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -88,58 +90,28 @@ export default function ServiziSanitariRoma() {
 
         {/* 🔹 TESTO SEO */}
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginTop: '50px', lineHeight: '1.8', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ color: '#0f172a', fontSize: '24px' }}>La tua guida alla sanità locale a Roma</h2>
+          <h2 style={{ color: '#0f172a', fontSize: '24px', fontWeight: '700' }}>La tua guida alla sanità locale a Roma</h2>
           <p>Roma è una metropoli complessa e trovare il servizio sanitario giusto vicino a casa può fare la differenza, specialmente in situazioni di urgenza o per visite frequenti. <strong>ServiziSalute</strong> nasce per mappare ogni angolo della Capitale, offrendo una panoramica trasparente e immediata su ciò che ogni quartiere offre, migliorando l'accessibilità alle cure per tutti i cittadini (Gennaio 2026).</p>
         </div>
-        {/* 🔹 SEZIONE CTA HUB GEOGRAFICO (SERVIZI SANITARI ROMA) */}
-        <section style={{ 
-          backgroundColor: '#ffffff', 
-          padding: '50px 30px', 
-          borderRadius: '32px', 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-        }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            La tua attività non è ancora sulla mappa?
-          </h2>
+
+        {/* 🔹 SEZIONE CTA PROFESSIONISTI */}
+        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>La tua attività non è ancora sulla mappa?</h2>
           <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
             Migliaia di cittadini a Roma cercano servizi sanitari nel proprio quartiere ogni giorno. Non perdere l'opportunità di essere trovato da chi vive vicino al tuo studio o alla tua struttura.
           </p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#10b981', 
-              color: 'white', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
-            }}>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>
               📍 Inserisci la tua attività
             </a>
-            <a href="/per-i-professionisti" style={{ 
-              backgroundColor: 'white', 
-              color: '#0f172a', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              border: '1px solid #e2e8f0'
-            }}>
+            <a href="/per-i-professionisti" style={{ backgroundColor: 'white', color: '#0f172a', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', border: '1px solid #e2e8f0' }}>
               Vantaggi per le strutture
             </a>
           </div>
-          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
-            Ottimizzazione SEO locale inclusa • Presenza su Roma Gennaio 2026
-          </p>
         </section>
       </main>
 
-      {/* FOOTER IDENTICO ALLA HOME */}
+      {/* FOOTER INTEGRALE DELLA HOME */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -156,29 +128,21 @@ export default function ServiziSanitariRoma() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
