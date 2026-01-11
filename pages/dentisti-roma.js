@@ -11,12 +11,12 @@ export default function DentistiRoma() {
   useEffect(() => {
     async function fetchDentisti() {
       const queryBusca = getDBQuery('dentisti');
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .ilike('categoria', queryBusca)
-        .eq('approvato', true)
-        .order('is_top', { ascending: false });
+     const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .ilike('zona', `%${variabileZona}%`) // Il % dice: cerca la parola ovunque nella cella
+  .eq('approvato', true)
+  .order('is_top', { ascending: false });
       if (!error && data) setMedici(data);
       setLoading(false);
     }
