@@ -15,16 +15,17 @@ export default function ServiziSanitariRoma() {
   useEffect(() => {
     async function fetchTutti() {
       try {
+        setLoading(true);
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
           .order('is_top', { ascending: false })
-          .limit(10); 
+          .limit(12); 
           
         if (!error && data) setAnnunci(data);
       } catch (err) {
-        console.error("Errore fetch:", err);
+        console.error("Errore fetch mappa:", err);
       } finally {
         setLoading(false);
       }
@@ -57,15 +58,23 @@ export default function ServiziSanitariRoma() {
         </div>
 
         {/* 🔹 GRIGLIA QUARTIERI (NAVIGAZIONE PRINCIPALE) */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '50px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '50px' }}>
           {quartieri.map(q => (
             <div key={q} style={{ backgroundColor: 'white', borderRadius: '20px', padding: '20px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
               <h3 style={{ fontSize: '18px', marginBottom: '15px', color: '#0f172a', borderBottom: '2px solid #f1f5f9', paddingBottom: '8px', fontWeight: '700' }}>{q}</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <a href={`/farmacie-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#059669', textDecoration: 'none', fontWeight: 'bold' }}>• Farmacie {q}</a>
-                <a href={`/dentisti-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>• Dentisti {q}</a>
-                <a href={`/dermatologi-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#ea580c', textDecoration: 'none', fontWeight: 'bold' }}>• Dermatologi {q}</a>
-                <a href={`/diagnostica-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#4f46e5', textDecoration: 'none', fontWeight: 'bold' }}>• Centri Diagnostici</a>
+                <a href={`/farmacie-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#059669', textDecoration: 'none', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ marginRight: '6px' }}>🟢</span> Farmacie {q}
+                </a>
+                <a href={`/dentisti-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#2563eb', textDecoration: 'none', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ marginRight: '6px' }}>🔵</span> Dentisti {q}
+                </a>
+                <a href={`/dermatologi-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#be185d', textDecoration: 'none', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ marginRight: '6px' }}>🔴</span> Dermatologi {q}
+                </a>
+                <a href={`/servizi-domicilio-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} style={{ fontSize: '13px', color: '#ea580c', textDecoration: 'none', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+                  <span style={{ marginRight: '6px' }}>🏠</span> A Domicilio {q}
+                </a>
               </div>
             </div>
           ))}
@@ -75,14 +84,14 @@ export default function ServiziSanitariRoma() {
         <h2 style={{ fontSize: '22px', color: '#0f172a', marginBottom: '20px', fontWeight: '800' }}>Professionisti in evidenza a Roma</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
           {loading ? (
-            <p>Caricamento contenuti...</p>
+            <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px' }}>Caricamento contenuti...</p>
           ) : annunci.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <h3 style={{ color: '#334155', margin: '0 0 10px 0', fontSize: '18px', fontWeight: '700' }}>{v.nome}</h3>
                 {v.is_top && <span style={{ fontSize: '10px', backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>TOP</span>}
               </div>
-              <p style={{ fontSize: '14px', margin: '5px 0' }}>📍 <strong>{v.zona}</strong> — <span style={{color: '#64748b'}}>{v.categoria}</span></p>
+              <p style={{ fontSize: '14px', margin: '5px 0' }}>📍 <strong>{v.zona}</strong> — <span style={{color: '#64748b', textTransform: 'capitalize'}}>{v.categoria}</span></p>
               <a href={`/servizi-sanitari-roma-${v.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ display: 'inline-block', marginTop: '12px', fontSize: '13px', color: '#334155', fontWeight: '700', textDecoration: 'underline' }}>Vedi tutti a {v.zona} →</a>
             </div>
           ))}
@@ -91,7 +100,7 @@ export default function ServiziSanitariRoma() {
         {/* 🔹 TESTO SEO */}
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginTop: '50px', lineHeight: '1.8', border: '1px solid #e2e8f0' }}>
           <h2 style={{ color: '#0f172a', fontSize: '24px', fontWeight: '700' }}>La tua guida alla sanità locale a Roma</h2>
-          <p>Roma è una metropoli complessa e trovare il servizio sanitario giusto vicino a casa può fare la differenza, specialmente in situazioni di urgenza o per visite frequenti. <strong>ServiziSalute</strong> nasce per mappare ogni angolo della Capitale, offrendo una panoramica trasparente e immediata su ciò che ogni quartiere offre, migliorando l'accessibilità alle cure per tutti i cittadini (Gennaio 2026).</p>
+          <p>Roma è una metropoli complessa e trovare il servizio sanitario giusto vicino a casa può fare la differenza, specialmente in situazioni di urgenza o per visite frequenti. <strong>ServiziSalute</strong> nasce per mappare ogni angolo della Capitale, offrendo una panoramica trasparente e immediata su ciò che ogni quartiere offre, migliorando l'accessibilità alle cure per tutti i cittadini (Aggiornamento Gennaio 2026).</p>
         </div>
 
         {/* 🔹 SEZIONE CTA PROFESSIONISTI */}
@@ -111,7 +120,7 @@ export default function ServiziSanitariRoma() {
         </section>
       </main>
 
-      {/* FOOTER INTEGRALE DELLA HOME */}
+      {/* FOOTER INTEGRALE DELLA HOME (Conforme alle specifiche salvate) */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -131,21 +140,26 @@ export default function ServiziSanitariRoma() {
                 <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
                 <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
+              <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
+                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+              </p>
             </div>
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
