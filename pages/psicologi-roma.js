@@ -8,18 +8,34 @@ export default function PsicologiRoma() {
   const [loading, setLoading] = useState(true);
   const schemas = getSchemas('psicologia', 'roma');
 
+  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+  
+  const altreSpecialistiche = [
+    { nome: "Dermatologi", url: "/dermatologi-roma" },
+    { nome: "Cardiologi", url: "/cardiologi-roma" },
+    { nome: "Ginecologi", url: "/ginecologi-roma" },
+    { nome: "Ortopedici", url: "/ortopedici-roma" },
+    { nome: "Nutrizionisti", url: "/nutrizionisti-roma" },
+    { nome: "Dentisti", url: "/dentisti-roma" }
+  ];
+
   useEffect(() => {
     async function fetchPsicologi() {
-      const queryBusca = getDBQuery('psicologia'); 
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .ilike('categoria', `%${queryBusca.cat}%`)
-        .eq('approvato', true)
-        .order('is_top', { ascending: false });
-        
-      if (!error && data) setMedici(data);
-      setLoading(false);
+      try {
+        const queryBusca = getDBQuery('psicologia'); 
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .ilike('categoria', `%${queryBusca.cat}%`)
+          .eq('approvato', true)
+          .order('is_top', { ascending: false });
+          
+        if (!error && data) setMedici(data);
+      } catch (err) {
+        console.error("Errore fetch psicologi:", err);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchPsicologi();
   }, []);
@@ -29,8 +45,12 @@ export default function PsicologiRoma() {
       <Head>
         <title>Psicologi a Roma – Psicoterapia e Consulenza Psicologica | ServiziSalute</title>
         <meta name="description" content="Trova uno psicologo o psicoterapeuta a Roma. Supporto per ansia, stress e benessere personale nei principali quartieri della capitale." />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
+        {schemas && (
+          <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
+          </>
+        )}
       </Head>
 
       <div style={{ backgroundColor: '#0d9488', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
@@ -40,59 +60,56 @@ export default function PsicologiRoma() {
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
         <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#0d9488', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
 
-        {/* 🔹 HERO PSICOLOGIA */}
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #0d9488' }}>
           <h1 style={{ color: '#134e4a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Psicologi a Roma</h1>
-          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px', maxWidth: '800px' }}>
+          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px' }}>
             Trova il supporto professionale di cui hai bisogno. Consulta i profili di <strong>psicologi e psicoterapeuti a Roma</strong> specializzati in terapia individuale, di coppia e familiare.
           </p>
 
-          {/* 🔹 SPECIALIZZAZIONI */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '25px' }}>
-            {['Ansia e Stress', 'Terapia di Coppia', 'Psicologia Infantile', 'Crescita Personale'].map(serv => (
-              <div key={serv} style={{ backgroundColor: '#f0fdfa', padding: '12px', borderRadius: '12px', textAlign: 'center', border: '1px solid #ccfbf1', fontSize: '14px', fontWeight: '600', color: '#0d9488' }}>
-                {serv}
-              </div>
-            ))}
+          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#6b7280', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {quartieriDoc.map(q => (
+                <a key={q} href={`/psicologi-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#f0fdfa', color: '#0d9488', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #ccfbf1' }}>
+                  {q}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* 🔹 LISTA PROFESSIONISTI */}
-        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Professionisti disponibili a Roma</h2>
-        {loading ? <p style={{textAlign:'center'}}>Caricamento...</p> : medici.length > 0 ? medici.map((v) => (
-          <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #0d9488' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h2 style={{ color: '#134e4a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-              {v.is_top && <span style={{ backgroundColor: '#ccfbf1', color: '#0d9488', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Professionisti disponibili</h2>
+        {loading ? (
+          <p style={{textAlign:'center'}}>Caricamento...</p>
+        ) : medici.length > 0 ? (
+          medici.map((v) => (
+            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #0d9488' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h2 style={{ color: '#134e4a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                {v.is_top && <span style={{ backgroundColor: '#ccfbf1', color: '#0d9488', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+              </div>
+              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#0d9488', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Contatta</a>
+                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+              </div>
             </div>
-            <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-            <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#0d9488', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Contatta</a>
-              <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
-            </div>
-          </div>
-        )) : (
+          ))
+        ) : (
           <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun professionista trovato in questa categoria.</div>
         )}
 
-        {/* 🔹 TESTO SEO */}
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginTop: '40px', lineHeight: '1.8' }}>
-          <h2 style={{ color: '#134e4a' }}>Scegliere lo psicologo giusto a Roma</h2>
-          <p>La ricerca di uno <strong>psicologo a Roma</strong> può sembrare complessa data la vastità dell'offerta. Su ServiziSalute puoi filtrare i professionisti per quartiere, trovando specialisti a <strong>Prati, San Giovanni, EUR o Parioli</strong>. Il contatto diretto ti permette di richiedere un primo colloquio conoscitivo per valutare il percorso più adatto alle tue esigenze.</p>
-        </div>
-
-        {/* 🔹 LINK AI QUARTIERI */}
-        <div style={{ marginTop: '50px', backgroundColor: 'white', padding: '30px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ color: '#134e4a', fontSize: '20px', marginBottom: '15px' }}>Psicologi nei quartieri di Roma</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {['Prati', 'EUR', 'Parioli', 'Tiburtina', 'San Giovanni', 'Ostiense'].map(z => (
-              <a key={z} href={`/psicologi-roma-${z.toLowerCase()}`} style={{ padding: '8px 16px', backgroundColor: '#f0fdfa', color: '#134e4a', borderRadius: '10px', textDecoration: 'none', fontSize: '14px', fontWeight: '600', border: '1px solid #ccfbf1' }}>{z}</a>
+        {/* SEZIONE ALTRE SPECIALISTICHE (CROSS-LINKING) */}
+        <section style={{ marginTop: '40px', padding: '20px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #0d9488' }}>
+          <h4 style={{ color: '#134e4a', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+            {altreSpecialistiche.map(s => (
+              <a key={s.nome} href={s.url} style={{ color: '#0d9488', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* 🔹 FAQ */}
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
+        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px' }}>
           <h3 style={{ color: '#134e4a', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
@@ -105,16 +122,9 @@ export default function PsicologiRoma() {
             </div>
           </div>
         </section>
-
-        {/* 🔹 CTA INSERZIONISTI */}
-        <div style={{ backgroundColor: '#0d9488', color: 'white', padding: '40px', borderRadius: '24px', textAlign: 'center', marginTop: '50px' }}>
-          <h2 style={{ margin: 0 }}>Sei uno Psicologo a Roma?</h2>
-          <p style={{ opacity: 0.9, marginBottom: '20px' }}>Unisciti al network di ServiziSalute e renditi visibile nel tuo quartiere.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: 'white', color: '#0d9488', padding: '15px 40px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>Inizia ora</a>
-        </div>
       </main>
-{/* FOOTER IDENTICO ALLA HOME */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
