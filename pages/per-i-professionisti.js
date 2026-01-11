@@ -6,7 +6,7 @@ export default function PerIProfessionisti() {
     <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', color: '#1e293b' }}>
       <Head>
         <title>Per i Professionisti della Salute a Roma | ServiziSalute</title>
-        <meta name="description" content="Sei un medico, una farmacia o un centro diagnostico a Roma? Scopri come aumentare la tua visibilità locale e ricevere contatti diretti dai pazienti." />
+        <meta name="description" content="Sei un medico o un professionista a Roma? Aumenta la tua visibilità locale a costo zero e ricevi contatti diretti dai pazienti del tuo quartiere." />
       </Head>
 
       {/* 🔹 NAVBAR SEMPLIFICATA */}
@@ -21,23 +21,20 @@ export default function PerIProfessionisti() {
       <header style={{ backgroundColor: '#065f46', color: 'white', padding: '80px 20px', textAlign: 'center' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h1 style={{ fontSize: '42px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.2' }}>
-            Porta la tua attività sanitaria <br/> nel cuore dei quartieri di Roma
+            Porta il tuo studio <br/> nel cuore dei quartieri di Roma
           </h1>
           <p style={{ fontSize: '20px', marginBottom: '40px', opacity: '0.9', lineHeight: '1.6' }}>
-            ServiziSalute è il portale che connette specialisti e strutture sanitarie con migliaia di pazienti che cercano servizi specifici nella propria zona di residenza.
+            Ricevi richieste dirette dai pazienti della tua zona. **Senza intermediari, senza commissioni e totalmente gratuito.**
           </p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '20px 40px', borderRadius: '15px', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2)' }}>
-              Pubblica il tuo profilo
-            </a>
-            <a href="#vantaggi" style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', padding: '20px 40px', borderRadius: '15px', fontSize: '18px', fontWeight: 'bold', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)' }}>
-              Scopri di più
+              Pubblica il tuo profilo Gratis
             </a>
           </div>
         </div>
       </header>
 
-      <main id="vantaggi" style={{ maxWidth: '1100px', margin: '0 auto', padding: '80px 20px' }}>
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '80px 20px' }}>
         
         {/* 🔹 SEZIONE STATISTICHE RAPIDE */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '50px', marginBottom: '80px', flexWrap: 'wrap', textAlign: 'center' }}>
@@ -47,109 +44,90 @@ export default function PerIProfessionisti() {
           </div>
           <div>
             <div style={{ fontSize: '36px', fontWeight: '800', color: '#065f46' }}>100%</div>
-            <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Contatto diretto</div>
+            <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Contatto diretto (WhatsApp/Tel)</div>
           </div>
           <div>
             <div style={{ fontSize: '36px', fontWeight: '800', color: '#065f46' }}>0€</div>
-            <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Commissioni sulle visite</div>
+            <div style={{ color: '#64748b', fontSize: '14px', fontWeight: '600' }}>Nessun costo di iscrizione</div>
           </div>
         </div>
-        
+
+        {/* 🔹 TABELLA COMPARATIVA (RICHIESTA) */}
+        <section style={{ marginBottom: '80px' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '28px', fontWeight: '800', marginBottom: '30px' }}>Perché scegliere ServiziSalute?</h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: 'white', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+              <thead>
+                <tr style={{ backgroundColor: '#f1f5f9' }}>
+                  <th style={{ padding: '20px', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Caratteristica</th>
+                  <th style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #e2e8f0' }}>Grandi Portali</th>
+                  <th style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #e2e8f0', color: '#059669', fontWeight: '800' }}>ServiziSalute Roma</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ padding: '20px', borderBottom: '1px solid #f1f5f9' }}>Costi di iscrizione</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9', color: '#dc2626' }}>Abbonamenti elevati</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9', fontWeight: '700' }}>GRATIS</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: '20px', borderBottom: '1px solid #f1f5f9' }}>Commissioni su visite</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9' }}>Spesso presenti</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9', fontWeight: '700' }}>ZERO</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: '20px', borderBottom: '1px solid #f1f5f9' }}>Focus geografico</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9' }}>Nazionale</td>
+                  <td style={{ padding: '20px', textAlign: 'center', borderBottom: '1px solid #f1f5f9', fontWeight: '700' }}>Quartieri di Roma</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: '20px' }}>Prenotazioni</td>
+                  <td style={{ padding: '20px', textAlign: 'center' }}>Tramite software esterno</td>
+                  <td style={{ padding: '20px', textAlign: 'center', fontWeight: '700' }}>Dirette (WhatsApp/Tel)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 🔹 SOCIAL PROOF */}
+        <section style={{ marginBottom: '80px', textAlign: 'center' }}>
+          <p style={{ fontStyle: 'italic', fontSize: '18px', color: '#475569', maxWidth: '700px', margin: '0 auto' }}>
+            "Finalmente un portale che non si mette in mezzo tra me e il paziente. Ricevo chiamate dirette da persone che abitano a pochi isolati dal mio studio."
+          </p>
+          <p style={{ marginTop: '10px', fontWeight: 'bold', color: '#065f46' }}>— Dr. S. Martini, Psicologa a Roma Prati</p>
+        </section>
+
         {/* 🔹 I VANTAGGI */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginBottom: '80px' }}>
           <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             <div style={{ fontSize: '40px', marginBottom: '15px' }}>📍</div>
-            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Iper-Targeting Geografico</h3>
-            <p style={{ color: '#64748b', lineHeight: '1.6' }}>Sia che tu sia a Prati, all'EUR o in Centro, ti posizioniamo esattamente davanti agli utenti che cercano servizi sanitari nel tuo quartiere specifico.</p>
+            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Targeting di Quartiere</h3>
+            <p style={{ color: '#64748b', lineHeight: '1.6' }}>Appari esattamente quando un paziente cerca uno specialista nel tuo quartiere (Eur, Parioli, San Giovanni, ecc.).</p>
           </div>
           <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             <div style={{ fontSize: '40px', marginBottom: '15px' }}>📱</div>
-            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Disintermediazione Totale</h3>
-            <p style={{ color: '#64748b', lineHeight: '1.6' }}>A differenza di altri portali, non tratteniamo commissioni. I pazienti ti chiamano o ti scrivono direttamente su WhatsApp o telefono.</p>
+            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Zero Intermediari</h3>
+            <p style={{ color: '#64748b', lineHeight: '1.6' }}>Niente percentuali sulle tue parcelle. Il rapporto con il paziente resta privato e diretto fin dal primo contatto.</p>
           </div>
           <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             <div style={{ fontSize: '40px', marginBottom: '15px' }}>🚀</div>
-            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Autorità SEO</h3>
-            <p style={{ color: '#64748b', lineHeight: '1.6' }}>Sfrutta il nostro posizionamento organico per query come "Dermatologo Roma Prati" senza dover gestire complessi siti web personali.</p>
+            <h3 style={{ fontSize: '22px', marginBottom: '10px', color: '#065f46', fontWeight: '700' }}>Pronto per il SEO</h3>
+            <p style={{ color: '#64748b', lineHeight: '1.6' }}>Ottimizziamo noi il tuo profilo per Google. Non hai bisogno di un sito web costoso per essere visibile localmente.</p>
           </div>
         </div>
 
-        {/* 🔹 COME FUNZIONA */}
-        <section style={{ marginBottom: '100px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '32px', marginBottom: '50px', fontWeight: '800' }}>Attiva il tuo profilo in 3 minuti</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center' }}>
-            <div style={{ flex: '1', minWidth: '280px', padding: '30px', backgroundColor: '#ecfdf5', borderRadius: '20px' }}>
-              <span style={{ fontSize: '32px', fontWeight: '800', color: '#10b981', display: 'block', marginBottom: '15px' }}>01.</span>
-              <h4 style={{ fontSize: '18px', marginBottom: '10px' }}>Inserisci i Dati</h4>
-              <p style={{ fontSize: '15px', color: '#475569' }}>Compila il form con specializzazione, zona e recapiti professionali.</p>
-            </div>
-            <div style={{ flex: '1', minWidth: '280px', padding: '30px', backgroundColor: '#ecfdf5', borderRadius: '20px' }}>
-              <span style={{ fontSize: '32px', fontWeight: '800', color: '#10b981', display: 'block', marginBottom: '15px' }}>02.</span>
-              <h4 style={{ fontSize: '18px', marginBottom: '10px' }}>Verifica e SEO</h4>
-              <p style={{ fontSize: '15px', color: '#475569' }}>Il nostro team revisiona l'annuncio e lo ottimizza per la massima visibilità locale.</p>
-            </div>
-            <div style={{ flex: '1', minWidth: '280px', padding: '30px', backgroundColor: '#ecfdf5', borderRadius: '20px' }}>
-              <span style={{ fontSize: '32px', fontWeight: '800', color: '#10b981', display: 'block', marginBottom: '15px' }}>03.</span>
-              <h4 style={{ fontSize: '18px', marginBottom: '10px' }}>Ricevi Contatti</h4>
-              <p style={{ fontSize: '15px', color: '#475569' }}>Il tuo profilo appare nelle ricerche dei quartieri di Roma e ricevi lead diretti.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* 🔹 FAQ PROFESSIONISTI */}
-        <section style={{ backgroundColor: 'white', padding: '50px', borderRadius: '30px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '28px', marginBottom: '40px', textAlign: 'center', fontWeight: '800' }}>Domande per i Professionisti</h2>
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <div style={{ marginBottom: '30px', borderBottom: '1px solid #f1f5f9', paddingBottom: '20px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '10px', color: '#0f172a' }}>Quanto costa pubblicare un annuncio?</p>
-              <p style={{ color: '#64748b', fontSize: '16px' }}>La pubblicazione standard è gratuita per il primo periodo. Offriamo opzioni "Premium" per i professionisti che desiderano apparire in cima alle liste di quartiere.</p>
-            </div>
-            <div style={{ marginBottom: '30px', borderBottom: '1px solid #f1f5f9', paddingBottom: '20px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '10px', color: '#0f172a' }}>Posso modificare i miei dati in seguito?</p>
-              <p style={{ color: '#64748b', fontSize: '16px' }}>Certamente. Potrai aggiornare i tuoi orari, i recapiti o le zone di competenza contattando il nostro supporto dedicato.</p>
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '10px', color: '#0f172a' }}>Chi gestisce le prenotazioni?</p>
-              <p style={{ color: '#64748b', fontSize: '16px' }}>Le prenotazioni vengono gestite interamente da te o dalla tua segreteria. Noi forniamo solo il ponte di collegamento tecnologico tra il paziente e il tuo studio.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* 🔹 FINAL CTA PER PAGINA PROFESSIONISTI */}
-        <section style={{ 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          padding: '40px', 
-          backgroundColor: '#065f46', 
-          borderRadius: '32px', 
-          color: 'white' 
-        }}>
-          <h2 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '15px' }}>
-            Pronto a far crescere il tuo studio?
-          </h2>
-          <p style={{ fontSize: '18px', opacity: '0.9', marginBottom: '30px' }}>
-            Unisciti oggi a ServiziSalute e renditi visibile ai pazienti del tuo quartiere.
-          </p>
-          <a href="/pubblica-annuncio" style={{ 
-            backgroundColor: '#10b981', 
-            color: 'white', 
-            padding: '20px 45px', 
-            borderRadius: '16px', 
-            fontSize: '20px', 
-            fontWeight: 'bold', 
-            textDecoration: 'none',
-            display: 'inline-block',
-            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)'
-          }}>
+        {/* 🔹 FINAL CTA */}
+        <section style={{ textAlign: 'center', padding: '60px 40px', backgroundColor: '#065f46', borderRadius: '32px', color: 'white' }}>
+          <h2 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '15px' }}>Unisciti alla rete sanitaria di Roma</h2>
+          <p style={{ fontSize: '18px', opacity: '0.9', marginBottom: '30px' }}>Inizia a ricevere nuovi contatti oggi stesso. La pubblicazione è gratuita.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '20px 45px', borderRadius: '16px', fontSize: '20px', fontWeight: 'bold', textDecoration: 'none', display: 'inline-block', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)' }}>
             Pubblica il tuo annuncio ora
           </a>
-          <p style={{ marginTop: '20px', fontSize: '14px', opacity: '0.8' }}>
-            Nessun costo nascosto • Procedura guidata semplice
-          </p>
         </section>
       </main>
 
-      {/* FOOTER INTEGRALE DELLA HOME */}
+      {/* FOOTER INTEGRALE (Come da tue istruzioni) */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -157,45 +135,28 @@ export default function PerIProfessionisti() {
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
               <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
                 ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
               </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
-                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Specialisti</a></li>
               </ul>
-              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
-                🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
-              </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica annuncio</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
-              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
-                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
-                  ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
-                </p>
-              </div>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
-                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
-              <p style={{ fontSize: '12px', color: '#718096', fontStyle: 'italic', lineHeight: '1.4' }}>
-                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
-              </p>
             </div>
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
