@@ -123,14 +123,52 @@ export default function VisiteSpecialisticheRoma() {
           </div>
         </section>
 
-        {/* 🔹 CTA INSERZIONISTI */}
-        <div style={{ backgroundColor: '#4f46e5', color: 'white', padding: '40px', borderRadius: '24px', textAlign: 'center', marginTop: '50px' }}>
-          <h2 style={{ margin: 0 }}>Sei un Medico Specialista a Roma?</h2>
-          <p style={{ opacity: 0.9, marginBottom: '20px' }}>Raggiungi migliaia di pazienti nel tuo quartiere. Pubblica il tuo profilo oggi stesso.</p>
-          <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: 'white', color: '#4f46e5', padding: '15px 40px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>Pubblica gratis</a>
-        </div>
-      </main>
-
+        {/* 🔹 SEZIONE CTA HUB VISITE SPECIALISTICHE */}
+        <section style={{ 
+          backgroundColor: '#ffffff', 
+          padding: '50px 30px', 
+          borderRadius: '32px', 
+          marginTop: '60px', 
+          textAlign: 'center', 
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
+        }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
+            Gestisci una struttura sanitaria o uno studio a Roma?
+          </h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
+            Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
+          </p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ 
+              backgroundColor: '#10b981', 
+              color: 'white', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
+            }}>
+              🚀 Inizia a ricevere contatti
+            </a>
+            <a href="/per-i-professionisti" style={{ 
+              backgroundColor: 'white', 
+              color: '#0f172a', 
+              padding: '18px 35px', 
+              borderRadius: '16px', 
+              fontWeight: 'bold', 
+              textDecoration: 'none',
+              fontSize: '17px',
+              border: '1px solid #e2e8f0'
+            }}>
+              Soluzioni Business
+            </a>
+          </div>
+          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
+            Nessun intermediario • Contatto diretto Paziente-Medico
+          </p>
+        </section>
       {/* FOOTER INTEGRALE */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
