@@ -112,6 +112,40 @@ export default function PerIProfessionisti() {
             </div>
           </div>
         </section>
+        {/* 🔹 FINAL CTA PER PAGINA PROFESSIONISTI */}
+        <section style={{ 
+          marginTop: '60px', 
+          textAlign: 'center', 
+          padding: '40px', 
+          backgroundColor: '#065f46', 
+          borderRadius: '32px', 
+          color: 'white' 
+        }}>
+          <h2 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '15px' }}>
+            Pronto a far crescere il tuo studio?
+          </h2>
+          <p style={{ fontSize: '18px', opacity: '0.9', marginBottom: '30px' }}>
+            Unisciti oggi a ServiziSalute e renditi visibile ai pazienti del tuo quartiere.
+          </p>
+          <a href="/pubblica-annuncio" style={{ 
+            backgroundColor: '#10b981', 
+            color: 'white', 
+            padding: '20px 45px', 
+            borderRadius: '16px', 
+            fontSize: '20px', 
+            fontWeight: 'bold', 
+            textDecoration: 'none',
+            display: 'inline-block',
+            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)'
+          }}>
+            Pubblica il tuo annuncio ora
+          </a>
+          <p style={{ marginTop: '20px', fontSize: '14px', opacity: '0.8' }}>
+            Nessun costo nascosto • Procedura guidata semplice
+          </p>
+        </section>
+
+      </main>
       </main>
 
       {/* FOOTER INTEGRALE DELLA HOME */}
