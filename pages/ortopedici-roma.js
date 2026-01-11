@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic'; // Aggiunto getSchemas
+import { getDBQuery, getSchemas } from '../lib/seo-logic';
 
 export default function OrtopediciRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
-  const schemas = getSchemas('ortopedia', 'roma'); // Inizializzato schemas
+  const schemas = getSchemas('ortopedia', 'roma');
+
+  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+  
+  const altreSpecialistiche = [
+    { nome: "Dermatologi", url: "/dermatologi-roma" },
+    { nome: "Cardiologi", url: "/cardiologi-roma" },
+    { nome: "Ginecologi", url: "/ginecologi-roma" },
+    { nome: "Psicologi", url: "/psicologi-roma" },
+    { nome: "Nutrizionisti", url: "/nutrizionisti-roma" },
+    { nome: "Dentisti", url: "/dentisti-roma" }
+  ];
 
   useEffect(() => {
     async function fetchData() {
@@ -52,8 +63,20 @@ export default function OrtopediciRoma() {
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #059669', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px' }}>
           <h1 style={{ color: '#064e3b', fontSize: '32px', fontWeight: '800' }}>Ortopedici a Roma</h1>
           <p>Migliora la tua mobilità. Contatta i migliori <strong>specialisti in ortopedia a Roma</strong> per consulenze su articolazioni, colonna vertebrale e infortuni sportivi.</p>
+          
+          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#6b7280', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {quartieriDoc.map(q => (
+                <a key={q} href={`/ortopedici-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#f0fdf4', color: '#059669', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #d1fae5' }}>
+                  {q}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
+        <h2 style={{ color: '#064e3b', marginBottom: '20px' }}>Specialisti disponibili</h2>
         {loading ? (
           <p style={{ textAlign: 'center' }}>Caricamento...</p>
         ) : medici.length > 0 ? (
@@ -73,29 +96,71 @@ export default function OrtopediciRoma() {
         ) : (
           <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun ortopedico trovato a Roma.</div>
         )}
+
+        {/* SEZIONE ALTRE SPECIALISTICHE (CROSS-LINKING) */}
+        <section style={{ marginTop: '40px', padding: '20px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #059669' }}>
+          <h4 style={{ color: '#064e3b', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+            {altreSpecialistiche.map(s => (
+              <a key={s.nome} href={s.url} style={{ color: '#059669', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
+            ))}
+          </div>
+        </section>
+
+        <section style={{ marginTop: '30px', backgroundColor: '#d1fae5', padding: '30px', borderRadius: '24px' }}>
+          <h3 style={{ color: '#064e3b' }}>Domande Frequenti (FAQ)</h3>
+          <div style={{ marginTop: '20px' }}>
+            <p><strong>Cosa cura l'ortopedico?</strong><br/>Si occupa di problemi a ossa, articolazioni, legamenti e tendini.</p>
+            <p style={{ marginTop: '15px' }}><strong>Serve la lastra prima della visita?</strong><br/>Dipende dal caso, spesso lo specialista preferisce valutare prima clinicamente il paziente.</p>
+          </div>
+        </section>
       </main>
 
-      {/* FOOTER IDENTICO ALLA HOME */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      {/* FOOTER INTEGRALE DELLA HOME */}
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>Il portale di annunci dedicato ai servizi sanitari a Roma.</p>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+              </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
+                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
+                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
+                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie</a></li>
+                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
-              <h4 style={{ marginBottom: '15px' }}>Professionisti</h4>
+              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica annuncio</a></li>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
+              </ul>
+              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
+                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.</p>
+              </div>
+            </div>
+            <div>
+              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
             </div>
           </div>
