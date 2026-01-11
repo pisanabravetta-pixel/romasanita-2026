@@ -79,22 +79,43 @@ export default function DiagnosticaRoma() {
         </div>
 
         <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Centri disponibili</h2>
+        
         {loading ? (
           <p style={{textAlign:'center'}}>Caricamento centri...</p>
         ) : centri.length > 0 ? (
           centri.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h2 style={{ color: '#1e3a8a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                  <h2 style={{ color: '#1e3a8a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
+                  <p style={{ fontSize: '17px', margin: '8px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+                </div>
                 {v.is_top && <span style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
               </div>
-              <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+
+              {/* --- BADGE DINAMICI --- */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                {v.referti_online && (
+                  <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #bae6fd' }}>💻 REFERTI ONLINE</span>
+                )}
+                {v.convenzionato_ssn && (
+                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>🏥 CONVENZIONATO SSN</span>
+                )}
+                {v.parcheggio_privato && (
+                  <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #e2e8f0' }}>🚗 PARCHEGGIO</span>
+                )}
+                {v.senza_barriere && (
+                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>♿ ACCESSIBILE</span>
+                )}
+                {v.vicino_metro && (
+                  <span style={{ backgroundColor: '#faf5ff', color: '#7e22ce', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #f3e8ff' }}>🚇 METRO</span>
+                )}
+              </div>
+
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
                 {v.whatsapp && (
-                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>
-                    WhatsApp
-                  </a>
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
                 )}
               </div>
             </div>
@@ -124,46 +145,13 @@ export default function DiagnosticaRoma() {
           </div>
         </section>
 
-        <section style={{ 
-          backgroundColor: '#ffffff', 
-          padding: '50px 30px', 
-          borderRadius: '32px', 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
-        }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            Gestisci un centro diagnostico a Roma?
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-            Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
-          </p>
+        {/* --- CTA PROFESSIONISTI --- */}
+        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
+          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Gestisci un centro diagnostico a Roma?</h2>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale.</p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#10b981', 
-              color: 'white', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)'
-            }}>
-              🚀 Inizia a ricevere contatti
-            </a>
-            <a href="/per-i-professionisti" style={{ 
-              backgroundColor: 'white', 
-              color: '#0f172a', 
-              padding: '18px 35px', 
-              borderRadius: '16px', 
-              fontWeight: 'bold', 
-              textDecoration: 'none',
-              fontSize: '17px',
-              border: '1px solid #e2e8f0'
-            }}>
-              Soluzioni Business
-            </a>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>🚀 Inizia a ricevere contatti</a>
+            <a href="/per-i-professionisti" style={{ backgroundColor: 'white', color: '#0f172a', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', border: '1px solid #e2e8f0' }}>Soluzioni Business</a>
           </div>
         </section>
       </main>
@@ -173,14 +161,11 @@ export default function DiagnosticaRoma() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
-              </p>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.</p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità aggiornate: Gennaio 2026</p>
+              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità: Gennaio 2026</p>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
