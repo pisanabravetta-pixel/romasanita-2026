@@ -21,16 +21,43 @@ export default function PaginaQuartiereDinamica() {
         const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
+        // Configurazione Tema e Titoli
         let nomeCat = catSlug.includes('farmac') ? "Farmacie" : "Dentisti";
         let color = catSlug.includes('farmac') ? "#059669" : "#2563eb";
         let colorChiaro = catSlug.includes('farmac') ? "#ecfdf5" : "#eff6ff";
         
         setTema({ primario: color, chiaro: colorChiaro, label: nomeCat.toUpperCase() });
+        
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1);
-       // Se la zona è già "Roma", evita di scriverlo due volte
-const zonaSenzaRoma = zonaBella.toLowerCase() === 'roma' ? '' : ` ${zonaBella}`;
-const titoloCorretto = `${nomeCat} a Roma${zonaSenzaRoma}`;
+        const zonaSenzaRoma = zonaBella.toLowerCase() === 'roma' ? '' : ` ${zonaBella}`;
+        const titoloCorretto = `${nomeCat} a Roma${zonaSenzaRoma}`;
 
+        setMeta({ 
+          titolo: titoloCorretto, 
+          zona: zonaBella, 
+          cat: catSlug 
+        });
+
+        // Chiamata al Database
+        const filtri = getDBQuery(catSlug);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('categoria', `%${filtri.cat}%`)
+          .ilike('specialista', `%${filtri.spec}%`)
+          .ilike('zona', `%${zonaSlug}%`) // Con ilike trova "Eur" anche in "Roma Eur"
+          .order('is_top', { ascending: false });
+
+        if (error) throw error;
+        setServizi(data || []);
+
+      } catch (err) { 
+        console.error("Errore nel caricamento dati:", err);
+        setServizi([]); 
+      } finally { 
+        setLoading(false); // <--- QUESTO È QUELLO CHE SBLOCCA LA PAGINA
+      }
 setMeta({ 
   titolo: titoloCorretto, 
   zona: zonaBella, 
