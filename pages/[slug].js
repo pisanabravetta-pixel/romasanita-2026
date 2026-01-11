@@ -43,14 +43,12 @@ setMeta({
   zona_cercata: zonaSlug
 });
    const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('categoria', `%${filtri.cat}%`)
-        .ilike('specialista', `%${filtri.spec}%`)
-        .ilike('zona', `%${zonaSlug}%`)
-        .order('is_top', { ascending: false });
-
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('zona', `%${zonaSlug}%`) // Filtra per zona (obbligatorio)
+          .or(`specialista.ilike.%${filtri.spec}%,categoria.ilike.%${filtri.cat}%`) // Cerca l'uno o l'altro
+          .order('is_top', { ascending: false });
       if (error) throw error;
       setServizi(data || []);
 
