@@ -21,12 +21,13 @@ export default function DiagnosticaRoma() {
   useEffect(() => {
     async function fetchDiagnostica() {
       try {
+        setLoading(true);
         const queryBusca = getDBQuery('diagnostica'); 
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
-          .ilike('categoria', `%${queryBusca.cat}%`)
           .eq('approvato', true)
+          .ilike('categoria', `%${queryBusca.cat}%`)
           .order('is_top', { ascending: false });
           
         if (!error && data) setCentri(data);
@@ -42,8 +43,8 @@ export default function DiagnosticaRoma() {
   return (
     <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
       <Head>
-        <title>Centri Diagnostici a Roma – Analisi, Risonanze e Screening | ServiziSalute</title>
-        <meta name="description" content="Trova i migliori centri diagnostici a Roma. Prenota analisi del sangue, ecografie, risonanze e screening preventivi nei principali quartieri della capitale." />
+        <title>Centri Diagnostici a Roma | Analisi, Risonanze e Screening | ServiziSalute</title>
+        <meta name="description" content="Cerchi un centro diagnostico a Roma? Trova i migliori laboratori per analisi del sangue, ecografie e risonanze nei quartieri di Roma con contatti diretti." />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -53,7 +54,7 @@ export default function DiagnosticaRoma() {
       </Head>
 
       <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        🔵 CENTRI DIAGNOSTICI E LABORATORI ANALISI A ROMA
+        🔵 CENTRI DIAGNOSTICI E LABORATORI ANALISI A ROMA - GENNAIO 2026
       </div>
 
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
@@ -62,7 +63,7 @@ export default function DiagnosticaRoma() {
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #2563eb' }}>
           <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Diagnostica a Roma</h1>
           <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px' }}>
-            Trova centri d'eccellenza per <strong>analisi cliniche, diagnostica per immagini e screening</strong> a Roma. Dai laboratori in centro alle grandi strutture di EUR e Prati.
+            Trova i migliori <strong>centri diagnostici a Roma</strong>. Ricerca laboratori d'eccellenza per analisi cliniche, risonanze magnetiche ed ecografie a <strong>Prati, EUR, San Giovanni o Parioli</strong>.
           </p>
 
           <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
@@ -79,7 +80,7 @@ export default function DiagnosticaRoma() {
 
         <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Centri disponibili</h2>
         {loading ? (
-          <p style={{textAlign:'center'}}>Caricamento...</p>
+          <p style={{textAlign:'center'}}>Caricamento centri...</p>
         ) : centri.length > 0 ? (
           centri.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
@@ -90,17 +91,20 @@ export default function DiagnosticaRoma() {
               <p style={{ fontSize: '17px', margin: '12px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                {v.whatsapp && (
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>
+                    WhatsApp
+                  </a>
+                )}
               </div>
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro diagnostico trovato.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro diagnostico trovato a Roma.</div>
         )}
 
-        {/* CROSS-LINKING SPECIALISTICHE */}
         <section style={{ marginTop: '40px', padding: '25px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #2563eb' }}>
-          <h4 style={{ color: '#1e3a8a', marginBottom: '15px', fontSize: '18px' }}>Hai già i referti? Trova uno specialista a Roma</h4>
+          <h4 style={{ color: '#1e3a8a', marginBottom: '15px', fontSize: '18px' }}>Hai i referti? Trova uno specialista a Roma</h4>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
             {specialisticheCorrelate.map(s => (
               <a key={s.nome} href={s.url} style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
@@ -111,17 +115,15 @@ export default function DiagnosticaRoma() {
         <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
           <h3 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c' }}>Come prenotare un esame diagnostico?</p>
-              <p style={{ color: '#64748b' }}>Puoi contattare direttamente i centri tramite i pulsanti Chiama o WhatsApp presenti in ogni annuncio su ServiziSalute.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: 'bold', color: '#1a202c' }}>Quali sono i tempi medi di attesa?</p>
-              <p style={{ color: '#64748b' }}>I centri privati presenti sul portale offrono solitamente disponibilità nell'arco di 24-48 ore.</p>
-            </div>
+            {schemas.faq?.mainEntity.map((item, i) => (
+              <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+                <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>{item.name}</p>
+                <p style={{ color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
+              </div>
+            ))}
           </div>
         </section>
-        {/* 🔹 SEZIONE CTA HUB PRINCIPALI (STRUTTURE E PROFESSIONISTI) */}
+
         <section style={{ 
           backgroundColor: '#ffffff', 
           padding: '50px 30px', 
@@ -132,7 +134,7 @@ export default function DiagnosticaRoma() {
           boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)'
         }}>
           <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>
-            Gestisci una struttura sanitaria o uno studio a Roma?
+            Gestisci un centro diagnostico a Roma?
           </h2>
           <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>
             Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale nella Capitale.
@@ -163,13 +165,10 @@ export default function DiagnosticaRoma() {
               Soluzioni Business
             </a>
           </div>
-          <p style={{ marginTop: '20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>
-            Nessun intermediario • Contatto diretto Paziente-Medico
-          </p>
         </section>
       </main>
 
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
+      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             <div>
@@ -185,29 +184,20 @@ export default function DiagnosticaRoma() {
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
                 <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-                <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-                <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
-                <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
                 <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-                <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
                 <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
