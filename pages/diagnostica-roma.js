@@ -10,13 +10,6 @@ export default function DiagnosticaRoma() {
 
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
   
-  const altre = [
-    { n: "Dermatologi Roma", l: "/dermatologi-roma" },
-    { n: "Dentisti Roma", l: "/dentisti-roma" },
-    { n: "Cardiologi Roma", l: "/cardiologi-roma" },
-    { n: "Ginecologi Roma", l: "/ginecologi-roma" }
-  ];
-
   useEffect(() => {
     async function fetchDocs() {
       const { data } = await supabase.from('annunci').select('*').eq('approvato', true).ilike('categoria', '%diagnostica%').order('is_top', { ascending: false });
@@ -27,104 +20,84 @@ export default function DiagnosticaRoma() {
   }, []);
 
   return (
-    <div style={{ display: 'block', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Head><title>Diagnostica Roma | Gennaio 2026</title></Head>
       
       <Navbar />
 
-      {/* BARRA SUPERIORE */}
-      <div style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '10px', textAlign: 'center', fontWeight: 'bold', fontSize: '13px' }}>
-        🔵 DISPONIBILITÀ AGGIORNATA: GENNAIO 2026
-      </div>
-
-      {/* CONTENITORE PRINCIPALE */}
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+      {/* Contenitore che si allunga e spinge il footer */}
+      <div style={{ flex: '1 0 auto' }}>
         
-        {/* RITORNO HOME */}
-        <div style={{ margin: '20px 0' }}>
-          <a href="/" style={{ color: '#1e3a8a', textDecoration: 'none', fontWeight: '800' }}>← TORNA ALLA HOME</a>
-        </div>
-
-        {/* HEADER */}
-        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '20px', marginBottom: '30px', borderLeft: '8px solid #1e3a8a', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-          <h1 style={{ color: '#1e3a8a', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>Diagnostica a Roma</h1>
-          <p style={{ color: '#475569', fontSize: '17px', margin: 0 }}>Trova i migliori laboratori per analisi cliniche e radiologia.</p>
-        </div>
-
-        {/* CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '30px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '16px', fontWeight: '900', marginBottom: '15px', color: '#1e3a8a' }}>Cerca per Quartiere:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieri.map(q => (
-              <a key={q} href={`/diagnostica-roma-${q.toLowerCase()}`} style={{ padding: '8px 12px', backgroundColor: '#eff6ff', color: '#1e3a8a', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px', border: '1px solid #dbeafe' }}>{q}</a>
-            ))}
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+          
+          <div style={{ margin: '20px 0' }}>
+            <a href="/" style={{ color: '#1e3a8a', textDecoration: 'none', fontWeight: '800' }}>← TORNA ALLA HOME</a>
           </div>
-        </div>
 
-        {/* BOX ANNUNCI - STILE RINFORZATO */}
-        {loading ? <p>Caricamento...</p> : centri.map((v) => (
-          <div key={v.id} style={{ 
-            backgroundColor: 'white', 
-            borderRadius: '25px', 
-            padding: '30px', 
-            marginBottom: '20px', 
-            border: v.is_top ? '3px solid #1e3a8a' : '1px solid #e2e8f0', 
-            boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-            display: 'block' 
-          }}>
-            <h3 style={{ color: '#1e3a8a', margin: '0 0 5px 0', fontSize: '24px', fontWeight: '900' }}>{v.nome}</h3>
-            <p style={{ fontSize: '17px', color: '#64748b', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-            
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '120px', backgroundColor: '#1e3a8a', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-              {v.whatsapp && (
-                <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: '1', minWidth: '120px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-              )}
-              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" style={{ flex: '1', minWidth: '120px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
+          <h1 style={{ color: '#1e3a8a', fontSize: '32px', fontWeight: '900', marginBottom: '20px' }}>Diagnostica a Roma</h1>
+
+          {/* CERCA PER QUARTIERE */}
+          <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '30px', border: '1px solid #e2e8f0' }}>
+            <p style={{ fontWeight: '800', marginBottom: '10px' }}>Cerca per Quartiere:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {quartieri.map(q => (
+                <a key={q} href={`/diagnostica-roma-${q.toLowerCase()}`} style={{ padding: '8px 12px', backgroundColor: '#eff6ff', color: '#1e3a8a', borderRadius: '8px', textDecoration: 'none', fontSize: '12px' }}>{q}</a>
+              ))}
             </div>
           </div>
-        ))}
 
-        {/* CTA NERA */}
-        <div style={{ backgroundColor: '#0f172a', padding: '40px', borderRadius: '25px', textAlign: 'center', color: 'white', marginTop: '40px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '10px' }}>Gestisci un Centro Diagnostico?</h2>
-          <p style={{ marginBottom: '20px', color: '#94a3b8' }}>Aggiungi la tua struttura su ServiziSalute Roma.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+          {/* LISTA BOX AGGIORNATI (FUORI DALLA GRID VECCHIA) */}
+          {loading ? <p>Caricamento...</p> : centri.map((v) => (
+            <div key={v.id} style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '30px', 
+              padding: '40px', 
+              marginBottom: '30px', 
+              border: v.is_top ? '3px solid #1e3a8a' : '1px solid #e2e8f0',
+              boxShadow: '0 10px 20px rgba(0,0,0,0.05)'
+            }}>
+              <h3 style={{ color: '#1e3a8a', fontSize: '26px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
+              <p style={{ fontSize: '18px', color: '#64748b', marginBottom: '25px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '150px', backgroundColor: '#1e3a8a', color: 'white', padding: '18px', borderRadius: '15px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>📞 CHIAMA</a>
+                {v.whatsapp && (
+                  <a href={`https://wa.me/${v.whatsapp}`} style={{ flex: '1', minWidth: '150px', backgroundColor: '#22c55e', color: 'white', padding: '18px', borderRadius: '15px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>💬 WHATSAPP</a>
+                )}
+                <a href={`http://google.com/maps?q=${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" style={{ flex: '1', minWidth: '150px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '18px', borderRadius: '15px', textAlign: 'center', fontWeight: '900', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
+              </div>
+            </div>
+          ))}
+
+          {/* CTA PROFESSIONISTI */}
+          <div style={{ backgroundColor: '#0f172a', padding: '40px', borderRadius: '30px', textAlign: 'center', color: 'white', margin: '40px 0' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: '900' }}>Gestisci un Centro?</h2>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', marginTop: '15px' }}>PUBBLICA ORA</a>
+          </div>
+
+          {/* CROSS-LINKING ALTRE SPECIALISTICHE */}
+          <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
+            <p style={{ fontWeight: '900', marginBottom: '15px' }}>Altre Specialistiche a Roma:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+              <a href="/dermatologi-roma" style={{ color: '#2563eb', fontWeight: '700' }}>Dermatologi Roma</a>
+              <a href="/dentisti-roma" style={{ color: '#2563eb', fontWeight: '700' }}>Dentisti Roma</a>
+              <a href="/cardiologi-roma" style={{ color: '#2563eb', fontWeight: '700' }}>Cardiologi Roma</a>
+            </div>
+          </div>
+
+          {/* 3 FAQ */}
+          <div style={{ marginTop: '50px', paddingBottom: '50px' }}>
+            <h3 style={{ fontWeight: '900', fontSize: '22px', marginBottom: '20px' }}>FAQ Diagnostica</h3>
+            <p><strong>1. Referti online?</strong><br/>Sì, disponibili nella maggior parte dei centri.</p><br/>
+            <p><strong>2. Serve la ricetta?</strong><br/>Solo per il regime SSN.</p><br/>
+            <p><strong>3. Tempi di attesa?</strong><br/>In media 24-48 ore per i privati.</p>
+          </div>
+
         </div>
-
-        {/* ALTRE SPECIALISTICHE */}
-        <div style={{ marginTop: '40px', padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ fontWeight: '900', marginBottom: '15px', fontSize: '18px' }}>Altre Specialistiche a Roma:</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            {altre.map(s => (
-              <a key={s.n} href={s.l} style={{ color: '#2563eb', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>{s.n}</a>
-            ))}
-          </div>
-        </div>
-
-        {/* FAQ */}
-        <div style={{ marginTop: '40px', paddingBottom: '60px' }}>
-          <h3 style={{ fontWeight: '900', fontSize: '22px', marginBottom: '20px' }}>FAQ</h3>
-          <div style={{ marginBottom: '15px' }}>
-            <p style={{ fontWeight: '800', marginBottom: '5px' }}>1. Referti online?</p>
-            <p style={{ color: '#475569' }}>Sì, la maggior parte dei centri offre il ritiro digitale.</p>
-          </div>
-          <div style={{ marginBottom: '15px' }}>
-            <p style={{ fontWeight: '800', marginBottom: '5px' }}>2. Serve la ricetta?</p>
-            <p style={{ color: '#475569' }}>Solo per prestazioni in convenzione SSN.</p>
-          </div>
-          <div style={{ marginBottom: '15px' }}>
-            <p style={{ fontWeight: '800', marginBottom: '5px' }}>3. Tempi di attesa?</p>
-            <p style={{ color: '#475569' }}>Solitamente 24-48 ore per i centri privati.</p>
-          </div>
-        </div>
-
       </div>
 
+      {/* FOOTER INTEGRALE - Ora deve apparire per forza */}
       <Footer />
-      
-      {/* SPAZIATORE FINALE PER EVITARE TAGLI */}
-      <div style={{ height: '50px' }}></div>
     </div>
   );
 }
