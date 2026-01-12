@@ -70,7 +70,7 @@ export default function DiagnosticaRoma() {
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', marginBottom: '30px', borderTop: '6px solid #2563eb' }}>
           <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '900' }}>Diagnostica a Roma</h1>
           <p style={{ color: '#475569', fontSize: '16px', lineHeight: '1.6' }}>
-            Trova laboratori d'eccellenza per analisi cliniche e risonanze a Roma. 
+            Trova laboratori d'eccellenza per analisi cliniche e risonanze a <strong>Roma</strong>. Prenota un esame nei quartieri più cercati della capitale.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
             {quartieriDoc.map(q => (
@@ -79,13 +79,12 @@ export default function DiagnosticaRoma() {
           </div>
         </div>
 
-        <h2 style={{ fontSize: '22px', marginBottom: '20px', fontWeight: '800' }}>Strutture Partner suggerite</h2>
+        <h2 style={{ fontSize: '22px', marginBottom: '20px', fontWeight: '800' }}>Centri e Laboratori disponibili</h2>
 
         {loading ? (
-          <p style={{ textAlign: 'center' }}>Caricamento...</p>
+          <p style={{ textAlign: 'center', padding: '40px' }}>Caricamento in corso...</p>
         ) : centri.length > 0 ? (
           centri.map((v) => (
-            /* --- IL NUOVO BOX ANNUNCIO AGGIORNATO --- */
             <div key={v.id} style={{ 
               backgroundColor: 'white', 
               borderRadius: '24px', 
@@ -99,18 +98,20 @@ export default function DiagnosticaRoma() {
                   <h3 style={{ color: '#1e3a8a', margin: '0', fontSize: '22px', fontWeight: '800' }}>{v.nome}</h3>
                   <p style={{ margin: '5px 0', fontSize: '15px', color: '#64748b' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
                 </div>
-                {v.is_top && <span style={{ backgroundColor: '#2563eb', color: 'white', padding: '5px 12px', borderRadius: '10px', fontSize: '10px', fontWeight: 'bold' }}>PREMIUM</span>}
+                {v.is_top && <span style={{ backgroundColor: '#2563eb', color: 'white', padding: '5px 12px', borderRadius: '10px', fontSize: '10px', fontWeight: 'bold' }}>TOP PARTNER</span>}
               </div>
 
-              {/* BADGE DINAMICI */}
+              {/* BADGE DINAMICI (Appaiono solo se compilati su Supabase) */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '15px' }}>
-                {v.referti_online && <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>💻 REFERTI ONLINE</span>}
                 {v.convenzionato_ssn && <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>🏥 SSN</span>}
-                {v.senza_barriere && <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>♿ ACCESSIBILE</span>}
+                {v.referti_online && <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>💻 REFERTI ONLINE</span>}
+                {v.parcheggio_privato && <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>🚗 PARCHEGGIO</span>}
+                {v.senza_barriere && <span style={{ backgroundColor: '#f8fafc', color: '#64748b', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>♿ ACCESSIBILE</span>}
+                {v.vicino_metro && <span style={{ backgroundColor: '#faf5ff', color: '#7e22ce', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>🚇 METRO</span>}
               </div>
 
-              {/* BOTTONI AZIONE STILE MODERNO */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginTop: '20px' }}>
+              {/* BOTTONI AZIONE */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px', marginTop: '20px' }}>
                 <a href={`tel:${v.telefono}`} style={{ backgroundColor: '#2563eb', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none', fontSize: '14px' }}>📞 Chiama</a>
                 {v.whatsapp && (
                   <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none', fontSize: '14px' }}>💬 WhatsApp</a>
@@ -120,34 +121,38 @@ export default function DiagnosticaRoma() {
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro trovato.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessuna struttura trovata per questa categoria.</div>
         )}
 
-        {/* CTA PER PROFESSIONISTI */}
+        {/* CTA PROFESSIONISTI */}
         <section style={{ backgroundColor: '#0f172a', padding: '40px', borderRadius: '32px', marginTop: '40px', textAlign: 'center', color: 'white' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '800' }}>Gestisci una struttura a Roma?</h2>
-          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>Inserisci il tuo centro diagnostico su ServiziSalute.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>🚀 Inizia Ora</a>
+          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>Aumenta i tuoi pazienti con ServiziSalute. Pubblica il tuo profilo oggi.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', borderRadius: '12px', fontWeight: 'bold', textDecoration: 'none' }}>🚀 Pubblica Gratis</a>
         </section>
 
-        {/* FAQ */}
-        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '30px', borderRadius: '24px' }}>
-          <h3 style={{ fontWeight: '900', marginBottom: '20px' }}>Domande Frequenti</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* FAQ COMPLETE (3) */}
+        <section style={{ marginTop: '50px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ fontWeight: '900', marginBottom: '25px', fontSize: '22px' }}>FAQ - Diagnostica Roma</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
             <div>
-              <p style={{ fontWeight: 'bold', color: '#2563eb' }}>Dove fare analisi del sangue a Roma con referto rapido?</p>
-              <p style={{ fontSize: '14px', color: '#64748b' }}>Molti dei nostri centri partner offrono il servizio di refertazione online in giornata. Controlla il badge "REFERTI ONLINE".</p>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', fontSize: '16px', marginBottom: '8px' }}>1. Come scelgo il miglior centro analisi a Roma?</p>
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6' }}>Valuta la vicinanza al tuo quartiere e i servizi offerti (come il parcheggio o i referti online). Su ServiziSalute puoi confrontare le strutture top di ogni zona.</p>
             </div>
             <div>
-              <p style={{ fontWeight: 'bold', color: '#2563eb' }}>I centri sono aperti il sabato?</p>
-              <p style={{ fontSize: '14px', color: '#64748b' }}>Sì, la maggior parte dei laboratori privati a Roma effettua prelievi anche il sabato mattina. Ti consigliamo di chiamare per prenotare.</p>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', fontSize: '16px', marginBottom: '8px' }}>2. È necessaria la prenotazione per gli esami del sangue?</p>
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6' }}>Sì, nella maggior parte dei laboratori a Roma è consigliata la prenotazione per ridurre i tempi di attesa. Puoi usare il tasto WhatsApp o il telefono per fissare l'appuntamento.</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', fontSize: '16px', marginBottom: '8px' }}>3. Quali centri offrono la convenzione SSN?</p>
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6' }}>Molti centri privati a Roma sono accreditati. Cerca il badge "SSN" nell'annuncio per trovare le strutture dove puoi usare l'impegnativa del medico.</p>
             </div>
           </div>
         </section>
 
         {/* CROSS-LINKING */}
         <section style={{ marginTop: '40px', textAlign: 'center' }}>
-          <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#94a3b8', textTransform: 'uppercase' }}>Altre Specialistiche:</p>
+          <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#94a3b8', textTransform: 'uppercase' }}>Potrebbe interessarti anche:</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
             {specialisticheCorrelate.map(s => (
               <a key={s.nome} href={s.url} style={{ fontSize: '13px', color: '#1e3a8a', textDecoration: 'none', padding: '8px 15px', backgroundColor: 'white', borderRadius: '10px', border: '1px solid #e2e8f0' }}>{s.nome}</a>
