@@ -107,73 +107,74 @@ export default function DiagnosticaRoma() {
 
       </main>
 
-     {/* FOOTER MANUALE - IDENTICO ALLA HOME */}
+    {/* FOOTER INTEGRALE DELLA HOME */}
       <footer style={{ 
         backgroundColor: '#1a202c', 
         color: 'white', 
-        padding: '60px 0 40px', 
+        padding: '60px 0 30px', 
         borderTop: '4px solid #3182ce', 
         width: '100%',
-        marginTop: 'auto',
+        marginTop: '0',
         display: 'block'
       }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
             gap: '40px' 
           }}>
-            {/* Colonna 1 */}
+            {/* Colonna Brand */}
             <div>
-              <h4 style={{ color: '#63b3ed', fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova i migliori specialisti e centri diagnostici aggiornati a Gennaio 2026.
+              <h4 style={{ color: '#63b3ed', fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>ServiziSalute</h4>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6', marginBottom: '20px' }}>
+                Il portale di annunci dedicato ai servizi sanitari a Roma. Trova specialisti e centri diagnostici vicini a te.
               </p>
+              <div style={{ display: 'flex', gap: '15px' }}>
+                <span style={{ color: '#a0aec0', cursor: 'pointer' }}>FB</span>
+                <span style={{ color: '#a0aec0', cursor: 'pointer' }}>IG</span>
+                <span style={{ color: '#a0aec0', cursor: 'pointer' }}>TW</span>
+              </div>
             </div>
 
-            {/* Colonna 2 */}
+            {/* Colonna Utenti */}
             <div>
               <h4 style={{ color: 'white', fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>Per gli utenti</h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '10px' }}><a href="/" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px' }}>Home</a></li>
-                <li style={{ marginBottom: '10px' }}><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px' }}>Tutte le specialistiche</a></li>
-                <li style={{ marginBottom: '10px' }}><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px' }}>Diagnostica a Roma</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home Page</a></li>
+                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Specialistiche</a></li>
+                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica</a></li>
+                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
             </div>
 
-            {/* Colonna 3 */}
+            {/* Colonna Professionisti */}
             <div>
-              <h4 style={{ color: 'white', fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>Per i professionisti</h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li>
-                  <a href="/pubblica-annuncio" style={{ 
-                    backgroundColor: '#48bb78', 
-                    color: 'white', 
-                    padding: '10px 20px', 
-                    borderRadius: '8px', 
-                    textDecoration: 'none', 
-                    fontWeight: 'bold',
-                    display: 'inline-block',
-                    fontSize: '14px'
-                  }}>
-                    Pubblica annuncio
-                  </a>
-                </li>
+              <h4 style={{ color: 'white', fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>Professionisti</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', lineHeight: '2.5' }}>
+                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+                <li><a href="/area-riservata" style={{ color: '#a0aec0', textDecoration: 'none' }}>Area Riservata</a></li>
+                <li><a href="/supporto" style={{ color: '#a0aec0', textDecoration: 'none' }}>Centro Assistenza</a></li>
               </ul>
             </div>
           </div>
 
-          {/* Copyright */}
+          {/* Bottom Footer */}
           <div style={{ 
-            marginTop: '60px', 
+            marginTop: '50px', 
             borderTop: '1px solid #2d3748', 
-            paddingTop: '20px', 
-            textAlign: 'center', 
+            paddingTop: '25px', 
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             fontSize: '12px', 
             color: '#718096' 
           }}>
-            © 2026 ServiziSalute Roma – Tutti i diritti riservati.
+            <p>© 2026 ServiziSalute Roma – Tutti i diritti riservati.</p>
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <a href="/privacy" style={{ color: '#718096', textDecoration: 'none' }}>Privacy Policy</a>
+              <a href="/cookie" style={{ color: '#718096', textDecoration: 'none' }}>Cookie Policy</a>
+            </div>
           </div>
         </div>
       </footer>
