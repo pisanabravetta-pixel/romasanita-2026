@@ -1,40 +1,20 @@
 import React from 'react';
 
-export default function Footer() {
+export default function Navbar() {
   return (
-    <footer style={{ backgroundColor: '#0f172a', color: 'white', padding: '60px 20px', marginTop: 'auto', width: '100%' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+    <header style={{ backgroundColor: 'white', borderBottom: '1px solid #e2e8f0', padding: '15px 0', width: '100%' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
-        <div>
-          <h4 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '20px', color: '#3b82f6' }}>ServiziSalute</h4>
-          <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.6' }}>
-            Il portale di riferimento per la sanità a Roma. Trova i migliori specialisti e centri diagnostici vicini a te.
-          </p>
-        </div>
+        <a href="/" style={{ fontWeight: '900', color: '#1e3a8a', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
+          Servizi<span style={{ color: '#2563eb' }}>Salute</span>
+        </a>
 
-        <div>
-          <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '20px' }}>Link Utili</h4>
-          <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-            <li><a href="/" style={{ color: '#94a3b8', textDecoration: 'none' }}>Home</a></li>
-            <li><a href="/chi-siamo" style={{ color: '#94a3b8', textDecoration: 'none' }}>Chi Siamo</a></li>
-            <li><a href="/pubblica-annuncio" style={{ color: '#94a3b8', textDecoration: 'none' }}>Inserisci Studio</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '20px' }}>Supporto</h4>
-          <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-            <li><a href="/contatti" style={{ color: '#94a3b8', textDecoration: 'none' }}>Contattaci</a></li>
-            <li><a href="/privacy" style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</a></li>
-            <li><a href="/cookie" style={{ color: '#94a3b8', textDecoration: 'none' }}>Cookie Policy</a></li>
-          </ul>
-        </div>
-
+        <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '14px' }}>Chi Siamo</a>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '10px 18px', borderRadius: '10px', textDecoration: 'none', fontWeight: '800', fontSize: '14px', boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)' }}>AREA MEDICI</a>
+        </nav>
+        
       </div>
-      
-      <div style={{ maxWidth: '1100px', margin: '40px auto 0', paddingTop: '20px', borderTop: '1px solid #1e293b', textAlign: 'center', fontSize: '12px', color: '#64748b' }}>
-        © {new Date().getFullYear()} ServiziSalute Roma. Tutti i diritti riservati. P.IVA 12345678901
-      </div>
-    </footer>
+    </header>
   );
 }
