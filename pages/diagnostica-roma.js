@@ -3,19 +3,28 @@ import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
 
+// COMPONENTI CENTRALIZZATI
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
 export default function DiagnosticaRoma() {
   const [centri, setCentri] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Date dinamiche (si aggiornano da sole ogni mese)
+  const currentMonth = new Intl.DateTimeFormat('it-IT', { month: 'long' }).format(new Date());
+  const currentYear = new Date().getFullYear();
+
   const schemas = getSchemas('diagnostica', 'roma');
 
-  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"];
+  const quartieriDoc = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti"];
   
   const specialisticheCorrelate = [
-    { nome: "Cardiologi", url: "/cardiologi-roma" },
-    { nome: "Ortopedici", url: "/ortopedici-roma" },
-    { nome: "Ginecologi", url: "/ginecologi-roma" },
-    { nome: "Oculisti", url: "/oculisti-roma" },
-    { nome: "Dermatologi", url: "/dermatologi-roma" }
+    { nome: "Cardiologi Roma", url: "/visite-specialistiche-roma/cardiologo" },
+    { nome: "Ortopedici Roma", url: "/visite-specialistiche-roma/ortopedico" },
+    { nome: "Ginecologi Roma", url: "/visite-specialistiche-roma/ginecologo" },
+    { nome: "Oculisti Roma", url: "/visite-specialistiche-roma/oculista" },
+    { nome: "Dermatologi Roma", url: "/visite-specialistiche-roma/dermatologo" }
   ];
 
   useEffect(() => {
@@ -41,10 +50,10 @@ export default function DiagnosticaRoma() {
   }, []);
 
   return (
-    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f0f4f8', minHeight: '100vh', color: '#1a202c' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f8fafc', color: '#1a202c', fontFamily: 'system-ui, sans-serif' }}>
       <Head>
-        <title>Centri Diagnostici a Roma | Analisi, Risonanze e Screening | ServiziSalute</title>
-        <meta name="description" content="Cerchi un centro diagnostico a Roma? Trova i migliori laboratori per analisi del sangue, ecografie e risonanze nei quartieri di Roma con contatti diretti." />
+        <title>Centri Diagnostici Roma | Analisi e Risonanze {currentYear}</title>
+        <meta name="description" content={`Trova i migliori centri diagnostici a Roma a ${currentMonth} ${currentYear}. Laboratori analisi, ecografie e risonanze magnetiche con referti online.`} />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -53,24 +62,34 @@ export default function DiagnosticaRoma() {
         )}
       </Head>
 
-      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 0', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
-        🔵 CENTRI DIAGNOSTICI E LABORATORI ANALISI A ROMA - GENNAIO 2026
+      <Navbar />
+
+      {/* TOP BAR DINAMICA */}
+      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '10px 0', textAlign: 'center', fontSize: '13px', fontWeight: '800', letterSpacing: '0.5px' }}>
+        🔵 DISPONIBILITÀ CENTRI DIAGNOSTICI AGGIORNATA: {currentMonth.toUpperCase()} {currentYear}
       </div>
 
-      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
-        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', marginBottom: '20px', color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>← Tutte le Specialistiche</a>
+      <main style={{ flex: 1, maxWidth: '1100px', margin: '0 auto', padding: '20px', width: '100%' }}>
+        
+        {/* BREADCRUMB */}
+        <div style={{ marginBottom: '20px' }}>
+          <a href="/" style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}> Home</a> 
+          <span style={{ color: '#94a3b8', margin: '0 8px' }}>/</span>
+          <span style={{ color: '#64748b', fontSize: '14px' }}>Diagnostica Roma</span>
+        </div>
 
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', marginBottom: '30px', borderLeft: '8px solid #2563eb' }}>
-          <h1 style={{ color: '#1e3a8a', fontSize: '32px', margin: '0 0 10px 0', fontWeight: '800' }}>Diagnostica a Roma</h1>
-          <p style={{ color: '#4a5568', lineHeight: '1.6', fontSize: '16px' }}>
-            Trova i migliori <strong>centri diagnostici a Roma</strong>. Ricerca laboratori d'eccellenza per analisi cliniche, risonanze magnetiche ed ecografie a <strong>Prati, EUR, San Giovanni o Parioli</strong>.
+        {/* HERO SEO SECTION */}
+        <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', marginBottom: '30px', borderTop: '6px solid #2563eb' }}>
+          <h1 style={{ color: '#1e3a8a', fontSize: '36px', margin: '0 0 15px 0', fontWeight: '900', lineHeight: '1.1' }}>Diagnostica a Roma</h1>
+          <p style={{ color: '#475569', lineHeight: '1.7', fontSize: '17px', maxWidth: '850px' }}>
+            Hai bisogno di analisi cliniche o esami strumentali? <strong>ServiziSalute</strong> ti aiuta a trovare i centri diagnostici più qualificati di Roma. Confronta laboratori per <strong>ecografie, risonanze magnetiche e check-up completi</strong> a Prati, EUR e in tutto il centro.
           </p>
 
-          <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
-            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#64748b', display: 'block', marginBottom: '10px' }}>CERCA PER QUARTIERE:</span>
+          <div style={{ marginTop: '25px', paddingTop: '25px', borderTop: '1px solid #f1f5f9' }}>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#94a3b8', display: 'block', marginBottom: '12px', textTransform: 'uppercase' }}>Cerca per Quartiere:</span>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {quartieriDoc.map(q => (
-                <a key={q} href={`/diagnostica-roma-${q.toLowerCase()}`} style={{ fontSize: '13px', backgroundColor: '#eff6ff', color: '#1e3a8a', padding: '6px 12px', borderRadius: '8px', textDecoration: 'none', border: '1px solid #dbeafe', fontWeight: '600' }}>
+                <a key={q} href={`/diagnostica-roma-${q.toLowerCase().replace(" ", "-")}`} style={{ fontSize: '13px', backgroundColor: '#eff6ff', color: '#1e3a8a', padding: '8px 14px', borderRadius: '10px', textDecoration: 'none', border: '1px solid #dbeafe', fontWeight: '700' }}>
                   {q}
                 </a>
               ))}
@@ -78,121 +97,85 @@ export default function DiagnosticaRoma() {
           </div>
         </div>
 
-        <h2 style={{ fontSize: '22px', color: '#1a202c', marginBottom: '20px' }}>Centri disponibili</h2>
+        <h2 style={{ fontSize: '24px', color: '#0f172a', marginBottom: '20px', fontWeight: '800' }}>Laboratori e Centri Analisi suggeriti</h2>
         
         {loading ? (
-          <p style={{textAlign:'center'}}>Caricamento centri...</p>
+          <div style={{textAlign:'center', padding: '50px'}}>Ricerca centri in corso...</div>
         ) : centri.length > 0 ? (
           centri.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '3px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+            <div key={v.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '24px', marginBottom: '20px', border: v.is_top ? '2px solid #2563eb' : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <h2 style={{ color: '#1e3a8a', margin: '0', fontSize: '24px', fontWeight: '800' }}>{v.nome}</h2>
-                  <p style={{ fontSize: '17px', margin: '8px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+                  <h3 style={{ color: '#1e3a8a', margin: '0', fontSize: '22px', fontWeight: '800' }}>{v.nome}</h3>
+                  <p style={{ fontSize: '16px', color: '#64748b', margin: '8px 0' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
                 </div>
-                {v.is_top && <span style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>TOP</span>}
+                {v.is_top && <span style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '6px 12px', borderRadius: '12px', fontSize: '10px', fontWeight: '900' }}>ECCELLENZA</span>}
               </div>
 
-              {/* --- BADGE DINAMICI --- */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
-                {v.referti_online && (
-                  <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #bae6fd' }}>💻 REFERTI ONLINE</span>
-                )}
-                {v.convenzionato_ssn && (
-                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>🏥 CONVENZIONATO SSN</span>
-                )}
-                {v.parcheggio_privato && (
-                  <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #e2e8f0' }}>🚗 PARCHEGGIO</span>
-                )}
-                {v.senza_barriere && (
-                  <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>♿ ACCESSIBILE</span>
-                )}
-                {v.vicino_metro && (
-                  <span style={{ backgroundColor: '#faf5ff', color: '#7e22ce', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid #f3e8ff' }}>🚇 METRO</span>
-                )}
+              {/* BADGE DINAMICI */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '15px' }}>
+                {v.referti_online && <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: '1px solid #bae6fd' }}>💻 REFERTI ONLINE</span>}
+                {v.convenzionato_ssn && <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>🏥 CONVENZIONATO SSN</span>}
+                {v.parcheggio_privato && <span style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: '1px solid #e2e8f0' }}>🚗 PARCHEGGIO</span>}
+                {v.senza_barriere && <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: '1px solid #dcfce7' }}>♿ ACCESSIBILE</span>}
+                {v.vicino_metro && <span style={{ backgroundColor: '#faf5ff', color: '#7e22ce', padding: '5px 10px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: '1px solid #f3e8ff' }}>🚇 METRO</span>}
               </div>
 
               <div style={{ display: 'flex', gap: '10px', marginTop: '25px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
+                <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: '#2563eb', color: 'white', padding: '15px', borderRadius: '14px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}>Contatta Centro</a>
                 {v.whatsapp && (
-                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '16px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WhatsApp</a>
+                  <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '15px', borderRadius: '14px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}>WhatsApp</a>
                 )}
               </div>
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro diagnostico trovato a Roma.</div>
+          <div style={{ textAlign: 'center', padding: '40px', backgroundColor: 'white', borderRadius: '24px' }}>Nessun centro diagnostico trovato.</div>
         )}
 
-        <section style={{ marginTop: '40px', padding: '25px', backgroundColor: 'white', borderRadius: '24px', border: '1px dashed #2563eb' }}>
-          <h4 style={{ color: '#1e3a8a', marginBottom: '15px', fontSize: '18px' }}>Hai i referti? Trova uno specialista a Roma</h4>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+        {/* CTA BUSINESS PER PROFESSIONISTI */}
+        <section style={{ backgroundColor: '#1e293b', padding: '40px', borderRadius: '32px', marginTop: '40px', textAlign: 'center', color: 'white' }}>
+          <h2 style={{ fontSize: '26px', fontWeight: '800', marginBottom: '15px' }}>Gestisci un Centro Diagnostico a Roma?</h2>
+          <p style={{ color: '#94a3b8', fontSize: '17px', maxWidth: '600px', margin: '0 auto 25px', lineHeight: '1.6' }}>
+            Aumenta la visibilità del tuo laboratorio. Entra in ServiziSalute e fatti trovare dai pazienti del tuo quartiere.
+          </p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '16px 32px', borderRadius: '14px', fontWeight: '800', textDecoration: 'none', fontSize: '16px', display: 'inline-block' }}>Aggiungi il tuo Centro — Gratis</a>
+        </section>
+
+        {/* FAQ - SEO STRUTTURATA */}
+        <section style={{ marginTop: '60px', backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+          <h3 style={{ color: '#0f172a', fontSize: '24px', marginBottom: '30px', fontWeight: '900' }}>FAQ - Diagnostica a Roma</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+            <div>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', marginBottom: '8px', fontSize: '17px' }}>1. Quali centri diagnostici a Roma sono convenzionati SSN?</p>
+              <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6' }}>Nella nostra lista, i centri che accettano l'impegnativa del medico curante sono contrassegnati dal badge "CONVENZIONATO SSN". Si consiglia di confermare telefonicamente la disponibilità dei ticket.</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', marginBottom: '8px', fontSize: '17px' }}>2. Come posso scaricare i referti online?</p>
+              <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6' }}>Molti laboratori d'avanguardia a Roma offrono il portale paziente. Cerca il badge "REFERTI ONLINE" per individuare le strutture che permettono il download digitale degli esami.</p>
+            </div>
+            <div>
+              <p style={{ fontWeight: '800', color: '#1e3a8a', marginBottom: '8px', fontSize: '17px' }}>3. Dove fare una risonanza magnetica aperta a Roma?</p>
+              <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6' }}>Diversi centri in zona EUR e Prati dispongono di macchinari per pazienti claustrofobici. Contatta i centri con il tasto "Chiama" per verificare la tecnologia disponibile.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* CROSS-LINKING SPECIALISTICO */}
+        <section style={{ marginTop: '50px', padding: '25px', backgroundColor: '#f1f5f9', borderRadius: '20px', textAlign: 'center' }}>
+          <h4 style={{ color: '#475569', marginBottom: '20px', fontSize: '15px', fontWeight: '700', textTransform: 'uppercase' }}>Trova lo specialista dopo gli esami:</h4>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px' }}>
             {specialisticheCorrelate.map(s => (
-              <a key={s.nome} href={s.url} style={{ color: '#2563eb', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>• {s.nome}</a>
+              <a key={s.nome} href={s.url} style={{ color: '#1e3a8a', textDecoration: 'none', fontSize: '14px', fontWeight: '700', backgroundColor: 'white', padding: '10px 20px', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.03)' }}>
+                {s.nome}
+              </a>
             ))}
           </div>
         </section>
 
-        <section style={{ marginTop: '30px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '50px' }}>
-          <h3 style={{ color: '#1e3a8a', fontSize: '24px', marginBottom: '25px', fontWeight: '800' }}>Domande Frequenti</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {schemas.faq?.mainEntity.map((item, i) => (
-              <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-                <p style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '8px' }}>{item.name}</p>
-                <p style={{ color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* --- CTA PROFESSIONISTI --- */}
-        <section style={{ backgroundColor: '#ffffff', padding: '50px 30px', borderRadius: '32px', marginTop: '60px', textAlign: 'center', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }}>
-          <h2 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '800', marginBottom: '15px' }}>Gestisci un centro diagnostico a Roma?</h2>
-          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', lineHeight: '1.6' }}>Unisciti al network di <strong>ServiziSalute</strong>. Raggiungi migliaia di pazienti nel tuo quartiere e potenzia la tua presenza digitale.</p>
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.2)' }}>🚀 Inizia a ricevere contatti</a>
-            <a href="/per-i-professionisti" style={{ backgroundColor: 'white', color: '#0f172a', padding: '18px 35px', borderRadius: '16px', fontWeight: 'bold', textDecoration: 'none', fontSize: '17px', border: '1px solid #e2e8f0' }}>Soluzioni Business</a>
-          </div>
-        </section>
       </main>
 
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '60px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
-            <div>
-              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.</p>
-            </div>
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
-              <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>● Disponibilità: Gennaio 2026</p>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
-                <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
-                <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
-                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
-            © 2026 ServiziSalute – Tutti i diritti riservati
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
