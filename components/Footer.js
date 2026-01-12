@@ -2,22 +2,12 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer style={{ 
-      background: '#1a202c', 
-      color: 'white', 
-      padding: '60px 0 30px', 
-      borderTop: '4px solid #3182ce', 
-      width: '100%',
-      display: 'block',
-      clear: 'both'
-    }}>
+    <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', width: '100%', clear: 'both' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
           <div>
             <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-            <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-              Il portale di annunci dedicato ai servizi sanitari a Roma.
-            </p>
+            <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>Il portale di annunci dedicato ai servizi sanitari a Roma.</p>
           </div>
           <div>
             <h4 style={{ marginBottom: '15px' }}>Link Rapidi</h4>
