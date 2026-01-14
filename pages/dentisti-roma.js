@@ -44,9 +44,9 @@ export default function DentistiRoma() {
         )}
       </Head>
       
-      <div style={{ backgroundColor: '#3182ce', color: 'white', padding: '10px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
-        🦷 STUDI DENTISTICI E ODONTOIATRI A ROMA AGGIORNATI A GENNAIO 2026
-      </div>
+      <div style={{ backgroundColor: '#3182ce', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
+  🦷 STUDI DENTISTICI E ODONTOIATRI A ROMA — AGGIORNATI A <span style={{ color: '#fff', textDecoration: 'underline' }}>GENNAIO 2026</span>
+</div>
 
       <Navbar />
 
