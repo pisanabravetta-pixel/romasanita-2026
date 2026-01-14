@@ -64,7 +64,7 @@ export default function DentistiRoma() {
             Dentisti a Roma
           </h1>
           <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Studi Odontoiatrici e Igiene Dentale a <span style={{ color: '#3182ce' }}>Gennaio 2026</span>
+            Studi Odontoiatrici e Igiene Dentale aggiornati a <span style={{ color: '#3182ce' }}>Gennaio 2026</span>
           </p>
         </div>
 
