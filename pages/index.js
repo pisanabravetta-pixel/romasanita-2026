@@ -132,7 +132,7 @@ const eseguiRicerca = () => {
                 color: '#065f46', 
                 fontWeight: 'bold', 
                 textDecoration: 'none',
-                borderBottom: '2px solid #10b981',
+               borderBottom: '2px solid #2563eb',
                 fontSize: '14px'
               }}>
                 Sei un Medico?
@@ -144,7 +144,7 @@ const eseguiRicerca = () => {
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
             <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px'}}>Accedi</a>
             <a href="/pubblica-annuncio" style={{
-              backgroundColor: '#065f46', 
+             backgroundColor: '#2563eb',
               color: 'white', 
               padding: '10px 20px', 
               borderRadius: '20px', 
