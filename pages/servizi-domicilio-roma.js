@@ -54,12 +54,13 @@ export default function ServiziDomicilioRoma() {
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
         {/* BREADCRUMB */}
-        <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>&gt;</span>
-          <span style={{ color: '#1e40af' }}>Servizi a Domicilio Roma</span>
-        </div>
-
+      <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+  <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
+  <span style={{ margin: '0 8px' }}>&gt;</span>
+  <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
+  <span style={{ margin: '0 8px' }}>&gt;</span>
+  <span style={{ color: '#065f46' }}>Servizi a Domicilio</span> {/* o Visite Specialistiche */}
+</div>
         {/* TITOLO MASTER H1 */}
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #2563eb', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#1e40af', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
