@@ -22,7 +22,26 @@ export default function DiagnosticaRoma() {
       <Head>
         <title>Diagnostica Roma: Centri Analisi e Radiologia | Gennaio 2026</title>
         <meta name="description" content="Trova i migliori centri di diagnostica a Roma. Prenota analisi del sangue e radiografie nei migliori centri della Capitale aggiornati a Gennaio 2026." />
-      </Head>
+     <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MedicalOrganization",
+              "name": "Diagnostica Roma - ServiziSalute",
+              "url": "https://www.servizisalute.com/diagnostica-roma",
+              "logo": "https://www.servizisalute.com/logo.png",
+              "description": "Elenco dei migliori centri di diagnostica e analisi a Roma aggiornato a Gennaio 2026.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Roma",
+                "addressRegion": "Lazio",
+                "addressCountry": "IT"
+              }
+            })
+          }}
+        />
+  </Head>
       
       <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '10px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
         TUTTI I CENTRI DIAGNOSTICI A ROMA AGGIORNATI A GENNAIO 2026
@@ -31,9 +50,11 @@ export default function DiagnosticaRoma() {
       <Navbar />
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
-        
-        <div style={{ margin: '10px 0' }}>
-          <a href="/" style={{ color: '#1e3a8a', textDecoration: 'none', fontWeight: 'bold', fontSize: '14px' }}>← TORNA ALLA HOME</a>
+        {/* BREADCRUMB SEO */}
+        <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <span style={{ color: '#1e3a8a' }}>Diagnostica a Roma</span>
         </div>
 
         {/* TITOLO E SOTTOTITOLO SEO */}
@@ -75,7 +96,14 @@ export default function DiagnosticaRoma() {
             </div>
           ))}
         </div>
-
+{/* MINI TESTO SEO DOPO ANNUNCI */}
+        <div style={{ margin: '30px 0', padding: '0 10px' }}>
+          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+            In questa pagina trovi un elenco aggiornato di <strong>centri di diagnostica a Roma</strong>, suddivisi per zona e quartiere. 
+            Puoi consultare le informazioni utili, contattare direttamente le strutture o filtrare i <strong>centri analisi a Roma per quartiere</strong> 
+            per trovare rapidamente quello più vicino a te e prenotare la tua prestazione sanitaria.
+          </p>
+        </div>
         {/* CTA NERA RIDOTTA */}
         <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Gestisci un Centro Diagnostico?</h2>
