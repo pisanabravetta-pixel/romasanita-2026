@@ -303,31 +303,31 @@ const eseguiRicerca = () => {
         <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap', padding: '20px'}}>
             
             {/* CARD FARMACIE - RETTANGOLARE CON CONTENUTO CENTRATO */}
-            <a href="/farmacie-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px solid #e2e8f0'}}>
+            <a href="/farmacie-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
               <div style={{backgroundColor: '#fff0f3', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #e91e63'}}>💊</div>
               <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Farmacie</span>
             </a>
 
             {/* CARD DENTISTI */}
-            <a href="/dentisti-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px solid #e2e8f0'}}>
+            <a href="/dentisti-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border:'2px solid #065f46' }}>
               <div style={{backgroundColor: '#e3f2fd', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #2196f3'}}>🦷</div>
               <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Dentisti</span>
             </a>
 
             {/* CARD DIAGNOSTICA */}
-            <a href="/diagnostica-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px solid #e2e8f0'}}>
+            <a href="/diagnostica-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius:'16px',  boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border:'2px solid #065f46'}}>
               <div style={{backgroundColor: '#f3e5f5', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #9c27b0'}}>🔬</div>
               <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Diagnostica</span>
             </a>
 
             {/* CARD SPECIALISTI */}
-            <a href="/visite-specialistiche-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px solid #e2e8f0'}}>
+            <a href="/visite-specialistiche-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
               <div style={{backgroundColor: '#e8f5e9', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #4caf50'}}>👨‍⚕️</div>
               <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Specialisti</span>
             </a>
 
             {/* CARD DOMICILIO */}
-            <a href="/servizi-domicilio-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px solid #e2e8f0'}}>
+            <a href="/servizi-domicilio-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
               <div style={{backgroundColor: '#fff3e0', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #ff9800'}}>🏠</div>
               <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Domicilio</span>
             </a>
