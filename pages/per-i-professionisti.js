@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 
-export default function PerIProfessionistiRoma() {
+export default function PerIProfessionisti() {
   const schemas = {
     faq: {
       "@context": "https://schema.org",
@@ -40,11 +40,11 @@ export default function PerIProfessionistiRoma() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
         <title>Per i Professionisti della Salute a Roma | ServiziSalute Business</title>
-        <meta name="description" content="Sei un medico o uno specialista a Roma? Aumenta la tua visibilità locale e ricevi contatti diretti dai pazienti del tuo quartiere. Aggiornato 2026." />
+        <meta name="description" content="Sei un medico o uno specialista a Roma? Aumenta la tua visibilità locale e ricevi contatti diretti dai pazienti del tuo quartiere. Aggiornato Gennaio 2026." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
       
-      {/* BARRA SUPERIORE BLINDATA */}
+      {/* BARRA SUPERIORE */}
       <div style={{ backgroundColor: '#065f46', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
         🚀 PORTA IL TUO STUDIO NEL CUORE DEI QUARTIERI DI ROMA — EDIZIONE 2026
       </div>
@@ -53,14 +53,14 @@ export default function PerIProfessionistiRoma() {
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
-        {/* BREADCRUMB CORRETTO PER JSX */}
+        {/* BREADCRUMB (CORRETTO PER VERCEL) */}
         <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
           <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>&gt;</span> 
+          <span style={{ margin: '0 8px' }}>{'>'}</span> 
           <span style={{ color: '#065f46' }}>Per i Professionisti</span>
         </div>
 
-        {/* TITOLO MASTER H1 BOXATO */}
+        {/* TITOLO MASTER H1 BOXATO (STILE DIAGNOSTICA) */}
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #10b981', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#065f46', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Sei un Professionista a Roma?
@@ -70,20 +70,47 @@ export default function PerIProfessionistiRoma() {
           </p>
         </div>
 
-        {/* CONTENUTO INFORMATIVO */}
-        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '30px' }}>
-          <h2 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>Perché scegliere ServiziSalute Roma:</h2>
-          <p style={{ margin: '0 0 10px 0' }}>✅ <strong>Zero Intermediari:</strong> Il paziente chiama te, non noi.</p>
-          <p style={{ margin: '0 0 10px 0' }}>✅ <strong>Zero Commissioni:</strong> Non tratteniamo nulla sulle tue parcelle.</p>
-          <p style={{ margin: '0 0 10px 0' }}>✅ <strong>Focus Territoriale:</strong> Compari nelle ricerche per il tuo quartiere.</p>
-          <p style={{ margin: '0' }}>✅ <strong>SEO Pronta:</strong> Pensiamo noi a farti trovare su Google.</p>
+        {/* TABELLA COMPARATIVA */}
+        <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '30px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>Perché scegliere noi rispetto ai grandi portali?</h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+              <thead>
+                <tr style={{ textAlign: 'left', borderBottom: '2px solid #f1f5f9' }}>
+                  <th style={{ padding: '12px' }}>Caratteristica</th>
+                  <th style={{ padding: '12px', color: '#059669' }}>ServiziSalute Roma</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '12px' }}>Costi di iscrizione</td>
+                  <td style={{ padding: '12px', fontWeight: 'bold' }}>GRATIS</td>
+                </tr>
+                <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '12px' }}>Commissioni su visite</td>
+                  <td style={{ padding: '12px', fontWeight: 'bold' }}>ZERO</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: '12px' }}>Contatto con il paziente</td>
+                  <td style={{ padding: '12px', fontWeight: 'bold' }}>DIRETTO (WA/TEL)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* CTA PROFESSIONISTI */}
+        {/* TESTO SEO */}
+        <div style={{ margin: '30px 0', padding: '0 10px' }}>
+          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+            ServiziSalute Roma è la piattaforma verticale pensata per connettere specialisti e pazienti all'interno dei quartieri della Capitale. Se gestisci uno studio medico o sei un professionista sanitario a Roma, la nostra piattaforma ti permette di aumentare la tua presenza locale a costo zero, ottimizzando la tua visibilità per le ricerche geolocalizzate a <strong>Gennaio 2026</strong>.
+          </p>
+        </div>
+
+        {/* CTA PROFESSIONISTI (BOX SCURO) */}
         <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Inizia a ricevere nuovi contatti oggi</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>La pubblicazione del profilo è rapida e totalmente gratuita.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '15px 35px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>PUBBLICA IL TUO ANNUNCIO</a>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Pronto a ricevere nuovi contatti?</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>La pubblicazione del profilo è rapida e non richiede carta di credito.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '15px 35px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>PUBBLICA ORA GRATIS</a>
         </div>
 
         {/* FAQ (3 DOMANDE) */}
@@ -91,7 +118,7 @@ export default function PerIProfessionistiRoma() {
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>Domande Frequenti</h3>
           {schemas.faq.mainEntity.map((item, i) => (
             <div key={i} style={{ marginBottom: '15px', padding: '15px', backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-              <p style={{ margin: '0 0 5px 0' }}><strong>{item.name}</strong></p>
+              <p style={{ margin: '0 0 5px 0' }}><strong>{i+1}. {item.name}</strong></p>
               <p style={{ margin: 0, color: '#475569', fontSize: '14px' }}>{item.acceptedAnswer.text}</p>
             </div>
           ))}
