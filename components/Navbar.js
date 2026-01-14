@@ -13,13 +13,13 @@ export default function Navbar() {
     }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
-        {/* LOGO - AGGIORNATO AL VERDE PROFESSIONALE */}
-        <a href="/" style={{ fontWeight: '900', color: '#065f46', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
-          Servizi<span style={{ color: '#10b981' }}>Salute</span>
+        {/* LOGO - BICOLORE COME NELLA HOME */}
+        <a href="/" style={{ fontWeight: '900', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
+          <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
         </a>
 
         <nav style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
-          {/* 1. LINK ALLA PAGINA HUB (SERVIZI SANITARI ROMA) */}
+          {/* 1. LINK ALLA PAGINA HUB */}
           <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
             Tutti i Servizi
           </a>
@@ -29,16 +29,16 @@ export default function Navbar() {
             Chi Siamo
           </a>
 
-          {/* 3. TASTO AREA MEDICI - COLLEGATO ALLA PAGINA PROFESSIONISTI */}
+          {/* 3. TASTO AREA MEDICI - AGGIORNATO AL BLU */}
           <a href="/per-i-professionisti" style={{ 
-            backgroundColor: '#065f46', 
+            backgroundColor: '#2563eb', // <--- CAMBIATO IN BLU
             color: 'white', 
             padding: '10px 18px', 
             borderRadius: '10px', 
             textDecoration: 'none', 
             fontWeight: '800', 
             fontSize: '13px',
-            boxShadow: '0 4px 6px -1px rgba(6, 95, 70, 0.2)',
+            boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)', // <--- Ombra blu coordinata
             textTransform: 'uppercase'
           }}>
             Area Medici
