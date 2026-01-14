@@ -99,7 +99,7 @@ const eseguiRicerca = () => {
         />
         {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head> 
-    {/* 1. TOP BAR AGGIORNATA (VERDE) */}
+   {/* TOP BAR - VERDE ISTITUZIONALE */}
       <div style={{ 
         backgroundColor: '#065f46', 
         color: 'white', 
@@ -113,31 +113,49 @@ const eseguiRicerca = () => {
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
-      {/* 2. HEADER AGGIORNATO (LOGO BICOLORE E MENU) */}
+      {/* HEADER - LOGO BICOLORE E MENU COMPLETO */}
       <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           
           {/* NOME BICOLORE */}
-          <a href="/" style={{ textDecoration: 'none', fontSize: '24px', fontWeight: '900' }}>
+          <div style={{fontSize: '24px', fontWeight: '900'}}>
             <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-          </a>
+          </div>
 
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px' }}>TUTTI I SERVIZI</a>
-            
-            {/* LINK LOGIN DISCRETO */}
-            <a href="/login" style={{textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '13px'}}>ACCEDI</a>
-            
-            <a href="/pubblica-annuncio" style={{ 
+          {/* MENU CENTRALE (Tutti i tuoi link originali) */}
+          <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
+            <li><a href="/farmacie-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Farmacie</a></li>
+            <li><a href="/dentisti-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Dentisti</a></li>
+            <li><a href="/visite-specialistiche-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Specialisti</a></li>
+            <li>
+              <a href="/pubblica-annuncio" style={{ 
+                color: '#065f46', 
+                fontWeight: 'bold', 
+                textDecoration: 'none',
+                borderBottom: '2px solid #10b981',
+                fontSize: '14px'
+              }}>
+                Sei un Medico?
+              </a>
+            </li>
+          </ul>
+
+          {/* PARTE DESTRA (Accedi e Bottone) */}
+          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+            <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px'}}>Accedi</a>
+            <a href="/pubblica-annuncio" style={{
               backgroundColor: '#065f46', 
               color: 'white', 
               padding: '10px 20px', 
-              borderRadius: '12px', 
+              borderRadius: '20px', 
               textDecoration: 'none', 
-              fontWeight: '800', 
-              fontSize: '12px' 
-            }}>PUBBLICA ANNUNCIO</a>
+              fontSize: '14px',
+              fontWeight: '800'
+            }}>
+              Pubblica annuncio
+            </a>
           </div>
+
         </div>
       </header>
 {/* HERO SECTION - HOME PAGE BICOLORE (VERDE & BLU) */}
