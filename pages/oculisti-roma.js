@@ -52,12 +52,13 @@ export default function OculistiRoma() {
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
-        <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: '#1e40af', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>&gt;</span>
-          <span style={{ color: '#1e3a8a' }}>Oculisti a Roma</span>
-        </div>
-
+        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+  <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
+  <span style={{ margin: '0 8px' }}>&gt;</span>
+  <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
+  <span style={{ margin: '0 8px' }}>&gt;</span>
+  <span style={{ color: '#065f46' }}>Oculisti Roma</span>
+</div>
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #1e40af', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#1e3a8a', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Oculisti a Roma
