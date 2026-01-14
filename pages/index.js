@@ -178,7 +178,7 @@ const eseguiRicerca = () => {
       flexWrap: 'wrap',
       gap: '15px',
       alignItems: 'flex-end',
-      border: '1px solid #e2e8f0'
+      border: '2px solid #065f46'
     }}>
       
       {/* 1. COSA CERCHI */}
