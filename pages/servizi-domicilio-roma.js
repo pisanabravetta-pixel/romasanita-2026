@@ -4,16 +4,16 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
 import Navbar from '../components/Navbar';
 
-export default function VisiteSpecialisticheRoma() {
+export default function ServiziDomicilioRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
-  const schemas = getSchemas('visite-specialistiche', 'roma');
+  const schemas = getSchemas('servizi-domicilio', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
-    async function fetchVisite() {
+    async function fetchServizi() {
       try {
-        const queryBusca = getDBQuery('specialistica'); 
+        const queryBusca = getDBQuery('domicilio'); 
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
@@ -28,14 +28,14 @@ export default function VisiteSpecialisticheRoma() {
         setLoading(false);
       }
     }
-    fetchVisite();
+    fetchServizi();
   }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
-        <title>Visite Specialistiche Roma: Prenota Medici Specialisti | 2026</title>
-        <meta name="description" content="Cerchi una visita specialistica a Roma? Trova i migliori medici specialisti in dermatologia, cardiologia, ginecologia e molto altro a Roma. Aggiornato a Gennaio 2026." />
+        <title>Servizi Sanitari a Domicilio Roma: Infermieri e Fisioterapia | 2026</title>
+        <meta name="description" content="Cerchi assistenza sanitaria a domicilio a Roma? Trova infermieri, fisioterapisti e medici per visite e prelievi a casa tua a Roma. Aggiornato a Gennaio 2026." />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -45,8 +45,8 @@ export default function VisiteSpecialisticheRoma() {
       </Head>
       
       {/* BARRA SUPERIORE */}
-      <div style={{ backgroundColor: '#7c3aed', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
-        👨‍⚕️ VISITE MEDICHE SPECIALISTICHE A ROMA — AGGIORNATE A GENNAIO 2026
+      <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
+        🏠 SERVIZI SANITARI E ASSISTENZA A DOMICILIO A ROMA — GENNAIO 2026
       </div>
 
       <Navbar />
@@ -55,51 +55,50 @@ export default function VisiteSpecialisticheRoma() {
         
         {/* BREADCRUMB */}
         <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: '#7c3aed', textDecoration: 'none' }}>Home</a>
+          <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
           <span style={{ margin: '0 8px' }}>&gt;</span>
-          <span style={{ color: '#5b21b6' }}>Visite Specialistiche Roma</span>
+          <span style={{ color: '#1e40af' }}>Servizi a Domicilio Roma</span>
         </div>
 
         {/* TITOLO MASTER H1 */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #7c3aed', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-          <h1 style={{ color: '#5b21b6', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-            Visite Specialistiche Roma
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #2563eb', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+          <h1 style={{ color: '#1e40af', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+            Servizi a Domicilio Roma
           </h1>
           <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Centri Medici e Specialisti a Roma aggiornati a <span style={{ color: '#7c3aed' }}>Gennaio 2026</span>
+            Assistenza Sanitaria Domiciliare a Roma aggiornata a <span style={{ color: '#2563eb' }}>Gennaio 2026</span>
           </p>
         </div>
 
         {/* BOX QUARTIERI */}
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#5b21b6' }}>Cerca per Quartiere:</h2>
+          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e40af' }}>Cerca nel tuo Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {quartieri.map(q => (
-              <a key={q} href={`/visite-specialistiche-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#f5f3ff', color: '#7c3aed', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
+              <a key={q} href={`/servizi-domicilio-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#eff6ff', color: '#2563eb', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
             ))}
           </div>
         </div>
 
-        {/* LISTA SPECIALISTI */}
+        {/* LISTA SERVIZI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : medici.map((v) => (
             <div key={v.id} style={{ 
               backgroundColor: 'white', borderRadius: '20px', padding: '25px', marginBottom: '20px', 
-              border: v.is_top ? '4px solid #7c3aed' : '1px solid #e2e8f0', 
+              border: v.is_top ? '4px solid #2563eb' : '1px solid #e2e8f0', 
               boxShadow: '0 6px 15px rgba(0,0,0,0.04)', display: 'block', width: '100%', boxSizing: 'border-box'
             }}>
-              <h3 style={{ color: '#5b21b6', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <h3 style={{ color: '#1e40af', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 Operativo in zona: <strong>{v.zona}</strong> — Roma</p>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#f5f3ff', color: '#7c3aed', padding: '4px 10px', borderRadius: '6px', border: '1px solid #ddd6fe' }}>🩺 CONSULTO SPECIALISTICO</span>
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#f5f3ff', color: '#7c3aed', padding: '4px 10px', borderRadius: '6px', border: '1px solid #ddd6fe' }}>📅 PRENOTAZIONE RAPIDA</span>
+                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#eff6ff', color: '#2563eb', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bfdbfe' }}>🩺 VISITA A DOMICILIO</span>
+                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#eff6ff', color: '#2563eb', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bfdbfe' }}>💉 INFERMIERE / PRELIEVI</span>
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#7c3aed', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#2563eb', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                 <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
               </div>
             </div>
           ))}
@@ -108,31 +107,32 @@ export default function VisiteSpecialisticheRoma() {
         {/* TESTO SEO - POSIZIONATO FUORI DAL LOOP */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
           <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            Cerchi un consulto medico professionale? In questa sezione trovi i contatti per le principali <strong>visite specialistiche a Roma</strong>. Dai controlli cardiologici alle visite dermatologiche, ginecologiche o ortopediche, puoi contattare direttamente i centri medici e gli studi privati della Capitale. Trova il tuo <strong>medico specialista a Roma</strong> filtrando per quartiere e prenota il tuo appuntamento, aggiornato a <strong>Gennaio 2026</strong>.
+            In questa pagina trovi i migliori professionisti per <strong>servizi a domicilio a Roma</strong>, specializzati in assistenza infermieristica, fisioterapia domiciliare e visite mediche specialistiche. 
+            Contatta direttamente gli operatori attivi nel tuo quartiere per richiedere interventi urgenti, medicazioni, prelievi del sangue o assistenza anziani a casa, aggiornato a <strong>Gennaio 2026</strong>.
           </p>
         </div>
 
         {/* CTA PROFESSIONISTI */}
         <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un Medico Specialista a Roma?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza la tua professionalità e ricevi contatti diretti da pazienti nella tua zona.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#7c3aed', color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Offri Servizi a Domicilio a Roma?</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua attività e raggiungi migliaia di pazienti che cercano assistenza sanitaria nella loro zona.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
         </div>
 
         {/* CROSS LINKING */}
         <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '40px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#5b21b6' }}>Principali Specialistiche:</h3>
+          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#1e40af' }}>Altre Specialistiche a Roma:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            <a href="/oculisti-roma" style={{ color: '#7c3aed', fontWeight: '700', textDecoration: 'none' }}>Oculisti</a>
-            <a href="/cardiologi-roma" style={{ color: '#7c3aed', fontWeight: '700', textDecoration: 'none' }}>Cardiologi</a>
-            <a href="/dermatologi-roma" style={{ color: '#7c3aed', fontWeight: '700', textDecoration: 'none' }}>Dermatologi</a>
-            <a href="/ortopedici-roma" style={{ color: '#7c3aed', fontWeight: '700', textDecoration: 'none' }}>Ortopedici</a>
+            <a href="/dentisti-roma" style={{ color: '#2563eb', fontWeight: '700', textDecoration: 'none' }}>Dentisti</a>
+            <a href="/infermieri-roma" style={{ color: '#2563eb', fontWeight: '700', textDecoration: 'none' }}>Infermieri</a>
+            <a href="/fisioterapisti-roma" style={{ color: '#2563eb', fontWeight: '700', textDecoration: 'none' }}>Fisioterapisti</a>
+            <a href="/diagnostica-roma" style={{ color: '#2563eb', fontWeight: '700', textDecoration: 'none' }}>Diagnostica</a>
           </div>
         </div>
 
         {/* FAQ */}
         <div style={{ paddingBottom: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#5b21b6' }}>Domande Frequenti</h3>
+          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#1e40af' }}>Domande Frequenti</h3>
           {schemas.faq?.mainEntity.slice(0, 3).map((item, i) => (
             <div key={i} style={{ marginBottom: '15px' }}>
               <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
