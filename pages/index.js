@@ -129,7 +129,7 @@ const eseguiRicerca = () => {
             <li><a href="/visite-specialistiche-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Specialisti</a></li>
             <li>
               <a href="/pubblica-annuncio" style={{ 
-                color: '#065f46', 
+                 color: '#2563eb',
                 fontWeight: 'bold', 
                 textDecoration: 'none',
                borderBottom: '2px solid #2563eb',
