@@ -144,7 +144,7 @@ export default function GinecologiRoma() {
 
       </main>
 
-      {/* FOOTER INTEGRALE ESATTO */}
+      {/* FOOTER INTEGRALE ESATTO - CON FOMO */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
@@ -172,6 +172,9 @@ export default function GinecologiRoma() {
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
                 <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
+              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
+                🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
+              </p>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
@@ -180,6 +183,12 @@ export default function GinecologiRoma() {
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
+              {/* BOX FOMO REINSERITO */}
+              <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
+                <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
+                  ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
+                </p>
+              </div>
             </div>
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
@@ -196,6 +205,3 @@ export default function GinecologiRoma() {
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
