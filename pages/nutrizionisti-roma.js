@@ -44,7 +44,7 @@ export default function NutrizionistiRoma() {
         )}
       </Head>
       
-      {/* BARRA SUPERIORE AGGIORNATA */}
+      {/* BARRA SUPERIORE */}
       <div style={{ backgroundColor: '#ea580c', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
         🍎 NUTRIZIONISTI E BIOLOGI NUTRIZIONISTI A ROMA — AGGIORNATI A GENNAIO 2026
       </div>
@@ -53,7 +53,7 @@ export default function NutrizionistiRoma() {
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
-        {/* LINK RITORNO */}
+        {/* BREADCRUMB */}
         <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
           <a href="/" style={{ color: '#ea580c', textDecoration: 'none' }}>Home</a>
           <span style={{ margin: '0 8px' }}>&gt;</span>
@@ -70,7 +70,7 @@ export default function NutrizionistiRoma() {
           </p>
         </div>
 
-        {/* QUARTIERI */}
+        {/* BOX QUARTIERI */}
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#9a3412' }}>Cerca per Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -105,7 +105,15 @@ export default function NutrizionistiRoma() {
           ))}
         </div>
 
-        {/* CTA NERA */}
+        {/* TESTO SEO - POSIZIONATO FUORI DAL LOOP */}
+        <div style={{ margin: '30px 0', padding: '0 10px' }}>
+          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+            In questa pagina trovi i migliori <strong>nutrizionisti a Roma</strong>, professionisti qualificati per l'elaborazione di piani alimentari, diete per sportivi e percorsi di educazione alimentare. 
+            Contatta direttamente gli studi o filtra per zona per trovare un <strong>biologo nutrizionista a Roma</strong> disponibile per visite conoscitive o controlli periodici, aggiornati a <strong>Gennaio 2026</strong>.
+          </p>
+        </div>
+
+        {/* CTA PROFESSIONISTI */}
         <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un Nutrizionista a Roma?</h2>
           <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza il tuo studio e ricevi contatti diretti da nuovi pazienti.</p>
@@ -139,8 +147,6 @@ export default function NutrizionistiRoma() {
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
-            
-            {/* COLONNA 1 */}
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
               <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
@@ -148,8 +154,6 @@ export default function NutrizionistiRoma() {
                 Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
               </p>
             </div>
-
-            {/* COLONNA 2 */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
               <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
@@ -167,12 +171,7 @@ export default function NutrizionistiRoma() {
                 <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
                 <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               </ul>
-              <p style={{ fontSize: '11px', color: '#718096', marginTop: '15px', fontStyle: 'italic', lineHeight: '1.4' }}>
-                🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
-              </p>
             </div>
-
-            {/* COLONNA 3 */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
@@ -186,8 +185,6 @@ export default function NutrizionistiRoma() {
                 </p>
               </div>
             </div>
-
-            {/* COLONNA 4 */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
@@ -197,7 +194,6 @@ export default function NutrizionistiRoma() {
                 <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
               </ul>
             </div>
-
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
             © 2026 ServiziSalute – Tutti i diritti riservati
