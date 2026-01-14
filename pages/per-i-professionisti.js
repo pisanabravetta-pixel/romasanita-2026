@@ -54,11 +54,11 @@ export default function PerIProfessionisti() {
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
         {/* BREADCRUMB (CORRETTO PER VERCEL) */}
-        <div style={{ margin: '10px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>{'>'}</span> 
-          <span style={{ color: '#065f46' }}>Per i Professionisti</span>
-        </div>
+       <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+  <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
+  <span style={{ margin: '0 8px' }}>&gt;</span>
+  <span style={{ color: '#065f46' }}>Area Professionisti</span>
+</div>
 
         {/* TITOLO MASTER H1 BOXATO (STILE DIAGNOSTICA) */}
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #10b981', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
