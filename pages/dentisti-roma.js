@@ -44,10 +44,9 @@ export default function DentistiRoma() {
         )}
       </Head>
       
-      <div style={{ backgroundColor: '#3182ce', color: 'white', padding: '12px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px', width: '100%' }}>
-  🦷 STUDI DENTISTICI E ODONTOIATRI A ROMA — AGGIORNATI A <span style={{ color: '#fff', textDecoration: 'underline' }}>GENNAIO 2026</span>
+     <div style={{ backgroundColor: '#000', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', fontSize: '16px', width: '100%' }}>
+  PROVA DI AGGIORNAMENTO — AGGIORNATI A GENNAIO 2026
 </div>
-
       <Navbar />
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
