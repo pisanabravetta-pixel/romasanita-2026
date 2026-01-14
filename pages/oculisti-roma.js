@@ -95,7 +95,13 @@ export default function OculistiRoma() {
                 <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#eff6ff', color: '#1e40af', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bfdbfe' }}>👁️ VISITA OCULISTICA</span>
                 <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#eff6ff', color: '#1e40af', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bfdbfe' }}>🔬 ESAME FONDO OCULARE</span>
               </div>
-
+{/* MINI TESTO SEO DOPO ANNUNCI OCULISTI */}
+<div style={{ margin: '30px 0', padding: '0 10px' }}>
+  <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+    In questa pagina trovi i migliori <strong>oculisti a Roma</strong>, specializzati in chirurgia refrattiva, cura del glaucoma e visite pediatriche. 
+    Contatta direttamente i professionisti del tuo quartiere o filtra per zona per trovare un <strong>oculista a Roma</strong> disponibile per esami della vista e diagnostica avanzata, aggiornato a <strong>Gennaio 2026</strong>.
+  </p>
+</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e40af', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                 <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
