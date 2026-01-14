@@ -122,92 +122,88 @@ const eseguiRicerca = () => {
 </div>
         </div>
       </header>
-{/* HERO SECTION - RESTYLING VERDE PROFESSIONALE */}
-<section className="hero" style={{ backgroundColor: '#f0fdf4', padding: '50px 0', borderBottom: '1px solid #dcfce7' }}>
-  <div className="container">
-    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '36px', marginBottom: '10px' }}>
-      Trova servizi sanitari a Roma, vicino a te
+{/* HERO SECTION - HOME PAGE BICOLORE (VERDE & BLU) */}
+<section className="hero" style={{ backgroundColor: '#f0fdf4', padding: '60px 0', borderBottom: '1px solid #dcfce7' }}>
+  <div className="container" style={{ textAlign: 'center' }}>
+    
+    {/* TITOLO CON LOGO BICOLORE */}
+    <h1 style={{ fontWeight: '900', fontSize: '42px', marginBottom: '15px', lineHeight: '1.2' }}>
+      Trova con <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span> <br />
+      lo specialista a Roma vicino a te
     </h1>
-    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
-      Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto
+    
+    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '19px' }}>
+      Farmacie, dentisti, diagnostica e visite specialistiche. Aggiornato 2026.
     </p>
 
+    {/* BOX DI RICERCA CON BORDO VERDE ISTITUZIONALE */}
     <div className="search-box-container" style={{ 
       backgroundColor: 'white', 
-      padding: '20px', 
-      borderRadius: '20px', 
-      boxShadow: '0 15px 30px -5px rgba(6, 95, 70, 0.1)', 
-      border: '1px solid #e2e8f0',
+      padding: '25px', 
+      borderRadius: '24px', 
+      boxShadow: '0 20px 25px -5px rgba(6, 95, 70, 0.1)', 
+      border: '2px solid #065f46', // Bordo verde scuro per richiamare la top bar
       display: 'flex',
       flexWrap: 'wrap',
       gap: '15px',
       justifyContent: 'center',
-      alignItems: 'flex-end'
+      alignItems: 'flex-end',
+      maxWidth: '900px',
+      margin: '0 auto'
     }}>
       <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
-        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>COSA CERCHI</label>
+        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', textTransform: 'uppercase' }}>Cosa cerchi</label>
         <input 
           type="text" 
           placeholder="Es: Pulizia denti, Oculista..." 
           value={ricerca}
           onChange={(e) => setRicerca(e.target.value)} 
-          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+          style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '16px' }}
         />
       </div>
       
       <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
-        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>ZONA / QUARTIERE</label>
+        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', textTransform: 'uppercase' }}>Quartiere</label>
         <select 
           value={zonaScelta} 
           onChange={(e) => setZonaScelta(e.target.value)}
-          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}
+          style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '16px' }}
         >
           <option>Tutta Roma</option>
           {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
         </select>
       </div>
 
-      <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
-        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>CATEGORIA</label>
-        <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}>
-          <option>Tutte le categorie</option>
-          <option>Farmacie</option>
-          <option>Dentisti</option>
-          <option>Diagnostica</option>
-          <option>Visite Specialistiche</option>
-          <option>Servizi a Domicilio</option>
-        </select>
-      </div>
-      
       <button 
         className="btn-search" 
         onClick={eseguiRicerca} 
         style={{ 
           backgroundColor: '#065f46', 
           color: 'white', 
-          padding: '12px 30px', 
-          borderRadius: '10px', 
-          fontWeight: '800', 
+          padding: '14px 40px', 
+          borderRadius: '12px', 
+          fontWeight: '900', 
           border: 'none', 
           cursor: 'pointer',
-          height: '45px'
+          fontSize: '16px',
+          boxShadow: '0 4px 6px rgba(6, 95, 70, 0.2)'
         }}
       >
         CERCA
       </button>
     </div>
 
-    {/* LINK STRATEGICO ALLA PAGINA HUB */}
-    <div style={{ marginTop: '30px' }}>
+    {/* LINK ALLA PAGINA HUB (SERVIZI SANITARI ROMA) */}
+    <div style={{ marginTop: '35px' }}>
       <a href="/servizi-sanitari-roma" style={{ 
-        color: '#059669', 
+        color: '#2563eb', // Qui usiamo il Blu per richiamare la seconda parte del logo
         textDecoration: 'none', 
         fontWeight: '800', 
-        fontSize: '15px',
-        borderBottom: '2px solid #10b981',
-        paddingBottom: '2px'
+        fontSize: '16px',
+        borderBottom: '2px solid #2563eb',
+        paddingBottom: '3px'
       }}>
-        👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
+        📍 SCOPRI TUTTI I SERVIZI SANITARI A ROMA
       </a>
     </div>
   </div>
