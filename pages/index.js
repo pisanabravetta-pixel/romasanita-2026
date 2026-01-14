@@ -122,44 +122,96 @@ const eseguiRicerca = () => {
 </div>
         </div>
       </header>
-{/* HERO SECTION */}
-      <section className="hero" style={{ backgroundColor: '#d0e3ff', paddingBottom: '50px' }}>
-        <div className="container">
-          <h1>Trova servizi sanitari a Roma, vicino a te</h1>
-          <p style={{ marginBottom: '40px' }}>Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto</p>
+{/* HERO SECTION - RESTYLING VERDE PROFESSIONALE */}
+<section className="hero" style={{ backgroundColor: '#f0fdf4', padding: '50px 0', borderBottom: '1px solid #dcfce7' }}>
+  <div className="container">
+    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '36px', marginBottom: '10px' }}>
+      Trova servizi sanitari a Roma, vicino a te
+    </h1>
+    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
+      Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto
+    </p>
 
-          <div className="search-box-container">
-            <div className="search-input-group">
-              <label>COSA CERCHI</label>
-             <input 
-  type="text" 
-  placeholder="Es: Pulizia denti, Tachipirina..." 
-  value={ricerca}
-  onChange={(e) => setRicerca(e.target.value)} 
-/>
-            </div>
-            <div className="search-input-group">
-  <label>ZONA / QUARTIERE</label>
-  <select value={zonaScelta} onChange={(e) => setZonaScelta(e.target.value)}>
-    <option>Tutta Roma</option>
-    {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
-  </select>
-</div>
-            <div className="search-input-group">
-              <label>CATEGORIA</label>
-              <select>
-                <option>Tutte le categorie</option>
-                <option>Farmacie</option>
-                <option>Dentisti</option>
-                <option>Diagnostica</option>
-                <option>Visite Specialistiche</option>
-                <option>Servizi a Domicilio</option>
-              </select>
-            </div>
-           <button className="btn-search" onClick={eseguiRicerca}>CERCA</button>
-          </div>
-        </div>
-      </section>
+    <div className="search-box-container" style={{ 
+      backgroundColor: 'white', 
+      padding: '20px', 
+      borderRadius: '20px', 
+      boxShadow: '0 15px 30px -5px rgba(6, 95, 70, 0.1)', 
+      border: '1px solid #e2e8f0',
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '15px',
+      justifyContent: 'center',
+      alignItems: 'flex-end'
+    }}>
+      <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
+        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>COSA CERCHI</label>
+        <input 
+          type="text" 
+          placeholder="Es: Pulizia denti, Oculista..." 
+          value={ricerca}
+          onChange={(e) => setRicerca(e.target.value)} 
+          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}
+        />
+      </div>
+      
+      <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
+        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>ZONA / QUARTIERE</label>
+        <select 
+          value={zonaScelta} 
+          onChange={(e) => setZonaScelta(e.target.value)}
+          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}
+        >
+          <option>Tutta Roma</option>
+          {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
+        </select>
+      </div>
+
+      <div className="search-input-group" style={{ textAlign: 'left', flex: '1', minWidth: '200px' }}>
+        <label style={{ display: 'block', fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px' }}>CATEGORIA</label>
+        <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}>
+          <option>Tutte le categorie</option>
+          <option>Farmacie</option>
+          <option>Dentisti</option>
+          <option>Diagnostica</option>
+          <option>Visite Specialistiche</option>
+          <option>Servizi a Domicilio</option>
+        </select>
+      </div>
+      
+      <button 
+        className="btn-search" 
+        onClick={eseguiRicerca} 
+        style={{ 
+          backgroundColor: '#065f46', 
+          color: 'white', 
+          padding: '12px 30px', 
+          borderRadius: '10px', 
+          fontWeight: '800', 
+          border: 'none', 
+          cursor: 'pointer',
+          height: '45px'
+        }}
+      >
+        CERCA
+      </button>
+    </div>
+
+    {/* LINK STRATEGICO ALLA PAGINA HUB */}
+    <div style={{ marginTop: '30px' }}>
+      <a href="/servizi-sanitari-roma" style={{ 
+        color: '#059669', 
+        textDecoration: 'none', 
+        fontWeight: '800', 
+        fontSize: '15px',
+        borderBottom: '2px solid #10b981',
+        paddingBottom: '2px'
+      }}>
+        👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
+      </a>
+    </div>
+  </div>
+</section>
      <div className="container" style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}>
   <p style={{ fontSize: '14px', color: '#1e3a8a', fontStyle: 'italic' }}>
     🔹 <strong>Focus Roma:</strong> Oltre 500 pazienti hanno cercato uno specialista nelle ultime 24 ore
