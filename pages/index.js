@@ -99,27 +99,45 @@ const eseguiRicerca = () => {
         />
         {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head> 
-     {/* TOP BAR */}
-      <div className="top-bar">
+    {/* 1. TOP BAR AGGIORNATA (VERDE) */}
+      <div style={{ 
+        backgroundColor: '#065f46', 
+        color: 'white', 
+        padding: '10px 0', 
+        textAlign: 'center', 
+        fontSize: '12px', 
+        fontWeight: '800', 
+        textTransform: 'uppercase',
+        letterSpacing: '1px'
+      }}>
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
-      {/* HEADER */}
-      <header className="header">
-        <div className="container">
-          <div style={{fontSize: '24px', fontWeight: '800', color: '#0070f3'}}>ServiziSalute</div>
-        <ul className="nav-links">
-  <li><a href="/farmacie-roma">Farmacie</a></li>
-  <li><a href="/dentisti-roma">Dentisti</a></li>
-  <li><a href="/visite-specialistiche-roma">Specialisti</a></li>
-  {/* Questo link serve a far iscrivere nuovi medici */}
-  <li><a href="/pubblica-annuncio" style={{color: '#0070f3', fontWeight: 'bold', borderBottom: '2px solid #0070f3'}}>Sei un Medico?</a></li>
-</ul>
-          <div className="nav-right">
-  {/* Modificato qui: rimosso # e messo /login */}
-  <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '500'}}>Accedi</a>
-  <a href="/pubblica-annuncio" className="btn-search" style={{padding: '10px 22px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px'}}>Pubblica annuncio</a>
-</div>
+      {/* 2. HEADER AGGIORNATO (LOGO BICOLORE E MENU) */}
+      <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          
+          {/* NOME BICOLORE */}
+          <a href="/" style={{ textDecoration: 'none', fontSize: '24px', fontWeight: '900' }}>
+            <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
+          </a>
+
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px' }}>TUTTI I SERVIZI</a>
+            
+            {/* LINK LOGIN DISCRETO */}
+            <a href="/login" style={{textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '13px'}}>ACCEDI</a>
+            
+            <a href="/pubblica-annuncio" style={{ 
+              backgroundColor: '#065f46', 
+              color: 'white', 
+              padding: '10px 20px', 
+              borderRadius: '12px', 
+              textDecoration: 'none', 
+              fontWeight: '800', 
+              fontSize: '12px' 
+            }}>PUBBLICA ANNUNCIO</a>
+          </div>
         </div>
       </header>
 {/* HERO SECTION - HOME PAGE BICOLORE (VERDE & BLU) */}
