@@ -121,14 +121,20 @@ export default function ServiziSanitariRoma() {
           </div>
         </div>
 
-        {/* FAQ HUB */}
+        {/* FAQ HUB - 3 DOMANDE COMPLETE */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>FAQ Servizi Roma</h3>
+          
           <div style={{ marginBottom: '15px' }}>
-            <p><strong>1. Come trovo un servizio sanitario vicino a me?</strong> — Puoi utilizzare la sezione "Cerca per Quartiere" per filtrare i professionisti attivi nella tua zona specifica di Roma.</p>
+            <p><strong>1. Come trovo un servizio sanitario vicino a me?</strong> — Puoi utilizzare la sezione "Cerca per Quartiere" per filtrare istantaneamente i professionisti e i centri medici attivi nella tua zona specifica di Roma.</p>
           </div>
+          
           <div style={{ marginBottom: '15px' }}>
-            <p><strong>2. Gli annunci sono verificati?</strong> — Tutti gli specialisti presenti su ServiziSalute Roma vengono approvati manualmente per garantire la massima affidabilità delle informazioni.</p>
+            <p><strong>2. Gli annunci sono verificati?</strong> — Sì, tutti i profili degli specialisti e delle strutture presenti su ServiziSalute Roma vengono controllati manualmente per garantire l'affidabilità dei recapiti e delle informazioni fornite.</p>
+          </div>
+
+          <div style={{ marginBottom: '15px' }}>
+            <p><strong>3. Come posso prenotare una visita o un servizio?</strong> — Basta cliccare sul tasto "Contatta" o "Chiama" presente in ogni annuncio per parlare direttamente con la struttura o il medico e fissare il tuo appuntamento senza intermediari.</p>
           </div>
         </div>
 
