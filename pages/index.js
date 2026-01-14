@@ -264,7 +264,7 @@ const eseguiRicerca = () => {
         <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
           
           {/* BOX 1 - ANNUNCI */}
-          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+          <div style={{ backgroundColor: '#fff', border:'2px solid #065f46', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
             <div style={{ fontSize: '24px' }}>📢</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+1.500</div>
@@ -273,7 +273,7 @@ const eseguiRicerca = () => {
           </div>
 
           {/* BOX 2 - PROFESSIONISTI (CORRETTO) */}
-          <div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+          <div style={{ backgroundColor: '#fff', border:'2px solid #065f46', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
             <div style={{ fontSize: '24px' }}>👨‍⚕️</div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+850</div>
@@ -282,7 +282,7 @@ const eseguiRicerca = () => {
           </div>
 
          {/* BOX 3 - VISITE (AGGIORNATO) */}
-<div style={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
+<div style={{ backgroundColor: '#fff', border:'2px solid #065f46',  padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
   <div style={{ fontSize: '24px' }}>📈</div>
   <div style={{ textAlign: 'left' }}>
     <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+15K</div>
