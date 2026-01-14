@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 
-export default function PerIProfessionisti() {
+export default function PerIProfessionistiRoma() {
   const schemas = {
     faq: {
       "@context": "https://schema.org",
@@ -10,26 +10,26 @@ export default function PerIProfessionisti() {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Quanto costa pubblicare un annuncio?",
+          "name": "Quanto costa pubblicare un annuncio su ServiziSalute?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "La pubblicazione del profilo standard su ServiziSalute Roma è totalmente gratuita e non prevede commissioni sulle visite ricevute."
+            "text": "La pubblicazione del profilo standard è totalmente gratuita. Non applichiamo costi di iscrizione né commissioni sulle visite che riceverai dai pazienti."
           }
         },
         {
           "@type": "Question",
-          "name": "Come ricevo i contatti dai pazienti?",
+          "name": "Come avviene il contatto con il paziente?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "I pazienti ti contatteranno direttamente tramite i pulsanti Chiama o WhatsApp presenti nel tuo annuncio, senza intermediari."
+            "text": "Il contatto è diretto. Il paziente utilizza i tasti Chiama o WhatsApp per parlare direttamente con te o la tua segreteria, senza intermediari."
           }
         },
         {
           "@type": "Question",
-          "name": "Posso modificare il mio annuncio?",
+          "name": "Il portale è specifico per Roma?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Certamente. Una volta pubblicato, puoi richiedere la modifica o l'aggiornamento dei tuoi dati contattando il nostro supporto tecnico."
+            "text": "Sì, il nostro portale è focalizzato esclusivamente sui quartieri di Roma, permettendoti di raggiungere pazienti che vivono realmente vicino al tuo studio."
           }
         }
       ]
@@ -40,7 +40,7 @@ export default function PerIProfessionisti() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
         <title>Per i Professionisti della Salute a Roma | ServiziSalute Business</title>
-        <meta name="description" content="Sei un medico o un professionista a Roma? Aumenta la tua visibilità locale e ricevi contatti diretti dai pazienti del tuo quartiere senza commissioni." />
+        <meta name="description" content="Sei un medico o uno specialista a Roma? Aumenta la tua visibilità locale e ricevi contatti diretti dai pazienti del tuo quartiere. Aggiornato 2026." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
       
@@ -60,57 +60,32 @@ export default function PerIProfessionisti() {
           <span style={{ color: '#065f46' }}>Per i Professionisti</span>
         </div>
 
-        {/* TITOLO MASTER H1 BOXATO */}
+        {/* TITOLO MASTER H1 BOXATO (STILE DIAGNOSTICA ROMA) */}
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #10b981', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#065f46', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Sei un Professionista a Roma?
           </h1>
           <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Cresci con ServiziSalute: Visibilità <span style={{ color: '#10b981' }}>Gratuita e Diretta</span>
+            Visibilità Locale <span style={{ color: '#10b981' }}>Gratuita e Diretta</span> nel tuo quartiere
           </p>
         </div>
 
-        {/* SEZIONE COMPARATIVA ADATTATA */}
-        <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '30px' }}>
-          <h2 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>Perché scegliere noi?</h2>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-              <thead>
-                <tr style={{ textAlign: 'left', borderBottom: '2px solid #f1f5f9' }}>
-                  <th style={{ padding: '10px' }}>Vantaggio</th>
-                  <th style={{ padding: '10px' }}>ServiziSalute Roma</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                  <td style={{ padding: '10px' }}>Costi Iscrizione</td>
-                  <td style={{ padding: '10px', color: '#059669', fontWeight: 'bold' }}>GRATIS</td>
-                </tr>
-                <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                  <td style={{ padding: '10px' }}>Commissioni Visita</td>
-                  <td style={{ padding: '10px', color: '#059669', fontWeight: 'bold' }}>ZERO</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: '10px' }}>Contatto Paziente</td>
-                  <td style={{ padding: '10px', color: '#059669', fontWeight: 'bold' }}>DIRETTO (WA/TEL)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        {/* CONTENUTO INFORMATIVO */}
+        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '30px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '20px', color: '#065f46' }}>Perché scegliere ServiziSalute Roma:</h2>
+          <ul style={{ lineHeight: '2', fontSize: '16px', color: '#475569', paddingLeft: '20px' }}>
+            <li>✅ <strong>Zero Intermediari:</strong> Il paziente chiama te, non noi.</li>
+            <li>✅ <strong>Zero Commissioni:</strong> Non tratteniamo nulla sulle tue parcelle.</li>
+            <li>✅ <strong>Focus Territoriale:</strong> Compari nelle ricerche per il tuo quartiere (Prati, Eur, ecc.).</li>
+            <li>✅ <strong>SEO Pronta:</strong> Pensiamo noi a farti trovare su Google.</li>
+          </ul>
         </div>
 
-        {/* TESTO SEO PROFESSIONISTI */}
-        <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            Unisciti alla più grande rete di <strong>servizi sanitari a Roma</strong>. Se sei un medico, un infermiere, un fisioterapista o gestisci un centro diagnostico, ServiziSalute ti permette di apparire nelle ricerche locali dei pazienti nel tuo quartiere. Ottimizziamo il tuo profilo per il posizionamento su Google e facilitiamo il contatto diretto senza intermediari, aggiornato a <strong>Gennaio 2026</strong>.
-          </p>
-        </div>
-
-        {/* CTA PRINCIPALE */}
+        {/* CTA PROFESSIONISTI */}
         <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Pronto a ricevere nuovi contatti?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>La pubblicazione è immediata e non richiede carta di credito.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '15px 30px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>PUBBLICA ORA GRATIS</a>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Inizia a ricevere nuovi contatti oggi</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>La pubblicazione del profilo è rapida e totalmente gratuita.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#10b981', color: 'white', padding: '15px 35px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>PUBBLICA IL TUO ANNUNCIO</a>
         </div>
 
         {/* FAQ (3 DOMANDE) */}
@@ -126,7 +101,7 @@ export default function PerIProfessionisti() {
 
       </main>
 
-      {/* FOOTER MASTER INTEGRALE A 4 COLONNE */}
+      {/* FOOTER MASTER INTEGRALE A 4 COLONNE (STRICTLY REQUIRED) */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
