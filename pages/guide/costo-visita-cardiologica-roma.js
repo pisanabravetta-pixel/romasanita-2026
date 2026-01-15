@@ -1,44 +1,82 @@
 import React from 'react';
 import Head from 'next/head';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 export default function GuidaCardiologia() {
   return (
-    <article style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', fontFamily: 'sans-serif', lineHeight: '1.8', color: '#333' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
         <title>Costo Visita Cardiologica Roma: Tariffe Private 2026</title>
+        <meta name="description" content="Guida completa ai prezzi per una visita cardiologica a Roma. Scopri i costi medi di ECG, ecocardiogramma e controlli specialistici." />
       </Head>
 
-      <div style={{ backgroundColor: '#fff4f4', border: '1px solid #feb2b2', padding: '15px', borderRadius: '8px', marginBottom: '30px', fontSize: '14px', color: '#9b2c2c' }}>
-        <strong>AVVERTENZA LEGALE:</strong> Questo contenuto analizza esclusivamente i costi medi delle prestazioni. <strong>Non è un consulto medico.</strong> In caso di sintomi o necessità cliniche, contattare immediatamente un medico o il 118.
+      <Navbar />
+
+      {/* BOX IMMAGINE - SEO OPTIMIZED */}
+      <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
+        <div style={{ 
+          width: '100%', 
+          height: '400px', 
+          borderRadius: '24px', 
+          overflow: 'hidden',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+        }}>
+          <img 
+            src="/images/costo-visita-cardiologica-roma.png" 
+            alt="Medico cardiologo esegue controllo del cuore e visita cardiologica specialistica a Roma" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
+          />
+        </div>
       </div>
 
-      <header style={{ marginBottom: '40px' }}>
-        <h1 style={{ color: '#1e3a8a', fontSize: '32px' }}>Costi Visita Cardiologica a Roma: Guida ai Prezzi</h1>
-        <p style={{ color: '#666' }}>Rilevazione tariffe specialisti privati - Gennaio 2026</p>
-      </header>
+      <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '0 auto', padding: '0 20px', width: '100%' }}>
+        {/* BREADCRUMB */}
+        <div style={{ marginBottom: '20px', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: '#0891b2', textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <a href="/guide" style={{ color: '#0891b2', textDecoration: 'none' }}>Guide</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <span style={{ color: '#164e63' }}>Costo Cardiologia</span>
+        </div>
 
-      <section style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '10px', borderLeft: '5px solid #2563eb', marginBottom: '30px' }}>
-        <p>Una visita cardiologica privata a Roma ha un prezzo medio che oscilla tra <strong>80€ e 150€</strong>, a seconda della complessità del controllo.</p>
-      </section>
+        <article>
+          <div style={{ backgroundColor: '#fff4f4', border: '1px solid #feb2b2', padding: '15px', borderRadius: '15px', marginBottom: '30px', fontSize: '14px', color: '#9b2c2c' }}>
+            <strong>AVVERTENZA LEGALE:</strong> Analisi dei costi medi. <strong>Non è un consulto medico.</strong> In caso di emergenza contattare il 118.
+          </div>
 
-      <h2 style={{ color: '#1e3a8a' }}>Cosa determina il costo finale?</h2>
-      <ul>
-        <li>Esecuzione contestuale dell'elettrocardiogramma (ECG).</li>
-        <li>Livello di specializzazione del cardiologo.</li>
-        <li>Zona della città (centro vs hinterland).</li>
-      </ul>
+          <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
+            Costi Visita Cardiologica a Roma: Guida ai Prezzi 2026
+          </h1>
 
-      <div style={{ marginTop: '40px', padding: '30px', backgroundColor: '#eff6ff', borderRadius: '15px', textAlign: 'center' }}>
-        <h3>Specialisti in Cardiologia a Roma</h3>
-        <a href="/visite-specialistiche-roma" style={{ display: 'inline-block', padding: '12px 25px', backgroundColor: '#2563eb', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>
-          Trova uno studio vicino a te
-        </a>
-      </div>
+          <div style={{ backgroundColor: '#ecfeff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #0891b2', marginBottom: '35px' }}>
+            <p style={{ margin: 0, color: '#164e63', fontSize: '18px', lineHeight: '1.6' }}>
+              Una visita cardiologica privata a Roma ha un prezzo medio tra <strong>80€ e 150€</strong>. Scopriamo cosa incide sulla tariffa finale.
+            </p>
+          </div>
 
-      <footer style={{ marginTop: '60px', paddingTop: '20px', borderTop: '2px solid #eee', fontSize: '12px', color: '#666' }}>
-        <p><strong>Disclaimer:</strong> ServiziSalute Roma non si assume responsabilità per le tariffe applicate dai singoli professionisti o per l'esito delle visite.</p>
-        <a href="/" style={{ color: '#1e3a8a', textDecoration: 'none' }}>← Torna alla Home</a>
-      </footer>
-    </article>
+          <div style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
+            <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800' }}>Cosa determina il costo?</h2>
+            <p>Il prezzo può variare in base ad alcuni fattori chiave:</p>
+            <ul style={{ paddingLeft: '20px' }}>
+              <li><strong>Elettrocardiogramma (ECG):</strong> Spesso incluso nella visita (100-120€ totali).</li>
+              <li><strong>Ecocardiogramma:</strong> Se richiesto, il costo totale può salire a 150-200€.</li>
+              <li><strong>Zona di Roma:</strong> Gli studi in centro (Prati, Parioli) tendono ad avere tariffe leggermente superiori rispetto alla periferia.</li>
+            </ul>
+          </div>
+
+          {/* CTA BOX */}
+          <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#164e63', borderRadius: '20px', color: 'white', textAlign: 'center' }}>
+            <h3 style={{ margin: '0 0 10px 0' }}>Cerchi un Cardiologo a Roma?</h3>
+            <p style={{ opacity: 0.8, marginBottom: '20px' }}>Trova i migliori specialisti nei quartieri della Capitale.</p>
+            <a href="/cardiologi-roma" style={{ color: 'white', fontWeight: '800', textDecoration: 'none', border: '2px solid white', padding: '10px 20px', borderRadius: '10px' }}>
+              VEDI CARDIOLOGI A ROMA
+            </a>
+          </div>
+        </article>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
