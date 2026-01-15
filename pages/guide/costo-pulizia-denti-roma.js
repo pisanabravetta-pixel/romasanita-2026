@@ -18,7 +18,7 @@ export default function GuidaCostoDenti() {
         <div style={{ width: '100%', height: '400px', overflow: 'hidden', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img 
             src="/images/costo-pulizia-denti-roma.png" 
-            alt="Costo pulizia denti Roma" 
+             alt="Seduta di igiene orale professionale e pulizia denti presso studio dentistico moderno a Roma"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
           />
         </div>
