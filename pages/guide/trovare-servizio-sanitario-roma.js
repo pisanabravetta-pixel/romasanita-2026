@@ -26,7 +26,7 @@ export default function GuidaRicercaSanitaria() {
         }}>
           <img 
             src="/images/guida-roma-salute.png" 
-            alt="Guida Servizi Sanitari Roma" 
+            alt="Mappa concettuale dei servizi sanitari e studi medici nei quartieri di Roma" 
             style={{ 
               width: '100%', 
               height: '100%', 
