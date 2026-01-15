@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Footer from '../components/Footer';
 
 export default function Disclaimer() {
   return (
@@ -73,10 +74,7 @@ export default function Disclaimer() {
         </div>
       </main>
 
-      <footer style={{ textAlign: 'center', padding: '60px 20px', fontSize: '13px', color: '#94a3b8' }}>
-        <p>Versione 1.0 — Ultimo aggiornamento: 6 Gennaio 2026</p>
-        <p style={{ marginTop: '10px' }}>ServiziSalute Roma — Portale Indipendente</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
