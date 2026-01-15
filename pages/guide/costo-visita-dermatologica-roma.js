@@ -1,5 +1,5 @@
 import React from 'react';
-import Head from 'next/head';
+import Head from 'next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
@@ -13,12 +13,11 @@ export default function GuidaDermatologia() {
 
       <Navbar />
 
-      {/* BOX IMMAGINE OTTIMIZZATO - NON TAGLIA IL SOGGETTO */}
+      {/* BOX IMMAGINE OTTIMIZZATO - A TUTTA LARGHEZZA */}
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ 
           width: '100%', 
           height: '400px', 
-          backgroundColor: '#f8fafc', // Sfondo neutro se l'immagine è più stretta
           borderRadius: '24px', 
           overflow: 'hidden',
           boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
@@ -28,12 +27,12 @@ export default function GuidaDermatologia() {
         }}>
           <img 
             src="/images/costo-visita-dermatologica-roma.png" 
-            alt="Dermatologo Roma"
+            alt="Dermatologia a Roma"
             style={{ 
               width: '100%', 
               height: '100%', 
-              objectFit: 'contain', // <--- Fondamentale: mostra tutta l'immagine senza tagliarla
-              backgroundColor: '#f8fafc' 
+              objectFit: 'cover', // <--- Torna a coprire tutta la larghezza
+              objectPosition: 'center center' // Assicura che il centro dell'immagine sia il focus
             }} 
           />
         </div>
