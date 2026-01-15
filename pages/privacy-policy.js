@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Footer from '../components/Footer';
 
 export default function PrivacyPolicy() {
   return (
@@ -58,9 +59,7 @@ export default function PrivacyPolicy() {
           </ul>
         </section>
 
-        <footer style={{ marginTop: '60px', textAlign: 'center', fontSize: '13px', color: '#94a3b8' }}>
-          © 2026 ServiziSalute – Portale Indipendente per la Sanità di Roma
-        </footer>
+       <Footer />
       </main>
     </div>
   );
