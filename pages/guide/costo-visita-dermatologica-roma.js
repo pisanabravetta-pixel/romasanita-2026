@@ -14,7 +14,7 @@ export default function GuidaDermatologia() {
 
       <Navbar />
 
-      {/* BOX IMMAGINE - USIAMO LA TUA FOTO NOMINATA CORRETTAMENTE */}
+      {/* BOX IMMAGINE - NOME FILE RIPRISTINATO */}
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ 
           width: '100%', 
@@ -24,13 +24,12 @@ export default function GuidaDermatologia() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
         }}>
           <img 
-            src="/images/visita-dermatologica-roma.png" 
+            src="/images/costo-visita-dermatologica-roma.png" 
             alt="Dermatologa a Roma mentre prescrive una terapia durante una visita specialistica" 
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
           />
         </div>
       </div>
-
       <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '0 auto', padding: '0 20px', width: '100%' }}>
         <div style={{ marginBottom: '20px', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
           <a href="/" style={{ color: '#0891b2', textDecoration: 'none' }}>Home</a>
