@@ -72,18 +72,14 @@ export default function GuidaRicercaSanitaria() {
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             
-            {/* COLONNA 1: DESCRIZIONE + DISCLAIMER OBBLIGATORIO */}
-            <div>
-              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6', marginBottom: '20px' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
-              </p>
-              {/* DISCLAIMER LEGALE */}
-              <p style={{ fontSize: '12px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
-                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
-              </p>
-            </div>
+            {/* COLONNA 1: DESCRIZIONE PULITA */}
+<div>
+  <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+  <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+    ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+    Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+  </p>
+</div>
 
             {/* COLONNA 2: UTENTI */}
             <div>
@@ -120,16 +116,20 @@ export default function GuidaRicercaSanitaria() {
               </div>
             </div>
 
-            {/* COLONNA 4: LEGALE */}
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
-                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
-                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
-              </ul>
-            </div>
+            {/* COLONNA 4: LEGALE + DISCLAIMER (COME IN HOME) */}
+<div>
+  <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+  <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+    <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+    <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+    <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+    <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+  </ul>
+  {/* DISCLAIMER SOTTO I LINK LEGALI */}
+  <p style={{ fontSize: '11px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
+    ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+  </p>
+</div>
 
           </div>
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
