@@ -133,21 +133,21 @@ export default function PerIProfessionisti() {
 
       </main>
 
-     {/* FOOTER INTEGRALE - COPIA ESATTA HOME / DIAGNOSTICA */}
+     {/* FOOTER MASTER INTEGRALE E IDENTICO ALLA HOME CON DISCLAIMER */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             
-            {/* COLONNA 1: DESCRIZIONE */}
-            <div>
-              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
-                ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
-                Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
-              </p>
-            </div>
+            {/* COLONNA 1: DESCRIZIONE PULITA */}
+<div>
+  <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+  <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+    ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+    Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+  </p>
+</div>
 
-            {/* COLONNA 2: UTENTI (COMPLETA) */}
+            {/* COLONNA 2: UTENTI */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
               <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
@@ -167,7 +167,7 @@ export default function PerIProfessionisti() {
               </ul>
             </div>
 
-            {/* COLONNA 3: PROFESSIONISTI + BOX AD PICCOLO */}
+            {/* COLONNA 3: PROFESSIONISTI */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
@@ -175,7 +175,6 @@ export default function PerIProfessionisti() {
                 <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
                 <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
               </ul>
-              {/* BOX AD PICCOLO COORDINATO */}
               <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
                 <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
                   ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
@@ -183,20 +182,22 @@ export default function PerIProfessionisti() {
               </div>
             </div>
 
-            {/* COLONNA 4: LEGALE */}
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
-                <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
-                <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
-                <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
-              </ul>
-            </div>
+            {/* COLONNA 4: LEGALE + DISCLAIMER (COME IN HOME) */}
+<div>
+  <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+  <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5', marginBottom: '15px' }}>
+    <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+    <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+    <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+    <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+  </ul>
+  {/* DISCLAIMER SOTTO I LINK LEGALI */}
+  <p style={{ fontSize: '11px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
+    ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+  </p>
+</div>
 
           </div>
-
-          {/* COPYRIGHT */}
           <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
             © 2026 ServiziSalute – Tutti i diritti riservati
           </div>
