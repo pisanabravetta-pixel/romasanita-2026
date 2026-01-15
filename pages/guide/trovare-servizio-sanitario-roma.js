@@ -12,7 +12,18 @@ export default function GuidaRicercaSanitaria() {
         {/* QUESTO TAG COMUNICA A GOOGLE DI MOSTRARE L'IMMAGINE GRANDE IN DISCOVER */}
         <meta name="robots" content="max-image-preview:large" />
       </Head>
-
+<div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
+  <img 
+    src="/images/guida-roma-salute.png" 
+    alt="Guida Servizi Sanitari Roma" 
+    style={{ 
+      width: '100%', 
+      height: 'auto', 
+      borderRadius: '24px', 
+      boxShadow: '0 10px 30px rgba(0,0,0,0.1)' 
+    }} 
+  />
+</div>
       <Navbar />
 
       <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '40px auto', padding: '0 20px', width: '100%' }}>
