@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Footer from '../components/Footer';
 
 export default function CookiePolicy() {
   return (
@@ -58,9 +59,7 @@ export default function CookiePolicy() {
           </div>
         </section>
 
-        <footer style={{ marginTop: '60px', textAlign: 'center', fontSize: '12px', color: '#94a3b8' }}>
-          © 2026 ServiziSalute Roma – Portale per la Sanità Professionale
-        </footer>
+        <Footer />
       </main>
     </div>
   );
