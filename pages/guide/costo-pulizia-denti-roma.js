@@ -1,44 +1,77 @@
 import React from 'react';
 import Head from 'next/head';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
-export default function GuidaDentista() {
+export default function GuidaCostoDenti() {
   return (
-    <article style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', fontFamily: 'sans-serif', lineHeight: '1.8', color: '#333' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Costo Pulizia Denti Roma: Prezzi Medi e Tariffe 2026</title>
+        <title>Quanto costa una pulizia dei denti a Roma? | Prezzi Medi 2026</title>
+        <meta name="description" content="Scopri i prezzi medi per l'igiene dentale professionale nei vari quartieri di Roma. Guida completa ai costi e alla scelta del dentista." />
+        <meta name="robots" content="max-image-preview:large" />
       </Head>
 
-      <div style={{ backgroundColor: '#fff4f4', border: '1px solid #feb2b2', padding: '15px', borderRadius: '8px', marginBottom: '30px', fontSize: '14px', color: '#9b2c2c' }}>
-        <strong>AVVERTENZA LEGALE:</strong> Le informazioni contenute in questa pagina sono puramente informative sui prezzi medi di mercato. <strong>Non costituiscono parere medico o diagnosi.</strong> Consultare sempre un odontoiatra professionista.
+      <Navbar />
+
+      <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
+        <div style={{ width: '100%', height: '400px', overflow: 'hidden', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+          <img 
+            src="/images/costo-pulizia-denti-roma.png" 
+            alt="Costo pulizia denti Roma" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
+        </div>
       </div>
 
-      <header style={{ marginBottom: '40px' }}>
-        <h1 style={{ color: '#1e3a8a', fontSize: '32px' }}>Quanto costa una Pulizia dei Denti a Roma?</h1>
-        <p style={{ color: '#666' }}>Analisi tariffe medie odontoiatriche - Gennaio 2026</p>
-      </header>
+      <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '20px auto', padding: '0 20px', width: '100%' }}>
+        <div style={{ marginBottom: '20px', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <a href="/guide" style={{ color: '#2563eb', textDecoration: 'none' }}>Guide</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <span style={{ color: '#1e3a8a' }}>Costo Pulizia Denti</span>
+        </div>
 
-      <section style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '10px', borderLeft: '5px solid #2563eb', marginBottom: '30px' }}>
-        <p>Il costo medio per una seduta di igiene orale professionale (ablazione tartaro) a Roma varia solitamente tra <strong>70€ e 120€</strong>.</p>
-      </section>
+        <article>
+          <h1 style={{ color: '#1e3a8a', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
+            Quanto costa una pulizia dei denti professionale a Roma?
+          </h1>
 
-      <h2 style={{ color: '#1e3a8a' }}>Fattori che influenzano il prezzo</h2>
-      <ul>
-        <li>Utilizzo di tecnologie come l'Airflow (getto di bicarbonato).</li>
-        <li>Eventuale applicazione di fluoro o paste lucidanti.</li>
-        <li>Ubicazione dello studio dentistico.</li>
-      </ul>
+          <div style={{ backgroundColor: '#eff6ff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #2563eb', marginBottom: '35px' }}>
+            <p style={{ margin: 0, color: '#1e40af', fontSize: '18px', lineHeight: '1.6' }}>
+              L'igiene dentale è l'intervento più richiesto negli studi odontoiatrici della Capitale. Ma quali sono le tariffe medie nei vari quartieri?
+            </p>
+          </div>
 
-      <div style={{ marginTop: '40px', padding: '30px', backgroundColor: '#eff6ff', borderRadius: '15px', textAlign: 'center' }}>
-        <h3>Cerchi un Dentista a Roma?</h3>
-        <a href="/dentisti-roma" style={{ display: 'inline-block', padding: '12px 25px', backgroundColor: '#2563eb', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>
-          Vedi l'elenco completo
-        </a>
-      </div>
+          <section style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
+            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>I prezzi medi a Roma</h2>
+            <p>
+              A Roma, il costo di una seduta di igiene dentale professionale (detartrasi) varia generalmente tra i <strong>70€ e i 120€</strong>. 
+            </p>
+            <ul style={{ paddingLeft: '20px' }}>
+              <li><strong>Roma Centro/Prati:</strong> 90€ - 130€</li>
+              <li><strong>Roma Nord (Parioli/Fleming):</strong> 100€ - 150€</li>
+              <li><strong>Zone Periferiche:</strong> 60€ - 90€</li>
+            </ul>
 
-      <footer style={{ marginTop: '60px', paddingTop: '20px', borderTop: '2px solid #eee', fontSize: '12px', color: '#666' }}>
-        <p><strong>Note:</strong> ServiziSalute Roma è un portale informativo e non eroga prestazioni sanitarie. I prezzi sono stime basate su medie di mercato.</p>
-        <a href="/" style={{ color: '#1e3a8a', textDecoration: 'none' }}>← Torna alla Home</a>
-      </footer>
-    </article>
+            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Cosa include la seduta</h2>
+            <p>
+              Una seduta professionale corretta non comprende solo la rimozione del tartaro, ma anche la lucidatura (polishing), l'eventuale rimozione di macchie con air-flow e un controllo generale della salute gengivale.
+            </p>
+          </section>
+
+          <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#1e3a8a', borderRadius: '20px', color: 'white', textAlign: 'center' }}>
+            <h3 style={{ margin: '0 0 10px 0' }}>Cerchi un dentista nel tuo quartiere?</h3>
+            <p style={{ opacity: 0.8, marginBottom: '20px' }}>Trova i migliori studi dentistici di Roma vicino a te.</p>
+            <a href="/dentisti-roma" style={{ color: 'white', fontWeight: '800', textDecoration: 'none', border: '2px solid white', padding: '10px 20px', borderRadius: '10px' }}>
+              VEDI DENTISTI A ROMA
+            </a>
+          </div>
+        </article>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
