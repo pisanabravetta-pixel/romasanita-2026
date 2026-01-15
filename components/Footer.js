@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* COLONNA 2: PER GLI UTENTI (COMPLETA) */}
+        {/* COLONNA 2: PER GLI UTENTI (ORDINATA E COMPLETA) */}
           <div>
             <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
             <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
@@ -24,15 +24,22 @@ export default function Footer() {
             <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
               <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+              
+              {/* CATEGORIE NELL'ORDINE ESATTO RICHIESTO */}
+              <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+              <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
+              <li><a href="/diagnostica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Diagnostica a Roma</a></li>
+              <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
+              <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
+              
+              {/* SEZIONE GUIDE */}
               <li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Trovare servizi a Roma</a></li>
               <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
               <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
               <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
-              <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
-              <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-              <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
             </ul>
-            {/* RIGA DELLE RICERCHE MENSILE (IMPORTANTE) */}
+
+            {/* STATISTICA RICERCHE */}
             <p style={{ fontSize: '11px', color: '#a0aec0', marginTop: '15px', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
               🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
             </p>
