@@ -5,22 +5,70 @@ export default function Footer() {
     <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', width: '100%', clear: 'both' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+          
+          {/* COLONNA 1: DESCRIZIONE */}
           <div>
             <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-            <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>Il portale di annunci dedicato ai servizi sanitari a Roma.</p>
+            <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+              ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
+              Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
+            </p>
           </div>
+
+          {/* COLONNA 2: PER GLI UTENTI (TUTTE LE GUIDE) */}
           <div>
-            <h4 style={{ marginBottom: '15px' }}>Link Rapidi</h4>
+            <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
+            <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
+              ● Disponibilità aggiornate: Gennaio 2026
+            </p>
             <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
+              <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+              <li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Trovare servizi a Roma</a></li>
+              <li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
+              <li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
+              <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
+              <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
+              <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
               <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Tutte le specialistiche</a></li>
             </ul>
           </div>
+
+          {/* COLONNA 3: PROFESSIONISTI */}
           <div>
-            <h4 style={{ marginBottom: '15px' }}>Professionisti</h4>
-            <a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica annuncio</a>
+            <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
+            <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+              <li><a href="/pubblica-annuncio" style={{ color: '#48bb78', textDecoration: 'none', fontWeight: 'bold' }}>Pubblica il tuo annuncio</a></li>
+              <li><a href="/per-i-professionisti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Perché esserci</a></li>
+              <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
+              <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
+            </ul>
+            {/* BOX AD PICCOLO */}
+            <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
+              <p style={{ fontSize: '11px', color: '#feb2b2', margin: 0, fontWeight: 'bold', lineHeight: '1.4' }}>
+                ⚠️ ATTENZIONE: Richieste di specialisti in forte aumento nei quartieri Prati, Eur e Roma Centro.
+              </p>
+            </div>
           </div>
+
+          {/* COLONNA 4: NOTE LEGALI + DISCLAIMER */}
+          <div>
+            <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
+            <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
+              <li><a href="/chi-siamo" style={{ color: '#a0aec0', textDecoration: 'none' }}>Chi Siamo</a></li>
+              <li><a href="/disclaimer" style={{ color: '#a0aec0', textDecoration: 'none' }}>Disclaimer</a></li>
+              <li><a href="/privacy-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy Policy</a></li>
+              <li><a href="/cookie-policy" style={{ color: '#a0aec0', textDecoration: 'none' }}>Cookie Policy</a></li>
+            </ul>
+            {/* DISCLAIMER LEGALE RICHIESTO */}
+            <p style={{ fontSize: '11px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px', marginTop: '10px' }}>
+              ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+            </p>
+          </div>
+
         </div>
+
+        {/* COPYRIGHT FINALE */}
         <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
           © 2026 ServiziSalute – Tutti i diritti riservati
         </div>
