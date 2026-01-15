@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
+import Footer from '../components/Footer';
 
 export default function PubblicaAnnuncio() {
   const [caricamento, setCaricamento] = useState(false);
@@ -185,28 +186,7 @@ export default function PubblicaAnnuncio() {
         </div>
       </main>
 
-      {/* FOOTER INTEGRALE */}
-      <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', marginTop: '80px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
-            <div>
-              <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0' }}>Portale annunci sanitari a Roma.</p>
-            </div>
-            <div>
-              <h4 style={{ marginBottom: '15px' }}>Link Rapidi</h4>
-              <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
-                <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-                <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie Roma</a></li>
-                <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Specialistiche</a></li>
-              </ul>
-            </div>
-          </div>
-          <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
-            © 2026 ServiziSalute – Tutti i diritti riservati
-          </div>
-        </div>
-      </footer>
+   <Footer />
     </div>
   );
 }
