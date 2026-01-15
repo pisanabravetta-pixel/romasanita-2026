@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* COLONNA 2: PER GLI UTENTI (TUTTE LE GUIDE) */}
+          {/* COLONNA 2: PER GLI UTENTI (COMPLETA) */}
           <div>
             <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
             <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
@@ -30,10 +30,13 @@ export default function Footer() {
               <li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
               <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
               <li><a href="/dentisti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Dentisti a Roma</a></li>
-              <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Tutte le specialistiche</a></li>
+              <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
             </ul>
+            {/* RIGA DELLE RICERCHE MENSILE (IMPORTANTE) */}
+            <p style={{ fontSize: '11px', color: '#a0aec0', marginTop: '15px', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
+              🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
+            </p>
           </div>
-
           {/* COLONNA 3: PROFESSIONISTI */}
           <div>
             <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
