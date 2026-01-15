@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Footer from '../components/Footer';
 
 const quartieri = [
   "Prati", "Eur", "Trastevere", "Monti", "Flaminio", "Parioli", "San Giovanni", 
@@ -43,9 +44,7 @@ export default function QuartieriRoma() {
         </div>
       </main>
 
-      <footer style={{ background: '#1a202c', color: 'white', padding: '40px 0', textAlign: 'center', marginTop: '50px' }}>
-        © 2026 ServiziSalute – Tutti i diritti riservati
-      </footer>
+      <Footer />
     </div>
   );
 }
