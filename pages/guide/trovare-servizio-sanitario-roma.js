@@ -67,19 +67,25 @@ export default function GuidaRicercaSanitaria() {
         </article>
       </main>
 
-      {/* FOOTER MASTER INTEGRALE E IDENTICO ALLA HOME */}
+      {/* FOOTER MASTER INTEGRALE E IDENTICO ALLA HOME CON DISCLAIMER */}
       <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
             
+            {/* COLONNA 1: DESCRIZIONE + DISCLAIMER OBBLIGATORIO */}
             <div>
               <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
-              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6', marginBottom: '20px' }}>
                 ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
                 Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
               </p>
+              {/* DISCLAIMER LEGALE */}
+              <p style={{ fontSize: '12px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
+                ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+              </p>
             </div>
 
+            {/* COLONNA 2: UTENTI */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
               <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
@@ -99,6 +105,7 @@ export default function GuidaRicercaSanitaria() {
               </ul>
             </div>
 
+            {/* COLONNA 3: PROFESSIONISTI */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Per i professionisti</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
@@ -113,6 +120,7 @@ export default function GuidaRicercaSanitaria() {
               </div>
             </div>
 
+            {/* COLONNA 4: LEGALE */}
             <div>
               <h4 style={{ marginBottom: '15px' }}>Note legali</h4>
               <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
