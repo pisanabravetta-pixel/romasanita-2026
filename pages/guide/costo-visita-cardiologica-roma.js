@@ -13,7 +13,7 @@ export default function GuidaCardiologia() {
 
       <Navbar />
 
-      {/* IMMAGINE CON ALT CORRETTO (TABLET + ROMA) */}
+      {/* IMMAGINE CON ALT CORRETTO */}
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ 
           width: '100%', 
@@ -28,6 +28,7 @@ export default function GuidaCardiologia() {
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
           />
         </div>
+      </div>
 
       <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '0 auto', padding: '0 20px', width: '100%', marginBottom: '80px' }}>
         
@@ -40,6 +41,7 @@ export default function GuidaCardiologia() {
           <span style={{ color: '#164e63' }}>Costo Cardiologia</span>
         </div>
 
+        <article>
           <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
             Costi Visita Cardiologica a Roma: Guida ai Prezzi 2026
           </h1>
@@ -56,7 +58,7 @@ export default function GuidaCardiologia() {
             <ul style={{ paddingLeft: '20px' }}>
               <li><strong>Elettrocardiogramma (ECG):</strong> Spesso incluso nella visita (100-120€ totali).</li>
               <li><strong>Ecocardiogramma:</strong> Se richiesto, il costo totale può salire a 150-200€.</li>
-              <li><strong>Livello di specializzazione:</strong> Tariffe diverse in base all'esperienza del cardiologo.</li>
+              <li><strong>Livello di specializzazione:</strong> Tariffe in base all'esperienza dello specialista.</li>
               <li><strong>Zona di Roma:</strong> Gli studi in centro (Prati, Parioli) possono avere costi superiori.</li>
             </ul>
           </section>
