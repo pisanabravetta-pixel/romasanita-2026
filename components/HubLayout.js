@@ -6,21 +6,21 @@ import { theme } from '../styles/theme';
 
 export default function HubLayout({ 
   titolo, 
-  descrizione, 
   categoria, 
   colore, 
   medici, 
   loading, 
   quartieri, 
   schemas, 
-  testoSEO,
-  badgeTesto = "SPECIALISTA" 
+  descrizioneMeta,
+  testoMiniSEO,
+  badgeSpec 
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
-        <title>{titolo} a Roma: {badgeTesto} e Urgenze | Gennaio 2026</title>
-        <meta name="description" content={descrizione} />
+        <title>{titolo} a Roma: Studi e Urgenze | Gennaio 2026</title>
+        <meta name="description" content={descrizioneMeta} />
         {schemas && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
@@ -29,8 +29,8 @@ export default function HubLayout({
         )}
       </Head>
       
-      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%' }}>
-         ⚡ {titolo.toUpperCase()} A ROMA — AGGIORNATI A GENNAIO 2026
+      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
+        {titolo.toUpperCase()} A ROMA — AGGIORNATI A GENNAIO 2026
       </div>
       
       <Navbar />
@@ -48,9 +48,11 @@ export default function HubLayout({
 
         {/* TITOLO E SOTTOTITOLO */}
         <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
-          <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>{titolo} a Roma</h1>
+          <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+            {titolo} a Roma
+          </h1>
           <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            {badgeTesto} aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
+            Specialisti aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
           </p>
         </div>
 
@@ -64,16 +66,16 @@ export default function HubLayout({
           </div>
         </div>
 
-        {/* LISTA BOX */}
+        {/* LISTA BOX ANNUNCI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
                 {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>🦷 {badgeTesto.toUpperCase()}</span>
+                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>{badgeSpec}</span>
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -85,30 +87,43 @@ export default function HubLayout({
           ))}
         </div>
 
-        {/* TESTO SEO */}
+        {/* MINI TESTO SEO DOPO ANNUNCI */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>{testoSEO}</p>
+          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+            {testoMiniSEO}
+          </p>
         </div>
 
         {/* CTA NERA */}
         <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a Roma?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci il tuo studio e ricevi contatti da nuovi pazienti.</p>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Gestisci un'attività a Roma?</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
           <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
         </div>
 
-        {/* FAQ DINAMICHE */}
-        {schemas?.faq && (
-          <div style={{ paddingBottom: '40px' }}>
-            <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
-            {schemas.faq.mainEntity.slice(0, 3).map((item, i) => (
-              <div key={i} style={{ marginBottom: '15px' }}>
-                <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
-              </div>
-            ))}
+        {/* ALTRE SPECIALISTICHE */}
+        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#2c5282' }}>Altre Specialistiche a Roma:</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+            <a href="/dermatologi-roma" style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>Dermatologi</a>
+            <a href="/cardiologi-roma" style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>Cardiologi</a>
+            <a href="/diagnostica-roma" style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>Diagnostica</a>
+            <a href="/oculisti-roma" style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>Oculisti</a>
           </div>
-        )}
+        </div>
+
+        {/* FAQ DINAMICHE DAL SEO LOGIC */}
+        <div style={{ paddingBottom: '40px' }}>
+          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
+          {schemas?.faq?.mainEntity.slice(0, 3).map((item, i) => (
+            <div key={i} style={{ marginBottom: '15px' }}>
+              <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
+            </div>
+          ))}
+        </div>
+
       </main>
+
       <Footer />
     </div>
   );
