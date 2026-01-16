@@ -24,14 +24,25 @@ export default function PaginaQuartiereDinamica() {
         const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
-        // LOGICA TEMA (Ciano per sanità, Verde per farmacie)
-        const isFarmacia = catSlug.includes('farmac');
-        const nomeCat = isFarmacia ? "Farmacie" : catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '');
-        const primario = isFarmacia ? "#059669" : "#0891b2";
-        const chiaro = isFarmacia ? "#ecfdf5" : "#ecfeff";
-        
-        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
+       // 1. Dizionario Colori Intelligente
+const coloriSpecialistiche = {
+  'farmac': { primario: '#166534', chiaro: '#f0fdf4', nome: 'Farmacie' },
+  'cardiolog': { primario: '#dc2626', chiaro: '#fef2f2', nome: 'Cardiologi' },
+  'dentist': { primario: '#2563eb', chiaro: '#eff6ff', nome: 'Dentisti' },
+  'dermatolog': { primario: '#0891b2', chiaro: '#ecfeff', nome: 'Dermatologi' },
+  'ortopedic': { primario: '#d97706', chiaro: '#fffbeb', nome: 'Ortopedici' },
+  'diagnostica': { primario: '#7c3aed', chiaro: '#f5f3ff', nome: 'Diagnostica' }
+};
 
+// 2. Identificazione Categoria e Colore
+const chiaveTrovata = Object.keys(coloriSpecialistiche).find(key => catSlug.includes(key));
+const configurazione = chiaveTrovata ? coloriSpecialistiche[chiaveTrovata] : { primario: '#0891b2', chiaro: '#ecfeff', nome: catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '') };
+
+const nomeCat = configurazione.nome;
+const primario = configurazione.primario;
+const chiaro = configurazione.chiaro;
+
+setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
         const titoloCorretto = `${nomeCat} a Roma ${zonaBella}`;
 
