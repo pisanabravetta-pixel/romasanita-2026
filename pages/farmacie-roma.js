@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, getSchemas } from '../lib/seo-logic';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { theme } from '../styles/theme';
 
 export default function FarmacieRoma() {
   const [farmacie, setFarmacie] = useState([]);
@@ -63,7 +64,7 @@ export default function FarmacieRoma() {
 </div>
 
         {/* TITOLO E SOTTOTITOLO SEO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #166534', boxShadow: ' 0 10px 30px rgba(0,0,0,0.05)' }}>
+       <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: '8px solid #166534', boxShadow: theme.shadows.premium }}>
           <h1 style={{ color: '#064e3b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Farmacie a Roma
           </h1>
@@ -73,7 +74,7 @@ export default function FarmacieRoma() {
         </div>
 
         {/* CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+       <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#064e3b' }}>Cerca per Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {quartieri.map(q => (
@@ -85,16 +86,7 @@ export default function FarmacieRoma() {
         {/* LISTA BOX RIDOTTI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : farmacie.map((v) => (
-           <div key={v.id} style={{ 
-  backgroundColor: 'white', 
-  borderRadius: '24px', 
-  padding: '30px', 
-  marginBottom: '20px', 
-  border: v.is_top ? '4px solid #166534' : '1px solid #e2e8f0', 
-  boxShadow: '0 10px 30px rgba(0,0,0,0.05)', 
-  display: 'block', 
-  width: '100%', 
-  boxSizing: 'border-box'
+          <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? '4px solid #166534' : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' 
 }}>
               <h3 style={{ color: '#064e3b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
@@ -105,9 +97,9 @@ export default function FarmacieRoma() {
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#166534', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#166534', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px',borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
+                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px'borderRadius: theme.radius.button,, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
               </div>
             </div>
           ))}
@@ -129,7 +121,7 @@ export default function FarmacieRoma() {
         </div>
 
         {/* ALTRE SPECIALISTICHE */}
-        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '40px' }}>
+        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#064e3b' }}>Altre Specialistiche a Roma:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
             <a href="/dentisti-roma" style={{ color: '#166534', fontWeight: '700', textDecoration: 'none' }}>Dentisti</a>
