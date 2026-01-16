@@ -61,7 +61,7 @@ export default function HubLayout({
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {quartieri.map(q => (
-              <a key={q} href={`/${categoria}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
+              <a key={q} href={`/${categoria.toLowerCase()}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
             ))}
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function HubLayout({
         {/* LISTA BOX ANNUNCI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' }}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
@@ -87,7 +87,7 @@ export default function HubLayout({
           ))}
         </div>
 
-        {/* MINI TESTO SEO DOPO ANNUNCI */}
+        {/* MINI TESTO SEO */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
           <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
             {testoMiniSEO}
@@ -112,7 +112,7 @@ export default function HubLayout({
           </div>
         </div>
 
-        {/* FAQ DINAMICHE DAL SEO LOGIC */}
+        {/* FAQ (DAL TUO CODICE) */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
           {schemas?.faq?.mainEntity.slice(0, 3).map((item, i) => (
