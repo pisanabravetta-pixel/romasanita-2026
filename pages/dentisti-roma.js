@@ -25,12 +25,20 @@ export default function DentistiRoma() {
       categoria="dentisti"
       colore="#3182ce"
       badgeSpec="🦷 ODONTOIATRIA"
+      testoTopBar="🦷 STUDI DENTISTICI E ODONTOIATRI A ROMA — AGGIORNATI A GENNAIO 2026"
       descrizioneMeta="Cerchi un dentista a Roma? Trova i migliori studi dentistici per pulizia denti, impianti e ortodonzia nei quartieri di Roma con contatti diretti."
-      testoMiniSEO="In questa pagina trovi i migliori studi dentistici a Roma, specializzati in igiene dentale, impianti, ortodonzia e carie. Contatta direttamente i professionisti del tuo quartiere."
+      testoMiniSEO="In questa pagina trovi i migliori studi dentistici a Roma, specializzati in igiene dentale, impianti, ortodonzia e carie. Contatta direttamente i professionisti del tuo quartiere o filtra per zona per trovare un dentista a Roma disponibile per visite di controllo o urgenze."
       medici={medici}
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
+      altreSpecialistiche={[
+        {nome: "Dermatologi", link: "/dermatologi-roma"},
+        {nome: "Cardiologi", link: "/cardiologi-roma"},
+        {nome: "Diagnostica", link: "/diagnostica-roma"},
+        {nome: "Oculisti", link: "/oculisti-roma"},
+        {nome: "Ortopedici", link: "/ortopedici-roma"}
+      ]}
     />
   );
 }
