@@ -62,7 +62,7 @@ export default function DentistiRoma() {
 </div>
 
         {/* TITOLO E SOTTOTITOLO SEO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #3182ce', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+<div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #3182ce', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Dentisti a Roma
           </h1>
@@ -84,11 +84,7 @@ export default function DentistiRoma() {
         {/* LISTA BOX RIDOTTI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : medici.map((v) => (
-            <div key={v.id} style={{ 
-              backgroundColor: 'white', borderRadius: '20px', padding: '25px', marginBottom: '20px', 
-              border: v.is_top ? '4px solid #2c5282' : '1px solid #e2e8f0', 
-              boxShadow: '0 6px 15px rgba(0,0,0,0.04)', display: 'block', width: '100%', boxSizing: 'border-box'
-            }}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '24px', padding: '30px', marginBottom: '20px', border: v.is_top ? '4px solid #2c5282' : '1px solid #e2e8f0', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'block', width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
@@ -98,9 +94,9 @@ export default function DentistiRoma() {
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#3182ce', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#3182ce', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
+                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
               </div>
             </div>
           ))}
@@ -115,7 +111,7 @@ export default function DentistiRoma() {
         </div>
 
         {/* CTA NERA RIDOTTA */}
-        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
+        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '24px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Gestisci uno Studio Dentistico?</h2>
           <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci il tuo studio e ricevi contatti da nuovi pazienti a Roma.</p>
           <a href="/pubblica-annuncio" style={{ backgroundColor: '#3182ce', color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
