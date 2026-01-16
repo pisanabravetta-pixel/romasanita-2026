@@ -41,11 +41,6 @@ export default function GuidaCardiologia() {
           <span style={{ color: '#164e63' }}>Costo Cardiologia</span>
         </div>
 
-        <article>
-          <div style={{ backgroundColor: '#fff4f4', border: '1px solid #feb2b2', padding: '15px', borderRadius: '15px', marginBottom: '30px', fontSize: '14px', color: '#9b2c2c' }}>
-            <strong>AVVERTENZA LEGALE:</strong> Analisi dei costi medi. <strong>Non è un consulto medico.</strong> In caso di emergenza contattare il 118.
-          </div>
-
           <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
             Costi Visita Cardiologica a Roma: Guida ai Prezzi 2026
           </h1>
