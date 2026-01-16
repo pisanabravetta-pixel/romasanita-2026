@@ -14,38 +14,23 @@ export default function PaginaQuartiereDinamica() {
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  useEffect(() => {
+useEffect(() => {
     if (!slug) return;
 
     async function fetchDati() {
       try {
         setLoading(true);
         const parti = slug.split('-'); 
-        const catSlug = parti[0].toLowerCase(); 
+        const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
-        // 1. LOGICA TEMA BLINDATA (Identica alle Hub)
-        let primario = "#0891b2"; // Default Blu
-        let chiaro = "#ecfeff";
-        let nomeVisualizzato = catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '');
-
-        if (catSlug.includes('farmac')) {
-          primario = "#166534"; chiaro = "#f0fdf4"; nomeVisualizzato = "Farmacie";
-        } else if (catSlug.includes('cardiolog')) {
-          primario = "#dc2626"; chiaro = "#fef2f2"; nomeVisualizzato = "Cardiologi";
-        } else if (catSlug.includes('dentist')) {
-          primario = "#2563eb"; chiaro = "#eff6ff"; nomeVisualizzato = "Dentisti";
-        } else if (catSlug.includes('dermatolog')) {
-          primario = "#0891b2"; chiaro = "#ecfeff"; nomeVisualizzato = "Dermatologi";
-        } else if (catSlug.includes('ortopedic')) {
-          primario = "#d97706"; chiaro = "#fffbeb"; nomeVisualizzato = "Ortopedici";
-        } else if (catSlug.includes('diagnostica')) {
-          primario = "#7c3aed"; chiaro = "#f5f3ff"; nomeVisualizzato = "Diagnostica";
-        } else if (catSlug.includes('oculist')) {
-          primario = "#0369a1"; chiaro = "#f0f9ff"; nomeVisualizzato = "Oculisti";
-        }
-
-        const nomeCat = nomeVisualizzato;
+        // COLORE UNICO PER TUTTI I QUARTIERI (Semplice e Pulito)
+        const primario = "#0891b2"; // Azzurro Ciano
+        const chiaro = "#ecfeff";
+        
+        const nomeCatRaw = catSlug.replace('-roma', '');
+        const nomeCat = nomeCatRaw.charAt(0).toUpperCase() + nomeCatRaw.slice(1);
+        
         setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
 
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
