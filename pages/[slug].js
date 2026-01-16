@@ -21,45 +21,33 @@ export default function PaginaQuartiereDinamica() {
       try {
         setLoading(true);
         const parti = slug.split('-'); 
-        const catSlug = parti[0]; 
+        const catSlug = parti[0].toLowerCase(); 
         const zonaSlug = parti[parti.length - 1];
 
-       // 1. Dizionario Colori Intelligente
-const coloriSpecialistiche = {
-  'farmac': { primario: '#166534', chiaro: '#f0fdf4', nome: 'Farmacie' },
-  'cardiolog': { primario: '#dc2626', chiaro: '#fef2f2', nome: 'Cardiologi' },
-  'dentist': { primario: '#2563eb', chiaro: '#eff6ff', nome: 'Dentisti' },
-  'dermatolog': { primario: '#0891b2', chiaro: '#ecfeff', nome: 'Dermatologi' },
-  'ortopedic': { primario: '#d97706', chiaro: '#fffbeb', nome: 'Ortopedici' },
-  'diagnostica': { primario: '#7c3aed', chiaro: '#f5f3ff', nome: 'Diagnostica' }
-};
-
-// 1. LOGICA TEMA BLINDATA
-        let primario = "#0891b2"; // Default Ciano
+        // 1. LOGICA TEMA BLINDATA (Identica alle Hub)
+        let primario = "#0891b2"; // Default Blu
         let chiaro = "#ecfeff";
         let nomeVisualizzato = catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '');
 
-        // Controllo Chirurgico Categoria
-        const slugPulito = catSlug.toLowerCase();
-
-        if (slugPulito.includes('farmac')) {
+        if (catSlug.includes('farmac')) {
           primario = "#166534"; chiaro = "#f0fdf4"; nomeVisualizzato = "Farmacie";
-        } else if (slugPulito.includes('cardiolog')) {
+        } else if (catSlug.includes('cardiolog')) {
           primario = "#dc2626"; chiaro = "#fef2f2"; nomeVisualizzato = "Cardiologi";
-        } else if (slugPulito.includes('dentist')) {
+        } else if (catSlug.includes('dentist')) {
           primario = "#2563eb"; chiaro = "#eff6ff"; nomeVisualizzato = "Dentisti";
-        } else if (slugPulito.includes('dermatolog')) {
+        } else if (catSlug.includes('dermatolog')) {
           primario = "#0891b2"; chiaro = "#ecfeff"; nomeVisualizzato = "Dermatologi";
-        } else if (slugPulito.includes('ortopedic')) {
+        } else if (catSlug.includes('ortopedic')) {
           primario = "#d97706"; chiaro = "#fffbeb"; nomeVisualizzato = "Ortopedici";
-        } else if (slugPulito.includes('diagnostica')) {
+        } else if (catSlug.includes('diagnostica')) {
           primario = "#7c3aed"; chiaro = "#f5f3ff"; nomeVisualizzato = "Diagnostica";
+        } else if (catSlug.includes('oculist')) {
+          primario = "#0369a1"; chiaro = "#f0f9ff"; nomeVisualizzato = "Oculisti";
         }
-
-        console.log("Categoria rilevata:", slugPulito, "Colore assegnato:", primario);
 
         const nomeCat = nomeVisualizzato;
         setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
+
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
         const titoloCorretto = `${nomeCat} a Roma ${zonaBella}`;
 
@@ -104,82 +92,82 @@ const coloriSpecialistiche = {
         📍 {tema.label} : {meta.zona}
       </div>
 
-    <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
+      <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
   
-  {/* 1. BREADCRUMB (Identico a Hub) */}
-  <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-    <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
-    <span style={{ margin: '0 8px' }}>{'>'}</span>
-    <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'none' }}>Servizi Roma</a>
-    <span style={{ margin: '0 8px' }}>{'>'}</span>
-    <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{meta.cat.replace('-roma', '').charAt(0).toUpperCase() + meta.cat.replace('-roma', '').slice(1)} Roma</a>
-  </div>
+        {/* 1. BREADCRUMB */}
+        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>{'>'}</span>
+          <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'none' }}>Servizi Roma</a>
+          <span style={{ margin: '0 8px' }}>{'>'}</span>
+          <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{tema.label} Roma</a>
+        </div>
 
-  {/* 2. TITOLO E SOTTOTITOLO (Stile Premium 24px) */}
-  <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-    <h1 style={{ color: '#064e3b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-      {meta.titolo}
-    </h1>
-    <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-      I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
-    </p>
-  </div>
+        {/* 2. TITOLO E SOTTOTITOLO (Stile Premium 24px) */}
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+            {meta.titolo}
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
+            I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
+          </p>
+        </div>
 
-  {/* 3. CERCA PER QUARTIERE (Richiamo altri quartieri come nella Hub) */}
-  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '24px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-    <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#064e3b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-      {["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere"].map(q => (
-        <a key={q} href={`/${meta.cat}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
-      ))}
-    </div>
-  </div>
+        {/* 3. CERCA PER QUARTIERE */}
+        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '24px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense"].map(q => (
+              <a key={q} href={`/${meta.cat}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
+            ))}
+          </div>
+        </div>
 
-  {/* 4. LISTA BOX (Stile Premium 24px) */}
-  <div style={{ display: 'block' }}>
-    {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
-      <div key={v.id} style={{ 
-        backgroundColor: 'white', borderRadius: '24px', padding: '25px', marginBottom: '20px', 
-        border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
-        boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'block', width: '100%', boxSizing: 'border-box'
-      }}>
-        <h3 style={{ color: '#064e3b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
-    📞 CHIAMA
-  </a>
-  
-  <a href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
-    💬 WHATSAPP
-  </a>
-  
-  <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>
-    🗺️ MAPPA
-  </a>
-</div>
-      </div>
-    )) : (
-      <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Al momento non ci sono annunci attivi a {meta.zona}.</p>
-    )}
-  </div>
+        {/* 4. LISTA BOX (Stile Premium 24px) */}
+        <div style={{ display: 'block' }}>
+          {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
+            <div key={v.id} style={{ 
+              backgroundColor: 'white', borderRadius: '24px', padding: '25px', marginBottom: '20px', 
+              border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
+              boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'block', width: '100%', boxSizing: 'border-box'
+            }}>
+              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+                  📞 CHIAMA
+                </a>
+                
+                <a href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+                  💬 WHATSAPP
+                </a>
+                
+                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>
+                  🗺️ MAPPA
+                </a>
+              </div>
+            </div>
+          )) : (
+            <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Al momento non ci sono annunci attivi a {meta.zona}.</p>
+          )}
+        </div>
 
-  {/* 5. CTA NERA (Identica alla Hub) */}
-  <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '24px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
-    <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a {meta.zona}?</h2>
-    <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza i tuoi servizi in questa zona.</p>
-    <a href="/pubblica-annuncio" style={{ backgroundColor: tema.primario, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-  </div>
+        {/* 5. CTA NERA */}
+        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '24px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a {meta.zona}?</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza i tuoi servizi in questa zona.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: tema.primario, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+        </div>
 
-  {/* 6. FAQ SPECIFICHE DEL QUARTIERE (Dinamiche) */}
-  <div style={{ paddingBottom: '40px' }}>
-    <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#064e3b' }}>Domande Frequenti {meta.zona}</h3>
-    <p><strong>1. Come trovare un servizio a Roma {meta.zona}?</strong> — Puoi consultare i box qui sopra per contattare direttamente i professionisti del quartiere.</p><br/>
-    <p><strong>2. I prezzi a {meta.zona} sono diversi dal resto di Roma?</strong> — Generalmente le tariffe seguono l'andamento cittadino, ma consigliamo di chiedere un preventivo via WhatsApp.</p><br/>
-    <p><strong>3. Ci sono specialisti disponibili subito a {meta.zona}?</strong> — Sì, usa il tasto Chiama per verificare la disponibilità immediata in zona.</p>
-  </div>
+        {/* 6. FAQ SPECIFICHE DEL QUARTIERE */}
+        <div style={{ paddingBottom: '40px' }}>
+          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#1e293b' }}>Domande Frequenti {meta.zona}</h3>
+          <p><strong>1. Come trovare un servizio a Roma {meta.zona}?</strong> — Puoi consultare i box qui sopra per contattare direttamente i professionisti del quartiere.</p><br/>
+          <p><strong>2. I prezzi a {meta.zona} sono diversi dal resto di Roma?</strong> — Generalmente le tariffe seguono l'andamento cittadino, ma consigliamo di chiedere un preventivo via WhatsApp.</p><br/>
+          <p><strong>3. Ci sono specialisti disponibili subito a {meta.zona}?</strong> — Sì, usa il tasto Chiama per verificare la disponibilità immediata in zona.</p>
+        </div>
 
-</main>
+      </main>
       <Footer />
     </div>
   );
