@@ -70,7 +70,10 @@ export default function GuidaCostoDenti() {
           </div>
         </article>
       </main>
-
+{/* DISCLAIMER STANDARD */}
+          <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
+            <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel 2026 e hanno scopo puramente informativo. Le tariffe possono variare in base alla clinica e ai trattamenti accessori necessari.
+          </div>
       <Footer />
     </div>
   );
