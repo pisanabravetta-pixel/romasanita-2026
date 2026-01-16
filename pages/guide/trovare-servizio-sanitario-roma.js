@@ -87,7 +87,10 @@ export default function GuidaRicercaSanitaria() {
           </div>
         </article>
       </main>
-
+{/* NUOVO DISCLAIMER SPECIFICO PER RICERCA SERVIZI */}
+          <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
+            <strong>Nota Informativa:</strong> Le informazioni fornite in questa guida hanno scopo puramente orientativo per facilitare la ricerca dei servizi sul territorio di Roma. ServiziSalute non effettua una selezione clinica dei professionisti e non risponde della qualità delle prestazioni erogate. Si consiglia sempre di verificare le autorizzazioni sanitarie e le recensioni prima di ogni visita.
+          </div>
       {/* 4. FOOTER MASTER AUTOMATICO (PULIZIA CHIRURGICA) */}
       <Footer />
     </div>
