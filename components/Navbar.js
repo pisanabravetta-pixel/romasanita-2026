@@ -23,7 +23,10 @@ export default function Navbar() {
           <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
             Tutti i Servizi
           </a>
-
+{/* LINK QUARTIERI */}
+          <a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
+            Quartieri
+          </a>
           {/* 2. CHI SIAMO */}
           <a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
             Chi Siamo
