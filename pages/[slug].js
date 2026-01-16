@@ -76,65 +76,73 @@ export default function PaginaQuartiereDinamica() {
         📍 {tema.label} : {meta.zona}
       </div>
 
-     <main style={{ flex: '1 0 auto', maxWidth: '1100px', margin: '0 auto', padding: '20px', width: '100%' }}>
+    <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
   
-  {/* BARRA SUPERIORE / BREADCRUMB (Quello che mancava) */}
-  <div style={{ backgroundColor: '#f8fafc', padding: '15px 20px', borderRadius: '12px', marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #e2e8f0' }}>
-    <div style={{ fontSize: '14px', fontWeight: '600', color: '#64748b' }}>
-      <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
-      <span style={{ margin: '0 8px' }}>{'>'}</span>
-      <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>Tutte le {meta.cat.replace('-roma', '')}</a>
-    </div>
-    <span style={{ fontWeight: '700', color: '#475569', fontSize: '14px' }}>📍 {meta.zona}</span>
+  {/* 1. BREADCRUMB (Identico a Hub) */}
+  <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+    <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
+    <span style={{ margin: '0 8px' }}>{'>'}</span>
+    <a href="/servizi-sanitari-roma" style={{ color: tema.primario, textDecoration: 'none' }}>Servizi Roma</a>
+    <span style={{ margin: '0 8px' }}>{'>'}</span>
+    <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{meta.cat.replace('-roma', '').charAt(0).toUpperCase() + meta.cat.replace('-roma', '').slice(1)} Roma</a>
   </div>
 
-  {/* HEADER PAGINA PREMIUM (24px) */}
-  <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, marginBottom: '40px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-    <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', margin: '0', lineHeight: '1.2' }}>{meta.titolo}</h1>
-    <p style={{ marginTop: '15px', color: '#64748b', fontSize: '18px' }}>
-      I migliori professionisti nel quartiere <strong>{meta.zona}</strong> a Roma. Contatta direttamente per informazioni e appuntamenti.
+  {/* 2. TITOLO E SOTTOTITOLO (Stile Premium 24px) */}
+  <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+    <h1 style={{ color: '#064e3b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+      {meta.titolo}
+    </h1>
+    <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
+      I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
     </p>
   </div>
 
-  {/* LISTA BOX PREMIUM (24px) */}
-  <div id="lista">
-    {loading ? (
-      <p style={{ textAlign: 'center', padding: '40px' }}>Caricamento...</p>
-    ) : servizi.length > 0 ? (
-      servizi.map((v) => (
-        <div key={v.id} style={{ 
-          backgroundColor: 'white', 
-          padding: '30px', 
-          borderRadius: '24px', // <-- CHIRURGICO: 24px come la Hub
-          marginBottom: '25px', 
-          border: v.is_top ? `3px solid ${tema.primario}` : '1px solid #e2e8f0', 
-          boxShadow: '0 10px 20px rgba(0,0,0,0.03)',
-          position: 'relative'
-        }}>
-          {v.is_top && (
-            <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: tema.primario, color: 'white', padding: '4px 12px', borderRadius: '10px', fontSize: '11px', fontWeight: '900' }}>RACCOMANDATO</span>
-          )}
-          <h2 style={{ color: '#164e63', margin: '0 0 10px 0', fontSize: '26px', fontWeight: '800' }}>{v.nome}</h2>
-          <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-          
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>CHIAMA ORA</a>
-            {v.whatsapp && (
-              <a href={`https://wa.me/${v.whatsapp.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>WHATSAPP</a>
-            )}
-          </div>
+  {/* 3. CERCA PER QUARTIERE (Richiamo altri quartieri come nella Hub) */}
+  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '24px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+    <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#064e3b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      {["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere"].map(q => (
+        <a key={q} href={`/${meta.cat}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
+      ))}
+    </div>
+  </div>
+
+  {/* 4. LISTA BOX (Stile Premium 24px) */}
+  <div style={{ display: 'block' }}>
+    {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
+      <div key={v.id} style={{ 
+        backgroundColor: 'white', borderRadius: '24px', padding: '25px', marginBottom: '20px', 
+        border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
+        boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'block', width: '100%', boxSizing: 'border-box'
+      }}>
+        <h3 style={{ color: '#064e3b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+          <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
         </div>
-      ))
-    ) : (
-      <div style={{ textAlign: 'center', padding: '60px', backgroundColor: '#f8fafc', borderRadius: '24px', border: '2px dashed #cbd5e0' }}>
-        <h3 style={{ color: '#1e293b' }}>Ancora nessun annuncio a {meta.zona}</h3>
-        <p style={{ color: '#64748b' }}>Stiamo aggiornando i dati per questa zona.</p>
-        <a href="/pubblica-annuncio" style={{ display: 'inline-block', backgroundColor: tema.primario, color: 'white', padding: '14px 28px', borderRadius: '12px', fontWeight: '800', textDecoration: 'none', marginTop: '15px' }}>ISCRIVITI ORA</a>
       </div>
+    )) : (
+      <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Al momento non ci sono annunci attivi a {meta.zona}.</p>
     )}
   </div>
-</main>
 
+  {/* 5. CTA NERA (Identica alla Hub) */}
+  <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '24px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
+    <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a {meta.zona}?</h2>
+    <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza i tuoi servizi in questa zona.</p>
+    <a href="/pubblica-annuncio" style={{ backgroundColor: tema.primario, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+  </div>
+
+  {/* 6. FAQ SPECIFICHE DEL QUARTIERE (Dinamiche) */}
+  <div style={{ paddingBottom: '40px' }}>
+    <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#064e3b' }}>Domande Frequenti {meta.zona}</h3>
+    <p><strong>1. Come trovare un servizio a Roma {meta.zona}?</strong> — Puoi consultare i box qui sopra per contattare direttamente i professionisti del quartiere.</p><br/>
+    <p><strong>2. I prezzi a {meta.zona} sono diversi dal resto di Roma?</strong> — Generalmente le tariffe seguono l'andamento cittadino, ma consigliamo di chiedere un preventivo via WhatsApp.</p><br/>
+    <p><strong>3. Ci sono specialisti disponibili subito a {meta.zona}?</strong> — Sì, usa il tasto Chiama per verificare la disponibilità immediata in zona.</p>
+  </div>
+
+</main>
       <Footer />
     </div>
   );
