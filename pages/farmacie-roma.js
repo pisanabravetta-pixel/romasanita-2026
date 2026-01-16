@@ -83,11 +83,10 @@ export default function FarmacieRoma() {
           </div>
         </div>
 
-        {/* LISTA BOX RIDOTTI */}
+       {/* LISTA BOX RIDOTTI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : farmacie.map((v) => (
-          <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? '4px solid #166534' : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' 
-}}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? '4px solid #166534' : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#064e3b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
@@ -96,44 +95,15 @@ export default function FarmacieRoma() {
                 <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bbf7d0' }}>🩺 TEST E ANALISI</span>
               </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-  <a href={`tel:${v.telefono}`} style={{ 
-    flex: '1', 
-    minWidth: '110px', 
-    backgroundColor: '#166534', 
-    color: 'white', 
-    padding: '14px', 
-    borderRadius: theme.radius.button, 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none' 
-  }}>📞 CHIAMA</a>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#166534', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
+                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
+              </div>
+            </div>
+          ))}
+        </div>
 
-  <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ 
-    flex: '1', 
-    minWidth: '110px', 
-    backgroundColor: '#22c55e', 
-    color: 'white', 
-    padding: '14px', 
-    borderRadius: theme.radius.button, 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none' 
-  }}>💬 WHATSAPP</a>
-
-  <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ 
-    flex: '1', 
-    minWidth: '110px', 
-    backgroundColor: '#f1f5f9', 
-    color: '#1e293b', 
-    padding: '14px', 
-    borderRadius: theme.radius.button, 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none', 
-    border: '1px solid #e2e8f0' 
-  }}>🗺️ MAPPA</a>
-</div>
         {/* MINI TESTO SEO */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
           <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
@@ -143,7 +113,7 @@ export default function FarmacieRoma() {
         </div>
 
         {/* CTA NERA RIDOTTA */}
-        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
+        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '24px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Gestisci una Farmacia a Roma?</h2>
           <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza i tuoi servizi e i turni del tuo punto vendita.</p>
           <a href="/pubblica-annuncio" style={{ backgroundColor: '#166534', color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
@@ -159,6 +129,8 @@ export default function FarmacieRoma() {
             <a href="/dermatologi-roma" style={{ color: '#166534', fontWeight: '700', textDecoration: 'none' }}>Dermatologi</a>
             <a href="/ortopedici-roma" style={{ color: '#166534', fontWeight: '700', textDecoration: 'none' }}>Ortopedici</a>
           </div>
+        </div>
+
         {/* FAQ */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#064e3b' }}>Domande Frequenti</h3>
@@ -173,4 +145,3 @@ export default function FarmacieRoma() {
     </div>
   );
 }
-        
