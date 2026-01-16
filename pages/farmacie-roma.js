@@ -159,8 +159,6 @@ export default function FarmacieRoma() {
             <a href="/dermatologi-roma" style={{ color: '#166534', fontWeight: '700', textDecoration: 'none' }}>Dermatologi</a>
             <a href="/ortopedici-roma" style={{ color: '#166534', fontWeight: '700', textDecoration: 'none' }}>Ortopedici</a>
           </div>
-        </div>
-
         {/* FAQ */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#064e3b' }}>Domande Frequenti</h3>
@@ -175,3 +173,4 @@ export default function FarmacieRoma() {
     </div>
   );
 }
+        
