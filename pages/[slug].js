@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getSchemas, getDBQuery } from '../lib/seo-logic';
+import { theme } from '../styles/theme';
 
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
@@ -89,7 +90,7 @@ useEffect(() => {
         </div>
 
         {/* 2. TITOLO E SOTTOTITOLO (Stile Premium 24px) */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${tema.primario}`, boxShadow: theme.shadows.premium }}>
           <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             {meta.titolo}
           </h1>
@@ -99,7 +100,7 @@ useEffect(() => {
         </div>
 
         {/* 3. CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '24px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense"].map(q => (
@@ -111,11 +112,7 @@ useEffect(() => {
         {/* 4. LISTA BOX (Stile Premium 24px) */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
-            <div key={v.id} style={{ 
-              backgroundColor: 'white', borderRadius: '24px', padding: '25px', marginBottom: '20px', 
-              border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
-              boxShadow: '0 10px 30px rgba(0,0,0,0.05)', display: 'block', width: '100%', boxSizing: 'border-box'
-            }}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
