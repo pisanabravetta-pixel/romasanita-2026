@@ -96,25 +96,44 @@ export default function FarmacieRoma() {
                 <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#f0fdf4', color: '#166534', padding: '4px 10px', borderRadius: '6px', border: '1px solid #bbf7d0' }}>🩺 TEST E ANALISI</span>
               </div>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-<a href={`tel:${v.telefono}`} style={{ 
-  flex: '1', 
-  minWidth: '110px', 
-  backgroundColor: '#166534', 
-  color: 'white', 
-  padding: '14px', 
-  borderRadius: theme.radius.button, // <--- CONTROLLA LA VIRGOLA QUI
-  textAlign: 'center', 
-  fontWeight: '800', 
-  textDecoration: 'none' 
-}}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px',borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px'borderRadius: theme.radius.button,, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
-              </div>
-            </div>
-          ))}
-        </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+  <a href={`tel:${v.telefono}`} style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#166534', 
+    color: 'white', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none' 
+  }}>📞 CHIAMA</a>
 
+  <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#22c55e', 
+    color: 'white', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none' 
+  }}>💬 WHATSAPP</a>
+
+  <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#f1f5f9', 
+    color: '#1e293b', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none', 
+    border: '1px solid #e2e8f0' 
+  }}>🗺️ MAPPA</a>
+</div>
         {/* MINI TESTO SEO */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
           <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
