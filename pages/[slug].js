@@ -34,15 +34,32 @@ const coloriSpecialistiche = {
   'diagnostica': { primario: '#7c3aed', chiaro: '#f5f3ff', nome: 'Diagnostica' }
 };
 
-// 2. Identificazione Categoria e Colore
-const chiaveTrovata = Object.keys(coloriSpecialistiche).find(key => catSlug.includes(key));
-const configurazione = chiaveTrovata ? coloriSpecialistiche[chiaveTrovata] : { primario: '#0891b2', chiaro: '#ecfeff', nome: catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '') };
+// 1. LOGICA TEMA BLINDATA
+        let primario = "#0891b2"; // Default Ciano
+        let chiaro = "#ecfeff";
+        let nomeVisualizzato = catSlug.charAt(0).toUpperCase() + catSlug.slice(1).replace('-roma', '');
 
-const nomeCat = configurazione.nome;
-const primario = configurazione.primario;
-const chiaro = configurazione.chiaro;
+        // Controllo Chirurgico Categoria
+        const slugPulito = catSlug.toLowerCase();
 
-setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
+        if (slugPulito.includes('farmac')) {
+          primario = "#166534"; chiaro = "#f0fdf4"; nomeVisualizzato = "Farmacie";
+        } else if (slugPulito.includes('cardiolog')) {
+          primario = "#dc2626"; chiaro = "#fef2f2"; nomeVisualizzato = "Cardiologi";
+        } else if (slugPulito.includes('dentist')) {
+          primario = "#2563eb"; chiaro = "#eff6ff"; nomeVisualizzato = "Dentisti";
+        } else if (slugPulito.includes('dermatolog')) {
+          primario = "#0891b2"; chiaro = "#ecfeff"; nomeVisualizzato = "Dermatologi";
+        } else if (slugPulito.includes('ortopedic')) {
+          primario = "#d97706"; chiaro = "#fffbeb"; nomeVisualizzato = "Ortopedici";
+        } else if (slugPulito.includes('diagnostica')) {
+          primario = "#7c3aed"; chiaro = "#f5f3ff"; nomeVisualizzato = "Diagnostica";
+        }
+
+        console.log("Categoria rilevata:", slugPulito, "Colore assegnato:", primario);
+
+        const nomeCat = nomeVisualizzato;
+        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
         const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
         const titoloCorretto = `${nomeCat} a Roma ${zonaBella}`;
 
