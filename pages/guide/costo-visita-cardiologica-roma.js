@@ -28,7 +28,6 @@ export default function GuidaCardiologia() {
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
           />
         </div>
-      </div>
 
       <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '0 auto', padding: '0 20px', width: '100%', marginBottom: '80px' }}>
         
