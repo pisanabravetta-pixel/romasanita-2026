@@ -63,7 +63,7 @@ export default function VisiteSpecialisticheRoma() {
 </div>
 
         {/* TITOLO MASTER H1 */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #7c3aed', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '35px', borderRadius: '24px', borderLeft: '8px solid #7c3aed', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
           <h1 style={{ color: '#5b21b6', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             Visite Specialistiche Roma
           </h1>
@@ -86,10 +86,16 @@ export default function VisiteSpecialisticheRoma() {
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : medici.map((v) => (
             <div key={v.id} style={{ 
-              backgroundColor: 'white', borderRadius: '20px', padding: '25px', marginBottom: '20px', 
-              border: v.is_top ? '4px solid #7c3aed' : '1px solid #e2e8f0', 
-              boxShadow: '0 6px 15px rgba(0,0,0,0.04)', display: 'block', width: '100%', boxSizing: 'border-box'
-            }}>
+  backgroundColor: 'white', 
+  borderRadius: '24px', 
+  padding: '30px', 
+  marginBottom: '20px', 
+  border: v.is_top ? '4px solid #7c3aed' : '1px solid #e2e8f0', 
+  boxShadow: '0 10px 30px rgba(0,0,0,0.05)', 
+  display: 'block', 
+  width: '100%', 
+  boxSizing: 'border-box'
+}}>
               <h3 style={{ color: '#5b21b6', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
