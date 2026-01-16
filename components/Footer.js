@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
             <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
-              <li><a href="/servizi-sanitari-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
+             <li><a href="/quartieri-roma" style={{ color: '#63b3ed', fontWeight: 'bold', textDecoration: 'none' }}>📍 Mappa Servizi per Quartiere</a></li>
               
               {/* CATEGORIE NELL'ORDINE ESATTO RICHIESTO */}
               <li><a href="/farmacie-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Farmacie a Roma</a></li>
