@@ -12,21 +12,32 @@ export default function HubLayout({ titolo, categoria, colore, medici, loading, 
         <meta name="description" content={`Trova i migliori professionisti per ${titolo} a Roma. Contatti diretti, orari e disponibilità aggiornata a Gennaio 2026.`} />
       </Head>
       
-      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '14px' }}>
-        🚀 {titolo.toUpperCase()} A ROMA — AGGIORNATO GENNAIO 2026
+      {/* BARRA SUPERIORE TESTO GRASSETTO */}
+      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '14px', textTransform: 'uppercase' }}>
+        📍 {titolo} A ROMA — AGGIORNATO GENNAIO 2026
       </div>
 
       <Navbar />
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
-        {/* 1. TITOLO MASTER */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `12px solid ${colore}`, boxShadow: theme.shadows.premium }}>
-          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0' }}>{titolo} a Roma</h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', marginTop: '10px' }}>I migliori professionisti in <span style={{ color: colore }}>{titolo.toLowerCase()}</span> aggiornati.</p>
+        {/* TORNA A TUTTE LE SPECIALISTICHE */}
+        <div style={{ marginBottom: '15px' }}>
+            <a href="/servizi-sanitari-roma" style={{ color: colore, fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>← Tutte le specialistiche a Roma</a>
         </div>
 
-        {/* 2. CERCA PER QUARTIERE */}
+        {/* 1. TITOLO MASTER (BORDI PREMIUM) */}
+        <div style={{ 
+            marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, 
+            borderRadius: theme.radius.main, borderLeft: `12px solid ${colore}`, boxShadow: theme.shadows.premium 
+        }}>
+          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0' }}>{titolo} a Roma</h1>
+          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', marginTop: '10px' }}>
+              I migliori professionisti in <span style={{ color: colore }}>{titolo.toLowerCase()}</span> a Roma.
+          </p>
+        </div>
+
+        {/* 2. CERCA PER QUARTIERE (BORDI PREMIUM) */}
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca per Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -36,13 +47,23 @@ export default function HubLayout({ titolo, categoria, colore, medici, loading, 
           </div>
         </div>
 
-        {/* 3. LISTA RISULTATI (CON MAPPA) */}
+        {/* 3. LISTA RISULTATI */}
         <div style={{ display: 'block' }}>
           {loading ? (
             <p>Caricamento...</p>
           ) : medici.length > 0 ? medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
-              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+            <div key={v.id} style={{ 
+                backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, 
+                marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', 
+                boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' 
+            }}>
+              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0' }}>{v.nome}</h3>
+              
+              {/* DICITURA SPECIALISTA (es. Odontoiatra) */}
+              <p style={{ color: colore, fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginTop: '5px', marginBottom: '10px' }}>
+                  {v.specialista || titolo}
+              </p>
+
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -56,22 +77,14 @@ export default function HubLayout({ titolo, categoria, colore, medici, loading, 
           )}
         </div>
 
-        {/* 4. MINI TESTO SEO */}
-        <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            In questa pagina trovi l'elenco dei migliori specialisti in <strong>{titolo.toLowerCase()} a Roma</strong>. 
-            Puoi filtrare per quartiere per trovare lo studio più vicino a te e contattare direttamente il professionista per prenotare una visita o richiedere informazioni su orari e tariffe aggiornate a <strong>Gennaio 2026</strong>.
-          </p>
-        </div>
-
-        {/* 5. CTA NERA */}
-        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista in {titolo}?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza il tuo studio e raggiungi nuovi pazienti a Roma.</p>
+        {/* 4. MINI TESTO SEO E CTA (BORDI PREMIUM) */}
+        <div style={{ backgroundColor: '#0f172a', padding: '30px', borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a Roma?</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza il tuo studio in questa sezione.</p>
           <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
         </div>
 
-        {/* 6. ALTRE SPECIALISTICHE */}
+        {/* 5. ALTRE SPECIALISTICHE */}
         <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#1e293b' }}>Altre Specialistiche a Roma:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
@@ -82,12 +95,11 @@ export default function HubLayout({ titolo, categoria, colore, medici, loading, 
           </div>
         </div>
 
-        {/* 7. FAQ */}
+        {/* 6. FAQ */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#1e293b' }}>Domande Frequenti</h3>
-          <p><strong>1. Come prenotare una visita con un esperto in {titolo.toLowerCase()}?</strong> — Puoi usare i tasti "Chiama" o "WhatsApp" presenti nei box degli specialisti per un contatto immediato.</p><br/>
-          <p><strong>2. Gli specialisti sono disponibili in tutti i quartieri di Roma?</strong> — Sì, usufruendo della ricerca per quartiere puoi trovare il professionista più vicino alla tua zona.</p><br/>
-          <p><strong>3. Le informazioni sono aggiornate?</strong> — Sì, l'elenco dei professionisti e dei servizi è verificato e aggiornato a Gennaio 2026.</p>
+          <p><strong>1. Come prenotare una visita?</strong> — Usa i tasti Chiama o WhatsApp per parlare direttamente con lo studio.</p><br/>
+          <p><strong>2. Le informazioni sono aggiornate?</strong> — Sì, tutti i profili sono verificati per il 2026.</p>
         </div>
 
       </main>
