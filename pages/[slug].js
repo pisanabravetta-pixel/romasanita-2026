@@ -118,9 +118,18 @@ export default function PaginaQuartiereDinamica() {
         <h3 style={{ color: '#064e3b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
         <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-          <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-          <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-        </div>
+  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+    📞 CHIAMA
+  </a>
+  
+  <a href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+    💬 WHATSAPP
+  </a>
+  
+  <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>
+    🗺️ MAPPA
+  </a>
+</div>
       </div>
     )) : (
       <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Al momento non ci sono annunci attivi a {meta.zona}.</p>
