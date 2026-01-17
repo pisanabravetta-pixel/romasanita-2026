@@ -14,16 +14,25 @@ export default function DermatologiRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
+      // 1. Prendiamo i dati del mapping dal tuo seo-logic.js
       const queryBusca = getDBQuery('dermatologi'); 
+      
+      // 2. Facciamo la query a Supabase che sappiamo funzionare (quella per categoria)
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
-        .ilike('specialistica', `%${queryBusca.spec}%`) // <--- AGGIUNTO QUESTO FILTRO
+        .ilike('categoria', `%${queryBusca.cat}%`) // Prende tutto quello che è "visite-specialistiche"
         .order('is_top', { ascending: false });
       
-      if (data) setMedici(data);
+      if (data) {
+        // 3. FILTRO MAGICO: Teniamo solo i dottori che hanno la parola "dermatologo" 
+        // scritta dentro l'annuncio. Così i cardiologi spariscono da questa pagina.
+        const filtrati = data.filter(m => 
+          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
+        );
+        setMedici(filtrati);
+      }
       setLoading(false);
     }
     fetchDocs();
