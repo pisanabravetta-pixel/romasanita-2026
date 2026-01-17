@@ -13,8 +13,8 @@ export default function ServiziDomicilioRoma() {
       colore="#d97706" 
       badgeSpec="🏠 DOMICILIO"
       testoTopBar="🏠 ASSISTENZA SANITARIA A DOMICILIO ROMA — GENNAIO 2026"
-      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri, medici e fisioterapisti per visite a domicilio a Roma."
-      testoMiniSEO="Servizi sanitari professionali direttamente a casa tua: assistenza, medicazioni, fisioterapia e visite specialistiche domiciliari con personale qualificato."
+      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri e medici per visite a domicilio a Roma."
+      testoMiniSEO="Servizi sanitari professionali direttamente a casa tua: assistenza, medicazioni, fisioterapia e visite specialistiche con i migliori professionisti di Roma."
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
