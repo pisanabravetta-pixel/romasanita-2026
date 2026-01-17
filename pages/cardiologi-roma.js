@@ -6,22 +6,13 @@ import HubLayout from '../components/HubLayout';
 export default function CardiologiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Recupero FAQ e Schemi per Cardiologia
   const schemas = getSchemas('cardiologi', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('cardiologi'); 
-      const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
-        .order('is_top', { ascending: false });
-      
+      const { data } = await supabase.from('annunci').select('*').eq('approvato', true).ilike('categoria', `%${queryBusca.cat}%`).order('is_top', { ascending: false });
       if (data) setMedici(data);
       setLoading(false);
     }
@@ -32,7 +23,7 @@ export default function CardiologiRoma() {
     <HubLayout 
       titolo="Cardiologi"
       categoria="cardiologi"
-      colore="#dc2626" // Rosso Cardiologia
+      colore="#dc2626"
       testoCTA="Gestisci uno Studio Cardiologico?"
       badgeSpec="❤️ CARDIOLOGIA"
       testoTopBar="❤️ STUDI DI CARDIOLOGIA E CARDIOLOGI A ROMA — AGGIORNATI A GENNAIO 2026"
