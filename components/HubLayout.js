@@ -1,138 +1,124 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import { theme } from '../styles/theme';
+import Link from 'next/link';
+import { supabase } from '../lib/supabaseClient';
+import { getDBQuery } from '../lib/seo-logic';
 
 export default function HubLayout({ 
   titolo, 
   categoria, 
   colore, 
-  medici, 
-  loading, 
+  testoCTA, 
+  badgeSpec, 
+  testoTopBar, 
+  descrizioneMeta, 
+  testoMiniSEO, 
   quartieri, 
-  schemas, 
-  descrizioneMeta,
-  testoMiniSEO,
-  badgeSpec,
-  testoTopBar,
-  testoCTA,           // <--- AGGIUNTO QUI (Mancava!)
-  altreSpecialistiche  // Array di oggetti {nome, link}
+  schemas,
+  altreSpecialistiche 
 }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
-      <Head>
-        <title>{titolo} a Roma: Studi e Urgenze | Gennaio 2026</title>
-        <meta name="description" content={descrizioneMeta} />
-        {schemas && (
-          <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
-          </>
-        )}
-      </Head>
+  const [medici, setMedici] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // --- LOGICA AUTOMATICA DI RICERCA ---
+  useEffect(() => {
+    async function fetchDocs() {
+      if (!categoria) return;
       
-      {/* TOP BAR INTEGRALE */}
-      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
+      // Prende la radice (es: 'oculist') dal tuo seo-logic.js
+      const queryBusca = getDBQuery(categoria); 
+      
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        // Cerca la radice ovunque per non sbagliare mai (singolare/plurale/maiuscole)
+        .or(`categoria.ilike.%${queryBusca.root}%,specialistica.ilike.%${queryBusca.root}%,titolo.ilike.%${queryBusca.root}%`)
+        .order('is_top', { ascending: false });
+      
+      if (data) setMedici(data);
+      setLoading(false);
+    }
+    fetchDocs();
+  }, [categoria]);
+
+  return (
+    <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+      <Head>
+        <title>{titolo} a Roma - ServiziSalute</title>
+        <meta name="description" content={descrizioneMeta} />
+        <script type="application/ld+json">{JSON.stringify(schemas.medical)}</script>
+        <script type="application/ld+json">{JSON.stringify(schemas.faq)}</script>
+      </Head>
+
+      {/* TOP BAR */}
+      <div style={{ backgroundColor: '#111827', color: 'white', padding: '10px', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
         {testoTopBar}
       </div>
-      
-      <Navbar />
 
-      <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
-        
-        {/* BREADCRUMB */}
-        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>{'>'}</span>
-          <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
-          <span style={{ margin: '0 8px' }}>{'>'}</span>
-          <span style={{ color: '#065f46' }}>{titolo} Roma</span>
-        </div>
+      {/* HEADER HUB */}
+      <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', borderBottom: '1px solid #e5e7eb' }}>
+        <Link href="/tutte-le-specialistiche" style={{ color: colore, textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>
+          ← TUTTE LE SPECIALISTICHE
+        </Link>
+        <h1 style={{ fontSize: '32px', marginTop: '10px', color: '#111827' }}>{titolo}</h1>
+        <p style={{ color: '#4b5563', maxWidth: '600px', margin: '15px auto' }}>{testoMiniSEO}</p>
+      </div>
 
-        {/* TITOLO E SOTTOTITOLO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
-          <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-            {titolo} a Roma
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Specialisti aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
-          </p>
-        </div>
-
-        {/* CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieri && quartieri.map(q => (
-              <a key={q} href={`/${categoria}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
-            ))}
-          </div>
-        </div>
-
-        {/* LISTA BOX ANNUNCI */}
-        <div style={{ display: 'block' }}>
-          {loading ? <p>Caricamento...</p> : medici && medici.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
-              <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>{badgeSpec}</span>
-              </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
-              </div>
-            </div>
+      {/* CERCA PER QUARTIERE */}
+      <div style={{ padding: '30px 20px', maxWidth: '1000px', margin: 'auto' }}>
+        <h3 style={{ fontSize: '18px', marginBottom: '15px' }}>Cerca per Quartiere:</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+          {quartieri.map(q => (
+            <Link key={q} href={`/${categoria}-roma-${q.toLowerCase().replace(' ', '-')}`} 
+                  style={{ padding: '10px', border: '1px solid #e5e7eb', borderRadius: '8px', textAlign: 'center', textDecoration: 'none', color: '#374151', backgroundColor: 'white' }}>
+              {q}
+            </Link>
           ))}
         </div>
+      </div>
 
-        {/* MINI TESTO SEO */}
-        <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            {testoMiniSEO}
-          </p>
-        </div>
+      {/* LISTA ANNUNCI */}
+      <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
+        {loading ? (
+          <p>Caricamento professionisti...</p>
+        ) : medici.length > 0 ? (
+          medici.map(m => (
+            <div key={m.id} style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: `2px solid ${m.is_top ? colore : '#e5e7eb'}`, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ backgroundColor: colore, color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold' }}>
+                  {badgeSpec}
+                </span>
+                {m.is_top && <span style={{ color: colore, fontWeight: 'bold' }}>⭐ TOP</span>}
+              </div>
+              <h2 style={{ fontSize: '20px', margin: '10px 0' }}>{m.titolo}</h2>
+              <p style={{ color: '#4b5563' }}>📍 {m.indirizzo} — {m.zona_quartiere}</p>
+            </div>
+          ))
+        ) : (
+          <p>Nessun professionista trovato in questa categoria.</p>
+        )}
+      </div>
 
-        {/* CTA NERA */}
-        <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-        </div>
-
-        {/* ALTRE SPECIALISTICHE */}
-        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#2c5282' }}>Altre Specialistiche a Roma:</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            {altreSpecialistiche && altreSpecialistiche.map(s => (
-              <a key={s.nome} href={s.link} style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>{s.nome}</a>
+      {/* ALTRE SPECIALISTICHE */}
+      <div style={{ padding: '40px 20px', backgroundColor: 'white', marginTop: '40px' }}>
+        <div style={{ maxWidth: '1000px', margin: 'auto' }}>
+          <h3 style={{ marginBottom: '20px' }}>Altre Specialistiche a Roma</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '15px' }}>
+            {altreSpecialistiche.map(s => (
+              <Link key={s.nome} href={s.link} style={{ color: '#111827', textDecoration: 'none', padding: '15px', border: '1px solid #e5e7eb', borderRadius: '8px', textAlign: 'center' }}>
+                {s.nome}
+              </Link>
             ))}
           </div>
         </div>
-
-      {/* SEZIONE FAQ DEFINITIVA */}
-<div style={{ paddingBottom: '40px' }}>
-  <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
-  {schemas?.faq?.mainEntity?.map((item, i) => {
-    return (
-      <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #e2e8f0', paddingBottom: '15px' }}>
-        <p style={{ fontSize: '16px', color: '#2c5282', fontWeight: '800', marginBottom: '8px' }}>
-          {i + 1}. {item.name}
-        </p>
-        <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.5', margin: 0 }}>
-          {item.acceptedAnswer.text}
-        </p>
       </div>
-    );
-  })}
-</div>
-      </main>
-      <Footer />
+
+      {/* FOOTER - Utilizza il tuo codice footer esistente qui */}
+      <footer style={{ marginTop: '50px', padding: '20px', backgroundColor: '#111827', color: 'white' }}>
+        {/* Incolla qui il codice esatto del tuo footer */}
+        <p style={{ textAlign: 'center' }}>© 2026 Diagnostica Roma - Tutti i diritti riservati</p>
+      </footer>
     </div>
   );
 }
