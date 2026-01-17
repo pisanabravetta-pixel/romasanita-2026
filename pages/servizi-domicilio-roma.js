@@ -14,8 +14,10 @@ export default function ServiziDomicilioRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
+      // 1. Prende la configurazione dal mapping (cat: 'servizi-domicilio')
       const queryBusca = getDBQuery('servizi-domicilio'); 
       
+      // 2. Query pura senza filtri JavaScript che possono rompere tutto
       const { data } = await supabase
         .from('annunci')
         .select('*')
@@ -24,11 +26,7 @@ export default function ServiziDomicilioRoma() {
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Filtro di sicurezza per isolare i servizi domiciliari
-        const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase().replace('-domicilio', ''))
-        );
-        setMedici(filtrati);
+        setMedici(data);
       }
       setLoading(false);
     }
