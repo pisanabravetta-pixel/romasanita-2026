@@ -12,12 +12,13 @@ export default function ServiziDomicilioRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      // Usiamo una query super-base: prendi tutto ciò che ha "domicilio" nel nome, categoria o specialistica
-      const { data, error } = await supabase
+      // Cerchiamo ESATTAMENTE la stringa che hai visto su Supabase
+      // Usiamo .ilike così non si arrabbia per le maiuscole/minuscole
+      const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,titolo.ilike.%domicilio%')
+        .ilike('categoria', 'Servizi a Domicilio') 
         .order('is_top', { ascending: false });
       
       if (data) {
@@ -42,14 +43,13 @@ export default function ServiziDomicilioRoma() {
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
-      // ARRAY COMPLETO: qui ne mettiamo 6 così ne vedi sicuramente almeno 4 o 5
+      // Lista lunga per riempire bene la sezione "Altre Specialistiche"
       altreSpecialistiche={[
         {nome: "Cardiologi", link: "/cardiologi-roma"},
         {nome: "Dermatologi", link: "/dermatologi-roma"},
         {nome: "Oculisti", link: "/oculisti-roma"},
         {nome: "Ortopedici", link: "/ortopedici-roma"},
-        {nome: "Ginecologi", link: "/ginecologi-roma"},
-        {nome: "Dentisti", link: "/dentisti-roma"}
+        {nome: "Diagnostica", link: "/diagnostica-roma"}
       ]}
     />
   );
