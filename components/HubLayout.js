@@ -8,16 +8,16 @@ export default function HubLayout({
   titolo, 
   categoria, 
   colore, 
-  medici, 
+  medici = [],         // Default array vuoto
   loading, 
-  quartieri, 
+  quartieri = [],      // Default array vuoto
   schemas, 
   descrizioneMeta,
   testoMiniSEO,
   badgeSpec,
   testoTopBar,
-  testoCTA,           // <--- AGGIUNTO QUI (Mancava!)
-  altreSpecialistiche  // Array di oggetti {nome, link}
+  testoCTA,
+  altreSpecialistiche = [] // Default array vuoto
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
