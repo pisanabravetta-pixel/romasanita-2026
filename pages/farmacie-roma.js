@@ -12,26 +12,23 @@ export default function FarmacieRoma() {
   
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
- useEffect(() => {
+useEffect(() => {
     async function fetchDocs() {
-      const queryBusca = getDBQuery('farmacie'); 
-      
+      // Usiamo una ricerca larga: se trova "farmac" prende tutto (farmacia, farmacie, parafarmacia)
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Usiamo solo il filtro categoria che per le farmacie è sicuro
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        .or('categoria.ilike.%farmac%,specialistica.ilike.%farmac%') 
         .order('is_top', { ascending: false });
       
       if (data) {
-        setMedici(data); // Niente filtri extra, carichiamo tutto quello che torna
+        setMedici(data);
       }
       setLoading(false);
     }
     fetchDocs();
   }, []);
-
   return (
     <HubLayout 
       titolo="Farmacie"
