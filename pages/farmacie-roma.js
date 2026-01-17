@@ -12,7 +12,7 @@ export default function FarmacieRoma() {
   
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-  useEffect(() => {
+ useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('farmacie'); 
       
@@ -20,17 +20,12 @@ export default function FarmacieRoma() {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
+        // Usiamo solo il filtro categoria che per le farmacie è sicuro
         .ilike('categoria', `%${queryBusca.cat}%`)
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Filtro di pulizia per sicurezza (gestisce farmacia/farmacie)
-        const puliti = data.filter(m => {
-          const rigaCompleta = JSON.stringify(m).toLowerCase();
-          const parolaCercata = queryBusca.spec.toLowerCase(); 
-          return rigaCompleta.includes(parolaCercata.slice(0, -1)); 
-        });
-        setMedici(puliti);
+        setMedici(data); // Niente filtri extra, carichiamo tutto quello che torna
       }
       setLoading(false);
     }
