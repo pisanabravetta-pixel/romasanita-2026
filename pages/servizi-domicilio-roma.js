@@ -12,20 +12,20 @@ export default function ServiziDomicilioRoma() {
   
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
- useEffect(() => {
+useEffect(() => {
     async function fetchDocs() {
-      const { data } = await supabase
+      // PROVA DI EMERGENZA: Prendiamo tutto quello che è approvato
+      const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .eq('approvato', true)
-        // Questa query cerca "domicilio" sia nella categoria che nella specialistica
-        // Ignora se c'è il trattino o se è singolare/plurale
-        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%') 
-        .order('is_top', { ascending: false });
+        .eq('approvato', true); // Controlliamo solo che sia approvato
       
       if (data) {
+        console.log("Dati ricevuti dal DB:", data); // Controlla la console del browser!
         setMedici(data);
       }
+      if (error) console.error("Errore Supabase:", error);
+      
       setLoading(false);
     }
     fetchDocs();
