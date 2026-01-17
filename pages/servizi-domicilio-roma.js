@@ -12,17 +12,15 @@ export default function ServiziDomicilioRoma() {
   
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-  useEffect(() => {
+ useEffect(() => {
     async function fetchDocs() {
-      // 1. Prende la configurazione dal mapping (cat: 'servizi-domicilio')
-      const queryBusca = getDBQuery('servizi-domicilio'); 
-      
-      // 2. Query pura senza filtri JavaScript che possono rompere tutto
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        // Questa query cerca "domicilio" sia nella categoria che nella specialistica
+        // Ignora se c'è il trattino o se è singolare/plurale
+        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%') 
         .order('is_top', { ascending: false });
       
       if (data) {
@@ -32,7 +30,6 @@ export default function ServiziDomicilioRoma() {
     }
     fetchDocs();
   }, []);
-
   return (
     <HubLayout 
       titolo="Servizi a Domicilio"
