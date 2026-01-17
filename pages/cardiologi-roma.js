@@ -12,7 +12,14 @@ export default function CardiologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('cardiologi'); 
-      const { data } = await supabase.from('annunci').select('*').eq('approvato', true).ilike('categoria', `%${queryBusca.cat}%`).order('is_top', { ascending: false });
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .ilike('categoria', `%${queryBusca.cat}%`)
+        .ilike('specialistica', `%${queryBusca.spec}%`) // <--- AGGIUNTO QUESTO PER SICUREZZA
+        .order('is_top', { ascending: false });
+      
       if (data) setMedici(data);
       setLoading(false);
     }
