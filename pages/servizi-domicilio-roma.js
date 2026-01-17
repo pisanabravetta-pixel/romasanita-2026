@@ -14,8 +14,7 @@ export default function ServiziDomicilioRoma() {
 
 useEffect(() => {
     async function fetchDocs() {
-      // 1. Facciamo una query che cerca la parola "domicilio"
-      // Cerchiamo sia in categoria che in specialistica per sicurezza
+      // Usiamo una ricerca "larga" su Supabase che ignora maiuscole, minuscole ed emoji
       const { data } = await supabase
         .from('annunci')
         .select('*')
@@ -24,12 +23,8 @@ useEffect(() => {
         .order('is_top', { ascending: false });
       
       if (data) {
-        // 2. Filtriamo ulteriormente per essere sicuri di non avere "imbucati"
-        const filtrati = data.filter(m => {
-          const riga = JSON.stringify(m).toLowerCase();
-          return riga.includes('domicilio');
-        });
-        setMedici(filtrati);
+        // Assegniamo i dati direttamente senza filtri JS che "nascondono" le righe
+        setMedici(data);
       }
       setLoading(false);
     }
