@@ -12,32 +12,39 @@ export default function DermatologiRoma() {
   
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-  useEffect(() => {
+ useEffect(() => {
     async function fetchDocs() {
-      // 1. Prendiamo i dati del mapping dal tuo seo-logic.js
       const queryBusca = getDBQuery('dermatologi'); 
       
-      // 2. Facciamo la query a Supabase che sappiamo funzionare (quella per categoria)
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`) // Prende tutto quello che è "visite-specialistiche"
+        .ilike('categoria', `%${queryBusca.cat}%`)
         .order('is_top', { ascending: false });
       
       if (data) {
-        // 3. FILTRO MAGICO: Teniamo solo i dottori che hanno la parola "dermatologo" 
-        // scritta dentro l'annuncio. Così i cardiologi spariscono da questa pagina.
+        // Questa riga risolve TUTTO: minuscole, maiuscole, singolari e plurali
         const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
+          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase().replace('i', '')) 
+          // .replace('i', '') serve se vuoi essere estremo e cercare la radice della parola
         );
-        setMedici(filtrati);
+        
+        // Versione più semplice e sicura:
+        const puliti = data.filter(m => {
+          const rigaCompleta = JSON.stringify(m).toLowerCase();
+          const parolaCercata = queryBusca.spec.toLowerCase(); // 'dermatologo'
+          
+          // Controlla se c'è la parola o la sua versione plurale tronca
+          return rigaCompleta.includes(parolaCercata.slice(0, -1)); 
+        });
+
+        setMedici(puliti);
       }
       setLoading(false);
     }
     fetchDocs();
   }, []);
-
   return (
     <HubLayout 
       titolo="Dermatologi"
