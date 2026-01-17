@@ -29,7 +29,7 @@ export default function HubLayout({
   }, [categoria]);
 
   return (
-    <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: '"Inter", sans-serif', color: '#1e293b' }}>
       <Head>
         <title>{titolo} a Roma - ServiziSalute</title>
         <meta name="description" content={descrizioneMeta} />
@@ -37,56 +37,64 @@ export default function HubLayout({
         {schemas?.faq && <script type="application/ld+json">{JSON.stringify(schemas.faq)}</script>}
       </Head>
 
-      {/* BARRA SUPERIORE IN GRASSETTO */}
-      <div style={{ backgroundColor: '#111827', color: 'white', padding: '12px', textAlign: 'center', fontSize: '14px' }}>
-        <strong>{testoTopBar}</strong>
+      {/* TOP BAR - ULTRA BOLD */}
+      <div style={{ backgroundColor: '#0f172a', color: 'white', padding: '14px', textAlign: 'center', fontSize: '13px', letterSpacing: '1px' }}>
+        <span style={{ fontWeight: '900', textTransform: 'uppercase' }}>{testoTopBar}</span>
       </div>
 
-      {/* HEADER HUB - STILE DIAGNOSTICA ROMA */}
-      <div style={{ padding: '50px 20px', textAlign: 'center', backgroundColor: 'white', borderBottom: '1px solid #e5e7eb' }}>
-        <Link href="/tutte-le-specialistiche" style={{ color: colore, textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>
-          ← TORNA A TUTTE LE SPECIALISTICHE
+      {/* HEADER HUB - STRUTTURA DIAGNOSTICA ROMA */}
+      <div style={{ padding: '60px 20px', textAlign: 'center', backgroundColor: 'white', borderBottom: '1px solid #e2e8f0' }}>
+        <Link href="/tutte-le-specialistiche" style={{ color: colore, textDecoration: 'none', fontSize: '13px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          ← TUTTE LE SPECIALISTICHE
         </Link>
-        <h1 style={{ fontSize: '42px', color: '#111827', fontWeight: '800', marginTop: '20px', letterSpacing: '-1px' }}>{titolo}</h1>
-        <p style={{ color: '#4b5563', maxWidth: '800px', margin: '20px auto', fontSize: '18px', lineHeight: '1.6' }}>{testoMiniSEO}</p>
+        <h1 style={{ fontSize: '48px', color: '#0f172a', fontWeight: '900', marginTop: '25px', marginBottom: '20px', letterSpacing: '-1.5px', lineHeight: '1' }}>
+          {titolo}
+        </h1>
+        <p style={{ color: '#64748b', maxWidth: '750px', margin: 'auto', fontSize: '19px', lineHeight: '1.7', fontWeight: '400' }}>
+          {testoMiniSEO}
+        </p>
       </div>
 
-      {/* SEZIONE QUARTIERI */}
-      <div style={{ padding: '40px 20px', maxWidth: '1100px', margin: 'auto' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>Cerca per Quartiere</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '12px' }}>
+      {/* CERCA PER QUARTIERE - GRID PROFESSIONALE */}
+      <div style={{ padding: '50px 20px', maxWidth: '1200px', margin: 'auto' }}>
+        <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '25px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Cerca per Quartiere</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '12px' }}>
           {quartieri.map(q => (
             <Link key={q} href={`/${categoria}-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} 
-                  style={{ padding: '15px', border: '1px solid #d1d5db', borderRadius: '12px', textAlign: 'center', textDecoration: 'none', color: '#374151', backgroundColor: 'white', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                  style={{ padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', textAlign: 'center', textDecoration: 'none', color: '#1e293b', backgroundColor: 'white', fontWeight: '700', fontSize: '15px', transition: 'all 0.2s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
               {q}
             </Link>
           ))}
         </div>
       </div>
 
-      {/* LISTA MEDICI DISPONIBILI */}
-      <div style={{ padding: '20px', maxWidth: '1100px', margin: 'auto' }}>
-        <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '30px' }}>Professionisti Disponibili</h2>
-        {loading ? <p>Caricamento...</p> : medici.map(m => (
-          <div key={m.id} style={{ backgroundColor: 'white', padding: '30px', borderRadius: '20px', marginBottom: '25px', border: m.is_top ? `2px solid ${colore}` : '1px solid #e5e7eb', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
-              <span style={{ backgroundColor: colore, color: 'white', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold' }}>{badgeSpec}</span>
-              {m.is_top && <span style={{ color: colore, fontWeight: 'bold' }}>⭐ RACCOMANDATO</span>}
+      {/* LISTA MEDICI - BOX CON SHADOWS PROFESSIONALI */}
+      <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
+        <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '35px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Professionisti in evidenza</h2>
+        {loading ? <p>Caricamento dati...</p> : medici.map(m => (
+          <div key={m.id} style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', marginBottom: '30px', border: m.is_top ? `2px solid ${colore}` : '1px solid #e2e8f0', boxShadow: m.is_top ? '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)' : '0 4px 6px -1px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <span style={{ backgroundColor: colore, color: 'white', padding: '6px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase' }}>{badgeSpec}</span>
+              {m.is_top && <span style={{ color: colore, fontWeight: '900', fontSize: '13px' }}>⭐ TOP SPECIALISTA</span>}
             </div>
-            <h3 style={{ fontSize: '26px', fontWeight: '800', color: '#111827', marginBottom: '10px' }}>{m.titolo}</h3>
-            <p style={{ color: '#4b5563', fontSize: '17px' }}>📍 {m.indirizzo} — <strong>{m.zona_quartiere}</strong></p>
-            <button style={{ marginTop: '20px', backgroundColor: colore, color: 'white', border: 'none', padding: '14px 28px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>CONTATTA ORA</button>
+            <h3 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a', marginBottom: '12px' }}>{m.titolo}</h3>
+            <p style={{ color: '#475569', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>📍</span> {m.indirizzo} — <strong style={{ color: '#0f172a' }}>{m.zona_quartiere}</strong>
+            </p>
+            <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end' }}>
+               <button style={{ backgroundColor: colore, color: 'white', border: 'none', padding: '16px 32px', borderRadius: '12px', fontWeight: '900', cursor: 'pointer', fontSize: '15px', boxShadow: `0 10px 15px -3px ${colore}44` }}>VAI AL PROFILO</button>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* CROSS-LINKING */}
-      <div style={{ padding: '60px 20px', backgroundColor: 'white', marginTop: '60px' }}>
-        <div style={{ maxWidth: '1100px', margin: 'auto' }}>
-          <h2 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '40px' }}>Altre Specialistiche a Roma</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
+      {/* ALTRE SPECIALISTICHE - CROSS LINKING PESANTE */}
+      <div style={{ padding: '80px 20px', backgroundColor: 'white', marginTop: '60px' }}>
+        <div style={{ maxWidth: '1200px', margin: 'auto' }}>
+          <h2 style={{ fontSize: '26px', fontWeight: '900', marginBottom: '40px', textAlign: 'center' }}>ESPLORA ALTRE CATEGORIE A ROMA</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px' }}>
             {altreSpecialistiche.map(s => (
-              <Link key={s.nome} href={s.link} style={{ color: '#111827', textDecoration: 'none', padding: '25px', border: '1px solid #e5e7eb', borderRadius: '15px', textAlign: 'center', fontWeight: '700', backgroundColor: '#f9fafb' }}>
+              <Link key={s.nome} href={s.link} style={{ color: '#0f172a', textDecoration: 'none', padding: '30px', border: '1px solid #f1f5f9', borderRadius: '20px', textAlign: 'center', fontWeight: '800', fontSize: '18px', backgroundColor: '#f8fafc', transition: 'transform 0.2s' }}>
                 {s.nome}
               </Link>
             ))}
@@ -94,20 +102,24 @@ export default function HubLayout({
         </div>
       </div>
 
-      {/* FOOTER IDENTICO HOME (Box piccoli Ad/CTA) */}
-      <footer style={{ backgroundColor: '#111827', color: 'white', padding: '60px 20px' }}>
-        <div style={{ maxWidth: '1100px', margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ maxWidth: '400px' }}>
-            <h4 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '15px' }}>ServiziSalute Roma</h4>
-            <p style={{ color: '#9ca3af', lineHeight: '1.6' }}>Il portale di riferimento per trovare i migliori specialisti sanitari nella Capitale.</p>
+      {/* FOOTER - DEFINITIVO CON BOX AD/CTA PICCOLI (Richiesta 12-01) */}
+      <footer style={{ backgroundColor: '#0f172a', color: 'white', padding: '80px 20px' }}>
+        <div style={{ maxWidth: '1200px', margin: 'auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '50px', alignItems: 'start' }}>
+          <div>
+            <h4 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '20px' }}>Diagnostica Roma</h4>
+            <p style={{ color: '#94a3b8', lineHeight: '1.8', fontSize: '16px' }}>Il punto di riferimento per la sanità privata d'eccellenza a Roma. Tutti i professionisti sono verificati manualmente.</p>
           </div>
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ width: '120px', height: '60px', border: '1px solid #374151', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#9ca3af' }}>AD BOX</div>
-            <div style={{ width: '120px', height: '60px', border: '1px solid #374151', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#9ca3af' }}>CTA BOX</div>
+          <div style={{ border: '1px solid #1e293b', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
+            <span style={{ fontSize: '11px', color: '#475569', display: 'block', marginBottom: '10px' }}>ADVERTISEMENT</span>
+            <div style={{ backgroundColor: '#1e293b', height: '40px', borderRadius: '8px' }}></div>
+          </div>
+          <div style={{ border: '1px solid #1e293b', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
+            <span style={{ fontSize: '11px', color: '#475569', display: 'block', marginBottom: '10px' }}>PARTNER CTA</span>
+            <div style={{ backgroundColor: '#1e293b', height: '40px', borderRadius: '8px' }}></div>
           </div>
         </div>
-        <div style={{ textAlign: 'center', marginTop: '50px', borderTop: '1px solid #374151', paddingTop: '20px', color: '#6b7280' }}>
-          © 2026 Diagnostica Roma - Tutti i diritti riservati
+        <div style={{ textAlign: 'center', marginTop: '60px', borderTop: '1px solid #1e293b', paddingTop: '30px', color: '#475569', fontSize: '14px', fontWeight: '700' }}>
+          © 2026 DIAGNOSTICA ROMA — TUTTI I DIRITTI RISERVATI
         </div>
       </footer>
     </div>
