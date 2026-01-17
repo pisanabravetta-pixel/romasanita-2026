@@ -8,35 +8,34 @@ export default function HubLayout({
   titolo, 
   categoria, 
   colore, 
-  testoCTA, 
   badgeSpec, 
   testoTopBar, 
   descrizioneMeta, 
   testoMiniSEO, 
-  quartieri, 
-  schemas,
-  altreSpecialistiche 
+  quartieri = [], 
+  schemas = {},
+  altreSpecialistiche = [] 
 }) {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // --- LOGICA AUTOMATICA DI RICERCA ---
   useEffect(() => {
     async function fetchDocs() {
       if (!categoria) return;
+      setLoading(true);
       
-      // Prende la radice (es: 'oculist') dal tuo seo-logic.js
       const queryBusca = getDBQuery(categoria); 
       
-      const { data } = await supabase
+      // La query elastica che ignora maiuscole e plurali
+      const { data, error } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Cerca la radice ovunque per non sbagliare mai (singolare/plurale/maiuscole)
         .or(`categoria.ilike.%${queryBusca.root}%,specialistica.ilike.%${queryBusca.root}%,titolo.ilike.%${queryBusca.root}%`)
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
+      if (error) console.error("Errore Supabase:", error);
       setLoading(false);
     }
     fetchDocs();
@@ -47,30 +46,27 @@ export default function HubLayout({
       <Head>
         <title>{titolo} a Roma - ServiziSalute</title>
         <meta name="description" content={descrizioneMeta} />
-        <script type="application/ld+json">{JSON.stringify(schemas.medical)}</script>
-        <script type="application/ld+json">{JSON.stringify(schemas.faq)}</script>
+        {schemas?.medical && <script type="application/ld+json">{JSON.stringify(schemas.medical)}</script>}
+        {schemas?.faq && <script type="application/ld+json">{JSON.stringify(schemas.faq)}</script>}
       </Head>
 
-      {/* TOP BAR */}
       <div style={{ backgroundColor: '#111827', color: 'white', padding: '10px', textAlign: 'center', fontSize: '14px', fontWeight: 'bold' }}>
         {testoTopBar}
       </div>
 
-      {/* HEADER HUB */}
       <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', borderBottom: '1px solid #e5e7eb' }}>
-        <Link href="/tutte-le-specialistiche" style={{ color: colore, textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>
-          ← TUTTE LE SPECIALISTICHE
+        <Link href="/" style={{ color: colore, textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>
+          ← TORNA ALLA HOME
         </Link>
         <h1 style={{ fontSize: '32px', marginTop: '10px', color: '#111827' }}>{titolo}</h1>
         <p style={{ color: '#4b5563', maxWidth: '600px', margin: '15px auto' }}>{testoMiniSEO}</p>
       </div>
 
-      {/* CERCA PER QUARTIERE */}
       <div style={{ padding: '30px 20px', maxWidth: '1000px', margin: 'auto' }}>
         <h3 style={{ fontSize: '18px', marginBottom: '15px' }}>Cerca per Quartiere:</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
           {quartieri.map(q => (
-            <Link key={q} href={`/${categoria}-roma-${q.toLowerCase().replace(' ', '-')}`} 
+            <Link key={q} href={`/${categoria}-roma-${q.toLowerCase().replace(/\s+/g, '-')}`} 
                   style={{ padding: '10px', border: '1px solid #e5e7eb', borderRadius: '8px', textAlign: 'center', textDecoration: 'none', color: '#374151', backgroundColor: 'white' }}>
               {q}
             </Link>
@@ -78,7 +74,6 @@ export default function HubLayout({
         </div>
       </div>
 
-      {/* LISTA ANNUNCI */}
       <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
         {loading ? (
           <p>Caricamento professionisti...</p>
@@ -100,7 +95,6 @@ export default function HubLayout({
         )}
       </div>
 
-      {/* ALTRE SPECIALISTICHE */}
       <div style={{ padding: '40px 20px', backgroundColor: 'white', marginTop: '40px' }}>
         <div style={{ maxWidth: '1000px', margin: 'auto' }}>
           <h3 style={{ marginBottom: '20px' }}>Altre Specialistiche a Roma</h3>
@@ -114,10 +108,8 @@ export default function HubLayout({
         </div>
       </div>
 
-      {/* FOOTER - Utilizza il tuo codice footer esistente qui */}
-      <footer style={{ marginTop: '50px', padding: '20px', backgroundColor: '#111827', color: 'white' }}>
-        {/* Incolla qui il codice esatto del tuo footer */}
-        <p style={{ textAlign: 'center' }}>© 2026 Diagnostica Roma - Tutti i diritti riservati</p>
+      <footer style={{ marginTop: '50px', padding: '40px 20px', backgroundColor: '#111827', color: 'white', textAlign: 'center' }}>
+        <p>© 2026 ServiziSalute Roma - Tutti i diritti riservati</p>
       </footer>
     </div>
   );
