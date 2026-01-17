@@ -115,15 +115,20 @@ export default function HubLayout({
           </div>
         </div>
 
-        {/* FAQ */}
-        <div style={{ paddingBottom: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
-          {schemas?.faq?.mainEntity?.slice(0, 3).map((item, i) => (
-            <div key={i} style={{ marginBottom: '15px' }}>
-              <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
-            </div>
-          ))}
-        </div>
+       {/* FAQ INTEGRALI SENZA LIMITI */}
+<div style={{ paddingBottom: '40px' }}>
+  <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
+  {schemas?.faq?.mainEntity && schemas.faq.mainEntity.map((item, i) => (
+    <div key={i} style={{ marginBottom: '20px', borderBottom: '1px solid #e2e8f0', paddingBottom: '15px' }}>
+      <p style={{ fontSize: '16px', color: '#2c5282', fontWeight: '800', marginBottom: '8px' }}>
+        {i + 1}. {item.name}
+      </p>
+      <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.5', margin: 0 }}>
+        {item.acceptedAnswer.text}
+      </p>
+    </div>
+  ))}
+</div>
 
       </main>
       <Footer />
