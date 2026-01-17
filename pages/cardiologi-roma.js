@@ -36,7 +36,7 @@ export default function CardiologiRoma() {
       testoTopBar="❤️ VISITE CARDIOLOGICHE ROMA — GENNAIO 2026"
       descrizioneMeta="Trova i migliori cardiologi a Roma per visite specialistiche ed ECG."
       testoMiniSEO="Specialisti in cardiologia per la salute del tuo cuore: controlli, ECG e prevenzione a Roma."
-      medici={medici} 
+      medici={medici}
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
