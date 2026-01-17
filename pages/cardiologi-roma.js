@@ -12,12 +12,13 @@ export default function CardiologiRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      // Forziamo la ricerca sulla parola chiave 'cardio' per essere sicuri che escano
+      // Query diretta sui valori che hai indicato nel database
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('specialistica', '%cardio%') 
+        .ilike('categoria', '%visite-specialistiche%')
+        .ilike('specialistica', '%cardiologo%')
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -28,7 +29,7 @@ export default function CardiologiRoma() {
 
   return (
     <HubLayout 
-      titolo="Cardiologi" 
+      titolo="Cardiologi a Roma"
       categoria="cardiologi" 
       colore="#e11d48" 
       badgeSpec="❤️ CARDIOLOGIA"
