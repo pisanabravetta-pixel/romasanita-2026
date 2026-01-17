@@ -1,57 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import React from 'react';
 import HubLayout from '../components/HubLayout';
+import { getSchemas } from '../lib/seo-logic';
 
 export default function CardiologiRoma() {
-  const [medici, setMedici] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // 1. Genera gli schemi SEO
   const schemas = getSchemas('cardiologi', 'roma');
+  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-useEffect(() => {
-    async function fetchDocs() {
-      const queryBusca = getDBQuery('cardiologi'); 
-      const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`) // Prende il "minestrone" (visite-specialistiche)
-        .order('is_top', { ascending: false });
-      
-      if (data) {
-        // FILTRO DI SICUREZZA: Teniamo solo quelli che hanno la parola "cardiologo" 
-        // scritta in qualche colonna del record (nome, categoria o specialistica)
-        const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
-        );
-        setMedici(filtrati);
-      }
-      setLoading(false);
-    }
-    fetchDocs();
-  }, []);
-  
   return (
     <HubLayout 
-      titolo="Cardiologi"
-      categoria="cardiologi"
-      colore="#dc2626"
-      testoCTA="Gestisci uno Studio Cardiologico?"
+      titolo="Cardiologi a Roma"
+      categoria="cardiologi" 
+      colore="#e11d48" 
       badgeSpec="❤️ CARDIOLOGIA"
-      testoTopBar="❤️ STUDI DI CARDIOLOGIA E CARDIOLOGI A ROMA — AGGIORNATI A GENNAIO 2026"
-      descrizioneMeta="Cerchi un cardiologo a Roma? Trova i migliori specialisti per visite cardiologiche, ECG ed ecocardiogrammi nei quartieri di Roma con contatti diretti."
-      testoMiniSEO="In questa pagina trovi i migliori cardiologi a Roma, specializzati in prevenzione cardiovascolare, controllo della pressione, ECG e aritmie. Contatta direttamente i professionisti del tuo quartiere o filtra per zona per trovare un cardiologo a Roma disponibile per visite specialistiche o check-up completi."
-      medici={medici}
-      loading={loading}
+      testoTopBar="❤️ VISITE CARDIOLOGICHE ROMA — GENNAIO 2026"
+      descrizioneMeta="Trova i migliori cardiologi a Roma per visite specialistiche ed ECG."
+      testoMiniSEO="Specialisti in cardiologia per la salute del tuo cuore: controlli, ECG e prevenzione a Roma."
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
         {nome: "Dermatologi", link: "/dermatologi-roma"},
-        {nome: "Dentisti", link: "/dentisti-roma"},
-        {nome: "Diagnostica", link: "/diagnostica-roma"},
         {nome: "Oculisti", link: "/oculisti-roma"},
-        {nome: "Ortopedici", link: "/ortopedici-roma"}
+        {nome: "Ortopedici", link: "/ortopedici-roma"},
+        {nome: "Diagnostica", link: "/diagnostica-roma"},
+        {nome: "Servizi a Domicilio", link: "/servizi-domicilio-roma"}
       ]}
     />
   );
