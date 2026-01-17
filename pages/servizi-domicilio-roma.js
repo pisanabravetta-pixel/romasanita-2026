@@ -12,21 +12,17 @@ export default function ServiziDomicilioRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      // Prendiamo la configurazione dal tuo seo-logic.js
-      const queryBusca = getDBQuery('servizi-domicilio'); 
-
-      const { data, error } = await supabase
+      // QUERY DIRETTA: Se l'annuncio esiste con "domicilio" o "assistenza", ESCE.
+      const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // QUERY ELASTICA: Cerca la parola 'domicilio' in categoria, titolo o specialistica
-        .or(`categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,titolo.ilike.%domicilio%`)
+        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,categoria.ilike.%assistenza%')
         .order('is_top', { ascending: false });
       
       if (data) {
         setMedici(data);
       }
-      if (error) console.error("Errore query:", error);
       setLoading(false);
     }
     fetchDocs();
@@ -46,8 +42,12 @@ export default function ServiziDomicilioRoma() {
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
+      // QUI AGGIUNGIAMO LE VOCI MANCANTI PER ARRIVARE A 5 (così la sezione è piena)
       altreSpecialistiche={[
-        {nome: "Farmacie", link: "/farmacie-roma"},
+        {nome: "Cardiologi", link: "/cardiologi-roma"},
+        {nome: "Dermatologi", link: "/dermatologi-roma"},
+        {nome: "Oculisti", link: "/oculisti-roma"},
+        {nome: "Ortopedici", link: "/ortopedici-roma"},
         {nome: "Diagnostica", link: "/diagnostica-roma"}
       ]}
     />
