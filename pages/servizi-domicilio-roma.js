@@ -14,18 +14,23 @@ export default function ServiziDomicilioRoma() {
 
 useEffect(() => {
     async function fetchDocs() {
-      // PROVA DI EMERGENZA: Prendiamo tutto quello che è approvato
-      const { data, error } = await supabase
+      // 1. Facciamo una query che cerca la parola "domicilio"
+      // Cerchiamo sia in categoria che in specialistica per sicurezza
+      const { data } = await supabase
         .from('annunci')
         .select('*')
-        .eq('approvato', true); // Controlliamo solo che sia approvato
+        .eq('approvato', true)
+        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%') 
+        .order('is_top', { ascending: false });
       
       if (data) {
-        console.log("Dati ricevuti dal DB:", data); // Controlla la console del browser!
-        setMedici(data);
+        // 2. Filtriamo ulteriormente per essere sicuri di non avere "imbucati"
+        const filtrati = data.filter(m => {
+          const riga = JSON.stringify(m).toLowerCase();
+          return riga.includes('domicilio');
+        });
+        setMedici(filtrati);
       }
-      if (error) console.error("Errore Supabase:", error);
-      
       setLoading(false);
     }
     fetchDocs();
