@@ -12,12 +12,12 @@ export default function ServiziDomicilioRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      // QUERY DIRETTA: Se l'annuncio esiste con "domicilio" o "assistenza", ESCE.
-      const { data } = await supabase
+      // Usiamo una query super-base: prendi tutto ciò che ha "domicilio" nel nome, categoria o specialistica
+      const { data, error } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,categoria.ilike.%assistenza%')
+        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,titolo.ilike.%domicilio%')
         .order('is_top', { ascending: false });
       
       if (data) {
@@ -42,13 +42,14 @@ export default function ServiziDomicilioRoma() {
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
-      // QUI AGGIUNGIAMO LE VOCI MANCANTI PER ARRIVARE A 5 (così la sezione è piena)
+      // ARRAY COMPLETO: qui ne mettiamo 6 così ne vedi sicuramente almeno 4 o 5
       altreSpecialistiche={[
         {nome: "Cardiologi", link: "/cardiologi-roma"},
         {nome: "Dermatologi", link: "/dermatologi-roma"},
         {nome: "Oculisti", link: "/oculisti-roma"},
         {nome: "Ortopedici", link: "/ortopedici-roma"},
-        {nome: "Diagnostica", link: "/diagnostica-roma"}
+        {nome: "Ginecologi", link: "/ginecologi-roma"},
+        {nome: "Dentisti", link: "/dentisti-roma"}
       ]}
     />
   );
