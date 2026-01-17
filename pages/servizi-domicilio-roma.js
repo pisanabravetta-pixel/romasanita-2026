@@ -1,10 +1,11 @@
 import React from 'react';
 import HubLayout from '../components/HubLayout';
-import { getSchemas } from '../lib/seo-logic';
 
 export default function ServiziDomicilioRoma() {
-  const schemas = getSchemas('servizi-domicilio', 'roma');
-  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
+  const faq = [
+    { q: "Come prenotare un infermiere a domicilio?", a: "Contatta direttamente i professionisti elencati per concordare orario e prestazione." },
+    { q: "Quali zone di Roma sono coperte?", a: "Il servizio copre tutti i principali quartieri all'interno e all'esterno del GRA." }
+  ];
 
   return (
     <HubLayout 
@@ -13,16 +14,15 @@ export default function ServiziDomicilioRoma() {
       colore="#d97706" 
       badgeSpec="🏠 DOMICILIO"
       testoTopBar="🏠 ASSISTENZA SANITARIA A DOMICILIO ROMA — GENNAIO 2026"
-      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri e medici per visite a domicilio a Roma."
-      testoMiniSEO="Servizi sanitari professionali direttamente a casa tua: assistenza, medicazioni, fisioterapia e visite specialistiche con i migliori professionisti di Roma."
-      quartieri={quartieri}
-      schemas={schemas}
+      testoMiniSEO="Trova assistenza sanitaria professionale direttamente a casa tua: infermieri, fisioterapisti e medici per visite domiciliari rapide e sicure a Roma."
+      descrizioneMeta="Servizi a domicilio a Roma: assistenza infermieristica e medica h24."
+      quartieri={["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"]}
+      faq={faq}
       altreSpecialistiche={[
-        {nome: "Cardiologi Roma", link: "/cardiologi-roma"},
-        {nome: "Dermatologi Roma", link: "/dermatologi-roma"},
-        {nome: "Oculisti Roma", link: "/oculisti-roma"},
-        {nome: "Ortopedici Roma", link: "/ortopedici-roma"},
-        {nome: "Diagnostica Roma", link: "/diagnostica-roma"}
+        {nome: "Cardiologi", link: "/cardiologi-roma"},
+        {nome: "Dermatologi", link: "/dermatologi-roma"},
+        {nome: "Oculisti", link: "/oculisti-roma"},
+        {nome: "Diagnostica", link: "/diagnostica-roma"}
       ]}
     />
   );
