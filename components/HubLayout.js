@@ -16,7 +16,8 @@ export default function HubLayout({
   testoMiniSEO,
   badgeSpec,
   testoTopBar,
-  altreSpecialistiche // Array di oggetti {nome, link}
+  testoCTA,           // <--- AGGIUNTO QUI (Mancava!)
+  altreSpecialistiche  // Array di oggetti {nome, link}
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
@@ -63,7 +64,7 @@ export default function HubLayout({
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieri.map(q => (
+            {quartieri && quartieri.map(q => (
               <a key={q} href={`/${categoria}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
             ))}
           </div>
@@ -71,7 +72,7 @@ export default function HubLayout({
 
         {/* LISTA BOX ANNUNCI */}
         <div style={{ display: 'block' }}>
-          {loading ? <p>Caricamento...</p> : medici.map((v) => (
+          {loading ? <p>Caricamento...</p> : medici && medici.map((v) => (
             <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
@@ -90,34 +91,34 @@ export default function HubLayout({
           ))}
         </div>
 
-        {/* MINI TESTO SEO (TESTO LUNGO ORIGINALE) */}
+        {/* MINI TESTO SEO */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
           <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
             {testoMiniSEO}
           </p>
         </div>
 
-        {/* CTA NERA MODIFICATA */}
-  <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-    <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
-    <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
-    <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-  </div>
+        {/* CTA NERA */}
+        <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+        </div>
 
-        {/* ALTRE SPECIALISTICHE (ELENCO DINAMICO) */}
+        {/* ALTRE SPECIALISTICHE */}
         <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#2c5282' }}>Altre Specialistiche a Roma:</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            {altreSpecialistiche.map(s => (
+            {altreSpecialistiche && altreSpecialistiche.map(s => (
               <a key={s.nome} href={s.link} style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>{s.nome}</a>
             ))}
           </div>
         </div>
 
-        {/* FAQ (DAL TUO CODICE) */}
+        {/* FAQ */}
         <div style={{ paddingBottom: '40px' }}>
           <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
-          {schemas?.faq?.mainEntity.slice(0, 3).map((item, i) => (
+          {schemas?.faq?.mainEntity?.slice(0, 3).map((item, i) => (
             <div key={i} style={{ marginBottom: '15px' }}>
               <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
             </div>
