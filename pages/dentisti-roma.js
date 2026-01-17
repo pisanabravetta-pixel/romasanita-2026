@@ -19,11 +19,12 @@ export default function DentistiRoma() {
     fetchDocs();
   }, []);
 
-  return (
+ return (
     <HubLayout 
       titolo="Dentisti"
       categoria="dentisti"
       colore="#3182ce"
+      testoCTA="Gestisci uno Studio Dentistico?" // <--- AGGIUNTA QUESTA RIGA
       badgeSpec="🦷 ODONTOIATRIA"
       testoTopBar="🦷 STUDI DENTISTICI E ODONTOIATRI A ROMA — AGGIORNATI A GENNAIO 2026"
       descrizioneMeta="Cerchi un dentista a Roma? Trova i migliori studi dentistici per pulizia denti, impianti e ortodonzia nei quartieri di Roma con contatti diretti."
