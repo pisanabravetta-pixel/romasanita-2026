@@ -3,9 +3,7 @@ import HubLayout from '../components/HubLayout';
 import { getSchemas } from '../lib/seo-logic';
 
 export default function CardiologiRoma() {
-  // 1. Genera gli schemi SEO
   const schemas = getSchemas('cardiologi', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   return (
