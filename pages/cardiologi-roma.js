@@ -12,12 +12,15 @@ export default function CardiologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('cardiologi'); 
+      
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
-        .ilike('specialistica', `%${queryBusca.spec}%`) // <--- AGGIUNTO QUESTO PER SICUREZZA
+        // Questo comando dice: "Prendi se trovi 'cardiologo' nella colonna categoria 
+        // OPPURE nella colonna specialistica". Così i medici tornano TUTTI 
+        // ma i dermatologi restano fuori.
+        .or(`categoria.ilike.%${queryBusca.spec}%,specialistica.ilike.%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -25,7 +28,6 @@ export default function CardiologiRoma() {
     }
     fetchDocs();
   }, []);
-
   return (
     <HubLayout 
       titolo="Cardiologi"
