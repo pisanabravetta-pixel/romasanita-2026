@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import React, { useEffect, useState } from 'react'; // Aggiunto per annunci
+import { supabase } from '../lib/supabaseClient'; // Aggiunto per annunci
+import { getDBQuery, getSchemas } from '../lib/seo-logic'; // Aggiunto getDBQuery
 import HubLayout from '../components/HubLayout';
 
 export default function CardiologiRoma() {
-  const [medici, setMedici] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [medici, setMedici] = useState([]); // Aggiunto per annunci
+  const [loading, setLoading] = useState(true); // Aggiunto per annunci
 
   const schemas = getSchemas('cardiologi', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
+  // Logica per caricare gli annunci senza cambiare nient'altro
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('cardiologi'); 
@@ -36,8 +37,8 @@ export default function CardiologiRoma() {
       testoTopBar="❤️ VISITE CARDIOLOGICHE ROMA — GENNAIO 2026"
       descrizioneMeta="Trova i migliori cardiologi a Roma per visite specialistiche ed ECG."
       testoMiniSEO="Specialisti in cardiologia per la salute del tuo cuore: controlli, ECG e prevenzione a Roma."
-      medici={medici}
-      loading={loading}
+      medici={medici} // Passa gli annunci caricati
+      loading={loading} // Passa lo stato di caricamento
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
