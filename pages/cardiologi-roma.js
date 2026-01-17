@@ -16,10 +16,17 @@ useEffect(() => {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`) // Torna al filtro categoria puro
+        .ilike('categoria', `%${queryBusca.cat}%`) // Prende il "minestrone" (visite-specialistiche)
         .order('is_top', { ascending: false });
       
-      if (data) setMedici(data);
+      if (data) {
+        // FILTRO DI SICUREZZA: Teniamo solo quelli che hanno la parola "cardiologo" 
+        // scritta in qualche colonna del record (nome, categoria o specialistica)
+        const filtrati = data.filter(m => 
+          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
+        );
+        setMedici(filtrati);
+      }
       setLoading(false);
     }
     fetchDocs();
