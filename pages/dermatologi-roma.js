@@ -20,6 +20,7 @@ export default function DermatologiRoma() {
         .select('*')
         .eq('approvato', true)
         .ilike('categoria', `%${queryBusca.cat}%`)
+        .ilike('specialistica', `%${queryBusca.spec}%`) // <--- AGGIUNTO QUESTO FILTRO
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
