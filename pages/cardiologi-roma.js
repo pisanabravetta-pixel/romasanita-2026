@@ -9,18 +9,14 @@ export default function CardiologiRoma() {
   const schemas = getSchemas('cardiologi', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-  useEffect(() => {
+useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('cardiologi'); 
-      
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Questo comando dice: "Prendi se trovi 'cardiologo' nella colonna categoria 
-        // OPPURE nella colonna specialistica". Così i medici tornano TUTTI 
-        // ma i dermatologi restano fuori.
-        .or(`categoria.ilike.%${queryBusca.spec}%,specialistica.ilike.%${queryBusca.spec}%`)
+        .ilike('categoria', `%${queryBusca.cat}%`) // Torna al filtro categoria puro
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -28,6 +24,7 @@ export default function CardiologiRoma() {
     }
     fetchDocs();
   }, []);
+  
   return (
     <HubLayout 
       titolo="Cardiologi"
