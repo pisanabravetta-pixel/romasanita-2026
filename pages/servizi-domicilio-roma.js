@@ -1,27 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { getDBQuery, getSchemas } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function ServiziDomicilioRoma() {
-  const faq = [
-    { q: "Come prenotare un infermiere a domicilio?", a: "Contatta direttamente i professionisti elencati per concordare orario e prestazione." },
-    { q: "Quali zone di Roma sono coperte?", a: "Il servizio copre tutti i principali quartieri all'interno e all'esterno del GRA." }
-  ];
+  const [medici, setMedici] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Recupero FAQ e Schemi dal seo-logic per 'servizi-domicilio'
+  const schemas = getSchemas('servizi-domicilio', 'roma');
+  
+  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
+
+  useEffect(() => {
+    async function fetchDocs() {
+      // 1. Prende il mapping corretto (es: 'domicilio')
+      const queryBusca = getDBQuery('servizi-domicilio'); 
+      
+      // 2. Query al database
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .ilike('categoria', `%${queryBusca.cat}%`)
+        .order('is_top', { ascending: false });
+      
+      if (data) setMedici(data);
+      setLoading(false);
+    }
+    fetchDocs();
+  }, []);
 
   return (
     <HubLayout 
-      titolo="Servizi a Domicilio a Roma"
+      titolo="Servizi a Domicilio"
       categoria="servizi-domicilio"
-      colore="#d97706" 
+      colore="#d97706" // Ambra/Arancione scuro
+      testoCTA="Offri assistenza sanitaria a domicilio a Roma?"
       badgeSpec="🏠 DOMICILIO"
       testoTopBar="🏠 ASSISTENZA SANITARIA A DOMICILIO ROMA — GENNAIO 2026"
-      testoMiniSEO="Trova assistenza sanitaria professionale direttamente a casa tua: infermieri, fisioterapisti e medici per visite domiciliari rapide e sicure a Roma."
-      descrizioneMeta="Servizi a domicilio a Roma: assistenza infermieristica e medica h24."
-      quartieri={["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia"]}
-      faq={faq}
+      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri, medici e fisioterapisti per visite a domicilio a Roma nei principali quartieri con contatto diretto."
+      testoMiniSEO="Servizi sanitari professionali direttamente a casa tua a Roma. In questa sezione trovi professionisti qualificati per assistenza infermieristica, fisioterapia domiciliare, prelievi e visite mediche specialistiche nel comfort della tua abitazione, attivi in tutti i quartieri della Capitale."
+      medici={medici}
+      loading={loading}
+      quartieri={quartieri}
+      schemas={schemas}
       altreSpecialistiche={[
+        {nome: "Farmacie", link: "/farmacie-roma"},
         {nome: "Cardiologi", link: "/cardiologi-roma"},
         {nome: "Dermatologi", link: "/dermatologi-roma"},
-        {nome: "Oculisti", link: "/oculisti-roma"},
+        {nome: "Infermieri", link: "/infermieri-roma"},
         {nome: "Diagnostica", link: "/diagnostica-roma"}
       ]}
     />
