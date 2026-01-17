@@ -14,16 +14,23 @@ export default function ServiziDomicilioRoma() {
 
 useEffect(() => {
     async function fetchDocs() {
-      // Usiamo una ricerca "larga" su Supabase che ignora maiuscole, minuscole ed emoji
+      // 1. Prendiamo la parola dal mapping (es: 'servizi-domicilio')
+      const queryBusca = getDBQuery('servici-domicilio'); 
+      
+      // 2. Rendiamola elastica: togliamo trattini e prendiamo la radice (es: 'domicilio')
+      const keywordElastica = queryBusca.cat.includes('-') 
+        ? queryBusca.cat.split('-').pop() 
+        : queryBusca.cat;
+
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%') 
+        // 3. Cerchiamo la "radice" della parola ovunque, ignorando emoji e fronzoli
+        .or(`categoria.ilike.%${keywordElastica}%,specialistica.ilike.%${keywordElastica}%`) 
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Assegniamo i dati direttamente senza filtri JS che "nascondono" le righe
         setMedici(data);
       }
       setLoading(false);
