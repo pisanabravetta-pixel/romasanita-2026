@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import HubLayout from '../components/HubLayout';
 
 export default function CardiologiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Recupero FAQ e Schemi per Cardiologia
+  const schemas = getSchemas('cardiologi', 'roma');
+  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
     async function fetchDocs() {
+      const queryBusca = getDBQuery('cardiologi'); 
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .or('categoria.ilike.%cardiologia%,categoria.ilike.%cardiologo%')
+        .ilike('categoria', `%${queryBusca.cat}%`)
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -25,132 +29,26 @@ export default function CardiologiRoma() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
-      <Head>
-        <title>Cardiologi a Roma: Visita Cardiologica ed ECG | Gennaio 2026</title>
-        <meta name="description" content="Trova i migliori cardiologi a Roma. Prenota visita cardiologica, ECG ed ecocardiogramma nei migliori studi della Capitale aggiornati a Gennaio 2026." />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "MedicalOrganization",
-              "name": "Cardiologi Roma - ServiziSalute",
-              "url": "https://www.servizisalute.com/cardiologi-roma",
-              "logo": "https://www.servizisalute.com/logo.png",
-              "description": "Elenco dei migliori cardiologi e studi cardiologici a Roma aggiornato a Gennaio 2026.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Roma",
-                "addressRegion": "Lazio",
-                "addressCountry": "IT"
-              }
-            })
-          }}
-        />
-      </Head>
-      
-      <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '10px', textAlign: 'center', fontWeight: 'bold', fontSize: '14px' }}>
-        TUTTI I CARDIOLOGI A ROMA AGGIORNATI A GENNAIO 2026
-      </div>
-
-      <Navbar />
-
-      <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
-        
-        {/* BREADCRUMB SEO */}
-        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-  <a href="/" style={{ color: '#059669', textDecoration: 'none' }}>Home</a>
-  <span style={{ margin: '0 8px' }}>{'>'}</span>
-  <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
-  <span style={{ margin: '0 8px' }}>{'>'}</span>
-  <span style={{ color: '#065f46' }}>Cardiologi Roma</span>
-</div>
-
-        {/* TITOLO E SOTTOTITOLO SEO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '15px', borderLeft: '8px solid #dc2626', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-          <h1 style={{ color: '#991b1b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-            Cardiologi a Roma
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Visite, ECG ed Ecocardiogramma aggiornati a <span style={{ color: '#dc2626' }}>Gennaio 2026</span>
-          </p>
-        </div>
-
-        {/* CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '15px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#991b1b' }}>Cerca per Quartiere:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieri.map(q => (
-              <a key={q} href={`/cardiologi-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
-            ))}
-          </div>
-        </div>
-
-        {/* LISTA BOX RIDOTTI */}
-        <div style={{ display: 'block' }}>
-          {loading ? <p>Caricamento...</p> : medici.map((v) => (
-            <div key={v.id} style={{ 
-              backgroundColor: 'white', borderRadius: '20px', padding: '25px', marginBottom: '20px', 
-              border: v.is_top ? '4px solid #991b1b' : '1px solid #e2e8f0', 
-              boxShadow: '0 6px 15px rgba(0,0,0,0.04)', display: 'block', width: '100%', boxSizing: 'border-box'
-            }}>
-              <h3 style={{ color: '#991b1b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fef2f2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>📉 ECG</span>
-                <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fef2f2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>💓 ECOCARDIOGRAMMA</span>
-              </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#dc2626', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* MINI TESTO SEO DOPO ANNUNCI */}
-        <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            In questa pagina trovi un elenco aggiornato di <strong>cardiologi a Roma</strong>, professionisti qualificati per il monitoraggio della salute del cuore. 
-            Puoi consultare profili, contattare direttamente gli studi medici o filtrare i <strong>cardiologi a Roma per quartiere</strong> 
-            per trovare lo specialista più vicino per visite cardiologiche, ECG e controllo pressione.
-          </p>
-        </div>
-
-        {/* CTA NERA RIDOTTA */}
-        <div style={{ backgroundColor: '#0f172a', padding: '35px 25px', borderRadius: '25px', textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un Medico Cardiologo?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci il tuo studio e ricevi contatti da nuovi pazienti a Roma.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#dc2626', color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-        </div>
-
-        {/* ALTRE SPECIALISTICHE */}
-        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '40px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#991b1b' }}>Altre Specialistiche a Roma:</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            <a href="/dermatologi-roma" style={{ color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}>Dermatologi</a>
-            <a href="/dentisti-roma" style={{ color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}>Dentisti</a>
-            <a href="/diagnostica-roma" style={{ color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}>Diagnostica</a>
-            <a href="/oculisti-roma" style={{ color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}>Oculisti</a>
-            <a href="/ortopedici-roma" style={{ color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}>Ortopedici</a>
-          </div>
-        </div>
-
-        {/* FAQ (3 DOMANDE) */}
-        <div style={{ paddingBottom: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#991b1b' }}>Domande Frequenti</h3>
-          <p><strong>1. Quanto costa una visita cardiologica a Roma?</strong> — La tariffa media per una visita con ECG oscilla tra 80€ e 150€ in regime privato.</p><br/>
-          <p><strong>2. È necessaria l'impegnativa?</strong> — Per i professionisti privati elencati su questo portale non è necessaria l'impegnativa del medico curante.</p><br/>
-          <p><strong>3. Come prenotare un ECG rapido?</strong> — Puoi contattare direttamente lo studio tramite il tasto WhatsApp o Telefono per verificare la disponibilità immediata.</p>
-        </div>
-
-      </main>
-
-      <Footer />
-    </div>
+    <HubLayout 
+      titolo="Cardiologi"
+      categoria="cardiologi"
+      colore="#dc2626" // Rosso Cardiologia
+      testoCTA="Gestisci uno Studio Cardiologico?"
+      badgeSpec="❤️ CARDIOLOGIA"
+      testoTopBar="❤️ STUDI DI CARDIOLOGIA E CARDIOLOGI A ROMA — AGGIORNATI A GENNAIO 2026"
+      descrizioneMeta="Cerchi un cardiologo a Roma? Trova i migliori specialisti per visite cardiologiche, ECG ed ecocardiogrammi nei quartieri di Roma con contatti diretti."
+      testoMiniSEO="In questa pagina trovi i migliori cardiologi a Roma, specializzati in prevenzione cardiovascolare, controllo della pressione, ECG e aritmie. Contatta direttamente i professionisti del tuo quartiere o filtra per zona per trovare un cardiologo a Roma disponibile per visite specialistiche o check-up completi."
+      medici={medici}
+      loading={loading}
+      quartieri={quartieri}
+      schemas={schemas}
+      altreSpecialistiche={[
+        {nome: "Dermatologi", link: "/dermatologi-roma"},
+        {nome: "Dentisti", link: "/dentisti-roma"},
+        {nome: "Diagnostica", link: "/diagnostica-roma"},
+        {nome: "Oculisti", link: "/oculisti-roma"},
+        {nome: "Ortopedici", link: "/ortopedici-roma"}
+      ]}
+    />
   );
 }
