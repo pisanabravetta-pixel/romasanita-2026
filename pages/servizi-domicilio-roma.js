@@ -14,20 +14,13 @@ export default function ServiziDomicilioRoma() {
 
 useEffect(() => {
     async function fetchDocs() {
-      // 1. Prendiamo la parola dal mapping (es: 'servizi-domicilio')
-      const queryBusca = getDBQuery('servici-domicilio'); 
-      
-      // 2. Rendiamola elastica: togliamo trattini e prendiamo la radice (es: 'domicilio')
-      const keywordElastica = queryBusca.cat.includes('-') 
-        ? queryBusca.cat.split('-').pop() 
-        : queryBusca.cat;
-
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // 3. Cerchiamo la "radice" della parola ovunque, ignorando emoji e fronzoli
-        .or(`categoria.ilike.%${keywordElastica}%,specialistica.ilike.%${keywordElastica}%`) 
+        // Cerchiamo le parole chiave fondamentali che sicuramente sono nel database
+        // Questo prenderà Medihospes e QUALSIASI altro annuncio futuro di questo tipo
+        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,categoria.ilike.%assistenza%,specialistica.ilike.%assistenza%')
         .order('is_top', { ascending: false });
       
       if (data) {
