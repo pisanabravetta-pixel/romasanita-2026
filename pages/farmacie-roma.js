@@ -14,17 +14,18 @@ export default function FarmacieRoma() {
 
 useEffect(() => {
     async function fetchDocs() {
-      // Usiamo una ricerca larga: se trova "farmac" prende tutto (farmacia, farmacie, parafarmacia)
+      // 1. Prende 'farmacia' dal mapping che hai in seo-logic
+      const queryBusca = getDBQuery('farmacie'); 
+      
+      // 2. Fa la query semplice che funzionava all'inizio
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .or('categoria.ilike.%farmac%,specialistica.ilike.%farmac%') 
+        .ilike('categoria', `%${queryBusca.cat}%`)
         .order('is_top', { ascending: false });
       
-      if (data) {
-        setMedici(data);
-      }
+      if (data) setMedici(data);
       setLoading(false);
     }
     fetchDocs();
