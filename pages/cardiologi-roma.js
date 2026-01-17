@@ -12,13 +12,13 @@ export default function CardiologiRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      // Query diretta sui valori che hai indicato nel database
+      // Query "Fregatene di tutto": cerca solo la radice 'cardio'
+      // ilike ignora maiuscole e minuscole in automatico
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', '%visite-specialistiche%')
-        .ilike('specialistica', '%cardiologo%')
+        .ilike('specialistica', '%cardio%') 
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -29,7 +29,7 @@ export default function CardiologiRoma() {
 
   return (
     <HubLayout 
-      titolo="Cardiologi a Roma"
+      titolo="Cardiologi" // Ho tolto "a Roma" qui perché lo mette già il layout
       categoria="cardiologi" 
       colore="#e11d48" 
       badgeSpec="❤️ CARDIOLOGIA"
