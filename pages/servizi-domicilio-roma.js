@@ -7,49 +7,48 @@ export default function ServiziDomicilioRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Recupero FAQ (3) e Schemi dal tuo seo-logic.js
   const schemas = getSchemas('servizi-domicilio', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-useEffect(() => {
+  useEffect(() => {
     async function fetchDocs() {
-      const { data } = await supabase
+      // Prendiamo la configurazione dal tuo seo-logic.js
+      const queryBusca = getDBQuery('servizi-domicilio'); 
+
+      const { data, error } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Cerchiamo le parole chiave fondamentali che sicuramente sono nel database
-        // Questo prenderà Medihospes e QUALSIASI altro annuncio futuro di questo tipo
-        .or('categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,categoria.ilike.%assistenza%,specialistica.ilike.%assistenza%')
+        // QUERY ELASTICA: Cerca la parola 'domicilio' in categoria, titolo o specialistica
+        .or(`categoria.ilike.%domicilio%,specialistica.ilike.%domicilio%,titolo.ilike.%domicilio%`)
         .order('is_top', { ascending: false });
       
       if (data) {
         setMedici(data);
       }
+      if (error) console.error("Errore query:", error);
       setLoading(false);
     }
     fetchDocs();
   }, []);
+
   return (
     <HubLayout 
       titolo="Servizi a Domicilio"
       categoria="servizi-domicilio"
-      colore="#d97706" // Giallo Ambra / Assistenza
+      colore="#d97706" 
       testoCTA="Offri servizi sanitari a domicilio a Roma?"
       badgeSpec="🏠 DOMICILIO"
-      testoTopBar="🏠 ASSISTENZA SANITARIA E SERVIZI A DOMICILIO A ROMA — GENNAIO 2026"
-      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri, fisioterapisti e medici per visite a domicilio nei quartieri di Roma con intervento rapido."
-      testoMiniSEO="In questa sezione trovi i migliori professionisti che offrono servizi sanitari a domicilio a Roma. Dalla fisioterapia riabilitativa all'assistenza infermieristica, fino alle visite mediche specialistiche direttamente a casa tua, per garantire continuità assistenziale in totale comodità."
+      testoTopBar="🏠 ASSISTENZA SANITARIA A DOMICILIO ROMA — GENNAIO 2026"
+      descrizioneMeta="Hai bisogno di assistenza a casa? Trova infermieri e medici per visite a domicilio a Roma."
+      testoMiniSEO="Servizi sanitari professionali direttamente a casa tua: assistenza, medicazioni e visite specialistiche domiciliari."
       medici={medici}
       loading={loading}
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
         {nome: "Farmacie", link: "/farmacie-roma"},
-        {nome: "Diagnostica", link: "/diagnostica-roma"},
-        {nome: "Infermieri", link: "/infermieri-roma"},
-        {nome: "Fisioterapisti", link: "/fisioterapisti-roma"},
-        {nome: "Cardiologi", link: "/cardiologi-roma"}
+        {nome: "Diagnostica", link: "/diagnostica-roma"}
       ]}
     />
   );
