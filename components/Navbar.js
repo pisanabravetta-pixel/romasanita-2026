@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function Navbar() {
+  const [menuAperto, setMenuAperto] = useState(false);
   return (
     <header style={{ 
       backgroundColor: 'white', 
@@ -31,24 +32,18 @@ export default function Navbar() {
     Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
   </div>
   
- <div 
-  className="nav-item-dropdown" 
-  onMouseEnter={(e) => {
-    const menu = e.currentTarget.querySelector('.dropdown-menu');
-    if (menu) menu.style.display = 'block';
-  }}
-  onMouseLeave={(e) => {
-    const menu = e.currentTarget.querySelector('.dropdown-menu');
-    if (menu) menu.style.display = 'none';
-  }}
-  style={{ position: 'relative', paddingBottom: '10px', marginBottom: '-10px' }}
+{/* DROP DOWN CATEGORIE */}
+<div 
+  onMouseEnter={() => setMenuAperto(true)}
+  onMouseLeave={() => setMenuAperto(false)}
+  style={{ position: 'relative', paddingBottom: '15px', marginBottom: '-15px' }}
 >
   <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
     Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
   </div>
   
-  <div className="dropdown-menu" style={{ 
-    display: 'none',
+  <div style={{ 
+    display: menuAperto ? 'block' : 'none',
     position: 'absolute', 
     top: '100%', 
     left: 0, 
@@ -77,8 +72,7 @@ export default function Navbar() {
           textDecoration: 'none', 
           color: '#475569', 
           fontSize: '13px', 
-          fontWeight: '600',
-          transition: 'background 0.2s'
+          fontWeight: '600'
         }}
         onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#2563eb'; }}
         onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#475569'; }}
@@ -88,6 +82,7 @@ export default function Navbar() {
     ))}
   </div>
 </div>
+
           {/* 1. LINK ALLA PAGINA HUB */}
           <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
             Tutti i Servizi
