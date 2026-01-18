@@ -7,22 +7,19 @@ export default function FarmacieRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Recupero FAQ (ora ne vedrai 3) e Schemi
   const schemas = getSchemas('farmacie', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-useEffect(() => {
+  useEffect(() => {
     async function fetchDocs() {
-      // 1. Prende 'farmacia' dal mapping che hai in seo-logic
       const queryBusca = getDBQuery('farmacie'); 
       
-      // 2. Fa la query semplice che funzionava all'inizio
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        // Cerca la radice 'farmac' in entrambe le colonne per non sbagliare mai
+        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
@@ -30,18 +27,19 @@ useEffect(() => {
     }
     fetchDocs();
   }, []);
+
   return (
     <HubLayout 
+      medici={medici}
+      loading={loading}
       titolo="Farmacie"
       categoria="farmacie"
-      colore="#16a34a" // Verde Farmacia
+      colore="#16a34a" 
       testoCTA="Sei il titolare di una Farmacia a Roma?"
       badgeSpec="💊 FARMACIE"
       testoTopBar="💊 FARMACIE DI TURNO E SERVIZI FARMACEUTICI A ROMA — GENNAIO 2026"
       descrizioneMeta="Cerca una farmacia a Roma. Trova farmacie di turno, parafarmacie e servizi di consegna farmaci a domicilio nei principali quartieri di Roma."
       testoMiniSEO="In questa sezione trovi l'elenco delle farmacie a Roma, suddivise per quartiere. Oltre alla vendita di farmaci, molte strutture offrono servizi di autoanalisi, test antigenici, prodotti galenici e parafarmacia. Consulta gli orari e i contatti per trovare la farmacia più vicina a te."
-      medici={medici}
-      loading={loading}
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
