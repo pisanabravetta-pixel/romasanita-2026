@@ -1,3 +1,4 @@
+import { quartieriTop } from '../lib/seo-logic';
 import React from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
@@ -60,15 +61,29 @@ export default function HubLayout({
           </p>
         </div>
 
-        {/* CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieri && quartieri.map(q => (
-              <a key={q} href={`/${categoria}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: '#ebf8ff', color: '#2c5282', borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
-            ))}
-          </div>
-        </div>
+     {/* CERCA PER QUARTIERE (Versione Automatica Centralizzata) */}
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+  <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    {quartieriTop.map(q => (
+      <a 
+        key={q.s} 
+        href={`/${categoria}-roma-${q.s}`} 
+        style={{ 
+          padding: '7px 12px', 
+          backgroundColor: '#ebf8ff', 
+          color: '#2c5282', 
+          borderRadius: '8px', 
+          textDecoration: 'none', 
+          fontWeight: '700', 
+          fontSize: '12px' 
+        }}
+      >
+        {q.n}
+      </a>
+    ))}
+  </div>
+</div>
 
         {/* LISTA BOX ANNUNCI */}
         <div style={{ display: 'block' }}>
