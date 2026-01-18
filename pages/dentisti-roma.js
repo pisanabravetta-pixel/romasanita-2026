@@ -12,7 +12,13 @@ export default function DentistiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('dentisti'); 
-      const { data } = await supabase.from('annunci').select('*').eq('approvato', true).ilike('categoria', `%${queryBusca.cat}%`).order('is_top', { ascending: false });
+      const { data } = await supabase.const queryBusca = getDBQuery('dentisti'); 
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .ilike('specialista', `%${queryBusca.spec}%`) // Cerca nella colonna specialista
+        .order('is_top', { ascending: false });
       if (data) setMedici(data);
       setLoading(false);
     }
@@ -21,6 +27,8 @@ export default function DentistiRoma() {
 
  return (
     <HubLayout 
+  medici={medici}
+  loading={loading}
       titolo="Dentisti"
       categoria="dentisti"
       colore="#3182ce"
