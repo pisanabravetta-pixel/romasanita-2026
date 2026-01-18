@@ -52,7 +52,7 @@ export default function PerIProfessionisti() {
 
       <Navbar />
 
-      {/* NAVIGAZIONE DI RITORNO (BREADCRUMB) */}
+      {/* NAVIGAZIONE DI RITORNO */}
       <div style={{ backgroundColor: 'white', borderBottom: '1px solid #e2e8f0', padding: '10px 20px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', fontSize: '14px', fontWeight: '600' }}>
           <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
@@ -71,13 +71,17 @@ export default function PerIProfessionisti() {
           <p style={{ color: '#475569', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', fontWeight: '500' }}>
             ServiziSalute aiuta i cittadini a trovare specialisti nel proprio quartiere. <strong>Offriamo uno spazio gratuito per posizionare il tuo studio medico nei risultati di ricerca a Roma.</strong>
           </p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
-            REGISTRA IL TUO PROFILO ORA
-          </a>
+          
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
+              REGISTRA IL TUO PROFILO ORA
+            </a>
+            <a href="/come-funziona" style={{ backgroundColor: 'white', color: '#2563eb', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px', border: '2px solid #2563eb' }}>
+              SCOPRI COME FUNZIONA
+            </a>
+          </div>
         </div>
 
-        {/* RESTO DELLA PAGINA... (Griglia, Tabella e FAQ rimangono invariate) */}
-        
         {/* SOCIAL PROOF QUARTIERI */}
         <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', padding: '25px', borderRadius: '24px', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ fontSize: '32px' }}>📊</div>
@@ -89,6 +93,7 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
+        {/* GRIGLIA CARATTERISTICHE */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '50px' }}>
           <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
             <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>📍 Hyper-Local Roma</h4>
@@ -104,36 +109,7 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
-        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', border: '1px solid #e2e8f0', marginBottom: '50px', overflowX: 'auto' }}>
-          <h3 style={{ textAlign: 'center', marginBottom: '30px', fontWeight: '900', color: '#0f172a', fontSize: '24px' }}>Confronto Piattaforme</h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid #f1f5f9', textAlign: 'left' }}>
-                <th style={{ padding: '20px', color: '#64748b' }}>Servizio</th>
-                <th style={{ padding: '20px', color: '#2563eb', fontWeight: '900' }}>ServiziSalute Roma</th>
-                <th style={{ padding: '20px', color: '#64748b' }}>Altri Portali</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                <td style={{ padding: '20px', fontWeight: '600' }}>Costo Iscrizione</td>
-                <td style={{ padding: '20px', fontWeight: '900', color: '#059669' }}>GRATUITO</td>
-                <td style={{ padding: '20px', color: '#94a3b8' }}>Abbonamento Mensile</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                <td style={{ padding: '20px', fontWeight: '600' }}>Commissione Prenotazione</td>
-                <td style={{ padding: '20px', fontWeight: '900', color: '#059669' }}>ZERO</td>
-                <td style={{ padding: '20px', color: '#94a3b8' }}>Costo per click/lead</td>
-              </tr>
-              <tr>
-                <td style={{ padding: '20px', fontWeight: '600' }}>Proprietà del Paziente</td>
-                <td style={{ padding: '20px', fontWeight: '900', color: '#2563eb' }}>DIRETTA</td>
-                <td style={{ padding: '20px', color: '#94a3b8' }}>Intermediazione</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+        {/* FAQ SECTION */}
         <div style={{ marginBottom: '60px' }}>
           <h3 style={{ fontSize: '26px', fontWeight: '900', marginBottom: '30px', color: '#0f172a', textAlign: 'center' }}>Domande Frequenti</h3>
           <div style={{ display: 'grid', gap: '15px' }}>
@@ -146,6 +122,7 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
+        {/* FINAL CTA */}
         <div style={{ textAlign: 'center', padding: '40px 0' }}>
           <h2 style={{ fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Pronto ad aumentare i tuoi contatti?</h2>
           <a href="/pubblica-annuncio" style={{ backgroundColor: '#0f172a', color: 'white', padding: '18px 40px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
