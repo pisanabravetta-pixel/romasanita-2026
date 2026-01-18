@@ -45,11 +45,21 @@ export default function PerIProfessionisti() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
       
+      {/* BARRA SUPERIORE */}
       <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px', textAlign: 'center', fontWeight: '800', fontSize: '13px', textTransform: 'uppercase' }}>
         🚀 PORTA IL TUO STUDIO NEL CUORE DEI QUARTIERI DI ROMA — EDIZIONE 2026
       </div>
 
       <Navbar />
+
+      {/* NAVIGAZIONE DI RITORNO (BREADCRUMB) */}
+      <div style={{ backgroundColor: 'white', borderBottom: '1px solid #e2e8f0', padding: '10px 20px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', fontSize: '14px', fontWeight: '600' }}>
+          <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
+          <span style={{ color: '#94a3b8', margin: '0 10px' }}>/</span>
+          <span style={{ color: '#64748b' }}>Area Professionisti</span>
+        </div>
+      </div>
 
       <main style={{ flex: '1 0 auto', maxWidth: '1000px', margin: '0 auto', padding: '40px 20px', width: '100%' }}>
         
@@ -61,23 +71,24 @@ export default function PerIProfessionisti() {
           <p style={{ color: '#475569', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', fontWeight: '500' }}>
             ServiziSalute aiuta i cittadini a trovare specialisti nel proprio quartiere. <strong>Offriamo uno spazio gratuito per posizionare il tuo studio medico nei risultati di ricerca a Roma.</strong>
           </p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px', transition: 'transform 0.2s' }}>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
             REGISTRA IL TUO PROFILO ORA
           </a>
         </div>
 
+        {/* RESTO DELLA PAGINA... (Griglia, Tabella e FAQ rimangono invariate) */}
+        
         {/* SOCIAL PROOF QUARTIERI */}
         <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', padding: '25px', borderRadius: '24px', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ fontSize: '32px' }}>📊</div>
           <div>
-            <h3 style={{ margin: 0, color: '#1e40af', fontSize: '18px', fontWeight: '800' }}>Cresce la ricerca di specialisti di zona</h3>
+            <h3 style={{ margin: 0, color: '#1e40af', fontSize: '18px', fontWeight: '800' }}>Cresce la richiesta di specialisti di zona</h3>
             <p style={{ margin: '5px 0 0', color: '#1e40af', fontSize: '14px', lineHeight: '1.4' }}>
               Pazienti a <strong>Prati, EUR, Parioli e Roma Centro</strong> cercano ogni giorno professionisti vicini. Non lasciare che trovino solo i tuoi competitor.
             </p>
           </div>
         </div>
 
-        {/* GRIGLIA CARATTERISTICHE */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '50px' }}>
           <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
             <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>📍 Hyper-Local Roma</h4>
@@ -93,7 +104,6 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
-        {/* TABELLA COMPARATIVA */}
         <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', border: '1px solid #e2e8f0', marginBottom: '50px', overflowX: 'auto' }}>
           <h3 style={{ textAlign: 'center', marginBottom: '30px', fontWeight: '900', color: '#0f172a', fontSize: '24px' }}>Confronto Piattaforme</h3>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px' }}>
@@ -124,7 +134,6 @@ export default function PerIProfessionisti() {
           </table>
         </div>
 
-        {/* FAQ SECTION */}
         <div style={{ marginBottom: '60px' }}>
           <h3 style={{ fontSize: '26px', fontWeight: '900', marginBottom: '30px', color: '#0f172a', textAlign: 'center' }}>Domande Frequenti</h3>
           <div style={{ display: 'grid', gap: '15px' }}>
@@ -137,7 +146,6 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
-        {/* FINAL CTA */}
         <div style={{ textAlign: 'center', padding: '40px 0' }}>
           <h2 style={{ fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Pronto ad aumentare i tuoi contatti?</h2>
           <a href="/pubblica-annuncio" style={{ backgroundColor: '#0f172a', color: 'white', padding: '18px 40px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
