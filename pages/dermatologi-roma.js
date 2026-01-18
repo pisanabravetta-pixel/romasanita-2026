@@ -7,12 +7,10 @@ export default function DermatologiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Recupero FAQ e Schemi (ora con 3 FAQ dal nuovo seo-logic)
   const schemas = getSchemas('dermatologi', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
- useEffect(() => {
+  useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('dermatologi'); 
       
@@ -20,43 +18,30 @@ export default function DermatologiRoma() {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        // CERCA NELLA COLONNA SPECIALISTA (Infallibile)
+        .ilike('specialista', `%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Questa riga risolve TUTTO: minuscole, maiuscole, singolari e plurali
-        const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase().replace('i', '')) 
-          // .replace('i', '') serve se vuoi essere estremo e cercare la radice della parola
-        );
-        
-        // Versione più semplice e sicura:
-        const puliti = data.filter(m => {
-          const rigaCompleta = JSON.stringify(m).toLowerCase();
-          const parolaCercata = queryBusca.spec.toLowerCase(); // 'dermatologo'
-          
-          // Controlla se c'è la parola o la sua versione plurale tronca
-          return rigaCompleta.includes(parolaCercata.slice(0, -1)); 
-        });
-
-        setMedici(puliti);
+        setMedici(data);
       }
       setLoading(false);
     }
     fetchDocs();
   }, []);
+
   return (
     <HubLayout 
+      medici={medici}
+      loading={loading}
       titolo="Dermatologi"
       categoria="dermatologi"
-      colore="#059669" // Verde Salute/Dermatologia
+      colore="#059669" 
       testoCTA="Gestisci uno Studio Dermatologico?"
       badgeSpec="🩺 DERMATOLOGIA"
       testoTopBar="🩺 STUDI DI DERMATOLOGIA E DERMATOLOGI A ROMA — AGGIORNATI A GENNAIO 2026"
       descrizioneMeta="Cerchi un dermatologo a Roma? Trova i migliori specialisti per mappatura nei, acne e malattie della pelle nei quartieri di Roma con contatti diretti."
       testoMiniSEO="In questa pagina trovi i migliori dermatologi a Roma, specializzati in mappatura dei nei, trattamento dell'acne, psoriasi e dermatologia estetica. Contatta direttamente i professionisti del tuo quartiere o filtra per zona per trovare un dermatologo a Roma disponibile per visite urgenti o controlli periodici."
-      medici={medici}
-      loading={loading}
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
