@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+
 export default function PerIProfessionisti() {
   const schemas = {
     faq: {
@@ -44,7 +45,6 @@ export default function PerIProfessionisti() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
       </Head>
       
-      {/* BARRA SUPERIORE BLU BUSINESS */}
       <div style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px', textAlign: 'center', fontWeight: '800', fontSize: '13px', textTransform: 'uppercase' }}>
         🚀 PORTA IL TUO STUDIO NEL CUORE DEI QUARTIERI DI ROMA — EDIZIONE 2026
       </div>
@@ -53,68 +53,72 @@ export default function PerIProfessionisti() {
 
       <main style={{ flex: '1 0 auto', maxWidth: '1000px', margin: '0 auto', padding: '40px 20px', width: '100%' }}>
         
-        {/* HERO SECTION - TESTO APPUNTI */}
-        <div style={{ marginBottom: '40px', backgroundColor: 'white', padding: '40px', borderRadius: '25px', border: '2px solid #2563eb', boxShadow: '0 15px 30px rgba(37,99,235,0.05)', textAlign: 'center' }}>
+        {/* HERO SECTION */}
+        <div style={{ marginBottom: '40px', backgroundColor: 'white', padding: '40px', borderRadius: '32px', border: '1px solid #e2e8f0', boxShadow: '0 15px 30px rgba(0,0,0,0.03)', textAlign: 'center' }}>
           <h1 style={{ color: '#0f172a', fontSize: '36px', fontWeight: '900', marginBottom: '20px', lineHeight: '1.2' }}>
             Diventa visibile per chi cerca <br/><span style={{ color: '#2563eb' }}>servizi sanitari a Roma</span>
           </h1>
-          <p style={{ color: '#475569', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px' }}>
-            ServiziSalute nasce per aiutare i cittadini a trovare farmacie, studi medici e professionisti nel proprio quartiere. <strong>Offriamo uno spazio gratuito per farsi trovare online in modo semplice.</strong>
+          <p style={{ color: '#475569', fontSize: '18px', maxWidth: '700px', margin: '0 auto 30px', fontWeight: '500' }}>
+            ServiziSalute aiuta i cittadini a trovare specialisti nel proprio quartiere. <strong>Offriamo uno spazio gratuito per posizionare il tuo studio medico nei risultati di ricerca a Roma.</strong>
           </p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '12px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
-            INSERISCI ORA IL TUO SERVIZIO
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px', transition: 'transform 0.2s' }}>
+            REGISTRA IL TUO PROFILO ORA
           </a>
         </div>
 
-        {/* PUNTO 7 - EFFETTO SPECCHIO (SOCIAL PROOF) */}
-        <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', padding: '25px', borderRadius: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div style={{ fontSize: '40px' }}>📈</div>
+        {/* SOCIAL PROOF QUARTIERI */}
+        <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', padding: '25px', borderRadius: '24px', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ fontSize: '32px' }}>📊</div>
           <div>
-            <h3 style={{ margin: 0, color: '#1e40af', fontSize: '18px', fontWeight: '800' }}>Cresce la richiesta nei quartieri</h3>
-            <p style={{ margin: '5px 0 0', color: '#1e40af', fontSize: '14px', opacity: 0.8 }}>
-              Molti professionisti a <strong>Prati, EUR e San Giovanni</strong> sono già attivi. Non lasciare che i pazienti del tuo quartiere trovino solo i tuoi colleghi.
+            <h3 style={{ margin: 0, color: '#1e40af', fontSize: '18px', fontWeight: '800' }}>Cresce la ricerca di specialisti di zona</h3>
+            <p style={{ margin: '5px 0 0', color: '#1e40af', fontSize: '14px', lineHeight: '1.4' }}>
+              Pazienti a <strong>Prati, EUR, Parioli e Roma Centro</strong> cercano ogni giorno professionisti vicini. Non lasciare che trovino solo i tuoi competitor.
             </p>
           </div>
         </div>
 
-        {/* GRIGLIA CARATTERISTICHE (PUNTI APPUNTI) */}
+        {/* GRIGLIA CARATTERISTICHE */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '50px' }}>
-          <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
-            <h4 style={{ color: '#065f46', fontWeight: '800', marginBottom: '10px' }}>Un portale per Roma</h4>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Siamo focalizzati esclusivamente sui quartieri della Capitale. Valorizziamo la vicinanza reale.</p>
+          <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>📍 Hyper-Local Roma</h4>
+            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6' }}>Siamo l'unico portale focalizzato esclusivamente sui quartieri della Capitale. Valorizziamo la tua presenza territoriale.</p>
           </div>
-          <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
-            <h4 style={{ color: '#065f46', fontWeight: '800', marginBottom: '10px' }}>Nessun costo o vincolo</h4>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Nessuna commissione sulle visite. Il rapporto con il paziente resta tuo, al 100%.</p>
+          <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>💰 Zero Commissioni</h4>
+            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6' }}>Nessun costo nascosto o percentuale sulle prestazioni. Il fatturato delle tue visite resta interamente a te.</p>
           </div>
-          <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
-            <h4 style={{ color: '#065f46', fontWeight: '800', marginBottom: '10px' }}>Semplice e diretto</h4>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Inserisci il servizio e ricevi chiamate o messaggi WhatsApp direttamente sul tuo numero.</p>
+          <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>📱 Contatto Diretto</h4>
+            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6' }}>Nessuna barriera. Ricevi chiamate e messaggi WhatsApp direttamente sul cellulare o al numero del tuo studio.</p>
           </div>
         </div>
 
         {/* TABELLA COMPARATIVA */}
-        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '20px', border: '1px solid #e2e8f0', marginBottom: '50px' }}>
-          <h3 style={{ textAlign: 'center', marginBottom: '25px', fontWeight: '900', color: '#0f172a' }}>Perché scegliere ServiziSalute?</h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div style={{ backgroundColor: 'white', padding: '35px', borderRadius: '24px', border: '1px solid #e2e8f0', marginBottom: '50px', overflowX: 'auto' }}>
+          <h3 style={{ textAlign: 'center', marginBottom: '30px', fontWeight: '900', color: '#0f172a', fontSize: '24px' }}>Confronto Piattaforme</h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #f1f5f9', textAlign: 'left' }}>
-                <th style={{ padding: '15px' }}>Caratteristica</th>
-                <th style={{ padding: '15px', color: '#2563eb' }}>ServiziSalute Roma</th>
+                <th style={{ padding: '20px', color: '#64748b' }}>Servizio</th>
+                <th style={{ padding: '20px', color: '#2563eb', fontWeight: '900' }}>ServiziSalute Roma</th>
+                <th style={{ padding: '20px', color: '#64748b' }}>Altri Portali</th>
               </tr>
             </thead>
             <tbody>
               <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                <td style={{ padding: '15px' }}>Costo iscrizione</td>
-                <td style={{ padding: '15px', fontWeight: 'bold', color: '#059669' }}>GRATUITO</td>
+                <td style={{ padding: '20px', fontWeight: '600' }}>Costo Iscrizione</td>
+                <td style={{ padding: '20px', fontWeight: '900', color: '#059669' }}>GRATUITO</td>
+                <td style={{ padding: '20px', color: '#94a3b8' }}>Abbonamento Mensile</td>
               </tr>
               <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                <td style={{ padding: '15px' }}>Commissioni visite</td>
-                <td style={{ padding: '15px', fontWeight: 'bold', color: '#059669' }}>ZERO</td>
+                <td style={{ padding: '20px', fontWeight: '600' }}>Commissione Prenotazione</td>
+                <td style={{ padding: '20px', fontWeight: '900', color: '#059669' }}>ZERO</td>
+                <td style={{ padding: '20px', color: '#94a3b8' }}>Costo per click/lead</td>
               </tr>
               <tr>
-                <td style={{ padding: '15px' }}>Contatto paziente</td>
-                <td style={{ padding: '15px', fontWeight: 'bold', color: '#2563eb' }}>DIRETTO</td>
+                <td style={{ padding: '20px', fontWeight: '600' }}>Proprietà del Paziente</td>
+                <td style={{ padding: '20px', fontWeight: '900', color: '#2563eb' }}>DIRETTA</td>
+                <td style={{ padding: '20px', color: '#94a3b8' }}>Intermediazione</td>
               </tr>
             </tbody>
           </table>
@@ -122,18 +126,28 @@ export default function PerIProfessionisti() {
 
         {/* FAQ SECTION */}
         <div style={{ marginBottom: '60px' }}>
-          <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#0f172a' }}>Domande Frequenti</h3>
-          {schemas.faq.mainEntity.map((item, i) => (
-            <div key={i} style={{ marginBottom: '15px', padding: '20px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0' }}>
-              <p style={{ margin: '0 0 5px 0', fontWeight: '800' }}>{item.name}</p>
-              <p style={{ margin: 0, color: '#64748b', fontSize: '15px' }}>{item.acceptedAnswer.text}</p>
-            </div>
-          ))}
+          <h3 style={{ fontSize: '26px', fontWeight: '900', marginBottom: '30px', color: '#0f172a', textAlign: 'center' }}>Domande Frequenti</h3>
+          <div style={{ display: 'grid', gap: '15px' }}>
+            {schemas.faq.mainEntity.map((item, i) => (
+              <div key={i} style={{ padding: '25px', backgroundColor: 'white', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
+                <p style={{ margin: '0 0 10px 0', fontWeight: '900', color: '#1e293b', fontSize: '17px' }}>{item.name}</p>
+                <p style={{ margin: 0, color: '#64748b', fontSize: '15px', lineHeight: '1.6' }}>{item.acceptedAnswer.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FINAL CTA */}
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <h2 style={{ fontWeight: '900', color: '#0f172a', marginBottom: '20px' }}>Pronto ad aumentare i tuoi contatti?</h2>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: '#0f172a', color: 'white', padding: '18px 40px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
+            ISCRIVITI GRATIS
+          </a>
         </div>
 
       </main>
 
-    <Footer />
+      <Footer />
     </div>
   );
 }
