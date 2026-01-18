@@ -132,22 +132,26 @@ const eseguiRicerca = () => {
     <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
       
       {/* MENU A TENDINA CATEGORIE */}
-      <li className="nav-item-dropdown" style={{ position: 'relative' }}>
-        <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '600', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
-        </div>
-        <div className="dropdown-menu" style={{ 
-          position: 'absolute', top: '100%', left: '0', backgroundColor: 'white', minWidth: '180px', 
-          boxShadow: '0 10px 25px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '10px', 
-          marginTop: '10px', border: '1px solid #f1f5f9', display: 'none', zIndex: 100
-        }}>
-          <a href="/farmacie-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>💊 Farmacie</a>
-          <a href="/dentisti-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🦷 Dentisti</a>
-          <a href="/diagnostica-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🔬 Diagnostica</a>
-          <a href="/visite-specialistiche-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>👨‍⚕️ Specialisti</a>
-          <a href="/servizi-domicilio-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🏠 Domicilio</a>
-        </div>
-      </li>
+      <li 
+  onMouseEnter={(e) => { e.currentTarget.querySelector('.dropdown-menu').style.display = 'block'; }}
+  onMouseLeave={(e) => { e.currentTarget.querySelector('.dropdown-menu').style.display = 'none'; }}
+  style={{ position: 'relative', paddingBottom: '15px', marginBottom: '-15px' }}
+>
+  <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '600', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+    Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
+  </div>
+  <div className="dropdown-menu" style={{ 
+    position: 'absolute', top: '100%', left: '0', backgroundColor: 'white', minWidth: '180px', 
+    boxShadow: '0 10px 25px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '10px', 
+    marginTop: '0px', border: '1px solid #f1f5f9', display: 'none', zIndex: 1000
+  }}>
+    <a href="/farmacie-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>💊 Farmacie</a>
+    <a href="/dentisti-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🦷 Dentisti</a>
+    <a href="/diagnostica-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🔬 Diagnostica</a>
+    <a href="/visite-specialistiche-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>👨‍⚕️ Specialisti</a>
+    <a href="/servizi-domicilio-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🏠 Domicilio</a>
+  </div>
+</li>
 
       <li><a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Tutti i servizi</a></li>
       <li><a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Quartieri</a></li>
