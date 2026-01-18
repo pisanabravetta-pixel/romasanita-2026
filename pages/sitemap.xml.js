@@ -2,12 +2,10 @@ import { seoData } from '../lib/seo-logic';
 
 const EXTERNAL_DATA_URL = 'https://servizisalute-roma.vercel.app';
 
-// Lista completa dei quartieri per l'indicizzazione
+// LISTA FILTRATA (Solo le 10 zone principali per iniziare)
 const quartieri = [
-  'prati', 'parioli', 'corso-francia', 'balduina', 'talenti', 'montesacro', 'fleming', 'olgiata', 'labaro', 'nomentano',
-  'eur', 'ostiense', 'garbatella', 'laurentina', 'montagnola', 'spinaceto', 'mostacciano', 'infernetto', 'ostia', 'acilia',
-  'tiburtina', 'san-giovanni', 'prenestino', 'casilino', 'pigneto', 'collatino', 'centocelle', 'san-lorenzo', 'rebibbia', 'lunghezza',
-  'centro-storico', 'trastevere', 'aurelio', 'boccea', 'monteverde', 'portuense', 'gianicolense', 'testaccio', 'bravetta', 'cornelia'
+  'prati', 'eur', 'parioli', 'centro-storico', 'san-giovanni', 
+  'monteverde', 'ostia', 'tiburtina', 'aurelio', 'montesacro'
 ];
 
 function generateSiteMap(specialistiche) {
@@ -43,16 +41,11 @@ function generateSiteMap(specialistiche) {
 }
 
 export async function getServerSideProps({ res }) {
-  // Passiamo le chiavi di seoData (dentisti, cardiologi, ecc.)
   const sitemap = generateSiteMap(seoData);
-
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
   res.end();
-
-  return {
-    props: {},
-  };
+  return { props: {} };
 }
 
 export default function SiteMap() {}
