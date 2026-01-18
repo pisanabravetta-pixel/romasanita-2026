@@ -7,9 +7,7 @@ export default function OculistiRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Recupero FAQ (3) e Schemi dal tuo seo-logic.js
   const schemas = getSchemas('oculisti', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
@@ -20,15 +18,12 @@ export default function OculistiRoma() {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        // Cerca 'oculist' in categoria o specialista (Infallibile)
+        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Filtro per isolare solo gli oculisti
-        const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
-        );
-        setMedici(filtrati);
+        setMedici(data);
       }
       setLoading(false);
     }
@@ -37,16 +32,16 @@ export default function OculistiRoma() {
 
   return (
     <HubLayout 
+      medici={medici}
+      loading={loading}
       titolo="Oculisti"
       categoria="oculisti"
-      colore="#0891b2" // Blu Ottanio / Visione
+      colore="#0891b2" 
       testoCTA="Sei un Oculista a Roma? Pubblica il tuo studio"
       badgeSpec="👁️ OCULISTICA"
       testoTopBar="👁️ MIGLIORI OCULISTI E STUDI OCULISTICI A ROMA — GENNAIO 2026"
       descrizioneMeta="Cerchi un oculista a Roma? Trova i migliori specialisti per visite oculistiche, chirurgia refrattiva e controllo della vista nei quartieri di Roma."
       testoMiniSEO="Trova i migliori medici oculisti a Roma esperti in microchirurgia oculare, diagnosi del glaucoma, cataratta e correzione laser della vista. Contatta direttamente gli studi oculistici di Roma per prenotare una visita completa per adulti e bambini."
-      medici={medici}
-      loading={loading}
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
