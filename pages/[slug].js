@@ -1,11 +1,10 @@
-import { getSchemas, getDBQuery, quartieriTop } from '../lib/seo-logic';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getSchemas, getDBQuery } from '../lib/seo-logic';
+import { getSchemas, getDBQuery, quartieriTop } from '../lib/seo-logic'; // Riga unica con tutto dentro
 import { theme } from '../styles/theme';
 
 export default function PaginaQuartiereDinamica() {
