@@ -114,51 +114,68 @@ const eseguiRicerca = () => {
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
-      {/* HEADER - LOGO BICOLORE E MENU COMPLETO */}
-      <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
-          
-          {/* NOME BICOLORE */}
-          <div style={{fontSize: '24px', fontWeight: '900'}}>
-            <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-          </div>
+    {/* HEADER - LOGO CON FAVICON E MENU A TENDINA */}
+<header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
+  <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+    
+    {/* NOME BICOLORE CON FAVICON */}
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <img src="/favicon.ico" alt="Logo" style={{ width: '24px', height: '24px' }} />
+      <div style={{ fontSize: '24px', fontWeight: '900' }}>
+        <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
+      </div>
+    </div>
 
-          {/* MENU CENTRALE (Tutti i tuoi link originali) */}
-          <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
-            <li><a href="/farmacie-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Farmacie</a></li>
-            <li><a href="/dentisti-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Dentisti</a></li>
-            <li><a href="/visite-specialistiche-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Specialisti</a></li>
-            <li>
-              <a href="/pubblica-annuncio" style={{ 
-                 color: '#2563eb',
-                fontWeight: 'bold', 
-                textDecoration: 'none',
-               borderBottom: '2px solid #2563eb',
-                fontSize: '14px'
-              }}>
-                Sei un Medico?
-              </a>
-            </li>
-          </ul>
-
-          {/* PARTE DESTRA (Accedi e Bottone) */}
-          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-            <a href="/login" style={{textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px'}}>Accedi</a>
-            <a href="/pubblica-annuncio" style={{
-             backgroundColor: '#2563eb',
-              color: 'white', 
-              padding: '10px 20px', 
-              borderRadius: '20px', 
-              textDecoration: 'none', 
-              fontSize: '14px',
-              fontWeight: '800'
-            }}>
-              Pubblica annuncio
-            </a>
-          </div>
-
+    {/* MENU CENTRALE OTTIMIZZATO */}
+    <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
+      
+      {/* MENU A TENDINA CATEGORIE */}
+      <li className="nav-item-dropdown" style={{ position: 'relative' }}>
+        <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '600', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
         </div>
-      </header>
+        <div className="dropdown-menu" style={{ 
+          position: 'absolute', top: '100%', left: '0', backgroundColor: 'white', minWidth: '180px', 
+          boxShadow: '0 10px 25px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '10px', 
+          marginTop: '10px', border: '1px solid #f1f5f9', display: 'none', zIndex: 100
+        }}>
+          <a href="/farmacie-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>💊 Farmacie</a>
+          <a href="/dentisti-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🦷 Dentisti</a>
+          <a href="/diagnostica-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🔬 Diagnostica</a>
+          <a href="/visite-specialistiche-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>👨‍⚕️ Specialisti</a>
+          <a href="/servizi-domicilio-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🏠 Domicilio</a>
+        </div>
+      </li>
+
+      <li><a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Tutti i servizi</a></li>
+      <li><a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Quartieri</a></li>
+      <li><a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Chi Siamo</a></li>
+    </ul>
+
+    {/* PARTE DESTRA (Accedi e Bottone) */}
+    <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+      <a href="/login" style={{ textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px' }}>Accedi</a>
+      <a href="/pubblica-annuncio" style={{
+        backgroundColor: '#2563eb',
+        color: 'white', 
+        padding: '10px 20px', 
+        borderRadius: '20px', 
+        textDecoration: 'none', 
+        fontSize: '14px',
+        fontWeight: '800'
+      }}>
+        Pubblica annuncio
+      </a>
+    </div>
+
+  </div>
+
+  {/* CSS NECESSARIO PER IL FUNZIONAMENTO DEL DROPDOWN */}
+  <style jsx>{`
+    .nav-item-dropdown:hover .dropdown-menu { display: block !important; }
+    .dropdown-menu a:hover { background-color: #f8fafc; color: #2563eb !important; border-radius: 8px; }
+  `}</style>
+</header>
 {/* HERO SECTION - RIPRISTINO RICERCA INTELLIGENTE */}
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
