@@ -118,13 +118,15 @@ const eseguiRicerca = () => {
 <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
   <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
     
-    {/* NOME BICOLORE CON FAVICON */}
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      <img src="/favicon.ico" alt="Logo" style={{ width: '24px', height: '24px' }} />
-      <div style={{ fontSize: '24px', fontWeight: '900' }}>
-        <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-      </div>
-    </div>
+    {/* NOME BICOLORE CON ICONA FONT-AWESOME COLORABILE */}
+<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  {/* Qui puoi cambiare il colore mettendo quello che vuoi in 'color' */}
+  <i className="fas fa-heartbeat" style={{ fontSize: '22px', color: '#2563eb' }}></i> 
+  
+  <div style={{ fontSize: '24px', fontWeight: '900' }}>
+    <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
+  </div>
+</div>
 
     {/* MENU CENTRALE OTTIMIZZATO */}
     <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
