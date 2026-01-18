@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { supabase } from '../lib/supabaseClient';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function PubblicaAnnuncio() {
   const [caricamento, setCaricamento] = useState(false);
   const [inviato, setInviato] = useState(false);
   const [sessione, setSessione] = useState(null);
+
+  // Elenco quartieri standardizzato per il database
+  const quartieriLista = [
+    "Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", 
+    "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"
+  ];
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -38,7 +45,6 @@ export default function PubblicaAnnuncio() {
           descrizione: dati.descrizione,
           whatsapp: dati.whatsapp,
           telefono: dati.whatsapp, 
-          // Checkbox convertite in Boolean
           vicino_metro: dati.vicino_metro === 'on',
           urgenza_24h: dati.urgenza_24h === 'on',
           primo_sconto: dati.primo_sconto === 'on',
@@ -47,7 +53,6 @@ export default function PubblicaAnnuncio() {
           consegna_domicilio: dati.consegna_domicilio === 'on',
           parcheggio_privato: dati.parcheggio_privato === 'on',
           senza_barriere: dati.senza_barriere === 'on',
-          // Campi di controllo
           approvato: false, 
           is_top: false,
           user_id: sessione.user.id 
@@ -66,127 +71,127 @@ export default function PubblicaAnnuncio() {
 
   if (inviato) {
     return (
-      <div style={{ textAlign: 'center', padding: '100px 20px', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-        <div style={{ fontSize: '60px', marginBottom: '20px' }}>✅</div>
-        <h1 style={{ color: '#065f46', fontSize: '32px', fontWeight: '800' }}>Richiesta Ricevuta</h1>
-        <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '500px', margin: '10px auto 30px auto', lineHeight: '1.6' }}>
-          Il tuo profilo professionale è in fase di verifica. Sarà visibile online entro 24 ore.
-        </p>
-        <a href="/" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 40px', borderRadius: '15px', textDecoration: 'none', fontWeight: 'bold' }}>Torna alla Home</a>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        <div style={{ flex: 1, textAlign: 'center', padding: '100px 20px', backgroundColor: '#f8fafc' }}>
+          <div style={{ fontSize: '60px', marginBottom: '20px' }}>✅</div>
+          <h1 style={{ color: '#065f46', fontSize: '32px', fontWeight: '800' }}>Richiesta Ricevuta</h1>
+          <p style={{ color: '#64748b', fontSize: '18px', maxWidth: '500px', margin: '10px auto 30px auto', lineHeight: '1.6' }}>
+            Il tuo profilo professionale è in fase di verifica manuale. <br/>Sarà online entro 24 ore.
+          </p>
+          <a href="/" style={{ backgroundColor: '#10b981', color: 'white', padding: '18px 40px', borderRadius: '15px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-block' }}>Torna alla Home</a>
+        </div>
+        <Footer />
       </div>
     );
   }
 
   if (!sessione) {
     return (
-      <div style={{ textAlign: 'center', padding: '100px 20px', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <h2 style={{ color: '#065f46', fontSize: '28px', fontWeight: '800' }}>Area Professionisti</h2>
-        <p style={{ color: '#64748b', marginBottom: '30px', maxWidth: '400px' }}>Per garantire la qualità del portale, solo i professionisti registrati possono pubblicare annunci.</p>
-        <a href="/login" style={{ background: '#065f46', color: 'white', padding: '15px 35px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Accedi o Registrati →</a>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        <div style={{ flex: 1, textAlign: 'center', padding: '100px 20px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <h2 style={{ color: '#065f46', fontSize: '28px', fontWeight: '800' }}>Area Professionisti</h2>
+          <p style={{ color: '#64748b', marginBottom: '30px', maxWidth: '400px' }}>Per garantire la sicurezza del portale, effettua il login per pubblicare il tuo annuncio.</p>
+          <a href="/login" style={{ background: '#065f46', color: 'white', padding: '15px 35px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold' }}>Accedi o Registrati →</a>
+        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div style={{ fontFamily: '-apple-system, system-ui, sans-serif', backgroundColor: '#f1f5f9', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
-        <title>Pubblica il tuo Profilo Sanitario | ServiziSalute Roma</title>
+        <title>Pubblica Profilo Sanitario Roma | Area Professionisti</title>
       </Head>
 
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 20px' }}>
-        <div style={{ backgroundColor: '#fff', padding: '45px', borderRadius: '35px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
-          
-          <h1 style={{ color: '#065f46', fontSize: '32px', marginBottom: '10px', textAlign: 'center', fontWeight: '800' }}>Crea il tuo Profilo</h1>
-          <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '40px', fontSize: '17px' }}>Inserisci i dettagli della tua attività a Roma.</p>
+      <Navbar />
 
-          <form onSubmit={gestisciInvio} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+      <main style={{ flex: 1, maxWidth: '800px', margin: '0 auto', padding: '40px 20px', width: '100%' }}>
+        <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '30px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
+          
+          <h1 style={{ color: '#065f46', fontSize: '28px', marginBottom: '10px', textAlign: 'center', fontWeight: '900' }}>Registra il tuo Studio</h1>
+          <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '35px' }}>Compila i campi per comparire nelle ricerche dei pazienti a Roma.</p>
+
+          <form onSubmit={gestisciInvio} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>Nome Struttura o Medico *</label>
-                    <input name="nome" type="text" placeholder="Es: Dr. Mario Rossi" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1' }} required />
+                    <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>NOME PROFESSIONISTA / CENTRO *</label>
+                    <input name="nome" type="text" placeholder="Es: Dr. Rossi - Dermatologo" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>Categoria *</label>
-                    <select name="categoria" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
+                    <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>CATEGORIA *</label>
+                    <select name="categoria" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
                         <option value="">Seleziona...</option>
                         <option value="Dentista">Dentista</option>
                         <option value="Dermatologo">Dermatologo</option>
-                        <option value="Farmacia">Farmacia</option>
                         <option value="Cardiologo">Cardiologo</option>
-                        <option value="Medico Specialista">Medico Specialista</option>
+                        <option value="Psicologo">Psicologo</option>
+                        <option value="Ginecologo">Ginecologo</option>
+                        <option value="Ortopedico">Ortopedico</option>
+                        <option value="Diagnostica">Centro Diagnostico</option>
+                        <option value="Farmacia">Farmacia</option>
+                        <option value="Assistenza Domiciliare">Assistenza Domiciliare</option>
                     </select>
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>Quartiere *</label>
-                <select name="zona" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
-                    <option value="">Scegli zona...</option>
-                    {['Centro Storico', 'Prati', 'EUR', 'Parioli', 'San Giovanni', 'Ostiense', 'Cassia', 'Monteverde'].sort().map(z => (
+                <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>QUARTIERE *</label>
+                <select name="zona" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: 'white' }} required>
+                    <option value="">Seleziona quartiere...</option>
+                    {quartieriLista.sort().map(z => (
                         <option key={z} value={z}>{z}</option>
                     ))}
                 </select>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>Indirizzo *</label>
-                <input name="indirizzo" type="text" placeholder="Es: Via Roma, 10" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1' }} required />
+                <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>INDIRIZZO COMPLETO *</label>
+                <input name="indirizzo" type="text" placeholder="Es: Via Appia Nuova, 45" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>WhatsApp / Telefono *</label>
-              <input name="whatsapp" type="tel" placeholder="3331234567" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1' }} required />
+              <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>CONTATTO DIRETTO (TEL/WHATSAPP) *</label>
+              <input name="whatsapp" type="tel" placeholder="333 1234567" style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1' }} required />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontWeight: '700', fontSize: '14px', color: '#065f46' }}>Descrizione</label>
-              <textarea name="descrizione" style={{ padding: '15px', borderRadius: '14px', border: '1px solid #cbd5e1', minHeight: '100px' }} />
+              <label style={{ fontWeight: '700', fontSize: '13px', color: '#475569' }}>BREVE DESCRIZIONE SERVIZI</label>
+              <textarea name="descrizione" placeholder="Descrivi le tue specializzazioni..." style={{ padding: '14px', borderRadius: '12px', border: '1px solid #cbd5e1', minHeight: '80px' }} />
             </div>
 
-            {/* --- NUOVA SEZIONE BADGE AGGIORNATA --- */}
-            <div style={{ backgroundColor: '#f0fdf4', padding: '25px', borderRadius: '20px', border: '1px solid #dcfce7' }}>
-              <label style={{ fontWeight: '800', fontSize: '15px', color: '#166534', display: 'block', marginBottom: '15px' }}>
-                SERVIZI E CARATTERISTICHE
-              </label>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="h24_aperto" /> 🏪 Aperto H24
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="test_rapidi" /> 🧪 Test/Tamponi
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="consegna_domicilio" /> 📦 Consegna a Casa
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="parcheggio_privato" /> 🚗 Parcheggio
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="senza_barriere" /> ♿ Accessibile
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="vicino_metro" /> 🚇 Vicino Metro
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="urgenza_24h" /> 🚨 Urgenze
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px' }}>
-                  <input type="checkbox" name="primo_sconto" /> ✨ Promo Portale
-                </label>
+            <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '15px', border: '1px solid #e2e8f0' }}>
+              <p style={{ fontWeight: '800', fontSize: '14px', color: '#065f46', marginBottom: '15px' }}>SERVIZI E CARATTERISTICHE:</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                {[
+                  { n: 'h24_aperto', l: '🏪 Aperto H24' },
+                  { n: 'test_rapidi', l: '🧪 Test/Tamponi' },
+                  { n: 'consegna_domicilio', l: '📦 Domicilio' },
+                  { n: 'parcheggio_privato', l: '🚗 Parcheggio' },
+                  { n: 'senza_barriere', l: '♿ Accessibile' },
+                  { n: 'vicino_metro', l: '🚇 Vicino Metro' },
+                  { n: 'urgenza_24h', l: '🚨 Urgenze' },
+                  { n: 'primo_sconto', l: '✨ Promo' }
+                ].map(item => (
+                  <label key={item.n} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569', cursor: 'pointer' }}>
+                    <input type="checkbox" name={item.n} style={{ width: '16px', height: '16px' }} /> {item.l}
+                  </label>
+                ))}
               </div>
             </div>
 
-            <button type="submit" disabled={caricamento} style={{ background: '#10b981', color: 'white', padding: '20px', borderRadius: '15px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}>
-              {caricamento ? 'Salvataggio...' : 'PUBBLICA ORA'}
+            <button type="submit" disabled={caricamento} style={{ background: '#10b981', color: 'white', padding: '18px', borderRadius: '12px', border: 'none', fontWeight: '900', cursor: 'pointer', fontSize: '16px', marginTop: '10px' }}>
+              {caricamento ? 'INVIO IN CORSO...' : 'CONFERMA E PUBBLICA'}
             </button>
           </form>
         </div>
       </main>
 
-   <Footer />
+      <Footer />
     </div>
   );
 }
