@@ -31,17 +31,33 @@ export default function Navbar() {
     Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
   </div>
   
+ <div 
+  className="nav-item-dropdown" 
+  onMouseEnter={(e) => {
+    const menu = e.currentTarget.querySelector('.dropdown-menu');
+    if (menu) menu.style.display = 'block';
+  }}
+  onMouseLeave={(e) => {
+    const menu = e.currentTarget.querySelector('.dropdown-menu');
+    if (menu) menu.style.display = 'none';
+  }}
+  style={{ position: 'relative', paddingBottom: '10px', marginBottom: '-10px' }}
+>
+  <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+    Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
+  </div>
+  
   <div className="dropdown-menu" style={{ 
     display: 'none',
     position: 'absolute', 
-    top: '100%', // Ora si attacca perfettamente grazie al padding sopra
+    top: '100%', 
     left: 0, 
     backgroundColor: 'white', 
     minWidth: '180px', 
     boxShadow: '0 10px 25px rgba(0,0,0,0.1)', 
     borderRadius: '12px', 
     padding: '10px', 
-    marginTop: '0px', // Azzerato perché il ponte copre lo spazio
+    marginTop: '0px', 
     border: '1px solid #f1f5f9', 
     zIndex: 9999 
   }}>
