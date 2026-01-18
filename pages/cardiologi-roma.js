@@ -13,11 +13,12 @@ export default function CardiologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       // Query mirata: cerca esattamente 'cardiologo' nella colonna 'specialista'
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .eq('specialista', 'cardiologo'); 
+      const queryBusca = getDBQuery('cardiologi'); // Prende 'cardio' dal tuo seo-logic
+const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .ilike('specialista', `%${queryBusca.spec}%`); // Cerca 'cardio' ovunque e ignora maiuscole
       
       if (data) {
         setMedici(data);
