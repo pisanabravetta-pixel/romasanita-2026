@@ -20,54 +20,55 @@ export default function Navbar() {
 </a>
 
         <nav style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
-<div className="nav-item-dropdown" style={{ position: 'relative' }}>
+<div 
+  className="nav-item-dropdown" 
+  onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-menu').style.display = 'block'}
+  onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-menu').style.display = 'none'}
+  style={{ position: 'relative' }}
+>
   <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
     Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
   </div>
   
-  {/* Menu che appare al passaggio del mouse */}
-  <div className="dropdown-menu">
-    <a href="/farmacie-roma">💊 Farmacie</a>
-    <a href="/dentisti-roma">🦷 Dentisti</a>
-    <a href="/diagnostica-roma">🔬 Diagnostica</a>
-    <a href="/visite-specialistiche-roma">👨‍⚕️ Specialisti</a>
-    <a href="/servizi-domicilio-roma">🏠 Domicilio</a>
+  <div className="dropdown-menu" style={{ 
+    display: 'none',
+    position: 'absolute', 
+    top: '100%', 
+    left: 0, 
+    backgroundColor: 'white', 
+    minWidth: '180px', 
+    boxShadow: '0 10px 25px rgba(0,0,0,0.1)', 
+    borderRadius: '12px', 
+    padding: '10px', 
+    marginTop: '5px', 
+    border: '1px solid #f1f5f9', 
+    zIndex: 9999 
+  }}>
+    {[
+      { label: 'Farmacie', emoji: '💊', href: '/farmacie-roma' },
+      { label: 'Dentisti', emoji: '🦷', href: '/dentisti-roma' },
+      { label: 'Diagnostica', emoji: '🔬', href: '/diagnostica-roma' },
+      { label: 'Specialisti', emoji: '👨‍⚕️', href: '/visite-specialistiche-roma' },
+      { label: 'Domicilio', emoji: '🏠', href: '/servizi-domicilio-roma' }
+    ].map((item, idx) => (
+      <a 
+        key={idx}
+        href={item.href} 
+        style={{ 
+          display: 'block', 
+          padding: '10px', 
+          textDecoration: 'none', 
+          color: '#475569', 
+          fontSize: '13px', 
+          fontWeight: '600' 
+        }}
+        onMouseOver={(e) => { e.target.style.backgroundColor = '#f8fafc'; e.target.style.color = '#2563eb'; }}
+        onMouseOut={(e) => { e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#475569'; }}
+      >
+        {item.emoji} {item.label}
+      </a>
+    ))}
   </div>
-
-  <style jsx>{`
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: white;
-      min-width: 180px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      border-radius: 12px;
-      padding: 10px;
-      margin-top: 10px;
-      border: 1px solid #f1f5f9;
-      z-index: 9999;
-    }
-    .nav-item-dropdown:hover .dropdown-menu {
-      display: block !important;
-    }
-    .dropdown-menu a {
-      display: block;
-      padding: 10px;
-      text-decoration: none;
-      color: #475569;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .dropdown-menu a:hover {
-      background-color: #f8fafc;
-      color: #2563eb !important;
-      border-radius: 8px;
-    }
-  `}</style>
-</div>
 </div>
           {/* 1. LINK ALLA PAGINA HUB */}
           <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
