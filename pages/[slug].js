@@ -130,7 +130,34 @@ useEffect(() => {
               </div>
             </div>
           )) : (
-            <p style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Al momento non ci sono annunci attivi a {meta.zona}.</p>
+<div style={{ 
+  textAlign: 'center', 
+  padding: '60px 20px', 
+  backgroundColor: '#f8fafc', 
+  borderRadius: '15px', 
+  border: '2px dashed #e2e8f0', 
+  marginTop: '20px' 
+}}>
+  <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
+  <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>
+    Ricerca in corso a {meta.zona}
+  </h3>
+  <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto 25px', lineHeight: '1.6' }}>
+    Stiamo selezionando e verificando i profili dei migliori professionisti per <strong>{meta.titolo}</strong>. 
+    I nuovi annunci saranno disponibili a breve.
+  </p>
+  <a href="/pubblica-annuncio" style={{ 
+    backgroundColor: tema.primario, 
+    color: 'white', 
+    padding: '14px 28px', 
+    borderRadius: '12px', 
+    fontWeight: '800', 
+    textDecoration: 'none', 
+    display: 'inline-block' 
+  }}>
+    SEI UN PROFESSIONISTA? ISCRIVITI ORA
+  </a>
+</div>
           )}
         </div>
 
