@@ -1,3 +1,4 @@
+import { getSchemas, getDBQuery, quartieriTop } from '../lib/seo-logic';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -98,16 +99,29 @@ useEffect(() => {
             I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
           </p>
         </div>
-
-        {/* 3. CERCA PER QUARTIERE */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense"].map(q => (
-              <a key={q} href={`/${meta.cat}-roma-${q.toLowerCase()}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q}</a>
-            ))}
-          </div>
-        </div>
+{/* 3. CERCA PER QUARTIERE (Sincronizzato con il resto del sito) */}
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+  <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    {quartieriTop.map(q => (
+      <a 
+        key={q.s} 
+        href={`/${meta.cat}-roma-${q.s}`} 
+        style={{ 
+          padding: '7px 12px', 
+          backgroundColor: tema.chiaro, 
+          color: tema.primario, 
+          borderRadius: '8px', 
+          textDecoration: 'none', 
+          fontWeight: '700', 
+          fontSize: '12px' 
+        }}
+      >
+        {q.n}
+      </a>
+    ))}
+  </div>
+</div>
 
         {/* 4. LISTA BOX (Stile Premium 24px) */}
         <div style={{ display: 'block' }}>
