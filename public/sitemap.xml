@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://servizisalute-roma.vercel.app/</loc><lastmod>2026-01-11</lastmod><priority>1.0</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/visite-specialistiche-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/quartieri-roma</loc><lastmod>2026-01-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/</loc><lastmod>2026-01-18</lastmod><priority>1.0</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/servizi-sanitari-roma</loc><lastmod>2026-01-18</lastmod><priority>0.9</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/visite-specialistiche-roma</loc><lastmod>2026-01-18</lastmod><priority>0.9</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/quartieri-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
 
-  <url><loc>https://servizisalute-roma.vercel.app/cardiologi-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/dermatologi-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/ginecologi-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/ortopedici-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/psicologi-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/nutrizionisti-roma</loc><lastmod>2026-01-11</lastmod><priority>0.9</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/cardiologi-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/dentisti-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/dermatologi-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/diagnostica-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/farmacie-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/ginecologi-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/nutrizionisti-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/oculisti-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/ortopedici-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/psicologi-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/servizi-domicilio-roma</loc><lastmod>2026-01-18</lastmod><priority>0.8</priority></url>
 
-  <url><loc>https://servizisalute-roma.vercel.app/dentisti-roma</loc><lastmod>2026-01-11</lastmod><priority>0.8</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/farmacie-roma</loc><lastmod>2026-01-11</lastmod><priority>0.8</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/diagnostica-roma</loc><lastmod>2026-01-11</lastmod><priority>0.8</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/servizi-domicilio-roma</loc><lastmod>2026-01-11</lastmod><priority>0.8</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/chi-siamo</loc><lastmod>2026-01-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/come-funziona</loc><lastmod>2026-01-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/contatti</loc><lastmod>2026-01-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/per-i-professionisti</loc><lastmod>2026-01-18</lastmod><priority>0.6</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/login</loc><lastmod>2026-01-18</lastmod><priority>0.4</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/pubblica-annuncio</loc><lastmod>2026-01-18</lastmod><priority>0.6</priority></url>
 
-  <url><loc>https://servizisalute-roma.vercel.app/cardiologi-roma-prati</loc><lastmod>2026-01-11</lastmod><priority>0.7</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/dentisti-roma-eur</loc><lastmod>2026-01-11</lastmod><priority>0.7</priority></url>
-  <url><loc>https://servizisalute-roma.vercel.app/farmacie-roma-centro</loc><lastmod>2026-01-11</lastmod><priority>0.7</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/cardiologi-roma-prati</loc><lastmod>2026-01-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/dentisti-roma-eur</loc><lastmod>2026-01-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://servizisalute-roma.vercel.app/farmacie-roma-centro</loc><lastmod>2026-01-18</lastmod><priority>0.7</priority></url>
 </urlset>
