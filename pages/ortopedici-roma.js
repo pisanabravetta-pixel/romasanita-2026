@@ -7,9 +7,7 @@ export default function OrtopediciRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Recupero FAQ (3) e Schemi dal tuo seo-logic.js
   const schemas = getSchemas('ortopedici', 'roma');
-  
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
@@ -20,15 +18,12 @@ export default function OrtopediciRoma() {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        .ilike('categoria', `%${queryBusca.cat}%`)
+        // Cerca 'ortoped' ovunque per non perdere nessun annuncio
+        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
       
       if (data) {
-        // Filtro per isolare solo gli ortopedici dal resto delle visite
-        const filtrati = data.filter(m => 
-          JSON.stringify(m).toLowerCase().includes(queryBusca.spec.toLowerCase())
-        );
-        setMedici(filtrati);
+        setMedici(data);
       }
       setLoading(false);
     }
@@ -37,16 +32,16 @@ export default function OrtopediciRoma() {
 
   return (
     <HubLayout 
+      medici={medici}
+      loading={loading}
       titolo="Ortopedici"
       categoria="ortopedici"
-      colore="#c2410c" // Arancione Scuro / Ortopedia
+      colore="#c2410c" 
       testoCTA="Sei un Ortopedico a Roma? Registra il tuo studio"
       badgeSpec="🦴 ORTOPEDIA"
       testoTopBar="🦴 MIGLIORI ORTOPEDICI E CHIRURGHI ORTOPEDICI A ROMA — GENNAIO 2026"
       descrizioneMeta="Cerchi un ortopedico a Roma? Trova i migliori specialisti per problemi articolari, traumatologia e chirurgia ortopedica nei quartieri di Roma."
       testoMiniSEO="In questa pagina trovi i migliori ortopedici a Roma esperti in chirurgia protesica, traumatologia dello sport e cura delle patologie della colonna vertebrale, anca e ginocchio. Contatta i professionisti del tuo quartiere per visite specialistiche e infiltrazioni."
-      medici={medici}
-      loading={loading}
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
