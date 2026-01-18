@@ -21,10 +21,11 @@ export default function Navbar() {
 
         <nav style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
 <div 
+  <div 
   className="nav-item-dropdown" 
   onMouseEnter={(e) => e.currentTarget.querySelector('.dropdown-menu').style.display = 'block'}
   onMouseLeave={(e) => e.currentTarget.querySelector('.dropdown-menu').style.display = 'none'}
-  style={{ position: 'relative' }}
+  style={{ position: 'relative', paddingBottom: '15px', marginBottom: '-15px' }} // <--- IL PONTE INVISIBILE
 >
   <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
     Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
@@ -33,14 +34,14 @@ export default function Navbar() {
   <div className="dropdown-menu" style={{ 
     display: 'none',
     position: 'absolute', 
-    top: '100%', 
+    top: '100%', // Ora si attacca perfettamente grazie al padding sopra
     left: 0, 
     backgroundColor: 'white', 
     minWidth: '180px', 
     boxShadow: '0 10px 25px rgba(0,0,0,0.1)', 
     borderRadius: '12px', 
     padding: '10px', 
-    marginTop: '5px', 
+    marginTop: '0px', // Azzerato perché il ponte copre lo spazio
     border: '1px solid #f1f5f9', 
     zIndex: 9999 
   }}>
@@ -60,10 +61,11 @@ export default function Navbar() {
           textDecoration: 'none', 
           color: '#475569', 
           fontSize: '13px', 
-          fontWeight: '600' 
+          fontWeight: '600',
+          transition: 'background 0.2s'
         }}
-        onMouseOver={(e) => { e.target.style.backgroundColor = '#f8fafc'; e.target.style.color = '#2563eb'; }}
-        onMouseOut={(e) => { e.target.style.backgroundColor = 'transparent'; e.target.style.color = '#475569'; }}
+        onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#2563eb'; }}
+        onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#475569'; }}
       >
         {item.emoji} {item.label}
       </a>
