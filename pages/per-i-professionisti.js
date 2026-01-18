@@ -52,7 +52,6 @@ export default function PerIProfessionisti() {
 
       <Navbar />
 
-      {/* NAVIGAZIONE DI RITORNO */}
       <div style={{ backgroundColor: 'white', borderBottom: '1px solid #e2e8f0', padding: '10px 20px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', fontSize: '14px', fontWeight: '600' }}>
           <a href="/" style={{ color: '#2563eb', textDecoration: 'none' }}>Home</a>
@@ -63,7 +62,7 @@ export default function PerIProfessionisti() {
 
       <main style={{ flex: '1 0 auto', maxWidth: '1000px', margin: '0 auto', padding: '40px 20px', width: '100%' }}>
         
-        {/* HERO SECTION */}
+        {/* HERO SECTION CON TASTO COME FUNZIONA */}
         <div style={{ marginBottom: '40px', backgroundColor: 'white', padding: '40px', borderRadius: '32px', border: '1px solid #e2e8f0', boxShadow: '0 15px 30px rgba(0,0,0,0.03)', textAlign: 'center' }}>
           <h1 style={{ color: '#0f172a', fontSize: '36px', fontWeight: '900', marginBottom: '20px', lineHeight: '1.2' }}>
             Diventa visibile per chi cerca <br/><span style={{ color: '#2563eb' }}>servizi sanitari a Roma</span>
@@ -76,13 +75,15 @@ export default function PerIProfessionisti() {
             <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px' }}>
               REGISTRA IL TUO PROFILO ORA
             </a>
-            <a href="/come-funziona" style={{ backgroundColor: 'white', color: '#2563eb', padding: '18px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px', border: '2px solid #2563eb' }}>
+            
+            {/* ECCO IL TASTO MANCANTE */}
+            <a href="/come-funziona" style={{ backgroundColor: 'white', color: '#2563eb', padding: '16px 35px', borderRadius: '14px', fontWeight: '900', textDecoration: 'none', display: 'inline-block', fontSize: '18px', border: '2px solid #2563eb' }}>
               SCOPRI COME FUNZIONA
             </a>
           </div>
         </div>
 
-        {/* SOCIAL PROOF QUARTIERI */}
+        {/* SOCIAL PROOF */}
         <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', padding: '25px', borderRadius: '24px', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ fontSize: '32px' }}>📊</div>
           <div>
@@ -93,7 +94,7 @@ export default function PerIProfessionisti() {
           </div>
         </div>
 
-        {/* GRIGLIA CARATTERISTICHE */}
+        {/* CARATTERISTICHE */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginBottom: '50px' }}>
           <div style={{ padding: '30px', backgroundColor: 'white', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
             <h4 style={{ color: '#0f172a', fontWeight: '900', marginBottom: '12px', fontSize: '18px' }}>📍 Hyper-Local Roma</h4>
