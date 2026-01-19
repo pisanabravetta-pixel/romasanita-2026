@@ -13,7 +13,7 @@ export default function Navbar() {
       top: 0,
       zIndex: 1000 
     }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',flexWrap: 'wrap' }}>
         
         {/* LOGO CON ICONA CUORE */}
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '900', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
@@ -21,7 +21,7 @@ export default function Navbar() {
           <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
         </a>
 
-        <nav style={{ display: 'flex', gap: '25px', alignItems: 'center' }}>
+        <nav style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap',justifyContent: 'center',marginTop: '10px'}}>
           
           {/* MENU A TENDINA CATEGORIE */}
           <div 
