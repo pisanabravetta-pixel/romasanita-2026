@@ -74,6 +74,7 @@ const eseguiRicerca = () => {
     <div>
      <Head>
         <title>ServiziSalute - Il Portale della Sanità a Roma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -104,7 +105,7 @@ const eseguiRicerca = () => {
       <div style={{ 
         backgroundColor: '#065f46', 
         color: 'white', 
-        padding: '10px 0', 
+        padding: '10px 15px', 
         textAlign: 'center', 
         fontSize: '12px', 
         fontWeight: '800', 
@@ -203,10 +204,12 @@ const eseguiRicerca = () => {
       gap: '15px',
       alignItems: 'flex-end',
       border: '2px solid #065f46'
+      maxWidth: '100%',
+      margin: '0 auto'
     }}>
       
       {/* 1. COSA CERCHI */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left' }}>
+      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
         <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>COSA CERCHI</label>
         <input 
           type="text" 
@@ -218,7 +221,7 @@ const eseguiRicerca = () => {
       </div>
 
       {/* 2. ZONA / QUARTIERE */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left' }}>
+      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
         <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>ZONA / QUARTIERE</label>
         <select 
           value={zonaScelta} 
@@ -231,7 +234,7 @@ const eseguiRicerca = () => {
       </div>
 
       {/* 3. CATEGORIA */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left' }}>
+      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
         <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
         <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}>
           <option>Tutte le categorie</option>
@@ -285,7 +288,7 @@ const eseguiRicerca = () => {
 
 {/* SEZIONE STATISTICHE - DATI CORRETTI E STILE COMPATTO */}
       <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap',width: '100%',maxWidth: '1100px',boxSizing: 'border-box',margin: '0 auto',padding: '0 15px' }}>
           
           {/* BOX 1 - ANNUNCI */}
           <div style={{ backgroundColor: '#fff', border:'2px solid #065f46', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
