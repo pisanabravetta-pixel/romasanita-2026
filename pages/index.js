@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
@@ -102,7 +103,7 @@ const eseguiRicerca = () => {
         {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head> 
 
-        <Navbar />
+       
    {/* TOP BAR - VERDE ISTITUZIONALE */}
       <div style={{ 
         backgroundColor: '#065f46', 
