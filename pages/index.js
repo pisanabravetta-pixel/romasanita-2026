@@ -101,6 +101,8 @@ const eseguiRicerca = () => {
         />
         {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head> 
+<div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
+        <Navbar />
    {/* TOP BAR - VERDE ISTITUZIONALE */}
       <div style={{ 
         backgroundColor: '#065f46', 
