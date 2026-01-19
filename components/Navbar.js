@@ -13,7 +13,7 @@ export default function Navbar() {
       top: 0,
       zIndex: 1000 
     }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',flexWrap: 'wrap' }}>
+      <div style={{ maxWidth: '1250px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
         
         {/* LOGO CON ICONA CUORE */}
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '900', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
