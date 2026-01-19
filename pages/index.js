@@ -101,7 +101,7 @@ const eseguiRicerca = () => {
         />
         {/* --- FINE SCHEMA ORGANIZATION --- */}
       </Head> 
-<div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
+
         <Navbar />
    {/* TOP BAR - VERDE ISTITUZIONALE */}
       <div style={{ 
@@ -366,7 +366,7 @@ const eseguiRicerca = () => {
       {/* ULTIMI ANNUNCI CON TASTI CONTATTO AGGIUNTI */}
       <section className="container" style={{padding: '40px 0'}}>
         <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Ultimi annunci pubblicati</h2>
-        <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(5, 1fr)', gap: '15px' }}>
+      <div className="announcements-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
           {[
             { cat: 'FARMACIE', title: 'Farmacia H24 Centro', img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400' },
             { cat: 'DIAGNOSTICA', title: 'Centro RX Prati', img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400' },
