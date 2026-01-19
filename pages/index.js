@@ -538,6 +538,8 @@ const eseguiRicerca = () => {
       </section>
                 
 <Footer />
-</div>
+    </div>
   );
 }
+
+export default Home;
