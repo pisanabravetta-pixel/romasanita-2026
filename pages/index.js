@@ -133,7 +133,7 @@ const eseguiRicerca = () => {
 </div>
 
     {/* MENU CENTRALE OTTIMIZZATO */}
-    <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0, alignItems: 'center' }}>
+    <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: '0 0 0 40px', padding: 0, alignItems: 'center' }}>
       
       {/* MENU A TENDINA CATEGORIE */}
       <li 
