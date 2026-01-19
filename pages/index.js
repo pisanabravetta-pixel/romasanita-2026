@@ -220,9 +220,9 @@ const eseguiRicerca = () => {
       <li><a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Chi Siamo</a></li>
     </ul>
 
-    {/* PARTE DESTRA (Accedi e Bottone) */}
-    <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-      <a href="/login" style={{ textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px' }}>Accedi</a>
+   {/* PARTE DESTRA (Accedi e Bottone) */}
+    <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexShrink: 0 }}>
+      <a href="/login" style={{ textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px', whiteSpace: 'nowrap' }}>Accedi</a>
       <a href="/pubblica-annuncio" style={{
         backgroundColor: '#2563eb',
         color: 'white', 
@@ -230,16 +230,17 @@ const eseguiRicerca = () => {
         borderRadius: '20px', 
         textDecoration: 'none', 
         fontSize: '14px',
-        fontWeight: '800'
+        fontWeight: '800',
+        whiteSpace: 'nowrap'
       }}>
         Pubblica annuncio
       </a>
     </div>
-
   </div>
 
-  {/* CSS NECESSARIO PER IL FUNZIONAMENTO DEL DROPDOWN */}
+ {/* CSS NECESSARIO PER IL FUNZIONAMENTO DEL DROPDOWN */}
   <style jsx>{`
+    .dropdown-menu { display: none; }
     .nav-item-dropdown:hover .dropdown-menu { display: block !important; }
     .dropdown-menu a:hover { background-color: #f8fafc; color: #2563eb !important; border-radius: 8px; }
   `}</style>
