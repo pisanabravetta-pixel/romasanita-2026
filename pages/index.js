@@ -203,7 +203,7 @@ const eseguiRicerca = () => {
       flexWrap: 'wrap',
       gap: '15px',
       alignItems: 'flex-end',
-      border: '2px solid #065f46'
+      border: '2px solid #065f46',
       maxWidth: '100%',
       margin: '0 auto'
     }}>
