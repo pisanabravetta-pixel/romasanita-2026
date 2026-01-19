@@ -120,7 +120,7 @@ const eseguiRicerca = () => {
 
     {/* HEADER - LOGO CON FAVICON E MENU A TENDINA */}
 <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
-  <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+ <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1250px', margin: '0 auto', padding: '0 20px', flexWrap: 'nowrap' }}>
     
     {/* NOME BICOLORE CON ICONA FONT-AWESOME COLORABILE */}
 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
