@@ -238,11 +238,11 @@ const eseguiRicerca = () => {
     </div>
   </div>
 
- {/* CSS NECESSARIO PER IL FUNZIONAMENTO DEL DROPDOWN */}
+</div>
+
   <style jsx>{`
     .dropdown-menu { display: none; }
-    .nav-item-dropdown:hover .dropdown-menu { display: block !important; }
-    .dropdown-menu a:hover { background-color: #f8fafc; color: #2563eb !important; border-radius: 8px; }
+    .dropdown-menu a:hover { background-color: #f8fafc; color: #2563eb !important; }
   `}</style>
 </header>
         Pubblica annuncio
