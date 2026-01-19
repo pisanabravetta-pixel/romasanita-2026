@@ -70,9 +70,9 @@ const eseguiRicerca = () => {
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
   };
-  return (
-    <div>
-     <Head>
+ return (
+    <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
+      <Head>
         <title>ServiziSalute - Il Portale della Sanità a Roma</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
@@ -541,5 +541,3 @@ const eseguiRicerca = () => {
     </div>
   );
 }
-
-export default Home;
