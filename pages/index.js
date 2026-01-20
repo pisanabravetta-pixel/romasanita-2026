@@ -75,12 +75,35 @@ const eseguiRicerca = () => {
   };
  return (
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
-      <Head>
-        <title>ServiziSalute - Il Portale della Sanità a Roma</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <Head>
+  <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
+  <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  {/* --- SCHEMA ORGANIZATION UNICO --- */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ServiziSalute",
+        "url": typeof window !== 'undefined' ? window.location.origin : "https://servizisalute.it",
+        "logo": typeof window !== 'undefined' ? `${window.location.origin}/favicon.ico` : "",
+        "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Roma",
+          "addressRegion": "RM",
+          "addressCountry": "IT"
+        }
+      }),
+    }}
+  />
+</Head>
 
         {/* --- INIZIO SCHEMA ORGANIZATION --- */}
         <script
@@ -520,18 +543,32 @@ const eseguiRicerca = () => {
         </div>
       </section>
 
-      {/* SEZIONE SEO ROMA */}
-      <section style={{ padding: '60px 0', background: '#f8fbff' }}>
-        <div className="container" style={{ 
-          background: 'white', padding: '40px', borderRadius: '20px', border: '1px solid #e1e8f0',
-          textAlign: 'justify', fontSize: '15px', lineHeight: '1.8', color: '#444'
-        }}>
-          <p>
-            <span style={{fontSize: '18px', fontWeight: 'bold', color: '#0070f3', display: 'block', marginBottom: '10px'}}>ServiziSalute Roma</span>
-            <strong>ServiziSalute Roma</strong> è il portale di riferimento per trovare <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella capitale. Il nostro motore di ricerca ti permette di individuare rapidamente i migliori <strong>servizi sanitari Roma</strong> in base alla zona e alla categoria di tuo interesse. Che tu stia cercando una farmacia di turno, un dentista di fiducia o un centro per <strong>visite specialistiche Roma</strong>, il nostro portale ti mette in contatto diretto con i professionisti sanitari della tua zona. <strong>Farmacie Roma</strong>, studi dentistici, laboratori di analisi e specialisti: tutto in un unico posto, gratuito e sempre aggiornato.
-          </p>
-        </div>
-      </section>
+      {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
+<section style={{ padding: '60px 0', background: '#f8fbff' }}>
+  <div className="container" style={{ 
+    background: 'white', padding: '40px', borderRadius: '20px', border: '1px solid #e1e8f0',
+    textAlign: 'left', fontSize: '15px', lineHeight: '1.8', color: '#444', maxWidth: '1100px', margin: '0 auto'
+  }}>
+    <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#065f46', marginBottom: '15px' }}>
+      ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
+    </h2>
+    <p style={{ marginBottom: '20px' }}>
+      <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
+    </p>
+    
+    <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
+      Trova Farmacie e Specialisti nei quartieri di Roma
+    </h3>
+    <p style={{ marginBottom: '20px' }}>
+      Che tu stia cercando una <strong>farmacia di turno a Roma Prati</strong>, un <strong>dentista all'EUR</strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
+    </p>
+    
+    <p style={{ fontSize: '14px', borderTop: '1px solid #eee', paddingTop: '15px', color: '#64748b' }}>
+      Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600'}}>Farmacie Roma</a>, 
+      studi dentistici specializzati, laboratori di diagnostica e le migliori <strong>visite specialistiche Roma</strong> per ogni branca medica.
+    </p>
+  </div>
+</section>
 {/* 📧 SEZIONE NEWSLETTER SOFT - POSIZIONATA PRIMA DEL FOOTER */}
       <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
         <div className="container" style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
