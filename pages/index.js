@@ -266,7 +266,7 @@ const eseguiRicerca = () => {
         </div>
       </section>
    
-{/* --- SEZIONE CATEGORIE - BLOCCO UNICO AUTO-CONTENUTO --- */}
+{/* --- SEZIONE CATEGORIE - RETTANGOLO GRANDE MOBILE CON FRECCE INTERNE --- */}
 <section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
   <div className="container">
     <h2 style={{ fontSize: '28px', fontWeight: '700' }}>Esplora le Categorie</h2>
@@ -276,8 +276,8 @@ const eseguiRicerca = () => {
 
 <div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
   {(() => {
-    // Definizione locale dei dati e dello stato per evitare ReferenceError
-    const [indexCat, setIndexCat] = useState(0); 
+    // Usiamo nomi unici per lo stato per evitare conflitti nel build
+    const [idCat, setIdCat] = useState(0); 
     const elencoCategorie = [
       { n: 'Farmacie', i: '💊', l: '/farmacie-roma', bg: '#fff0f3', bc: '#e91e63' },
       { n: 'Dentisti', i: '🦷', l: '/dentisti-roma', bg: '#e3f2fd', bc: '#2196f3' },
@@ -287,63 +287,107 @@ const eseguiRicerca = () => {
     ];
 
     return (
-      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
         
-        {/* MOBILE: SLIDER FISSO (Logica come Ultimi Annunci) */}
-        <div className="cat-wrapper-mobile">
-          <button onClick={() => setIndexCat(indexCat === 0 ? 4 : indexCat - 1)} className="cat-btn-arrow left-arrow">‹</button>
-          
-          <a href={elencoCategorie[indexCat].l} className="cat-box-mobile">
-            <div className="cat-icon-round" style={{ backgroundColor: elencoCategorie[indexCat].bg, border: '2px solid ' + elencoCategorie[indexCat].bc }}>
-              {elencoCategorie[indexCat].i}
-            </div>
-            <span className="cat-name-mobile">{elencoCategorie[indexCat].n}</span>
-          </a>
+        {/* MOBILE: RETTANGOLO LARGO CON FRECCE DENTRO */}
+        <div className="cat-mobile-layout">
+          <div className="cat-rect-box">
+            {/* Freccia SX dentro il box */}
+            <button onClick={() => setIdCat(idCat === 0 ? 4 : idCat - 1)} className="btn-in sx">‹</button>
+            
+            <a href={elencoCategorie[idCat].l} className="cat-content">
+              <div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: '2px solid ' + elencoCategorie[elencoCategorie[idCat].bc] || elencoCategorie[idCat].bc }}>
+                {elencoCategorie[idCat].i}
+              </div>
+              <span className="cat-title-big">{elencoCategorie[idCat].n}</span>
+            </a>
 
-          <button onClick={() => setIndexCat(indexCat === 4 ? 0 : indexCat + 1)} className="cat-btn-arrow right-arrow">›</button>
+            {/* Freccia DX dentro il box */}
+            <button onClick={() => setIdCat(idCat === 4 ? 0 : idCat + 1)} className="btn-in dx">›</button>
+          </div>
         </div>
 
-        {/* PC: GRID FISSA (5 BOX) */}
-        <div className="cat-wrapper-pc">
+        {/* PC: GRID ORIGINALE (5 BOX RETTANGOLARI) */}
+        <div className="cat-pc-layout">
           {elencoCategorie.map((item, idx) => (
-            <a key={idx} href={item.l} className="cat-box-pc">
-              <div className="cat-icon-pc" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
-              <span className="cat-name-pc">{item.n}</span>
+            <a key={idx} href={item.l} className="box-pc-original">
+              <div className="icon-pc-circle" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
+              <span className="label-pc-text">{item.n}</span>
             </a>
           ))}
         </div>
 
         <style jsx>{`
-          /* PC: 5 BOX AFFIANCATI */
-          .cat-wrapper-pc { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-          .cat-box-pc {
+          /* PC STYLE */
+          .cat-pc-layout { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+          .box-pc-original {
             text-decoration: none; color: inherit; background: white; padding: 20px 10px;
             border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); width: 180px;
             display: flex; flex-direction: column; align-items: center; text-align: center; border: 2px solid #065f46;
           }
-          .cat-icon-pc { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 24px; }
-          .cat-name-pc { font-weight: 600; font-size: 15px; }
+          .icon-pc-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 24px; }
+          .label-pc-text { font-weight: 600; font-size: 15px; }
 
-          /* MOBILE: 1 BOX FISSO CON FRECCE */
-          .cat-wrapper-mobile { display: none; position: relative; width: 100%; justify-content: center; align-items: center; padding: 20px 0; }
-          .cat-box-mobile {
-            text-decoration: none; color: inherit; background: white; padding: 40px 20px;
-            border-radius: 20px; width: 240px; display: flex; flex-direction: column;
-            align-items: center; text-align: center; border: 2px solid #065f46; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          /* MOBILE STYLE - RETTANGOLO LARGO */
+          .cat-mobile-layout { display: none; width: 100%; justify-content: center; padding: 10px 0; }
+          .cat-rect-box {
+            position: relative;
+            background: white;
+            width: 100%;
+            max-width: 400px; /* Larghezza massima su cellulari grandi */
+            height: 140px;    /* Altezza rettangolare */
+            border: 2px solid #065f46;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
           }
-          .cat-icon-round { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-size: 40px; }
-          .cat-name-mobile { font-weight: 800; font-size: 22px; color: #333; }
-          
-          .cat-btn-arrow {
-            background: #065f46; color: white; border: 2px solid white; width: 50px; height: 50px;
-            border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; z-index: 10;
+          .cat-content {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
           }
-          .left-arrow { margin-right: -25px; }
-          .right-arrow { margin-left: -25px; }
+          .cat-circle-big {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 8px;
+          }
+          .cat-title-big { font-weight: 800; font-size: 20px; color: #333; }
+
+          /* FRECCE DENTRO IL BOX */
+          .btn-in {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            background: rgba(6, 95, 70, 0.05); /* Sfondo leggerissimo per farle vedere */
+            border: none;
+            color: #065f46;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+          }
+          .btn-in:active { background: rgba(6, 95, 70, 0.1); }
+          .sx { left: 0; border-right: 1px solid #eee; }
+          .dx { right: 0; border-left: 1px solid #eee; }
 
           @media (max-width: 768px) {
-            .cat-wrapper-pc { display: none; }
-            .cat-wrapper-mobile { display: flex; }
+            .cat-pc-layout { display: none; }
+            .cat-mobile-layout { display: flex; }
           }
         `}</style>
       </div>
