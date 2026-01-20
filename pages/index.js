@@ -232,51 +232,53 @@ const eseguiRicerca = () => {
   </p>
 </div>
 
-{/* SEZIONE STATISTICHE - RESPONSIVE: 3 IN RIGA SU MOBILE */}
+{/* SEZIONE STATISTICHE - PC ORIGINALE / MOBILE: 3 BOX QUADRATI IN RIGA */}
 <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
-  <div className="stats-container">
+  <div className="stats-wrapper">
     
     {/* BOX 1 - ANNUNCI */}
-    <div className="stat-box">
-      <div className="stat-icon">📢</div>
-      <div className="stat-text-wrapper">
-        <div className="stat-number">+1.500</div>
-        <div className="stat-label">Annunci</div>
+    <div className="s-box">
+      <div className="s-icon">📢</div>
+      <div className="s-text">
+        <div className="s-num">+1.500</div>
+        <div className="s-lab">Annunci Online</div>
       </div>
     </div>
 
     {/* BOX 2 - PROFESSIONISTI */}
-    <div className="stat-box">
-      <div className="stat-icon">👨‍⚕️</div>
-      <div className="stat-text-wrapper">
-        <div className="stat-number">+850</div>
-        <div className="stat-label">Medici</div>
+    <div className="s-box">
+      <div className="s-icon">👨‍⚕️</div>
+      <div className="s-text">
+        <div className="s-num">+850</div>
+        <div className="s-lab">Professionisti</div>
       </div>
     </div>
 
     {/* BOX 3 - VISITE */}
-    <div className="stat-box">
-      <div className="stat-icon">📈</div>
-      <div className="stat-text-wrapper">
-        <div className="stat-number">+15K</div>
-        <div className="stat-label">Accessi</div>
+    <div className="s-box">
+      <div className="s-icon">📈</div>
+      <div className="s-text">
+        <div className="s-num">+15K</div>
+        <div className="s-lab">Accessi Gennaio 2026</div>
       </div>
     </div>
 
   </div>
 
   <style jsx>{`
-    .stats-container {
+    .stats-wrapper {
       display: flex;
       justify-content: center;
       gap: 15px;
+      width: 100%;
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 15px;
+      box-sizing: border-box;
     }
 
-    .stat-box {
-      backgroundColor: #fff;
+    .s-box {
+      background-color: #fff;
       border: 2px solid #065f46;
       padding: 15px 20px;
       border-radius: 12px;
@@ -285,37 +287,44 @@ const eseguiRicerca = () => {
       align-items: center;
       gap: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-sizing: border-box;
     }
 
-    .stat-text-wrapper { text-align: left; }
-    .stat-icon { fontSize: 24px; }
-    .stat-number { fontSize: 18px; fontWeight: bold; color: #2563eb; lineHeight: 1; }
-    .stat-label { fontSize: 11px; color: #64748b; fontWeight: 600; textTransform: uppercase; }
+    .s-icon { font-size: 24px; flex-shrink: 0; }
+    .s-text { text-align: left; }
+    .s-num { font-size: 18px; font-weight: bold; color: #2563eb; line-height: 1; }
+    .s-lab { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
 
     @media (max-width: 768px) {
-      .stats-container {
-        gap: 8px; /* Spazio ridotto tra i box */
+      .stats-wrapper {
+        gap: 5px; /* Spazio minimo per farli stare tutti */
+        padding: 0 10px;
         justify-content: space-between;
       }
 
-      .stat-box {
-        flex-direction: column; /* Icona sopra, testo sotto */
-        padding: 10px 5px;
-        width: 31%; /* Divide la riga in 3 parti quasi uguali */
+      .s-box {
+        flex-direction: column;
+        padding: 10px 2px;
+        width: 32%; /* Forza i tre box a dividersi lo spazio */
+        min-width: 0; /* Impedisce al contenuto di allargare il box */
         gap: 5px;
         text-align: center;
-        aspect-ratio: 1 / 1; /* Li rende quadrati */
+        aspect-ratio: 1 / 1;
         justify-content: center;
+        border-radius: 8px;
       }
 
-      .stat-text-wrapper { text-align: center; }
-      .stat-icon { fontSize: 20px; }
-      .stat-number { fontSize: 14px; }
-      .stat-label { fontSize: 9px; }
+      .s-text { text-align: center; width: 100%; }
+      .s-icon { font-size: 20px; }
+      .s-num { font-size: 15px; } /* Leggermente ridotto per non far uscire il testo */
+      .s-lab { 
+        font-size: 8px; 
+        white-space: normal; /* Permette al testo di andare a capo se troppo lungo */
+        line-height: 1.1;
+      }
     }
   `}</style>
 </section>
-   
 {/* --- SEZIONE CATEGORIE - RETTANGOLO GRANDE MOBILE CON FRECCE INTERNE --- */}
 <section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
   <div className="container">
