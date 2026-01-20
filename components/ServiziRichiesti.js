@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export default function ServiziRichiesti() {
-  // Ho preso esattamente i tuoi dati dal codice che mi hai passato
   const servizi = [
     { id: 1, titolo: "Fisioterapia", desc: "Riabilitazione e massoterapia", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400" },
     { id: 2, titolo: "Oculista", desc: "Esame della vista completo", img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400" },
@@ -15,36 +14,38 @@ export default function ServiziRichiesti() {
   const indietro = () => setIndex((prev) => (prev === 0 ? servizi.length - 1 : prev - 1));
 
   return (
-    <section style={{ padding: '40px 0', borderTop: '1px solid #eee', backgroundColor: 'white' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+    <section className="servizi-section">
+      <div className="container-servizi">
         
-        <h2 style={{ marginBottom: '25px', fontSize: '24px', textAlign: 'center', fontWeight: '800' }}>
-          Servizi più richiesti
-        </h2>
+        <h2 className="titolo-sezione">Servizi più richiesti</h2>
 
-        {/* VERSIONE MOBILE: SLIDER CON FRECCE */}
-        <div className="mobile-only-slider">
-          <button onClick={indietro} className="slide-btn"><i className="fas fa-chevron-left"></i></button>
+        {/* --- MOBILE: SLIDER (1 FOTO ALLA VOLTA + FRECCE) --- */}
+        <div className="mobile-slider-container">
+          <button onClick={indietro} className="arrow-nav left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
           
-          <div className="card-centrata">
-            <img src={servizi[index].img} alt={servizi[index].titolo} className="img-centrata" />
-            <div className="info-centrata">
-              <h4 style={{ margin: '10px 0 5px 0', fontSize: '18px' }}>{servizi[index].titolo}</h4>
-              <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>{servizi[index].desc}</p>
+          <div className="card-singola">
+            <img src={servizi[index].img} alt={servizi[index].titolo} className="img-servizio" />
+            <div className="info-servizio">
+              <h4>{servizi[index].titolo}</h4>
+              <p>{servizi[index].desc}</p>
             </div>
           </div>
 
-          <button onClick={avanti} className="slide-btn"><i className="fas fa-chevron-right"></i></button>
+          <button onClick={avanti} className="arrow-nav right">
+            <i className="fas fa-chevron-right"></i>
+          </button>
         </div>
 
-        {/* VERSIONE PC: GRIGLIA NORMALE (4 COLONNE) */}
-        <div className="pc-only-grid">
+        {/* --- PC: GRIGLIA NORMALE (4 COLONNE) --- */}
+        <div className="pc-grid-container">
           {servizi.map((s) => (
-            <div key={s.id} className="card-centrata">
-              <img src={s.img} alt={s.titolo} className="img-centrata" />
-              <div className="info-centrata">
-                <h4 style={{ margin: '10px 0 5px 0' }}>{s.titolo}</h4>
-                <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>{s.desc}</p>
+            <div key={s.id} className="card-singola">
+              <img src={s.img} alt={s.titolo} className="img-servizio" />
+              <div className="info-servizio">
+                <h4>{s.titolo}</h4>
+                <p>{s.desc}</p>
               </div>
             </div>
           ))}
@@ -53,49 +54,85 @@ export default function ServiziRichiesti() {
       </div>
 
       <style jsx>{`
-        .card-centrata {
-          background: white;
-          border-radius: 15px;
-          overflow: hidden;
-          text-align: center; /* CENTRA IL TESTO */
+        .servizi-section {
+          padding: 60px 0;
+          border-top: 1px solid #eee;
+          background: #fff;
+        }
+        .container-servizi {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+        .titolo-sezione {
+          text-align: center; /* CENTRA IL TITOLO H2 */
+          font-size: 28px;
+          font-weight: 900;
+          margin-bottom: 40px;
+          color: #0f172a;
+        }
+
+        /* CARD STYLE CON CENTRATURA */
+        .card-singola {
+          background: #fff;
+          text-align: center; /* CENTRA LE SCRITTE SOTTO LE FOTO */
           display: flex;
           flex-direction: column;
-          align-items: center; /* CENTRA GLI ELEMENTI NEL FLEX */
+          align-items: center; /* CENTRA GLI ELEMENTI INTERNI */
         }
-        .img-centrata {
+        .img-servizio {
           width: 100%;
-          height: 200px;
+          height: 220px;
           object-fit: cover;
-          border-radius: 12px;
+          border-radius: 15px;
+          margin-bottom: 15px;
         }
-        .info-centrata {
-            padding: 15px;
-            width: 100%;
+        .info-servizio h4 {
+          margin: 0 0 5px 0;
+          font-size: 20px;
+          font-weight: 800;
+          color: #065f46;
         }
-        
-        .pc-only-grid {
+        .info-servizio p {
+          margin: 0;
+          color: #64748b;
+          font-size: 15px;
+        }
+
+        /* VISUALIZZAZIONE PC */
+        .pc-grid-container {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 20px;
+          gap: 25px;
         }
-        .mobile-only-slider { display: none; }
+        .mobile-slider-container { display: none; }
 
+        /* VISUALIZZAZIONE MOBILE */
         @media (max-width: 768px) {
-          .pc-only-grid { display: none; }
-          .mobile-only-slider {
+          .pc-grid-container { display: none; }
+          .mobile-slider-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+            justify-content: center;
+            gap: 15px;
           }
-          .slide-btn {
+          .card-singola {
+            width: 100%;
+          }
+          .arrow-nav {
             background: #065f46;
             color: white;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            z-index: 10;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(6, 95, 70, 0.3);
           }
         }
       `}</style>
