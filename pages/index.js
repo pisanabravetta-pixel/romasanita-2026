@@ -521,33 +521,53 @@ const eseguiRicerca = () => {
         </div>
       </section>
 
-      {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
-<section style={{ padding: '60px 0', background: '#f8fbff' }}>
-  <div className="container" style={{ 
-    background: 'white', padding: '40px', borderRadius: '20px', border: '1px solid #e1e8f0',
-    textAlign: 'left', fontSize: '15px', lineHeight: '1.8', color: '#444', maxWidth: '1100px', margin: '0 auto'
-  }}>
-    <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#065f46', marginBottom: '15px' }}>
-      ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
-    </h2>
-    <p style={{ marginBottom: '20px' }}>
-      <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
-    </p>
-    
-    <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
-      Trova Farmacie e Specialisti nei quartieri di Roma
-    </h3>
-    <p style={{ marginBottom: '20px' }}>
-      Che tu stia cercando una <strong>farmacia di turno a Roma Prati</strong>, un <strong>dentista all'EUR</strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
-    </p>
-    
-    <p style={{ fontSize: '14px', borderTop: '1px solid #eee', paddingTop: '15px', color: '#64748b' }}>
-      Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600'}}>Farmacie Roma</a>, 
-      studi dentistici specializzati, laboratori di diagnostica e le migliori <strong>visite specialistiche Roma</strong> per ogni branca medica.
-    </p>
-  </div>
-</section>
-{/* 📧 SEZIONE NEWSLETTER SOFT - POSIZIONATA PRIMA DEL FOOTER */}
+    {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
+      <section style={{ padding: '60px 0', background: '#f8fbff' }}>
+        <div className="container" style={{ 
+          background: 'white', padding: '40px', borderRadius: '20px', border: '1px solid #e1e8f0',
+          textAlign: 'left', fontSize: '15px', lineHeight: '1.8', color: '#444', maxWidth: '1100px', margin: '0 auto'
+        }}>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#065f46', marginBottom: '15px' }}>
+            ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
+          </h2>
+          <p style={{ marginBottom: '20px' }}>
+            <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
+          </p>
+          
+          <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
+            Trova Farmacie e Specialisti nei quartieri di Roma
+          </h3>
+          <p style={{ marginBottom: '20px' }}>
+            Che tu stia cercando una <strong>farmacia di turno a Roma Prati</strong>, un <strong>dentista all'EUR</strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
+          </p>
+          
+          <p style={{ fontSize: '14px', borderTop: '1px solid #eee', paddingTop: '15px', color: '#64748b' }}>
+            Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600'}}>Farmacie Roma</a>, 
+            studi dentistici specializzati, laboratori di diagnostica e le migliori <strong>visite specialistiche Roma</strong> per ogni branca medica.
+          </p>
+        </div>
+      </section>
+
+      {/* SEZIONE FAQ - AGGIUNTA PER MIGLIORARE IL POSIZIONAMENTO */}
+      <section style={{ padding: '40px 0', background: 'white' }}>
+        <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+          <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
+            Domande Frequenti sui Servizi Sanitari a Roma
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come trovo una farmacia di turno a Roma su ServiziSalute?</h4>
+              <p style={{ color: '#64748b' }}>Basta inserire "Farmacia" e il tuo quartiere nella barra di ricerca in alto. Ti mostreremo le strutture più vicine con i riferimenti diretti.</p>
+            </div>
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>I contatti dei medici sono diretti?</h4>
+              <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 📧 SEZIONE NEWSLETTER SOFT */}
       <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
         <div className="container" style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
           <div style={{ backgroundColor: '#ffffff', padding: '45px 30px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', border: '1px solid #edf2f7' }}>
@@ -555,50 +575,26 @@ const eseguiRicerca = () => {
               Resta informato sulla salute nel tuo quartiere
             </h3>
             <p style={{ color: '#64748b', fontSize: '16px', marginBottom: '30px', lineHeight: '1.6' }}>
-              Ricevi ogni 15 giorni le nuove aperture, i turni delle farmacie e le guide ai prezzi aggiornate a Roma.
+              Ricevi ogni 15 giorni le nuove aperture e i turni delle farmacie aggiornati a Roma.
             </p>
             
             <form style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <input 
                 type="email" 
                 placeholder="La tua email migliore..." 
-                style={{ 
-                  padding: '16px 22px', 
-                  borderRadius: '12px', 
-                  border: '2px solid #edf2f7', 
-                  width: '340px', 
-                  outline: 'none',
-                  fontSize: '16px',
-                  backgroundColor: '#f1f5f9'
-                }} 
+                style={{ padding: '16px 22px', borderRadius: '12px', border: '2px solid #edf2f7', width: '340px', fontSize: '16px', backgroundColor: '#f1f5f9' }} 
               />
               <button 
                 type="button"
                 onClick={() => alert('Ottimo! Ti abbiamo inserito nella lista aggiornamenti di ServiziSalute Roma.')}
-                style={{ 
-                  backgroundColor: '#2563eb', 
-                  color: 'white', 
-                  padding: '16px 30px', 
-                  borderRadius: '12px', 
-                  border: 'none', 
-                  fontWeight: 'bold', 
-                  cursor: 'pointer',
-                  fontSize: '16px',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.2)'
-                }}
+                style={{ backgroundColor: '#2563eb', color: 'white', padding: '16px 30px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}
               >
                 Iscrivimi Gratis
               </button>
             </form>
-            
-            <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '20px' }}>
-              📍 Servizio dedicato ai cittadini di Roma. Zero Spam.
-            </p>
+            <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '20px' }}>📍 Servizio dedicato ai cittadini di Roma. Zero Spam.</p>
           </div>
         </div>
       </section>
-                
-<Footer />
-    </div>
-  );
-}
+
+      <Footer />
