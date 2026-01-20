@@ -19,106 +19,147 @@ export default function Navbar() {
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
-      {/* HEADER - NAVIGAZIONE */}
+      {/* HEADER - NAVIGAZIONE STILE SUBITO.IT */}
       <header style={{ 
         backgroundColor: 'white', 
         borderBottom: '2px solid #e2e8f0', 
-        padding: '15px 0', 
+        padding: '12px 0', 
         width: '100%',
         position: 'sticky',
         top: 0,
         zIndex: 1000 
       }}>
-        <div style={{ maxWidth: '1250px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap' }}>
+        <div style={{ 
+          maxWidth: '1250px', 
+          margin: '0 auto', 
+          padding: '0 20px', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center' 
+        }}>
           
-          {/* LOGO CON ICONA CUORE */}
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '900', textDecoration: 'none', fontSize: '24px', letterSpacing: '-0.5px' }}>
-            <i className="fas fa-heartbeat" style={{ fontSize: '22px', color: '#2563eb' }}></i> 
+          {/* 1️⃣ SINISTRA: LOGO (Senza link home come richiesto) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '900', fontSize: '22px', letterSpacing: '-0.5px' }}>
+            <i className="fas fa-heartbeat" style={{ fontSize: '20px', color: '#2563eb' }}></i> 
             <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-          </a>
+          </div>
 
-          <nav style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-            
-            {/* MENU A TENDINA CATEGORIE */}
-            <div 
-              onMouseEnter={() => setMenuAperto(true)}
-              onMouseLeave={() => setMenuAperto(false)}
-              style={{ position: 'relative', paddingBottom: '10px', marginBottom: '-10px' }}
-            >
-              <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
-              </div>
-              
-              <div style={{ 
-                display: menuAperto ? 'block' : 'none',
-                position: 'absolute', 
-                top: '100%', 
-                left: 0, 
-                backgroundColor: 'white', 
-                minWidth: '180px', 
-                boxShadow: '0 10px 25px rgba(0,0,0,0.1)', 
-                borderRadius: '12px', 
-                padding: '10px', 
-                marginTop: '0px', 
-                border: '1px solid #f1f5f9', 
-                zIndex: 9999 
-              }}>
-                {[
-                  { label: 'Farmacie', emoji: '💊', href: '/farmacie-roma' },
-                  { label: 'Dentisti', emoji: '🦷', href: '/dentisti-roma' },
-                  { label: 'Diagnostica', emoji: '🔬', href: '/diagnostica-roma' },
-                  { label: 'Specialisti', emoji: '👨‍⚕️', href: '/visite-specialistiche-roma' },
-                  { label: 'Domicilio', emoji: '🏠', href: '/servizi-domicilio-roma' }
-                ].map((item, idx) => (
-                  <a 
-                    key={idx}
-                    href={item.href} 
-                    style={{ 
-                      display: 'block', 
-                      padding: '10px', 
-                      textDecoration: 'none', 
-                      color: '#475569', 
-                      fontSize: '13px', 
-                      fontWeight: '600',
-                      borderRadius: '8px'
-                    }}
-                    onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#2563eb'; }}
-                    onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#475569'; }}
-                  >
-                    {item.emoji} {item.label}
-                  </a>
-                ))}
-              </div>
+          {/* 2️⃣ CENTRO: UNICO MENU A TENDINA "MENU ▼" */}
+          <div 
+            onMouseEnter={() => setMenuAperto(true)}
+            onMouseLeave={() => setMenuAperto(false)}
+            style={{ position: 'relative' }}
+          >
+            <div style={{ 
+              cursor: 'pointer', 
+              color: '#475569', 
+              fontWeight: '700', 
+              fontSize: '14px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              padding: '10px'
+            }}>
+              MENU <i className="fas fa-chevron-down" style={{ fontSize: '12px' }}></i>
             </div>
+            
+            {/* CONTENUTO DEL MENU A TENDINA */}
+            <div style={{ 
+              display: menuAperto ? 'block' : 'none',
+              position: 'absolute', 
+              top: '100%', 
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: 'white', 
+              minWidth: '240px', 
+              boxShadow: '0 15px 35px rgba(0,0,0,0.15)', 
+              borderRadius: '16px', 
+              padding: '15px', 
+              border: '1px solid #f1f5f9', 
+              zIndex: 9999 
+            }}>
+              {/* SEZIONE CATEGORIE */}
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', marginBottom: '8px', paddingLeft: '10px', textTransform: 'uppercase' }}>Categorie</div>
+              <a href="/farmacie-roma" className="menu-link">💊 Farmacie a Roma</a>
+              <a href="/dentisti-roma" className="menu-link">🦷 Dentisti a Roma</a>
+              <a href="/diagnostica-roma" className="menu-link">🔬 Diagnostica a Roma</a>
+              <a href="/visite-specialistiche-roma" className="menu-link">👨‍⚕️ Visite Specialistiche</a>
+              <a href="/servizi-domicilio-roma" className="menu-link">🏠 Servizi a Domicilio</a>
 
-            <a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
-              Tutti i Servizi
+              <div style={{ height: '1px', backgroundColor: '#f1f5f9', margin: '10px 0' }}></div>
+
+              {/* SEZIONE QUARTIERI */}
+              <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', marginBottom: '8px', paddingLeft: '10px', textTransform: 'uppercase' }}>Quartieri</div>
+              <a href="/roma/prati" className="menu-link">📍 Roma Prati</a>
+              <a href="/roma/eur" className="menu-link">📍 Roma EUR</a>
+              <a href="/roma/trastevere" className="menu-link">📍 Roma Trastevere</a>
+              <a href="/quartieri-roma" className="menu-link" style={{ fontWeight: '800', color: '#2563eb' }}>Tutti i quartieri</a>
+
+              <div style={{ height: '1px', backgroundColor: '#f1f5f9', margin: '10px 0' }}></div>
+
+              {/* SEZIONE INFO */}
+              <a href="/guide" className="menu-link">📘 Guide Sanitarie</a>
+              <a href="/chi-siamo" className="menu-link">ℹ️ Chi Siamo</a>
+            </div>
+          </div>
+
+          {/* 3️⃣ DESTRA: ACCEDI + PUBBLICA ANNUNCIO */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <a href="/login" style={{ 
+              textDecoration: 'none', 
+              color: '#475569', 
+              fontWeight: '700', 
+              fontSize: '14px' 
+            }}>
+              Accedi
             </a>
 
-            <a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
-              Quartieri
-            </a>
-
-            <a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px', textTransform: 'uppercase' }}>
-              Chi Siamo
-            </a>
-
-            {/* TASTO AREA MEDICI */}
-            <a href="/per-i-professionisti" style={{ 
+            <a href="/pubblica-annuncio" style={{ 
               backgroundColor: '#2563eb', 
               color: 'white', 
-              padding: '10px 18px', 
-              borderRadius: '10px', 
+              padding: '10px 20px', 
+              borderRadius: '24px', 
               textDecoration: 'none', 
               fontWeight: '800', 
               fontSize: '13px',
-              boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.2)',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
+              transition: 'transform 0.2s'
             }}>
-              Area Medici
+              Pubblica annuncio
             </a>
-          </nav>
+          </div>
         </div>
+
+        {/* STILI PER HOVER E MOBILE */}
+        <style jsx>{`
+          .menu-link {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.2s;
+          }
+          .menu-link:hover {
+            background-color: #f8fafc;
+            color: #2563eb;
+            padding-left: 15px;
+          }
+          
+          /* OTTIMIZZAZIONE MOBILE */
+          @media (max-width: 768px) {
+            header { padding: 8px 0; }
+            span { display: none; } /* Nasconde "ServiziSalute" per far spazio */
+            .menu-link { padding: 12px; font-size: 14px; }
+            a[href="/pubblica-annuncio"] { 
+              padding: 8px 14px; 
+              font-size: 11px; 
+            }
+          }
+        `}</style>
       </header>
     </>
   );
