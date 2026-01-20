@@ -5,7 +5,6 @@ export default function Navbar() {
   const [catAperto, setCatAperto] = useState(false);
   const [isHome, setIsHome] = useState(false);
 
-  // Controlla se siamo in Home Page per mostrare la barra verde
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsHome(window.location.pathname === '/');
@@ -14,118 +13,111 @@ export default function Navbar() {
 
   return (
     <>
-      {/* TOP BAR VERDE - APPARE SOLO IN HOME PAGE */}
+      {/* TOP BAR VERDE - SOLO IN HOME */}
       {isHome && (
-        <div style={{ 
-          backgroundColor: '#065f46', 
-          color: 'white', 
-          padding: '10px 15px', 
-          textAlign: 'center', 
-          fontSize: '12px', 
-          fontWeight: '800', 
-          textTransform: 'uppercase', 
-          letterSpacing: '1px' 
-        }}>
+        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '10px', textAlign: 'center', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
           🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
         </div>
       )}
 
-      <header style={{ 
-        backgroundColor: 'white', 
-        borderBottom: '2px solid #e2e8f0', 
-        padding: '12px 0', 
-        width: '100%',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000 
-      }}>
-        <div style={{ maxWidth: '1250px', margin: '0 auto', padding: '0 15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
+        <div className="nav-container">
           
-          {/* SINISTRA: LOGO */}
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>
+          {/* LOGO E NOME */}
+          <div className="logo-section">
             <i className="fas fa-heartbeat" style={{ color: '#2563eb' }}></i> 
             <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-          </a>
+          </div>
 
-          {/* CENTRO: MENU ▼ */}
-          <div 
-            onMouseEnter={() => setMenuAperto(true)}
-            onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
-            style={{ position: 'relative' }}
-          >
-            <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '700', fontSize: '13px', padding: '10px' }}>
-              MENU <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
-            </div>
-            
-            {/* PRIMO LIVELLO MENU */}
-            <div style={{ 
-              display: menuAperto ? 'block' : 'none',
-              position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)',
-              backgroundColor: 'white', minWidth: '200px', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', 
-              borderRadius: '12px', padding: '8px', border: '1px solid #f1f5f9', zIndex: 9999 
-            }}>
-              
-              {/* CATEGORIE CON SOTTOCATEGORIE */}
-              <div 
-                onMouseEnter={() => setCatAperto(true)}
-                onMouseLeave={() => setCatAperto(false)}
-                style={{ position: 'relative' }}
-              >
-                <div className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                  <span>🧩 Categorie</span>
-                  <i className="fas fa-chevron-right" style={{ fontSize: '10px' }}></i>
-                </div>
-
-                {/* SOTTOMENU CATEGORIE (SECONDO LIVELLO) */}
-                <div style={{ 
-                  display: catAperto ? 'block' : 'none',
-                  position: 'absolute', top: 0, left: '100%', marginLeft: '5px',
-                  backgroundColor: 'white', minWidth: '200px', boxShadow: '0 10px 30px rgba(0,0,0,0.15)', 
-                  borderRadius: '12px', padding: '8px', border: '1px solid #f1f5f9'
-                }}>
-                  <a href="/farmacie-roma" className="menu-link">💊 Farmacie</a>
-                  <a href="/dentisti-roma" className="menu-link">🦷 Dentisti</a>
-                  <a href="/diagnostica-roma" className="menu-link">🔬 Diagnostica</a>
-                  <a href="/visite-specialistiche-roma" className="menu-link">👨‍⚕️ Specialisti</a>
-                  <a href="/servizi-domicilio-roma" className="menu-link">🏠 Domicilio</a>
-                </div>
+          {/* NAVIGAZIONE (MENU + AZIONI) */}
+          <nav className="nav-actions">
+            {/* MENU CON DROP DOWN IN BASSO */}
+            <div 
+              onMouseEnter={() => setMenuAperto(true)}
+              onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
+              className="menu-wrapper"
+            >
+              <div className="menu-trigger">
+                MENU <i className="fas fa-chevron-down"></i>
               </div>
+              
+              {menuAperto && (
+                <div className="dropdown-main">
+                  {/* CATEGORIE CON SOTTOMENU IN BASSO */}
+                  <div className="cat-section">
+                    <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: catAperto ? '1px solid #f1f5f9' : 'none' }}>
+                      <span>🧩 Categorie</span>
+                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                    </div>
+                    
+                    {catAperto && (
+                      <div className="submenu-vertical">
+                        <a href="/farmacie-roma">💊 Farmacie</a>
+                        <a href="/dentisti-roma">🦷 Dentisti</a>
+                        <a href="/diagnostica-roma">🔬 Diagnostica</a>
+                        <a href="/visite-specialistiche-roma">👨‍⚕️ Specialisti</a>
+                        <a href="/servizi-domicilio-roma">🏠 Domicilio</a>
+                      </div>
+                    )}
+                  </div>
 
-              <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
-              <a href="/guide" className="menu-link">📘 Guide</a>
-              <a href="/chi-siamo" className="menu-link">ℹ️ Chi siamo</a>
+                  <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
+                  <a href="/guide" className="menu-link">📘 Guide</a>
+                  <a href="/chi-siamo" className="menu-link">ℹ️ Chi siamo</a>
+                </div>
+              )}
             </div>
-          </div>
 
-          {/* DESTRA: ACCEDI + PUBBLICA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <a href="/login" style={{ textDecoration: 'none', color: '#475569', fontWeight: '700', fontSize: '13px' }}>Accedi</a>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#2563eb', color: 'white', padding: '8px 16px', borderRadius: '20px', 
-              textDecoration: 'none', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase' 
-            }}>
-              Pubblica
-            </a>
-          </div>
+            <div className="user-actions">
+              <a href="/login" className="accedi-link">Accedi</a>
+              <a href="/pubblica-annuncio" className="pubblica-btn">Pubblica</a>
+            </div>
+          </nav>
         </div>
 
         <style jsx>{`
-          .menu-link {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #475569;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: background 0.2s;
+          .nav-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
           }
-          .menu-link:hover {
-            background-color: #f8fafc;
-            color: #2563eb;
+          .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 900;
+            font-size: 26px;
+            cursor: pointer;
           }
-          @media (max-width: 480px) {
-            span { font-size: 15px; }
+          .nav-actions { display: flex; align-items: center; gap: 30px; }
+          .menu-wrapper { position: relative; }
+          .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 14px; padding: 10px; }
+          
+          .dropdown-main {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            background: white; min-width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9;
+          }
+          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; }
+          .submenu-vertical a { display: block; padding: 8px 20px; font-size: 13px; text-decoration: none; color: #475569; font-weight: 600; }
+          .submenu-vertical a:hover { color: #2563eb; }
+
+          .menu-link { display: block; padding: 10px 15px; text-decoration: none; color: #475569; font-size: 14px; font-weight: 600; border-radius: 8px; }
+          .menu-link:hover { background-color: #f8fafc; color: #2563eb; }
+          
+          .user-actions { display: flex; align-items: center; gap: 15px; }
+          .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 14px; }
+          .pubblica-btn { background: #2563eb; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+
+          /* MOBILE: LOGO SOPRA E MENU SOTTO */
+          @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 15px; padding: 10px; }
+            .logo-section { font-size: 22px; justify-content: center; width: 100%; }
+            .nav-actions { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; gap: 0; }
+            .dropdown-main { left: 0; transform: none; width: 100vw; max-width: 250px; }
           }
         `}</style>
       </header>
