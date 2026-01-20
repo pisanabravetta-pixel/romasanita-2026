@@ -114,77 +114,96 @@ const eseguiRicerca = () => {
       Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto
     </p>
 
-    {/* LA TUA BARRA INTELLIGENTE A 3 SEZIONI */}
-    <div className="search-box-container" style={{ 
-      backgroundColor: 'white', 
-      padding: '20px', 
-      borderRadius: '20px', 
-      boxShadow: '0 15px 30px rgba(0,0,0,0.08)',
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '15px',
-      alignItems: 'flex-end',
-      border: '2px solid #065f46',
-      maxWidth: '100%',
-      margin: '0 auto'
-    }}>
-      
-      {/* 1. COSA CERCHI */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
-        <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>COSA CERCHI</label>
-        <input 
-          type="text" 
-          placeholder="Es: Pulizia denti, Tachipirina..." 
-          value={ricerca}
-          onChange={(e) => setRicerca(e.target.value)}
-          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1' }}
-        />
-      </div>
+   {/* LA TUA BARRA INTELLIGENTE A 3 SEZIONI */}
+<div className="search-box-container" style={{ 
+  backgroundColor: 'white', 
+  padding: '20px', 
+  borderRadius: '20px', 
+  boxShadow: '0 15px 30px rgba(0,0,0,0.08)',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '15px',
+  alignItems: 'flex-end',
+  justifyContent: 'center', // Centra gli elementi all'interno
+  border: '2px solid #065f46',
+  maxWidth: '1100px', // IMPEDISCE CHE DIVENTI GIGANTE SU PC
+  margin: '0 auto', // CENTRA LA BARRA NELLA PAGINA
+  width: '95%' // Forza la centratura su mobile evitando i bordi
+}}>
+  
+  {/* 1. COSA CERCHI (Placeholder Aggiornato) */}
+  <div className="search-input-group" style={{ flex: '1', minWidth: '250px', textAlign: 'left' }}>
+    <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>COSA CERCHI</label>
+    <input 
+      type="text" 
+      placeholder="Es: Farmacia, Cardiologo, Dermatologo..." 
+      value={ricerca}
+      onChange={(e) => setRicerca(e.target.value)}
+      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px' }}
+    />
+  </div>
 
-      {/* 2. ZONA / QUARTIERE */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
-        <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>ZONA / QUARTIERE</label>
-        <select 
-          value={zonaScelta} 
-          onChange={(e) => setZonaScelta(e.target.value)}
-          style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}
-        >
-          <option>Tutta Roma</option>
-          {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
-        </select>
-      </div>
+  {/* 2. ZONA / QUARTIERE */}
+  <div className="search-input-group" style={{ flex: '1', minWidth: '250px', textAlign: 'left' }}>
+    <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>ZONA / QUARTIERE</label>
+    <select 
+      value={zonaScelta} 
+      onChange={(e) => setZonaScelta(e.target.value)}
+      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px' }}
+    >
+      <option>Tutta Roma</option>
+      {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
+    </select>
+  </div>
 
-      {/* 3. CATEGORIA */}
-      <div className="search-input-group" style={{ flex: '1', minWidth: '280px', textAlign: 'left' }}>
-        <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
-        <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white' }}>
-          <option>Tutte le categorie</option>
-          <option>Farmacie</option>
-          <option>Dentisti</option>
-          <option>Diagnostica</option>
-          <option>Visite Specialistiche</option>
-          <option>Servizi a Domicilio</option>
-        </select>
-      </div>
+  {/* 3. CATEGORIA */}
+  <div className="search-input-group" style={{ flex: '1', minWidth: '250px', textAlign: 'left' }}>
+    <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
+    <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px' }}>
+      <option>Tutte le categorie</option>
+      <option>Farmacie</option>
+      <option>Dentisti</option>
+      <option>Diagnostica</option>
+      <option>Visite Specialistiche</option>
+      <option>Servizi a Domicilio</option>
+    </select>
+  </div>
 
-      {/* BOTTONE CERCA */}
-      <button 
-        className="btn-search" 
-        onClick={eseguiRicerca}
-        style={{ 
-          backgroundColor: '#065f46', 
-          color: 'white', 
-          padding: '12px 30px', 
-          borderRadius: '10px', 
-          fontWeight: '900', 
-          border: 'none', 
-          cursor: 'pointer',
-          height: '46px'
-        }}
-      >
-        CERCA
-      </button>
-    </div>
+  {/* BOTTONE CERCA */}
+  <button 
+    className="btn-search" 
+    onClick={eseguiRicerca}
+    style={{ 
+      backgroundColor: '#065f46', 
+      color: 'white', 
+      padding: '12px 30px', 
+      borderRadius: '10px', 
+      fontWeight: '900', 
+      border: 'none', 
+      cursor: 'pointer',
+      height: '46px',
+      minWidth: '120px'
+    }}
+  >
+    CERCA
+  </button>
+
+  <style jsx>{`
+    @media (max-width: 768px) {
+      .search-input-group {
+        min-width: 100% !important; /* Su mobile vanno una sotto l'altra */
+      }
+      .btn-search {
+        width: 100%; /* Bottone largo tutto lo schermo su mobile */
+      }
+      .search-box-container {
+        padding: 15px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+  `}</style>
+</div>
 
     {/* LINK HUB STRATEGICO */}
     <div style={{ marginTop: '30px' }}>
