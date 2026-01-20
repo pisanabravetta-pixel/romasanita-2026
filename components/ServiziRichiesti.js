@@ -41,19 +41,46 @@ export default function ServiziRichiesti() {
         </div>
       </div>
 
-      <style jsx>{`
-        .box-unico-servizio { border: 1px solid #eee; border-radius: 15px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
-        .sx { left: 10px; } .dx { right: 10px; }
-        
-        .solo-pc-servizi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .solo-mobile-servizi { display: none; }
+     <style jsx>{`
+  /* BOX MOBILE RINFORZATO */
+  .box-unico-servizio { 
+    border: 2px solid #cbd5e1; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    background: #ffffff; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+  }
 
-        @media (max-width: 768px) {
-          .solo-pc-servizi { display: none; }
-          .solo-mobile-servizi { display: block; }
-        }
-      `}</style>
+  /* FRECCE VERDI PIENE */
+  .freccia-nav { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: #065f46; 
+    color: white; 
+    border: 2px solid white; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    font-size: 25px; 
+    cursor: pointer; 
+    z-index: 5; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sx { left: 10px; } 
+  .dx { right: 10px; }
+  
+  .solo-pc-servizi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .solo-mobile-servizi { display: none; }
+
+  @media (max-width: 768px) {
+    .solo-pc-servizi { display: none; }
+    .solo-mobile-servizi { display: block; }
+  }
+`}</style>
     </section>
   );
 }
