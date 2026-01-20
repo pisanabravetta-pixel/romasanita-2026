@@ -73,39 +73,40 @@ const eseguiRicerca = () => {
       window.location.href = "/visite-specialistiche-roma" + parametri;
     }
   };
- return (
+return (
+  <>
+    <Head>
+      <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
+      <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+      {/* --- SCHEMA ORGANIZATION UNICO --- */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ServiziSalute",
+            "url": "https://servizisalute.it",
+            "logo": "https://servizisalute.it/favicon.ico",
+            "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Roma",
+              "addressRegion": "RM",
+              "addressCountry": "IT"
+            }
+          }),
+        }}
+      />
+    </Head>
+
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
-  <Head>
-  <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
-  <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  {/* --- SCHEMA ORGANIZATION UNICO --- */}
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ServiziSalute",
-        "url": typeof window !== 'undefined' ? window.location.origin : "https://servizisalute.it",
-        "logo": typeof window !== 'undefined' ? `${window.location.origin}/favicon.ico` : "",
-        "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Roma",
-          "addressRegion": "RM",
-          "addressCountry": "IT"
-        }
-      }),
-    }}
-  />
-</Head>
-
-<Navbar />
+      <Navbar />
        
 {/* HERO SECTION - RIPRISTINO RICERCA INTELLIGENTE */}
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
@@ -599,7 +600,7 @@ const eseguiRicerca = () => {
 
       <Footer />
 </div>
-
+</>
   );
 
 }
