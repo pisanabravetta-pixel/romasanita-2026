@@ -266,46 +266,92 @@ const eseguiRicerca = () => {
         </div>
       </section>
    
-{/* ESPLORA LE CATEGORIE STILE SUBITO.IT (RETTANGOLARI CENTRATI) */}
-      <section className="container" style={{padding: '50px 0 20px', textAlign: 'center'}}>
-        <h2 style={{fontSize: '28px', fontWeight: '700'}}>Esplora le Categorie</h2>
-        <p style={{color: '#666'}}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
-      </section>
+{/* SEZIONE CATEGORIE - PC: GRID / MOBILE: SLIDER ORIZZONTALE */}
+<section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
+  <div className="container">
+    <h2 style={{ fontSize: '28px', fontWeight: '700' }}>Esplora le Categorie</h2>
+    <p style={{ color: '#666' }}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
+  </div>
+</section>
 
-      <div style={{paddingBottom: '50px', backgroundColor: '#f6f7f9'}}>
-        <div className="container" style={{display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap', padding: '20px'}}>
-            
-            {/* CARD FARMACIE - RETTANGOLARE CON CONTENUTO CENTRATO */}
-            <a href="/farmacie-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
-              <div style={{backgroundColor: '#fff0f3', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #e91e63'}}>💊</div>
-              <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Farmacie</span>
-            </a>
+<div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
+  <div className="categorie-wrapper">
+    
+    {/* CARD FARMACIE */}
+    <a href="/farmacie-roma" className="cat-card">
+      <div style={{ backgroundColor: '#fff0f3', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #e91e63' }}>💊</div>
+      <span style={{ fontWeight: '600', fontSize: '15px', width: '100%' }}>Farmacie</span>
+    </a>
 
-            {/* CARD DENTISTI */}
-            <a href="/dentisti-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border:'2px solid #065f46' }}>
-              <div style={{backgroundColor: '#e3f2fd', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #2196f3'}}>🦷</div>
-              <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Dentisti</span>
-            </a>
+    {/* CARD DENTISTI */}
+    <a href="/dentisti-roma" className="cat-card">
+      <div style={{ backgroundColor: '#e3f2fd', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #2196f3' }}>🦷</div>
+      <span style={{ fontWeight: '600', fontSize: '15px', width: '100%' }}>Dentisti</span>
+    </a>
 
-            {/* CARD DIAGNOSTICA */}
-            <a href="/diagnostica-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius:'16px',  boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border:'2px solid #065f46'}}>
-              <div style={{backgroundColor: '#f3e5f5', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #9c27b0'}}>🔬</div>
-              <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Diagnostica</span>
-            </a>
+    {/* CARD DIAGNOSTICA */}
+    <a href="/diagnostica-roma" className="cat-card">
+      <div style={{ backgroundColor: '#f3e5f5', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #9c27b0' }}>🔬</div>
+      <span style={{ fontWeight: '600', fontSize: '15px', width: '100%' }}>Diagnostica</span>
+    </a>
 
-            {/* CARD SPECIALISTI */}
-            <a href="/visite-specialistiche-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
-              <div style={{backgroundColor: '#e8f5e9', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #4caf50'}}>👨‍⚕️</div>
-              <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Specialisti</span>
-            </a>
+    {/* CARD SPECIALISTI */}
+    <a href="/visite-specialistiche-roma" className="cat-card">
+      <div style={{ backgroundColor: '#e8f5e9', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #4caf50' }}>👨‍⚕️</div>
+      <span style={{ fontWeight: '600', fontSize: '15px', width: '100%' }}>Specialisti</span>
+    </a>
 
-            {/* CARD DOMICILIO */}
-            <a href="/servizi-domicilio-roma" style={{textDecoration: 'none', color: 'inherit', background: 'white', padding: '20px 10px', borderRadius: '16px', boxShadow: '0 1px 4px rgba(0,0,0,0.1)', width: '180px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '2px solid #065f46'}}>
-              <div style={{backgroundColor: '#fff3e0', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #ff9800'}}>🏠</div>
-              <span style={{fontWeight: '600', fontSize: '15px', width: '100%'}}>Domicilio</span>
-            </a>
+    {/* CARD DOMICILIO */}
+    <a href="/servizi-domicilio-roma" className="cat-card">
+      <div style={{ backgroundColor: '#fff3e0', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', fontSize: '24px', border: '1px solid #ff9800' }}>🏠</div>
+      <span style={{ fontWeight: '600', fontSize: '15px', width: '100%' }}>Domicilio</span>
+    </a>
 
-        </div>
+  </div>
+
+  <style jsx>{`
+    .categorie-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cat-card {
+      text-decoration: none;
+      color: inherit;
+      background: white;
+      padding: 20px 10px;
+      border-radius: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 2px solid #065f46;
+      flex-shrink: 0; /* Impedisce alle card di rimpicciolirsi su mobile */
+    }
+
+    @media (max-width: 768px) {
+      .categorie-wrapper {
+        justify-content: flex-start; /* Allinea a sinistra per lo scorrimento */
+        overflow-x: auto; /* Attiva lo scorrimento orizzontale */
+        padding: 20px 20px 30px 20px; /* Più spazio sotto per non tagliare l'ombra */
+        scrollbar-width: none; /* Nasconde barra Firefox */
+        -webkit-overflow-scrolling: touch;
+      }
+      .categorie-wrapper::-webkit-scrollbar {
+        display: none; /* Nasconde barra Chrome/Safari */
+      }
+      .cat-card {
+        width: 150px; /* Leggermente più strette su mobile per farne vedere di più */
+      }
+    }
+  `}</style>
+</div>
       </div>
      {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
       <UltimiAnnunci />
