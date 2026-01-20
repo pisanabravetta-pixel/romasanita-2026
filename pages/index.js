@@ -105,28 +105,6 @@ const eseguiRicerca = () => {
   />
 </Head>
 
-        {/* --- INIZIO SCHEMA ORGANIZATION --- */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "ServiziSalute",
-              "url": typeof window !== 'undefined' ? window.location.origin : "https://servizisalute.it",
-              "logo": typeof window !== 'undefined' ? `${window.location.origin}/favicon.ico` : "",
-              "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Roma",
-                "addressRegion": "RM",
-                "addressCountry": "IT"
-              }
-            }),
-          }}
-        />
-        {/* --- FINE SCHEMA ORGANIZATION --- */}
-      </Head> 
 <Navbar />
        
 {/* HERO SECTION - RIPRISTINO RICERCA INTELLIGENTE */}
