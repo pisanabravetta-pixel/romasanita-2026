@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import ServiziRichiesti from '../components/ServiziRichiesti';
 
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
@@ -331,28 +332,7 @@ const eseguiRicerca = () => {
         </div>
       </section>
 
-      {/* SERVIZI PIÙ RICHIESTI - BOX CON FOTO */}
-      <section className="container" style={{padding: '40px 0', borderTop: '1px solid #eee'}}>
-        <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Servizi più richiesti</h2>
-        <div className="announcements-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-          <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400" alt="Fisioterapia" />
-            <div className="ann-info"><h4>Fisioterapia</h4><p>Riabilitazione e massoterapia</p></div>
-          </div>
-          <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400" alt="Oculista" />
-            <div className="ann-info"><h4>Oculista</h4><p>Esame della vista completo</p></div>
-          </div>
-          <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400" alt="Psicologo" />
-            <div className="ann-info"><h4>Psicologo</h4><p>Consulenza e supporto</p></div>
-          </div>
-          <div className="ann-card">
-            <img className="ann-img" src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400" alt="Cardiologo" />
-            <div className="ann-info"><h4>Cardiologo</h4><p>ECG e controllo pressione</p></div>
-          </div>
-        </div>
-      </section>
+     <ServiziRichiesti />
 
       {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
       <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
