@@ -104,63 +104,6 @@ const eseguiRicerca = () => {
       </Head> 
 
        
-   {/* TOP BAR - VERDE ISTITUZIONALE */}
-      <div style={{ 
-        backgroundColor: '#065f46', 
-        color: 'white', 
-        padding: '10px 15px', 
-        textAlign: 'center', 
-        fontSize: '12px', 
-        fontWeight: '800', 
-        textTransform: 'uppercase',
-        letterSpacing: '1px'
-      }}>
-        🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
-      </div>
-
-    {/* HEADER - LOGO CON FAVICON E MENU A TENDINA */}
-<header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
-<div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1280px', margin: '0 auto', padding: '0 15px', flexWrap: 'nowrap' }}>
-    
-    {/* NOME BICOLORE CON ICONA FONT-AWESOME COLORABILE */}
-<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-  {/* Qui puoi cambiare il colore mettendo quello che vuoi in 'color' */}
-  <i className="fas fa-heartbeat" style={{ fontSize: '22px', color: '#2563eb' }}></i> 
-  
-  <div style={{ fontSize: '24px', fontWeight: '900' }}>
-    <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
-  </div>
-</div>
-
-    {/* MENU CENTRALE OTTIMIZZATO */}
-    <ul style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: '0 0 0 40px', padding: 0, alignItems: 'center' }}>
-      
-      {/* MENU A TENDINA CATEGORIE */}
-      <li 
-  onMouseEnter={(e) => { e.currentTarget.querySelector('.dropdown-menu').style.display = 'block'; }}
-  onMouseLeave={(e) => { e.currentTarget.querySelector('.dropdown-menu').style.display = 'none'; }}
-  style={{ position: 'relative', paddingBottom: '15px', marginBottom: '-15px' }}
->
-  <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '600', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-    Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
-  </div>
-  <div className="dropdown-menu" style={{ 
-    position: 'absolute', top: '100%', left: '0', backgroundColor: 'white', minWidth: '180px', 
-    boxShadow: '0 10px 25px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '10px', 
-    marginTop: '0px', border: '1px solid #f1f5f9', display: 'none', zIndex: 1000
-  }}>
-    <a href="/farmacie-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>💊 Farmacie</a>
-    <a href="/dentisti-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🦷 Dentisti</a>
-    <a href="/diagnostica-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🔬 Diagnostica</a>
-    <a href="/visite-specialistiche-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>👨‍⚕️ Specialisti</a>
-    <a href="/servizi-domicilio-roma" style={{ display: 'block', padding: '10px', textDecoration: 'none', color: '#475569', fontSize: '13px', fontWeight: '600' }}>🏠 Domicilio</a>
-  </div>
-</li>
-
-      <li><a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Tutti i servizi</a></li>
-      <li><a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Quartieri</a></li>
-      <li><a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Chi Siamo</a></li>
-    </ul>
 {/* TOP BAR - VERDE ISTITUZIONALE */}
       <div style={{ 
         backgroundColor: '#065f46', 
