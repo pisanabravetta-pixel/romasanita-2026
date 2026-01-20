@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { useState } from 'react';
 import Footer from '../components/Footer';
@@ -266,139 +267,10 @@ const eseguiRicerca = () => {
         </div>
       </section>
    
-{/* --- INIZIO BLOCCO CATEGORIE --- */}
-{(() => {
-  const [idx, setIdx] = React.useState(0);
-  const cats = [
-    { n: 'Farmacie', i: '💊', l: '/farmacie-roma', bg: '#fff0f3', bc: '#e91e63' },
-    { n: 'Dentisti', i: '🦷', l: '/dentisti-roma', bg: '#e3f2fd', bc: '#2196f3' },
-    { n: 'Diagnostica', i: '🔬', l: '/diagnostica-roma', bg: '#f3e5f5', bc: '#9c27b0' },
-    { n: 'Specialisti', i: '👨‍⚕️', l: '/visite-specialistiche-roma', bg: '#e8f5e9', bc: '#4caf50' },
-    { n: 'Domicilio', i: '🏠', l: '/servizi-domicilio-roma', bg: '#fff3e0', bc: '#ff9800' }
-  ];
+{/* --- SEZIONE CATEGORIE - CODICE CORRETTO --- */}
+<CategoriaSemplificata />
 
-  return (
-    <>
-      <section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
-        <div className="container">
-          <h2 style={{ fontSize: '28px', fontWeight: '700' }}>Esplora le Categorie</h2>
-          <p style={{ color: '#666' }}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
-        </div>
-      </section>
-
-      <div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
-        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-          
-          {/* MOBILE: SLIDER FISSO (Gira una categoria alla volta) */}
-          <div className="mobile-slider-only">
-            <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="cat-arrow sx">‹</button>
-            
-            <a href={cats[idx].l} className="cat-card-mobile">
-              <div className="icon-circle-mobile" style={{ backgroundColor: cats[idx].bg, border: '2px solid ' + cats[idx].bc }}>
-                {cats[idx].i}
-              </div>
-              <span className="cat-label-mobile">{cats[idx].n}</span>
-            </a>
-
-            <button onClick={() => setIdx(idx === 4 ? 0 : idx + 1)} className="cat-arrow dx">›</button>
-          </div>
-
-          {/* PC: GRID FISSA ORIGINALE */}
-          <div className="pc-only-grid">
-            {cats.map((c, i) => (
-              <a key={i} href={c.l} className="cat-card-pc">
-                <div className="icon-circle-pc" style={{ backgroundColor: c.bg, border: `1px solid ${c.bc}` }}>{c.i}</div>
-                <span className="cat-label-pc">{c.n}</span>
-              </a>
-            ))}
-          </div>
-
-        </div>
-
-        <style jsx>{`
-          /* PC STYLE */
-          .pc-only-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-          .cat-card-pc {
-            text-decoration: none;
-            color: inherit;
-            background: white;
-            padding: 20px 10px;
-            border-radius: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-            width: 180px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border: 2px solid #065f46;
-          }
-          .icon-circle-pc {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            font-size: 24px;
-          }
-          .cat-label-pc { font-weight: 600; font-size: 15px; }
-
-          /* MOBILE STYLE */
-          .mobile-slider-only { display: none; position: relative; width: 100%; justify-content: center; align-items: center; padding: 20px 0; }
-          .cat-card-mobile {
-            text-decoration: none;
-            color: inherit;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 20px;
-            width: 240px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border: 2px solid #065f46;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-          }
-          .icon-circle-mobile {
-            width: 80px; 
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            font-size: 40px;
-          }
-          .cat-label-mobile { font-weight: 800; font-size: 22px; color: #333; }
-          .cat-arrow {
-            background: #065f46;
-            color: white;
-            border: 2px solid white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            cursor: pointer;
-          }
-          .sx { margin-right: -25px; }
-          .dx { margin-left: -25px; }
-
-          @media (max-width: 768px) {
-            .pc-only-grid { display: none; }
-            .mobile-slider-only { display: flex; }
-          }
-        `}</style>
-      </div>
-    </>
-  );
-})()}
-{/* --- FINE BLOCCO CATEGORIE --- */}
-     
+{/* ... qui sotto ti metto il componente da incollare ... */}
      {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
       <UltimiAnnunci />
       
