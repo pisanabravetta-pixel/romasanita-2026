@@ -14,9 +14,9 @@ export default function ServiziRichiesti() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '24px', fontWeight: '900' }}>Servizi più richiesti</h2>
         
-        {/* MOBILE SLIDER */}
+        {/* MOBILE */}
         <div className="solo-mobile-servizi">
-          <div className="box-unico-servizio">
+          <div className="box-rinforzato-servizi">
             <div style={{ position: 'relative', height: '240px' }}>
               <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
               <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx">‹</button>
@@ -29,58 +29,29 @@ export default function ServiziRichiesti() {
           </div>
         </div>
 
-        {/* PC GRID */}
+        {/* PC (Con box rinforzato per contenere le scritte) */}
         <div className="solo-pc-servizi">
           {servizi.map((s, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
-              <img src={s.img} style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '12px' }} alt="" />
-              <h4 style={{ marginTop: '12px', fontWeight: '800', color: '#065f46' }}>{s.titolo}</h4>
-              <p style={{ fontSize: '14px', color: '#64748b' }}>{s.desc}</p>
+            <div key={i} className="box-rinforzato-servizi" style={{ textAlign: 'center' }}>
+              <img src={s.img} style={{ width: '100%', height: '180px', objectFit: 'cover' }} alt="" />
+              <div style={{ padding: '15px' }}>
+                <h4 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h4>
+                <p style={{ fontSize: '14px', color: '#64748b', marginTop: '5px' }}>{s.desc}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-     <style jsx>{`
-  /* BOX MOBILE RINFORZATO */
-  .box-unico-servizio { 
-    border: 2px solid #cbd5e1; 
-    border-radius: 15px; 
-    overflow: hidden; 
-    background: #ffffff; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-  }
-
-  /* FRECCE VERDI PIENE */
-  .freccia-nav { 
-    position: absolute; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    background: #065f46; 
-    color: white; 
-    border: 2px solid white; 
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    font-size: 25px; 
-    cursor: pointer; 
-    z-index: 5; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .sx { left: 10px; } 
-  .dx { right: 10px; }
-  
-  .solo-pc-servizi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .solo-mobile-servizi { display: none; }
-
-  @media (max-width: 768px) {
-    .solo-pc-servizi { display: none; }
-    .solo-mobile-servizi { display: block; }
-  }
-`}</style>
+      <style jsx>{`
+        .box-rinforzato-servizi { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; }
+        .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
+        .sx { left: 10px; } .dx { right: 10px; }
+        
+        .solo-pc-servizi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .solo-mobile-servizi { display: none; }
+        @media (max-width: 768px) { .solo-pc-servizi { display: none; } .solo-mobile-servizi { display: block; } }
+      `}</style>
     </section>
   );
 }
