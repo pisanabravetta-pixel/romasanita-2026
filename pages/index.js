@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import UltimiAnnunci from '../components/UltimiAnnunci';
 import ServiziRichiesti from '../components/ServiziRichiesti';
 
 export default function Home() {
@@ -306,35 +307,12 @@ const eseguiRicerca = () => {
 
         </div>
       </div>
-      {/* ULTIMI ANNUNCI CON TASTI CONTATTO AGGIUNTI */}
-      <section className="container" style={{padding: '40px 0'}}>
-        <h2 style={{marginBottom: '25px', fontSize: '24px'}}>Ultimi annunci pubblicati</h2>
-      <div className="announcements-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
-          {[
-            { cat: 'FARMACIE', title: 'Farmacia H24 Centro', img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400' },
-            { cat: 'DIAGNOSTICA', title: 'Centro RX Prati', img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400' },
-            { cat: 'DENTISTI', title: 'Studio Dentistico Eur', img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400' },
-            { cat: 'SPECIALISTI', title: 'Dermatologo Roma', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400' },
-            { cat: 'DOMICILIO', title: 'Infermiere a Casa', img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400' }
-          ].map((ann, idx) => (
-            <div className="ann-card" key={idx}>
-              <img className="ann-img" src={ann.img} alt={ann.title} />
-              <div className="ann-info">
-                <small>{ann.cat}</small>
-                <h4 style={{fontSize: '14px', margin: '5px 0'}}>{ann.title}</h4>
-                <div style={{display: 'flex', gap: '5px', marginTop: '10px'}}>
-                  <a href="tel:061234567" style={{flex: 1, textAlign: 'center', background: '#eef6ff', color: '#0070f3', padding: '6px', borderRadius: '4px', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold'}}>Chiama</a>
-                  <a href="https://wa.me/39" style={{background: '#25D366', color: 'white', padding: '6px 10px', borderRadius: '4px', fontSize: '11px'}}><i className="fab fa-whatsapp"></i></a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+     {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
+      <UltimiAnnunci />
+      
+      <ServiziRichiesti />
 
-     <ServiziRichiesti />
-
-      {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
+    {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
       <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
