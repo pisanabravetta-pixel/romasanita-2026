@@ -118,53 +118,75 @@ const eseguiRicerca = () => {
         🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
       </div>
 
-     {/* HEADER - NAVIGAZIONE OTTIMIZZATA */}
-<header style={{ backgroundColor: 'white', padding: '10px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
-  <div className="container-header" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 15px' }}>
+    <header style={{ backgroundColor: 'white', padding: '15px 0', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 1000 }}>
+  <div className="container-header" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 15px', display: 'flex', flexDirection: 'column' }}>
     
-    {/* RIGA SUPERIORE: LOGO + ACCESSO (Sempre visibili bene) */}
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+    {/* PRIMA RIGA: LOGO + TASTI (Sempre puliti) */}
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <i className="fas fa-heartbeat" style={{ fontSize: '20px', color: '#2563eb' }}></i> 
-        <div style={{ fontSize: '22px', fontWeight: '900' }}>
+        <i className="fas fa-heartbeat" style={{ fontSize: '22px', color: '#2563eb' }}></i> 
+        <div style={{ fontSize: '24px', fontWeight: '900' }}>
           <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
         </div>
       </div>
       
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-        <a href="/login" style={{ textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '13px' }}>Accedi</a>
-        <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '8px 15px', borderRadius: '20px', textDecoration: 'none', fontSize: '12px', fontWeight: '800' }}>
+      <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+        <a href="/login" style={{ textDecoration: 'none', color: '#333', fontWeight: '600', fontSize: '14px' }}>Accedi</a>
+        <a href="/pubblica-annuncio" style={{ backgroundColor: '#2563eb', color: 'white', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none', fontSize: '14px', fontWeight: '800' }}>
           Pubblica
         </a>
       </div>
     </div>
 
-    {/* RIGA INFERIORE: MENU SCORREVOLE (Risolve il problema del cellulare) */}
-    <ul className="mobile-menu" style={{ 
+    {/* SECONDA RIGA: MENU CON TENDINA (Mobile scorre, PC fisso) */}
+    <ul className="nav-menu" style={{ 
       listStyle: 'none', 
       display: 'flex', 
       gap: '20px', 
-      margin: 0, 
-      padding: '10px 0', 
-      overflowX: 'auto', // Permette di scorrere col dito se i link sono tanti
+      margin: '15px 0 0 0', 
+      padding: '10px 0 5px 0', 
+      alignItems: 'center',
+      overflowX: 'auto',
       whiteSpace: 'nowrap',
-      WebkitOverflowScrolling: 'touch',
       borderTop: '1px solid #f1f5f9'
     }}>
-      <li style={{ position: 'relative' }}>
-        <a href="/farmacie-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>💊 Farmacie</a>
+      {/* MENU A TENDINA CATEGORIE - RIPRISTINATO */}
+      <li 
+        className="dropdown-trigger"
+        onMouseEnter={(e) => { if(window.innerWidth > 768) e.currentTarget.querySelector('.dropdown-menu').style.display = 'block'; }}
+        onMouseLeave={(e) => { if(window.innerWidth > 768) e.currentTarget.querySelector('.dropdown-menu').style.display = 'none'; }}
+        style={{ position: 'relative' }}
+      >
+        <div style={{ cursor: 'pointer', color: '#475569', fontWeight: '600', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          Categorie <i className="fas fa-chevron-down" style={{ fontSize: '10px' }}></i>
+        </div>
+        <div className="dropdown-menu" style={{ 
+          position: 'absolute', top: '100%', left: '0', backgroundColor: 'white', minWidth: '180px', 
+          boxShadow: '0 10px 25px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '10px', 
+          display: 'none', zIndex: 1000, border: '1px solid #f1f5f9'
+        }}>
+          <a href="/farmacie-roma">💊 Farmacie</a>
+          <a href="/dentisti-roma">🦷 Dentisti</a>
+          <a href="/diagnostica-roma">🔬 Diagnostica</a>
+          <a href="/visite-specialistiche-roma">👨‍⚕️ Specialisti</a>
+        </div>
       </li>
-      <li><a href="/dentisti-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>🦷 Dentisti</a></li>
-      <li><a href="/diagnostica-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>🔬 Diagnostica</a></li>
-      <li><a href="/visite-specialistiche-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>👨‍⚕️ Specialisti</a></li>
+
+      <li><a href="/servizi-sanitari-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Tutti i servizi</a></li>
       <li><a href="/quartieri-roma" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Quartieri</a></li>
+      <li><a href="/chi-siamo" style={{ textDecoration: 'none', color: '#475569', fontWeight: '600', fontSize: '14px' }}>Chi Siamo</a></li>
     </ul>
 
     <style jsx>{`
-      .mobile-menu::-webkit-scrollbar { display: none; } /* Nasconde barra scorrimento brutta */
+      .nav-menu::-webkit-scrollbar { display: none; }
+      .dropdown-menu a { display: block; padding: 10px; textDecoration: none; color: #475569; fontSize: 13px; font-weight: 600; text-decoration: none; }
+      .dropdown-menu a:hover { background-color: #f8fafc; color: #2563eb !important; border-radius: 8px; }
+      
+      /* TRASFORMAZIONE PER PC */
       @media (min-width: 768px) {
-        .container-header { display: flex; justify-content: space-between; align-items: center; }
-        .mobile-menu { border-top: none; padding: 0; margin-left: 40px; overflow: visible; }
+        .container-header { flex-direction: row !important; justify-content: space-between !important; }
+        .nav-menu { margin: 0 0 0 40px !important; padding: 0 !important; border-top: none !important; overflow: visible !important; }
+        .nav-menu li { flex-shrink: 0; }
       }
     `}</style>
   </div>
