@@ -114,7 +114,7 @@ const eseguiRicerca = () => {
       Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto
     </p>
 
- {/* LA TUA BARRA INTELLIGENTE A 3 SEZIONI - VERSIONE COMPATTA PC */}
+ {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
   backgroundColor: 'white', 
   padding: '20px', 
@@ -122,34 +122,35 @@ const eseguiRicerca = () => {
   boxShadow: '0 15px 30px rgba(0,0,0,0.08)',
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '12px', // Ridotto leggermente il gap
+  gap: '12px',
   alignItems: 'flex-end',
   justifyContent: 'center',
   border: '2px solid #065f46',
-  maxWidth: '850px', // <--- ORA È COMPATTA SU PC
-  margin: '0 auto', 
-  width: '95%' 
+  maxWidth: '850px', 
+  margin: '0 auto', // Centra su PC
+  width: '90%', // Ridotto leggermente per dare aria ai lati su mobile
+  boxSizing: 'border-box'
 }}>
   
   {/* 1. COSA CERCHI */}
-  <div className="search-input-group" style={{ flex: '1', minWidth: '200px', textAlign: 'left' }}>
+  <div className="search-input-group" style={{ flex: '1', minWidth: '200px', textAlign: 'left', boxSizing: 'border-box' }}>
     <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>COSA CERCHI</label>
     <input 
       type="text" 
       placeholder="Es: Farmacia, Cardiologo..." 
       value={ricerca}
       onChange={(e) => setRicerca(e.target.value)}
-      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '13px' }}
+      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', boxSizing: 'border-box' }}
     />
   </div>
 
   {/* 2. ZONA / QUARTIERE */}
-  <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left' }}>
+  <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
     <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>ZONA / QUARTIERE</label>
     <select 
       value={zonaScelta} 
       onChange={(e) => setZonaScelta(e.target.value)}
-      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '13px' }}
+      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
     >
       <option>Tutta Roma</option>
       {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
@@ -157,9 +158,9 @@ const eseguiRicerca = () => {
   </div>
 
   {/* 3. CATEGORIA */}
-  <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left' }}>
+  <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
     <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
-    <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '13px' }}>
+    <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}>
       <option>Tutte le categorie</option>
       <option>Farmacie</option>
       <option>Dentisti</option>
@@ -181,8 +182,9 @@ const eseguiRicerca = () => {
       fontWeight: '900', 
       border: 'none', 
       cursor: 'pointer',
-      height: '43px', // Leggermente più basso per allinearsi meglio ai campi
-      minWidth: '100px'
+      height: '46px',
+      minWidth: '100px',
+      boxSizing: 'border-box'
     }}
   >
     CERCA
@@ -190,15 +192,19 @@ const eseguiRicerca = () => {
 
   <style jsx>{`
     @media (max-width: 768px) {
+      .search-box-container {
+        width: 92% !important; /* Forza la larghezza centrata */
+        margin: 0 auto !important;
+        padding: 15px !important;
+        gap: 15px !important;
+      }
       .search-input-group {
         min-width: 100% !important;
+        flex: none !important;
       }
       .btn-search {
-        width: 100%;
+        width: 100% !important;
         margin-top: 5px;
-      }
-      .search-box-container {
-        padding: 15px !important;
       }
     }
   `}</style>
