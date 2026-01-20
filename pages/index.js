@@ -598,3 +598,8 @@ const eseguiRicerca = () => {
       </section>
 
       <Footer />
+</div>
+
+  );
+
+}
