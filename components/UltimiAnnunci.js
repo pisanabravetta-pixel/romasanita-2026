@@ -15,9 +15,9 @@ export default function UltimiAnnunci() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '24px', fontWeight: '900' }}>Ultimi annunci pubblicati</h2>
         
-        {/* MOBILE SLIDER */}
+        {/* MOBILE */}
         <div className="solo-mobile-slider">
-          <div className="box-unico-annuncio">
+          <div className="box-rinforzato">
             <div style={{ position: 'relative', height: '240px' }}>
               <img src={annunci[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
               <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="freccia-nav sx">‹</button>
@@ -27,24 +27,24 @@ export default function UltimiAnnunci() {
               <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
               <h4 style={{ fontSize: '19px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <a href="tel:061234567" className="btn-chiama">Chiama</a>
-                <a href="#" className="btn-whatsapp"><i className="fab fa-whatsapp"></i></a>
+                <a href="tel:061234567" className="btn-chiama-mobile">Chiama</a>
+                <a href="#" className="btn-wa-mobile"><i className="fab fa-whatsapp"></i></a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* PC GRID */}
+        {/* PC (Ripristinato con bordi e tasti) */}
         <div className="solo-pc-grid">
           {annunci.map((ann, i) => (
-            <div key={i} className="card-pc-pulita">
+            <div key={i} className="box-rinforzato">
               <img src={ann.img} style={{ width: '100%', height: '140px', objectFit: 'cover' }} alt="" />
               <div style={{ padding: '12px', textAlign: 'center' }}>
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
                 <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
                 <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
-                  <a href="tel:061234567" className="btn-chiama-small">Chiama</a>
-                  <a href="#" className="btn-whatsapp-small"><i className="fab fa-whatsapp"></i></a>
+                  <a href="tel:061234567" className="btn-chiama-pc">Chiama</a>
+                  <a href="#" className="btn-wa-pc"><i className="fab fa-whatsapp"></i></a>
                 </div>
               </div>
             </div>
@@ -52,71 +52,23 @@ export default function UltimiAnnunci() {
         </div>
       </div>
 
-   <style jsx>{`
-  /* BOX MOBILE RINFORZATO */
-  .box-unico-annuncio { 
-    border: 2px solid #cbd5e1; /* Bordo più spesso e scuro */
-    border-radius: 15px; 
-    overflow: hidden; 
-    background: #ffffff; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-  }
+      <style jsx>{`
+        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; }
+        .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
+        .sx { left: 10px; } .dx { right: 10px; }
+        
+        /* TASTI PC */
+        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: bold; text-decoration: none; text-align: center; }
+        .btn-wa-pc { background: #25D366; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; }
+        
+        /* TASTI MOBILE */
+        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; }
+        .btn-wa-mobile { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-size: 18px; }
 
-  /* CARD PC RINFORZATA */
-  .card-pc-pulita { 
-    border: 2px solid #e2e8f0; /* Bordo più visibile anche su PC */
-    border-radius: 12px; 
-    overflow: hidden; 
-    background: #fff;
-  }
-
-  .freccia-nav { 
-    position: absolute; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    background: #065f46; /* Verde pieno per massima visibilità */
-    color: white; 
-    border: 2px solid white; 
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    font-size: 25px; 
-    cursor: pointer; 
-    z-index: 5; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .sx { left: 10px; } 
-  .dx { right: 10px; }
-
-  .btn-chiama { 
-    flex: 1; 
-    background: #0070f3; 
-    color: white; 
-    padding: 12px; 
-    border-radius: 8px; 
-    font-weight: 800; 
-    text-decoration: none; 
-  }
-  
-  .btn-whatsapp { 
-    background: #25D366; 
-    color: white; 
-    padding: 12px 20px; 
-    border-radius: 8px; 
-    font-size: 18px;
-  }
-  
-  .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
-  .solo-mobile-slider { display: none; }
-
-  @media (max-width: 768px) {
-    .solo-pc-grid { display: none; }
-    .solo-mobile-slider { display: block; }
-  }
-`}</style>
+        .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+        .solo-mobile-slider { display: none; }
+        @media (max-width: 768px) { .solo-pc-grid { display: none; } .solo-mobile-slider { display: block; } }
+      `}</style>
     </section>
   );
 }
