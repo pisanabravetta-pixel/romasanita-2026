@@ -52,24 +52,71 @@ export default function UltimiAnnunci() {
         </div>
       </div>
 
-      <style jsx>{`
-        .box-unico-annuncio { border: 1px solid #eee; border-radius: 15px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .card-pc-pulita { border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; }
-        .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
-        .sx { left: 10px; } .dx { right: 10px; }
-        .btn-chiama { flex: 1; background: #eef6ff; color: '#0070f3'; padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; }
-        .btn-whatsapp { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; }
-        .btn-chiama-small { flex: 1; background: #eef6ff; color: #0070f3; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: bold; text-decoration: none; }
-        .btn-whatsapp-small { background: #25D366; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; }
-        
-        .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
-        .solo-mobile-slider { display: none; }
+   <style jsx>{`
+  /* BOX MOBILE RINFORZATO */
+  .box-unico-annuncio { 
+    border: 2px solid #cbd5e1; /* Bordo più spesso e scuro */
+    border-radius: 15px; 
+    overflow: hidden; 
+    background: #ffffff; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+  }
 
-        @media (max-width: 768px) {
-          .solo-pc-grid { display: none; }
-          .solo-mobile-slider { display: block; }
-        }
-      `}</style>
+  /* CARD PC RINFORZATA */
+  .card-pc-pulita { 
+    border: 2px solid #e2e8f0; /* Bordo più visibile anche su PC */
+    border-radius: 12px; 
+    overflow: hidden; 
+    background: #fff;
+  }
+
+  .freccia-nav { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: #065f46; /* Verde pieno per massima visibilità */
+    color: white; 
+    border: 2px solid white; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    font-size: 25px; 
+    cursor: pointer; 
+    z-index: 5; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sx { left: 10px; } 
+  .dx { right: 10px; }
+
+  .btn-chiama { 
+    flex: 1; 
+    background: #0070f3; 
+    color: white; 
+    padding: 12px; 
+    border-radius: 8px; 
+    font-weight: 800; 
+    text-decoration: none; 
+  }
+  
+  .btn-whatsapp { 
+    background: #25D366; 
+    color: white; 
+    padding: 12px 20px; 
+    border-radius: 8px; 
+    font-size: 18px;
+  }
+  
+  .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
+  .solo-mobile-slider { display: none; }
+
+  @media (max-width: 768px) {
+    .solo-pc-grid { display: none; }
+    .solo-mobile-slider { display: block; }
+  }
+`}</style>
     </section>
   );
 }
