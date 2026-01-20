@@ -23,7 +23,7 @@ export default function Navbar() {
       <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
         <div className="nav-container">
           
-          {/* LOGO E NOME */}
+          {/* LOGO E NOME - GRANDEZZA DINAMICA */}
           <div className="logo-section">
             <i className="fas fa-heartbeat" style={{ color: '#2563eb' }}></i> 
             <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
@@ -31,7 +31,6 @@ export default function Navbar() {
 
           {/* NAVIGAZIONE (MENU + AZIONI) */}
           <nav className="nav-actions">
-            {/* MENU CON DROP DOWN IN BASSO */}
             <div 
               onMouseEnter={() => setMenuAperto(true)}
               onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
@@ -43,11 +42,10 @@ export default function Navbar() {
               
               {menuAperto && (
                 <div className="dropdown-main">
-                  {/* CATEGORIE CON SOTTOMENU IN BASSO */}
                   <div className="cat-section">
-                    <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: catAperto ? '1px solid #f1f5f9' : 'none' }}>
+                    <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                       <span>🧩 Categorie</span>
-                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`} style={{fontSize: '10px'}}></i>
                     </div>
                     
                     {catAperto && (
@@ -84,40 +82,46 @@ export default function Navbar() {
             justify-content: space-between;
             align-items: center;
           }
+          
+          /* LOGO GRANDE SU PC */
           .logo-section {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-weight: 900;
-            font-size: 26px;
+            font-size: 32px; /* Ingrandito per PC */
+            letter-spacing: -1px;
             cursor: pointer;
           }
-          .nav-actions { display: flex; align-items: center; gap: 30px; }
+
+          .nav-actions { display: flex; align-items: center; gap: 40px; }
           .menu-wrapper { position: relative; }
-          .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 14px; padding: 10px; }
+          .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
           
           .dropdown-main {
             position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-            background: white; min-width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: white; min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9;
           }
-          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; }
+          
+          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; padding: 5px 0; }
           .submenu-vertical a { display: block; padding: 8px 20px; font-size: 13px; text-decoration: none; color: #475569; font-weight: 600; }
-          .submenu-vertical a:hover { color: #2563eb; }
+          .submenu-vertical a:hover { color: #2563eb; background: #f1f5f9; }
 
-          .menu-link { display: block; padding: 10px 15px; text-decoration: none; color: #475569; font-size: 14px; font-weight: 600; border-radius: 8px; }
+          .menu-link { display: block; padding: 12px 15px; text-decoration: none; color: #475569; font-size: 15px; font-weight: 600; border-radius: 8px; }
           .menu-link:hover { background-color: #f8fafc; color: #2563eb; }
           
-          .user-actions { display: flex; align-items: center; gap: 15px; }
-          .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 14px; }
-          .pubblica-btn { background: #2563eb; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+          .user-actions { display: flex; align-items: center; gap: 20px; }
+          .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
+          .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
 
-          /* MOBILE: LOGO SOPRA E MENU SOTTO */
+          /* ADATTAMENTO MOBILE */
           @media (max-width: 768px) {
             .nav-container { flex-direction: column; gap: 15px; padding: 10px; }
-            .logo-section { font-size: 22px; justify-content: center; width: 100%; }
+            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
             .nav-actions { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; gap: 0; }
-            .dropdown-main { left: 0; transform: none; width: 100vw; max-width: 250px; }
+            .dropdown-main { left: 0; transform: none; width: 250px; }
+            .pubblica-btn { padding: 8px 16px; font-size: 12px; }
           }
         `}</style>
       </header>
