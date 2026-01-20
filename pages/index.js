@@ -232,39 +232,89 @@ const eseguiRicerca = () => {
   </p>
 </div>
 
-{/* SEZIONE STATISTICHE - DATI CORRETTI E STILE COMPATTO */}
-      <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap',width: '100%',maxWidth: '1100px',boxSizing: 'border-box',margin: '0 auto',padding: '0 15px' }}>
-          
-          {/* BOX 1 - ANNUNCI */}
-          <div style={{ backgroundColor: '#fff', border:'2px solid #065f46', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-            <div style={{ fontSize: '24px' }}>📢</div>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+1.500</div>
-              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Annunci Online</div>
-            </div>
-          </div>
+{/* SEZIONE STATISTICHE - RESPONSIVE: 3 IN RIGA SU MOBILE */}
+<section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
+  <div className="stats-container">
+    
+    {/* BOX 1 - ANNUNCI */}
+    <div className="stat-box">
+      <div className="stat-icon">📢</div>
+      <div className="stat-text-wrapper">
+        <div className="stat-number">+1.500</div>
+        <div className="stat-label">Annunci</div>
+      </div>
+    </div>
 
-          {/* BOX 2 - PROFESSIONISTI (CORRETTO) */}
-          <div style={{ backgroundColor: '#fff', border:'2px solid #065f46', padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-            <div style={{ fontSize: '24px' }}>👨‍⚕️</div>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+850</div>
-              <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Professionisti</div>
-            </div>
-          </div>
+    {/* BOX 2 - PROFESSIONISTI */}
+    <div className="stat-box">
+      <div className="stat-icon">👨‍⚕️</div>
+      <div className="stat-text-wrapper">
+        <div className="stat-number">+850</div>
+        <div className="stat-label">Medici</div>
+      </div>
+    </div>
 
-         {/* BOX 3 - VISITE (AGGIORNATO) */}
-<div style={{ backgroundColor: '#fff', border:'2px solid #065f46',  padding: '15px 20px', borderRadius: '12px', width: '200px', display: 'flex', alignItems: 'center', gap: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }}>
-  <div style={{ fontSize: '24px' }}>📈</div>
-  <div style={{ textAlign: 'left' }}>
-    <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#2563eb', lineHeight: '1' }}>+15K</div>
-    <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase' }}>Accessi Gennaio 2026</div>
+    {/* BOX 3 - VISITE */}
+    <div className="stat-box">
+      <div className="stat-icon">📈</div>
+      <div className="stat-text-wrapper">
+        <div className="stat-number">+15K</div>
+        <div className="stat-label">Accessi</div>
+      </div>
+    </div>
+
   </div>
-</div>
 
-        </div>
-      </section>
+  <style jsx>{`
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .stat-box {
+      backgroundColor: #fff;
+      border: 2px solid #065f46;
+      padding: 15px 20px;
+      border-radius: 12px;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .stat-text-wrapper { text-align: left; }
+    .stat-icon { fontSize: 24px; }
+    .stat-number { fontSize: 18px; fontWeight: bold; color: #2563eb; lineHeight: 1; }
+    .stat-label { fontSize: 11px; color: #64748b; fontWeight: 600; textTransform: uppercase; }
+
+    @media (max-width: 768px) {
+      .stats-container {
+        gap: 8px; /* Spazio ridotto tra i box */
+        justify-content: space-between;
+      }
+
+      .stat-box {
+        flex-direction: column; /* Icona sopra, testo sotto */
+        padding: 10px 5px;
+        width: 31%; /* Divide la riga in 3 parti quasi uguali */
+        gap: 5px;
+        text-align: center;
+        aspect-ratio: 1 / 1; /* Li rende quadrati */
+        justify-content: center;
+      }
+
+      .stat-text-wrapper { text-align: center; }
+      .stat-icon { fontSize: 20px; }
+      .stat-number { fontSize: 14px; }
+      .stat-label { fontSize: 9px; }
+    }
+  `}</style>
+</section>
    
 {/* --- SEZIONE CATEGORIE - RETTANGOLO GRANDE MOBILE CON FRECCE INTERNE --- */}
 <section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
