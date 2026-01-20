@@ -17,17 +17,21 @@ export default function UltimiAnnunci() {
         
         {/* MOBILE */}
         <div className="mobile-only">
-          <div style={{ border: '2px solid #065f46', borderRadius: '15px', overflow: 'hidden', backgroundColor: '#fff', paddingBottom: '15px' }}>
-            <div style={{ position: 'relative' }}>
-              <img src={annunci[idx].img} style={{ width: '100%', height: '240px', objectFit: 'cover' }} />
-              <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="arrow">‹</button>
-              <button onClick={() => setIdx(idx === 4 ? 0 : idx + 1)} className="arrow" style={{ right: '10px' }}>›</button>
+          <div style={{ border: '1px solid #ddd', borderRadius: '15px', overflow: 'hidden', backgroundColor: '#fff', paddingBottom: '20px' }}>
+            <div style={{ position: 'relative', height: '240px' }}>
+              <img src={annunci[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {/* FRECCIA SINISTRA */}
+              <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="arrow-btn" style={{ left: '10px' }}>‹</button>
+              {/* FRECCIA DESTRA */}
+              <button onClick={() => setIdx(idx === 4 ? 0 : idx + 1)} className="arrow-btn" style={{ right: '10px' }}>›</button>
             </div>
-            <small style={{ color: '#065f46', fontWeight: '900', display: 'block', marginTop: '15px' }}>{annunci[idx].cat}</small>
-            <h4 style={{ fontSize: '20px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
-            <div style={{ display: 'flex', gap: '10px', padding: '0 15px' }}>
-              <a href="tel:061234567" style={{ flex: 1, background: '#eef6ff', color: '#0070f3', padding: '12px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none' }}>Chiama</a>
-              <a href="#" style={{ background: '#25D366', color: 'white', padding: '12px 20px', borderRadius: '8px' }}><i className="fab fa-whatsapp"></i></a>
+            <div style={{ padding: '15px' }}>
+              <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
+              <h4 style={{ fontSize: '18px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                <a href="tel:061234567" style={{ flex: 1, background: '#eef6ff', color: '#0070f3', padding: '10px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', fontSize: '14px' }}>Chiama</a>
+                <a href="#" style={{ background: '#25D366', color: 'white', padding: '10px 20px', borderRadius: '8px' }}><i className="fab fa-whatsapp"></i></a>
+              </div>
             </div>
           </div>
         </div>
@@ -50,7 +54,7 @@ export default function UltimiAnnunci() {
         </div>
       </div>
       <style jsx>{`
-        .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(6,95,70,0.8); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 24px; left: 10px; cursor: pointer; }
+        .arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; padding-bottom: 5px; }
         @media (min-width: 769px) { .mobile-only { display: none; } }
         @media (max-width: 768px) { .pc-only { display: none; } }
       `}</style>
