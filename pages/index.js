@@ -266,10 +266,90 @@ const eseguiRicerca = () => {
         </div>
       </section>
    
-{/* --- SEZIONE CATEGORIE - CODICE CORRETTO --- */}
-<CategoriaSemplificata />
+{/* --- SEZIONE CATEGORIE - BLOCCO UNICO AUTO-CONTENUTO --- */}
+<section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
+  <div className="container">
+    <h2 style={{ fontSize: '28px', fontWeight: '700' }}>Esplora le Categorie</h2>
+    <p style={{ color: '#666' }}>Trova il servizio sanitario di cui hai bisogno a Roma</p>
+  </div>
+</section>
 
-{/* ... qui sotto ti metto il componente da incollare ... */}
+<div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
+  {(() => {
+    // Definizione locale dei dati e dello stato per evitare ReferenceError
+    const [indexCat, setIndexCat] = useState(0); 
+    const elencoCategorie = [
+      { n: 'Farmacie', i: '💊', l: '/farmacie-roma', bg: '#fff0f3', bc: '#e91e63' },
+      { n: 'Dentisti', i: '🦷', l: '/dentisti-roma', bg: '#e3f2fd', bc: '#2196f3' },
+      { n: 'Diagnostica', i: '🔬', l: '/diagnostica-roma', bg: '#f3e5f5', bc: '#9c27b0' },
+      { n: 'Specialisti', i: '👨‍⚕️', l: '/visite-specialistiche-roma', bg: '#e8f5e9', bc: '#4caf50' },
+      { n: 'Domicilio', i: '🏠', l: '/servizi-domicilio-roma', bg: '#fff3e0', bc: '#ff9800' }
+    ];
+
+    return (
+      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        
+        {/* MOBILE: SLIDER FISSO (Logica come Ultimi Annunci) */}
+        <div className="cat-wrapper-mobile">
+          <button onClick={() => setIndexCat(indexCat === 0 ? 4 : indexCat - 1)} className="cat-btn-arrow left-arrow">‹</button>
+          
+          <a href={elencoCategorie[indexCat].l} className="cat-box-mobile">
+            <div className="cat-icon-round" style={{ backgroundColor: elencoCategorie[indexCat].bg, border: '2px solid ' + elencoCategorie[indexCat].bc }}>
+              {elencoCategorie[indexCat].i}
+            </div>
+            <span className="cat-name-mobile">{elencoCategorie[indexCat].n}</span>
+          </a>
+
+          <button onClick={() => setIndexCat(indexCat === 4 ? 0 : indexCat + 1)} className="cat-btn-arrow right-arrow">›</button>
+        </div>
+
+        {/* PC: GRID FISSA (5 BOX) */}
+        <div className="cat-wrapper-pc">
+          {elencoCategorie.map((item, idx) => (
+            <a key={idx} href={item.l} className="cat-box-pc">
+              <div className="cat-icon-pc" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
+              <span className="cat-name-pc">{item.n}</span>
+            </a>
+          ))}
+        </div>
+
+        <style jsx>{`
+          /* PC: 5 BOX AFFIANCATI */
+          .cat-wrapper-pc { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+          .cat-box-pc {
+            text-decoration: none; color: inherit; background: white; padding: 20px 10px;
+            border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); width: 180px;
+            display: flex; flex-direction: column; align-items: center; text-align: center; border: 2px solid #065f46;
+          }
+          .cat-icon-pc { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 24px; }
+          .cat-name-pc { font-weight: 600; font-size: 15px; }
+
+          /* MOBILE: 1 BOX FISSO CON FRECCE */
+          .cat-wrapper-mobile { display: none; position: relative; width: 100%; justify-content: center; align-items: center; padding: 20px 0; }
+          .cat-box-mobile {
+            text-decoration: none; color: inherit; background: white; padding: 40px 20px;
+            border-radius: 20px; width: 240px; display: flex; flex-direction: column;
+            align-items: center; text-align: center; border: 2px solid #065f46; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          }
+          .cat-icon-round { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; font-size: 40px; }
+          .cat-name-mobile { font-weight: 800; font-size: 22px; color: #333; }
+          
+          .cat-btn-arrow {
+            background: #065f46; color: white; border: 2px solid white; width: 50px; height: 50px;
+            border-radius: 50%; font-size: 30px; display: flex; align-items: center; justify-content: center; z-index: 10;
+          }
+          .left-arrow { margin-right: -25px; }
+          .right-arrow { margin-left: -25px; }
+
+          @media (max-width: 768px) {
+            .cat-wrapper-pc { display: none; }
+            .cat-wrapper-mobile { display: flex; }
+          }
+        `}</style>
+      </div>
+    );
+  })()}
+</div>
      {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
       <UltimiAnnunci />
       
