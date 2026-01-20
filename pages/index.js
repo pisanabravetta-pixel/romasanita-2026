@@ -352,7 +352,7 @@ const eseguiRicerca = () => {
     }
   `}</style>
 </div>
-      </div>
+     
      {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
       <UltimiAnnunci />
       
