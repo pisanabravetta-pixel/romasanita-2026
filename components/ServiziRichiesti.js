@@ -14,39 +14,38 @@ export default function ServiziRichiesti() {
   const indietro = () => setIndex((prev) => (prev === 0 ? servizi.length - 1 : prev - 1));
 
   return (
-    <section className="servizi-section">
-      <div className="container-servizi">
+    <section style={{ padding: '60px 0', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         
-        <h2 className="titolo-sezione">Servizi più richiesti</h2>
+        {/* TITOLO SEMPRE CENTRATO */}
+        <h2 style={{ textAlign: 'center', fontSize: '28px', fontWeight: '900', marginBottom: '40px', color: '#0f172a' }}>
+          Servizi più richiesti
+        </h2>
 
-        {/* --- MOBILE: SLIDER (1 FOTO ALLA VOLTA + FRECCE) --- */}
-        <div className="mobile-slider-container">
-          <button onClick={indietro} className="arrow-nav left">
+        {/* --- VERSIONE MOBILE: 1 FOTO + FRECCE --- */}
+        <div className="mobile-view" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+          <button onClick={indietro} style={{ background: '#065f46', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer' }}>
             <i className="fas fa-chevron-left"></i>
           </button>
           
-          <div className="card-singola">
-            <img src={servizi[index].img} alt={servizi[index].titolo} className="img-servizio" />
-            <div className="info-servizio">
-              <h4>{servizi[index].titolo}</h4>
-              <p>{servizi[index].desc}</p>
-            </div>
+          <div style={{ textAlign: 'center', width: '100%' }}>
+            <img src={servizi[index].img} style={{ width: '100%', height: '250px', objectFit: 'cover', borderRadius: '15px' }} alt="servizio" />
+            <h4 style={{ margin: '15px 0 5px 0', fontSize: '22px', fontWeight: '800', color: '#065f46' }}>{servizi[index].titolo}</h4>
+            <p style={{ margin: 0, color: '#64748b' }}>{servizi[index].desc}</p>
           </div>
 
-          <button onClick={avanti} className="arrow-nav right">
+          <button onClick={avanti} style={{ background: '#065f46', color: 'white', border: 'none', width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer' }}>
             <i className="fas fa-chevron-right"></i>
           </button>
         </div>
 
-        {/* --- PC: GRIGLIA NORMALE (4 COLONNE) --- */}
-        <div className="pc-grid-container">
+        {/* --- VERSIONE PC: 4 COLONNE CENTRATE --- */}
+        <div className="pc-view" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '25px' }}>
           {servizi.map((s) => (
-            <div key={s.id} className="card-singola">
-              <img src={s.img} alt={s.titolo} className="img-servizio" />
-              <div className="info-servizio">
-                <h4>{s.titolo}</h4>
-                <p>{s.desc}</p>
-              </div>
+            <div key={s.id} style={{ textAlign: 'center' }}> {/* CENTRA LE SCRITTE */}
+              <img src={s.img} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '15px', marginBottom: '15px' }} alt={s.titolo} />
+              <h4 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: '800', color: '#065f46' }}>{s.titolo}</h4>
+              <p style={{ margin: 0, color: '#64748b', fontSize: '14px' }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -54,86 +53,9 @@ export default function ServiziRichiesti() {
       </div>
 
       <style jsx>{`
-        .servizi-section {
-          padding: 60px 0;
-          border-top: 1px solid #eee;
-          background: #fff;
-        }
-        .container-servizi {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 20px;
-        }
-        .titolo-sezione {
-          text-align: center; /* CENTRA IL TITOLO H2 */
-          font-size: 28px;
-          font-weight: 900;
-          margin-bottom: 40px;
-          color: #0f172a;
-        }
-
-        /* CARD STYLE CON CENTRATURA */
-        .card-singola {
-          background: #fff;
-          text-align: center; /* CENTRA LE SCRITTE SOTTO LE FOTO */
-          display: flex;
-          flex-direction: column;
-          align-items: center; /* CENTRA GLI ELEMENTI INTERNI */
-        }
-        .img-servizio {
-          width: 100%;
-          height: 220px;
-          object-fit: cover;
-          border-radius: 15px;
-          margin-bottom: 15px;
-        }
-        .info-servizio h4 {
-          margin: 0 0 5px 0;
-          font-size: 20px;
-          font-weight: 800;
-          color: #065f46;
-        }
-        .info-servizio p {
-          margin: 0;
-          color: #64748b;
-          font-size: 15px;
-        }
-
-        /* VISUALIZZAZIONE PC */
-        .pc-grid-container {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 25px;
-        }
-        .mobile-slider-container { display: none; }
-
-        /* VISUALIZZAZIONE MOBILE */
         @media (max-width: 768px) {
-          .pc-grid-container { display: none; }
-          .mobile-slider-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-          }
-          .card-singola {
-            width: 100%;
-          }
-          .arrow-nav {
-            background: #065f46;
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(6, 95, 70, 0.3);
-          }
+          .pc-view { display: none !important; }
+          .mobile-view { display: flex !important; }
         }
       `}</style>
     </section>
