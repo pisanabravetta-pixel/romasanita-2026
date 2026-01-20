@@ -266,7 +266,7 @@ const eseguiRicerca = () => {
         </div>
       </section>
    
-{/* SEZIONE CATEGORIE - PC: FISSE / MOBILE: SLIDER CON FRECCE */}
+{/* SEZIONE CATEGORIE - CON SCORRIMENTO A SCATTO E FRECCE INTERNE */}
 <section style={{ padding: '50px 0 20px', textAlign: 'center' }}>
   <div className="container">
     <h2 style={{ fontSize: '28px', fontWeight: '700' }}>Esplora le Categorie</h2>
@@ -275,66 +275,60 @@ const eseguiRicerca = () => {
 </section>
 
 <div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
-  <div className="container">
-    <div className="categorie-nav-container">
+  <div className="container" style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto' }}>
+    
+    {/* FRECCIA SINISTRA (DENTRO IL CONTENITORE) */}
+    <button className="nav-btn-cat prev" onClick={() => document.getElementById('catSlider').scrollBy({left: -200, behavior: 'smooth'})}>‹</button>
+
+    <div className="categorie-wrapper-scroll" id="catSlider">
       
-      {/* CONTENITORE CARD SCORREVOLI */}
-      <div className="categorie-wrapper-scroll" id="catSlider">
-        
-        {/* CARD FARMACIE */}
-        <a href="/farmacie-roma" className="cat-card-custom">
-          <div className="circle-icon" style={{ backgroundColor: '#fff0f3', border: '1px solid #e91e63' }}>💊</div>
-          <span className="cat-label">Farmacie</span>
-        </a>
+      {/* CARD FARMACIE */}
+      <a href="/farmacie-roma" className="cat-card-custom">
+        <div style={{ backgroundColor: '#fff0f3', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px', border: '1px solid #e91e63' }}>💊</div>
+        <span className="cat-label">Farmacie</span>
+      </a>
 
-        {/* CARD DENTISTI */}
-        <a href="/dentisti-roma" className="cat-card-custom">
-          <div className="circle-icon" style={{ backgroundColor: '#e3f2fd', border: '1px solid #2196f3' }}>🦷</div>
-          <span className="cat-label">Dentisti</span>
-        </a>
+      {/* CARD DENTISTI */}
+      <a href="/dentisti-roma" className="cat-card-custom">
+        <div style={{ backgroundColor: '#e3f2fd', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px', border: '1px solid #2196f3' }}>🦷</div>
+        <span className="cat-label">Dentisti</span>
+      </a>
 
-        {/* CARD DIAGNOSTICA */}
-        <a href="/diagnostica-roma" className="cat-card-custom">
-          <div className="circle-icon" style={{ backgroundColor: '#f3e5f5', border: '1px solid #9c27b0' }}>🔬</div>
-          <span className="cat-label">Diagnostica</span>
-        </a>
+      {/* CARD DIAGNOSTICA */}
+      <a href="/diagnostica-roma" className="cat-card-custom">
+        <div style={{ backgroundColor: '#f3e5f5', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px', border: '1px solid #9c27b0' }}>🔬</div>
+        <span className="cat-label">Diagnostica</span>
+      </a>
 
-        {/* CARD SPECIALISTI */}
-        <a href="/visite-specialistiche-roma" className="cat-card-custom">
-          <div className="circle-icon" style={{ backgroundColor: '#e8f5e9', border: '1px solid #4caf50' }}>👨‍⚕️</div>
-          <span className="cat-label">Specialisti</span>
-        </a>
+      {/* CARD SPECIALISTI */}
+      <a href="/visite-specialistiche-roma" className="cat-card-custom">
+        <div style={{ backgroundColor: '#e8f5e9', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px', border: '1px solid #4caf50' }}>👨‍⚕️</div>
+        <span className="cat-label">Specialisti</span>
+      </a>
 
-        {/* CARD DOMICILIO */}
-        <a href="/servizi-domicilio-roma" className="cat-card-custom">
-          <div className="circle-icon" style={{ backgroundColor: '#fff3e0', border: '1px solid #ff9800' }}>🏠</div>
-          <span className="cat-label">Domicilio</span>
-        </a>
-
-      </div>
-
-      {/* FRECCE SOLO MOBILE */}
-      <button className="nav-btn-cat prev" onClick={() => document.getElementById('catSlider').scrollBy({left: -200, behavior: 'smooth'})}>‹</button>
-      <button className="nav-btn-cat next" onClick={() => document.getElementById('catSlider').scrollBy({left: 200, behavior: 'smooth'})}>›</button>
+      {/* CARD DOMICILIO */}
+      <a href="/servizi-domicilio-roma" className="cat-card-custom">
+        <div style={{ backgroundColor: '#fff3e0', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontSize: '24px', border: '1px solid #ff9800' }}>🏠</div>
+        <span className="cat-label">Domicilio</span>
+      </a>
 
     </div>
+
+    {/* FRECCIA DESTRA (DENTRO IL CONTENITORE) */}
+    <button className="nav-btn-cat next" onClick={() => document.getElementById('catSlider').scrollBy({left: 200, behavior: 'smooth'})}>›</button>
+
   </div>
 
   <style jsx>{`
-    .categorie-nav-container {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 10px;
-    }
-
     .categorie-wrapper-scroll {
       display: flex;
-      justify-content: center; /* Centrate su PC */
+      justify-content: center;
       gap: 15px;
-      padding: 20px 0;
-      overflow-x: hidden; /* Nascondiamo lo scroll brutto */
+      padding: 20px 10px;
+      overflow-x: hidden;
       scroll-behavior: smooth;
+      /* SNAP: Forza il box a fermarsi in posizione */
+      scroll-snap-type: x mandatory;
     }
 
     .cat-card-custom {
@@ -344,66 +338,54 @@ const eseguiRicerca = () => {
       padding: 20px 10px;
       border-radius: 16px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      width: 180px;
+      width: 180px; /* La tua grandezza originale */
       display: flex;
       flex-direction: column;
-      align-items: center; /* Centra icona e testo */
-      justify-content: center;
+      align-items: center;
       text-align: center;
       border: 2px solid #065f46;
       flex-shrink: 0;
-    }
-
-    .circle-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      font-size: 24px;
+      scroll-snap-align: center; /* Il box si ferma al centro */
     }
 
     .cat-label {
       font-weight: 600;
       font-size: 15px;
+      display: block;
       width: 100%;
     }
 
-    /* FRECCE NAVIGAZIONE */
     .nav-btn-cat {
-      display: none; /* Chiuse su PC */
+      display: none;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       background: #065f46;
       color: white;
       border: 2px solid white;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
-      font-size: 24px;
+      font-size: 20px;
       cursor: pointer;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 20;
     }
-    .prev { left: -5px; }
-    .next { right: -5px; }
+    .prev { left: 10px; }
+    .next { right: 10px; }
 
     @media (max-width: 768px) {
       .categorie-wrapper-scroll {
-        justify-content: flex-start; /* Permette lo scorrimento */
-        overflow-x: scroll;
+        justify-content: flex-start;
+        overflow-x: auto;
         scrollbar-width: none;
-        padding: 20px 10px;
+        padding: 20px 50px; /* Spazio per le frecce */
       }
       .categorie-wrapper-scroll::-webkit-scrollbar { display: none; }
       
       .nav-btn-cat { display: flex; align-items: center; justify-content: center; }
       
       .cat-card-custom {
-        width: 160px; /* Misura perfetta per mobile */
+        width: 200px; /* Leggermente più grande per occupare bene lo schermo mobile */
       }
     }
   `}</style>
