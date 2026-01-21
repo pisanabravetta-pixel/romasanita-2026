@@ -127,7 +127,7 @@ export default function PaginaQuartiereDinamica() {
 
         {/* MAPPA QUARTIERE (Sotto i link zone) */}
         <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', height: '250px' }}>
-          <iframe width="100%" height="100%" style={{ border: 0 }} loading="lazy"src={`https://maps.google.com/?cid=17222239536124900571&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ{encodeURIComponent(meta.titolo + " " + meta.zona + " Roma")}&t=&z=14&ie=UTF8&iwloc=&output=embed`} ></iframe>
+          <iframe width="100%" height="100%" style={{ border: 0 }} loading="lazy"src={`https://www.google.com/maps?q=${encodeURIComponent(meta.titolo)}&output=embed`} ></iframe>
         </div>
 
         {/* LISTA ANNUNCI */}
@@ -150,16 +150,16 @@ export default function PaginaQuartiereDinamica() {
         {/* APPROFONDIMENTI COSTI */}
         <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
           <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>💰 Approfondimenti e Costi a Roma:</h4>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-  {meta.cat.includes('dentist') ? (
-    <>
-      <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
-      <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
-    </>
-  ) : (
+         <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+  {meta.cat.includes('farmac') ? (
     <>
       <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
       <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Guida esenzioni e Ticket Regione Lazio</a></li>
+    </>
+  ) : (
+    <>
+      <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+      <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
     </>
   )}
 </ul>
