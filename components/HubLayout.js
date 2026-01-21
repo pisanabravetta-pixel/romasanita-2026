@@ -51,13 +51,17 @@ export default function HubLayout({
           <span style={{ color: '#065f46' }}>{titolo} Roma</span>
         </div>
 
-        {/* TITOLO E SOTTOTITOLO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
-          <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-            {titolo} a Roma
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-            Specialisti aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
+       {/* TESTO SEO INIZIALE (Tratto da Appunti SEO Gennaio 2026) */}
+        <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+          <p style={{ margin: '0 0 15px 0' }}>
+            Su ServiziSalute trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, suddivisi per quartiere e facilmente contattabili. 
+            Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti, 
+            per aiutarti a trovare rapidamente la soluzione più vicina alle tue esigenze.
+          </p>
+          <p style={{ margin: 0 }}>
+            I professionisti e le strutture di Roma presenti nel portale offrono servizi d'eccellenza, consulenze specialistiche 
+            e supporto diagnostico all'avanguardia. Attraverso il nostro sistema puoi individuare la struttura giusta nel tuo quartiere 
+            e contattarla direttamente senza intermediari.
           </p>
         </div>
 
