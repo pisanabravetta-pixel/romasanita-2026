@@ -97,18 +97,23 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - SOLO I TUOI ANNUNCI DI ROMA */}
+{/* BOX MAPPA HUB - SOLO I TUOI ANNUNCI DI ROMA (Con controllo sicurezza) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-    <iframe
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      loading="lazy"
-      allowFullScreen
-      /* Questa stringa prende i nomi di TUTTI i servizi caricati (max 10-15 per non rompere l'URL) e li cerca su Roma */
-      src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
-    ></iframe>
+    {servizi.length > 0 ? (
+      <iframe
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+      ></iframe>
+    ) : (
+      <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1f5f9', color: '#64748b', fontSize: '14px' }}>
+        Caricamento mappa strutture...
+      </div>
+    )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', textAlign: 'center', fontWeight: '600' }}>
     📍 Mappa delle strutture verificate {meta.nomeSemplice} a Roma
