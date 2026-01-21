@@ -97,6 +97,19 @@ export default function PaginaQuartiereDinamica() {
             I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
           </p>
         </div>
+     {/* TESTO SEO INTRO (Tratto dagli Appunti di Oggi) */}
+        <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+          <p style={{ margin: '0 0 15px 0' }}>
+            Cerchi <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona} a Roma</strong>? 
+            Su ServiziSalute trovi un elenco selezionato di professionisti e strutture sanitarie, 
+            con informazioni utili su contatti, servizi disponibili e posizione.
+          </p>
+          <p style={{ margin: 0 }}>
+            Il quartiere <strong>{meta.zona}</strong> dispone di numerose realtà che offrono 
+            servizi per la salute e il benessere dei cittadini. Attraverso il nostro portale puoi individuare 
+            rapidamente la soluzione più adatta alle tue esigenze nel tuo quadrante di riferimento.
+          </p>
+        </div>         
 
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius?.main || '12px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
