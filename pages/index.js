@@ -77,15 +77,15 @@ const eseguiRicerca = () => {
   };
 return (
   <>
-    <Head>
-     <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2</title>
+  <Head>
+      <title key="title">Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
       <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
       <link rel="icon" href="/favicon.ico" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-      {/* --- SCHEMA ORGANIZATION UNICO --- */}
+      {/* --- SCHEMA ORGANIZATION COMPLETO AGGIORNATO .COM --- */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -93,8 +93,8 @@ return (
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "ServiziSalute",
-            "url": "https://servizisalute.it",
-            "logo": "https://servizisalute.it/favicon.ico",
+            "url": "https://servizisalute.com",
+            "logo": "https://servizisalute.com/favicon.ico",
             "description": "Portale informativo di servizi sanitari privati e professionisti della salute a Roma.",
             "address": {
               "@type": "PostalAddress",
@@ -106,7 +106,6 @@ return (
         }}
       />
     </Head>
-
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
        
