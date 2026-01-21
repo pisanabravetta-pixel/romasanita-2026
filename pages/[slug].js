@@ -144,7 +144,37 @@ export default function PaginaQuartiereDinamica() {
             </div>
           )}
         </div>
+{/* TESTO SEO CONCLUSIVO E FAQ LOCAL (Regola Appunti 21 Gennaio) */}
+        <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: theme.radius?.main || '12px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '15px' }}>
+            Servizi offerti per {meta.titolo}
+          </h2>
+          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '25px' }}>
+            Le strutture presenti nel quartiere <strong>{meta.zona}</strong> rappresentano un punto di riferimento per i residenti della zona. 
+            Oltre alle prestazioni standard, molte realtà offrono servizi integrativi e consulenze specialistiche personalizzate. 
+            Grazie alla posizione strategica a {meta.zona}, queste strutture sono facilmente raggiungibili e permettono un contatto diretto tramite i canali indicati.
+          </p>
 
+          <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#1e293b', marginBottom: '15px', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>
+            Domande frequenti su {meta.zona}
+          </h3>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', fontSize: '15px' }}>
+            <p><strong>Dove trovare {meta.titolo.toLowerCase()} a Roma {meta.zona}?</strong><br/>
+            Su ServiziSalute puoi consultare l'elenco aggiornato con indirizzi e contatti utili per raggiungere rapidamente la struttura più vicina.</p>
+            
+            <p><strong>Le strutture di {meta.zona} offrono servizi sanitari aggiuntivi?</strong><br/>
+            Sì, molte strutture del quartiere offrono servizi come test rapidi e consulenze farmacologiche o specialistiche.</p>
+            
+            <p><strong>Come verificare gli orari a {meta.zona}?</strong><br/>
+            Gli orari possono variare. È consigliato contattare direttamente la struttura tramite telefono o WhatsApp per confermare l'apertura.</p>
+          </div>
+
+          {/* LINK INTERNI (OBBLIGATORI) */}
+          <div style={{ marginTop: '30px', padding: '15px', backgroundColor: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>
+            Se cerchi altri servizi nella zona, consulta i <a href={`/dentisti-roma-${meta.zona.toLowerCase()}`} style={{ color: tema.primario, fontWeight: '700' }}>dentisti a Roma {meta.zona}</a> o torna alla pagina principale <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, fontWeight: '700' }}>{tema.label} Roma</a>.
+          </div>
+        </section>
         <Footer />
       </main>
     </div>
