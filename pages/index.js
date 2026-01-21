@@ -109,14 +109,18 @@ return (
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
        
-{/* HERO SECTION - RIPRISTINO RICERCA INTELLIGENTE */}
+{/* HERO SECTION - AGGIORNATA V2 */}
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
-    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '-1px' }}>
+    
+    {/* TITOLO PRINCIPALE (H1) */}
+    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px' }}>
       Servizi Sanitari Roma: Trova il meglio vicino a te
     </h1>
-    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '600', fontSize: '18px' }}>
-      Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti verificati.
+    
+    {/* SOTTOTITOLO (P) - rimosso "verificati" */}
+    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
+      Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti.
     </p>
 
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
