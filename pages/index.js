@@ -76,7 +76,7 @@ const eseguiRicerca = () => {
 return (
   <>
     <Head>
-      <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute</title>
+     <title>Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
       <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
