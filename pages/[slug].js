@@ -188,35 +188,6 @@ export default function PaginaQuartiereDinamica() {
             rapidamente la soluzione più adatta alle tue esigenze nel tuo quadrante di riferimento.
           </p>
         </div>  
-       {/* FINE BOX QUARTIERI (Riga 117 circa) */}
-        </div>
-
-        {/* --- INCOLLA QUI IL BOX MAPPA --- */}
-        <div style={{ marginBottom: '25px' }}>
-          <div style={{ 
-            width: '100%', 
-            height: '250px', 
-            borderRadius: '12px', 
-            overflow: 'hidden', 
-            border: '1px solid #e2e8f0',
-            position: 'relative',
-            backgroundColor: '#f1f5f9'
-          }}>
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              src={`https://www.google.com/maps?q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}&output=embed`}
-            >
-            </iframe>
-          </div>
-          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-            📍 La mappa mostra le strutture di <strong>{meta.titolo}</strong> disponibili a <strong>{meta.zona}</strong> e verificate dal portale.
-          </p>
-        </div>
-        {/* --- FINE BOX MAPPA --- */}
 
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (       
