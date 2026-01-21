@@ -112,11 +112,11 @@ return (
 {/* HERO SECTION - RIPRISTINO RICERCA INTELLIGENTE */}
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
-    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px' }}>
-      Trova servizi sanitari a Roma, vicino a te
+    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '-1px' }}>
+      Servizi Sanitari Roma: Trova il meglio vicino a te
     </h1>
-    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500' }}>
-      Farmacie, dentisti, diagnostica e visite specialistiche in un unico posto
+    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '600', fontSize: '18px' }}>
+      Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti verificati.
     </p>
 
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
