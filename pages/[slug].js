@@ -180,10 +180,10 @@ export default function PaginaQuartiereDinamica() {
               <a href={`/visite-specialistiche-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: tema.primario, fontWeight: '700', textDecoration: 'none' }}>👨‍⚕️ Specialisti {meta.zona}</a>
             </div>
           <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
-              <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', textDecoration: 'none', fontSize: '13px' }}>
-                ← Torna a {meta.titolo.split(' Roma')[0]} a Roma
-              </a>
-            </div>
+  <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', textDecoration: 'none', fontSize: '13px' }}>
+    ← Torna a {meta.titolo.split(' a Roma')[0]} a Roma
+  </a>
+</div>
           </div>
         </section>
       </main>
