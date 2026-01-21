@@ -170,13 +170,22 @@ export default function PaginaQuartiereDinamica() {
             Gli orari possono variare. È consigliato contattare direttamente la struttura tramite telefono o WhatsApp per confermare l'apertura.</p>
           </div>
 
-          {/* LINK INTERNI (OBBLIGATORI) */}
-          <div style={{ marginTop: '30px', padding: '15px', backgroundColor: '#f8fafc', borderRadius: '8px', fontSize: '14px' }}>
-            Se cerchi altri servizi nella zona, consulta i <a href={`/dentisti-roma-${meta.zona.toLowerCase()}`} style={{ color: tema.primario, fontWeight: '700' }}>dentisti a Roma {meta.zona}</a> o torna alla pagina principale <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, fontWeight: '700' }}>{tema.label} Roma</a>.
+          {/* LINK INTERNI COMPLETI (Regola Appunti 21 Gennaio) */}
+          <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+            <p style={{ fontWeight: '800', color: '#1e293b', marginBottom: '10px', fontSize: '14px', textTransform: 'uppercase' }}>Esplora altri servizi a {meta.zona}:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '14px' }}>
+              <a href={`/dentisti-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: tema.primario, fontWeight: '700', textDecoration: 'none' }}>🦷 Dentisti {meta.zona}</a>
+              <a href={`/farmacie-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: tema.primario, fontWeight: '700', textDecoration: 'none' }}>💊 Farmacie {meta.zona}</a>
+              <a href={`/diagnostica-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: tema.primario, fontWeight: '700', textDecoration: 'none' }}>🔬 Diagnostica {meta.zona}</a>
+              <a href={`/visite-specialistiche-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: tema.primario, fontWeight: '700', textDecoration: 'none' }}>👨‍⚕️ Specialisti {meta.zona}</a>
+            </div>
+            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+              <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', textDecoration: 'none', fontSize: '13px' }}>← Torna a tutti i {tema.label} di Roma</a>
+            </div>
           </div>
         </section>
-        <Footer />
       </main>
+       <Footer />
     </div>
   );
 }
