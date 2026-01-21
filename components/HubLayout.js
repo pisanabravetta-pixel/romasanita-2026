@@ -51,7 +51,17 @@ export default function HubLayout({
           <span style={{ color: '#065f46' }}>{titolo} Roma</span>
         </div>
 
-       {/* TESTO SEO INIZIALE (Tratto da Appunti SEO Gennaio 2026) */}
+      {/* TITOLO E SOTTOTITOLO */}
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
+          <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+            {titolo} a Roma
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
+            Specialisti aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
+          </p>
+        </div>
+
+        {/* TESTO SEO INIZIALE (Aggiunto dagli Appunti) */}
         <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
           <p style={{ margin: '0 0 15px 0' }}>
             Su ServiziSalute trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, suddivisi per quartiere e facilmente contattabili. 
@@ -64,7 +74,6 @@ export default function HubLayout({
             e contattarla direttamente senza intermediari.
           </p>
         </div>
-
      {/* CERCA PER QUARTIERE (Versione Automatica Centralizzata) */}
 <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
   <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
