@@ -132,6 +132,21 @@ export default function HubLayout({
             </div>
           )}
         </div> 
+{/* TESTO SEO CONCLUSIVO (Novità Appunti 21 Gennaio) */}
+        <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
+            {titolo} a Roma: servizi, orari e informazioni utili
+          </h2>
+          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '15px' }}>
+            Roma è una città con una rete capillare di strutture sanitarie e professionisti distribuiti in tutti i quartieri, dal centro storico alle zone periferiche. 
+            Molte delle realtà presenti nel nostro portale offrono servizi aggiuntivi come test diagnostici rapidi, supporto per terapie croniche e consulenze personalizzate. 
+            Su ServiziSalute puoi confrontare diverse opzioni per <strong>{titolo.toLowerCase()} a Roma</strong> e scegliere quella più comoda in base alla zona e ai servizi offerti.
+          </p>
+          <p style={{ color: '#475569', lineHeight: '1.7', margin: 0 }}>
+            È sempre consigliato verificare direttamente con la struttura gli orari di apertura e i turni aggiornati, soprattutto nei giorni festivi o notturni. 
+            Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale.
+          </p>
+        </section>
 
         {/* MINI TESTO SEO */}
         <div style={{ margin: '30px 0', padding: '0 10px' }}>
