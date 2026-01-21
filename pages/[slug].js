@@ -128,12 +128,16 @@ export default function PaginaQuartiereDinamica() {
           </div>
         </div>
 
-        {/* BOX MAPPA QUARTIERE */}
+       {/* BOX MAPPA QUARTIERE - CORRETTO */}
         <div style={{ marginBottom: '25px' }}>
           <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
             <iframe
-              width="100%" height="100%" style={{ border: 0 }} loading="lazy" allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_QUI&q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}`}
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              loading="lazy" 
+              allowFullScreen
+              src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY&q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma`}
             ></iframe>
           </div>
           <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center' }}>📍 Strutture verificate a {meta.zona}</p>
