@@ -25,13 +25,12 @@ export default function PaginaQuartiereDinamica() {
         const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
-        // Gestione Colori Dinamici (Sistema i colori in base alla categoria)
+        // Gestione Colori per categoria
         let primario = "#0891b2"; 
         let chiaro = "#ecfeff";
         if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
         if (catSlug.includes('farmaci')) { primario = "#15803d"; chiaro = "#f0fdf4"; }
         if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-        if (catSlug.includes('diagnostica')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
         
         const nomeCatRaw = catSlug.replace('-roma', '');
         const nomeCat = nomeCatRaw.charAt(0).toUpperCase() + nomeCatRaw.slice(1);
@@ -73,6 +72,7 @@ export default function PaginaQuartiereDinamica() {
       <Head>
         <title key="slug-title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento..."}</title>
         <meta key="slug-desc" name="description" content={`Scopri i migliori professionisti per ${meta.titolo}. Elenco aggiornato con contatti, servizi e informazioni utili a ${meta.zona}.`} />
+
         {meta.titolo && (
           <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -123,34 +123,45 @@ export default function PaginaQuartiereDinamica() {
           </div>
         </div>
 
-        {/* LISTA ANNUNCI - BOX PREMIUM CON MAPPA INTERNA */}
+        {/* MAPPA QUARTIERE FUORI DAI BOX (Sola e Unica) */}
+        <div style={{ marginBottom: '25px' }}>
+          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <iframe
+              width="100%" height="100%" style={{ border: 0 }} loading="lazy" allowFullScreen
+              src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_QUI&q=${encodeURIComponent(servizi.length > 0 ? servizi.map(s => s.nome).join(' OR ') : meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma`}
+            ></iframe>
+            {/* Se non hai API Key usa questo fallback */}
+            <iframe width="100%" height="100%" style={{ border: 0, marginTop: '-250px', position: 'relative', zIndex: 1 }} loading="lazy" src={`https://maps.google.com/maps?q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}></iframe>
+          </div>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+            📍 Posizione delle strutture verificate a {meta.zona}
+          </p>
+        </div>
+
+        {/* LISTA ANNUNCI */}
         <div style={{ display: 'block' }}>
           {loading ? (
             <p>Caricamento...</p>
           ) : servizi.length > 0 ? (
             servizi.map((v) => (
-              <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '30px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', position: 'relative' }}>
+              <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', position: 'relative' }}>
                 {v.is_top && (
                   <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: tema.primario, color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '900', textTransform: 'uppercase' }}>Top Partner</span>
                 )}
+                <h3 style={{ color: '#1e293b', fontSize: '26px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
+                <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong style={{ color: tema.primario }}>{v.zona}</strong></p>
 
-                <h3 style={{ color: '#1e293b', fontSize: '26px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.1' }}>{v.nome}</h3>
-                <p style={{ fontSize: '17px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ color: tema.primario }}>{v.zona}</strong></p>
-
-                {/* Mappa Interna al Box */}
-                <div style={{ width: '100%', height: '180px', borderRadius: '8px', overflow: 'hidden', marginBottom: '20px', border: '1px solid #eee' }}>
-                  <iframe width="100%" height="100%" style={{ border: 0 }} loading="lazy" src={`https://maps.google.com/maps?q=${encodeURIComponent(v.nome + " " + v.indirizzo)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}></iframe>
-                </div>
-
-                {/* Pulsanti Azione */}
+                {/* BOTTONI AZIONE (Chiama, WA, Mappa) */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-                  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '140px', backgroundColor: tema.primario, color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none', fontSize: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>📞 CHIAMA ORA</a>
-                  <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '140px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none', fontSize: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>💬 WHATSAPP</a>
+                  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '120px', backgroundColor: tema.primario, color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}>📞 CHIAMA</a>
+                  <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '120px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}>💬 WHATSAPP</a>
+                  <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.nome + " " + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '120px', backgroundColor: '#64748b', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}>📍 MAPPA</a>
                 </div>
               </div>
             ))
           ) : (
             <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '2px dashed #e2e8f0' }}>
+              <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
               <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b' }}>Ricerca in corso a {meta.zona}</h3>
               <p style={{ color: '#64748b' }}>Stiamo selezionando i migliori profili per {meta.titolo}.</p>
             </div>
@@ -183,20 +194,21 @@ export default function PaginaQuartiereDinamica() {
           <h3 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '15px', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>Domande frequenti su {meta.zona}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <p><strong>Dove trovare {meta.titolo.toLowerCase()} a Roma {meta.zona}?</strong><br/>Consulta l'elenco sopra per indirizzi e contatti.</p>
-            <p><strong>Come prenotare una visita?</strong><br/>Puoi contattare direttamente le strutture tramite i pulsanti di chiamata rapida o WhatsApp.</p>
+            <p><strong>Come prenotare una visita a {meta.zona}?</strong><br/>Contatta direttamente le strutture cliccando sui pulsanti Chiama o WhatsApp.</p>
+            <p><strong>Le strutture di {meta.zona} sono convenzionate?</strong><br/>Molte strutture accettano assicurazioni private; contatta il centro per conferma.</p>
           </div>
 
-          {/* CROSS LINKING DINAMICO (4 Categorie) */}
+          {/* CROSS LINKING (4 CATEGORIE CON EMOJI) */}
           <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px' }}>Esplora altro a {meta.zona}:</p>
+            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px' }}>Esplora altri servizi a {meta.zona}:</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
               <a href={`/dentisti-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none' }}>🦷 Dentisti {meta.zona}</a>
               <a href={`/farmacie-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none' }}>💊 Farmacie {meta.zona}</a>
               <a href={`/diagnostica-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none' }}>🔬 Diagnostica {meta.zona}</a>
               <a href={`/dermatologi-roma-${meta.zona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none' }}>👨‍⚕️ Specialisti {meta.zona}</a>
             </div>
-            <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
-              <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>← Torna a {tema.label} a Roma</a>
+            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+              <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px' }}>← Torna a tutti i {tema.label} a Roma</a>
             </div>
           </div>
         </section>
