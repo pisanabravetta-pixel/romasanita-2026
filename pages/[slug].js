@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getSchemas, getDBQuery, quartieriTop } from '../lib/seo-logic'; // Riga unica con tutto dentro
+import { getDBQuery, quartieriTop } from '../lib/seo-logic'; 
 import { theme } from '../styles/theme';
 
 export default function PaginaQuartiereDinamica() {
@@ -15,8 +15,9 @@ export default function PaginaQuartiereDinamica() {
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-useEffect(() => {
-    if (!slug) return;
+  useEffect(() => {
+    // 1. PROTEZIONE: Se non c'è slug o è la home, non fare nulla
+    if (!slug || slug === 'index' || slug === '') return;
 
     async function fetchDati() {
       try {
@@ -25,8 +26,7 @@ useEffect(() => {
         const catSlug = parti[0]; 
         const zonaSlug = parti[parti.length - 1];
 
-        // COLORE UNICO PER TUTTI I QUARTIERI (Semplice e Pulito)
-        const primario = "#0891b2"; // Azzurro Ciano
+        const primario = "#0891b2"; 
         const chiaro = "#ecfeff";
         
         const nomeCatRaw = catSlug.replace('-roma', '');
@@ -62,31 +62,25 @@ useEffect(() => {
     fetchDati();
   }, [slug]);
 
-  if (!slug) return null;
-
- // ... (tutto il resto rimane uguale fino al return)
-
-  if (!slug || slug === 'index' || slug === '') return null; // Protezione aggiuntiva
+  // 2. BLOCCO DI SICUREZZA: Impedisce al file [slug] di caricarsi se siamo in Home
+  if (!slug || slug === 'index' || slug === '') return null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        {/* Usiamo una chiave univoca (key) per dire a Next.js: questo titolo appartiene SOLO allo slug */}
-        <title key="title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento... | ServiziSalute"}</title>
-        <meta key="description" name="description" content={`Trova i migliori professionisti per ${meta.titolo}. Contatti diretti, orari e disponibilità aggiornata.`} />
+        {/* Il segreto è la key="slug-title": forza Next.js a distinguere questo titolo da quello della Home */}
+        <title key="slug-title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento..."}</title>
+        <meta key="slug-desc" name="description" content={`Trova i migliori professionisti per ${meta.titolo}. Contatti diretti, orari e disponibilità aggiornata.`} />
       </Head>
 
       <Navbar />
-      {/* ... resto del codice */}
 
-      {/* STRISCIA DI STATO DINAMICA */}
       <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
         📍 {tema.label} : {meta.zona}
       </div>
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
   
-        {/* 1. BREADCRUMB */}
         <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
           <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
           <span style={{ margin: '0 8px' }}>{'>'}</span>
@@ -95,8 +89,7 @@ useEffect(() => {
           <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{tema.label} Roma</a>
         </div>
 
-        {/* 2. TITOLO E SOTTOTITOLO (Stile Premium 24px) */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${tema.primario}`, boxShadow: theme.shadows.premium }}>
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding?.main || '20px', borderRadius: theme.radius?.main || '12px', borderLeft: `8px solid ${tema.primario}`, boxShadow: theme.shadows?.premium || '0 4px 6px rgba(0,0,0,0.1)' }}>
           <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
             {meta.titolo}
           </h1>
@@ -104,99 +97,43 @@ useEffect(() => {
             I migliori professionisti a <span style={{ color: tema.primario }}>{meta.zona}</span> aggiornati a Gennaio 2026
           </p>
         </div>
-{/* 3. CERCA PER QUARTIERE (Sincronizzato con il resto del sito) */}
-<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
-  <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
-  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-    {quartieriTop.map(q => (
-      <a 
-        key={q.s} 
-        href={`/${meta.cat}-roma-${q.s}`} 
-        style={{ 
-          padding: '7px 12px', 
-          backgroundColor: tema.chiaro, 
-          color: tema.primario, 
-          borderRadius: '8px', 
-          textDecoration: 'none', 
-          fontWeight: '700', 
-          fontSize: '12px' 
-        }}
-      >
-        {q.n}
-      </a>
-    ))}
-  </div>
-</div>
 
-        {/* 4. LISTA BOX (Stile Premium 24px) */}
+        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius?.main || '12px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#1e293b' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {quartieriTop.map(q => (
+              <a key={q.s} href={`/${meta.cat}-roma-${q.s}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>
+                {q.n}
+              </a>
+            ))}
+          </div>
+        </div>
+
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, display: 'block', width: '100%', boxSizing: 'border-box' }}>
+            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius?.card || '12px', padding: theme.padding?.card || '20px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: theme.shadows?.premium || '0 4px 6px rgba(0,0,0,0.1)', display: 'block', width: '100%', boxSizing: 'border-box' }}>
               <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
               <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px',borderRadius: theme.radius.button , textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: theme.radius?.button || '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
                   📞 CHIAMA
                 </a>
-                
-                <a href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+                <a href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius?.button || '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
                   💬 WHATSAPP
-                </a>
-                
-                <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>
-                  🗺️ MAPPA
                 </a>
               </div>
             </div>
           )) : (
-<div style={{ 
-  textAlign: 'center', 
-  padding: '60px 20px', 
-  backgroundColor: '#f8fafc', 
-  borderRadius: '15px', 
-  border: '2px dashed #e2e8f0', 
-  marginTop: '20px' 
-}}>
-  <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
-  <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>
-    Ricerca in corso a {meta.zona}
-  </h3>
-  <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto 25px', lineHeight: '1.6' }}>
-    Stiamo selezionando e verificando i profili dei migliori professionisti per <strong>{meta.titolo}</strong>. 
-    I nuovi annunci saranno disponibili a breve.
-  </p>
-  <a href="/pubblica-annuncio" style={{ 
-    backgroundColor: tema.primario, 
-    color: 'white', 
-    padding: '14px 28px', 
-    borderRadius: '12px', 
-    fontWeight: '800', 
-    textDecoration: 'none', 
-    display: 'inline-block' 
-  }}>
-    SEI UN PROFESSIONISTA? ISCRIVITI ORA
-  </a>
-</div>
+            <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '2px dashed #e2e8f0', marginTop: '20px' }}>
+              <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
+              <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>Ricerca in corso a {meta.zona}</h3>
+              <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto 25px', lineHeight: '1.6' }}>Stiamo verificando i migliori profili per {meta.titolo}.</p>
+            </div>
           )}
         </div>
 
-        {/* 5. CTA NERA */}
-       <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Sei un professionista a {meta.zona}?</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Metti in evidenza i tuoi servizi in questa zona.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: tema.primario, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-        </div>
-
-        {/* 6. FAQ SPECIFICHE DEL QUARTIERE */}
-        <div style={{ paddingBottom: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#1e293b' }}>Domande Frequenti {meta.zona}</h3>
-          <p><strong>1. Come trovare un servizio a Roma {meta.zona}?</strong> — Puoi consultare i box qui sopra per contattare direttamente i professionisti del quartiere.</p><br/>
-          <p><strong>2. I prezzi a {meta.zona} sono diversi dal resto di Roma?</strong> — Generalmente le tariffe seguono l'andamento cittadino, ma consigliamo di chiedere un preventivo via WhatsApp.</p><br/>
-          <p><strong>3. Ci sono specialisti disponibili subito a {meta.zona}?</strong> — Sì, usa il tasto Chiama per verificare la disponibilità immediata in zona.</p>
-        </div>
-
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 }
