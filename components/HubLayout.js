@@ -172,15 +172,41 @@ export default function HubLayout({
           </div>
         </div>
 
-        {/* FAQ */}
-        <div style={{ paddingBottom: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#2c5282' }}>Domande Frequenti</h3>
-          {schemas?.faq?.mainEntity?.slice(0, 3).map((item, i) => (
-            <div key={i} style={{ marginBottom: '15px' }}>
-              <p><strong>{i+1}. {item.name}</strong> — {item.acceptedAnswer.text}</p>
+        {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
+        <section style={{ paddingBottom: '50px' }}>
+          <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
+            Domande Frequenti su {titolo} a Roma
+          </h3>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
+                1. Come trovare {titolo.toLowerCase()} a Roma vicino a me?
+              </p>
+              <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
+                Su ServiziSalute puoi cercare {titolo.toLowerCase()} a Roma filtrando per quartiere. Ogni annuncio include indirizzo e contatti diretti per raggiungere facilmente la struttura più vicina nel tuo quadrante urbano.
+              </p>
             </div>
-          ))}
-        </div>
+
+            <div>
+              <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
+                2. Quali servizi offrono {titolo.toLowerCase()} a Roma?
+              </p>
+              <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
+                Oltre alle prestazioni standard, molte strutture a Roma offrono servizi accessori (come test rapidi o consulenze specialistiche) indicati direttamente nella scheda del professionista. Ti consigliamo di chiamare per confermare la disponibilità del servizio specifico.
+              </p>
+            </div>
+
+            <div>
+              <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
+                3. Come sapere se la struttura è aperta oggi a Roma?
+              </p>
+              <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
+                Gli orari possono variare in base al quartiere e alla giornata (festivi o turni). Il modo più rapido è utilizzare i tasti <strong>Chiama</strong> o <strong>WhatsApp</strong> presenti su ServiziSalute per parlare direttamente con la segreteria o il titolare.
+              </p>
+            </div>
+          </div>
+        </section>
 
       </main>
       <Footer />
