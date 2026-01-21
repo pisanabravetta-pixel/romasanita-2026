@@ -64,14 +64,20 @@ useEffect(() => {
 
   if (!slug) return null;
 
+ // ... (tutto il resto rimane uguale fino al return)
+
+  if (!slug || slug === 'index' || slug === '') return null; // Protezione aggiuntiva
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>{meta.titolo} | ServiziSalute</title>
-        <meta name="description" content={`Trova i migliori professionisti per ${meta.titolo}. Contatti diretti, orari e disponibilità aggiornata.`} />
+        {/* Usiamo una chiave univoca (key) per dire a Next.js: questo titolo appartiene SOLO allo slug */}
+        <title key="title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento... | ServiziSalute"}</title>
+        <meta key="description" name="description" content={`Trova i migliori professionisti per ${meta.titolo}. Contatti diretti, orari e disponibilità aggiornata.`} />
       </Head>
 
       <Navbar />
+      {/* ... resto del codice */}
 
       {/* STRISCIA DI STATO DINAMICA */}
       <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
