@@ -222,15 +222,15 @@ export default function PaginaQuartiereDinamica() {
             </div>
           )}
         </div>
-{/* GUIDE AI COSTI - ESCHE SEO (Inserimento Chirurgico Appunti 21 Gennaio) */}
+{/* GUIDE AI COSTI - ESCHE SEO (Corretto per Appunti 21 Gennaio) */}
           <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
-            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              💰 Guide ai Prezzi Roma 2026:
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
+              💰 Guide Utili ai Prezzi (Roma 2026):
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <li>🔹 <a href="/quanto-costa-tac-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
-              <li>🔹 <a href="/costo-visita-specialistica-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie visite specialistiche Roma</a></li>
-              <li>🔹 <a href="/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
+              <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai costi: Quanto costa una TAC a Roma?</a></li>
+              <li>🔹 <a href="/guide/tariffe-visite-specialistiche" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per visite specialistiche a Roma</a></li>
+              <li>🔹 <a href="/guide/esenzioni-ticket-lazio" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e Ticket Sanitario (Regione Lazio)</a></li>
             </ul>
           </div>
 {/* TESTO SEO CONCLUSIVO E FAQ LOCAL (Regola Appunti 21 Gennaio) */}
