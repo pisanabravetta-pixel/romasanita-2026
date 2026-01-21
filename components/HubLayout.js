@@ -23,7 +23,7 @@ export default function HubLayout({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
       <Head>
-        <title>{titolo} a Roma: Studi e Urgenze | Gennaio 2026</title>
+       <title>{titolo.includes("Roma") ? titolo : `${titolo} a Roma: Studi e Urgenze | Gennaio 2026`}</title>
         <meta name="description" content={descrizioneMeta} />
         {schemas && (
           <>
