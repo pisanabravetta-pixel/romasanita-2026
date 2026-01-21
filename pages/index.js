@@ -1,6 +1,5 @@
 // Versione 1.0.1 - Aggiornamento titoli 2026-01-21
-import Head from 'next/head';
-// ... resto del codice
+
 import Head from 'next/head';
 import { useState } from 'react';
 import Footer from '../components/Footer';
