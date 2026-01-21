@@ -97,27 +97,22 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - SOLO I TUOI ANNUNCI DI ROMA (Con controllo sicurezza) */}
+{/* BOX MAPPA HUB - FIX PER BUILD ERROR */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-    {servizi.length > 0 ? (
+  <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+    {/* Controlliamo che servizi sia un array e che abbia elementi */}
+    {Array.isArray(servizi) && servizi.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        allowFullScreen
         src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
-      <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1f5f9', color: '#64748b', fontSize: '14px' }}>
-        Caricamento mappa strutture...
-      </div>
+      <div style={{ height: '100%', backgroundColor: '#f8fafc' }} />
     )}
   </div>
-  <p style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Mappa delle strutture verificate {meta.nomeSemplice} a Roma
-  </p>
 </div>
 
        {/* LISTA BOX ANNUNCI (Con controllo lista vuota) */}
