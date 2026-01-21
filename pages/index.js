@@ -554,21 +554,30 @@ return (
         </div>
       </section>
 
-      {/* SEZIONE FAQ - AGGIUNTA PER MIGLIORARE IL POSIZIONAMENTO */}
+    {/* SEZIONE FAQ - AGGIORNATA A 3 DOMANDE PER COERENZA V2 */}
       <section style={{ padding: '40px 0', background: 'white' }}>
         <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
           <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
             Domande Frequenti sui Servizi Sanitari a Roma
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+            
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
               <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come trovo una farmacia di turno a Roma su ServiziSalute?</h4>
               <p style={{ color: '#64748b' }}>Basta inserire "Farmacia" e il tuo quartiere nella barra di ricerca in alto. Ti mostreremo le strutture più vicine con i riferimenti diretti.</p>
             </div>
+
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
               <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>I contatti dei medici sono diretti?</h4>
               <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
             </div>
+
+            {/* TERZA FAQ AGGIUNTA */}
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>È possibile prenotare una visita specialistica online?</h4>
+              <p style={{ color: '#64748b' }}>Sì, molti professionisti presenti sul portale offrono il link diretto alla loro agenda digitale o permettono la prenotazione rapida tramite WhatsApp.</p>
+            </div>
+
           </div>
         </div>
       </section>
