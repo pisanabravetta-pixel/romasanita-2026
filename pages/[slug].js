@@ -4,143 +4,278 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, quartieriTop } from '../lib/seo-logic'; 
+import { getDBQuery, quartieriTop } from '../lib/seo-logic'; 
+import { theme } from '../styles/theme';
 
 export default function PaginaQuartiereDinamica() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [servizi, setServizi] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "" });
-  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
+  const router = useRouter();
+  const { slug } = router.query;
+  const [servizi, setServizi] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "" });
+  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  useEffect(() => {
-    if (!slug || slug === 'index' || slug === '') return;
+  useEffect(() => {
+    if (!slug || slug === 'index' || slug === '') return;
 
-    async function fetchDati() {
-      try {
-        setLoading(true);
-        const parti = slug.split('-'); 
-        const catSlug = parti[0]; 
-        const zonaSlug = parti[parti.length - 1];
+    async function fetchDati() {
+      try {
+        setLoading(true);
+        const parti = slug.split('-'); 
+        const catSlug = parti[0]; 
+        const zonaSlug = parti[parti.length - 1];
 
-        // Gestione Colori Categorie
-        let primario = "#0891b2"; let chiaro = "#ecfeff";
-        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-        if (catSlug.includes('farmaci')) { primario = "#15803d"; chiaro = "#f0fdf4"; }
-        if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-        if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-        
-        const nomeCatRaw = catSlug.replace('-roma', '');
-        const nomeCat = nomeCatRaw.charAt(0).toUpperCase() + nomeCatRaw.slice(1);
-        const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
+        const primario = "#0891b2"; 
+        const chiaro = "#ecfeff";
+        
+        const nomeCatRaw = catSlug.replace('-roma', '');
+        const nomeCat = nomeCatRaw.charAt(0).toUpperCase() + nomeCatRaw.slice(1);
+        
+        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
 
-        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
-        setMeta({ titolo: `${nomeCat} a Roma ${zonaBella}`, zona: zonaBella, cat: catSlug });
+        const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
+        const titoloCorretto = `${nomeCat} a Roma ${zonaBella}`;
 
-        const filtri = getDBQuery(catSlug);
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          .ilike('zona', `%${zonaSlug}%`) 
-          .or(`specialista.ilike.%${filtri.spec}%,categoria.ilike.%${filtri.cat}%`)
-          .order('is_top', { ascending: false });
+        setMeta({ titolo: titoloCorretto, zona: zonaBella, cat: catSlug });
 
-        if (error) throw error;
-        setServizi(data || []);
-      } catch (err) { console.error(err); } finally { setLoading(false); }
-    }
-    fetchDati();
-  }, [slug]);
+        const filtri = getDBQuery(catSlug);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('zona', `%${zonaSlug}%`) 
+          .or(`specialista.ilike.%${filtri.spec}%,categoria.ilike.%${filtri.cat}%`)
+          .order('is_top', { ascending: false });
 
-  if (!slug) return null;
+        if (error) throw error;
+        setServizi(data || []);
 
-  // Correzione SEO: Evitiamo ripetizioni Prati/Prati
-  const seoIntro = `Stai cercando ${meta.titolo}? In questa pagina trovi l'elenco completo e aggiornato delle migliori strutture e professionisti situati a ${meta.zona}. Abbiamo selezionato per te i centri più affidabili per garantirti assistenza immediata nel tuo quartiere.`;
+      } catch (err) { 
+        console.error("Errore Fetch:", err);
+        setServizi([]); 
+      } finally { 
+        setLoading(false); 
+      }
+    }
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-      <Head>
-        <title>{`${meta.titolo} | ServiziSalute Roma`}</title>
-        <meta name="description" content={`Trova ${meta.titolo}. Contatti diretti, orari e posizioni sulla mappa a Roma ${meta.zona}.`} />
-      </Head>
+    fetchDati();
+  }, [slug]);
 
-      <Navbar />
+  if (!slug || slug === 'index' || slug === '') return null;
 
-      <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '12px', textAlign: 'center', fontWeight: '800', fontSize: '13px', letterSpacing: '0.5px' }}>
-        📍 {tema.label} : ROMA {meta.zona.toUpperCase()}
-      </div>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
+      <Head>
+        <title key="slug-title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento..."}</title>
+        <meta key="slug-desc" name="description" content={`Scopri i migliori professionisti per ${meta.titolo}. Elenco aggiornato con contatti, servizi e informazioni utili a ${meta.zona}.`} />
 
-      <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
-        
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '25px', borderRadius: '12px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>{meta.titolo}</h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>Eccellenze sanitarie nel quartiere {meta.zona}</p>
-        </div>
+        {meta.titolo && (
+          <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                { "@type": "Question", "name": `Dove trovare ${meta.titolo.toLowerCase()} a Roma ${meta.zona}?`, "acceptedAnswer": { "@type": "Answer", "text": `Su ServiziSalute puoi consultare l'elenco aggiornato di ${meta.titolo} con indirizzi e contatti per raggiungere la struttura nel quartiere ${meta.zona}.` }},
+                { "@type": "Question", "name": `Quali servizi offrono le strutture a ${meta.zona}?`, "acceptedAnswer": { "@type": "Answer", "text": `Le strutture a Roma ${meta.zona} offrono prestazioni standard, test diagnostici e consulenze specialistiche.` }}
+              ]
+            })}} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.com" },
+                { "@type": "ListItem", "position": 2, "name": `${tema.label} Roma`, "item": `https://www.servizisalute.com/${meta.cat}-roma` },
+                { "@type": "ListItem", "position": 3, "name": meta.zona, "item": `https://www.servizisalute.com/${slug}` }
+              ]
+            })}} />
+          </>
+        )}
+      </Head>
 
-        <div style={{ marginBottom: '30px', color: '#475569', fontSize: '16px', lineHeight: '1.8' }}>
-          <p>{seoIntro}</p>
-        </div>
+      <Navbar />
 
-        {/* MAPPA - Fix Contenitore */}
-        <div style={{ marginBottom: '35px', borderRadius: '16px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', height: '300px', width: '100%', position: 'relative' }}>
-          <iframe 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0, display: 'block' }} 
-            loading="lazy" 
-            src={`https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipN8s6fjzKns9vZLE4jkOtONpBKS-_y4KyPA9AcS!2e10!4m2!3m1!1s0x132f605fa9243ee7:0xef01af9c5b69b4db{encodeURIComponent(meta.titolo + " " + meta.zona + " Roma")}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-          ></iframe>
-        </div>
+      <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase' }}>
+        📍 {tema.label} : {meta.zona}
+      </div>
 
-        {/* LISTA ANNUNCI */}
-        <div style={{ marginBottom: '40px' }}>
-          {servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '16px', padding: '25px', marginBottom: '20px', border: v.is_top ? `3px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.08)' }}>
-              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '20px', fontWeight: '500' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+      <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
+        
+        {/* Breadcrumb */}
+        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>{'>'}</span>
+          <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{tema.label} Roma</a>
+        </div>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '14px' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} style={{ flex: '1', minWidth: '100px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '14px' }}>💬 W.A.</a>
-                <a href={`https://www.google.com/maps?q=...&output=embed0{encodeURIComponent(v.nome + " " + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '14px' }}>📍 MAPPA</a>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Titolo Box */}
+        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '20px', borderRadius: '12px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>{meta.titolo}</h1>
+          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>I migliori professionisti a {meta.zona} aggiornati a Gennaio 2026</p>
+        </div>
 
-        {/* FAQ SPECIFICHE */}
-        <section style={{ padding: '30px', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#1e293b' }}>Domande Frequenti su {meta.zona}</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <p style={{ fontWeight: '800', color: tema.primario, marginBottom: '5px' }}>Quali sono gli orari delle strutture a {meta.zona}?</p>
-              <p style={{ color: '#475569', margin: 0 }}>La maggior parte dei centri a {meta.zona} osserva orari continuati. Ti consigliamo di usare il tasto WhatsApp per richiedere l'orario esatto di oggi.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: '800', color: tema.primario, marginBottom: '5px' }}>Come raggiungere questi centri a Roma {meta.zona}?</p>
-              <p style={{ color: '#475569', margin: 0 }}>Tutte le strutture elencate sono facilmente raggiungibili. Cliccando sul tasto "Mappa" nel box del professionista, il tuo navigatore ti porterà direttamente a destinazione.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: '800', color: tema.primario, marginBottom: '5px' }}>È necessaria la prenotazione per una visita a {meta.zona}?</p>
-              <p style={{ color: '#475569', margin: 0 }}>Sì, è sempre preferibile prenotare. Puoi farlo istantaneamente chiamando il numero indicato nel box dedicato a {meta.zona}.</p>
-            </div>
-          </div>
-        </section>
+        {/* Testo SEO Intro */}
+        <div style={{ marginBottom: '25px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+          <p>Cerchi <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona} a Roma</strong>? Su ServiziSalute trovi un elenco selezionato di professionisti e strutture sanitarie.</p>
+        </div>
 
-        {/* CROSS LINKING QUARTIERE */}
-        <div style={{ marginTop: '30px', padding: '20px', backgroundColor: tema.chiaro, borderRadius: '12px', border: `1px solid ${tema.primario}33` }}>
-          <p style={{ fontWeight: '800', fontSize: '14px', color: tema.primario, marginBottom: '15px', textTransform: 'uppercase' }}>Altre specialistiche a {meta.zona}:</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            <a href={`/dentisti-roma-${meta.zona.toLowerCase()}`} style={{ color: '#1e293b', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti</a>
-            <a href={`/farmacie-roma-${meta.zona.toLowerCase()}`} style={{ color: '#1e293b', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie</a>
-            <a href={`/diagnostica-roma-${meta.zona.toLowerCase()}`} style={{ color: '#1e293b', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica</a>
-          </div>
-        </div>
-      </main>
+        {/* Cerca in altre zone */}
+        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px' }}>Cerca zone vicino a {meta.zona}:</h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {quartieriTop.map(q => (
+              <a key={q.s} href={`/${meta.cat}-roma-${q.s}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q.n}</a>
+            ))}
+          </div>
+        </div>
+  {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI (Preciso Estremo) */}
+        <div style={{ marginBottom: '25px' }}>
+          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <iframe
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              /* Cerchiamo solo i nomi dei tuoi annunci per isolare la concorrenza */
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+            ></iframe>
+          </div>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+            📍 Posizione delle strutture verificate a {meta.zona}
+          </p>
+        </div>
 
-      <Footer />
-    </div>
-  );
+        {/* LISTA ANNUNCI - BOX PREMIUM */}
+        <div style={{ display: 'block' }}>
+          {loading ? (
+            <p>Caricamento...</p>
+          ) : servizi.length > 0 ? (
+            servizi.map((v) => (
+              <div 
+                key={v.id} 
+                style={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: '12px', 
+                  padding: '25px', 
+                  marginBottom: '20px', 
+                  border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
+                  boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', 
+                  display: 'block', 
+                  width: '100%', 
+                  boxSizing: 'border-box',
+                  position: 'relative'
+                }}
+              >
+                {v.is_top && (
+                  <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: tema.primario, color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '900', textTransform: 'uppercase' }}>
+                    Top Partner
+                  </span>
+                )}
+
+                <h3 style={{ color: '#1e293b', fontSize: '26px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.1' }}>
+                  {v.nome}
+                </h3>
+                
+                <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  📍 {v.indirizzo} — <strong style={{ color: tema.primario }}>{v.zona}</strong>
+                </p>
+
+                {/* PULSANTI AZIONE GRANDI */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                  <a 
+                    href={`tel:${v.telefono}`} 
+                    style={{ 
+                      flex: '1', 
+                      minWidth: '140px', 
+                      backgroundColor: tema.primario, 
+                      color: 'white', 
+                      padding: '16px', 
+                      borderRadius: '10px', 
+                      textAlign: 'center', 
+                      fontWeight: '800', 
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    📞 CHIAMA ORA
+                  </a>
+                  <a 
+                    href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ 
+                      flex: '1', 
+                      minWidth: '140px', 
+                      backgroundColor: '#22c55e', 
+                      color: 'white', 
+                      padding: '16px', 
+                      borderRadius: '10px', 
+                      textAlign: 'center', 
+                      fontWeight: '800', 
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    💬 WHATSAPP
+                  </a>
+                </div>
+              </div>
+            ))
+          ) : (
+            /* BOX VUOTO SE NON CI SONO ANNUNCI */
+            <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '2px dashed #e2e8f0' }}>
+              <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
+              <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b' }}>Ricerca in corso a {meta.zona}</h3>
+              <p style={{ color: '#64748b' }}>Stiamo selezionando i migliori profili per {meta.titolo}.</p>
+            </div>
+          )}
+        </div>
+
+        {/* GUIDE COSTI */}
+        <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
+          <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>💰 Guide ai Costi Roma 2026:</h4>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {meta.cat.includes('dentist') ? (
+              <>
+                <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+                <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', fontWeight: '600' }}>Tariffe impianti dentali (Guida 2026)</a></li>
+              </>
+            ) : (
+              <>
+                <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
+                <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', fontWeight: '600' }}>Guida esenzioni Regione Lazio</a></li>
+              </>
+            )}
+          </ul>
+        </div>
+
+        {/* SEO CONCLUSIVO E FAQ */}
+        <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '15px' }}>Servizi offerti per {meta.titolo}</h2>
+          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '25px' }}>Le strutture a <strong>{meta.zona}</strong> sono punti di riferimento per la zona.</p>
+
+          <h3 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '15px', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>Domande frequenti su {meta.zona}</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <p><strong>Dove trovare {meta.titolo.toLowerCase()} a Roma {meta.zona}?</strong><br/>Consulta l'elenco sopra per indirizzi e contatti.</p>
+          </div>
+
+          {/* CROSS LINKING */}
+          <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase' }}>Esplora altro a {meta.zona}:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+              <a href={`/dentisti-roma-${meta.zona.toLowerCase()}`} style={{ color: tema.primario, fontWeight: '700' }}>🦷 Dentisti</a>
+              <a href={`/farmacie-roma-${meta.zona.toLowerCase()}`} style={{ color: tema.primario, fontWeight: '700' }}>💊 Farmacie</a>
+            </div>
+            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+              <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px' }}>← Torna a {meta.titolo.split(' a Roma')[0]} a Roma</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
 }
