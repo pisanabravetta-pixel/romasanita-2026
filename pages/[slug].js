@@ -125,9 +125,22 @@ export default function PaginaQuartiereDinamica() {
           </div>
         </div>
 
-        {/* MAPPA QUARTIERE (Sotto i link zone) */}
-        <div style={{ marginBottom: '30px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', height: '250px' }}>
-          <iframe width="100%" height="100%" style={{ border: 0 }} loading="lazy"src={`https://www.google.com/maps?q=${encodeURIComponent(meta.titolo)}&output=embed`} ></iframe>
+       {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI */}
+        <div style={{ marginBottom: '25px' }}>
+          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <iframe
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              /* Qui cerchiamo i NOMI dei tuoi servizi + il quartiere, così Google punta solo su di loro */
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+            ></iframe>
+          </div>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+            📍 Posizione delle strutture verificate a {meta.zona}
+          </p>
         </div>
 
         {/* LISTA ANNUNCI */}
@@ -147,23 +160,30 @@ export default function PaginaQuartiereDinamica() {
           ))}
         </div>
 
-        {/* APPROFONDIMENTI COSTI */}
-        <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
-          <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>💰 Approfondimenti e Costi a Roma:</h4>
-         <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-  {meta.cat.includes('farmac') ? (
-    <>
-      <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
-      <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Guida esenzioni e Ticket Regione Lazio</a></li>
-    </>
-  ) : (
-    <>
-      <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
-      <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', fontWeight: '600', textDecoration: 'none' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
-    </>
-  )}
-</ul>
-        </div>
+       {/* GUIDE SPECIFICHE PER CATEGORIA (Appunti 21 Gennaio - Corretto) */}
+          <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
+              💰 Approfondimenti e Costi a Roma:
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {meta.cat.includes('dentist') ? (
+                <>
+                  <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+                  <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
+                </>
+              ) : meta.cat.includes('farmac') ? (
+                <>
+                  <li>🔹 <a href="/guide/farmacie-turno-roma-come-funziona" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Come trovare le farmacie di turno a Roma</a></li>
+                  <li>🔹 <a href="/guide/servizi-farmacia-noleggio-ausili" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai servizi di telemedicina in farmacia</a></li>
+                </>
+              ) : (
+                <>
+                  <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
+                  <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
+                </>
+              )}
+            </ul>
+          </div>
 
         {/* SEO CONCLUSIVO E FAQ */}
         <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
