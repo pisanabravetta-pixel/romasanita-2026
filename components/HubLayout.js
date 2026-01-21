@@ -161,18 +161,7 @@ export default function HubLayout({
           <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
           <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
         </div>
-
-        {/* ALTRE SPECIALISTICHE */}
-        <div style={{ padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0', marginBottom: '40px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '15px', color: '#2c5282' }}>Altre Specialistiche a Roma:</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-            {altreSpecialistiche && altreSpecialistiche.map(s => (
-              <a key={s.nome} href={s.link} style={{ color: colore, fontWeight: '700', textDecoration: 'none' }}>{s.nome}</a>
-            ))}
-          </div>
-        </div>
-
-        {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
+   {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
         <section style={{ paddingBottom: '50px' }}>
           <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
             Domande Frequenti su {titolo} a Roma
@@ -208,8 +197,38 @@ export default function HubLayout({
           </div>
         </section>
 
-      </main>
-      <Footer />
+      {/* ... tutto il resto della pagina (lista, guide, FAQ) ... */}
+
+        {/* SEZIONE CROSS-LINKING FINALE - Ultima cosa dentro il MAIN */}
+        <div style={{ marginTop: '40px', padding: '25px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+          <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '20px', color: '#1e293b' }}>
+            Altre specialistiche disponibili a Roma:
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+            <a href="/dentisti-roma" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#0f766e', fontWeight: '700', textDecoration: 'none', padding: '10px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #ccfbf1' }}>
+              <span>🦷</span> Dentisti Roma
+            </a>
+            <a href="/farmacie-roma" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#15803d', fontWeight: '700', textDecoration: 'none', padding: '10px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #dcfce7' }}>
+              <span>💊</span> Farmacie Roma
+            </a>
+            <a href="/diagnostica-roma" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e40af', fontWeight: '700', textDecoration: 'none', padding: '10px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #dbeafe' }}>
+              <span>🔬</span> Diagnostica Roma
+            </a>
+            <a href="/dermatologi-roma" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#be185d', fontWeight: '700', textDecoration: 'none', padding: '10px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #fce7f3' }}>
+              <span>👨‍⚕️</span> Dermatologi Roma
+            </a>
+          </div>
+          
+          <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+            <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
+              ← Esplora tutte le categorie mediche a Roma
+            </a>
+          </div>
+        </div>
+
+      </main> {/* CHIUDE IL MAIN */}
+
+      <Footer /> {/* IL FOOTER STA FUORI DAL MAIN */}
     </div>
   );
 }
