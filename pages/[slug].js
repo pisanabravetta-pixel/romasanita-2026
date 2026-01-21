@@ -128,21 +128,22 @@ export default function PaginaQuartiereDinamica() {
           </div>
         </div>
 
-       {/* BOX MAPPA QUARTIERE - CORRETTO */}
+     {/* BOX MAPPA QUARTIERE - VERSIONE SENZA API KEY */}
         <div style={{ marginBottom: '25px' }}>
           <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
             <iframe
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              loading="lazy" 
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
               allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY&q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
             ></iframe>
           </div>
-          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center' }}>📍 Strutture verificate a {meta.zona}</p>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+            📍 Mappa dei centri {meta.titolo} selezionati a {meta.zona}
+          </p>
         </div>
-
         {/* LISTA ANNUNCI */}
         <div style={{ display: 'block' }}>
           {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
