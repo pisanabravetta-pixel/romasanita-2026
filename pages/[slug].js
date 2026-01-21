@@ -127,25 +127,7 @@ export default function PaginaQuartiereDinamica() {
             ))}
           </div>
         </div>
-
-    {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI */}
-        <div style={{ marginBottom: '25px' }}>
-          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              /* Qui cerchiamo i NOMI dei tuoi servizi + il quartiere, così Google punta solo su di loro */
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-            ></iframe>
-          </div>
-          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-            📍 Posizione delle strutture verificate a {meta.zona}
-          </p>
-        </div>
-       {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI (Preciso Estremo) */}
+  {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI (Preciso Estremo) */}
         <div style={{ marginBottom: '25px' }}>
           <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
             <iframe
