@@ -222,15 +222,28 @@ export default function PaginaQuartiereDinamica() {
             </div>
           )}
         </div>
-{/* GUIDE AI COSTI - ESCHE SEO (Corretto per Appunti 21 Gennaio) */}
+{/* GUIDE SPECIFICHE PER CATEGORIA (Appunti 21 Gennaio - Corretto) */}
           <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
             <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
-              💰 Guide Utili ai Prezzi (Roma 2026):
+              💰 Approfondimenti e Costi a Roma:
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai costi: Quanto costa una TAC a Roma?</a></li>
-              <li>🔹 <a href="/guide/tariffe-visite-specialistiche" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per visite specialistiche a Roma</a></li>
-              <li>🔹 <a href="/guide/esenzioni-ticket-lazio" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e Ticket Sanitario (Regione Lazio)</a></li>
+              {meta.cat.includes('dentist') ? (
+                <>
+                  <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+                  <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
+                </>
+              ) : meta.cat.includes('farmac') ? (
+                <>
+                  <li>🔹 <a href="/guide/farmacie-turno-roma-come-funziona" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Come trovare le farmacie di turno a Roma</a></li>
+                  <li>🔹 <a href="/guide/servizi-farmacia-noleggio-ausili" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai servizi di telemedicina in farmacia</a></li>
+                </>
+              ) : (
+                <>
+                  <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
+                  <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
+                </>
+              )}
             </ul>
           </div>
 {/* TESTO SEO CONCLUSIVO E FAQ LOCAL (Regola Appunti 21 Gennaio) */}
