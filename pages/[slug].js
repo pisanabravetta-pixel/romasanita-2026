@@ -145,18 +145,110 @@ export default function PaginaQuartiereDinamica() {
             📍 Posizione delle strutture verificate a {meta.zona}
           </p>
         </div>
-        {/* LISTA ANNUNCI */}
+       {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI (Preciso Estremo) */}
+        <div style={{ marginBottom: '25px' }}>
+          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <iframe
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              /* Cerchiamo solo i nomi dei tuoi annunci per isolare la concorrenza */
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+            ></iframe>
+          </div>
+          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+            📍 Posizione delle strutture verificate a {meta.zona}
+          </p>
+        </div>
+
+        {/* LISTA ANNUNCI - BOX PREMIUM */}
         <div style={{ display: 'block' }}>
-          {loading ? <p>Caricamento...</p> : servizi.length > 0 ? servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
+          {loading ? (
+            <p>Caricamento...</p>
+          ) : servizi.length > 0 ? (
+            servizi.map((v) => (
+              <div 
+                key={v.id} 
+                style={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: '12px', 
+                  padding: '25px', 
+                  marginBottom: '20px', 
+                  border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', 
+                  boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', 
+                  display: 'block', 
+                  width: '100%', 
+                  boxSizing: 'border-box',
+                  position: 'relative'
+                }}
+              >
+                {v.is_top && (
+                  <span style={{ position: 'absolute', top: '-12px', right: '20px', backgroundColor: tema.primario, color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '900', textTransform: 'uppercase' }}>
+                    Top Partner
+                  </span>
+                )}
+
+                <h3 style={{ color: '#1e293b', fontSize: '26px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.1' }}>
+                  {v.nome}
+                </h3>
+                
+                <p style={{ fontSize: '17px', color: '#475569', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  📍 {v.indirizzo} — <strong style={{ color: tema.primario }}>{v.zona}</strong>
+                </p>
+
+                {/* PULSANTI AZIONE GRANDI */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                  <a 
+                    href={`tel:${v.telefono}`} 
+                    style={{ 
+                      flex: '1', 
+                      minWidth: '140px', 
+                      backgroundColor: tema.primario, 
+                      color: 'white', 
+                      padding: '16px', 
+                      borderRadius: '10px', 
+                      textAlign: 'center', 
+                      fontWeight: '800', 
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    📞 CHIAMA ORA
+                  </a>
+                  <a 
+                    href={`https://wa.me/${v.whatsapp ? v.whatsapp.replace(/\s+/g, '') : ''}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ 
+                      flex: '1', 
+                      minWidth: '140px', 
+                      backgroundColor: '#22c55e', 
+                      color: 'white', 
+                      padding: '16px', 
+                      borderRadius: '10px', 
+                      textAlign: 'center', 
+                      fontWeight: '800', 
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    💬 WHATSAPP
+                  </a>
+                </div>
               </div>
+            ))
+          ) : (
+            /* BOX VUOTO SE NON CI SONO ANNUNCI */
+            <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '2px dashed #e2e8f0' }}>
+              <div style={{ fontSize: '50px', marginBottom: '20px' }}>🏥</div>
+              <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b' }}>Ricerca in corso a {meta.zona}</h3>
+              <p style={{ color: '#64748b' }}>Stiamo selezionando i migliori profili per {meta.titolo}.</p>
             </div>
-          )) : <p>Nessun risultato trovato a {meta.zona}.</p>}
+          )}
         </div>
 
         {/* GUIDE COSTI */}
