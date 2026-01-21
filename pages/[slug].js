@@ -128,7 +128,7 @@ export default function PaginaQuartiereDinamica() {
           </div>
         </div>
 
-     {/* BOX MAPPA QUARTIERE - VERSIONE SENZA API KEY */}
+    {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI */}
         <div style={{ marginBottom: '25px' }}>
           <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
             <iframe
@@ -137,11 +137,12 @@ export default function PaginaQuartiereDinamica() {
               style={{ border: 0 }}
               loading="lazy"
               allowFullScreen
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(meta.titolo)}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
+              /* Qui cerchiamo i NOMI dei tuoi servizi + il quartiere, così Google punta solo su di loro */
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
             ></iframe>
           </div>
           <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-            📍 Mappa dei centri {meta.titolo} selezionati a {meta.zona}
+            📍 Posizione delle strutture verificate a {meta.zona}
           </p>
         </div>
         {/* LISTA ANNUNCI */}
