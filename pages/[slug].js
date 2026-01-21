@@ -68,11 +68,89 @@ export default function PaginaQuartiereDinamica() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        {/* Il segreto è la key="slug-title": forza Next.js a distinguere questo titolo da quello della Home */}
+        {/* Titolo e Meta dinamici potenziati per SEO */}
         <title key="slug-title">{meta.titolo ? `${meta.titolo} | ServiziSalute` : "Caricamento..."}</title>
-        <meta key="slug-desc" name="description" content={`Trova i migliori professionisti per ${meta.titolo}. Contatti diretti, orari e disponibilità aggiornata.`} />
-      </Head>
+        <meta key="slug-desc" name="description" content={`Scopri i migliori professionisti per ${meta.titolo}. Elenco aggiornato con contatti, servizi e informazioni utili a ${meta.zona}.`} />
 
+        {meta.titolo && (
+          <>
+            {/* 1. SCHEMA FAQPage - Appunti 21 Gennaio */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": [
+                    {
+                      "@type": "Question",
+                      "name": `Dove trovare ${meta.titolo.toLowerCase()} a Roma ${meta.zona}?`,
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": `Su ServiziSalute puoi consultare l'elenco aggiornato di ${meta.titolo} con indirizzi e contatti per raggiungere rapidamente la struttura nel quartiere ${meta.zona}.`
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": `Quali servizi offrono le strutture a ${meta.zona}?`,
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": `Le strutture a Roma ${meta.zona} offrono prestazioni standard, test diagnostici, consulenze specialistiche e supporto farmacologico, come indicato nelle singole schede.`
+                      }
+                    }
+                  ]
+                }),
+              }}
+            />
+
+            {/* 2. SCHEMA BREADCRUMB - Gerarchia Google */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.com" },
+                    { "@type": "ListItem", "position": 2, "name": `${tema.label} Roma`, "item": `https://www.servizisalute.com/${meta.cat}-roma` },
+                    { "@type": "ListItem", "position": 3, "name": meta.zona, "item": `https://www.servizisalute.com/${slug}` }
+                  ]
+                }),
+              }}
+            />
+
+            {/* 3. SCHEMA ITEMLIST - Strutture Reali */}
+            {servizi && servizi.length > 0 && (
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "ItemList",
+                    "name": `Lista ${meta.titolo}`,
+                    "itemListElement": servizi.map((v, i) => ({
+                      "@type": "ListItem",
+                      "position": i + 1,
+                      "item": {
+                        "@type": "MedicalBusiness",
+                        "name": v.nome,
+                        "address": {
+                          "@type": "PostalAddress",
+                          "streetAddress": v.indirizzo,
+                          "addressLocality": "Roma",
+                          "addressRegion": "RM",
+                          "addressCountry": "IT"
+                        },
+                        "telephone": v.telefono
+                      }
+                    }))
+                  }),
+                }}
+              />
+            )}
+          </>
+        )}
+      </Head>
       <Navbar />
 
       <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>
@@ -144,6 +222,17 @@ export default function PaginaQuartiereDinamica() {
             </div>
           )}
         </div>
+{/* GUIDE AI COSTI - ESCHE SEO (Inserimento Chirurgico Appunti 21 Gennaio) */}
+          <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              💰 Guide ai Prezzi Roma 2026:
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li>🔹 <a href="/quanto-costa-tac-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
+              <li>🔹 <a href="/costo-visita-specialistica-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie visite specialistiche Roma</a></li>
+              <li>🔹 <a href="/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
+            </ul>
+          </div>
 {/* TESTO SEO CONCLUSIVO E FAQ LOCAL (Regola Appunti 21 Gennaio) */}
         <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: theme.radius?.main || '12px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '15px' }}>
