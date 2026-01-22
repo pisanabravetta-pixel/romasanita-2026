@@ -171,8 +171,17 @@ export default function HubLayout({
     )}
   </ul>
 </div>
-{/* TESTO SEO CONCLUSIVO (Novità Appunti 21 Gennaio) */}
-        <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0' }}>
+{/* CONTENITORE UNICO BIANCO (SEO, FAQ, CTA, CROSS-LINKING) */}
+        <section style={{ 
+          margin: '40px 0', 
+          padding: '25px', 
+          backgroundColor: 'white', 
+          borderRadius: theme.radius.main, 
+          border: '1px solid #e2e8f0',
+          boxShadow: theme.shadows.premium 
+        }}>
+          
+          {/* TESTO SEO CONCLUSIVO */}
           <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
             {titolo} a Roma: servizi, orari e informazioni utili
           </h2>
@@ -181,26 +190,24 @@ export default function HubLayout({
             Molte delle realtà presenti nel nostro portale offrono servizi aggiuntivi come test diagnostici rapidi, supporto per terapie croniche e consulenze personalizzate. 
             Su ServiziSalute puoi confrontare diverse opzioni per <strong>{titolo.toLowerCase()} a Roma</strong> e scegliere quella più comoda in base alla zona e ai servizi offerti.
           </p>
-          <p style={{ color: '#475569', lineHeight: '1.7', margin: 0 }}>
+          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '30px' }}>
             È sempre consigliato verificare direttamente con la struttura gli orari di apertura e i turni aggiornati, soprattutto nei giorni festivi o notturni. 
             Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale.
           </p>
-        </section>
 
-        {/* MINI TESTO SEO */}
-        <div style={{ margin: '30px 0', padding: '0 10px' }}>
-          <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-            {testoMiniSEO}
-          </p>
-        </div>
+          {/* MINI TESTO SEO */}
+          <div style={{ marginBottom: '40px', padding: '0 10px' }}>
+            <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
+              {testoMiniSEO}
+            </p>
+          </div>
 
-        {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
-        <section style={{ paddingBottom: '50px' }}>
+          {/* FAQ OTTIMIZZATE */}
           <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
             Domande Frequenti su {titolo} a Roma
           </h3>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
             <div>
               <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
                 1. Come trovare {titolo.toLowerCase()} a Roma vicino a me?
@@ -228,36 +235,35 @@ export default function HubLayout({
               </p>
             </div>
           </div>
+
+          {/* CTA NERA */}
+          <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
+            <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
+            <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+          </div>
+
+          {/* SEZIONE CROSS-LINKING FINALE */}
+          <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
+              Esplora altri servizi a Roma:
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+              <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
+              <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>
+              <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>
+              <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>
+            </div>
+            
+            <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+              <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
+                ← Torna a tutte le specialistiche a Roma
+              </a>
+            </div>
+          </div>
+
         </section>
-
-      {/* ... tutto il resto della pagina (lista, guide, FAQ) ... */}
-  {/* CTA NERA */}
-        <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-        </div>
- {/* SEZIONE CROSS-LINKING FINALE - Compatta su una riga come pagine quartiere */}
-<div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-  <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
-    Esplora altri servizi a Roma:
-  </p>
-  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-    <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
-    <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>
-    <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>
-    <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>
-  </div>
-  
-  <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
-    <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
-      ← Torna a tutte le specialistiche a Roma
-    </a>
-  </div>
-</div>
-
-      </main> {/* CHIUDE IL MAIN */}
-
+         </main> {/* CHIUDE IL MAIN */}          
       <Footer /> {/* IL FOOTER STA FUORI DAL MAIN */}
     </div>
   );
