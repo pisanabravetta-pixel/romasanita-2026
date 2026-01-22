@@ -97,24 +97,22 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - FIX PER BUILD ERROR */}
+{/* BOX MAPPA HUB - FIX: Usiamo 'medici' al posto di 'servizi' */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {/* Controlliamo che servizi sia un array e che abbia elementi */}
-    {Array.isArray(servizi) && servizi.length > 0 ? (
+    {Array.isArray(medici) && medici.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(medici.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc' }} />
     )}
   </div>
 </div>
-
        {/* LISTA BOX ANNUNCI (Con controllo lista vuota) */}
         <div style={{ display: 'block' }}>
           {loading ? (
@@ -149,6 +147,30 @@ export default function HubLayout({
             </div>
           )}
         </div> 
+{/* BOX GUIDE E COSTI - DINAMICO */}
+<div style={{ marginTop: '10px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
+  <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
+    💰 Approfondimenti e Costi a Roma:
+  </h4>
+  <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    {categoria.includes('dentist') ? (
+      <>
+        <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+        <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
+      </>
+    ) : categoria.includes('farmac') ? (
+      <>
+        <li>🔹 <a href="/guide/farmacie-turno-roma-come-funziona" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Come trovare le farmacie di turno a Roma</a></li>
+        <li>🔹 <a href="/guide/servizi-farmacia-noleggio-ausili" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai servizi di telemedicina in farmacia</a></li>
+      </>
+    ) : (
+      <>
+        <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
+        <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
+      </>
+    )}
+  </ul>
+</div>
 {/* TESTO SEO CONCLUSIVO (Novità Appunti 21 Gennaio) */}
         <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: theme.radius.main, border: '1px solid #e2e8f0' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
