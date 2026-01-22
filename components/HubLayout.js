@@ -194,6 +194,13 @@ export default function HubLayout({
             È sempre consigliato verificare direttamente con la struttura gli orari di apertura e i turni aggiornati, soprattutto nei giorni festivi o notturni. 
             Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale.
           </p>
+{/* RIGA DI SEPARAZIONE TRA SEO E MINI SEO */}
+<div style={{ 
+  height: '1px', 
+  backgroundColor: '#f1f5f9', 
+  width: '80%', 
+  margin: '30px auto' 
+}} />
 
           {/* MINI TESTO SEO */}
           <div style={{ marginBottom: '40px', padding: '0 10px' }}>
