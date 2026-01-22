@@ -205,6 +205,35 @@ export default function PaginaQuartiereDinamica() {
               <p style={{ color: '#475569', margin: 0 }}>Gli orari possono variare. È consigliato contattare direttamente la struttura tramite telefono o WhatsApp per confermare l'apertura.</p>
             </div>
           </div>
+{/* CTA PER PROFESSIONISTI NEL QUARTIERE */}
+<div style={{ 
+  backgroundColor: '#0f172a', 
+  padding: '30px 20px', 
+  borderRadius: '12px', 
+  textAlign: 'center', 
+  color: 'white', 
+  margin: '35px 0',
+  boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'
+}}>
+  <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>
+    Sei un {meta.nomeSemplice.toLowerCase()} a {meta.zona}?
+  </h2>
+  <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px', maxWidth: '500px', margin: '0 auto 20px auto' }}>
+    Aumenta la tua visibilità nel quartiere <strong>{meta.zona}</strong>. Inserisci la tua struttura su ServiziSalute e ricevi contatti diretti.
+  </p>
+  <a href="/pubblica-annuncio" style={{ 
+    backgroundColor: tema.primario, 
+    color: 'white', 
+    padding: '12px 25px', 
+    borderRadius: '10px', 
+    fontWeight: '900', 
+    textDecoration: 'none', 
+    display: 'inline-block',
+    transition: 'transform 0.2s'
+  }}>
+    🚀 PUBBLICA IL TUO ANNUNCIO
+  </a>
+</div>
 
           {/* CROSS LINKING */}
           <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
