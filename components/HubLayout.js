@@ -201,6 +201,13 @@ export default function HubLayout({
               {testoMiniSEO}
             </p>
           </div>
+{/* RIGA DI SEPARAZIONE TRA SEO E FAQ */}
+<div style={{ 
+  height: '1px', 
+  backgroundColor: '#f1f5f9', 
+  width: '80%', 
+  margin: '30px auto' 
+}} />
 
           {/* FAQ OTTIMIZZATE */}
           <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
