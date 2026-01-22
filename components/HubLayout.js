@@ -194,13 +194,7 @@ export default function HubLayout({
           </p>
         </div>
 
-        {/* CTA NERA */}
-        <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
-          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
-          <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-        </div>
-   {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
+        {/* FAQ OTTIMIZZATE (Regola Appunti 21 Gennaio) */}
         <section style={{ paddingBottom: '50px' }}>
           <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
             Domande Frequenti su {titolo} a Roma
@@ -237,7 +231,12 @@ export default function HubLayout({
         </section>
 
       {/* ... tutto il resto della pagina (lista, guide, FAQ) ... */}
-
+  {/* CTA NERA */}
+        <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', margin: '35px 0' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
+          <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
+          <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+        </div>
  {/* SEZIONE CROSS-LINKING FINALE - Compatta su una riga come pagine quartiere */}
 <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
   <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
