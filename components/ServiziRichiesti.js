@@ -5,25 +5,25 @@ const servizi = [
     { 
       titolo: "Ginecologi", 
       desc: "Visite specialistiche e prevenzione", 
-      img: "https://images.unsplash.com/photo-1579152276503-6862b740510a?auto=format&fit=crop&w=400&q=75", 
+      img: "https://images.unsplash.com/photo-1579152276503-6862b740510a?w=400", 
       link: "/ginecologi-roma" 
     },
     { 
       titolo: "Dentisti", 
       desc: "Igiene, impianti e ortodonzia", 
-      img: "https://images.unsplash.com/photo-1629909608115-f94f50c4f5b1?auto=format&fit=crop&w=400&q=75", 
+      img: "https://images.unsplash.com/photo-1629909608115-f94f50c4f5b1?w=400", 
       link: "/dentisti-roma" 
     },
     { 
       titolo: "Analisi del Sangue", 
       desc: "Check-up e prelievi in farmacia", 
-      img: "https://images.unsplash.com/photo-1579152276743-69018e614481?auto=format&fit=crop&w=400&q=75", 
+      img: "https://images.unsplash.com/photo-1579152276743-69018e614481?w=400", 
       link: "/farmacie-roma" 
     },
     { 
       titolo: "Cardiologo", 
       desc: "ECG e controllo pressione", 
-      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?auto=format&fit=crop&w=400&q=75", 
+      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400", 
       link: "/cardiologi-roma" 
     }
   ];
