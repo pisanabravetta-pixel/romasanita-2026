@@ -510,6 +510,26 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
+        <section style={{ padding: '30px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
+  <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+    <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '15px', color: '#1e293b', textAlign: 'center' }}>
+      Servizi sanitari a Roma per quartiere
+    </h3>
+    <div style={{ 
+      display: 'flex', 
+      flexWrap: 'wrap', 
+      justifyContent: 'center', 
+      gap: '15px',
+      fontSize: '14px' 
+    }}>
+      <a href="/farmacie-roma/prati" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Farmacie Prati</a>
+      <a href="/farmacie-roma/eur" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Farmacie EUR</a>
+      <a href="/dentisti-roma/parioli" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Dentisti Parioli</a>
+      <a href="/dermatologi-roma/centro-storico" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Dermatologi Centro</a>
+      <a href="/diagnostica-roma/ostia" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Centri Diagnostici Ostia</a>
+    </div>
+  </div>
+</section>
   {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
       <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
         <div className="container">
