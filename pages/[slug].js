@@ -218,10 +218,9 @@ export default function PaginaQuartiereDinamica() {
 {/* SEO CONCLUSIVO E FAQ CON LINK TESTUALI OBBLIGATORI */}
 <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
   
-  <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
-    {meta.titolo} nel quartiere {meta.zona} di Roma
-  </h2>
-  
+ <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
+  {meta.nomeSemplice} a Roma nel quartiere {meta.zona}
+</h2>
   <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
     <p style={{ marginBottom: '15px' }}>
       Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. In questa pagina trovi l’elenco di <strong>{meta.titolo}</strong>, pensato per aiutare residenti e lavoratori a individuare rapidamente un professionista o una struttura nella propria zona.
