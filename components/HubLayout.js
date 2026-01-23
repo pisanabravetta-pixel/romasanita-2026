@@ -99,11 +99,11 @@ export default function HubLayout({
           </p>
         </div>
 
-   <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+   {/* --- 1. MINI TESTO SEO (Sotto H1/H2) --- */}
+<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '15px', lineHeight: '1.6' }}>
   <p>
-    Trovare una <strong>farmacia a Roma</strong> aperta o vicina alla propria posizione è essenziale per la gestione della salute quotidiana. 
-    I professionisti e le strutture presenti su <strong>ServiziSalute</strong> offrono servizi d'eccellenza, dalla dispensazione di farmaci a consulenze specialistiche e supporto diagnostico all'avanguardia. 
-    Attraverso il nostro sistema puoi individuare la struttura giusta nel tuo quartiere e contattarla direttamente, senza intermediari e in pochi secondi.
+    In questa pagina trovi l’elenco dei servizi di <strong>{titolo} a Roma</strong>, pensato per aiutare cittadini e famiglie a individuare rapidamente strutture e professionisti sanitari presenti sul territorio. 
+    Grazie alla suddivisione per quartiere, puoi trovare facilmente i servizi disponibili a <strong>Prati, EUR, Parioli, San Giovanni, Tiburtina</strong> e altre aree della Capitale.
   </p>
 </div>
      {/* CERCA PER QUARTIERE (Versione Automatica Centralizzata) */}
@@ -213,38 +213,41 @@ export default function HubLayout({
           boxShadow: theme.shadows.premium 
         }}>
           
- <section style={{ marginBottom: '30px' }}>
+ {/* --- SEZIONE SEO APPROFONDIMENTO E MINI SEO --- */}
+<section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+  
+  {/* TESTO SEO PRINCIPALE (MIX OTTIMIZZATO) */}
   <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
-    Farmacie a Roma: servizi, orari e informazioni utili
+    {titolo} a Roma: servizi, orari e informazioni utili
   </h2>
   
-  <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '15px' }}>
-    Roma vanta una rete capillare di presidi sanitari distribuiti dal centro storico alle zone periferiche. Su ServiziSalute trovi l'elenco completo suddiviso per zone, incluse <a href="/farmacie-roma-prati" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <strong>EUR</strong>, <strong>Parioli</strong>, <strong>San Giovanni</strong>, <strong>Monteverde</strong> e <strong>Roma Nord</strong>. 
-    Oltre alla vendita di farmaci, molte strutture offrono servizi di autoanalisi, test antigenici, prodotti galenici e telemedicina.
-  </p>
+  <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
+    <p style={{ marginBottom: '15px' }}>
+      Roma vanta una rete capillare di presidi sanitari distribuiti dal centro storico alle zone periferiche. Su <strong>ServiziSalute</strong> trovi l'elenco completo suddiviso per zone, incluse <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <strong>EUR</strong>, <strong>Parioli</strong>, <strong>San Giovanni</strong>, <strong>Monteverde</strong> e <strong>Roma Nord</strong>. 
+      Oltre alle prestazioni standard, molte strutture offrono servizi di autoanalisi, test diagnostici rapidi e consulenze specializzate.
+    </p>
 
-  <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '15px' }}>
-    Puoi confrontare diverse opzioni e scegliere la più comoda in base ai servizi offerti, consultando anche la nostra <a href="/guide/farmacie-turno-roma-come-funziona" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>guida alle farmacie di turno a Roma</a> per le emergenze notturne o festive.
-  </p>
+    <p style={{ marginBottom: '15px' }}>
+      Puoi confrontare le diverse opzioni e scegliere la più comoda in base ai servizi offerti, consultando anche la nostra <a href="/guide/farmacie-turno-roma-come-funziona" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>guida alle urgenze a Roma</a> per necessità notturne o festive. 
+      Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale senza intermediari.
+    </p>
 
-  <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '30px' }}>
-    Ti consigliamo di verificare sempre gli orari aggiornati tramite i tasti di contatto diretto. Il nostro portale semplifica l'accesso ai servizi essenziali della Capitale, mettendo in comunicazione immediata cittadini e professionisti della salute.
-  </p>
+    <p style={{ marginBottom: '30px' }}>
+      Ti consigliamo di verificare sempre gli orari aggiornati tramite i tasti di contatto diretto (Telefono o WhatsApp). La presenza di servizi sanitari distribuiti nei diversi quartieri consente di accedere facilmente alle prestazioni mediche più richieste vicino alla propria area di residenza.
+    </p>
+  </div>
+
+  {/* RIGA DI SEPARAZIONE DISCRETA */}
+  <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '60%', margin: '20px auto' }} />
+
+  {/* MINI TESTO SEO (FOOTER DEL BLOCCO) */}
+  <div style={{ padding: '10px 0' }}>
+    <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6', textAlign: 'center', fontStyle: 'italic' }}>
+      {testoMiniSEO}
+    </p>
+  </div>
+
 </section>
-{/* RIGA DI SEPARAZIONE TRA SEO E MINI SEO */}
-<div style={{ 
-  height: '1px', 
-  backgroundColor: '#f1f5f9', 
-  width: '80%', 
-  margin: '30px auto' 
-}} />
-
-          {/* MINI TESTO SEO */}
-          <div style={{ marginBottom: '40px', padding: '0 10px' }}>
-            <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', textAlign: 'center' }}>
-              {testoMiniSEO}
-            </p>
-          </div>
 {/* RIGA DI SEPARAZIONE TRA SEO E FAQ */}
 <div style={{ 
   height: '1px', 
