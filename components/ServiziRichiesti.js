@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 
 export default function ServiziRichiesti() {
- const servizi = [
+const servizi = [
     { 
       titolo: "Fisioterapia", 
       desc: "Riabilitazione e massoterapia", 
-      img: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&q=75",
       link: "/fisioterapisti-roma" 
     },
     { 
       titolo: "Oculista", 
       desc: "Esame della vista completo", 
-      img: "https://images.unsplash.com/photo-1574689049868-e94ed5301745?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1582719471384-894fbb16e024?auto=format&fit=crop&w=400&q=75",
       link: "/oculisti-roma" 
     },
     { 
       titolo: "Psicologo", 
       desc: "Consulenza e supporto", 
-      img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=400&q=75",
       link: "/psicologi-roma" 
     },
     { 
@@ -27,7 +27,6 @@ export default function ServiziRichiesti() {
       link: "/cardiologi-roma" 
     }
   ];
-  
   const [idx, setIdx] = useState(0);
 
   return (
