@@ -22,17 +22,55 @@ export default function HubLayout({
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
-      <Head>
-      <title>{titolo === "Home" ? "Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2" : (titolo.includes("Roma") ? titolo : `${titolo} a Roma: Studi e Urgenze | Gennaio 2026`)}</title>
-        <meta name="description" content={descrizioneMeta} />
-        {schemas && (
-          <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
-          </>
-        )}
-      </Head>
-      
+     <Head>
+  <title>{titolo === "Home" ? "Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2" : (titolo.includes("Roma") ? titolo : `${titolo} a Roma: Studi e Urgenze | Gennaio 2026`)}</title>
+  <meta name="description" content={descrizioneMeta} />
+
+  {/* PUNTO ESATTO: INIZIO SCHEMA FAQ DINAMICO */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": `Come trovare ${titolo.toLowerCase()} a Roma vicino a me?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Su ServiziSalute puoi cercare ${titolo.toLowerCase()} a Roma filtrando per quartiere. Ogni annuncio include indirizzo e contatti diretti per raggiungere facilmente la struttura più vicina nel tuo quadrante urbano.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `Quali servizi offrono ${titolo.toLowerCase()} a Roma?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Oltre alle prestazioni standard, molte strutture a Roma offrono servizi accessori (come test rapidi o consulenze specialistiche) indicati direttamente nella scheda del professionista.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `Come sapere se la struttura è aperta oggi a Roma?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Gli orari possono variare in base al quartiere. Il modo più rapido è utilizzare i tasti Chiama o WhatsApp presenti su ServiziSalute per parlare direttamente con la segreteria o il titolare.`
+            }
+          }
+        ]
+      })
+    }}
+  />
+  {/* FINE SCHEMA FAQ DINAMICO */}
+
+  {schemas && (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
+    </>
+  )}
+</Head>
       {/* TOP BAR INTEGRALE */}
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
         {testoTopBar}
