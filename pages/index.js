@@ -579,15 +579,16 @@ return (
             ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
           </h2>
           <p style={{ marginBottom: '20px' }}>
-            <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <strong>farmacie</strong>, <strong>dentisti</strong>, <strong>centri diagnostici</strong> e <strong>visite specialistiche</strong> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
-          </p>
+            <p style={{ marginBottom: '20px' }}>
+  <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, <a href="/dentisti-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>dentisti</a>, <a href="/diagnostica-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>centri diagnostici</a> e visite specialistiche nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
+</p>
           
           <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
             Trova Farmacie e Specialisti nei quartieri di Roma
           </h3>
-          <p style={{ marginBottom: '20px' }}>
-            Che tu stia cercando una <strong>farmacia di turno a Roma Prati</strong>, un <strong>dentista all'EUR</strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
-          </p>
+         <p style={{ marginBottom: '20px' }}>
+  Che tu stia cercando una <strong>farmacia di turno a <a href="/farmacie-roma-prati" style={{color: '#1e3a8a', textDecoration: 'none'}}>Roma Prati</a></strong>, un <strong>dentista all'<a href="/dentisti-roma-eur" style={{color: '#1e3a8a', textDecoration: 'none'}}>EUR</a></strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
+</p>
           
           <p style={{ fontSize: '14px', borderTop: '1px solid #eee', paddingTop: '15px', color: '#64748b' }}>
             Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600'}}>Farmacie Roma</a>, 
