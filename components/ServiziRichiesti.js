@@ -5,7 +5,7 @@ const servizi = [
     { 
       titolo: "Ginecologi", 
       desc: "Visite specialistiche e prevenzione", 
-      img: "https://images.unsplash.com/photo-1559839734-2b71f1e3c77e?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=400", 
       link: "/ginecologi-roma" 
     },
     { 
@@ -17,7 +17,7 @@ const servizi = [
     { 
       titolo: "Analisi del Sangue", 
       desc: "Check-up e prelievi in farmacia", 
-      img: "https://images.unsplash.com/photo-1579152276743-69018e614481?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=400", 
       link: "/farmacie-roma" 
     },
     { 
