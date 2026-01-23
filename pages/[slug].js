@@ -215,7 +215,7 @@ export default function PaginaQuartiereDinamica() {
             </ul>
           </div>
 
-      {/* SEO CONCLUSIVO E FAQ (TEMPLATE AUTOMATICO) */}
+{/* SEO CONCLUSIVO E FAQ CON LINK TESTUALI OBBLIGATORI */}
 <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
   
   <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
@@ -224,44 +224,33 @@ export default function PaginaQuartiereDinamica() {
   
   <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
     <p style={{ marginBottom: '15px' }}>
-      Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. Le strutture presenti nel quartiere offrono servizi fondamentali come la dispensazione di farmaci, consulenza professionale e supporto alla prevenzione. 
+      Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. In questa pagina trovi l’elenco di <strong>{meta.titolo}</strong>, pensato per aiutare residenti e lavoratori a individuare rapidamente un professionista o una struttura nella propria zona.
     </p>
+    
     <p style={{ marginBottom: '15px' }}>
-      Grazie alla distribuzione sul territorio, è possibile trovare facilmente una soluzione per <strong>{meta.titolo} nel quartiere {meta.zona}</strong> di Roma e verificarne contatti e posizione direttamente sulla mappa. Puoi confrontare i servizi disponibili e contattare direttamente la struttura per informazioni su orari e disponibilità.
+      Grazie alla distribuzione sul territorio, è possibile trovare facilmente una soluzione per la propria salute e verificarne contatti e posizione direttamente sulla mappa. Oltre a questa categoria, nel quartiere {meta.zona} puoi trovare anche servizi di <a href={`/dentisti-roma-${slug?.split('-').pop()}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'underline' }}>Dentisti a Roma {meta.zona}</a> e centri di <a href={`/diagnostica-roma-${slug?.split('-').pop()}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'underline' }}>Diagnostica a Roma {meta.zona}</a>.
+    </p>
+
+    <p>
+      Puoi confrontare i servizi disponibili e contattare direttamente la struttura per informazioni su orari e disponibilità. Per una visione completa di tutti i servizi in città, puoi sempre <a href={`/${meta.cat}-roma`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'underline' }}>tornare alla lista generale di {meta.nomeSemplice} a Roma</a>.
     </p>
   </div>
 
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '100%', margin: '30px 0' }} />
 
   <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
     <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.titolo} a Roma {meta.zona}?</p>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice.toLowerCase()} a {meta.zona}?</p>
       <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato al quartiere {meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.</p>
     </div>
     <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Le strutture del quartiere {meta.zona} offrono servizi sanitari aggiuntivi?</p>
-      <p style={{ margin: 0, color: '#475569' }}>Molte strutture a Roma {meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.</p>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Le strutture di {meta.zona} offrono servizi sanitari aggiuntivi?</p>
+      <p style={{ margin: 0, color: '#475569' }}>Sì, molte strutture a Roma {meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.</p>
     </div>
     <div>
       <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Posso contattare direttamente le strutture di {meta.zona}?</p>
       <p style={{ margin: 0, color: '#475569' }}>Sì, ogni scheda dispone di contatti diretti (Telefono o WhatsApp) per richiedere informazioni su orari, servizi e disponibilità.</p>
-    </div>
-  </div>
-
-  {/* LINK INTERNI OBBLIGATORI */}
-  <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-    <p style={{ fontWeight: '800', color: '#2c5282', marginBottom: '12px', fontSize: '14px', textTransform: 'uppercase' }}>Link Utili e Correlati:</p>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-     <a href={`/${meta.cat}-roma`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
-  ← Torna a: {meta.nomeSemplice} a Roma
-</a>
-<a href={`/dentisti-roma-${slug?.split('-').pop()}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
-  👉 Dentisti a Roma {meta.zona}
-</a>
-      <a href={`/diagnostica-roma-${meta.slugZona}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
-        👉 Diagnostica a Roma {meta.zona}
-      </a>
     </div>
   </div>
 </section>
