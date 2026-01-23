@@ -5,25 +5,25 @@ const servizi = [
     { 
       titolo: "Fisioterapia", 
       desc: "Riabilitazione e massoterapia", 
-      img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=400&q=75", 
       link: "/fisioterapisti-roma" 
     },
     { 
       titolo: "Oculista", 
       desc: "Esame della vista completo", 
-      img: "https://images.unsplash.com/photo-1582719471384-894fbb16e024?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=400&q=75", 
       link: "/oculisti-roma" 
     },
     { 
       titolo: "Psicologo", 
       desc: "Consulenza e supporto", 
-      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=400&q=75", 
       link: "/psicologi-roma" 
     },
     { 
       titolo: "Cardiologo", 
       desc: "ECG e controllo pressione", 
-      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?auto=format&fit=crop&w=400&q=75",
+      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?auto=format&fit=crop&w=400&q=75", 
       link: "/cardiologi-roma" 
     }
   ];
