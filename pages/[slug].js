@@ -62,33 +62,47 @@ export default function PaginaQuartiereDinamica() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-      <Head>
-        <title>{`${meta.titolo} | ServiziSalute`}</title>
-        <meta name="description" content={`Cerchi ${meta.titolo}? Trova i migliori professionisti nel quartiere ${meta.zona}. Contatti, orari e mappa.`} />
-     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": `Migliori ${meta.titolo}`,
-  "description": `Elenco selezionato di ${meta.titolo} nel quartiere ${meta.zona} a Roma.`,
-  "itemListElement": servizi.map((v, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "item": {
-      "@type": "LocalBusiness",
-      "name": v.nome,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": v.indirizzo,
-        "addressLocality": "Roma",
-        "addressRegion": "Lazio",
-        "addressCountry": "IT"
-      },
-      "telephone": v.telefono
-    }
-  }))
-})}} />
-  </Head>
+     <Head>
+  <title>{`Farmacie a Roma ${quartiereNome} – Elenco e contatti | ServiziSalute`}</title>
+  <meta name="description" content={`Scopri tutte le farmacie nel quartiere ${quartiereNome} a Roma. Contatti, servizi e mappa per trovare rapidamente la farmacia più vicina.`} />
 
+  {/* FAQ JSON-LD SPECIFICA PER QUARTIERE */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": `Come trovare una farmacia a Roma ${quartiereNome}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `È possibile consultare l’elenco delle farmacie nel quartiere ${quartiereNome} e utilizzare la mappa per individuare quella più vicina alla propria posizione.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `Le farmacie del quartiere ${quartiereNome} offrono servizi sanitari aggiuntivi?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Molte farmacie a Roma ${quartiereNome} offrono servizi come autoanalisi, test rapidi e consulenza professionale.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `Posso contattare direttamente le farmacie di ${quartiereNome}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Sì, ogni farmacia dispone di contatti diretti per richiedere informazioni su orari e servizi.`
+            }
+          }
+        ]
+      })
+    }}
+  />
+</Head>
       <Navbar />
 
       <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase' }}>
@@ -104,16 +118,29 @@ export default function PaginaQuartiereDinamica() {
           <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{meta.nomeSemplice} Roma</a>
         </div>
 
-        {/* Header SEO */}
-        <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: '20px', borderRadius: '12px', borderLeft: `8px solid ${tema.primario}`, boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-          <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>{meta.titolo}</h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>I migliori professionisti a {meta.zona} aggiornati a Gennaio 2026</p>
-        </div>
+      {/* Header SEO */}
+<div style={{ 
+  marginBottom: '25px', 
+  backgroundColor: 'white', 
+  padding: '20px', 
+  borderRadius: '12px', 
+  borderLeft: `8px solid ${tema.primario}`, 
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)' 
+}}>
+  <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>
+    {meta.titolo}
+  </h1>
+  <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
+    I migliori professionisti a {meta.zona} aggiornati a Gennaio 2026
+  </p>
+</div>
 
-        <div style={{ marginBottom: '25px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
-          <p>Cerchi <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma? Su ServiziSalute trovi un elenco selezionato di professionisti e strutture sanitarie, con informazioni utili su contatti, servizi disponibili e posizione.</p>
-          <p>Il quartiere <strong>{meta.zona}</strong> dispone di numerose realtà che offrono servizi per la salute e il benessere dei cittadini. Attraverso il nostro portale puoi individuare rapidamente la soluzione più adatta alle tue esigenze nel tuo quadrante di riferimento.</p>
-        </div>
+{/* MINI TESTO SEO INIZIALE (Sotto H1) */}
+<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+  <p>
+    Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. In questa pagina trovi l’elenco di <strong>{meta.titolo}</strong>, pensato per aiutare residenti, lavoratori e visitatori a individuare rapidamente un professionista o una farmacia nel quartiere <strong>{meta.zona}</strong> di Roma e verificarne contatti e posizione.
+  </p>
+</div>
 
         {/* Selezione Zone */}
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '15px', border: '1px solid #e2e8f0' }}>
@@ -142,6 +169,18 @@ export default function PaginaQuartiereDinamica() {
             📍 Posizione delle strutture verificate a {meta.zona}
           </p>
         </div>
+{/* MINI TESTO SEO SOTTO LA MAPPA - OBBLIGATORIO (PAGINA QUARTIERE) */}
+<p style={{ 
+  fontSize: '14px', 
+  color: '#64748b', 
+  textAlign: 'center', 
+  marginTop: '10px', 
+  marginBottom: '30px', 
+  fontStyle: 'italic',
+  lineHeight: '1.5'
+}}>
+  La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
+</p>
 
         {/* LISTA ANNUNCI */}
         <div style={{ display: 'block' }}>
@@ -185,26 +224,56 @@ export default function PaginaQuartiereDinamica() {
             </ul>
           </div>
 
-        {/* SEO CONCLUSIVO E FAQ */}
-        <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '15px' }}>Servizi offerti per {meta.titolo}</h2>
-          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '25px' }}>Le strutture presenti nel quartiere <strong>{meta.zona}</strong> rappresentano un punto di riferimento per i residenti della zona. Oltre alle prestazioni standard, molte realtà offrono servizi integrativi e consulenze specialistiche personalizzate. Grazie alla posizione strategica a <strong>{meta.zona}</strong>, queste strutture sono facilmente raggiungibili e permettono un contatto diretto tramite i canali indicati.</p>
+      {/* SEO CONCLUSIVO E FAQ (TEMPLATE AUTOMATICO) */}
+<section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+  
+  <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
+    {meta.titolo} nel quartiere {meta.zona} di Roma
+  </h2>
+  
+  <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
+    <p style={{ marginBottom: '15px' }}>
+      Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. Le strutture presenti nel quartiere offrono servizi fondamentali come la dispensazione di farmaci, consulenza professionale e supporto alla prevenzione. 
+    </p>
+    <p style={{ marginBottom: '15px' }}>
+      Grazie alla distribuzione sul territorio, è possibile trovare facilmente una soluzione per <strong>{meta.titolo} nel quartiere {meta.zona}</strong> di Roma e verificarne contatti e posizione direttamente sulla mappa. Puoi confrontare i servizi disponibili e contattare direttamente la struttura per informazioni su orari e disponibilità.
+    </p>
+  </div>
 
-          <h3 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '15px', borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>Domande frequenti su {meta.zona}</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <p style={{ fontWeight: '800', margin: '0 0 5px 0' }}>Dove trovare {meta.titolo.toLowerCase()} a Roma {meta.zona}?</p>
-              <p style={{ color: '#475569', margin: 0 }}>Su ServiziSalute puoi consultare l'elenco aggiornato con indirizzi e contatti utili per raggiungere rapidamente la struttura più vicina.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: '800', margin: '0 0 5px 0' }}>Le strutture di {meta.zona} offrono servizi sanitari aggiuntivi?</p>
-              <p style={{ color: '#475569', margin: 0 }}>Sì, molte strutture del quartiere offrono servizi come test rapidi e consulenze farmacologiche o specialistiche.</p>
-            </div>
-            <div>
-              <p style={{ fontWeight: '800', margin: '0 0 5px 0' }}>Come verificare gli orari a {meta.zona}?</p>
-              <p style={{ color: '#475569', margin: 0 }}>Gli orari possono variare. È consigliato contattare direttamente la struttura tramite telefono o WhatsApp per confermare l'apertura.</p>
-            </div>
-          </div>
+  <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '100%', margin: '30px 0' }} />
+
+  <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
+    <div>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.titolo} a Roma {meta.zona}?</p>
+      <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato al quartiere {meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.</p>
+    </div>
+    <div>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Le strutture del quartiere {meta.zona} offrono servizi sanitari aggiuntivi?</p>
+      <p style={{ margin: 0, color: '#475569' }}>Molte strutture a Roma {meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.</p>
+    </div>
+    <div>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Posso contattare direttamente le strutture di {meta.zona}?</p>
+      <p style={{ margin: 0, color: '#475569' }}>Sì, ogni scheda dispone di contatti diretti (Telefono o WhatsApp) per richiedere informazioni su orari, servizi e disponibilità.</p>
+    </div>
+  </div>
+
+  {/* LINK INTERNI OBBLIGATORI */}
+  <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+    <p style={{ fontWeight: '800', color: '#2c5282', marginBottom: '12px', fontSize: '14px', textTransform: 'uppercase' }}>Link Utili e Correlati:</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <a href={`/${meta.categoria}-roma`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
+        ← Torna a: {meta.titolo.split(' a ')[0]} a Roma
+      </a>
+      <a href={`/dentisti-roma-${meta.slugZona}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
+        👉 Dentisti a Roma {meta.zona}
+      </a>
+      <a href={`/diagnostica-roma-${meta.slugZona}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
+        👉 Diagnostica a Roma {meta.zona}
+      </a>
+    </div>
+  </div>
+</section>
 {/* CTA PER PROFESSIONISTI NEL QUARTIERE */}
 <div style={{ 
   backgroundColor: '#0f172a', 
