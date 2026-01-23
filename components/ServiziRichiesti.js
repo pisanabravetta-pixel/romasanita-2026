@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 export default function ServiziRichiesti() {
 const servizi = [
     { 
-      titolo: "Fisioterapia", 
-      desc: "Riabilitazione e massoterapia", 
-      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=400&q=75", 
-      link: "/fisioterapisti-roma" 
+      titolo: "Ginecologi", 
+      desc: "Visite specialistiche e prevenzione", 
+      img: "https://images.unsplash.com/photo-1579152276503-6862b740510a?auto=format&fit=crop&w=400&q=75", 
+      link: "/ginecologi-roma" 
     },
     { 
-      titolo: "Oculista", 
-      desc: "Esame della vista completo", 
-      img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=400&q=75", 
-      link: "/oculisti-roma" 
+      titolo: "Dentisti", 
+      desc: "Igiene, impianti e ortodonzia", 
+      img: "https://images.unsplash.com/photo-1629909608115-f94f50c4f5b1?auto=format&fit=crop&w=400&q=75", 
+      link: "/dentisti-roma" 
     },
     { 
-      titolo: "Psicologo", 
-      desc: "Consulenza e supporto", 
-      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&w=400&q=75", 
-      link: "/psicologi-roma" 
+      titolo: "Analisi del Sangue", 
+      desc: "Check-up e prelievi in farmacia", 
+      img: "https://images.unsplash.com/photo-1579152276743-69018e614481?auto=format&fit=crop&w=400&q=75", 
+      link: "/farmacie-roma" 
     },
     { 
       titolo: "Cardiologo", 
