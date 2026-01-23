@@ -506,8 +506,7 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
-
-    {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
+  {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
       <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
