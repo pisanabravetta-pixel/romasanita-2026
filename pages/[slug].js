@@ -62,11 +62,10 @@ export default function PaginaQuartiereDinamica() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-     <Head>
-  <title>{`Farmacie a Roma ${quartiereNome} – Elenco e contatti | ServiziSalute`}</title>
-  <meta name="description" content={`Scopri tutte le farmacie nel quartiere ${quartiereNome} a Roma. Contatti, servizi e mappa per trovare rapidamente la farmacia più vicina.`} />
+   <Head>
+  <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute`}</title>
+  <meta name="description" content={`Scopri tutte le strutture di ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti, servizi e mappa per trovare rapidamente il servizio più vicino.`} />
 
-  {/* FAQ JSON-LD SPECIFICA PER QUARTIERE */}
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -76,26 +75,18 @@ export default function PaginaQuartiereDinamica() {
         "mainEntity": [
           {
             "@type": "Question",
-            "name": `Come trovare una farmacia a Roma ${quartiereNome}?`,
+            "name": `Come trovare ${meta.nomeSemplice.toLowerCase()} a Roma ${meta.zona}?`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `È possibile consultare l’elenco delle farmacie nel quartiere ${quartiereNome} e utilizzare la mappa per individuare quella più vicina alla propria posizione.`
+              "text": `È possibile consultare l’elenco di ${meta.nomeSemplice.toLowerCase()} nel quartiere ${meta.zona} e utilizzare la mappa per individuare la struttura più vicina.`
             }
           },
           {
             "@type": "Question",
-            "name": `Le farmacie del quartiere ${quartiereNome} offrono servizi sanitari aggiuntivi?`,
+            "name": `Le strutture di ${meta.zona} offrono servizi sanitari aggiuntivi?`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `Molte farmacie a Roma ${quartiereNome} offrono servizi come autoanalisi, test rapidi e consulenza professionale.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": `Posso contattare direttamente le farmacie di ${quartiereNome}?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Sì, ogni farmacia dispone di contatti diretti per richiedere informazioni su orari e servizi.`
+              "text": `Molte strutture a Roma ${meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale.`
             }
           }
         ]
@@ -262,12 +253,12 @@ export default function PaginaQuartiereDinamica() {
   <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
     <p style={{ fontWeight: '800', color: '#2c5282', marginBottom: '12px', fontSize: '14px', textTransform: 'uppercase' }}>Link Utili e Correlati:</p>
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <a href={`/${meta.categoria}-roma`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
-        ← Torna a: {meta.titolo.split(' a ')[0]} a Roma
-      </a>
-      <a href={`/dentisti-roma-${meta.slugZona}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
-        👉 Dentisti a Roma {meta.zona}
-      </a>
+     <a href={`/${meta.cat}-roma`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
+  ← Torna a: {meta.nomeSemplice} a Roma
+</a>
+<a href={`/dentisti-roma-${slug?.split('-').pop()}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
+  👉 Dentisti a Roma {meta.zona}
+</a>
       <a href={`/diagnostica-roma-${meta.slugZona}`} style={{ color: '#059669', fontWeight: '700', textDecoration: 'none', fontSize: '15px' }}>
         👉 Diagnostica a Roma {meta.zona}
       </a>
@@ -317,7 +308,6 @@ export default function PaginaQuartiereDinamica() {
               <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>← Torna a {meta.nomeSemplice} a Roma</a>
             </div>
           </div>
-        </section>
       </main>
 
       <Footer />
