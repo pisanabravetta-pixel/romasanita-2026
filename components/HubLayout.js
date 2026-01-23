@@ -147,6 +147,18 @@ export default function HubLayout({
     )}
   </div>
 </div>
+{/* MINI TESTO SEO SOTTO LA MAPPA - OBBLIGATORIO (1 SOLA FRASE) */}
+<p style={{ 
+  fontSize: '14px', 
+  color: '#64748b', 
+  textAlign: 'center', 
+  marginTop: '10px', 
+  marginBottom: '30px', 
+  fontStyle: 'italic',
+  lineHeight: '1.5'
+}}>
+  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong> nei diversi quartieri della città, aiutando a individuare rapidamente le strutture più vicine alla tua posizione.
+</p>
        {/* LISTA BOX ANNUNCI (Con controllo lista vuota) */}
         <div style={{ display: 'block' }}>
           {loading ? (
