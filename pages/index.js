@@ -510,23 +510,48 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
-        <section style={{ padding: '30px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
-  <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-    <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '15px', color: '#1e293b', textAlign: 'center' }}>
-      Servizi sanitari a Roma per quartiere
-    </h3>
+       {/* SEZIONE QUARTIERI UNIFORME - HOME */}
+<section style={{ padding: '50px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
+  <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+      <h3 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '900', marginBottom: '10px' }}>
+        Cerca per Quartiere
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '16px', fontWeight: '500' }}>
+        Trova rapidamente specialisti e farmacie nelle zone più cercate di Roma
+      </p>
+    </div>
+
     <div style={{ 
-      display: 'flex', 
-      flexWrap: 'wrap', 
-      justifyContent: 'center', 
-      gap: '15px',
-      fontSize: '14px' 
+      display: 'grid', 
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+      gap: '15px' 
     }}>
-      <a href="/farmacie-roma/prati" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Farmacie Prati</a>
-      <a href="/farmacie-roma/eur" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Farmacie EUR</a>
-      <a href="/dentisti-roma/parioli" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Dentisti Parioli</a>
-      <a href="/dermatologi-roma/centro-storico" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Dermatologi Centro</a>
-      <a href="/diagnostica-roma/ostia" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '600', border: '1px solid #cbd5e1', padding: '5px 12px', borderRadius: '20px', backgroundColor: '#fff' }}>Centri Diagnostici Ostia</a>
+      {[
+        "Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", 
+        "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"
+      ].map((q) => (
+        <a 
+          key={q} 
+          href={`/quartieri-roma#${q.toLowerCase()}`} // O link diretto alla pagina hub quartieri
+          style={{ 
+            backgroundColor: 'white', 
+            padding: '15px', 
+            borderRadius: '16px', 
+            textAlign: 'center',
+            color: '#0d9488',
+            fontWeight: '800',
+            textDecoration: 'none',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => { e.target.style.transform = 'translateY(-3px)'; e.target.style.borderColor = '#0d9488'; }}
+          onMouseLeave={(e) => { e.target.style.transform = 'translateY(0)'; e.target.style.borderColor = '#e2e8f0'; }}
+        >
+          📍 {q}
+        </a>
+      ))}
     </div>
   </div>
 </section>
