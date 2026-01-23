@@ -99,13 +99,12 @@ export default function HubLayout({
           </p>
         </div>
 
-        {/* TESTO SEO INIZIALE (Aggiunto dagli Appunti) */}
-        <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
-          <p style={{ margin: '0 0 15px 0' }}>
-            Su ServiziSalute trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, suddivisi per quartiere e facilmente contattabili. 
-            Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti, 
-            per aiutarti a trovare rapidamente la soluzione più vicina alle tue esigenze.
-          </p>
+    {/* TESTO SEO INIZIALE OTTIMIZZATO */}
+<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+  <p style={{ margin: '0 0 15px 0' }}>
+    Su <strong>ServiziSalute</strong> trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, con una copertura capillare che include quartieri storici e zone residenziali come <strong>Prati, EUR, Parioli, San Giovanni, Monteverde e Roma Nord</strong>. 
+    Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti per aiutarti a trovare rapidamente la soluzione più vicina nel tuo quadrante urbano.
+  </p>
           <p style={{ margin: 0 }}>
             I professionisti e le strutture di Roma presenti nel portale offrono servizi d'eccellenza, consulenze specialistiche 
             e supporto diagnostico all'avanguardia. Attraverso il nostro sistema puoi individuare la struttura giusta nel tuo quartiere 
@@ -219,19 +218,14 @@ export default function HubLayout({
           boxShadow: theme.shadows.premium 
         }}>
           
-          {/* TESTO SEO CONCLUSIVO */}
-          <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
-            {titolo} a Roma: servizi, orari e informazioni utili
-          </h2>
-          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '15px' }}>
-            Roma è una città con una rete capillare di strutture sanitarie e professionisti distribuiti in tutti i quartieri, dal centro storico alle zone periferiche. 
-            Molte delle realtà presenti nel nostro portale offrono servizi aggiuntivi come test diagnostici rapidi, supporto per terapie croniche e consulenze personalizzate. 
-            Su ServiziSalute puoi confrontare diverse opzioni per <strong>{titolo.toLowerCase()} a Roma</strong> e scegliere quella più comoda in base alla zona e ai servizi offerti.
-          </p>
-          <p style={{ color: '#475569', lineHeight: '1.7', marginBottom: '30px' }}>
-            È sempre consigliato verificare direttamente con la struttura gli orari di apertura e i turni aggiornati, soprattutto nei giorni festivi o notturni. 
-            Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale.
-          </p>
+       {/* TESTO SEO INIZIALE OTTIMIZZATO */}
+<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+  <p style={{ margin: '0 0 15px 0' }}>
+    Su <strong>ServiziSalute</strong> trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, con una copertura capillare che include quartieri storici e zone residenziali come <strong>Prati, EUR, Parioli, San Giovanni, Monteverde e Roma Nord</strong>. 
+    Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti per aiutarti a trovare rapidamente la soluzione più vicina nel tuo quadrante urbano.
+  </p>
+  {/* ... resto del testo invariato ... */}
+</div> 
 {/* RIGA DI SEPARAZIONE TRA SEO E MINI SEO */}
 <div style={{ 
   height: '1px', 
