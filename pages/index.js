@@ -78,76 +78,80 @@ const eseguiRicerca = () => {
 return (
   <>
   <Head>
-      <title key="title">Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-      <meta name="description" content="Trova rapidamente farmacie di turno, dentisti, centri diagnostici e specialisti a Roma. Cerca per quartiere e contatta direttamente i migliori professionisti sanitari." />
-      <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title key="title">Sanità Roma: Farmacie, Medici e Diagnostica | Gennaio 2026 - ServiziSalute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="Trova farmacie di turno, dentisti e centri diagnostici a Roma. Cerca per quartiere (Prati, EUR, Parioli) e contatta direttamente i migliori specialisti sanitari a Roma aggiornati a Gennaio 2026." />
+  <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-      {/* --- SCHEMA SEO INTEGRATO: ORGANIZATION + SEARCH + FAQ --- */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+  {/* --- SCHEMA SEO INTEGRATO: ORGANIZATION + SEARCH + FAQ --- */}
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify([
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "ServiziSalute Roma",
+          "url": "https://servizisalute.com",
+          "logo": "https://servizisalute.com/favicon.ico",
+          "sameAs": [
+            "https://www.facebook.com/servizisaluteroma", // Aggiungi i tuoi social se li hai
+            "https://www.instagram.com/servizisaluteroma"
+          ],
+          "description": "Il portale della sanità romana per trovare farmacie, dentisti e specialisti.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Roma",
+            "addressRegion": "RM",
+            "addressCountry": "IT"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "url": "https://servizisalute.com",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://servizisalute.com/visite-specialistiche-roma?cerca={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
             {
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "ServiziSalute Roma",
-              "url": "https://servizisalute.com",
-              "logo": "https://servizisalute.com/favicon.ico",
-              "description": "Il portale della sanità romana per trovare farmacie, dentisti e specialisti.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Roma",
-                "addressRegion": "RM",
-                "addressCountry": "IT"
+              "@type": "Question",
+              "name": "Come trovo una farmacia di turno a Roma su ServiziSalute?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Basta inserire 'Farmacia' e il tuo quartiere (es. Prati o EUR) nella barra di ricerca su ServiziSalute. Ti mostreremo le strutture più vicine con orari e riferimenti diretti."
               }
             },
             {
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "url": "https://servizisalute.com",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://servizisalute.com/visite-specialistiche-roma?cerca={search_term_string}",
-                "query-input": "required name=search_term_string"
+              "@type": "Question",
+              "name": "I contatti dei medici a Roma sono diretti?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sì, ServiziSalute non è un intermediario. Puoi chiamare direttamente lo studio medico a Roma o cliccare sul tasto WhatsApp per parlare con la segreteria del professionista."
               }
             },
             {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "Come trovo una farmacia di turno a Roma su ServiziSalute?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Basta inserire 'Farmacia' e il tuo quartiere nella barra di ricerca in alto su ServiziSalute. Ti mostreremo le strutture più vicine con i riferimenti diretti."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "I contatti dei medici a Roma sono diretti?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Sì, ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o accedere al sito ufficiale del professionista."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "È possibile prenotare una visita specialistica online?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Certamente. Molti professionisti a Roma presenti sul portale offrono il link diretto alla loro agenda digitale o permettono la prenotazione rapida tramite WhatsApp."
-                  }
-                }
-              ]
+              "@type": "Question",
+              "name": "Come prenotare una visita specialistica a Roma?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Puoi filtrare per branca medica (Oculista, Cardiologo, Psicologo) e quartiere di Roma. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico per fissare l'appuntamento."
+              }
             }
-          ]),
-        }}
-      />
-    </Head>
+          ]
+        }
+      ]),
+    }}
+  />
+</Head>
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
        
