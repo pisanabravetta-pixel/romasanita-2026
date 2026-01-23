@@ -5,7 +5,7 @@ const servizi = [
     { 
       titolo: "Ginecologi", 
       desc: "Visite specialistiche e prevenzione", 
-      img: "https://images.unsplash.com/photo-1584362917165-526a968579e8?q=80&w=400", 
+      img: "https://plus.unsplash.com/premium_photo-1661281397737-9b5d75b52beb?q=80&w=400", 
       link: "/ginecologi-roma" 
     },
     { 
