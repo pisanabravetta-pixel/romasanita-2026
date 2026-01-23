@@ -510,19 +510,7 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
-       <section style={{ padding: '50px 20px', backgroundColor: '#ffffff' }}>
-  <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-    <h2 style={{ fontSize: '26px', fontWeight: '900', color: '#1e293b', marginBottom: '20px' }}>
-      Servizi sanitari a Roma: la tua guida alla salute locale
-    </h2>
-    <div style={{ color: '#475569', lineHeight: '1.7', fontSize: '16px' }}>
-      <p>
-        <strong>ServiziSalute</strong> è il portale nato per semplificare l'accesso alla sanità nella Capitale. 
-        Aiutiamo cittadini e famiglie a individuare rapidamente farmacie, studi medici e centri diagnostici, offrendo una panoramica aggiornata delle opportunità disponibili sul territorio, da <strong>Prati</strong> all'<strong>EUR</strong>, passando per <strong>Ostia</strong> e <strong>San Giovanni</strong>.
-      </p>
-    </div>
-  </div>
-</section>
+       
    <section style={{ padding: '40px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
   <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
     <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#0f172a' }}>
