@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 
 export default function ServiziRichiesti() {
-const servizi = [
+  const servizi = [
     { 
       titolo: "Ginecologi", 
       desc: "Visite specialistiche e prevenzione", 
-      img: "https://plus.unsplash.com/premium_photo-1661281397737-9b5d75b52beb?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400", 
       link: "/ginecologi-roma" 
     },
     { 
       titolo: "Dentisti", 
       desc: "Igiene, impianti e ortodonzia", 
-      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400", 
       link: "/dentisti-roma" 
     },
     { 
       titolo: "Analisi del Sangue", 
       desc: "Check-up e prelievi in farmacia", 
-      img: "https://images.unsplash.com/photo-1579152276503-6862b740510a?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400", 
       link: "/farmacie-roma" 
     },
     { 
       titolo: "Cardiologo", 
       desc: "ECG e controllo pressione", 
-      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=400", 
+      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400", 
       link: "/cardiologi-roma" 
     }
   ];
@@ -34,12 +34,12 @@ const servizi = [
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '24px', fontWeight: '900' }}>Servizi più richiesti</h2>
         
-        {/* MOBILE - RIPRISTINATO ORIGINALE CON LINK */}
+        {/* MOBILE */}
         <div className="solo-mobile-servizi">
           <div className="box-rinforzato-servizi">
             <div style={{ position: 'relative', height: '240px' }}>
               <a href={servizi[idx].link}>
-                <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={servizi[idx].titolo} />
+                <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }} alt={servizi[idx].titolo} />
               </a>
               <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx">‹</button>
               <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} className="freccia-nav dx">›</button>
@@ -53,7 +53,7 @@ const servizi = [
           </div>
         </div>
 
-        {/* PC - RIPRISTINATO ORIGINALE CON LINK */}
+        {/* PC */}
         <div className="solo-pc-servizi">
           {servizi.map((s, i) => (
             <a key={i} href={s.link} style={{ textDecoration: 'none' }}>
@@ -70,7 +70,8 @@ const servizi = [
       </div>
 
       <style jsx>{`
-        .box-rinforzato-servizi { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; }
+        .box-rinforzato-servizi { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; transition: transform 0.2s; }
+        .box-rinforzato-servizi:hover { transform: translateY(-5px); }
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
         
