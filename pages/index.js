@@ -510,6 +510,27 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
+        {/* --- NUOVO BLOCCO SEO POSIZIONATO DOPO I SERVIZI --- */}
+<section style={{ padding: '50px 20px', backgroundColor: '#ffffff' }}>
+  <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+    <h2 style={{ fontSize: '28px', fontWeight: '900', color: '#1e293b', marginBottom: '20px', textAlign: 'center' }}>
+      Servizi sanitari a Roma: trova strutture e professionisti vicino a te
+    </h2>
+    <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
+      <p style={{ marginBottom: '15px' }}>
+        <strong>ServiziSalute</strong> è il portale dedicato ai <strong>servizi sanitari a Roma</strong>, pensato per aiutare cittadini e famiglie a trovare rapidamente <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, studi medici, centri diagnostici e visite specialistiche vicino alla propria zona.
+      </p>
+      <p style={{ marginBottom: '15px' }}>
+        Attraverso una ricerca per categoria e quartiere, è possibile individuare strutture sanitarie presenti in tutta la città di Roma, con contatti diretti, mappa e informazioni essenziali.
+        Il sito raccoglie servizi sanitari distribuiti nei principali quartieri come <strong>Prati, EUR, Parioli, San Giovanni, Tiburtina, Monteverde e Ostia</strong>, offrendo una panoramica chiara e aggiornata delle opportunità disponibili sul territorio.
+      </p>
+      <p>
+        Che tu stia cercando una farmacia a Roma, uno studio dentistico, un centro di diagnostica o una visita specialistica, ServiziSalute ti permette di orientarti facilmente tra le strutture presenti nella tua zona.
+        Il portale è pensato anche per i professionisti sanitari, che possono aumentare la propria visibilità online e farsi trovare da utenti realmente interessati ai servizi offerti.
+      </p>
+    </div>
+  </div>
+</section>
    <section style={{ padding: '40px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
   <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
     <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#0f172a' }}>
