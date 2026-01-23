@@ -100,10 +100,9 @@ export default function HubLayout({
         </div>
 
    {/* --- 1. MINI TESTO SEO (Sotto H1/H2) --- */}
-<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '15px', lineHeight: '1.6' }}>
+<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
   <p>
-    In questa pagina trovi l’elenco dei servizi di <strong>{titolo} a Roma</strong>, pensato per aiutare cittadini e famiglie a individuare rapidamente strutture e professionisti sanitari presenti sul territorio. 
-    Grazie alla suddivisione per quartiere, puoi trovare facilmente i servizi disponibili a <strong>Prati, EUR, Parioli, San Giovanni, Tiburtina</strong> e altre aree della Capitale.
+    Benvenuto su <strong>ServiziSalute</strong>, il portale dedicato alla sanità locale. In questa sezione puoi consultare l'elenco completo di <strong>{titolo} a Roma</strong>, con schede dettagliate che includono orari, indirizzi e tasti di contatto rapido. Il nostro obiettivo è semplificare l'accesso alle cure, mettendo in contatto diretto i cittadini con i migliori professionisti della Capitale, senza attese o intermediari.
   </p>
 </div>
      {/* CERCA PER QUARTIERE (Versione Automatica Centralizzata) */}
@@ -216,37 +215,24 @@ export default function HubLayout({
  {/* --- SEZIONE SEO APPROFONDIMENTO E MINI SEO --- */}
 <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
   
-  {/* TESTO SEO PRINCIPALE (MIX OTTIMIZZATO) */}
+<section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0' }}>
   <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
-    {titolo} a Roma: servizi, orari e informazioni utili
+    {titolo} a Roma: guida alla scelta nel tuo quartiere
   </h2>
   
   <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
     <p style={{ marginBottom: '15px' }}>
-      Roma vanta una rete capillare di presidi sanitari distribuiti dal centro storico alle zone periferiche. Su <strong>ServiziSalute</strong> trovi l'elenco completo suddiviso per zone, incluse <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <strong>EUR</strong>, <strong>Parioli</strong>, <strong>San Giovanni</strong>, <strong>Monteverde</strong> e <strong>Roma Nord</strong>. 
-      Oltre alle prestazioni standard, molte strutture offrono servizi di autoanalisi, test diagnostici rapidi e consulenze specializzate.
+      Roma vanta una rete sanitaria complessa che si estende dal centro storico fino alle zone periferiche. Per facilitare la tua ricerca, abbiamo organizzato i servizi di <strong>{titolo.toLowerCase()} a Roma</strong> per aree strategiche, permettendoti di individuare professionisti a <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <a href={`/${categoria}-roma-eur`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>EUR</a>, <strong>Parioli</strong>, <strong>San Giovanni</strong> e <strong>Monteverde</strong>.
     </p>
 
     <p style={{ marginBottom: '15px' }}>
-      Puoi confrontare le diverse opzioni e scegliere la più comoda in base ai servizi offerti, consultando anche la nostra <a href="/guide/farmacie-turno-roma-come-funziona" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>guida alle urgenze a Roma</a> per necessità notturne o festive. 
-      Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale senza intermediari.
+      Oltre alle prestazioni standard, molte delle strutture elencate offrono servizi di autoanalisi, test diagnostici rapidi e telemedicina. Se non sai come orientarti tra le diverse opzioni disponibili, ti consigliamo di leggere la nostra guida su <a href="/guide/trovare-servizio-sanitario-roma" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>come trovare il miglior servizio sanitario a Roma</a>, dove troverai consigli utili su ticket, esenzioni e scelta del medico.
     </p>
 
-    <p style={{ marginBottom: '30px' }}>
-      Ti consigliamo di verificare sempre gli orari aggiornati tramite i tasti di contatto diretto (Telefono o WhatsApp). La presenza di servizi sanitari distribuiti nei diversi quartieri consente di accedere facilmente alle prestazioni mediche più richieste vicino alla propria area di residenza.
-    </p>
-  </div>
-
-  {/* RIGA DI SEPARAZIONE DISCRETA */}
-  <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '60%', margin: '20px auto' }} />
-
-  {/* MINI TESTO SEO (FOOTER DEL BLOCCO) */}
-  <div style={{ padding: '10px 0' }}>
-    <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6', textAlign: 'center', fontStyle: 'italic' }}>
-      {testoMiniSEO}
+    <p>
+      Ti ricordiamo di verificare sempre la disponibilità e gli orari aggiornati (specialmente per i turni festivi) utilizzando i tasti <strong>Chiama</strong> o <strong>WhatsApp</strong> presenti in ogni scheda. Questo garantisce un contatto immediato con la segreteria o lo specialista di riferimento nel tuo quadrante urbano.
     </p>
   </div>
-
 </section>
 {/* RIGA DI SEPARAZIONE TRA SEO E FAQ */}
 <div style={{ 
