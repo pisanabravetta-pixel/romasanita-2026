@@ -568,7 +568,7 @@ return (
         </div>
       </section>
 
-    {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
+  {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
       <section style={{ padding: '60px 0', background: '#f8fbff' }}>
         <div className="container" style={{ 
           background: 'white', padding: '40px', borderRadius: '20px', border: '1px solid #e1e8f0',
@@ -578,25 +578,24 @@ return (
             ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
           </h2>
           <p style={{ marginBottom: '20px' }}>
-            <p style={{ marginBottom: '20px' }}>
-  <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, <a href="/dentisti-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>dentisti</a>, <a href="/diagnostica-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>centri diagnostici</a> e visite specialistiche nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
-</p>
+            <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, <a href="/dentisti-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>dentisti</a>, <a href="/diagnostica-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>centri diagnostici</a> e visite specialistiche nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
+          </p>
           
           <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
             Trova Farmacie e Specialisti nei quartieri di Roma
           </h3>
-         <p style={{ marginBottom: '20px' }}>
-  Che tu stia cercando una <strong>farmacia di turno a <a href="/farmacie-roma-prati" style={{color: '#1e3a8a', textDecoration: 'none'}}>Roma Prati</a></strong>, un <strong>dentista all'<a href="/dentisti-roma-eur" style={{color: '#1e3a8a', textDecoration: 'none'}}>EUR</a></strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
-</p>
+          <p style={{ marginBottom: '20px' }}>
+            Che tu stia cercando una <strong>farmacia di turno a <a href="/farmacie-roma-prati" style={{color: '#1e3a8a', textDecoration: 'none'}}>Roma Prati</a></strong>, un <strong>dentista all'<a href="/dentisti-roma-eur" style={{color: '#1e3a8a', textDecoration: 'none'}}>EUR</a></strong> o un centro per <strong>analisi cliniche a Roma Nord</strong>, ServiziSalute ti mette in contatto diretto con le strutture, senza intermediari. La nostra missione è rendere la salute accessibile e veloce per tutti i cittadini romani, aggregando in un unico posto laboratori di analisi, studi medici e parafarmacie sempre aggiornati.
+          </p>
           
           <p style={{ fontSize: '14px', borderTop: '1px solid #eee', paddingTop: '15px', color: '#64748b' }}>
-            Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600'}}>Farmacie Roma</a>, 
+            Esplora le nostre categorie principali: <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: '600', textDecoration: 'none'}}>Farmacie Roma</a>, 
             studi dentistici specializzati, laboratori di diagnostica e le migliori <strong>visite specialistiche Roma</strong> per ogni branca medica.
           </p>
         </div>
       </section>
 
-    {/* SEZIONE FAQ - AGGIORNATA A 3 DOMANDE PER COERENZA V2 */}
+      {/* SEZIONE FAQ - AGGIORNATA A 3 DOMANDE PER COERENZA V2 */}
       <section style={{ padding: '40px 0', background: 'white' }}>
         <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
           <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
@@ -614,7 +613,6 @@ return (
               <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
             </div>
 
-            {/* TERZA FAQ AGGIUNTA */}
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
               <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>È possibile prenotare una visita specialistica online?</h4>
               <p style={{ color: '#64748b' }}>Sì, molti professionisti presenti sul portale offrono il link diretto alla loro agenda digitale o permettono la prenotazione rapida tramite WhatsApp.</p>
