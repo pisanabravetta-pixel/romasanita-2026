@@ -22,55 +22,41 @@ export default function HubLayout({
 }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
-     <Head>
-  <title>{titolo === "Home" ? "Servizi Sanitari Roma: Farmacie, Medici e Diagnostica | ServiziSalute - V2" : (titolo.includes("Roma") ? titolo : `${titolo} a Roma: Studi e Urgenze | Gennaio 2026`)}</title>
-  <meta name="description" content={descrizioneMeta} />
-
-  {/* PUNTO ESATTO: INIZIO SCHEMA FAQ DINAMICO */}
   <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": `Come trovare ${titolo.toLowerCase()} a Roma vicino a me?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Su ServiziSalute puoi cercare ${titolo.toLowerCase()} a Roma filtrando per quartiere. Ogni annuncio include indirizzo e contatti diretti per raggiungere facilmente la struttura più vicina nel tuo quadrante urbano.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": `Quali servizi offrono ${titolo.toLowerCase()} a Roma?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Oltre alle prestazioni standard, molte strutture a Roma offrono servizi accessori (come test rapidi o consulenze specialistiche) indicati direttamente nella scheda del professionista.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": `Come sapere se la struttura è aperta oggi a Roma?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Gli orari possono variare in base al quartiere. Il modo più rapido è utilizzare i tasti Chiama o WhatsApp presenti su ServiziSalute per parlare direttamente con la segreteria o il titolare.`
-            }
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `Come trovare servizi di ${titolo} a Roma?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `È possibile consultare l’elenco dei servizi di ${titolo} a Roma suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.`
           }
-        ]
-      })
-    }}
-  />
-  {/* FINE SCHEMA FAQ DINAMICO */}
-
-  {schemas && (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.medical) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas.faq) }} />
-    </>
-  )}
-</Head>
+        },
+        {
+          "@type": "Question",
+          "name": `I servizi di ${titolo} a Roma sono disponibili in tutti i quartieri?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `I servizi di ${titolo} sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `È possibile contattare direttamente le strutture di ${titolo}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Sì, ogni struttura elencata mette a disposizione contatti diretti per richiedere informazioni su servizi, orari e disponibilità.`
+          }
+        }
+      ]
+    })
+  }}
+/>
       {/* TOP BAR INTEGRALE */}
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
         {testoTopBar}
@@ -259,36 +245,36 @@ export default function HubLayout({
   {/* RIGA DI SEPARAZIONE TRA SEO E FAQ */}
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '80%', margin: '30px auto' }} />
 
-  {/* FAQ OTTIMIZZATE */}
+{/* FAQ OTTIMIZZATE - MATCH PERFETTO CON SCHEMA JSON-LD */}
   <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
     Domande Frequenti su {titolo} a Roma
   </h3>
   
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
     <div>
       <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        1. Come trovare {titolo.toLowerCase()} a Roma vicino a me?
+        1. Come trovare servizi di {titolo} a Roma?
       </p>
       <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        Su ServiziSalute puoi cercare {titolo.toLowerCase()} a Roma filtrando per quartiere. Ogni annuncio include indirizzo e contatti diretti per raggiungere facilmente la struttura più vicina nel tuo quadrante urbano.
+        È possibile consultare l’elenco dei servizi di <strong>{titolo} a Roma</strong> suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.
       </p>
     </div>
 
     <div>
       <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        2. Quali servizi offrono {titolo.toLowerCase()} a Roma?
+        2. I servizi di {titolo} a Roma sono disponibili in tutti i quartieri?
       </p>
       <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        Oltre alle prestazioni standard, molte strutture a Roma offrono servizi accessori (come test rapidi o consulenze specialistiche) indicati direttamente nella scheda del professionista. Ti consigliamo di chiamare per confermare la disponibilità del servizio specifico.
+        I servizi di <strong>{titolo}</strong> sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.
       </p>
     </div>
 
     <div>
       <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        3. Come sapere se la struttura è aperta oggi a Roma?
+        3. È possibile contattare direttamente le strutture di {titolo}?
       </p>
       <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        Gli orari possono variare in base al quartiere e alla giornata (festivi o turni). Il modo più rapido è utilizzare i tasti <strong>Chiama</strong> o <strong>WhatsApp</strong> presenti su ServiziSalute per parlare direttamente con la segreteria o il titolare.
+        Sì, ogni struttura elencata mette a disposizione contatti diretti (Telefono o WhatsApp) per richiedere informazioni su servizi, orari e disponibilità.
       </p>
     </div>
   </div>
