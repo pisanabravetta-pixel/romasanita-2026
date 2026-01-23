@@ -510,49 +510,37 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
-       {/* SEZIONE QUARTIERI UNIFORME - HOME */}
-<section style={{ padding: '50px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
-  <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
-    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-      <h3 style={{ color: '#0f172a', fontSize: '28px', fontWeight: '900', marginBottom: '10px' }}>
-        Cerca per Quartiere
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '16px', fontWeight: '500' }}>
-        Trova rapidamente specialisti e farmacie nelle zone più cercate di Roma
-      </p>
+    <section style={{ padding: '40px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
+  <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
+    <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#0f172a' }}>
+      Servizi sanitari a Roma per quartiere
+    </h3>
+    
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px', marginBottom: '25px' }}>
+      {/* 4 Link specifici come da appunti */}
+      <a href="/farmacie-roma/prati" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie Prati</a>
+      <span style={{ color: '#cbd5e1' }}>•</span>
+      <a href="/dentisti-roma/parioli" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dentisti Parioli</a>
+      <span style={{ color: '#cbd5e1' }}>•</span>
+      <a href="/farmacie-roma/eur" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie EUR</a>
+      <span style={{ color: '#cbd5e1' }}>•</span>
+      <a href="/dermatologi-roma/san-giovanni" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dermatologi San Giovanni</a>
     </div>
 
-    <div style={{ 
-      display: 'grid', 
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-      gap: '15px' 
+    {/* Il link che apre la pagina di tutti i quartieri che mi hai postato sopra */}
+    <a href="/quartieri-roma" style={{ 
+      display: 'inline-block',
+      padding: '12px 24px', 
+      backgroundColor: '#0d9488', 
+      color: 'white', 
+      borderRadius: '50px', 
+      textDecoration: 'none', 
+      fontWeight: '800',
+      fontSize: '14px',
+      boxShadow: '0 4px 12px rgba(13, 148, 136, 0.2)'
     }}>
-      {[
-        "Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", 
-        "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"
-      ].map((q) => (
-        <a 
-          key={q} 
-          href={`/quartieri-roma#${q.toLowerCase()}`} // O link diretto alla pagina hub quartieri
-          style={{ 
-            backgroundColor: 'white', 
-            padding: '15px', 
-            borderRadius: '16px', 
-            textAlign: 'center',
-            color: '#0d9488',
-            fontWeight: '800',
-            textDecoration: 'none',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => { e.target.style.transform = 'translateY(-3px)'; e.target.style.borderColor = '#0d9488'; }}
-          onMouseLeave={(e) => { e.target.style.transform = 'translateY(0)'; e.target.style.borderColor = '#e2e8f0'; }}
-        >
-          📍 {q}
-        </a>
-      ))}
-    </div>
+      Visualizza tutti i quartieri →
+    </a>
   </div>
 </section>
   {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
