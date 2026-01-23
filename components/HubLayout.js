@@ -99,18 +99,13 @@ export default function HubLayout({
           </p>
         </div>
 
-    {/* TESTO SEO INIZIALE OTTIMIZZATO */}
-<div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
-  <p style={{ margin: '0 0 15px 0' }}>
-    Su <strong>ServiziSalute</strong> trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, con una copertura capillare che include quartieri storici e zone residenziali come <strong>Prati, EUR, Parioli, San Giovanni, Monteverde e Roma Nord</strong>. 
-    Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti per aiutarti a trovare rapidamente la soluzione più vicina nel tuo quadrante urbano.
+   <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
+  <p>
+    Trovare una <strong>farmacia a Roma</strong> aperta o vicina alla propria posizione è essenziale per la gestione della salute quotidiana. 
+    I professionisti e le strutture presenti su <strong>ServiziSalute</strong> offrono servizi d'eccellenza, dalla dispensazione di farmaci a consulenze specialistiche e supporto diagnostico all'avanguardia. 
+    Attraverso il nostro sistema puoi individuare la struttura giusta nel tuo quartiere e contattarla direttamente, senza intermediari e in pochi secondi.
   </p>
-          <p style={{ margin: 0 }}>
-            I professionisti e le strutture di Roma presenti nel portale offrono servizi d'eccellenza, consulenze specialistiche 
-            e supporto diagnostico all'avanguardia. Attraverso il nostro sistema puoi individuare la struttura giusta nel tuo quartiere 
-            e contattarla direttamente senza intermediari.
-          </p>
-        </div>
+</div>
      {/* CERCA PER QUARTIERE (Versione Automatica Centralizzata) */}
 <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
   <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px', color: '#2c5282' }}>Cerca per Quartiere:</h2>
@@ -218,23 +213,22 @@ export default function HubLayout({
           boxShadow: theme.shadows.premium 
         }}>
           
-     {/* TESTO SEO MIX OTTIMIZZATO - SOPRA LE FAQ */}
-<section style={{ marginBottom: '30px' }}>
+ <section style={{ marginBottom: '30px' }}>
   <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2c5282', marginBottom: '15px' }}>
-    {titolo} a Roma: servizi, orari e informazioni utili
+    Farmacie a Roma: servizi, orari e informazioni utili
   </h2>
   
   <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '15px' }}>
-    Roma è una città con una rete capillare di strutture sanitarie e professionisti distribuiti in tutti i quartieri, dal centro storico alle zone periferiche. Su <strong>ServiziSalute</strong> trovi un elenco aggiornato di <strong>{titolo} a Roma</strong>, con una copertura che include zone residenziali come <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <strong>EUR</strong>, <strong>Parioli</strong>, <strong>San Giovanni</strong>, <strong>Monteverde</strong> e <strong>Roma Nord</strong>. 
-    Ogni struttura presente sulla piattaforma fornisce informazioni chiare su servizi disponibili, orari di apertura e contatti diretti per aiutarti a trovare rapidamente la soluzione più vicina nel tuo quadrante urbano.
+    Roma vanta una rete capillare di presidi sanitari distribuiti dal centro storico alle zone periferiche. Su ServiziSalute trovi l'elenco completo suddiviso per zone, incluse <a href="/farmacie-roma-prati" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <strong>EUR</strong>, <strong>Parioli</strong>, <strong>San Giovanni</strong>, <strong>Monteverde</strong> e <strong>Roma Nord</strong>. 
+    Oltre alla vendita di farmaci, molte strutture offrono servizi di autoanalisi, test antigenici, prodotti galenici e telemedicina.
   </p>
 
   <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '15px' }}>
-    Molte delle realtà presenti nel nostro portale offrono servizi aggiuntivi come test diagnostici rapidi, supporto per terapie croniche e consulenze personalizzate. Su ServiziSalute puoi confrontare diverse opzioni per <strong>{titolo.toLowerCase()} a Roma</strong> e scegliere quella più comoda in base alla zona e ai servizi offerti, consultando anche la nostra <a href="/guide/farmacie-turno-roma-come-funziona" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>guida alle farmacie di turno e urgenze</a>.
+    Puoi confrontare diverse opzioni e scegliere la più comoda in base ai servizi offerti, consultando anche la nostra <a href="/guide/farmacie-turno-roma-come-funziona" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>guida alle farmacie di turno a Roma</a> per le emergenze notturne o festive.
   </p>
 
   <p style={{ color: '#475569', lineHeight: '1.8', marginBottom: '30px' }}>
-    È sempre consigliato verificare direttamente con la struttura gli orari di apertura e i turni aggiornati, soprattutto nei giorni festivi o notturni. Il nostro portale nasce per facilitare il contatto diretto tra cittadini e professionisti della salute, rendendo più semplice l’accesso ai servizi essenziali della Capitale senza intermediari.
+    Ti consigliamo di verificare sempre gli orari aggiornati tramite i tasti di contatto diretto. Il nostro portale semplifica l'accesso ai servizi essenziali della Capitale, mettendo in comunicazione immediata cittadini e professionisti della salute.
   </p>
 </section>
 {/* RIGA DI SEPARAZIONE TRA SEO E MINI SEO */}
