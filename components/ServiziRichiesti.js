@@ -6,7 +6,7 @@ export default function ServiziRichiesti() {
       titolo: "Fisioterapia", 
       desc: "Riabilitazione e massoterapia", 
       img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400",
-      link: "/fisioterapisti-roma" // O "/servizi-a-domicilio-roma" come preferisci
+      link: "/fisioterapisti-roma"
     },
     { 
       titolo: "Oculista", 
@@ -29,41 +29,66 @@ export default function ServiziRichiesti() {
   ];
   const [idx, setIdx] = useState(0);
 
+  const boxStyle = {
+    border: '2px solid #cbd5e1',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    background: '#fff',
+    height: '100%',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    display: 'block'
+  };
+
+  const frecciaStyle = {
+    position: 'absolute',
+    top: '100px',
+    background: '#065f46',
+    color: 'white',
+    border: '2px solid white',
+    width: '40px',
+    height: '40px',
+    border-radius: '50%',
+    fontSize: '25px',
+    cursor: 'pointer',
+    zIndex: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
   return (
     <section style={{ padding: '40px 0', borderTop: '1px solid #eee', backgroundColor: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '24px', fontWeight: '900' }}>Servizi più richiesti</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '25px', fontSize: '24px', fontWeight: '900', color: '#1e293b' }}>
+          Servizi più richiesti
+        </h2>
         
-        {/* MOBILE */}
-        <div className="solo-mobile-servizi">
-          <a href={servizi[idx].link} style={{ textDecoration: 'none' }}>
-            <div className="box-rinforzato-servizi">
-              <div style={{ position: 'relative', height: '240px' }}>
-                <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={servizi[idx].titolo} />
-                {/* Nota: le frecce sono fuori dal link o gestite per non interferire */}
-              </div>
-              <div style={{ padding: '20px', textAlign: 'center' }}>
-                <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#065f46', margin: '0' }}>{servizi[idx].titolo}</h4>
-                <p style={{ color: '#64748b', fontSize: '15px', marginTop: '5px' }}>{servizi[idx].desc}</p>
-                <span style={{ color: '#065f46', fontWeight: '700', fontSize: '14px', marginTop: '10px', display: 'inline-block' }}>Scopri di più →</span>
-              </div>
+        {/* MOBILE CONTAINER */}
+        <div style={{ position: 'relative', maxWidth: '400px', margin: '0 auto' }} className="mobile-only-display">
+          <a href={servizi[idx].link} style={boxStyle}>
+            <div style={{ height: '200px' }}>
+              <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={servizi[idx].titolo} />
+            </div>
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              <h4 style={{ fontSize: '20px', fontWeight: '800', color: '#065f46', margin: '0' }}>{servizi[idx].titolo}</h4>
+              <p style={{ color: '#64748b', fontSize: '14px', marginTop: '5px' }}>{servizi[idx].desc}</p>
+              <span style={{ color: '#065f46', fontWeight: 'bold', fontSize: '14px', marginTop: '10px', display: 'inline-block' }}>Vedi Specialisti →</span>
             </div>
           </a>
-          <button onClick={(e) => { e.preventDefault(); setIdx(idx === 0 ? 3 : idx - 1); }} className="freccia-nav sx">‹</button>
-          <button onClick={(e) => { e.preventDefault(); setIdx(idx === 3 ? 0 : idx + 1); }} className="freccia-nav dx">›</button>
+          <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} style={{ ...frecciaStyle, left: '-15px' }}>‹</button>
+          <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} style={{ ...frecciaStyle, right: '-15px' }}>›</button>
         </div>
 
-        {/* PC */}
-        <div className="solo-pc-servizi">
+        {/* PC GRID */}
+        <div className="pc-only-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
           {servizi.map((s, i) => (
-            <a key={i} href={s.link} style={{ textDecoration: 'none' }}>
-              <div className="box-rinforzato-servizi" style={{ textAlign: 'center', transition: 'transform 0.2s' }}>
-                <img src={s.img} style={{ width: '100%', height: '180px', objectFit: 'cover' }} alt={s.titolo} />
-                <div style={{ padding: '15px' }}>
-                  <h4 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h4>
-                  <p style={{ fontSize: '14px', color: '#64748b', marginTop: '5px' }}>{s.desc}</p>
-                  <p style={{ color: '#065f46', fontWeight: 'bold', fontSize: '13px', marginTop: '8px' }}>Vedi specialisti</p>
-                </div>
+            <a key={i} href={s.link} style={boxStyle} className="box-hover-effect">
+              <img src={s.img} style={{ width: '100%', height: '160px', objectFit: 'cover' }} alt={s.titolo} />
+              <div style={{ padding: '15px', textAlign: 'center' }}>
+                <h4 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h4>
+                <p style={{ fontSize: '13px', color: '#64748b', marginTop: '5px' }}>{s.desc}</p>
+                <p style={{ color: '#065f46', fontWeight: 'bold', fontSize: '12px', marginTop: '8px' }}>Scopri di più</p>
               </div>
             </a>
           ))}
@@ -71,13 +96,9 @@ export default function ServiziRichiesti() {
       </div>
 
       <style jsx>{`
-        .box-rinforzato-servizi { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; cursor: pointer; }
-        .box-rinforzato-servizi:hover { border-color: #065f46; transform: translateY(-5px); }
-        .freccia-nav { position: absolute; top: 120px; background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 10; }
-        .sx { left: 5px; } .dx { right: 5px; }
-        .solo-pc-servizi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .solo-mobile-servizi { display: none; position: relative; }
-        @media (max-width: 768px) { .solo-pc-servizi { display: none; } .solo-mobile-servizi { display: block; } }
+        @media (min-width: 769px) { .mobile-only-display { display: none !important; } }
+        @media (max-width: 768px) { .pc-only-grid { display: none !important; } }
+        .box-hover-effect:hover { border-color: #065f46 !important; transform: translateY(-5px); transition: all 0.3s; }
       `}</style>
     </section>
   );
