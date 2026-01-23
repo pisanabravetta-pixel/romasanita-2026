@@ -510,24 +510,24 @@ return (
       <UltimiAnnunci />
       
       <ServiziRichiesti />
-    <section style={{ padding: '40px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
+   <section style={{ padding: '40px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #eee' }}>
   <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
     <h3 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '20px', color: '#0f172a' }}>
       Servizi sanitari a Roma per quartiere
     </h3>
     
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px', marginBottom: '25px' }}>
-      {/* 4 Link specifici come da appunti */}
-      <a href="/farmacie-roma/prati" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie Prati</a>
+      {/* Link strutturati per il tuo file [slug].js (categoria-roma-quartiere) */}
+      <a href="/farmacie-roma-prati" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie Prati</a>
       <span style={{ color: '#cbd5e1' }}>•</span>
-      <a href="/dentisti-roma/parioli" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dentisti Parioli</a>
+      <a href="/dentisti-roma-parioli" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dentisti Parioli</a>
       <span style={{ color: '#cbd5e1' }}>•</span>
-      <a href="/farmacie-roma/eur" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie EUR</a>
+      <a href="/farmacie-roma-eur" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Farmacie EUR</a>
       <span style={{ color: '#cbd5e1' }}>•</span>
-      <a href="/dermatologi-roma/san-giovanni" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dermatologi San Giovanni</a>
+      <a href="/dermatologi-roma-san-giovanni" style={{ color: '#065f46', textDecoration: 'none', fontWeight: '700' }}>Dermatologi San Giovanni</a>
     </div>
 
-    {/* Il link che apre la pagina di tutti i quartieri che mi hai postato sopra */}
+    {/* Link alla pagina hub dei quartieri */}
     <a href="/quartieri-roma" style={{ 
       display: 'inline-block',
       padding: '12px 24px', 
