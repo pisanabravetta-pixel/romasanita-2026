@@ -14,27 +14,62 @@ export default function GuideHub() {
     <>
       <Head>
         <title>Guide Sanitarie e Costi Roma | ServiziSalute 2026</title>
-        <meta name="description" content="Approfondimenti sulla salute a Roma: guide ai costi, esenzioni e consigli per trovare i migliori specialisti nella capitale." />
+        <meta name="description" content="Approfondimenti sulla salute a Roma: guide ai costi, esenzioni e consigli per trovare i migliori specialisti." />
       </Head>
-      <Navbar />
-      <div style={{ padding: '60px 20px', backgroundColor: '#f8fafc', minHeight: '80vh' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#1e3a8a', marginBottom: '10px' }}>Guide alla Salute Roma</h1>
-          <p style={{ fontSize: '18px', color: '#64748b', marginBottom: '40px' }}>Informazioni utili, costi medi e consigli pratici per orientarsi nella sanità romana.</p>
-          
-          <div style={{ display: 'grid', gap: '20px' }}>
-            {guide.map((item, index) => (
-              <a key={index} href={item.link} style={{ textDecoration: 'none', display: 'block' }}>
-                <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '15px', border: '1px solid #e2e8f0', transition: 'transform 0.2s' }}>
-                  <h3 style={{ color: '#065f46', margin: '0 0 10px 0', fontSize: '20px' }}>{item.title} →</h3>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '15px' }}>{item.desc}</p>
-                </div>
-              </a>
-            ))}
+      
+      <div style={{ width: '100%', overflowX: 'hidden' }}>
+        <Navbar />
+        
+        {/* HERO SEZIONE GUIDE */}
+        <section style={{ backgroundColor: '#f0fdf4', padding: '60px 20px', borderBottom: '1px solid #dcfce7', textAlign: 'center' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#065f46', marginBottom: '15px' }}>
+            Guide alla Salute Roma
+          </h1>
+          <p style={{ fontSize: '18px', color: '#475569', maxWidth: '700px', margin: '0 auto' }}>
+            Informazioni utili, costi medi e consigli pratici per orientarsi nella sanità romana aggiornati a Gennaio 2026.
+          </p>
+        </section>
+
+        {/* LISTA DELLE GUIDE CON SPAZIATURA DI SICUREZZA IN FONDO */}
+        <section style={{ padding: '60px 20px 100px 20px', backgroundColor: 'white', minHeight: '60vh' }}>
+          <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
+              {guide.map((item, index) => (
+                <a key={index} href={item.link} style={{ textDecoration: 'none' }}>
+                  <div style={{ 
+                    backgroundColor: '#ffffff', 
+                    padding: '30px', 
+                    borderRadius: '20px', 
+                    border: '2px solid #f1f5f9', 
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
+                  }}
+                  className="card-guida"
+                  >
+                    <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px', fontWeight: '800' }}>
+                      {item.title} <span style={{ color: '#2563eb' }}>→</span>
+                    </h3>
+                    <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
+
+        <Footer />
       </div>
-      <Footer />
+
+      <style jsx>{`
+        .card-guida:hover {
+          border-color: #065f46 !important;
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+      `}</style>
     </>
   );
 }
