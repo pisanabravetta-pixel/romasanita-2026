@@ -20,7 +20,7 @@ export default function VisiteSpecialisticheRoma() {
           .eq('approvato', true)
           // Questa query prende tutti gli annunci che hanno 'visita' o 'specialista' 
           // coprendo di fatto tutte le categorie mediche della hub
-          .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+          .or(`categoria.ilike.%medico%,categoria.ilike.%specialista%,categoria.ilike.%visita%`)
           .order('is_top', { ascending: false });
 if (data) setAnnunci(data);
       } catch (err) {
@@ -35,7 +35,7 @@ if (data) setAnnunci(data);
 
   return (
     <HubLayout 
-  annunci={annunci}
+medici={annunci}
       loading={loading}
       titolo="Visite Specialistiche"
       categoria="specialistica"
