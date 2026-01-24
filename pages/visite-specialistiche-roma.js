@@ -14,11 +14,13 @@ export default function VisiteSpecialisticheRoma() {
   async function fetchVisite() {
     try {
       setLoading(true);
-      const { data } = await supabase
+     const { data } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .or('categoria.ilike.%visite%,categoria.ilike.%specialistica%')
+  // Questo filtro cerca i tuoi 3 annunci specifici. 
+  // Assicurati che i nomi siano SCRITTI UGUALI nel database!
+  .or(`nome.eq.Polo Cardiologico San Giovanni,nome.eq.Studio Medico Prati - Cardiologia,nome.eq.Centro Medico Specialistico Roma`)
   .order('is_top', { ascending: false });
 
       if (data) setAnnunci(data);
