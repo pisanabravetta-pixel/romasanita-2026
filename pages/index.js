@@ -283,13 +283,7 @@ return (
 
   </div>
 </section>
-  {/* MINI TESTO SEO DI TRANSIZIONE */}
-<div className="container" style={{ textAlign: 'center', marginTop: '30px', marginBottom: '10px', padding: '0 20px' }}>
-  <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500', maxWidth: '800px', margin: '0 auto' }}>
-    ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
-  </p>
-</div>
-
+  
 {/* SEZIONE STATISTICHE (quella che hai già con i 3 box) */}
 <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
 ...
