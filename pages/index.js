@@ -169,7 +169,9 @@ return (
     <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
       Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti.
     </p>
-
+<p style={{ maxWidth: '700px', margin: '0 auto 40px', color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500' }}>
+  ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
+</p>
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
   backgroundColor: 'white', 
@@ -509,6 +511,18 @@ return (
     );
   })()}
 </div>
+{/* MICRO CTA PROFESSIONISTI - B2B CONVERSION */}
+<div style={{ backgroundColor: '#065f46', padding: '15px 0', textAlign: 'center' }}>
+  <div className="container">
+    <p style={{ color: 'white', margin: 0, fontWeight: '700', fontSize: '15px' }}>
+      Sei un medico o gestisci una struttura a Roma? 
+      <a href="/pubblica-annuncio" style={{ color: '#fbbf24', marginLeft: '10px', textDecoration: 'underline' }}>
+        Inserisci la tua attività gratis →
+      </a>
+    </p>
+  </div>
+</div>
+
      {/* SEZIONE ANNUNCI E SERVIZI - ORDINE CORRETTO */}
       <UltimiAnnunci />
       
