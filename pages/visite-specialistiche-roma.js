@@ -14,11 +14,10 @@ export default function VisiteSpecialisticheRoma() {
   async function fetchVisite() {
     try {
       setLoading(true);
-  const { data } = await supabase
+ const { data } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  // Filtra per i nomi dei tuoi 3 annunci o per la categoria
   .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%`)
   .order('is_top', { ascending: false });
 
