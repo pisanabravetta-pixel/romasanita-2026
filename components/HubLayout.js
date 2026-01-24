@@ -124,17 +124,17 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FILTRATA PER MEDICI ATTIVI E PRECISIONE ZONA */}
+{/* BOX MAPPA HUB - CORRETTO PER BUILD */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {mediciAttivi.length > 0 ? (
+    {mediciAttivi && mediciAttivi.length > 0 ? (
       <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 5).map(m => `${m.nome} ${m.zona}`).join(' OR ') + ' Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
-      ></iframe>
+  width="100%"
+  height="100%"
+  style={{ border: 0 }}
+  loading="lazy"
+  src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 5).map(m => m.nome + " " + m.zona).join(' OR ') + ' Roma')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ color: '#94a3b8' }}>Mappa non disponibile al momento</p>
