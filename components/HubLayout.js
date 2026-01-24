@@ -25,9 +25,11 @@ export default function HubLayout({
     
     <Head>
       <title>{`${titolo} a Roma – Elenco e contatti | ServiziSalute`}</title>
-      <meta name="description" content={descrizioneMeta || Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.} />
+      <meta 
+        name="description" 
+        content={descrizioneMeta || `Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.`} 
+      />
       
-      {/* Lo script JSON-LD va qui dentro */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -64,7 +66,6 @@ export default function HubLayout({
         }}
       />
     </Head>
-
     {/* TOP BAR E IL RESTO DEL CODICE */}
     <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
       {testoTopBar}
@@ -131,19 +132,21 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - FIX: Usiamo 'medici' al posto di 'servizi' */}
+{/* BOX MAPPA HUB - FIX SICUREZZA BUILD */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {Array.isArray(medici) && medici.length > 0 ? (
+    {medici && medici.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(medici.slice(0, 15).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(medici.slice(0, 5).map(s => s.nome).join(' OR '))}+Roma&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc' }} />
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Mappa in caricamento...</p>
+      </div>
     )}
   </div>
 </div>
