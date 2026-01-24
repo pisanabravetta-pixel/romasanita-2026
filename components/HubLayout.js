@@ -135,11 +135,11 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${
-    medici && medici.length > 0 
-      ? encodeURIComponent(medici.slice(0, 5).map(m => `"${m.nome} ${m.quartiere || 'Roma'}"`).join(' OR '))
-      : encodeURIComponent("Roma")
-  }&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+  src={`https://www.google.com/search?q=https://www.google.com/maps/search/%3Fapi%3D1%26query%3DStudio%2BMedico%2BPrati%2BCardiologia%2BVia%2BFederico%2BCesi%2B72%2BRoma{encodeURIComponent(
+    medici.length > 0 
+      ? medici.slice(0, 6).map(m => `"${m.nome}"`).join(' OR ') 
+      : "Roma"
+  )}&t=m&z=11&ie=UTF8&iwloc=B&output=embed`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
