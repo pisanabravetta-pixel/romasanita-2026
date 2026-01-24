@@ -18,7 +18,8 @@ export default function VisiteSpecialisticheRoma() {
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .or('categoria.ilike.%visite%,categoria.ilike.%specialistica%')
+  // Filtra per i nomi dei tuoi 3 annunci o per la categoria
+  .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%`)
   .order('is_top', { ascending: false });
 
       if (data) setAnnunci(data);
