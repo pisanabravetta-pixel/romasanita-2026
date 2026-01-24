@@ -25,11 +25,7 @@ export default function VisiteSpecialisticheRoma() {
 
         if (data) setAnnunci(data);
       } catch (err) {
-        console.error("Errore caricamento:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+          }
     fetchVisite();
   }, []);
 console.log("CONTROLLO DATI:", { 
