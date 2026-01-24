@@ -289,14 +289,6 @@ return (
     ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
   </p>
 </div>
-{/* SEZIONE STATISTICHE (quella che hai già con i 3 box) */}
-<section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
-...
-     <div className="container" style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}>
-  <p style={{ fontSize: '14px', color: '#1e3a8a', fontStyle: 'italic' }}>
-    🔹 <strong>Focus Roma:</strong> Oltre 500 pazienti hanno cercato uno specialista nelle ultime 24 ore
-  </p>
-</div>
 
 {/* SEZIONE STATISTICHE - PC ORIGINALE / MOBILE: 3 BOX QUADRATI IN RIGA */}
 <section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
@@ -674,12 +666,10 @@ return (
               <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>I contatti dei medici sono diretti?</h4>
               <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
             </div>
-
-            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-  <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come prenotare una visita specialistica a Roma?</h4>
-  <p style={{ color: '#64748b' }}>Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico diretto per fissare l'appuntamento.</p>
-</div>
-
+<div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come prenotare una visita specialistica a Roma?</h4>
+              <p style={{ color: '#64748b' }}>Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico diretto per fissare l'appuntamento.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -714,7 +704,7 @@ return (
         </div>
       </section>
 
-    <Footer />
+      <Footer />
     </div>
   </>
   );
