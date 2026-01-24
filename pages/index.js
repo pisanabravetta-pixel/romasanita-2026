@@ -714,9 +714,8 @@ return (
         </div>
       </section>
 
-      <Footer />
-</div>
-</>
+     <Footer />
+    </div> {/* Chiusura del div principale con overflowX hidden */}
+  </>
   );
-
 }
