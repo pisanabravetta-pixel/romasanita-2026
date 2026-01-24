@@ -210,30 +210,35 @@ const { data, error } = await supabase
           ))}
         </div>
 
-       {/* GUIDE SPECIFICHE PER CATEGORIA (Appunti 21 Gennaio - Corretto) */}
-          <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
-            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
-              💰 Approfondimenti e Costi a Roma:
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {meta.cat.includes('dentist') ? (
-                <>
-                  <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
-                  <li>🔹 <a href="/guide/prezzi-impianti-dentali-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Tariffe medie per impianti dentali (Guida 2026)</a></li>
-                </>
-              ) : meta.cat.includes('farmac') ? (
-                <>
-                  <li>🔹 <a href="/guide/farmacie-turno-roma-come-funziona" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Come trovare le farmacie di turno a Roma</a></li>
-                  <li>🔹 <a href="/guide/servizi-farmacia-noleggio-ausili" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida ai servizi di telemedicina in farmacia</a></li>
-                </>
-              ) : (
-                <>
-                  <li>🔹 <a href="/guide/costo-tac-risonanza-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una TAC o Risonanza a Roma?</a></li>
-                  <li>🔹 <a href="/guide/ticket-sanitario-lazio-guida" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida esenzioni e ticket Regione Lazio</a></li>
-                </>
-              )}
-            </ul>
-          </div>
+      {/* GUIDE SPECIFICHE PER CATEGORIA - AGGIORNATE AI FILE REALI */}
+<div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
+  <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
+    💰 Approfondimenti e Costi a Roma:
+  </h4>
+  <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    {meta.cat.includes('dentist') ? (
+      <>
+        <li>🔹 <a href="/guide/costo-pulizia-denti-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una pulizia dei denti a Roma?</a></li>
+        <li>🔹 <a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida completa ai servizi odontoiatrici a Roma</a></li>
+      </>
+    ) : meta.cat.includes('cardiolog') ? (
+      <>
+        <li>🔹 <a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una visita cardiologica a Roma?</a></li>
+        <li>🔹 <a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Come prenotare visite specialistiche a Roma</a></li>
+      </>
+    ) : meta.cat.includes('dermatolog') ? (
+      <>
+        <li>🔹 <a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Quanto costa una visita dermatologica a Roma?</a></li>
+        <li>🔹 <a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida alla prevenzione e mappatura nei a Roma</a></li>
+      </>
+    ) : (
+      <>
+        <li>🔹 <a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Guida: Come trovare un servizio sanitario a Roma</a></li>
+        <li>🔹 <a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#0284c7', textDecoration: 'none', fontWeight: '600' }}>Informazioni su ticket e prenotazioni nel Lazio</a></li>
+      </>
+    )}
+  </ul>
+</div>
 
 {/* SEO CONCLUSIVO E FAQ CON LINK TESTUALI OBBLIGATORI */}
 <section style={{ margin: '40px 0', padding: '25px', backgroundColor: 'white', borderRadius: '15px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
