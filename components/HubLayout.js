@@ -130,14 +130,12 @@ export default function HubLayout({
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {mediciAttivi && mediciAttivi.length > 0 ? (
-     <iframe
+    <iframe
   width="100%"
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://www.google.com/maps?q=${encodeURIComponent(
-    mediciAttivi.slice(0, 5).map(m => `${m.nome} ${m.zona || ''} Roma`).join(' OR ')
-  )}&output=embed`}
+  src={`https://www.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&output=embed&z=11`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
