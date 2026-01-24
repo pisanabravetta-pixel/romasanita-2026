@@ -22,17 +22,17 @@ export default function VisiteSpecialisticheRoma() {
           // coprendo di fatto tutte le categorie mediche della hub
           .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
           .order('is_top', { ascending: false });
-
-        if (data) setAnnunci(data);
+if (data) setAnnunci(data);
       } catch (err) {
-          }
+        console.error("Errore caricamento:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+      
     fetchVisite();
   }, []);
-console.log("CONTROLLO DATI:", { 
-  quanti: annunci.length, 
-  primoNome: annunci[0]?.nome, 
-  categoriaCercata: categoria 
-});
+
   return (
     <HubLayout 
   annunci={annunci}
