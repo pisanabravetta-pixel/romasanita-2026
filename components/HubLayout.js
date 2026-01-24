@@ -135,11 +135,11 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${encodeURIComponent(
+  src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY&q=${encodeURIComponent(
     medici && medici.length > 0 
-      ? medici.map(m => `"${m.nome}, Roma"`).join(' OR ') 
+      ? medici.map(m => `place_id:${m.google_place_id || ''}`).join('|') || medici.map(m => `"${m.nome} ${m.indirizzo}"`).join('|')
       : "Roma"
-  )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+  )}&zoom=11`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
