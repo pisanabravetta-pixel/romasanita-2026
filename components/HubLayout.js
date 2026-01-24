@@ -135,11 +135,11 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://www.google.com/maps?q=${encodeURIComponent(
+  src={`https://www.google.com/search?q=https://www.google.com/maps/search/%3Fapi%3D1%26query%3DCentro%2BMedico%2BSpecialistico%2BRoma%2BVia%2Bdelle%2BFornaci%2B38%2BRoma{encodeURIComponent(
     medici && medici.length > 0 
-      ? medici.map(m => `"${m.nome}"`).join(' OR ') 
+      ? medici.map(m => `${m.nome} ${m.indirizzo}`).join(' | ') 
       : "Roma"
-  )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+  )}&t=m&z=11&output=embed&iwloc=near`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
