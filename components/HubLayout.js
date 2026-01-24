@@ -225,8 +225,6 @@ export default function HubLayout({
   </ul>
 </div>
 
-</div>
-
 <section style={{ 
   margin: '40px 0', 
   padding: '25px', 
