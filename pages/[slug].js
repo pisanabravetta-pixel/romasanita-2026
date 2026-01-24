@@ -62,7 +62,7 @@ export default function PaginaQuartiereDinamica() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-   <Head>
+  <Head>
   <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute`}</title>
   <meta name="description" content={`Scopri tutte le strutture di ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti, servizi e mappa per trovare rapidamente il servizio più vicino.`} />
 
@@ -75,10 +75,10 @@ export default function PaginaQuartiereDinamica() {
         "mainEntity": [
           {
             "@type": "Question",
-            "name": `Come trovare ${meta.nomeSemplice.toLowerCase()} a Roma ${meta.zona}?`,
+            "name": `Come trovare ${meta.nomeSemplice.toLowerCase()} a ${meta.zona}?`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `È possibile consultare l’elenco di ${meta.nomeSemplice.toLowerCase()} nel quartiere ${meta.zona} e utilizzare la mappa per individuare la struttura più vicina.`
+              "text": `È possibile consultare l’elenco dedicato al quartiere ${meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.`
             }
           },
           {
@@ -86,7 +86,15 @@ export default function PaginaQuartiereDinamica() {
             "name": `Le strutture di ${meta.zona} offrono servizi sanitari aggiuntivi?`,
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": `Molte strutture a Roma ${meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale.`
+              "text": `Sì, molte strutture a Roma ${meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `Posso contattare direttamente le strutture di ${meta.zona}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `Sì, ogni scheda dispone di contatti diretti (Telefono o WhatsApp) per richiedere informazioni su orari, servizi e disponibilità.`
             }
           }
         ]
