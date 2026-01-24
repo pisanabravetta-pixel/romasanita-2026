@@ -169,9 +169,7 @@ return (
     <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
       Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti.
     </p>
-<p style={{ maxWidth: '700px', margin: '0 auto 40px', color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500' }}>
-  ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
-</p>
+
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
   backgroundColor: 'white', 
@@ -285,6 +283,16 @@ return (
 
   </div>
 </section>
+  {/* MINI TESTO SEO DI TRANSIZIONE */}
+<div className="container" style={{ textAlign: 'center', marginTop: '30px', marginBottom: '10px', padding: '0 20px' }}>
+  <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500', maxWidth: '800px', margin: '0 auto' }}>
+    ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
+  </p>
+</div>
+
+{/* SEZIONE STATISTICHE (quella che hai già con i 3 box) */}
+<section style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
+...
      <div className="container" style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}>
   <p style={{ fontSize: '14px', color: '#1e3a8a', fontStyle: 'italic' }}>
     🔹 <strong>Focus Roma:</strong> Oltre 500 pazienti hanno cercato uno specialista nelle ultime 24 ore
