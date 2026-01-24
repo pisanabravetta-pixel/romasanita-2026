@@ -42,14 +42,15 @@ export default function PaginaQuartiereDinamica() {
           nomeSemplice: nomeCat
         });
 
-        const filtri = getDBQuery(catSlug);
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          .ilike('zona', `%${zonaSlug}%`) 
-          .or(`specialista.ilike.%${filtri.spec}%,categoria.ilike.%${filtri.cat}%`)
-          .order('is_top', { ascending: false });
+       const filtri = getDBQuery(catSlug);
+const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .ilike('zona', `%${zonaSlug}%`) 
+  // Rimosso .or(): usiamo la categoria secca estratta dallo slug
+  .ilike('categoria', `%${filtri.cat}%`)
+  .order('is_top', { ascending: false });
 
         if (error) throw error;
         setServizi(data || []);
@@ -192,8 +193,19 @@ export default function PaginaQuartiereDinamica() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                 <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} style={{ flex: '1', minWidth: '100px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-                <a href={`https://maps.google.com/maps/contrib/107807434180698320195{encodeURIComponent(v.nome + " " + v.indirizzo)}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>🗺️ MAPPA</a>
+<a 
+  href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
+  target="_blank" 
+  rel="noopener noreferrer" 
+  style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+>
+  🗺️ MAPPA
+</a>
               </div>
+    {/* MICRO TESTO SEO SOTTO I BOTTONI */}
+<p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
+  {meta.nomeSemplice} a {v.zona}, Roma
+</p>
             </div>
           ))}
         </div>
