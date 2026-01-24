@@ -135,7 +135,7 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 8).map(m => m.nome + " Roma").join(' OR '))}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+ src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 8).map(m => m.nome + " " + m.quartiere).join(' OR '))}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
