@@ -18,7 +18,7 @@ export default function VisiteSpecialisticheRoma() {
   .from('annunci')
   .select('*')
   .eq('approvato', true)
- .or(`categoria.ilike.%cardiolog%,categoria.ilike.%dermatolog%,categoria.ilike.%ginecolog%,categoria.ilike.%oculist%,categoria.ilike.%ortoped%`)
+.or(`categoria.ilike.%cardiolog%,categoria.ilike.%dermatolog%,categoria.ilike.%ginecolog%,categoria.ilike.%oculist%,categoria.ilike.%ortoped%,categoria.ilike.%specialist%`)
           .order('is_top', { ascending: false });
 if (data) setAnnunci(data);
       } catch (err) {
