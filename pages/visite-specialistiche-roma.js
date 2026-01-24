@@ -14,12 +14,11 @@ export default function VisiteSpecialisticheRoma() {
   async function fetchVisite() {
     try {
       setLoading(true);
-   const { data } = await supabase
+  const { data } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  // Usiamo ILIKE così non importa se hai scritto minuscolo o maiuscolo
-  .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%`)
+  .or('categoria.ilike.%visite%,categoria.ilike.%specialistica%')
   .order('is_top', { ascending: false });
 
       if (data) setAnnunci(data);
