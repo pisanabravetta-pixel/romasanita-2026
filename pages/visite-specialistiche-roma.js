@@ -14,14 +14,12 @@ export default function VisiteSpecialisticheRoma() {
   async function fetchVisite() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        // Questo filtro prende sia "visite-specialistiche" che "Visite Specialistiche"
-        // e anche i tuoi 3 annunci specifici per nome, così sei sicuro al 100%
-        .or(`categoria.ilike.%visite%,nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico%`)
-        .order('is_top', { ascending: false });
+      const { data } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .or('categoria.ilike.%visite%,categoria.ilike.%specialistica%')
+  .order('is_top', { ascending: false });
 
       if (data) setAnnunci(data);
     } catch (err) {
