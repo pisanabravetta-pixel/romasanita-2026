@@ -11,25 +11,27 @@ export default function VisiteSpecialisticheRoma() {
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
-    async function fetchVisite() {
-      try {
-        const queryBusca = getDBQuery('specialistica'); 
-     const { data } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  .filter('nome', 'in', '("Polo Cardiologico San Giovanni","Studio Medico Prati - Cardiologia","Centro Medico Specialistico Roma")')
-  .order('is_top', { ascending: false });
-if (data) setAnnunci(data);
-      } catch (err) {
-        console.error("Errore caricamento:", err);
-      } finally {
-        setLoading(false);
-      }
+  async function fetchVisite() {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        // Questo filtro prende sia "visite-specialistiche" che "Visite Specialistiche"
+        // e anche i tuoi 3 annunci specifici per nome, così sei sicuro al 100%
+        .or(`categoria.ilike.%visite%,nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico%`)
+        .order('is_top', { ascending: false });
+
+      if (data) setAnnunci(data);
+    } catch (err) {
+      console.error("Errore caricamento:", err);
+    } finally {
+      setLoading(false);
     }
-      
-    fetchVisite();
-  }, []);
+  }
+  fetchVisite();
+}, []);
 
   return (
     <HubLayout 
