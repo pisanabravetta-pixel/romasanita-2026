@@ -10,6 +10,7 @@ import ServiziRichiesti from '../components/ServiziRichiesti';
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
+  const [idCat, setIdCat] = useState(0);
   const zoneRoma = [
     "Appio Latino", "Cassia", "Centro Storico", "EUR", "Flaminio", 
     "Magliana", "Monteverde", "Nomentano", "Ostiense", "Parioli", 
@@ -212,18 +213,21 @@ return (
     </select>
   </div>
 
-  {/* 3. CATEGORIA */}
-  <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
-    <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
-    <select style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}>
-      <option>Tutte le categorie</option>
-      <option>Farmacie</option>
-      <option>Dentisti</option>
-      <option>Diagnostica</option>
-      <option>Visite Specialistiche</option>
-      <option>Servizi a Domicilio</option>
-    </select>
-  </div>
+ {/* 3. CATEGORIA - COLLEGATA */}
+<div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
+  <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
+  <select 
+    onChange={(e) => setRicerca(e.target.value)} // <--- AGGIUNTO QUESTO
+    style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
+  >
+    <option value="">Tutte le categorie</option>
+    <option value="Farmacie">Farmacie</option>
+    <option value="Dentisti">Dentisti</option>
+    <option value="Diagnostica">Diagnostica</option>
+    <option value="Specialisti">Visite Specialistiche</option>
+    <option value="Domicilio">Servizi a Domicilio</option>
+  </select>
+</div>
 
   {/* BOTTONE CERCA */}
   <button 
@@ -307,14 +311,14 @@ return (
       </div>
     </div>
 
-    {/* BOX 3 - VISITE */}
-    <div className="s-box">
-      <div className="s-icon">📈</div>
-      <div className="s-text">
-        <div className="s-num">+15K</div>
-        <div className="s-lab">Accessi Gennaio 2026</div>
-      </div>
-    </div>
+   {/* BOX 3 - VISITE (TESTO NORMALIZZATO) */}
+<div className="s-box">
+  <div className="s-icon">📈</div>
+  <div className="s-text">
+    <div className="s-num">MIGLIAIA</div>
+    <div className="s-lab">Ricerche mensili</div>
+  </div>
+</div>
 
   </div>
 
@@ -388,9 +392,8 @@ return (
 
 <div style={{ paddingBottom: '50px', backgroundColor: '#f6f7f9' }}>
   {(() => {
-    // Usiamo nomi unici per lo stato per evitare conflitti nel build
-    const [idCat, setIdCat] = useState(0); 
-    const elencoCategorie = [
+    
+     const elencoCategorie = [
       { n: 'Farmacie', i: '💊', l: '/farmacie-roma', bg: '#fff0f3', bc: '#e91e63' },
       { n: 'Dentisti', i: '🦷', l: '/dentisti-roma', bg: '#e3f2fd', bc: '#2196f3' },
       { n: 'Diagnostica', i: '🔬', l: '/diagnostica-roma', bg: '#f3e5f5', bc: '#9c27b0' },
@@ -652,9 +655,9 @@ return (
             </div>
 
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>È possibile prenotare una visita specialistica online?</h4>
-              <p style={{ color: '#64748b' }}>Sì, molti professionisti presenti sul portale offrono il link diretto alla loro agenda digitale o permettono la prenotazione rapida tramite WhatsApp.</p>
-            </div>
+  <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come prenotare una visita specialistica a Roma?</h4>
+  <p style={{ color: '#64748b' }}>Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico diretto per fissare l'appuntamento.</p>
+</div>
 
           </div>
         </div>
