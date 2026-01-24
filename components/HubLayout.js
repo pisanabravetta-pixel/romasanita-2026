@@ -123,6 +123,7 @@ export default function HubLayout({
   </div>
 </div>
 
+{/* BOX MAPPA HUB - CERCA SOLO MEDICI ATTIVI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -131,11 +132,11 @@ export default function HubLayout({
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&q=${encodeURIComponent(titolo + ' Roma')}`}
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(medici.slice(0, 5).map(m => m.nome).join(' OR ') + ' Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa in caricamento...</p>
+        <p style={{ color: '#94a3b8' }}>Mappa non disponibile per questa categoria</p>
       </div>
     )}
   </div>
@@ -279,28 +280,25 @@ export default function HubLayout({
             <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
           </div>
 
-          <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
-              Esplora altri servizi a Roma:
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-              {(categoria || '') !== 'dentisti' && <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>}
-              {(categoria || '') !== 'farmacie' && <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>}
-              {(categoria || '') !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
-              {(categoria || '') !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
-              
-              {!['dentisti', 'farmacie', 'diagnostica', 'dermatologi'].includes(categoria || '') && (
-                <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
-              )}
-            </div>
-            
-            <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
-              <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
-                ← Torna a tutte le specialistiche a Roma
-              </a>
-            </div>
-          </div>
-
+          {/* SEZIONE CROSS-LINKING FINALE */}
+<div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+  <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
+    Esplora altri servizi a Roma:
+  </p>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+    {(categoria || '') !== 'dentisti' && <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>}
+    {(categoria || '') !== 'farmacie' && <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>}
+    {(categoria || '') !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
+    {(categoria || '') !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
+    {(categoria || '') !== 'servizi-a-domicilio' && <a href="/servizi-a-domicilio-roma" style={{ color: '#ea580c', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🏠 Servizi a Domicilio</a>}
+  </div>
+  
+  <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+    <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
+      ← Torna a tutte le specialistiche a Roma
+    </a>
+  </div>
+</div>
       </main>          
       <Footer />
     </div>
