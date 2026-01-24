@@ -14,12 +14,12 @@ export default function VisiteSpecialisticheRoma() {
     async function fetchVisite() {
       try {
         const queryBusca = getDBQuery('specialistica'); 
-       const { data } = await supabase
+      const { data, error } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-.or(`categoria.ilike.%cardiolog%,categoria.ilike.%dermatolog%,categoria.ilike.%ginecolog%,categoria.ilike.%oculist%,categoria.ilike.%ortoped%,categoria.ilike.%specialist%`)
-          .order('is_top', { ascending: false });
+  .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%`)
+  .order('is_top', { ascending: false });
 if (data) setAnnunci(data);
       } catch (err) {
         console.error("Errore caricamento:", err);
