@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - CHIRURGIA FINALE PERFETTA */}
+{/* BOX MAPPA HUB - VERSIONE PULITA SENZA ERRORI BUILD */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -135,7 +135,7 @@ export default function HubLayout({
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://www.google.com/search?q=https://www.google.com/maps/search/%3Fapi%3D1%26query%3DCentro%2BMedico%2BSpecialistico%2BRoma%2BVia%2Bdelle%2BFornaci%2B38%2BRoma{encodeURIComponent(
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici
             .filter(m => m.indirizzo)
             .map(m => `"${m.nome} ${m.indirizzo}"`) 
