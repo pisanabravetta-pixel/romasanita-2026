@@ -20,6 +20,7 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = []
 }) {
+  const mediciAttivi = medici.filter(m => m.attivo);
  return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
@@ -123,20 +124,20 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - CERCA SOLO MEDICI ATTIVI */}
+{/* BOX MAPPA HUB - FILTRATA PER MEDICI ATTIVI E PRECISIONE ZONA */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
+    {mediciAttivi.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(medici.slice(0, 5).map(m => m.nome).join(' OR ') + ' Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 5).map(m => `${m.nome} ${m.zona}`).join(' OR ') + ' Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa non disponibile per questa categoria</p>
+        <p style={{ color: '#94a3b8' }}>Mappa non disponibile al momento</p>
       </div>
     )}
   </div>
@@ -151,14 +152,14 @@ export default function HubLayout({
   fontStyle: 'italic',
   lineHeight: '1.5'
 }}>
-  La mappa mostra la distributione dei servizi di <strong>{titolo} a Roma</strong> nei diversi quartieri della città, aiutando a individuare rapidamente le strutture più vicine alla tua posizione.
+  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong> nei diversi quartieri della città, aiutando a individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
 
-        <div style={{ display: 'block' }}>
+     <div style={{ display: 'block' }}>
           {loading ? (
             <p>Caricamento...</p>
-          ) : medici && medici.length > 0 ? (
-            medici.map((v) => (
+          ) : mediciAttivi && mediciAttivi.length > 0 ? (
+            mediciAttivi.map((v) => (
               <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
                 <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
                 <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
@@ -173,9 +174,15 @@ export default function HubLayout({
                   <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
                   <a href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo)}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>🗺️ MAPPA</a>
                 </div>
+
+                {/* PUNTO 4: MICRO TESTO SEO AGGIUNTO QUI */}
+                <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
+                  {badgeSpec} a {v.zona}, Roma
+                </p>
               </div>
             ))
           ) : (
+            /* BOX CORTESIA SE LISTA VUOTA */
             <div style={{ backgroundColor: 'white', padding: '40px 20px', borderRadius: theme.radius.main, textAlign: 'center', border: '2px dashed #cbd5e1', marginBottom: '30px' }}>
               <span style={{ fontSize: '40px', marginBottom: '10px', display: 'block' }}>🔎</span>
               <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Ricerca in corso a Roma</h3>
@@ -185,7 +192,7 @@ export default function HubLayout({
               </p>
             </div>
           )}
-        </div> 
+        </div>
 
 <div style={{ marginTop: '10px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
@@ -224,10 +231,14 @@ export default function HubLayout({
     {titolo} a Roma: guida alla scelta nel tuo quartiere
   </h2>
   
-  <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
-    <p style={{ marginBottom: '15px' }}>
-      Roma vanta una rete sanitaria complessa che si estende dal centro storico fino alle zone periferiche. Per facilitare la tua ricerca, abbiamo organizzato i servizi di <strong>{titolo.toLowerCase()} a Roma</strong> per aree strategiche, permettendoti di individuare professionisti a <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>Prati</a>, <a href={`/${categoria}-roma-eur`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>EUR</a>, <strong>Parioli</strong>, <strong>San Giovanni</strong> e <strong>Monteverde</strong>.
-    </p>
+  <p style={{ marginBottom: '15px' }}>
+  Roma vanta una rete sanitaria complessa che si estende dal centro storico fino alle zone periferiche. Per facilitare la tua ricerca, abbiamo organizzato i servizi di <strong>{titolo.toLowerCase()} a Roma</strong> per aree strategiche, permettendoti di individuare professionisti a: 
+  <a href={`/${categoria}-roma-prati`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none', marginLeft: '5px'}}>Prati</a>, 
+  <a href={`/${categoria}-roma-eur`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none', marginLeft: '5px'}}>EUR</a>, 
+  <a href={`/${categoria}-roma-parioli`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none', marginLeft: '5px'}}>Parioli</a>, 
+  <a href={`/${categoria}-roma-san-giovanni`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none', marginLeft: '5px'}}>San Giovanni</a> e 
+  <a href={`/${categoria}-roma-monteverde`} style={{color: '#059669', fontWeight: '700', textDecoration: 'none', marginLeft: '5px'}}>Monteverde</a>.
+</p>
 
     <p style={{ marginBottom: '15px' }}>
       Oltre alle prestazioni standard, molte delle strutture elencate offrono servizi di autoanalisi, test diagnostici rapidi e telemedicina. Se non sai come orientarti tra le diverse opzioni disponibili, ti consigliamo di leggere la nostra guida su <a href="/guide/trovare-servizio-sanitario-roma" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>come trovare il miglior servizio sanitario a Roma</a>, dove troverai consigli utili su ticket, esenzioni e scelta del medico.
