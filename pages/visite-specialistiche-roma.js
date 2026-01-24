@@ -4,7 +4,7 @@ import { getDBQuery, getSchemas } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function VisiteSpecialisticheRoma() {
-  const [medici, setMedici] = useState([]);
+  const [annunci, setAnnunci] = useState([]);
   const [loading, setLoading] = useState(true);
   
   const schemas = getSchemas('visite-specialistiche', 'roma');
@@ -23,7 +23,7 @@ export default function VisiteSpecialisticheRoma() {
           .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
           .order('is_top', { ascending: false });
 
-        if (data) setMedici(data);
+        if (data) setAnnunci(data);
       } catch (err) {
         console.error("Errore caricamento:", err);
       } finally {
@@ -35,7 +35,7 @@ export default function VisiteSpecialisticheRoma() {
 
   return (
     <HubLayout 
-      medici={medici}
+  annunci={annunci}
       loading={loading}
       titolo="Visite Specialistiche"
       categoria="specialistica"
