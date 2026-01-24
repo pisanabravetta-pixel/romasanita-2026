@@ -32,7 +32,11 @@ export default function VisiteSpecialisticheRoma() {
     }
     fetchVisite();
   }, []);
-
+console.log("CONTROLLO DATI:", { 
+  quanti: annunci.length, 
+  primoNome: annunci[0]?.nome, 
+  categoriaCercata: categoria 
+});
   return (
     <HubLayout 
   annunci={annunci}
