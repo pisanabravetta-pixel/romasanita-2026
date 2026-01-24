@@ -14,13 +14,11 @@ export default function VisiteSpecialisticheRoma() {
     async function fetchVisite() {
       try {
         const queryBusca = getDBQuery('specialistica'); 
-        const { data } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          // Questa query prende tutti gli annunci che hanno 'visita' o 'specialista' 
-          // coprendo di fatto tutte le categorie mediche della hub
-          .or(`categoria.ilike.%medico%,categoria.ilike.%specialista%,categoria.ilike.%visita%`)
+       const { data } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .or(`categoria.ilike.%medico%,categoria.ilike.%visita%,specialista.ilike.%specialista%`)
           .order('is_top', { ascending: false });
 if (data) setAnnunci(data);
       } catch (err) {
