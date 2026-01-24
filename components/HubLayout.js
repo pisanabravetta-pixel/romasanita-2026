@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - RITORNO A MAPS (PULITO) */}
+{/* BOX MAPPA HUB - CORREZIONE DEFINITIVA NOMI + INDIRIZZI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -136,12 +136,10 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici.filter(m => m.indirizzo).length > 0
-            ? medici
-                .filter(m => m.indirizzo)
-                .map(m => `"${m.indirizzo}"`) // Usiamo SOLO l'indirizzo tra virgolette
-                .join(' OR ')
-            : "Roma, Italia"
+          medici
+            .filter(m => m.indirizzo)
+            .map(m => `"${m.nome} ${m.indirizzo}"`) 
+            .join(' OR ')
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
