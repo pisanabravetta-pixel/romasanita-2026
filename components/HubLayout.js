@@ -133,7 +133,7 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${encodeURIComponent(mediciAttivi.slice(0, 5).map(m => m.nome + " " + m.zona).join(' OR ') + ' Roma')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+  src={"http://googleusercontent.com/maps.google.com/7" + encodeURIComponent(mediciAttivi.slice(0, 5).map(m => m.nome + " " + m.zona).join(' OR ') + ' Roma') + "&t=&z=13&ie=UTF8&iwloc=&output=embed"}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -244,10 +244,11 @@ export default function HubLayout({
       Oltre alle prestazioni standard, molte delle strutture elencate offrono servizi di autoanalisi, test diagnostici rapidi e telemedicina. Se non sai come orientarti tra le diverse opzioni disponibili, ti consigliamo di leggere la nostra guida su <a href="/guide/trovare-servizio-sanitario-roma" style={{color: '#059669', fontWeight: '700', textDecoration: 'none'}}>come trovare il miglior servizio sanitario a Roma</a>, dove troverai consigli utili su ticket, esenzioni e scelta del medico.
     </p>
 
-    <p style={{ marginBottom: '30px' }}>
-      Ti ricordiamo di verificare sempre la disponibilità e gli orari aggiornati (specialmente per i turni festivi) utilizzando i tasti <strong>Chiama</strong> o <strong>WhatsApp</strong> presenti in ogni scheda. Questo garantisce un contatto immediato con la segreteria o lo specialista di riferimento nel tuo quadrante urbano.
-    </p>
-  </div>
+   <div style={{ color: '#475569', lineHeight: '1.8', fontSize: '16px' }}>
+      <p style={{ marginBottom: '30px' }}>
+        Ti ricordiamo di verificare sempre la disponibilità e gli orari aggiornati (specialmente per i turni festivi) utilizzando i tasti <strong>Chiama</strong> o <strong>WhatsApp</strong> presenti in ogni scheda. Questo garantisce un contatto immediato con la segreteria o lo specialista di riferimento nel tuo quadrante urbano.
+      </p>
+    </div>
 
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '80%', margin: '30px auto' }} />
 
