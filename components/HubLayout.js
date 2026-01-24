@@ -297,32 +297,32 @@ export default function HubLayout({
           </div>
 
           {/* SEZIONE CROSS-LINKING FINALE */}
-          <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-            <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
-              Esplora altri servizi a Roma:
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-  {categoria !== 'dentisti' && <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>}
-  {categoria !== 'farmacie' && <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>}
-  {categoria !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
-  {categoria !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
+<div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+  <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
+    Esplora altri servizi a Roma:
+  </p>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+    {(categoria || '') !== 'dentisti' && <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>}
+    {(categoria || '') !== 'farmacie' && <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>}
+    {(categoria || '') !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
+    {(categoria || '') !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
+    
+    {/* Link jolly per coprire altre specialistiche senza linkare se stessi */}
+    {!['dentisti', 'farmacie', 'diagnostica', 'dermatologi'].includes(categoria || '') && (
+      <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
+    )}
+  </div>
   
-  {/* Link jolly per coprire altre specialistiche */}
-  {!['dentisti', 'farmacie', 'diagnostica', 'dermatologi'].includes(categoria) && (
-    <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
-  )}
+  <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
+    <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
+      ← Torna a tutte le specialistiche a Roma
+    </a>
+  </div>
 </div>
-            
-            <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
-              <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
-                ← Torna a tutte le specialistiche a Roma
-              </a>
-            </div>
-          </div>
 
-        </section>
-         </main> {/* CHIUDE IL MAIN */}          
-      <Footer /> {/* IL FOOTER STA FUORI DAL MAIN */}
-    </div>
-  );
+</section>
+</main> {/* CHIUDE IL MAIN */}          
+<Footer /> {/* IL FOOTER STA FUORI DAL MAIN */}
+</div>
+);
 }
