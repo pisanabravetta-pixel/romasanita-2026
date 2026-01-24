@@ -20,43 +20,57 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = [] // Default array vuoto
 }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
-  <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": `Come trovare servizi di ${titolo} a Roma?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `È possibile consultare l’elenco dei servizi di ${titolo} a Roma suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.`
-          }
-        },
-        {
-          "@type": "Question",
-          "name": `I servizi di ${titolo} a Roma sono disponibili in tutti i quartieri?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `I servizi di ${titolo} sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.`
-          }
-        },
-        {
-          "@type": "Question",
-          "name": `È possibile contattare direttamente le strutture di ${titolo}?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `Sì, ogni struttura elencata mette a disposizione contatti diretti per richiedere informazioni su servizi, orari e disponibilità.`
-          }
-        }
-      ]
-    })
-  }}
-/>
+ return (
+  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
+    
+    <Head>
+      <title>{`${titolo} a Roma – Elenco e contatti | ServiziSalute`}</title>
+      <meta name="description" content={descrizioneMeta || Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.} />
+      
+      {/* Lo script JSON-LD va qui dentro */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": `Come trovare servizi di ${titolo} a Roma?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": `È possibile consultare l’elenco dei servizi di ${titolo} a Roma suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.`
+                }
+              },
+              {
+                "@type": "Question",
+                "name": `I servizi di ${titolo} a Roma sono disponibili in tutti i quartieri?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": `I servizi di ${titolo} sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.`
+                }
+              },
+              {
+                "@type": "Question",
+                "name": `È possibile contattare direttamente le strutture di ${titolo}?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": `Sì, ogni struttura elencata mette a disposizione contatti diretti (Telefono o WhatsApp) per richiedere informazioni su servizi, orari e disponibilità.`
+                }
+              }
+            ]
+          })
+        }}
+      />
+    </Head>
+
+    {/* TOP BAR E IL RESTO DEL CODICE */}
+    <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
+      {testoTopBar}
+    </div>
+    
+    {/* ... resto del componente ... */}
       {/* TOP BAR INTEGRALE */}
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
         {testoTopBar}
@@ -203,15 +217,7 @@ export default function HubLayout({
     )}
   </ul>
 </div>
-{/* CONTENITORE UNICO BIANCO (SEO, FAQ, CTA, CROSS-LINKING) */}
-        <section style={{ 
-          margin: '40px 0', 
-          padding: '25px', 
-          backgroundColor: 'white', 
-          borderRadius: theme.radius.main, 
-          border: '1px solid #e2e8f0',
-          boxShadow: theme.shadows.premium 
-        }}>
+
           
 {/* --- SEZIONE SEO APPROFONDIMENTO E FAQ --- */}
 <section style={{ 
@@ -293,11 +299,16 @@ export default function HubLayout({
               Esplora altri servizi a Roma:
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-              <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
-              <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>
-              <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>
-              <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>
-            </div>
+  {categoria !== 'dentisti' && <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>}
+  {categoria !== 'farmacie' && <a href="/farmacie-roma" style={{ color: '#15803d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>💊 Farmacie Roma</a>}
+  {categoria !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
+  {categoria !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
+  
+  {/* Link jolly per coprire altre specialistiche */}
+  {!['dentisti', 'farmacie', 'diagnostica', 'dermatologi'].includes(categoria) && (
+    <a href="/dentisti-roma" style={{ color: '#0f766e', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🦷 Dentisti Roma</a>
+  )}
+</div>
             
             <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
               <a href="/specialistiche-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
