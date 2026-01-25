@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - VERSIONE CORRETTA PER BUILD E PULIZIA */}
+{/* BOX MAPPA HUB - IL TUO CODICE ORIGINALE RIPRISTINATO */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -135,9 +135,9 @@ export default function HubLayout({
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://www.google.com/maps?q=${encodeURIComponent(
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici.filter(m => m.indirizzo).length > 0
-            ? medici.filter(m => m.indirizzo).map(m => `"${m.nome} ${m.indirizzo}"`).join(' OR ')
+            ? medici.filter(m => m.indirizzo).map(m => `"${m.nome} ${m.indirizzo}"`).join(' OR ') // Qui ho aggiunto m.nome per precisione
             : "Roma, Italia"
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
