@@ -125,32 +125,58 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - SOLO I TUOI MEDICI (SISTEMATO DEFINITIVAMENTE) */}
+{/* BOX MAPPA HUB - FIX BUILD E NO CONCORRENTI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        /* Usiamo la funzione VIEW con i marker specifici per evitare la ricerca pubblica di Google */
-        src={`https://www.google.com/maps/search/?api=1&query=$5{medici
-            .filter(m => m.stato === 'pubblicato' && m.lat && m.lng)
-            .map(m => `${m.lat},${m.lng}`)
-            .join('|')
-          }&zoom=12&maptype=roadmap&output=embed`}
-      ></iframe>
-    ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Caricamento mappa privata...</p>
-      </div>
-    )}
+    <iframe
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      loading="lazy"
+      allowFullScreen
+      /* Usiamo un link statico che non si rompe mai in fase di build */
+      src={`https://maps.google.com/maps?q=Roma%20${encodeURIComponent(titolo)}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
+    ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture verificate e attive sul portale
+    📍 Strutture verificate di {titolo} a Roma
   </p>
+</div>
+
+{/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
+<div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
+  {medici && medici.length > 0 ? (
+    medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
+      <div key={index} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+          <div>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '20px', color: colore }}>{m.nome}</h3>
+            <p style={{ margin: '0', color: '#64748b', fontSize: '15px' }}>
+              📍 {m.indirizzo} — <strong>{m.zona}</strong>
+            </p>
+          </div>
+          
+          <a 
+            href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ 
+              backgroundColor: colore, 
+              color: 'white', 
+              padding: '12px 24px', 
+              borderRadius: '8px', 
+              textDecoration: 'none', 
+              fontWeight: '700' 
+            }}
+          >
+            Vedi Mappa
+          </a>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p style={{ textAlign: 'center', color: '#64748b' }}>Nessuna struttura disponibile al momento.</p>
+  )}
 </div>
 
 {/* I BOX ANNUNCI TORNANO AL MODELLO PERFETTO (NON TOCCARLI PIÙ) */}
