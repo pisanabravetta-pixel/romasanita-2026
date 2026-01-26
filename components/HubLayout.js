@@ -126,31 +126,48 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE ORIGINALE - STILE COERENTE CON GLI ANNUNCI */}
+{/* MAPPA "SOLO MIEI MEDICI" - GRAFICA PROFESSIONALE */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     <iframe
       width="100%"
       height="100%"
       style={{ border: 0 }}
-      loading="lazy"
-      allowFullScreen
-      src={`https://www.google.com/maps/embed/v1/search?q=${encodeURIComponent(
-        titolo + " Roma " + (medici.length > 0 ? medici[0].zona : "")
-      )}&key=VUOTA`} 
-      /* NOTA: Se non hai una Key, usiamo il trucco del link di ricerca standard qui sotto */
       srcDoc={`
-        <style>body{margin:0;overflow:hidden;}</style>
-        <iframe 
-          width="100%" 
-          height="400" 
-          frameborder="0" 
-          style="border:0" 
-          src="https://maps.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&t=&z=12&ie=UTF8&iwloc=&output=embed">
-        </iframe>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+          <style>
+            body { margin: 0; }
+            #map { height: 100vh; width: 100%; }
+          </style>
+        </head>
+        <body>
+          <div id="map"></div>
+          <script>
+            var map = L.map('map').setView([41.9028, 12.4964], 11);
+            // Stile "Voyager" - Molto simile a Google Maps
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
+            
+            var medici = ${JSON.stringify(medici.filter(m => m.lat && m.lng))};
+            
+            medici.forEach(function(m) {
+              L.marker([m.lat, m.lng]).addTo(map).bindPopup("<b>" + m.nome + "</b>");
+            });
+
+            if (medici.length > 0) {
+              var group = new L.featureGroup(medici.map(m => L.marker([m.lat, m.lng])));
+              map.fitBounds(group.getBounds().pad(0.1));
+            }
+          </script>
+        </body>
+        </html>
       `}
     ></iframe>
   </div>
+</div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
     📍 Visualizza i centri di {titolo} su Google Maps
   </p>
