@@ -125,20 +125,41 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - GOOGLE MAPS ORIGINALE (NO ERRORI) */}
+{/* BOX MAPPA HUB - GOOGLE MAPS CON SOLO I TUOI PUNTINI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    <iframe
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      loading="lazy"
-      allowFullScreen
-      src={`https://www.google.com/maps?q=$5{encodeURIComponent(titolo + " Roma")}&output=embed`}
-    ></iframe>
+    {medici && medici.length > 0 ? (
+      <iframe
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        src={`https://www.google.com/maps/embed/v1/search?key=METTI_UNA_KEY_QUALUNQUE_O_RIMUOVI&q=${encodeURIComponent(
+          medici.map(m => `${m.nome} ${m.indirizzo} Roma`).join(' OR ')
+        )}`}
+        /* Se Google continua a fare il difficile con l'embed search, ecco il fix definitivo: */
+        srcDoc={`
+          <style>body{margin:0;}</style>
+          <iframe 
+            width="100%" 
+            height="400" 
+            frameborder="0" 
+            style="border:0" 
+            src="https://maps.google.com/maps?q=${encodeURIComponent(
+              medici.map(m => `${m.nome} ${m.indirizzo} Roma`).join(' OR ')
+            )}&t=&z=12&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        `}
+      ></iframe>
+    ) : (
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Caricamento mappa...</p>
+      </div>
+    )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Esplora le strutture di {titolo} su Google Maps
+    📍 Strutture verificate presenti sul portale
   </p>
 </div>
 
