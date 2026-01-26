@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA CITTÀ - ZERO ERRORI, ZERO COSTI, SOLO I TUOI PUNTI */}
+{/* MAPPA STRADALE PROFESSIONALE CON TOOLTIP AL PASSAGGIO MOUSE */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
     <iframe
@@ -142,34 +142,51 @@ export default function HubLayout({
           <style>
             body { margin: 0; padding: 0; }
             #map { height: 100vh; width: 100%; }
-            /* Colore del fumetto personalizzato col tuo colore */
-            .leaflet-popup-content-wrapper { border-bottom: 3px solid ${colore}; }
-            .leaflet-popup-content { font-family: sans-serif; font-weight: bold; }
+            /* Stile del nome che appare al passaggio del mouse */
+            .custom-tooltip { 
+              background: white; 
+              border: 1px solid #ccc; 
+              border-radius: 4px; 
+              padding: 5px 10px; 
+              font-weight: bold; 
+              font-family: sans-serif;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
           </style>
         </head>
         <body>
           <div id="map"></div>
           <script>
-            // Centra su Roma centro
             var map = L.map('map').setView([41.9028, 12.4964], 11);
             
-            // Carica la mappa stradale (stile simile a Google)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: '© OpenStreetMap'
+            // STILE MAPPA STRADALE (Stile Google/CartoDB più moderno)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+              attribution: '© OpenStreetMap © CARTO'
             }).addTo(map);
             
-            // I tuoi medici passati da Supabase con le coordinate
             var medici = ${JSON.stringify(medici.filter(m => m.lat && m.lng).map(m => ({ nome: m.nome, lat: parseFloat(m.lat), lng: parseFloat(m.lng) })))};
             
             if (medici.length > 0) {
               var markers = [];
               medici.forEach(function(m) {
-                var marker = L.marker([m.lat, m.lng]).addTo(map).bindPopup(m.nome);
+                var marker = L.marker([m.lat, m.lng]).addTo(map);
+                
+                // TOOLTIP: Esce quando passi sopra col mouse (hover)
+                marker.bindTooltip(m.nome, {
+                  permanent: false, 
+                  direction: 'top',
+                  className: 'custom-tooltip',
+                  offset: [0, -32]
+                });
+
+                // POPUP: Esce quando clicchi
+                marker.bindPopup("<b>" + m.nome + "</b>");
+                
                 markers.push(marker);
               });
-              // Inquadra automaticamente tutti i medici
+              
               var group = new L.featureGroup(markers);
-              map.fitBounds(group.getBounds().pad(0.1));
+              map.fitBounds(group.getBounds().pad(0.2));
             }
           </script>
         </body>
@@ -178,7 +195,7 @@ export default function HubLayout({
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 {medici.length} strutture verificate a Roma (Mappa Dinamica)
+    📍 Passa il mouse sopra i punti per vedere i nomi dei centri
   </p>
 </div>
 <p style={{ 
