@@ -151,7 +151,7 @@ export default function HubLayout({
     📍 Posizione delle strutture verificate a Roma
   </p>
 </div>
- </div>     
+  
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
