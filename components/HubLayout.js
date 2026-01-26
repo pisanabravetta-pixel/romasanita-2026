@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FIX DEFINITIVO TUTTI I PUNTI */}
+{/* BOX MAPPA HUB - LOGICA IDENTICA ALLE PAGINE QUARTIERE (FUNZIONANTE) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -134,45 +134,17 @@ export default function HubLayout({
         width="100%"
         height="100%"
         style={{ border: 0 }}
-        srcDoc={`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-            <style>
-              body { margin: 0; padding: 0; }
-              #map { height: 100vh; width: 100%; }
-              .leaflet-popup-content { font-family: sans-serif; font-weight: bold; color: ${colore}; text-align: center; }
-            </style>
-          </head>
-          <body>
-            <div id="map"></div>
-            <script>
-              var map = L.map('map').setView([41.85, 12.48], 11);
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-              var medici = ${JSON.stringify(medici.map(m => ({ nome: m.nome, indirizzo: m.indirizzo })))};
-              
-              medici.forEach(function(m, index) {
-                // Pulizia aggressiva: toglie civici doppi, CAP e frazioni
-                var q = m.indirizzo.split(',')[0].split('-')[0].split('/')[0].replace('00183', '').replace('00193', '').replace('00127', '');
-                
-                // Ritardo di mezzo secondo tra un punto e l'altro per non farci bloccare
-                setTimeout(function() {
-                  fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(q + ' Roma'))
-                    .then(r => r.json())
-                    .then(data => {
-                      if (data.length > 0) {
-                        L.marker([data[0].lat, data[0].lon]).addTo(map).bindPopup(m.nome);
-                      }
-                    });
-                }, index * 600); 
-              });
-            </script>
-          </body>
-          </html>
-        `}
+        loading="lazy"
+        allowFullScreen
+        /* Usiamo NOME + ROMA (logica slug) ma puliamo i civici doppi per il Centro iDea */
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
+          medici
+            .map(m => {
+              // Se è il Centro iDea o ha indirizzi lunghi, usiamo solo il nome per farlo trovare a Google
+              return m.nome.includes('iDea') ? m.nome : m.nome + ' ' + m.indirizzo;
+            })
+            .join(' OR ')
+        )}+${encodeURIComponent('Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -181,7 +153,7 @@ export default function HubLayout({
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Solo strutture verificate a Roma (Mappa Indipendente)
+    📍 Posizione delle strutture verificate a Roma
   </p>
 </div>
 
