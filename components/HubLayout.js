@@ -126,37 +126,22 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE - STILE QUARTIERE MA CON COORDINATE */}
+{/* MAPPA GOOGLE - STESSO STILE PAGINA QUARTIERE */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_SE_CE_LHAI&q=${encodeURIComponent(
-          medici
-            .map(m => {
-              // Se hai inserito lat e lng, usiamo quelli per essere precisissimi
-              if (m.lat && m.lng) {
-                return m.lat + ',' + m.lng;
-              }
-              // Altrimenti usa il nome (backup)
-              return m.nome;
-            })
-            .join(' OR ')
-        )}&zoom=11`}
-      ></iframe>
-    ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
-      </div>
-    )}
+    <iframe
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      loading="lazy"
+      allowFullScreen
+      src={`https://www.google.com/maps/embed/v1/search?key=NON_SERVE_KEY_PER_EMBED_BASE&q=${encodeURIComponent(
+        medici.map(m => `${m.nome} ${m.zona} Roma`).join(' OR ')
+      )}&zoom=11`}
+    ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture odontoiatriche verificate a Roma
+    📍 Strutture di {titolo} verificate a Roma
   </p>
 </div>
 
