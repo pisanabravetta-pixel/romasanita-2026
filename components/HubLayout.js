@@ -126,54 +126,37 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA BLINDATA - UTILIZZA COORDINATE LAT/LNG DA SUPABASE */}
+{/* MAPPA GOOGLE - STILE QUARTIERE MA CON COORDINATE */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
-    <iframe
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      srcDoc={`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-          <style>
-            body { margin: 0; padding: 0; }
-            #map { height: 100vh; width: 100%; }
-            .leaflet-popup-content { font-family: sans-serif; font-weight: bold; color: ${colore}; text-align: center; }
-          </style>
-        </head>
-        <body>
-          <div id="map"></div>
-          <script>
-            // Centro la mappa su Roma
-            var map = L.map('map').setView([41.9028, 12.4964], 11);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            
-            // Filtra solo i medici che hanno le coordinate inserite
-            var medici = ${JSON.stringify(medici.filter(m => m.lat && m.lng).map(m => ({ nome: m.nome, lat: m.lat, lng: m.lng })))};
-            
-            medici.forEach(function(m) {
-              L.marker([m.lat, m.lng])
-                .addTo(map)
-                .bindPopup(m.nome);
-            });
-
-            // Se ci sono punti, adatta la vista per farli vedere tutti
-            if (medici.length > 0) {
-              var group = new L.featureGroup(medici.map(m => L.marker([m.lat, m.lng])));
-              map.fitBounds(group.getBounds().pad(0.1));
-            }
-          </script>
-        </body>
-        </html>
-      `}
-    ></iframe>
+  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+    {medici && medici.length > 0 ? (
+      <iframe
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_SE_CE_LHAI&q=${encodeURIComponent(
+          medici
+            .map(m => {
+              // Se hai inserito lat e lng, usiamo quelli per essere precisissimi
+              if (m.lat && m.lng) {
+                return m.lat + ',' + m.lng;
+              }
+              // Altrimenti usa il nome (backup)
+              return m.nome;
+            })
+            .join(' OR ')
+        )}&zoom=11`}
+      ></iframe>
+    ) : (
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
+      </div>
+    )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture verificate a Roma (Posizione esatta tramite coordinate)
+    📍 Strutture odontoiatriche verificate a Roma
   </p>
 </div>
 
