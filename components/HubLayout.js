@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* MAPPA HUB - SEGUENDO GLI APPUNTI: SOLO I TUOI DATI, NIENTE MONDO */}
+{/* BOX MAPPA HUB - GOOGLE MAPS DA NOME E INDIRIZZO (APPUNTI RISPETTATI) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -133,56 +133,23 @@ export default function HubLayout({
         width="100%"
         height="100%"
         style={{ border: 0 }}
-        srcDoc={`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-            <style>
-              body { margin: 0; }
-              #map { height: 100vh; width: 100%; }
-              .leaflet-popup-content-wrapper { border-radius: 8px; font-family: sans-serif; }
-              .leaflet-popup-content { font-weight: bold; color: ${colore}; }
-            </style>
-          </head>
-          <body>
-            <div id="map"></div>
-            <script>
-              // Inizializza su Roma centro come backup
-              var map = L.map('map').setView([41.9028, 12.4964], 12);
-
-              // Tile tipo Google Maps (Chiara e pulita)
-              L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
-
-              // Prende i tuoi medici da Supabase
-              var data = ${JSON.stringify(medici.filter(m => m.lat && m.lng))};
-              
-              if (data.length > 0) {
-                var markers = [];
-                data.forEach(function(m) {
-                  var marker = L.marker([m.lat, m.lng]).addTo(map)
-                    .bindPopup(m.nome + '<br><span style="font-weight:normal; font-size:12px; color:#64748b">' + m.zona + '</span>');
-                  markers.push(marker);
-                });
-
-                // ZOOM AUTOMATICO: inquadra SOLO i tuoi medici, niente mondo!
-                var group = new L.featureGroup(markers);
-                map.fitBounds(group.getBounds().pad(0.2));
-              }
-            </script>
-          </body>
-          </html>
-        `}
+        loading="lazy"
+        allowFullScreen
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
+          medici
+            .filter(m => m.stato === 'pubblicato') // Solo annunci attivi come da appunti
+            .map(m => `${m.nome} ${m.indirizzo || m.zona} Roma`)
+            .join(' OR ')
+        )}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
-      <div style={{ height: '400px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p>Caricamento strutture...</p>
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Caricamento mappa Google...</p>
       </div>
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Visualizzazione esclusiva: {medici.length} centri verificati a Roma
+    📍 Strutture di {titolo} verificate e attive a Roma
   </p>
 </div>
 
