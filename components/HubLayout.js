@@ -135,9 +135,17 @@ export default function HubLayout({
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
+        src={`https://www.google.com/maps?q=${encodeURIComponent(
           medici.filter(m => m.indirizzo).length > 0
-            ? medici.filter(m => m.indirizzo).map(m => `"${m.indirizzo}"`).join(' OR ')
+            ? medici
+                .filter(m => m.indirizzo)
+                .map(m => {
+                  // Se sono dentisti, uniamo Nome e Indirizzo per forzare Google a trovare QUELLA struttura
+                  return categoria === "dentisti" 
+                    ? `"${m.nome} ${m.indirizzo}"` 
+                    : `"${m.indirizzo}"`;
+                })
+                .join(' OR ')
             : "Roma, Italia"
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
