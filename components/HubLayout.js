@@ -167,7 +167,6 @@ export default function HubLayout({
       `}
     ></iframe>
   </div>
-</div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
     📍 Visualizza i centri di {titolo} su Google Maps
   </p>
