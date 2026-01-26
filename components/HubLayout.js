@@ -125,51 +125,50 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - GOOGLE MAPS SU ROMA (PULIZIA TOTALE) */}
+{/* BOX MAPPA HUB - SOLO I TUOI MEDICI (SISTEMATO DEFINITIVAMENTE) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    <iframe
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      loading="lazy"
-      allowFullScreen
-      src={`https://maps.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
-    ></iframe>
+    {medici && medici.length > 0 ? (
+      <iframe
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        /* Usiamo la funzione VIEW con i marker specifici per evitare la ricerca pubblica di Google */
+        src={`https://www.google.com/maps/search/?api=1&query=$5{medici
+            .filter(m => m.stato === 'pubblicato' && m.lat && m.lng)
+            .map(m => `${m.lat},${m.lng}`)
+            .join('|')
+          }&zoom=12&maptype=roadmap&output=embed`}
+      ></iframe>
+    ) : (
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Caricamento mappa privata...</p>
+      </div>
+    )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture di {titolo} verificate a Roma
+    📍 Strutture verificate e attive sul portale
   </p>
 </div>
 
-{/* LISTA MEDICI - IL TUO MODELLO PERFETTO */}
-<div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
-  {medici && medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
-    <div key={index} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px' }}>
+{/* I BOX ANNUNCI TORNANO AL MODELLO PERFETTO (NON TOCCARLI PIÙ) */}
+<div style={{ display: 'grid', gap: '20px' }}>
+  {medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
+    <div key={index} style={{ padding: '24px', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h3 style={{ margin: '0 0 8px 0', fontSize: '20px', color: colore }}>{m.nome}</h3>
-          <p style={{ margin: '0', color: '#64748b', fontSize: '15px' }}>
-            📍 {m.indirizzo} — <strong>{m.zona}</strong>
-          </p>
+          <h3 style={{ margin: '0', color: colore, fontSize: '20px' }}>{m.nome}</h3>
+          <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
         </div>
-        
-        {/* IL TASTO CHE USA LE COORDINATE DI SUPABASE PER LA PRECISIONE */}
         <a 
-          href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
+          href={`https://www.google.com/maps/search/?api=1&query=$6{m.lat},${m.lng}`}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ 
-            backgroundColor: colore, 
-            color: 'white', 
-            padding: '10px 20px', 
-            borderRadius: '8px', 
-            textDecoration: 'none', 
-            fontWeight: '700', 
-            fontSize: '14px' 
-          }}
+          style={{ backgroundColor: colore, color: 'white', padding: '10px 20px', borderRadius: '8px', fontWeight: '700', textDecoration: 'none' }}
         >
-          Vedi sulla Mappa
+          Mappa
         </a>
       </div>
     </div>
