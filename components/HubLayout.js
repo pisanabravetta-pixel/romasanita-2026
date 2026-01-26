@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FIX DEFINITIVO SENZA ERRORI DI SINTASSI */}
+{/* BOX MAPPA HUB - VERSIONE "PAGINA QUARTIERE" GARANTITA */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     <iframe
@@ -135,7 +135,7 @@ export default function HubLayout({
       style={{ border: 0 }}
       loading="lazy"
       allowFullScreen
-      src={`https://www.google.com/maps/embed/v1/search?key=NON_INSERIRE_CHIAVE&q=$5{encodeURIComponent(titolo + " Roma")}&output=embed`}
+      src={`https://www.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&output=embed`}
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
