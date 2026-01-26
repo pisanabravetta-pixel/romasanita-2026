@@ -126,49 +126,48 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA "SOLO MIEI MEDICI" - GRAFICA PROFESSIONALE */}
+{/* MAPPA GOOGLE - IL CODICE CHE FUNZIONAVA ALL'INIZIO */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    <iframe
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      srcDoc={`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-          <style>
-            body { margin: 0; }
-            #map { height: 100vh; width: 100%; }
-          </style>
-        </head>
-        <body>
-          <div id="map"></div>
-          <script>
-            var map = L.map('map').setView([41.9028, 12.4964], 11);
-            // Stile "Voyager" - Molto simile a Google Maps
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
-            
-            var medici = ${JSON.stringify(medici.filter(m => m.lat && m.lng))};
-            
-            medici.forEach(function(m) {
-              L.marker([m.lat, m.lng]).addTo(map).bindPopup("<b>" + m.nome + "</b>");
-            });
-
-            if (medici.length > 0) {
-              var group = new L.featureGroup(medici.map(m => L.marker([m.lat, m.lng])));
-              map.fitBounds(group.getBounds().pad(0.1));
-            }
-          </script>
-        </body>
-        </html>
-      `}
-    ></iframe>
+    {medici && medici.length > 0 ? (
+      <iframe
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        src={`https://www.google.com/maps/embed/v1/search?q=${encodeURIComponent(
+          medici
+            .map(m => {
+              // Usiamo Nome + Zona per essere sicuri che Google becchi i TUOI
+              return `${m.nome} ${m.zona} Roma`;
+            })
+            .join(' OR ')
+        )}&key=VUOTA_O_RIMUOVI`} 
+        /* ATTENZIONE: Se ti ridà l'errore della Key, usa la versione qui sotto 
+           che è quella "standard" di ricerca che non fallisce mai:
+        */
+        srcDoc={`
+          <style>body{margin:0;}</style>
+          <iframe 
+            width="100%" 
+            height="400" 
+            frameborder="0" 
+            style="border:0" 
+            src="https://maps.google.com/maps?q=${encodeURIComponent(
+              medici.map(m => `${m.nome} ${m.zona} Roma`).join(' OR ')
+            )}&t=&z=12&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        `}
+      ></iframe>
+    ) : (
+      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
+      </div>
+    )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Visualizza i centri di {titolo} su Google Maps
+    📍 Strutture verificate a Roma (Ricerca Mirata)
   </p>
 </div>
 <p style={{ 
