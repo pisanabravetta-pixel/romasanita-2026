@@ -126,30 +126,21 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - SOLUZIONE DEFINITIVA NO ESTRANEI */}
+{/* BOX MAPPA HUB - FIX ZOOM E CONTROLLO TOTALE */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+  <div style={{ width: '100%', height: '450px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_SE_CE_LHAI&q=${encodeURIComponent(
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici
             .filter(m => m.indirizzo)
-            .map(m => `loc:${m.indirizzo}`) // Il prefisso loc: forza Google a cercare la posizione esatta
-            .join(' + ')
-        )}&zoom=11`}
-        // Se non hai una API Key, usiamo questo formato che è più restrittivo:
-        srcDoc={`
-          <style>body{margin:0;overflow:hidden;}iframe{border:0;width:100%;height:100%;}</style>
-          <iframe 
-            src="https://maps.google.com/maps?q=${encodeURIComponent(
-              medici.filter(m => m.indirizzo).map(m => m.indirizzo).join('; ')
-            )}&t=&z=11&ie=UTF8&iwloc=B&output=embed">
-          </iframe>
-        `}
+            .map(m => `"${m.indirizzo}"`) // Usiamo solo l'indirizzo tra virgolette per pulizia
+            .join(' OR ')
+        )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
