@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE - RITORNO AL METODO FUNZIONANTE (SENZA API KEY) */}
+{/* MAPPA GOOGLE - PUNTA SUL CENTRO PRINCIPALE USANDO LE COORDINATE */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     <iframe
@@ -135,16 +135,18 @@ export default function HubLayout({
       style={{ border: 0 }}
       loading="lazy"
       allowFullScreen
-      src={`https://www.google.com/maps?q=${encodeURIComponent(
-        medici.map(m => m.lat && m.lng ? `${m.lat},${m.lng}` : `${m.nome} ${m.zona} Roma`).join(' OR ')
-      )}&output=embed`}
+      src={`http://googleusercontent.com/maps.google.com/6{encodeURIComponent(
+        // Prende il primo medico della lista e usa le sue coordinate
+        medici[0]?.lat && medici[0]?.lng 
+          ? `${medici[0].lat},${medici[0].lng}` 
+          : "Roma"
+      )}&zoom=12`}
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture verificate a Roma
+    📍 Esplora le strutture odontoiatriche verificate a Roma
   </p>
 </div>
-
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
