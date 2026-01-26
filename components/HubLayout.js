@@ -126,21 +126,20 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FIX ZOOM E CONTROLLO TOTALE */}
+{/* BOX MAPPA HUB - LOGICA "SLUG" (FUNZIONANTE) */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '450px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
       <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
+        allowFullScreen
+        /* Applichiamo la logica delle pagine quartiere: NOMI + ROMA */
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .filter(m => m.indirizzo)
-            .map(m => `"${m.indirizzo}"`) // Usiamo solo l'indirizzo tra virgolette per pulizia
-            .join(' OR ')
-        )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+          medici.map(m => m.nome).join(' OR ')
+        )}+${encodeURIComponent('Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -148,7 +147,11 @@ export default function HubLayout({
       </div>
     )}
   </div>
+  <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
+    📍 Posizione delle strutture verificate a Roma
+  </p>
 </div>
+ </div>     
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
