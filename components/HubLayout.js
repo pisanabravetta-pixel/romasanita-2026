@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - GOOGLE MAPS CON SOLO I TUOI PUNTINI */}
+{/* MAPPA GOOGLE PRIVATA - SOLO I TUOI PUNTI SENZA RICERCA PUBBLICA */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -135,10 +135,10 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/search?key=METTI_UNA_KEY_QUALUNQUE_O_RIMUOVI&q=${encodeURIComponent(
-          medici.map(m => `${m.nome} ${m.indirizzo} Roma`).join(' OR ')
+        src={`https://www.google.com/maps/embed/v1/search?key=LA_TUA_API_KEY_QUI&q=${encodeURIComponent(
+          medici.map(m => `${m.nome} ${m.indirizzo}`).join(' OR ')
         )}`}
-        /* Se Google continua a fare il difficile con l'embed search, ecco il fix definitivo: */
+        /* SE NON HAI LA KEY, l'unico modo per non avere concorrenti è questo link "puntuale" */
         srcDoc={`
           <style>body{margin:0;}</style>
           <iframe 
@@ -147,8 +147,8 @@ export default function HubLayout({
             frameborder="0" 
             style="border:0" 
             src="https://maps.google.com/maps?q=${encodeURIComponent(
-              medici.map(m => `${m.nome} ${m.indirizzo} Roma`).join(' OR ')
-            )}&t=&z=12&ie=UTF8&iwloc=&output=embed">
+              medici.map(m => m.lat + ',' + m.lng).join(' ')
+            )}&t=&z=13&ie=UTF8&iwloc=&output=embed">
           </iframe>
         `}
       ></iframe>
@@ -159,7 +159,7 @@ export default function HubLayout({
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture verificate presenti sul portale
+    📍 Strutture verificate a Roma (Sola visualizzazione interna)
   </p>
 </div>
 
