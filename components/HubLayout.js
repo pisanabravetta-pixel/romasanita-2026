@@ -125,62 +125,53 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - GOOGLE MAPS DA NOME E INDIRIZZO (APPUNTI RISPETTATI) */}
+{/* BOX MAPPA HUB - GOOGLE MAPS SU ROMA (PULIZIA TOTALE) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .filter(m => m.stato === 'pubblicato') // Solo annunci attivi come da appunti
-            .map(m => `${m.nome} ${m.indirizzo || m.zona} Roma`)
-            .join(' OR ')
-        )}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
-      ></iframe>
-    ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Caricamento mappa Google...</p>
-      </div>
-    )}
+    <iframe
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      loading="lazy"
+      allowFullScreen
+      src={`https://maps.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
+    ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture di {titolo} verificate e attive a Roma
+    📍 Strutture di {titolo} verificate a Roma
   </p>
 </div>
 
-{/* LISTA MEDICI CON I PUNTINI ESATTI DI GOOGLE */}
-<div style={{ display: 'grid', gap: '20px' }}>
-  {medici.map((m, index) => (
-    <div key={index} style={{ padding: '20px', border: '1px solid #e2e8f0', borderRadius: '12px', backgroundColor: 'white' }}>
-      <h3 style={{ margin: '0 0 10px 0', color: colore }}>{m.nome}</h3>
-      <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '15px' }}>📍 {m.indirizzo} - {m.zona}</p>
-      
-      {/* QUESTO È IL VERO PUNTINO DI GOOGLE MAPS ESATTO */}
-      <a 
-        href={`https://www.google.com/maps?q=$6{m.lat},${m.lng}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ 
-          display: 'inline-flex', 
-          alignItems: 'center', 
-          gap: '8px', 
-          padding: '10px 15px', 
-          backgroundColor: '#f1f5f9', 
-          borderRadius: '8px', 
-          color: '#1e293b', 
-          textDecoration: 'none', 
-          fontWeight: 'bold', 
-          fontSize: '13px' 
-        }}
-      >
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282015-2020%29.svg" width="16" />
-        Vedi posizione esatta su Google Maps
-      </a>
+{/* LISTA MEDICI - IL TUO MODELLO PERFETTO */}
+<div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
+  {medici && medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
+    <div key={index} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px' }}>
+        <div>
+          <h3 style={{ margin: '0 0 8px 0', fontSize: '20px', color: colore }}>{m.nome}</h3>
+          <p style={{ margin: '0', color: '#64748b', fontSize: '15px' }}>
+            📍 {m.indirizzo} — <strong>{m.zona}</strong>
+          </p>
+        </div>
+        
+        {/* IL TASTO CHE USA LE COORDINATE DI SUPABASE PER LA PRECISIONE */}
+        <a 
+          href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ 
+            backgroundColor: colore, 
+            color: 'white', 
+            padding: '10px 20px', 
+            borderRadius: '8px', 
+            textDecoration: 'none', 
+            fontWeight: '700', 
+            fontSize: '14px' 
+          }}
+        >
+          Vedi sulla Mappa
+        </a>
+      </div>
     </div>
   ))}
 </div>
