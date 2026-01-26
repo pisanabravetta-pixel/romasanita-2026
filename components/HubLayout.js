@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - GOOGLE MAPS ORIGINALE SENZA CONCORRENTI */}
+{/* BOX MAPPA HUB - PRENDE I DATI COME IL BOX ANNUNCI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -136,21 +136,18 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .filter(m => m.lat && m.lng)
-            .map(m => `${m.lat},${m.lng}`) // USA LE COORDINATE CHE ABBIAMO MESSO!
-            .join(' OR ')
-        )}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
+        src={`https://www.google.com/maps/embed/v1/search?key=NON_SERVE_KEY_PER_EMBED_BASE&q=$3{encodeURIComponent(
+          medici.map(m => `${m.nome} ${m.zona} Roma`).join(' OR ')
+        )}&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
+        <p style={{ color: '#94a3b8' }}>Caricamento mappa...</p>
       </div>
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Posizione esatta delle strutture verificate a Roma
+    📍 Posizione delle strutture verificate a Roma
   </p>
 </div>
 
