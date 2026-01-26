@@ -126,34 +126,54 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - LOGICA IDENTICA ALLE PAGINE QUARTIERE (FUNZIONANTE) */}
+{/* MAPPA BLINDATA - UTILIZZA COORDINATE LAT/LNG DA SUPABASE */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        /* Usiamo NOME + ROMA (logica slug) ma puliamo i civici doppi per il Centro iDea */
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .map(m => {
-              // Se è il Centro iDea o ha indirizzi lunghi, usiamo solo il nome per farlo trovare a Google
-              return m.nome.includes('iDea') ? m.nome : m.nome + ' ' + m.indirizzo;
-            })
-            .join(' OR ')
-        )}+${encodeURIComponent('Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
-      ></iframe>
-    ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
-      </div>
-    )}
+  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+    <iframe
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      srcDoc={`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+          <style>
+            body { margin: 0; padding: 0; }
+            #map { height: 100vh; width: 100%; }
+            .leaflet-popup-content { font-family: sans-serif; font-weight: bold; color: ${colore}; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <div id="map"></div>
+          <script>
+            // Centro la mappa su Roma
+            var map = L.map('map').setView([41.9028, 12.4964], 11);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            
+            // Filtra solo i medici che hanno le coordinate inserite
+            var medici = ${JSON.stringify(medici.filter(m => m.lat && m.lng).map(m => ({ nome: m.nome, lat: m.lat, lng: m.lng })))};
+            
+            medici.forEach(function(m) {
+              L.marker([m.lat, m.lng])
+                .addTo(map)
+                .bindPopup(m.nome);
+            });
+
+            // Se ci sono punti, adatta la vista per farli vedere tutti
+            if (medici.length > 0) {
+              var group = new L.featureGroup(medici.map(m => L.marker([m.lat, m.lng])));
+              map.fitBounds(group.getBounds().pad(0.1));
+            }
+          </script>
+        </body>
+        </html>
+      `}
+    ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Posizione delle strutture verificate a Roma
+    📍 Strutture verificate a Roma (Posizione esatta tramite coordinate)
   </p>
 </div>
 
