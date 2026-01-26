@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - PULIZIA TOTALE E FIX BUILD */}
+{/* BOX MAPPA HUB - SOLUZIONE FINALE SENZA TERMINALE (NO ESTRANEI) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -134,14 +134,39 @@ export default function HubLayout({
         width="100%"
         height="100%"
         style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-       src={`https://maps.google.com/maps?q=${encodeURIComponent(
-  medici
-    .filter(m => m.indirizzo)
-    .map(m => `"${m.nome}, ${m.indirizzo}, Roma"`) 
-    .join(' | ')
-)}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+        srcDoc={`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+            <style>
+              body { margin: 0; padding: 0; }
+              #map { height: 100vh; width: 100%; }
+              .leaflet-popup-content { font-family: sans-serif; font-weight: bold; color: ${colore}; }
+            </style>
+          </head>
+          <body>
+            <div id="map"></div>
+            <script>
+              var map = L.map('map').setView([41.9028, 12.4964], 11);
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+              var medici = ${JSON.stringify(medici.map(m => ({ nome: m.nome, indirizzo: m.indirizzo })))};
+              
+              medici.forEach(function(m) {
+                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(m.indirizzo + ', Roma'))
+                  .then(r => r.json())
+                  .then(data => {
+                    if (data.length > 0) {
+                      L.marker([data[0].lat, data[0].lon]).addTo(map).bindPopup(m.nome);
+                    }
+                  });
+              });
+            </script>
+          </body>
+          </html>
+        `}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -150,7 +175,7 @@ export default function HubLayout({
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Posizione delle strutture verificate a Roma
+    📍 Solo strutture verificate a Roma (Mappa Indipendente)
   </p>
 </div>
 
@@ -163,7 +188,7 @@ export default function HubLayout({
   fontStyle: 'italic',
   lineHeight: '1.5'
 }}>
-  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
+  La mappa mostra la posizione dei servizi di <strong>{titolo} a Roma</strong>, garantendo la visualizzazione esclusiva delle strutture verificate.
 </p>
      <div style={{ display: 'block' }}>
           {loading ? (
