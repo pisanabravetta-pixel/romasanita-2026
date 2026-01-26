@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FIX INDIRIZZI DOPPI E TUTTI I MEDICI PRESENTI */}
+{/* BOX MAPPA HUB - FIX DEFINITIVO TUTTI I PUNTI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -149,25 +149,25 @@ export default function HubLayout({
           <body>
             <div id="map"></div>
             <script>
-              // Centro la mappa su Roma
-              var map = L.map('map').setView([41.8902, 12.4922], 11);
+              var map = L.map('map').setView([41.85, 12.48], 11);
               L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
               var medici = ${JSON.stringify(medici.map(m => ({ nome: m.nome, indirizzo: m.indirizzo })))};
               
-              medici.forEach(function(m) {
-                // Pulizia indirizzo: se c'è "22-24" prende solo "22" per non confondere la mappa
-                var indirizzoPulito = m.indirizzo.split('-')[0].split('/')[0];
+              medici.forEach(function(m, index) {
+                // Pulizia aggressiva: toglie civici doppi, CAP e frazioni
+                var q = m.indirizzo.split(',')[0].split('-')[0].split('/')[0].replace('00183', '').replace('00193', '').replace('00127', '');
                 
-                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(indirizzoPulito + ', Roma'))
-                  .then(r => r.json())
-                  .then(data => {
-                    if (data.length > 0) {
-                      L.marker([data[0].lat, data[0].lon])
-                        .addTo(map)
-                        .bindPopup(m.nome);
-                    }
-                  });
+                // Ritardo di mezzo secondo tra un punto e l'altro per non farci bloccare
+                setTimeout(function() {
+                  fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(q + ' Roma'))
+                    .then(r => r.json())
+                    .then(data => {
+                      if (data.length > 0) {
+                        L.marker([data[0].lat, data[0].lon]).addTo(map).bindPopup(m.nome);
+                      }
+                    });
+                }, index * 600); 
               });
             </script>
           </body>
