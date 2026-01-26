@@ -136,12 +136,12 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .filter(m => m.indirizzo)
-           .map(m => `"${m.nome} ${m.indirizzo}, Roma"`)
-            .join(' OR ')
-        )}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+       src={`https://maps.google.com/maps?q=${encodeURIComponent(
+  medici
+    .filter(m => m.indirizzo)
+    .map(m => `"${m.nome}, ${m.indirizzo}, Roma"`) 
+    .join(' | ')
+)}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
