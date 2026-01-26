@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE - IL CODICE CHE FUNZIONAVA ALL'INIZIO */}
+{/* BOX MAPPA HUB - GOOGLE MAPS ORIGINALE SENZA CONCORRENTI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -136,29 +136,12 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/search?q=${encodeURIComponent(
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici
-            .map(m => {
-              // Usiamo Nome + Zona per essere sicuri che Google becchi i TUOI
-              return `${m.nome} ${m.zona} Roma`;
-            })
+            .filter(m => m.lat && m.lng)
+            .map(m => `${m.lat},${m.lng}`) // USA LE COORDINATE CHE ABBIAMO MESSO!
             .join(' OR ')
-        )}&key=VUOTA_O_RIMUOVI`} 
-        /* ATTENZIONE: Se ti ridà l'errore della Key, usa la versione qui sotto 
-           che è quella "standard" di ricerca che non fallisce mai:
-        */
-        srcDoc={`
-          <style>body{margin:0;}</style>
-          <iframe 
-            width="100%" 
-            height="400" 
-            frameborder="0" 
-            style="border:0" 
-            src="https://maps.google.com/maps?q=${encodeURIComponent(
-              medici.map(m => `${m.nome} ${m.zona} Roma`).join(' OR ')
-            )}&t=&z=12&ie=UTF8&iwloc=&output=embed">
-          </iframe>
-        `}
+        )}&t=&z=12&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -167,9 +150,10 @@ export default function HubLayout({
     )}
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture verificate a Roma (Ricerca Mirata)
+    📍 Posizione esatta delle strutture verificate a Roma
   </p>
 </div>
+
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
@@ -179,7 +163,7 @@ export default function HubLayout({
   fontStyle: 'italic',
   lineHeight: '1.5'
 }}>
-  La mappa mostra la posizione dei servizi di <strong>{titolo} a Roma</strong>, garantendo la visualizzazione esclusiva delle strutture verificate.
+  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
 </p>
      <div style={{ display: 'block' }}>
           {loading ? (
