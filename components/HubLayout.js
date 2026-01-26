@@ -139,7 +139,7 @@ export default function HubLayout({
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici
             .filter(m => m.indirizzo)
-            .map(m => `"${m.indirizzo}, Roma"`) // Indirizzo esatto tra virgolette + Roma
+           .map(m => `"${m.nome} ${m.indirizzo}, Roma"`)
             .join(' OR ')
         )}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
