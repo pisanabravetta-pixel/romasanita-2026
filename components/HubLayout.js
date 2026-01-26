@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - VERSIONE DEFINITIVA (SOLO I TUOI INDIRIZZI) */}
+{/* BOX MAPPA HUB - IL TUO CODICE ORIGINALE SISTEMATO PER IL BUILD */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -134,12 +134,10 @@ export default function HubLayout({
         height="100%"
         style={{ border: 0 }}
         loading="lazy"
-        allowFullScreen
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici
-            .filter(m => m.stato === 'pubblicato' && m.indirizzo) // Filtra solo quelli attivi con indirizzo
-            .map(m => `"${m.indirizzo}, Roma"`) // Virgolette per precisione chirurgica
-            .join(' OR ') || "Roma, Italia"
+          medici.filter(m => m.indirizzo).length > 0
+            ? medici.filter(m => m.indirizzo).map(m => `"${m.indirizzo}"`).join(' OR ')
+            : "Roma, Italia"
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
