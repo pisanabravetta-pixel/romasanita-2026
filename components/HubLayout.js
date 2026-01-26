@@ -148,7 +148,6 @@ export default function HubLayout({
       </div>
     )}
   </div>
-</div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
     📍 Solo strutture verificate a Roma (Mappa Indipendente)
   </p>
