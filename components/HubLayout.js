@@ -126,28 +126,17 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - FIX BUILD E COERENZA ANNUNCI */}
+{/* BOX MAPPA HUB - FIX DEFINITIVO SENZA ERRORI DI SINTASSI */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        allowFullScreen
-        src={`https://www.google.com/maps/embed/v1/search?key=NON_INSERIRE_CHIAVE&q=$3{encodeURIComponent(
-          medici.filter(m => m && m.nome).map(m => m.nome + " " + (m.zona || "") + " Roma").join(" OR ")
-        )}&output=embed`}
-      ></iframe>
-    ) : (
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        src={`https://www.google.com/maps/embed/v1/search?key=NON_INSERIRE_CHIAVE&q=$4{encodeURIComponent(titolo + " Roma")}&output=embed`}
-      ></iframe>
-    )}
+    <iframe
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      loading="lazy"
+      allowFullScreen
+      src={`https://www.google.com/maps/embed/v1/search?key=NON_INSERIRE_CHIAVE&q=$5{encodeURIComponent(titolo + " Roma")}&output=embed`}
+    ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
     📍 Strutture di {titolo} verificate a Roma
