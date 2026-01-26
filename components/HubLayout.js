@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE - VERSIONE COMPATIBILE CON BUILD */}
+{/* MAPPA GOOGLE - VERSIONE "QUARTIERE" CHE NON CHIEDE API KEY */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     <iframe
@@ -135,11 +135,22 @@ export default function HubLayout({
       style={{ border: 0 }}
       loading="lazy"
       allowFullScreen
-      src={`https://www.google.com/maps/embed/v1/search?key=IL_TUO_SITO_USA_EMBED_FREE&q=${encodeURIComponent(titolo + " Roma")}`}
+      src={`https://www.google.com/maps/embed/v1/search?q=${encodeURIComponent(titolo + " Roma")}&key=NON_INSERIRE_NULLA_QUI`} 
+      // NOTA: Se sopra ti dà ancora errore, usa il link qui sotto che è quello "pulito" da ricerca:
+      srcDoc={`
+        <style>body{margin:0;}</style>
+        <iframe 
+          width="100%" 
+          height="400" 
+          frameborder="0" 
+          style="border:0" 
+          src="https://www.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&output=embed">
+        </iframe>
+      `}
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture di {titolo} verificate a Roma
+    📍 Strutture verificate a Roma
   </p>
 </div>
 <p style={{ 
