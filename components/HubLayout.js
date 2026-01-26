@@ -126,20 +126,65 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - VERSIONE "PAGINA QUARTIERE" GARANTITA */}
+{/* MAPPA HUB - SOLO LE TUE STRUTTURE DA SUPABASE */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+  <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
     <iframe
       width="100%"
       height="100%"
       style={{ border: 0 }}
-      loading="lazy"
-      allowFullScreen
-      src={`https://www.google.com/maps?q=${encodeURIComponent(titolo + " Roma")}&output=embed`}
+      srcDoc={`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+          <style>
+            body { margin: 0; padding: 0; }
+            #map { height: 100vh; width: 100%; }
+            .custom-popup { font-family: sans-serif; text-align: center; }
+            .custom-popup b { color: ${colore}; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <div id="map"></div>
+          <script>
+            // 1. Inizializza mappa su Roma
+            var map = L.map('map').setView([41.9028, 12.4964], 11);
+            
+            // 2. Carica stile mappa pulito (No concorrenti, solo strade)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+              attribution: '© OpenStreetMap'
+            }).addTo(map);
+            
+            // 3. Prende i dati passati da Supabase (SOLO i tuoi medici pubblicati)
+            var punti = ${JSON.stringify(medici.filter(m => m.lat && m.lng).map(m => ({
+              nome: m.nome,
+              lat: parseFloat(m.lat),
+              lng: parseFloat(m.lng),
+              zona: m.zona
+            })))};
+            
+            if (punti.length > 0) {
+              var markers = [];
+              punti.forEach(function(p) {
+                var m = L.marker([p.lat, p.lng]).addTo(map)
+                  .bindPopup("<div class='custom-popup'><b>" + p.nome + "</b><br>" + p.zona + "</div>");
+                markers.push(m);
+              });
+              
+              // 4. Inquadra automaticamente solo i tuoi medici
+              var group = new L.featureGroup(markers);
+              map.fitBounds(group.getBounds().pad(0.2));
+            }
+          </script>
+        </body>
+        </html>
+      `}
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Strutture di {titolo} verificate a Roma
+    📍 Mostrate solo le {medici.length} strutture verificate di {titolo}
   </p>
 </div>
 
