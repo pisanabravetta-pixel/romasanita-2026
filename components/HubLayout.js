@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* MAPPA GOOGLE CON COORDINATE - STILE QUARTIERE */}
+{/* MAPPA GOOGLE - RITORNO AL METODO FUNZIONANTE (SENZA API KEY) */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     <iframe
@@ -135,15 +135,13 @@ export default function HubLayout({
       style={{ border: 0 }}
       loading="lazy"
       allowFullScreen
-      src={`https://www.google.com/maps/embed/v1/search?key=NON_SERVE_CHIAVE&q=${encodeURIComponent(
-        medici.filter(m => m.lat && m.lng)
-        .map(m => `${m.lat},${m.lng}`)
-        .join(' OR ')
-      )}`}
+      src={`https://www.google.com/maps?q=${encodeURIComponent(
+        medici.map(m => m.lat && m.lng ? `${m.lat},${m.lng}` : `${m.nome} ${m.zona} Roma`).join(' OR ')
+      )}&output=embed`}
     ></iframe>
   </div>
   <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Posizioni esatte verificate tramite coordinate
+    📍 Strutture verificate a Roma
   </p>
 </div>
 
