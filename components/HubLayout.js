@@ -126,7 +126,7 @@ export default function HubLayout({
   </div>
 </div>
 
-{/* BOX MAPPA HUB - LOGICA "SLUG" (FUNZIONANTE) */}
+{/* BOX MAPPA HUB - PULIZIA TOTALE E FIX BUILD */}
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
@@ -136,10 +136,12 @@ export default function HubLayout({
         style={{ border: 0 }}
         loading="lazy"
         allowFullScreen
-        /* Applichiamo la logica delle pagine quartiere: NOMI + ROMA */
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici.map(m => m.nome).join(' OR ')
-        )}+${encodeURIComponent('Roma')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+          medici
+            .filter(m => m.indirizzo)
+            .map(m => `"${m.indirizzo}, Roma"`) // Indirizzo esatto tra virgolette + Roma
+            .join(' OR ')
+        )}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -151,7 +153,7 @@ export default function HubLayout({
     📍 Posizione delle strutture verificate a Roma
   </p>
 </div>
-  
+
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
@@ -161,9 +163,8 @@ export default function HubLayout({
   fontStyle: 'italic',
   lineHeight: '1.5'
 }}>
-  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong> nei diversi quartieri della città, aiutando a individuare rapidamente le strutture più vicine alla tua posizione.
+  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
 </p>
-
      <div style={{ display: 'block' }}>
           {loading ? (
             <p>Caricamento...</p>
