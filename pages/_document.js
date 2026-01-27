@@ -12,9 +12,9 @@ export default function Document() {
           rel="stylesheet" 
         />
 
-        {/* LIBRERIA LEAFLET PER LA MAPPA */}
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" async></script>
+  {/* LIBRERIA LEAFLET PER LA MAPPA */}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
       </Head>
       <body style={{ margin: 0, padding: 0 }}>
         <Main />
