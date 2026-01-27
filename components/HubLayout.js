@@ -186,7 +186,7 @@ export default function HubLayout({
           </div>
           
           <a 
- href={https://www.google.com/url?sa=E&source=gmail&q=https://www.google.com/maps?q=${v.lat},${v.lng}}
+href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
   target="_blank" 
   rel="noopener noreferrer" 
   style={{ 
@@ -218,7 +218,7 @@ export default function HubLayout({
           <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
         </div>
        <a 
-  href={https://www.google.com/url?sa=E&source=gmail&q=https://www.google.com/maps?q=${v.lat},${v.lng}}
+href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
   target="_blank" 
   rel="noopener noreferrer" 
   style={{ 
@@ -266,7 +266,7 @@ export default function HubLayout({
                   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                   <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
               <a 
-  href={`https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lng}`} 
+href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
   target="_blank" 
   rel="noreferrer" 
   style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
