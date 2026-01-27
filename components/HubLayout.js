@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - AUTOMATICA, PULITA E CENTRATA */}
+{/* BOX MAPPA LEAFLET - VERSIONE DEFINITIVA PRO (SOLO DATI DIRETTI) */}
 <div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
@@ -141,15 +141,14 @@ export default function HubLayout({
       border: '1px solid #e2e8f0',
       background: '#f8fafc' 
     }}
-  >
-  </div>
+  ></div>
 
   <p style={{ 
     marginTop: '12px', 
     fontSize: '0.85rem', 
     color: '#64748b', 
     fontStyle: 'italic', 
-    textAlign: 'center' // <--- SCRITTA CENTRATA QUI
+    textAlign: 'center' 
   }}>
     📍 La mappa mostra esclusivamente le strutture presenti su Diagnostica Roma. <br />
     Per navigare fino alla sede, usa il pulsante <strong>"Vedi Mappa"</strong> nella scheda del professionista.
@@ -159,36 +158,24 @@ export default function HubLayout({
     __html: `
       setTimeout(() => {
         if (typeof L !== 'undefined' && !window.mapInitialized) {
+          // Centriamo su Roma con zoom 11 per vedere tutti i punti
           const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+          
           L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap'
           }).addTo(map);
 
           const doctors = ${JSON.stringify(medici || [])};
           
-          doctors.forEach((m, index) => {
-            // Se abbiamo le coordinate, usiamole subito (METODO PIÙ VELOCE)
+          doctors.forEach((m) => {
             if (m.lat && m.lng) {
               L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
-                .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-            } 
-            // Altrimenti cerchiamo l'indirizzo con un piccolo ritardo per non farci bloccare
-            else if (m.indirizzo) {
-              setTimeout(() => {
-                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(m.indirizzo + ', Roma, Italy'))
-                  .then(r => r.json())
-                  .then(data => {
-                    if (data && data.length > 0) {
-                      L.marker([data[0].lat, data[0].lon]).addTo(map)
-                        .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-                    }
-                  }).catch(e => console.error('Errore mappa:', e));
-              }, index * 500); // Mezzo secondo di pausa tra una ricerca e l'altra
+                .bindPopup('<div style="font-family: sans-serif;"><b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo + '</div>');
             }
           });
           window.mapInitialized = true;
         }
-      }, 1000);
+      }, 300); 
     `
   }} />
 </div>
