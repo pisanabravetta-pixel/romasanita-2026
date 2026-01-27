@@ -129,7 +129,7 @@ export default function HubLayout({
 <div style={{ marginBottom: '30px' }}>
   <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
     {medici && medici.length > 0 ? (
-     <iframe
+ <iframe
         width="100%"
         height="100%"
         style={{ border: 0 }}
@@ -138,11 +138,11 @@ export default function HubLayout({
           medici && medici.filter(m => m.indirizzo).length > 0
             ? medici
                 .filter(m => m.indirizzo)
-                .map(m => '"' + m.indirizzo + ' Roma"')
+                .map(m => '"' + (m.nome || m.specialista) + ' ' + m.indirizzo + ' Roma"')
                 .join(' OR ')
             : "Roma, Italia"
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
-      ></iframe> 
+      ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
