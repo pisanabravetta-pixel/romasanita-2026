@@ -185,8 +185,8 @@ export default function HubLayout({
             </p>
           </div>
           
-          <a 
-href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
+<a 
+  href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
   target="_blank" 
   rel="noopener noreferrer" 
   style={{ 
@@ -217,21 +217,21 @@ href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
           <h3 style={{ margin: '0', color: colore, fontSize: '20px' }}>{m.nome}</h3>
           <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
         </div>
-       <a 
-href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-  target="_blank" 
-  rel="noopener noreferrer" 
-  style={{ 
-    backgroundColor: colore, 
-    color: 'white', 
-    padding: '10px 20px', 
-    borderRadius: '8px', 
-    fontWeight: '700', 
-    textDecoration: 'none' 
-  }}
->
-  Mappa
-</a> 
+        <a 
+          href={`https://www.google.it/maps?q=${m.lat},${m.lng}`} // <--- QUI DEVE ESSERE 'm', NON 'v'
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ 
+            backgroundColor: colore, 
+            color: 'white', 
+            padding: '10px 20px', 
+            borderRadius: '8px', 
+            fontWeight: '700', 
+            textDecoration: 'none' 
+          }}
+        >
+          Mappa
+        </a> 
       </div>
     </div>
   ))}
@@ -265,8 +265,8 @@ href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                   <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-              <a 
-href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+        <a 
+  href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
   target="_blank" 
   rel="noreferrer" 
   style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
