@@ -136,8 +136,14 @@ export default function HubLayout({
         loading="lazy"
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici.filter(m => m.indirizzo).length > 0
-      ? medici.filter(m => m.indirizzo).map(m => `"${m.indirizzo} Roma"`).join(' OR ')
-        )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+     src={`https://maps.google.com/maps?q=${encodeURIComponent(
+  medici && medici.filter(m => m.indirizzo).length > 0
+    ? medici
+        .filter(m => m.indirizzo)
+        .map(m => '"' + m.indirizzo + ' Roma"')
+        .join(' OR ')
+    : "Roma, Italia"
+)}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
