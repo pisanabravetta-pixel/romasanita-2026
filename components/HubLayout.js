@@ -269,7 +269,18 @@ export default function HubLayout({
   href={`https://www.google.it/maps?q=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
   target="_blank" 
   rel="noreferrer" 
-  style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
+  style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#f1f5f9', 
+    color: '#1e293b', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none', 
+    border: '1px solid #e2e8f0' 
+  }}
 >
   🗺️ MAPPA
 </a>
