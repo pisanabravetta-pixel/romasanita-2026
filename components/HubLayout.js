@@ -218,7 +218,7 @@ href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
           <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
         </div>
        <a 
-href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
+href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
   target="_blank" 
   rel="noopener noreferrer" 
   style={{ 
@@ -273,7 +273,7 @@ href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
 >
   🗺️ MAPPA
 </a>
-                    /div>
+    /div>
 
                 {/* PUNTO 4: MICRO TESTO SEO AGGIUNTO QUI */}
                 <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
