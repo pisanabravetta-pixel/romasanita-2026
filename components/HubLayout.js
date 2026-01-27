@@ -125,30 +125,52 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA HUB - IL TUO CODICE ORIGINALE SISTEMATO PER IL BUILD */}
+{/* BOX MAPPA LEAFLET - STRADA B: MINIMALE ED ELEGANTE */}
 <div style={{ marginBottom: '30px' }}>
-  <div style={{ width: '100%', height: '350px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-    {medici && medici.length > 0 ? (
-<iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        loading="lazy"
-        src={`https://maps.google.com/maps?q=${encodeURIComponent(
-          medici && medici.filter(m => m.indirizzo).length > 0
-            ? medici.filter(m => m.indirizzo).map(m => m.indirizzo + " Roma").join(' | ')
-            : "Roma, Italia"
-        )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
-      ></iframe>
-    ) : (
-      <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#94a3b8' }}>Mappa in aggiornamento...</p>
-      </div>
-    )}
+  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px' }}>
+    📍 Strutture presenti in questa zona
+  </h3>
+  
+  <div 
+    id="map" 
+    style={{ 
+      height: '350px', 
+      width: '100%',
+      borderRadius: '12px', 
+      overflow: 'hidden', 
+      border: '1px solid #e2e8f0',
+      background: '#f8fafc' 
+    }}
+  >
+    {/* La mappa verrà inserita qui dallo script sotto */}
   </div>
-  <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-    📍 Solo strutture verificate a Roma (Mappa Indipendente)
+
+  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>
+    📍 La mappa mostra esclusivamente le strutture presenti su Diagnostica Roma. <br />
+    Per navigare fino alla sede, usa il pulsante <strong>"Vedi Mappa"</strong> nella scheda del professionista.
   </p>
+
+  <script dangerouslySetInnerHTML={{
+    __html: `
+      setTimeout(() => {
+        if (typeof L !== 'undefined' && !window.mapInitialized) {
+          const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '© OpenStreetMap'
+          }).addTo(map);
+
+          const doctors = ${JSON.stringify(medici || [])};
+          doctors.forEach(m => {
+            if (m.lat && m.lng) {
+              L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
+                .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+            }
+          });
+          window.mapInitialized = true;
+        }
+      }, 1000);
+    `
+  }} />
 </div>
 
 {/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
