@@ -135,12 +135,12 @@ export default function HubLayout({
   style={{ border: 0 }}
   loading="lazy"
   src={`https://maps.google.com/maps?q=${encodeURIComponent(
-    medici && medici.filter(m => m.indirizzo).length > 0
+    medici && medici.length > 0
       ? medici
           .filter(m => m.indirizzo)
-          .map(m => '"' + m.indirizzo.trim() + ' Roma"')
+          .map(m => '"' + m.indirizzo.split(',')[0].trim() + '"') // Prende solo la prima parte dell'indirizzo
           .join(' OR ')
-      : "Roma, Italia"
+      : "Roma"
   )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
 ></iframe>
     ) : (
