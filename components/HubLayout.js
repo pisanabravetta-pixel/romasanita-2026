@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - FIX CARICAMENTO VELOCE */}
+{/* BOX MAPPA LEAFLET - FIX DEFINITIVO REACT-STYLE */}
 <div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
@@ -150,28 +150,44 @@ export default function HubLayout({
 
   <script dangerouslySetInnerHTML={{
     __html: `
-      (function initMap() {
-        if (typeof L !== 'undefined') {
-          // Rimuove inizializzazioni precedenti per evitare errori
-          if (window.mapInstance) { window.mapInstance.remove(); }
-          
-          const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
-          window.mapInstance = map;
+      (function checkAndInit() {
+        const mapContainer = document.getElementById('map');
+        const doctorsData = ${JSON.stringify(medici || [])};
 
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap'
-          }).addTo(map);
+        // Se l'elemento non esiste ancora, riprova tra 50ms
+        if (!mapContainer || typeof L === 'undefined') {
+          setTimeout(checkAndInit, 50);
+          return;
+        }
 
-          const doctors = ${JSON.stringify(medici || [])};
-          doctors.forEach((m) => {
+        // Se la mappa è già stata creata in questa sessione, la distruggiamo per resettarla
+        if (window.leafletMap) {
+          window.leafletMap.remove();
+        }
+
+        // Creazione mappa
+        window.leafletMap = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '© OpenStreetMap'
+        }).addTo(window.leafletMap);
+
+        // Funzione per aggiungere i marker
+        if (doctorsData.length > 0) {
+          let hasMarkers = false;
+          doctorsData.forEach((m) => {
             if (m.lat && m.lng) {
-              L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
-                .bindPopup('<b>' + (m.nome || m.specialista || 'Struttura') + '</b><br>' + m.indirizzo);
+              L.marker([parseFloat(m.lat), parseFloat(m.lng)])
+                .addTo(window.leafletMap)
+                .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+              hasMarkers = true;
             }
           });
+          
+          // Se non ci sono marker (tutte lat/lng vuote), stampiamo un log per debug
+          if (!hasMarkers) console.warn("Dati medici presenti ma lat/lng mancanti su Supabase");
         } else {
-          // Se Leaflet non è ancora pronto, riprova tra 100ms
-          setTimeout(initMap, 100);
+          console.warn("Nessun dato medici ricevuto nel componente HubLayout");
         }
       })();
     `
