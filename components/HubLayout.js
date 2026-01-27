@@ -136,8 +136,7 @@ export default function HubLayout({
         loading="lazy"
         src={`https://maps.google.com/maps?q=${encodeURIComponent(
           medici.filter(m => m.indirizzo).length > 0
-            ? medici.filter(m => m.indirizzo).map(m => `"${m.indirizzo}"`).join(' OR ')
-            : "Roma, Italia"
+           ? medici.filter(m => m.indirizzo).map(m => "${m.indirizzo} Roma").join(' OR ')
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
       ></iframe>
     ) : (
