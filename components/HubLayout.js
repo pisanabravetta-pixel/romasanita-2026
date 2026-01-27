@@ -134,14 +134,14 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${encodeURIComponent(
-    medici && medici.length > 0
+  src={`http://googleusercontent.com/maps.google.com/maps?q=${encodeURIComponent(
+    medici && medici.filter(m => m.indirizzo).length > 0
       ? medici
           .filter(m => m.indirizzo)
           .map(m => m.indirizzo + " Roma")
-          .join(' | ') // Usiamo il pipe invece di OR, più digeribile per Google
-      : "Roma"
-  )}&t=&z=13&ie=UTF8&iwloc=B&output=embed`}
+          .join(' OR ')
+      : "Roma, Italia"
+  )}&t=m&z=11&ie=UTF8&iwloc=B&output=embed`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
