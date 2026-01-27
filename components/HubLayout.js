@@ -266,10 +266,21 @@ export default function HubLayout({
                   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                   <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
 <a 
-  href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
+  href={v.mappa_link ? v.mappa_link : `https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
   target="_blank" 
   rel="noreferrer" 
-  style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
+  style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#f1f5f9', 
+    color: '#1e293b', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none', 
+    border: '1px solid #e2e8f0' 
+  }}
 >
   🗺️ MAPPA
 </a>
