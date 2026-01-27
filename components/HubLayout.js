@@ -138,10 +138,10 @@ export default function HubLayout({
     medici && medici.length > 0
       ? medici
           .filter(m => m.indirizzo)
-          .map(m => m.indirizzo + " Roma")
+          .map(m => `"${m.nome || m.specialista} ${m.indirizzo} Roma"`)
           .join(' OR ')
       : "Roma"
-  )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+  )}&t=m&z=12&iwloc=addr&output=embed`}
 ></iframe>
     ) : (
       <div style={{ height: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
