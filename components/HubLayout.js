@@ -134,11 +134,11 @@ export default function HubLayout({
   height="100%"
   style={{ border: 0 }}
   loading="lazy"
-  src={`https://maps.google.com/maps?q=${encodeURIComponent(
+  src={`http://googleusercontent.com/maps.google.com/maps?q=${encodeURIComponent(
     medici && medici.length > 0
       ? medici
           .filter(m => m.indirizzo)
-          .map(m => '"' + m.indirizzo.split(',')[0].trim() + '"') // Prende solo la prima parte dell'indirizzo
+          .map(m => m.indirizzo + " Roma")
           .join(' OR ')
       : "Roma"
   )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
