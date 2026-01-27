@@ -138,7 +138,7 @@ export default function HubLayout({
           medici && medici.filter(m => m.indirizzo).length > 0
             ? medici
                 .filter(m => m.indirizzo)
-                .map(m => '"' + (m.nome || m.specialista) + ' ' + m.indirizzo + ' Roma"')
+                .map(m => '"' + m.indirizzo + ' Roma"')
                 .join(' OR ')
             : "Roma, Italia"
         )}&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
