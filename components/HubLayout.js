@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - VERSIONE DEFINITIVA PRO (SOLO DATI DIRETTI) */}
+{/* BOX MAPPA LEAFLET - FIX CARICAMENTO VELOCE */}
 <div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
@@ -143,39 +143,37 @@ export default function HubLayout({
     }}
   ></div>
 
-  <p style={{ 
-    marginTop: '12px', 
-    fontSize: '0.85rem', 
-    color: '#64748b', 
-    fontStyle: 'italic', 
-    textAlign: 'center' 
-  }}>
+  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic', textAlign: 'center' }}>
     📍 La mappa mostra esclusivamente le strutture presenti su Diagnostica Roma. <br />
     Per navigare fino alla sede, usa il pulsante <strong>"Vedi Mappa"</strong> nella scheda del professionista.
   </p>
 
   <script dangerouslySetInnerHTML={{
     __html: `
-      setTimeout(() => {
-        if (typeof L !== 'undefined' && !window.mapInitialized) {
-          // Centriamo su Roma con zoom 11 per vedere tutti i punti
-          const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+      (function initMap() {
+        if (typeof L !== 'undefined') {
+          // Rimuove inizializzazioni precedenti per evitare errori
+          if (window.mapInstance) { window.mapInstance.remove(); }
           
+          const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+          window.mapInstance = map;
+
           L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap'
           }).addTo(map);
 
           const doctors = ${JSON.stringify(medici || [])};
-          
           doctors.forEach((m) => {
             if (m.lat && m.lng) {
               L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
-                .bindPopup('<div style="font-family: sans-serif;"><b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo + '</div>');
+                .bindPopup('<b>' + (m.nome || m.specialista || 'Struttura') + '</b><br>' + m.indirizzo);
             }
           });
-          window.mapInitialized = true;
+        } else {
+          // Se Leaflet non è ancora pronto, riprova tra 100ms
+          setTimeout(initMap, 100);
         }
-      }, 300); 
+      })();
     `
   }} />
 </div>
