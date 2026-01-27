@@ -125,7 +125,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - STRADA B: MINIMALE ED ELEGANTE */}
+{/* BOX MAPPA LEAFLET - AUTOMATICA E PULITA */}
 <div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px' }}>
     📍 Strutture presenti in questa zona
@@ -142,7 +142,6 @@ export default function HubLayout({
       background: '#f8fafc' 
     }}
   >
-    {/* La mappa verrà inserita qui dallo script sotto */}
   </div>
 
   <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>
@@ -164,6 +163,16 @@ export default function HubLayout({
             if (m.lat && m.lng) {
               L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
                 .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+            } else if (m.indirizzo) {
+              // CERCA L'INDIRIZZO AUTOMATICAMENTE SE MANCANO LE COORDINATE
+              fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(m.indirizzo + ' Roma'))
+                .then(r => r.json())
+                .then(data => {
+                  if (data.length > 0) {
+                    L.marker([data[0].lat, data[0].lon]).addTo(map)
+                      .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+                  }
+                }).catch(e => console.log('Geocoding error:', e));
             }
           });
           window.mapInitialized = true;
@@ -172,7 +181,6 @@ export default function HubLayout({
     `
   }} />
 </div>
-
 {/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
   {medici && medici.length > 0 ? (
