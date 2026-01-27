@@ -217,14 +217,21 @@ export default function HubLayout({
           <h3 style={{ margin: '0', color: colore, fontSize: '20px' }}>{m.nome}</h3>
           <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
         </div>
-        <a 
-          href={`https://www.google.com/maps/search/?api=1&query=$6{m.lat},${m.lng}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ backgroundColor: colore, color: 'white', padding: '10px 20px', borderRadius: '8px', fontWeight: '700', textDecoration: 'none' }}
-        >
-          Mappa
-        </a>
+       <a 
+  href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
+  target="_blank" 
+  rel="noopener noreferrer" 
+  style={{ 
+    backgroundColor: colore, 
+    color: 'white', 
+    padding: '10px 20px', 
+    borderRadius: '8px', 
+    fontWeight: '700', 
+    textDecoration: 'none' 
+  }}
+>
+  Mappa
+</a> 
       </div>
     </div>
   ))}
