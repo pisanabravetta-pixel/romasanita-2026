@@ -125,9 +125,9 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - AUTOMATICA E PULITA */}
+{/* BOX MAPPA LEAFLET - AUTOMATICA, PULITA E CENTRATA */}
 <div style={{ marginBottom: '30px' }}>
-  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px' }}>
+  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
   
@@ -144,7 +144,13 @@ export default function HubLayout({
   >
   </div>
 
-  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>
+  <p style={{ 
+    marginTop: '12px', 
+    fontSize: '0.85rem', 
+    color: '#64748b', 
+    fontStyle: 'italic', 
+    textAlign: 'center' // <--- SCRITTA CENTRATA QUI
+  }}>
     📍 La mappa mostra esclusivamente le strutture presenti su Diagnostica Roma. <br />
     Per navigare fino alla sede, usa il pulsante <strong>"Vedi Mappa"</strong> nella scheda del professionista.
   </p>
@@ -159,20 +165,25 @@ export default function HubLayout({
           }).addTo(map);
 
           const doctors = ${JSON.stringify(medici || [])};
-          doctors.forEach(m => {
+          
+          doctors.forEach((m, index) => {
+            // Se abbiamo le coordinate, usiamole subito (METODO PIÙ VELOCE)
             if (m.lat && m.lng) {
               L.marker([parseFloat(m.lat), parseFloat(m.lng)]).addTo(map)
                 .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-            } else if (m.indirizzo) {
-              // CERCA L'INDIRIZZO AUTOMATICAMENTE SE MANCANO LE COORDINATE
-              fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(m.indirizzo + ' Roma'))
-                .then(r => r.json())
-                .then(data => {
-                  if (data.length > 0) {
-                    L.marker([data[0].lat, data[0].lon]).addTo(map)
-                      .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-                  }
-                }).catch(e => console.log('Geocoding error:', e));
+            } 
+            // Altrimenti cerchiamo l'indirizzo con un piccolo ritardo per non farci bloccare
+            else if (m.indirizzo) {
+              setTimeout(() => {
+                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(m.indirizzo + ', Roma, Italy'))
+                  .then(r => r.json())
+                  .then(data => {
+                    if (data && data.length > 0) {
+                      L.marker([data[0].lat, data[0].lon]).addTo(map)
+                        .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+                    }
+                  }).catch(e => console.error('Errore mappa:', e));
+              }, index * 500); // Mezzo secondo di pausa tra una ricerca e l'altra
             }
           });
           window.mapInitialized = true;
