@@ -13,11 +13,12 @@ export default function DentistiRoma() {
     async function fetchDocs() {
       const queryBusca = getDBQuery('dentisti'); 
       const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('specialista', `%${queryBusca.spec}%`) 
-        .order('is_top', { ascending: false });
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  // INTERVENTO CHIRURGICO: Cerca in entrambe le colonne
+  .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+  .order('is_top', { ascending: false });
       
       if (data) setMedici(data);
       setLoading(false);
