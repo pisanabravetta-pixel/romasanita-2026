@@ -186,20 +186,20 @@ export default function HubLayout({
           </div>
           
           <a 
-            href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              backgroundColor: colore, 
-              color: 'white', 
-              padding: '12px 24px', 
-              borderRadius: '8px', 
-              textDecoration: 'none', 
-              fontWeight: '700' 
-            }}
-          >
-            Vedi Mappa
-          </a>
+  href={`https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}`}
+  target="_blank" 
+  rel="noopener noreferrer" 
+  style={{ 
+    backgroundColor: colore, 
+    color: 'white', 
+    padding: '10px 20px', 
+    borderRadius: '8px', 
+    fontWeight: '700', 
+    textDecoration: 'none' 
+  }}
+>
+  Mappa
+</a>
         </div>
       </div>
     ))
