@@ -125,8 +125,8 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - FIX DEFINITIVO REACT-STYLE */}
-<div style={{ marginBottom: '30px' }}>
+{/* BOX MAPPA LEAFLET - INTELLIGENTE E REATTIVA */}
+<div style={{ marginBottom: '30px' }} id="map-container">
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
@@ -141,54 +141,61 @@ export default function HubLayout({
       border: '1px solid #e2e8f0',
       background: '#f8fafc' 
     }}
+    data-medici={JSON.stringify(medici || [])} // Passiamo i dati qui come attributo
   ></div>
-
-  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic', textAlign: 'center' }}>
-    📍 La mappa mostra esclusivamente le strutture presenti su Diagnostica Roma. <br />
-    Per navigare fino alla sede, usa il pulsante <strong>"Vedi Mappa"</strong> nella scheda del professionista.
-  </p>
 
   <script dangerouslySetInnerHTML={{
     __html: `
-      (function checkAndInit() {
-        const mapContainer = document.getElementById('map');
-        const doctorsData = ${JSON.stringify(medici || [])};
+      (function() {
+        let map = null;
 
-        // Se l'elemento non esiste ancora, riprova tra 50ms
-        if (!mapContainer || typeof L === 'undefined') {
-          setTimeout(checkAndInit, 50);
-          return;
-        }
-
-        // Se la mappa è già stata creata in questa sessione, la distruggiamo per resettarla
-        if (window.leafletMap) {
-          window.leafletMap.remove();
-        }
-
-        // Creazione mappa
-        window.leafletMap = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
-        
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          attribution: '© OpenStreetMap'
-        }).addTo(window.leafletMap);
-
-        // Funzione per aggiungere i marker
-        if (doctorsData.length > 0) {
-          let hasMarkers = false;
-          doctorsData.forEach((m) => {
-            if (m.lat && m.lng) {
-              L.marker([parseFloat(m.lat), parseFloat(m.lng)])
-                .addTo(window.leafletMap)
-                .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-              hasMarkers = true;
-            }
-          });
+        function drawMarkers(target) {
+          const dataRaw = target.getAttribute('data-medici');
+          if (!dataRaw) return;
+          const docs = JSON.parse(dataRaw);
           
-          // Se non ci sono marker (tutte lat/lng vuote), stampiamo un log per debug
-          if (!hasMarkers) console.warn("Dati medici presenti ma lat/lng mancanti su Supabase");
-        } else {
-          console.warn("Nessun dato medici ricevuto nel componente HubLayout");
+          if (docs.length > 0 && map) {
+            // Puliamo marker vecchi se esistono
+            map.eachLayer((layer) => {
+              if (layer instanceof L.Marker) map.removeLayer(layer);
+            });
+
+            docs.forEach(m => {
+              if (m.lat && m.lng) {
+                L.marker([parseFloat(m.lat), parseFloat(m.lng)])
+                 .addTo(map)
+                 .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
+              }
+            });
+          }
         }
+
+        function init() {
+          const el = document.getElementById('map');
+          if (!el || typeof L === 'undefined') {
+            setTimeout(init, 100);
+            return;
+          }
+
+          if (window.mapInstance) { window.mapInstance.remove(); }
+          map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+          window.mapInstance = map;
+
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+
+          // 1. Prova a disegnare subito
+          drawMarkers(el);
+
+          // 2. "Osserva" se i dati cambiano (quando Supabase risponde)
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.attributeName === 'data-medici') drawMarkers(el);
+            });
+          });
+          observer.observe(el, { attributes: true });
+        }
+
+        init();
       })();
     `
   }} />
