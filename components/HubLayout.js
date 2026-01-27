@@ -1,5 +1,5 @@
+import React, { useEffect } from 'react';
 import { quartieriTop } from '../lib/seo-logic';
-import React from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -20,10 +20,35 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = []
 }) {
- const mediciAttivi = medici.filter(m => m.attivo).length > 0 
+  const mediciAttivi = medici.filter(m => m.attivo).length > 0 
   ? medici.filter(m => m.attivo) 
   : medici;
- return (
+
+  // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA ---
+  useEffect(() => {
+    if (typeof L !== 'undefined' && medici && medici.length > 0) {
+      // Se esiste già una mappa (cambio pagina), la distruggiamo per resettarla
+      if (window.mapInstance) { window.mapInstance.remove(); }
+      
+      const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+      window.mapInstance = map;
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OSM'
+      }).addTo(map);
+
+      medici.forEach((m) => {
+        if (m.lat && m.lng) {
+          L.marker([parseFloat(m.lat), parseFloat(m.lng)])
+            .addTo(map)
+            .bindPopup(`<b>${m.nome || m.specialista}</b><br>${m.indirizzo}`);
+        }
+      });
+    }
+  }, [medici]); // Si attiva automaticamente quando i dati arrivano da Supabase
+  // --- FINE INTERVENTO CHIRURGICO ---
+
+  return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
     <Head>
@@ -125,8 +150,8 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - INTELLIGENTE E REATTIVA */}
-<div style={{ marginBottom: '30px' }} id="map-container">
+{/* BOX MAPPA LEAFLET - PULITO */}
+<div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
@@ -141,64 +166,11 @@ export default function HubLayout({
       border: '1px solid #e2e8f0',
       background: '#f8fafc' 
     }}
-    data-medici={JSON.stringify(medici || [])} // Passiamo i dati qui come attributo
   ></div>
 
-  <script dangerouslySetInnerHTML={{
-    __html: `
-      (function() {
-        let map = null;
-
-        function drawMarkers(target) {
-          const dataRaw = target.getAttribute('data-medici');
-          if (!dataRaw) return;
-          const docs = JSON.parse(dataRaw);
-          
-          if (docs.length > 0 && map) {
-            // Puliamo marker vecchi se esistono
-            map.eachLayer((layer) => {
-              if (layer instanceof L.Marker) map.removeLayer(layer);
-            });
-
-            docs.forEach(m => {
-              if (m.lat && m.lng) {
-                L.marker([parseFloat(m.lat), parseFloat(m.lng)])
-                 .addTo(map)
-                 .bindPopup('<b>' + (m.nome || m.specialista) + '</b><br>' + m.indirizzo);
-              }
-            });
-          }
-        }
-
-        function init() {
-          const el = document.getElementById('map');
-          if (!el || typeof L === 'undefined') {
-            setTimeout(init, 100);
-            return;
-          }
-
-          if (window.mapInstance) { window.mapInstance.remove(); }
-          map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
-          window.mapInstance = map;
-
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
-
-          // 1. Prova a disegnare subito
-          drawMarkers(el);
-
-          // 2. "Osserva" se i dati cambiano (quando Supabase risponde)
-          const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              if (mutation.attributeName === 'data-medici') drawMarkers(el);
-            });
-          });
-          observer.observe(el, { attributes: true });
-        }
-
-        init();
-      })();
-    `
-  }} />
+  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', textAlign: 'center' }}>
+    📍 La mappa mostra le strutture di Diagnostica Roma.
+  </p>
 </div>
 {/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
