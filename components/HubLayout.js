@@ -266,7 +266,7 @@ export default function HubLayout({
                   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                   <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
 <a 
-  href={v.mappa_link ? v.mappa_link : `https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
+  href={`https://www.google.com/maps?z=18&t=m&q=loc:${v.lat}+${v.lng}`}
   target="_blank" 
   rel="noreferrer" 
   style={{ 
