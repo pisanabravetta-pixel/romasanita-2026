@@ -58,7 +58,34 @@ const { data, error } = await supabase
     }
     fetchDati();
   }, [slug]);
+// --- AGGIUNGI DA QUI ---
+  useEffect(() => {
+    if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
+      if (window.mapInstance) { window.mapInstance.remove(); }
+      
+      const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
+      window.mapInstance = map;
 
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OSM'
+      }).addTo(map);
+
+      const group = new L.featureGroup();
+      servizi.forEach((s) => {
+        if (s.lat && s.lng) {
+          const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)])
+            .addTo(map)
+            .bindPopup(`<b>${s.nome}</b><br>${s.indirizzo}`);
+          group.addLayer(marker);
+        }
+      });
+
+      if (servizi.some(s => s.lat && s.lng)) {
+        map.fitBounds(group.getBounds().pad(0.1));
+      }
+    }
+  }, [servizi]);
+  // --- FINE AGGIUNTA ---
   if (!slug) return null;
 
   return (
@@ -152,24 +179,25 @@ const { data, error } = await supabase
           </div>
         </div>
 
-       {/* BOX MAPPA QUARTIERE - SOLO I TUOI ANNUNCI */}
-        <div style={{ marginBottom: '25px' }}>
-          <div style={{ width: '100%', height: '250px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              /* Qui cerchiamo i NOMI dei tuoi servizi + il quartiere, così Google punta solo su di loro */
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(servizi.map(s => s.nome).join(' OR '))}+${encodeURIComponent(meta.zona)}+Roma&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-            ></iframe>
-          </div>
-          <p style={{ fontSize: '12px', color: '#64748b', marginTop: '8px', textAlign: 'center', fontWeight: '600' }}>
-            📍 Posizione delle strutture verificate a {meta.zona}
-          </p>
-        </div>
-{/* MINI TESTO SEO SOTTO LA MAPPA - OBBLIGATORIO (PAGINA QUARTIERE) */}
+    {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
+<div style={{ marginBottom: '0px' }}>
+  <div 
+    id="map" 
+    style={{ 
+      height: '350px', 
+      width: '100%',
+      borderRadius: '12px', 
+      overflow: 'hidden', 
+      border: '1px solid #e2e8f0',
+      background: '#f8fafc',
+      /* Effetto scurito per contrasto */
+      filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
+      marginBottom: '0px' 
+    }}
+  ></div>
+</div>
+
+{/* MINI TESTO SEO SOTTO LA MAPPA - ATTACCATO */}
 <p style={{ 
   fontSize: '14px', 
   color: '#64748b', 
@@ -181,7 +209,6 @@ const { data, error } = await supabase
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-
         {/* LISTA ANNUNCI */}
         <div style={{ display: 'block' }}>
           {servizi.map((v) => (
@@ -194,10 +221,21 @@ const { data, error } = await supabase
                 <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
                 <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} style={{ flex: '1', minWidth: '100px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
 <a 
-  href={`https://www.google.it/maps/search/${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
+  /* COORDINATE PURE: Niente nomi, solo posizione esatta */
+  href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
   target="_blank" 
   rel="noopener noreferrer" 
-  style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+  style={{ 
+    flex: '1', 
+    minWidth: '100px', 
+    backgroundColor: '#64748b', 
+    color: 'white', 
+    padding: '14px', 
+    borderRadius: '10px', 
+    textAlign: 'center', 
+    fontWeight: '800', 
+    textDecoration: 'none' 
+  }}
 >
   🗺️ MAPPA
 </a>
