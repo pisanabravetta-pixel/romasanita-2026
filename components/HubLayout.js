@@ -254,14 +254,31 @@ export default function HubLayout({
     rel="noreferrer" 
     style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
   >
-    🗺️ MAPPA
-  </a>
+  🗺️ MAPPA
+    </a>
+  </div>
+  
+  {/* --- INIZIO TESTO TITOLARE --- */}
+  <p style={{ 
+    fontSize: '11px', 
+    color: '#94a3b8', 
+    marginTop: '16px', 
+    marginBottom: '10px',
+    textAlign: 'center', 
+    lineHeight: '1.5',
+    borderTop: '1px solid #f1f5f9', 
+    paddingTop: '10px' 
+  }}>
+    Dati estratti da fonti pubbliche. Sei il titolare? <br/>
+    Puoi richiedere la gestione o la modifica di questo annuncio 
+    <a href="mailto:info@servizisalute.com" style={{ color: colore, marginLeft: '4px', fontWeight: '700', textDecoration: 'none' }}>cliccando qui</a>
+  </p>
+  {/* --- FINE TESTO TITOLARE --- */}
+
+  <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
+    {badgeSpec} a {v.zona}, Roma
+  </p>
 </div>
-      
- <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
-          {badgeSpec} a {v.zona}, Roma
-        </p>
-      </div>
     ))
   ) : (
     /* BOX CORTESIA SE LISTA VUOTA */
