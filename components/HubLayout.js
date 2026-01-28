@@ -287,9 +287,9 @@ export default function HubLayout({
 </p>
   {/* --- FINE TESTO TITOLARE --- */}
 
-  <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
-    {badgeSpec} a {v.zona}, Roma
-  </p>
+ <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600', textTransform: 'lowercase' }}>
+  <span style={{ textTransform: 'capitalize' }}>{titolo}</span> a Roma {v.zona}
+</p>
 </div>
     ))
   ) : (
