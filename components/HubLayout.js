@@ -239,20 +239,19 @@ export default function HubLayout({
   
   {v.whatsapp && (
 <a 
-  href={`https://wa.me/${(v.whatsapp || '').toString().replace(/\s+/g, '')}`} 
+  href={`https://wa.me/${v.whatsapp || v.telefono || ''}`} 
   style={{ 
+    display: 'block',
     flex: '1', 
     minWidth: '110px', 
     backgroundColor: '#22c55e', 
     color: 'white', 
     padding: '14px', 
-    borderRadius: theme.radius.button, 
+    borderRadius: '10px', 
     textAlign: 'center', 
     fontWeight: '800', 
     textDecoration: 'none' 
   }}
-  target="_blank" 
-  rel="noopener noreferrer"
 >
   💬 WHATSAPP
 </a>
