@@ -151,7 +151,7 @@ export default function HubLayout({
   </div>
 </div>
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
-<div style={{ marginBottom: '0px', paddingBottom: '0px' }}> 
+<div style={{ marginBottom: '0px' }}> 
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
@@ -166,11 +166,25 @@ export default function HubLayout({
       border: '1px solid #e2e8f0',
       background: '#f8fafc',
       filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
-      marginBottom: '0px' // Forza lo spazio a zero
+      marginBottom: '0px' 
     }}
   ></div>
 </div>
-{/* LISTA MEDICI - VERSIONE COORDINATE (GRATUITA) */}
+
+{/* TESTO SEO SOTTO MAPPA - ATTACCATO */}
+<p style={{ 
+  fontSize: '14px', 
+  color: '#64748b', 
+  textAlign: 'center', 
+  marginTop: '8px', // Spazio minimo per leggibilità
+  marginBottom: '30px', 
+  fontStyle: 'italic',
+  lineHeight: '1.5'
+}}>
+  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
+</p>
+
+{/* LISTA MEDICI SINTETICA - SOLO COORDINATE (Il blocco che non trovavi) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
   {medici && medici.length > 0 ? (
     medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
@@ -183,126 +197,84 @@ export default function HubLayout({
             </p>
           </div>
           
-        <a 
-  /* Usiamo solo lat e lng separati da virgola, senza termini di ricerca */
-  href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
-  target="_blank" 
-  rel="noopener noreferrer" 
-  style={{ 
-    backgroundColor: colore, 
-    color: 'white', 
-    padding: '10px 20px', 
-    borderRadius: '8px', 
-    fontWeight: '700', 
-    textDecoration: 'none' 
-  }}
->
-  Mappa
-</a>
+          <a 
+            /* COORDINATE PURE: Forza Google Maps a mostrare solo la posizione geografica */
+            href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ 
+              backgroundColor: colore, 
+              color: 'white', 
+              padding: '10px 20px', 
+              borderRadius: '8px', 
+              fontWeight: '700', 
+              textDecoration: 'none' 
+            }}
+          >
+            Mappa
+          </a>
         </div>
       </div>
     ))
+  ) : null }
+</div>
+
+{/* BLOCCO ANNUNCI DETTAGLIATI (Quello in fondo alla pagina) */}
+<div style={{ display: 'block' }}>
+  {loading ? (
+    <p>Caricamento...</p>
+  ) : mediciAttivi && mediciAttivi.length > 0 ? (
+    mediciAttivi.map((v) => (
+      <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
+        <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+        
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+          {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>{badgeSpec}</span>
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+          <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
+          <a 
+            /* COORDINATE PURE anche qui per coerenza con il servizio gratuito */
+            href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+            target="_blank" 
+            rel="noreferrer" 
+            style={{ 
+              flex: '1', 
+              minWidth: '110px', 
+              backgroundColor: '#f1f5f9', 
+              color: '#1e293b', 
+              padding: '14px', 
+              borderRadius: theme.radius.button, 
+              textAlign: 'center', 
+              fontWeight: '800', 
+              textDecoration: 'none', 
+              border: '1px solid #e2e8f0' 
+            }}
+          >
+            🗺️ MAPPA
+          </a>
+        </div>
+        <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
+          {badgeSpec} a {v.zona}, Roma
+        </p>
+      </div>
+    ))
   ) : (
-    <p style={{ textAlign: 'center', color: '#64748b' }}>Nessuna struttura disponibile al momento.</p>
+    /* BOX CORTESIA SE LISTA VUOTA */
+    <div style={{ backgroundColor: 'white', padding: '40px 20px', borderRadius: theme.radius.main, textAlign: 'center', border: '2px dashed #cbd5e1', marginBottom: '30px' }}>
+      <span style={{ fontSize: '40px', marginBottom: '10px', display: 'block' }}>🔎</span>
+      <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Ricerca in corso a Roma</h3>
+      <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.6', maxWidth: '500px', margin: '0 auto' }}>
+        Stiamo selezionando e verificando i migliori profili per <strong>{titolo} a Roma</strong>.<br/>
+        I nuovi annunci professionali saranno disponibili a breve.
+      </p>
+    </div>
   )}
 </div>
-
-{/* I BOX ANNUNCI TORNANO AL MODELLO PERFETTO (NON TOCCARLI PIÙ) */}
-<div style={{ display: 'grid', gap: '20px' }}>
-  {medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
-    <div key={index} style={{ padding: '24px', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h3 style={{ margin: '0', color: colore, fontSize: '20px' }}>{m.nome}</h3>
-          <p style={{ margin: '5px 0 0', color: '#64748b' }}>📍 {m.indirizzo} — <strong>{m.zona}</strong></p>
-        </div>
-        <a 
-          href={`https://www.google.it/maps?q=${m.lat},${m.lng}`} // <--- QUI DEVE ESSERE 'm', NON 'v'
-          target="_blank" 
-          rel="noopener noreferrer" 
-          style={{ 
-            backgroundColor: colore, 
-            color: 'white', 
-            padding: '10px 20px', 
-            borderRadius: '8px', 
-            fontWeight: '700', 
-            textDecoration: 'none' 
-          }}
-        >
-          Mappa
-        </a> 
-      </div>
-    </div>
-  ))}
-</div>
-
-<p style={{ 
-  fontSize: '14px', 
-  color: '#64748b', 
-  textAlign: 'center', 
-  marginTop: '10px', 
-  marginBottom: '30px', 
-  fontStyle: 'italic',
-  lineHeight: '1.5'
-}}>
-  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
-</p>
-     <div style={{ display: 'block' }}>
-          {loading ? (
-            <p>Caricamento...</p>
-          ) : mediciAttivi && mediciAttivi.length > 0 ? (
-            mediciAttivi.map((v) => (
-              <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
-                <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
-                <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
-                
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                  {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-                  <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>{badgeSpec}</span>
-                </div>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                  <a href={`https://wa.me/${v.whatsapp || ''}`} style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-<a 
-  href={`https://maps.google.com/?q=${encodeURIComponent(v.nome + ' ' + v.indirizzo + ' Roma')}`}
-  target="_blank" 
-  rel="noreferrer" 
-  style={{ 
-    flex: '1', 
-    minWidth: '110px', 
-    backgroundColor: '#f1f5f9', 
-    color: '#1e293b', 
-    padding: '14px', 
-    borderRadius: theme.radius.button, 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none', 
-    border: '1px solid #e2e8f0' 
-  }}
->
-  🗺️ MAPPA
-</a>
-    </div>
-
-    {/* PUNTO 4: MICRO TESTO SEO AGGIUNTO QUI */}
-    <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
-      {badgeSpec} a {v.zona}, Roma
-    </p>
-              </div>
-            ))
-          ) : (
-            /* BOX CORTESIA SE LISTA VUOTA */
-            <div style={{ backgroundColor: 'white', padding: '40px 20px', borderRadius: theme.radius.main, textAlign: 'center', border: '2px dashed #cbd5e1', marginBottom: '30px' }}>
-              <span style={{ fontSize: '40px', marginBottom: '10px', display: 'block' }}>🔎</span>
-              <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Ricerca in corso a Roma</h3>
-              <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.6', maxWidth: '500px', margin: '0 auto' }}>
-                Stiamo selezionando e verificando i migliori profili per <strong>{titolo} a Roma</strong>.<br/>
-                I nuovi annunci professionali saranno disponibili a breve.
-              </p>
-            </div>
-          )}
-        </div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
