@@ -246,7 +246,7 @@ export default function HubLayout({
   >
     💬 WHATSAPP
   </a>
-)}
+
             /* COORDINATE PURE anche qui per coerenza con il servizio gratuito */
             href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
             target="_blank" 
