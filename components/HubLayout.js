@@ -287,9 +287,22 @@ export default function HubLayout({
 </p>
   {/* --- FINE TESTO TITOLARE --- */}
 
- <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600', textTransform: 'lowercase' }}>
-  <span style={{ textTransform: 'capitalize' }}>{titolo}</span> a Roma {v.zona}
-</p>
+<div style={{ textAlign: 'center', marginTop: '12px' }}>
+  <span style={{ 
+    fontSize: '11px', 
+    fontWeight: '800', 
+    backgroundColor: `${colore}15`, 
+    color: colore, 
+    padding: '6px 15px', 
+    borderRadius: '20px', 
+    border: `1px solid ${colore}33`,
+    display: 'inline-block',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px'
+  }}>
+    {titolo} A ROMA {v.zona}
+  </span>
+</div>
 </div>
     ))
   ) : (
