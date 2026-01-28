@@ -237,6 +237,7 @@ export default function HubLayout({
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
           <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
           {v.whatsapp && (
+  {v.whatsapp && (
   <a 
     href={`https://wa.me/${v.whatsapp}`} 
     style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
