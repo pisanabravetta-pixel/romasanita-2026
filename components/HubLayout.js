@@ -150,9 +150,9 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - SPAZIO RIDOTTO E SCURITO */}
-<div style={{ marginBottom: '10px' }}> {/* Ridotto lo spazio qui */}
-  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
+{/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
+<div style={{ marginBottom: '0px', paddingBottom: '0px' }}> 
+  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
   
@@ -165,12 +165,10 @@ export default function HubLayout({
       overflow: 'hidden', 
       border: '1px solid #e2e8f0',
       background: '#f8fafc',
-      /* Manteniamo la mappa più scura per leggibilità */
-      filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)' 
+      filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
+      marginBottom: '0px' // Forza lo spazio a zero
     }}
   ></div>
-
-  {/* Nessun testo qui sotto per evitare spazi inutili */}
 </div>
 {/* LISTA MEDICI - VERSIONE COORDINATE (GRATUITA) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
@@ -185,22 +183,22 @@ export default function HubLayout({
             </p>
           </div>
           
-          <a 
-            /* Ritorno alle coordinate pure: mostra solo il punto sulla mappa */
-            href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
-            target="_blank" 
-            rel="noopener noreferrer" 
-            style={{ 
-              backgroundColor: colore, 
-              color: 'white', 
-              padding: '10px 20px', 
-              borderRadius: '8px', 
-              fontWeight: '700', 
-              textDecoration: 'none' 
-            }}
-          >
-            Mappa
-          </a>
+        <a 
+  /* Usiamo solo lat e lng separati da virgola, senza termini di ricerca */
+  href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
+  target="_blank" 
+  rel="noopener noreferrer" 
+  style={{ 
+    backgroundColor: colore, 
+    color: 'white', 
+    padding: '10px 20px', 
+    borderRadius: '8px', 
+    fontWeight: '700', 
+    textDecoration: 'none' 
+  }}
+>
+  Mappa
+</a>
         </div>
       </div>
     ))
