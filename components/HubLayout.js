@@ -259,20 +259,32 @@ export default function HubLayout({
   </div>
   
   {/* --- INIZIO TESTO TITOLARE --- */}
-  <p style={{ 
-    fontSize: '11px', 
-    color: '#94a3b8', 
-    marginTop: '16px', 
-    marginBottom: '10px',
-    textAlign: 'center', 
-    lineHeight: '1.5',
-    borderTop: '1px solid #f1f5f9', 
-    paddingTop: '10px' 
-  }}>
-    Dati estratti da fonti pubbliche. Sei il titolare? <br/>
-    Puoi richiedere la gestione o la modifica di questo annuncio 
-    <a href="mailto:info@servizisalute.com" style={{ color: colore, marginLeft: '4px', fontWeight: '700', textDecoration: 'none' }}>cliccando qui</a>
-  </p>
+ <p style={{ 
+  fontSize: '11px', 
+  color: '#94a3b8', 
+  marginTop: '16px', 
+  marginBottom: '10px',
+  textAlign: 'center', 
+  lineHeight: '1.5',
+  borderTop: '1px solid #f1f5f9', 
+  paddingTop: '10px' 
+}}>
+  Dati estratti da fonti pubbliche. Sei il titolare? <br/>
+  Puoi richiedere la gestione o la modifica di questo annuncio 
+  <a 
+    href="mailto:info@servizisalute.com?subject=Richiesta gestione annuncio:宣{v.nome}" 
+    style={{ 
+      color: colore, 
+      marginLeft: '4px', 
+      fontWeight: '700', 
+      textDecoration: 'underline',
+      cursor: 'pointer',
+      display: 'inline-block'
+    }}
+  >
+    cliccando qui
+  </a>
+</p>
   {/* --- FINE TESTO TITOLARE --- */}
 
   <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
