@@ -247,26 +247,15 @@ export default function HubLayout({
       💬 WHATSAPP
     </a>
   )}
-</div>
-            /* COORDINATE PURE anche qui per coerenza con il servizio gratuito */
-            href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-            target="_blank" 
-            rel="noreferrer" 
-            style={{ 
-              flex: '1', 
-              minWidth: '110px', 
-              backgroundColor: '#f1f5f9', 
-              color: '#1e293b', 
-              padding: '14px', 
-              borderRadius: theme.radius.button, 
-              textAlign: 'center', 
-              fontWeight: '800', 
-              textDecoration: 'none', 
-              border: '1px solid #e2e8f0' 
-            }}
-          >
-            🗺️ MAPPA
-          </a>
+
+           <a 
+    href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+    target="_blank" 
+    rel="noreferrer" 
+    style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
+  >
+    🗺️ MAPPA
+  </a> 
         </div>
         <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
           {badgeSpec} a {v.zona}, Roma
