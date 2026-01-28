@@ -238,10 +238,9 @@ export default function HubLayout({
   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
   
   {v.whatsapp && (
-   <a 
-  href={v.whatsapp ? `https://wa.me/${v.whatsapp}` : '#'} 
+<a 
+  href={`https://wa.me/${v.whatsapp || ''}`} 
   style={{ 
-    display: v.whatsapp ? 'flex' : 'none', 
     flex: '1', 
     minWidth: '110px', 
     backgroundColor: '#22c55e', 
