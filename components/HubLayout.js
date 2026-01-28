@@ -150,7 +150,7 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - PULITO */}
+{/* BOX MAPPA LEAFLET - PULITO E SCURITO */}
 <div style={{ marginBottom: '30px' }}>
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
@@ -164,13 +164,13 @@ export default function HubLayout({
       borderRadius: '12px', 
       overflow: 'hidden', 
       border: '1px solid #e2e8f0',
-      background: '#f8fafc' 
+      background: '#f8fafc',
+      /* AGGIUNTO: Scurisce la mappa e aumenta il contrasto */
+      filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)' 
     }}
   ></div>
 
-  <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#64748b', textAlign: 'center' }}>
-    📍 La mappa mostra le strutture di Diagnostica Roma.
-  </p>
+  {/* IL TESTO "Diagnostica Roma" È STATO CANCELLATO QUI */}
 </div>
 {/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
@@ -185,21 +185,22 @@ export default function HubLayout({
             </p>
           </div>
           
-<a 
-  href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
-  target="_blank" 
-  rel="noopener noreferrer" 
-  style={{ 
-    backgroundColor: colore, 
-    color: 'white', 
-    padding: '10px 20px', 
-    borderRadius: '8px', 
-    fontWeight: '700', 
-    textDecoration: 'none' 
-  }}
->
-  Mappa
-</a>
+          <a 
+            /* MODIFICATO: Ricerca testuale per non sbagliare città o struttura */
+            href={`https://www.google.it/maps/search/${encodeURIComponent(m.nome + ' ' + m.indirizzo + ' Roma')}`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ 
+              backgroundColor: colore, 
+              color: 'white', 
+              padding: '10px 20px', 
+              borderRadius: '8px', 
+              fontWeight: '700', 
+              textDecoration: 'none' 
+            }}
+          >
+            Mappa
+          </a>
         </div>
       </div>
     ))
