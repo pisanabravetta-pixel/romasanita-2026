@@ -257,6 +257,11 @@ export default function HubLayout({
     🗺️ MAPPA
   </a>
 </div>
+      <p style={{ fontSize: '11px', color: '#94a3b8', ... }}>
+          Dati estratti da fonti pubbliche. Sei il titolare? <br/>
+          Puoi richiedere la gestione o la modifica di questo annuncio 
+          <a href="mailto:info@servizisalute.com" ...>cliccando qui</a>
+        </p>
         <p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
           {badgeSpec} a {v.zona}, Roma
         </p>
