@@ -239,7 +239,7 @@ export default function HubLayout({
   
   {v.whatsapp && (
 <a 
-  href={`https://wa.me/${v.whatsapp || ''}`} 
+  href={`https://wa.me/${(v.whatsapp || '').toString().replace(/\s+/g, '')}`} 
   style={{ 
     flex: '1', 
     minWidth: '110px', 
