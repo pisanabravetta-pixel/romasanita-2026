@@ -150,8 +150,8 @@ export default function HubLayout({
     ))}
   </div>
 </div>
-{/* BOX MAPPA LEAFLET - PULITO E SCURITO */}
-<div style={{ marginBottom: '30px' }}>
+{/* BOX MAPPA LEAFLET - SPAZIO RIDOTTO E SCURITO */}
+<div style={{ marginBottom: '10px' }}> {/* Ridotto lo spazio qui */}
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center' }}>
     📍 Strutture presenti in questa zona
   </h3>
@@ -165,14 +165,14 @@ export default function HubLayout({
       overflow: 'hidden', 
       border: '1px solid #e2e8f0',
       background: '#f8fafc',
-      /* AGGIUNTO: Scurisce la mappa e aumenta il contrasto */
+      /* Manteniamo la mappa più scura per leggibilità */
       filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)' 
     }}
   ></div>
 
-  {/* IL TESTO "Diagnostica Roma" È STATO CANCELLATO QUI */}
+  {/* Nessun testo qui sotto per evitare spazi inutili */}
 </div>
-{/* LISTA MEDICI - IL MODELLO PERFETTO (FIX BUILD) */}
+{/* LISTA MEDICI - VERSIONE COORDINATE (GRATUITA) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
   {medici && medici.length > 0 ? (
     medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
@@ -186,8 +186,8 @@ export default function HubLayout({
           </div>
           
           <a 
-            /* MODIFICATO: Ricerca testuale per non sbagliare città o struttura */
-            href={`https://www.google.it/maps/search/${encodeURIComponent(m.nome + ' ' + m.indirizzo + ' Roma')}`}
+            /* Ritorno alle coordinate pure: mostra solo il punto sulla mappa */
+            href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
             target="_blank" 
             rel="noopener noreferrer" 
             style={{ 
