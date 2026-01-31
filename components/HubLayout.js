@@ -21,18 +21,15 @@ export default function HubLayout({
   altreSpecialistiche = []
 }) {
   const mediciAttivi = medici;
-  ? medici.filter(m => m.attivo) 
-  : medici;
-
+const mediciAttivi = medici;
+ 
  // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (VERSIONE BLINDATA SSR) ---
   useEffect(() => {
-    // Verifichiamo che siamo nel browser e che Leaflet sia caricato
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
       return;
     }
-
-    const L = window.L; // Prendiamo L globalmente per sicurezza
-
+    const L = window.L; 
+    // ... tutto il resto del tuo codice della mappa rimane uguale
     try {
       // Pulizia istanza precedente
       if (window.mapInstance) { 
