@@ -9,6 +9,18 @@ import { getDBQuery, quartieriTop } from '../lib/seo-logic';
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
   const { slug } = router.query;
+  // --- AGGIUNGI QUESTO BLOCCO QUI ---
+  const filtri = getDBQuery(slug || '');
+  
+  // Se la categoria è quella che abbiamo marchiato come NON_ESISTE, 
+  // o se lo slug è proprio quello che vogliamo eliminare
+  if (filtri.cat === 'NON_ESISTE' || slug === 'specialistica-roma') {
+    if (typeof window !== 'undefined') {
+      router.replace('/404'); 
+    }
+    return null;
+  }
+  // --- FINE BLOCCO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
