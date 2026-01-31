@@ -162,24 +162,26 @@ return (
     
     {/* TITOLO PRINCIPALE (H1) */}
 <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
-  {/* Nome Brand - Grande e in VERDE */}
+  {/* Nome Brand - Grande e VERDE SCURO */}
   <h1 style={{ 
-    fontSize: '42px', 
+    fontSize: '44px', 
     fontWeight: '900', 
-    color: '#10b981', // Verde sanitario vivido (stile farmacia/salute)
-    letterSpacing: '-1px',
-    marginBottom: '5px'
+    color: '#064e3b', // Verde scuro profondo (molto autorevole)
+    letterSpacing: '-1.5px',
+    marginBottom: '8px',
+    lineHeight: '1'
   }}>
     ServiziSalute
   </h1>
   
-  {/* Slogan - Più piccolo e discreto */}
+  {/* Slogan - In VERDE SCURO coordinato (più sottile) */}
   <p style={{ 
-    fontSize: '18px', 
-    fontWeight: '500', 
-    color: '#475569', 
-    maxWidth: '500px', 
-    margin: '0 auto' 
+    fontSize: '19px', 
+    fontWeight: '600', 
+    color: '#065f46', // Verde scuro leggermente più chiaro per staccare
+    maxWidth: '600px', 
+    margin: '0 auto',
+    letterSpacing: '-0.2px'
   }}>
     Trova strutture e professionisti sanitari a Roma
   </p>
