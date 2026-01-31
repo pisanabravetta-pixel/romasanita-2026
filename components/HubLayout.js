@@ -239,30 +239,51 @@ export default function HubLayout({
     📞 CHIAMA
   </a>
   
-<a 
-  href={`https://api.whatsapp.com/send?phone=39${String(v.whatsapp || "").replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
-  target="_blank" 
-  rel="noopener noreferrer"
-  style={{
-    backgroundColor: '#25D366', // VERDE WHATSAPP ACCESO
-    color: '#ffffff',
-    padding: '12px 20px',
-    borderRadius: '8px',
-    textDecoration: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: '800',
-    fontSize: '15px',
-    cursor: 'pointer',
-    width: '100%', // Lo facciamo bello grande così si clicca bene
-    border: 'none',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-  }}
->
-  <i className="fab fa-whatsapp" style={{ marginRight: '10px', fontSize: '20px' }}></i>
-  WHATSAPP
-</a>
+<div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+  {/* PULSANTE CHIAMA */}
+  <a 
+    href={`tel:${v.telefono}`} 
+    style={{
+      flex: 1,
+      backgroundColor: colore,
+      color: 'white',
+      padding: '12px 5px',
+      borderRadius: '8px',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '14px',
+      fontWeight: 'bold'
+    }}
+  >
+    <i className="fa-solid fa-phone" style={{ marginRight: '8px' }}></i>
+    Chiama
+  </a>
+
+  {/* PULSANTE WHATSAPP - FIX NUMERO CORTO E LAYOUT */}
+  <a 
+    href={`https://api.whatsapp.com/send?phone=39${String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
+    target="_blank" 
+    rel="noopener noreferrer"
+    style={{
+      flex: 1,
+      backgroundColor: '#25D366',
+      color: 'white',
+      padding: '12px 5px',
+      borderRadius: '8px',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '14px',
+      fontWeight: 'bold'
+    }}
+  >
+    <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
+    WhatsApp
+  </a>
+</div>
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
     target="_blank" 
