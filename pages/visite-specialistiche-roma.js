@@ -14,13 +14,13 @@ export default function VisiteSpecialisticheRoma() {
   async function fetchVisite() {
     try {
       setLoading(true);
- const { data } = await supabase
+const { data } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%`)
+  // Questa riga sotto è quella corretta: prende tutti i medici, non solo quei 3 nomi
+  .ilike('categoria', '%specialistica%') 
   .order('is_top', { ascending: false });
-
       if (data) setAnnunci(data);
     } catch (err) {
       console.error("Errore caricamento:", err);
