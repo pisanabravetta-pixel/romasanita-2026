@@ -239,11 +239,9 @@ export default function HubLayout({
     📞 CHIAMA
   </a>
   
+
 <a 
-  href={v.whatsapp && String(v.whatsapp).replace(/\D/g, '').length > 5 
-    ? `https://api.whatsapp.com/send?phone=${String(v.whatsapp).replace(/\D/g, '').startsWith('39') ? String(v.whatsapp).replace(/\D/g, '') : '39' + String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno` 
-    : '#'
-  }
+  href={`https://api.whatsapp.com/send?phone=39${v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : ''}`}
   target="_blank" 
   rel="noopener noreferrer"
   style={{
@@ -257,8 +255,7 @@ export default function HubLayout({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '14px',
-    fontWeight: 'bold',
-    opacity: (v.whatsapp && String(v.whatsapp).replace(/\D/g, '').length > 5) ? 1 : 0.5
+    fontWeight: 'bold'
   }}
 >
   <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
