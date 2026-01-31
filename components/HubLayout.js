@@ -240,11 +240,11 @@ export default function HubLayout({
   </a>
   
 <a 
-  href={`https://api.whatsapp.com/send?phone=39${v.whatsapp.replace(/\s+/g, '')}&text=Buongiorno, vi contatto da ServiziSalute per informazioni.`}
+  href={`https://api.whatsapp.com/send?phone=39${(v.whatsapp || "").toString().replace(/\s+/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
   target="_blank" 
   rel="noopener noreferrer"
   style={{
-    // mantieni il tuo stile attuale del pulsante
+    // qui metti il tuo stile del pulsante
   }}
 >
   {/* icona e testo pulsante */}
