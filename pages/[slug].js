@@ -53,20 +53,27 @@ useEffect(() => {
 
         if (error) throw error;
 
-        // FILTRO INTELLIGENTE PER CATEGORIA
+        // LOG DI DEBUG - Premi F12 nel browser per vedere cosa succede
+        console.log("Categoria cercata dall'URL:", catSlug);
+        console.log("Dati totali scaricati da DB:", data?.length);
+
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
-          const catDB = item.categoria.toLowerCase();
-          const catURL = catSlug.toLowerCase();
+          
+          const catDB = item.categoria.toLowerCase().trim();
+          const catURL = catSlug.toLowerCase().trim();
 
-          // Se lo slug è "specialistiche", forziamo il match con "visite specialistiche"
-          if (catURL.includes('specialist') && (catDB.includes('specialist') || catDB.includes('visite'))) {
-            return true;
-          }
+          // TEST 1: Corrispondenza parziale (es. "specialist" in "visite specialistiche")
+          const matchParziale = catDB.includes(catURL.slice(0, 5)) || catURL.includes(catDB.slice(0, 5));
+          
+          // TEST 2: Casi specifici per Specialistiche
+          const isSpecialistica = (catURL.includes('specialist') || catURL.includes('visite')) && 
+                                  (catDB.includes('specialist') || catDB.includes('visite'));
 
-          // Filtro standard per le altre (dentisti, oculisti, ecc.)
-          return catDB.includes(catURL.slice(0, 4));
+          return matchParziale || isSpecialistica;
         }) : [];
+
+        console.log("Risultati dopo il filtro categoria:", filtrati.length);
 
         const risultatiFinali = (zonaInSlug === 'roma') 
           ? filtrati 
