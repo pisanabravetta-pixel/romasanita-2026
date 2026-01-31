@@ -10,26 +10,28 @@ export default function VisiteSpecialisticheRoma() {
   const schemas = getSchemas('visite-specialistiche', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
- useEffect(() => {
-    async function fetchVisite() {
-      try {
-        setLoading(true);
-        // Prendiamo TUTTI gli annunci approvati per popolare la Hub generale
-        const { data } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true) 
-          .order('is_top', { ascending: false });
+useEffect(() => {
+  async function fetchVisite() {
+    try {
+      setLoading(true);
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        // Escludiamo farmacie e tutto ciò che non è una "visita"
+        .not('categoria', 'ilike', '%farmaci%')
+        .not('categoria', 'ilike', '%dentist%')
+        .order('is_top', { ascending: false });
 
-        if (data) setAnnunci(data);
-      } catch (err) {
-        console.error("Errore caricamento:", err);
-      } finally {
-        setLoading(false);
-      }
+      if (data) setAnnunci(data);
+    } catch (err) {
+      console.error("Errore caricamento:", err);
+    } finally {
+      setLoading(false);
     }
-    fetchVisite();
-  }, []);
+  }
+  fetchVisite();
+}, []);
 
   return (
     <HubLayout 
