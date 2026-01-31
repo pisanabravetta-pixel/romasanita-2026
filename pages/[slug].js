@@ -209,44 +209,109 @@ const { data, error } = await supabase
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-        {/* LISTA ANNUNCI */}
-        <div style={{ display: 'block' }}>
-          {servizi.map((v) => (
-            <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-              <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
-              <p style={{ fontSize: '16px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ textTransform: 'uppercase' }}>{v.zona}</strong></p>
-              <div style={{ marginBottom: '20px', fontWeight: '800', color: tema.primario, fontSize: '14px' }}>🦷 {tema.label}</div>
-              
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
-                <a href={`https://wa.me/${v.whatsapp?.replace(/\s+/g, '')}`} style={{ flex: '1', minWidth: '100px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>💬 WHATSAPP</a>
-<a 
-  /* COORDINATE PURE: Niente nomi, solo posizione esatta */
-  href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-  target="_blank" 
-  rel="noopener noreferrer" 
-  style={{ 
-    flex: '1', 
-    minWidth: '100px', 
-    backgroundColor: '#64748b', 
-    color: 'white', 
-    padding: '14px', 
-    borderRadius: '10px', 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none' 
-  }}
->
-  🗺️ MAPPA
-</a>
-              </div>
-    {/* MICRO TESTO SEO SOTTO I BOTTONI */}
-<p style={{ fontSize:'12px', color:'#94a3b8', marginTop:'12px', textAlign: 'center', fontWeight: '600' }}>
-  {meta.nomeSemplice} a {v.zona}, Roma
-</p>
-            </div>
-          ))}
-        </div>
+      {/* LISTA ANNUNCI AGGIORNATA E BLINDATA */}
+<div style={{ display: 'block' }}>
+  {servizi.map((v) => (
+    <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+      <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
+      <p style={{ fontSize: '16px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ textTransform: 'uppercase' }}>{v.zona}</strong></p>
+      
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+        {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+        <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${tema.primario}44` }}>{tema.label}</span>
+      </div>
+      
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+        <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+        
+        {/* WHATSAPP FISSO E SEMPRE VERDE */}
+        <a 
+          href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'}
+          onClick={(e) => { 
+            if(!v.whatsapp) { 
+              e.preventDefault(); 
+              alert("WhatsApp non disponibile per questo professionista"); 
+            } 
+          }}
+          target={v.whatsapp ? "_blank" : "_self"}
+          rel="noopener noreferrer"
+          style={{ 
+            flex: '1', 
+            minWidth: '100px', 
+            backgroundColor: '#22c55e', 
+            color: 'white', 
+            padding: '14px', 
+            borderRadius: '10px', 
+            textAlign: 'center', 
+            fontWeight: '800', 
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer'
+          }}
+        >
+          💬 WHATSAPP
+        </a>
+
+        <a 
+          href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+        >
+          🗺️ MAPPA
+        </a>
+      </div>
+
+      {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
+      <p style={{ 
+        fontSize: '11px', 
+        color: '#94a3b8', 
+        marginTop: '16px', 
+        marginBottom: '10px',
+        textAlign: 'center', 
+        lineHeight: '1.5',
+        borderTop: '1px solid #f1f5f9', 
+        paddingTop: '10px' 
+      }}>
+        Dati estratti da fonti pubbliche. Sei il titolare? <br/>
+        Puoi richiedere la gestione o la modifica di questo annuncio 
+        <a 
+          href={`mailto:info@servizisalute.com?subject=Richiesta gestione annuncio: ${v.nome}`} 
+          style={{ 
+            color: tema.primario, 
+            marginLeft: '4px', 
+            fontWeight: '700', 
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            display: 'inline-block'
+          }}
+        >
+          cliccando qui
+        </a>
+      </p>
+
+      {/* BADGE DINAMICO SEO QUARTIERE */}
+      <div style={{ textAlign: 'center', marginTop: '12px' }}>
+        <span style={{ 
+          fontSize: '11px', 
+          fontWeight: '800', 
+          backgroundColor: `${tema.primario}15`, 
+          color: tema.primario, 
+          padding: '6px 15px', 
+          borderRadius: '20px', 
+          border: `1px solid ${tema.primario}33`,
+          display: 'inline-block',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px'
+        }}>
+          {meta.nomeSemplice} A ROMA {v.zona}
+        </span>
+      </div>
+    </div>
+  ))}
+</div> 
 {/* GUIDE SPECIFICHE - DISTRIBUZIONE ARTICOLI REALI */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
