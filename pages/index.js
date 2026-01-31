@@ -79,9 +79,9 @@ const eseguiRicerca = () => {
 return (
   <>
   <Head>
-  <title key="title">Sanità Roma: Farmacie, Medici e Diagnostica | Gennaio 2026 - ServiziSalute</title>
+ <title key="title">ServiziSalute | Portale della Sanità a Roma - Strutture e Specialisti</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="description" content="Trova farmacie di turno, dentisti e centri diagnostici a Roma. Cerca per quartiere (Prati, EUR, Parioli) e contatta direttamente i migliori specialisti sanitari a Roma aggiornati a Gennaio 2026." />
+  <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
