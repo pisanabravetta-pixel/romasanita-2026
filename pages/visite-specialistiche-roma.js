@@ -11,28 +11,27 @@ export default function VisiteSpecialisticheRoma() {
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
 useEffect(() => {
-  async function fetchVisite() {
-    try {
-      setLoading(true);
-      const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        // Escludiamo farmacie e tutto ciò che non è una "visita"
-        .not('categoria', 'ilike', '%farmaci%')
-        .not('categoria', 'ilike', '%dentist%')
-        .order('is_top', { ascending: false });
+    async function fetchVisite() {
+      try {
+        setLoading(true);
+        const { data } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          // FILTRO CHIRURGICO: Prendiamo solo le vere visite specialistiche
+          // Aggiungi qui sotto le categorie che vuoi far apparire
+          .or('categoria.ilike.%dermatolog%,categoria.ilike.%cardiolog%,categoria.ilike.%oculist%,categoria.ilike.%ortopedic%,categoria.ilike.%ginecolog%,categoria.ilike.%nutrizionist%,categoria.ilike.%psicolog%')
+          .order('is_top', { ascending: false });
 
-      if (data) setAnnunci(data);
-    } catch (err) {
-      console.error("Errore caricamento:", err);
-    } finally {
-      setLoading(false);
+        if (data) setAnnunci(data);
+      } catch (err) {
+        console.error("Errore caricamento:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  fetchVisite();
-}, []);
-
+    fetchVisite();
+  }, []);
   return (
     <HubLayout 
 medici={annunci}
