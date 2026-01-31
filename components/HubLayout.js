@@ -239,28 +239,29 @@ export default function HubLayout({
     📞 CHIAMA
   </a>
   
-{v.whatsapp && (
-  <a 
-    href={`https://api.whatsapp.com/send?phone=39${v.whatsapp.toString().replace(/[^0-9]/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
-    target="_blank" 
-    rel="noopener noreferrer"
-    style={{
-      backgroundColor: '#25D366',
-      color: 'white',
-      padding: '10px 20px',
-      borderRadius: '8px',
-      textDecoration: 'none',
-      display: 'inline-flex',
-      alignItems: 'center',
-      fontWeight: 'bold',
-      fontSize: '14px'
-    }}
-  >
-    <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
-    WhatsApp
-  </a>
-)}
-
+<a 
+  href={v.whatsapp ? `https://api.whatsapp.com/send?phone=39${String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.` : '#'}
+  target="_blank" 
+  rel="noopener noreferrer"
+  onClick={(e) => { if(!v.whatsapp) e.preventDefault(); }}
+  style={{
+    backgroundColor: '#25D366',
+    color: 'white',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    textDecoration: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+    fontSize: '14px',
+    cursor: v.whatsapp ? 'pointer' : 'not-allowed',
+    opacity: v.whatsapp ? 1 : 0.5
+  }}
+>
+  <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
+  WhatsApp
+</a>
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
     target="_blank" 
