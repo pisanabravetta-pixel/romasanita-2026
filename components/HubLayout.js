@@ -24,47 +24,49 @@ export default function HubLayout({
   ? medici.filter(m => m.attivo) 
   : medici;
 
-  // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA ---
- // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (FIX BUILD) ---
+ // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (VERSIONE BLINDATA SSR) ---
   useEffect(() => {
-    // Controllo fondamentale per evitare l'errore in fase di Build su Vercel
-    if (typeof window !== 'undefined' && typeof L !== 'undefined' && medici && medici.length > 0) {
-      
-      // Se esiste già una mappa, la distruggiamo per resettarla correttamente
+    // Verifichiamo che siamo nel browser e che Leaflet sia caricato
+    if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
+      return;
+    }
+
+    const L = window.L; // Prendiamo L globalmente per sicurezza
+
+    try {
+      // Pulizia istanza precedente
       if (window.mapInstance) { 
         window.mapInstance.remove(); 
         window.mapInstance = null;
       }
       
-      try {
-        const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
-        window.mapInstance = map;
+      const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
+      window.mapInstance = map;
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          attribution: '© OSM'
-        }).addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OSM'
+      }).addTo(map);
 
-        const markers = [];
-        medici.forEach((m) => {
-          if (m.lat && m.lng) {
-            const marker = L.marker([parseFloat(m.lat), parseFloat(m.lng)])
-              .addTo(map)
-              .bindPopup(`<b>${m.nome}</b><br>${m.indirizzo}`);
-            markers.push(marker);
-          }
-        });
-
-        // Se ci sono marker, centra la mappa automaticamente su di essi
-        if (markers.length > 0) {
-          const group = new L.featureGroup(markers);
-          map.fitBounds(group.getBounds().pad(0.1));
+      const markers = [];
+      medici.forEach((m) => {
+        if (m.lat && m.lng) {
+          const marker = L.marker([parseFloat(m.lat), parseFloat(m.lng)])
+            .addTo(map)
+            .bindPopup(`<b>${m.nome}</b><br>${m.indirizzo}`);
+          markers.push(marker);
         }
-      } catch (err) {
-        console.error("Errore inizializzazione mappa:", err);
+      });
+
+      if (markers.length > 0 && map) {
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.1));
       }
+    } catch (err) {
+      console.error("Errore Mappa:", err);
     }
   }, [medici]); 
-  // --- FINE INTERVENTO CHIRURGICO --- 
+  // --- FINE INTERVENTO CHIRURGICO ---
+  
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
