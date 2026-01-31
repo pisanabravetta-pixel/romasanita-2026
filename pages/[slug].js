@@ -93,8 +93,9 @@ async function fetchDati() {
     }
 
     if (slug) fetchDati();
-  }, [slug]); // <-- Questa è la chiusura del primo useEffect che dava errore
-  // Qui sotto inizia il tuo useEffect della mappa (rigo 103)
+  }, [slug]);
+
+  useEffect(() => {
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
