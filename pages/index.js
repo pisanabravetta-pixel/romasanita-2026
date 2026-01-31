@@ -161,23 +161,23 @@ return (
   <div className="container" style={{ textAlign: 'center' }}>
     
     {/* TITOLO PRINCIPALE (H1) */}
-    <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
-  {/* Nome Brand - Grande e Forte */}
+<div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
+  {/* Nome Brand - Grande e in VERDE */}
   <h1 style={{ 
     fontSize: '42px', 
     fontWeight: '900', 
-    color: '#1a365d', 
+    color: '#10b981', // Verde sanitario vivido (stile farmacia/salute)
     letterSpacing: '-1px',
     marginBottom: '5px'
   }}>
     ServiziSalute
   </h1>
   
-  {/* Slogan - Più piccolo e grigio, per non appesantire */}
+  {/* Slogan - Più piccolo e discreto */}
   <p style={{ 
     fontSize: '18px', 
     fontWeight: '500', 
-    color: '#64748b', 
+    color: '#475569', 
     maxWidth: '500px', 
     margin: '0 auto' 
   }}>
