@@ -240,27 +240,28 @@ export default function HubLayout({
   </a>
   
 <a 
-  href={v.whatsapp ? `https://api.whatsapp.com/send?phone=39${String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.` : '#'}
+  href={`https://api.whatsapp.com/send?phone=39${String(v.whatsapp || "").replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
   target="_blank" 
   rel="noopener noreferrer"
-  onClick={(e) => { if(!v.whatsapp) e.preventDefault(); }}
   style={{
-    backgroundColor: '#25D366',
-    color: 'white',
-    padding: '10px 20px',
+    backgroundColor: '#25D366', // VERDE WHATSAPP ACCESO
+    color: '#ffffff',
+    padding: '12px 20px',
     borderRadius: '8px',
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: '14px',
-    cursor: v.whatsapp ? 'pointer' : 'not-allowed',
-    opacity: v.whatsapp ? 1 : 0.5
+    fontWeight: '800',
+    fontSize: '15px',
+    cursor: 'pointer',
+    width: '100%', // Lo facciamo bello grande così si clicca bene
+    border: 'none',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
   }}
 >
-  <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
-  WhatsApp
+  <i className="fab fa-whatsapp" style={{ marginRight: '10px', fontSize: '20px' }}></i>
+  WHATSAPP
 </a>
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
