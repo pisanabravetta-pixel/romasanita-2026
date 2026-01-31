@@ -284,7 +284,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   Dati estratti da fonti pubbliche. Sei il titolare? <br/>
   Puoi richiedere la gestione o la modifica di questo annuncio 
   <a 
-    href="mailto:info@servizisalute.com?subject=Richiesta gestione annuncio:宣{v.nome}" 
+    href={`mailto:info@servizisalute.com?subject=Richiesta gestione annuncio: ${v.nome}`}
     style={{ 
       color: colore, 
       marginLeft: '4px', 
