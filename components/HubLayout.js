@@ -241,13 +241,19 @@ export default function HubLayout({
   
 
 <a 
-  href={`https://wa.me/39${String(v.whatsapp).replace(/\D/g, '')}`}
-  target="_blank"
+  href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'}
+  onClick={(e) => { 
+    if(!v.whatsapp) { 
+      e.preventDefault(); 
+      alert("WhatsApp non disponibile per questo professionista"); 
+    } 
+  }}
+  target={v.whatsapp ? "_blank" : "_self"}
   rel="noopener noreferrer"
   style={{ 
     flex: '1', 
     minWidth: '110px', 
-    backgroundColor: '#22c55e', 
+    backgroundColor: v.whatsapp ? '#22c55e' : '#cbd5e1', 
     color: 'white', 
     padding: '14px', 
     borderRadius: '8px', 
@@ -256,7 +262,8 @@ export default function HubLayout({
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    cursor: v.whatsapp ? 'pointer' : 'default'
   }}
 >
   💬 WHATSAPP
