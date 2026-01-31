@@ -162,7 +162,7 @@ return (
     
     {/* TITOLO PRINCIPALE (H1) */}
     <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px' }}>
-      Servizi Sanitari Roma: Trova il meglio vicino a te
+      Servizi Salute: Trova strutture e professionisti sanitari a Roma
     </h1>
     
     {/* SOTTOTITOLO (P) - rimosso "verificati" */}
