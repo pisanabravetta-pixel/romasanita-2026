@@ -28,58 +28,57 @@ export default function PaginaQuartiereDinamica() {
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
 useEffect(() => {
+    console.log("Slug rilevato:", slug); // Questo DEVE apparire in console
     if (!slug || slug === 'index' || slug === '') return;
 
     async function fetchDati() {
       try {
         setLoading(true);
+        console.log("Avvio fetch da Supabase..."); 
+
         const parti = String(slug).split('-');
         const catSlug = parti[0].trim().toLowerCase(); 
         
-        let primario = "#0891b2"; let chiaro = "#ecfeff";
-        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-        if (catSlug.includes('farmaci')) { primario = "#15803d"; chiaro = "#f0fdf4"; }
-        if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-        if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-        
-        const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
-        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
-        const zonaBella = zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ');
-
+        // Chiamata al DB
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true);
 
-        if (error) throw error;
+        if (error) {
+          console.error("Errore Supabase:", error);
+          throw error;
+        }
 
-        // LOG DI DEBUG - Premi F12 nel browser per vedere cosa succede
-        console.log("Categoria cercata dall'URL:", catSlug);
-        console.log("Dati totali scaricati da DB:", data?.length);
+        console.log("Dati grezzi ricevuti:", data ? data.length : 0);
 
+        // Filtro Categoria Indistruttibile
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
-          
-          const catDB = item.categoria.toLowerCase().trim();
-          const catURL = catSlug.toLowerCase().trim();
-
-          // TEST 1: Corrispondenza parziale (es. "specialist" in "visite specialistiche")
-          const matchParziale = catDB.includes(catURL.slice(0, 5)) || catURL.includes(catDB.slice(0, 5));
-          
-          // TEST 2: Casi specifici per Specialistiche
-          const isSpecialistica = (catURL.includes('specialist') || catURL.includes('visite')) && 
-                                  (catDB.includes('specialist') || catDB.includes('visite'));
-
-          return matchParziale || isSpecialistica;
+          const cDB = item.categoria.toLowerCase();
+          const cURL = catSlug.toLowerCase();
+          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
         }) : [];
 
-        console.log("Risultati dopo il filtro categoria:", filtrati.length);
-
+        // Filtro Zona
+        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
         const risultatiFinali = (zonaInSlug === 'roma') 
           ? filtrati 
           : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
 
+        console.log("Risultati finali filtrati:", risultatiFinali.length);
+
         setServizi(risultatiFinali);
+
+        // Meta e Tema
+        const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
+        const zonaBella = zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ');
+        
+        let primario = "#0891b2"; let chiaro = "#ecfeff";
+        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+        if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+        if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
+
         setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
         setMeta({ 
           titolo: `${nomeCat} a Roma ${zonaBella}`, 
@@ -87,12 +86,14 @@ useEffect(() => {
           cat: catSlug,
           nomeSemplice: nomeCat
         });
+
       } catch (err) { 
-        console.error("Errore:", err.message); 
+        console.error("Errore nel catch:", err.message); 
       } finally { 
         setLoading(false); 
       }
     }
+
     fetchDati();
   }, [slug]);
 
