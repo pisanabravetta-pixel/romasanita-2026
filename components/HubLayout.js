@@ -242,14 +242,13 @@ export default function HubLayout({
 
 <a 
   href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).split(',')[0].replace(/\D/g, '')}` : '#'}
-  onClick={(e) => { if(!v.whatsapp) e.preventDefault(); }}
   target="_blank"
   rel="noopener noreferrer"
   style={{ 
     flex: '1', 
     minWidth: '110px', 
-    backgroundColor: v.whatsapp ? '#22c55e' : '#e2e8f0', // Grigio se manca il numero
-    color: v.whatsapp ? 'white' : '#94a3b8',
+    backgroundColor: '#22c55e', 
+    color: 'white', 
     padding: '14px', 
     borderRadius: theme.radius.button, 
     textAlign: 'center', 
@@ -258,7 +257,7 @@ export default function HubLayout({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: v.whatsapp ? 'pointer' : 'not-allowed'
+    cursor: 'pointer'
   }}
 >
   💬 WHATSAPP
