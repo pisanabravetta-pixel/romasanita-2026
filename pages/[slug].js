@@ -56,14 +56,22 @@ export default function PaginaQuartiereDinamica() {
         });
 
        const filtri = getDBQuery(catSlug);
-const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  .ilike('zona', `%${zonaSlug}%`) 
-  // Rimosso .or(): usiamo la categoria secca estratta dallo slug
-  .ilike('categoria', `%${filtri.cat}%`)
-  .order('is_top', { ascending: false });
+// --- COPIA E SOSTITUISCI DA QUI ---
+    const { data, error } = await supabase
+      .from('annunci')
+      .select('*')
+      .eq('approvato', true)
+      .ilike('zona', `%${zonaSlug}%`) 
+      .ilike('categoria', `%${filtri.cat !== 'NON_ESISTE' ? filtri.cat : catSlug}%`);
+
+    if (error) {
+      console.error("Errore Supabase:", error.message);
+      throw error;
+    }
+
+    console.log("Risultati trovati:", data); // Questo ti dice se arrivano dati
+    setServizi(data || []);
+// --- FINO A QUI ---
 
         if (error) throw error;
         setServizi(data || []);
