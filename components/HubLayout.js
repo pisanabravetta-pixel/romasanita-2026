@@ -20,7 +20,7 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = []
 }) {
-  const mediciAttivi = medici.filter(m => m.attivo).length > 0 
+  const mediciAttivi = medici;
   ? medici.filter(m => m.attivo) 
   : medici;
 
@@ -187,7 +187,7 @@ export default function HubLayout({
 {/* LISTA MEDICI SINTETICA - SOLO COORDINATE (Il blocco che non trovavi) */}
 <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
   {medici && medici.length > 0 ? (
-    medici.filter(m => m.stato === 'pubblicato').map((m, index) => (
+  medici.map((m, index) => (
       <div key={index} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
           <div>
@@ -223,7 +223,7 @@ export default function HubLayout({
 <div style={{ display: 'block' }}>
   {loading ? (
     <p>Caricamento...</p>
-  ) : mediciAttivi && mediciAttivi.length > 0 ? (
+  ) : medici && medici.length > 0 ? (
     mediciAttivi.map((v) => (
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
         <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
