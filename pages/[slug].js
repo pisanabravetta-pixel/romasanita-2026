@@ -56,22 +56,33 @@ export default function PaginaQuartiereDinamica() {
         });
 
        const filtri = getDBQuery(catSlug);
-const { data, error } = await supabase
+// --- COPIA E SOSTITUISCI SOLO QUESTO PEZZO ---
+    const parti = String(slug).split('-');
+    const catSlug = parti[0].trim().toLowerCase(); 
+
+    console.log("STO CERCANDO QUESTA CATEGORIA:", catSlug);
+
+    const { data, error } = await supabase
       .from('annunci')
       .select('*')
-      .eq('approvato', true)
-      .ilike('zona', `%${zonaSlug}%`) 
-      .ilike('categoria', `%${catSlug.slice(0, 5)}%`);
+      .eq('approvato', true); // CARICHIAMO TUTTO CIÒ CHE È APPROVATO
 
     if (error) {
-      console.error("Errore Supabase:", error.message);
+      console.error("ERRORE SUPABASE:", error.message);
       throw error;
     }
 
-    console.log("Dati ricevuti:", data);
-    setServizi(data || []);
+    // Filtriamo a mano per essere sicuri al 100%
+    const filtrati = data.filter(item => 
+      item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
+    );
+
+    console.log("ANNUNCI NEL DB:", data.length);
+    console.log("ANNUNCI DOPO FILTRO:", filtrati.length);
+    
+    setServizi(filtrati || []);
   } catch (err) { 
-    console.error("Errore fatale:", err); 
+    console.error("ERRORE NEL CODICE:", err); 
   } finally { 
     setLoading(false); 
   }
@@ -79,6 +90,7 @@ const { data, error } = await supabase
 
 fetchDati();
 }, [slug]);
+// --- FINE SOSTITUZIONE ---
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
