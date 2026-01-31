@@ -55,50 +55,51 @@ export default function PaginaQuartiereDinamica() {
           nomeSemplice: nomeCat
         });
 async function fetchDati() {
-      try {
-        setLoading(true);
-        const parti = String(slug).split('-');
-        const catSlug = parti[0].trim().toLowerCase(); 
+    try {
+      setLoading(true);
+      const parti = String(slug).split('-');
+      const catSlug = parti[0].trim().toLowerCase(); 
 
-        // 1. Chiamata a Supabase
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
+      // 1. Chiamata a Supabase
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true);
 
-        if (error) throw error;
+      if (error) throw error;
 
-        // 2. Filtro manuale per categoria (cerca le prime 4 lettere, es: "card")
-        const filtrati = data ? data.filter(item => 
-          item.categoria && item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
-        ) : [];
+      // 2. Filtro manuale per categoria (cerca le prime 4 lettere, es: "card")
+      const filtrati = data ? data.filter(item => 
+        item.categoria && item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
+      ) : [];
 
-        // 3. Filtro per zona (se presente nello slug)
-        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
-        const risultatiFinali = (zonaInSlug === 'roma') 
-          ? filtrati 
-          : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
+      // 3. Filtro per zona (se presente nello slug)
+      const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
+      const risultatiFinali = (zonaInSlug === 'roma') 
+        ? filtrati 
+        : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
 
-        setServizi(risultatiFinali);
+      setServizi(risultatiFinali);
 
-        // Meta dati per evitare che la pagina resti senza titoli
-        setMeta({ 
-          titolo: `${catSlug.toUpperCase()} a Roma`, 
-          zona: zonaInSlug, 
-          cat: catSlug,
-          nomeSemplice: catSlug
-        });
+      // Meta dati per evitare che la pagina resti senza titoli
+      setMeta({ 
+        titolo: `${catSlug.toUpperCase()} a Roma`, 
+        zona: zonaInSlug, 
+        cat: catSlug,
+        nomeSemplice: catSlug
+      });
 
-      } catch (err) { 
-        console.error("Errore:", err.message); 
-      } finally { 
-        setLoading(false); 
-      }
+    } catch (err) { 
+      console.error("Errore:", err.message); 
+    } finally { 
+      setLoading(false); 
     }
+  }
 
-    if (slug) fetchDati();
-  }, [slug]);
-// --- FINE SOSTITUZIONE ---
+  if (slug) {
+    fetchDati();
+  }
+}, [slug]);
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
