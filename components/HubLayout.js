@@ -253,7 +253,7 @@ export default function HubLayout({
   style={{ 
     flex: '1', 
     minWidth: '110px', 
-    backgroundColor: v.whatsapp ? '#22c55e' : '#cbd5e1', 
+    backgroundColor: '#22c55e', // Verde fisso per tutti
     color: 'white', 
     padding: '14px', 
     borderRadius: '8px', 
@@ -263,7 +263,7 @@ export default function HubLayout({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: v.whatsapp ? 'pointer' : 'default'
+    cursor: 'pointer'
   }}
 >
   💬 WHATSAPP
