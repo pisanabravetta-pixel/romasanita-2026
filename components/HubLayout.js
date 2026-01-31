@@ -241,7 +241,7 @@ export default function HubLayout({
   
 
 <a 
-  href={`https://api.whatsapp.com/send?phone=39${v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : ''}`}
+  href={`https://wa.me/${v.whatsapp ? '39' + String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '') : ''}`}
   target="_blank" 
   rel="noopener noreferrer"
   style={{
