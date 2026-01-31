@@ -52,7 +52,7 @@ useEffect(() => {
 
         console.log("Dati grezzi ricevuti:", data ? data.length : 0);
 
-        // Filtro Categoria Indistruttibile
+     // 1. Filtro Categoria (Già funzionante)
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
           const cDB = item.categoria.toLowerCase();
@@ -60,14 +60,17 @@ useEffect(() => {
           return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
         }) : [];
 
-        // Filtro Zona
+        // 2. FILTRO ZONA CORRETTO (Il colpevole)
         const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
-        const risultatiFinali = (zonaInSlug === 'roma') 
-          ? filtrati 
-          : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
+        
+        const risultatiFinali = (zonaInSlug === 'roma' || zonaInSlug === catSlug) 
+          ? filtrati  // Se siamo nella HUB, mostra TUTTI i medici di quella categoria
+          : filtrati.filter(item => 
+              item.zona && item.zona.toLowerCase().includes(zonaInSlug) // Se siamo nel QUARTIERE, filtra
+            );
 
-        console.log("Risultati finali filtrati:", risultatiFinali.length);
-
+        console.log("Zona rilevata:", zonaInSlug, "Risultati:", risultatiFinali.length);
+        setServizi(risultatiFinali);
         setServizi(risultatiFinali);
 
         // Meta e Tema
