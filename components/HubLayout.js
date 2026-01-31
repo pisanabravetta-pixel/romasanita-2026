@@ -241,7 +241,7 @@ export default function HubLayout({
   
 
 <a 
-  href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).split(',')[0].replace(/\D/g, '')}` : '#'}
+  href={`https://wa.me/39${String(v.whatsapp).replace(/\D/g, '')}`}
   target="_blank"
   rel="noopener noreferrer"
   style={{ 
@@ -250,14 +250,13 @@ export default function HubLayout({
     backgroundColor: '#22c55e', 
     color: 'white', 
     padding: '14px', 
-    borderRadius: theme.radius.button, 
+    borderRadius: '8px', 
     textAlign: 'center', 
     fontWeight: '800', 
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer'
+    justifyContent: 'center'
   }}
 >
   💬 WHATSAPP
