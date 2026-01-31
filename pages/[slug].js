@@ -78,7 +78,7 @@ async function fetchDati() {
 
         setServizi(risultatiFinali);
 
-        setMeta({ 
+       setMeta({ 
           titolo: `${catSlug.toUpperCase()} a Roma`, 
           zona: zonaInSlug, 
           cat: catSlug,
@@ -92,11 +92,8 @@ async function fetchDati() {
       }
     }
 
-    if (slug) {
-      fetchDati();
-    }
-  }, [slug]);
-
+    if (slug) fetchDati();
+  }, [slug]); // <-- Questa è la chiusura del primo useEffect che dava errore
   // Qui sotto inizia il tuo useEffect della mappa (rigo 103)
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
