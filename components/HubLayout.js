@@ -20,16 +20,15 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = []
 }) {
-  const mediciAttivi = medici;
-const mediciAttivi = medici;
- 
- // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (VERSIONE BLINDATA SSR) ---
+ const mediciAttivi = medici && medici.length > 0 ? medici : [];
+
+  // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (VERSIONE BLINDATA SSR) ---
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
       return;
     }
     const L = window.L; 
-    // ... tutto il resto del tuo codice della mappa rimane uguale
+    
     try {
       // Pulizia istanza precedente
       if (window.mapInstance) { 
