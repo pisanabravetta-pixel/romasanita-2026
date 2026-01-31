@@ -54,42 +54,50 @@ export default function PaginaQuartiereDinamica() {
           cat: catSlug,
           nomeSemplice: nomeCat
         });
+async function fetchDati() {
+      try {
+        setLoading(true);
+        const parti = String(slug).split('-');
+        const catSlug = parti[0].trim().toLowerCase(); 
 
-       const filtri = getDBQuery(catSlug);
-// --- COPIA E SOSTITUISCI SOLO QUESTO PEZZO ---
-    const parti = String(slug).split('-');
-    const catSlug = parti[0].trim().toLowerCase(); 
+        // 1. Chiamata a Supabase
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true);
 
-    console.log("STO CERCANDO QUESTA CATEGORIA:", catSlug);
+        if (error) throw error;
 
-    const { data, error } = await supabase
-      .from('annunci')
-      .select('*')
-      .eq('approvato', true); // CARICHIAMO TUTTO CIÒ CHE È APPROVATO
+        // 2. Filtro manuale per categoria (cerca le prime 4 lettere, es: "card")
+        const filtrati = data ? data.filter(item => 
+          item.categoria && item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
+        ) : [];
 
-    if (error) {
-      console.error("ERRORE SUPABASE:", error.message);
-      throw error;
+        // 3. Filtro per zona (se presente nello slug)
+        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
+        const risultatiFinali = (zonaInSlug === 'roma') 
+          ? filtrati 
+          : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
+
+        setServizi(risultatiFinali);
+
+        // Meta dati per evitare che la pagina resti senza titoli
+        setMeta({ 
+          titolo: `${catSlug.toUpperCase()} a Roma`, 
+          zona: zonaInSlug, 
+          cat: catSlug,
+          nomeSemplice: catSlug
+        });
+
+      } catch (err) { 
+        console.error("Errore:", err.message); 
+      } finally { 
+        setLoading(false); 
+      }
     }
 
-    // Filtriamo a mano per essere sicuri al 100%
-    const filtrati = data.filter(item => 
-      item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
-    );
-
-    console.log("ANNUNCI NEL DB:", data.length);
-    console.log("ANNUNCI DOPO FILTRO:", filtrati.length);
-    
-    setServizi(filtrati || []);
-  } catch (err) { 
-    console.error("ERRORE NEL CODICE:", err); 
-  } finally { 
-    setLoading(false); 
-  }
-}
-
-fetchDati();
-}, [slug]);
+    if (slug) fetchDati();
+  }, [slug]);
 // --- FINE SOSTITUZIONE ---
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
