@@ -53,9 +53,20 @@ useEffect(() => {
 
         if (error) throw error;
 
-        const filtrati = data ? data.filter(item => 
-          item.categoria && item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
-        ) : [];
+        // FILTRO INTELLIGENTE PER CATEGORIA
+        const filtrati = data ? data.filter(item => {
+          if (!item.categoria) return false;
+          const catDB = item.categoria.toLowerCase();
+          const catURL = catSlug.toLowerCase();
+
+          // Se lo slug è "specialistiche", forziamo il match con "visite specialistiche"
+          if (catURL.includes('specialist') && (catDB.includes('specialist') || catDB.includes('visite'))) {
+            return true;
+          }
+
+          // Filtro standard per le altre (dentisti, oculisti, ecc.)
+          return catDB.includes(catURL.slice(0, 4));
+        }) : [];
 
         const risultatiFinali = (zonaInSlug === 'roma') 
           ? filtrati 
