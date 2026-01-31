@@ -241,28 +241,25 @@ export default function HubLayout({
   
 
 <a 
-  href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'}
-  target="_blank" 
+  href={`https://wa.me/${v.whatsapp || ''}`} 
+  target="_blank"
   rel="noopener noreferrer"
-  onClick={(e) => { if(!v.whatsapp) e.preventDefault(); }}
-  style={{
-    flex: 1,
-    backgroundColor: '#25D366',
-    color: 'white',
-    padding: '12px 5px',
-    borderRadius: '8px',
+  style={{ 
+    flex: '1', 
+    minWidth: '110px', 
+    backgroundColor: '#22c55e', 
+    color: 'white', 
+    padding: '14px', 
+    borderRadius: theme.radius.button, 
+    textAlign: 'center', 
+    fontWeight: '800', 
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    opacity: v.whatsapp ? 1 : 0.5,
-    cursor: v.whatsapp ? 'pointer' : 'default'
+    justifyContent: 'center'
   }}
 >
-  <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
-  WhatsApp
+  💬 WHATSAPP
 </a>
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
