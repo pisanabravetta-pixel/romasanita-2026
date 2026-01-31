@@ -239,51 +239,27 @@ export default function HubLayout({
     📞 CHIAMA
   </a>
   
-<div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-  {/* PULSANTE CHIAMA */}
-  <a 
-    href={`tel:${v.telefono}`} 
-    style={{
-      flex: 1,
-      backgroundColor: colore,
-      color: 'white',
-      padding: '12px 5px',
-      borderRadius: '8px',
-      textDecoration: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '14px',
-      fontWeight: 'bold'
-    }}
-  >
-    <i className="fa-solid fa-phone" style={{ marginRight: '8px' }}></i>
-    Chiama
-  </a>
-
-  {/* PULSANTE WHATSAPP - FIX NUMERO CORTO E LAYOUT */}
-  <a 
-    href={`https://api.whatsapp.com/send?phone=39${String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
-    target="_blank" 
-    rel="noopener noreferrer"
-    style={{
-      flex: 1,
-      backgroundColor: '#25D366',
-      color: 'white',
-      padding: '12px 5px',
-      borderRadius: '8px',
-      textDecoration: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '14px',
-      fontWeight: 'bold'
-    }}
-  >
-    <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
-    WhatsApp
-  </a>
-</div>
+<a 
+  href={`https://api.whatsapp.com/send?phone=${String(v.whatsapp).replace(/\D/g, '').startsWith('39') ? String(v.whatsapp).replace(/\D/g, '') : '39' + String(v.whatsapp).replace(/\D/g, '')}&text=Buongiorno, vi contatto da ServiziSalute.`}
+  target="_blank" 
+  rel="noopener noreferrer"
+  style={{
+    flex: 1,
+    backgroundColor: '#25D366',
+    color: 'white',
+    padding: '12px 5px',
+    borderRadius: '8px',
+    textDecoration: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '14px',
+    fontWeight: 'bold'
+  }}
+>
+  <i className="fab fa-whatsapp" style={{ marginRight: '8px', fontSize: '18px' }}></i>
+  WhatsApp
+</a>
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
     target="_blank" 
