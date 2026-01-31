@@ -27,38 +27,24 @@ export default function PaginaQuartiereDinamica() {
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  useEffect(() => {
+useEffect(() => {
     if (!slug || slug === 'index' || slug === '') return;
 
     async function fetchDati() {
       try {
         setLoading(true);
-        const parti = slug.split('-'); 
-        const catSlug = parti[0]; 
-        const zonaSlug = parti[parti.length - 1];
-
+        const parti = String(slug).split('-');
+        const catSlug = parti[0].trim().toLowerCase(); 
+        
         let primario = "#0891b2"; let chiaro = "#ecfeff";
         if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
         if (catSlug.includes('farmaci')) { primario = "#15803d"; chiaro = "#f0fdf4"; }
         if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
         if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
         
-        const nomeCatRaw = catSlug.replace('-roma', '');
-        const nomeCat = nomeCatRaw.charAt(0).toUpperCase() + nomeCatRaw.slice(1);
-        const zonaBella = zonaSlug.charAt(0).toUpperCase() + zonaSlug.slice(1).replace(/-/g, ' ');
-
-        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
-        setMeta({ 
-          titolo: `${nomeCat} a Roma ${zonaBella}`, 
-          zona: zonaBella, 
-          cat: catSlug,
-          nomeSemplice: nomeCat
-        });
-async function fetchDati() {
-      try {
-        setLoading(true);
-        const parti = String(slug).split('-');
-        const catSlug = parti[0].trim().toLowerCase(); 
+        const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
+        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
+        const zonaBella = zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ');
 
         const { data, error } = await supabase
           .from('annunci')
@@ -71,43 +57,35 @@ async function fetchDati() {
           item.categoria && item.categoria.toLowerCase().includes(catSlug.slice(0, 4))
         ) : [];
 
-        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
         const risultatiFinali = (zonaInSlug === 'roma') 
           ? filtrati 
           : filtrati.filter(item => item.zona && item.zona.toLowerCase().includes(zonaInSlug));
 
         setServizi(risultatiFinali);
-
+        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
         setMeta({ 
-          titolo: `${catSlug.toUpperCase()} a Roma`, 
-          zona: zonaInSlug, 
+          titolo: `${nomeCat} a Roma ${zonaBella}`, 
+          zona: zonaBella, 
           cat: catSlug,
-          nomeSemplice: catSlug
+          nomeSemplice: nomeCat
         });
-
       } catch (err) { 
         console.error("Errore:", err.message); 
       } finally { 
         setLoading(false); 
       }
     }
-
-    if (slug) {
-      fetchDati();
-    }
+    fetchDati();
   }, [slug]);
-  useEffect(() => {
+
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
-      
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OSM'
       }).addTo(map);
-
       const group = new L.featureGroup();
       servizi.forEach((s) => {
         if (s.lat && s.lng) {
@@ -117,7 +95,6 @@ async function fetchDati() {
           group.addLayer(marker);
         }
       });
-
       if (servizi.some(s => s.lat && s.lng)) {
         map.fitBounds(group.getBounds().pad(0.1));
       }
