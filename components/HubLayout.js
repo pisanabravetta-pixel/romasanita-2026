@@ -241,7 +241,7 @@ export default function HubLayout({
   
 
 <a 
-  href={`https://wa.me/${v.whatsapp || ''}`} 
+  href={`https://wa.me/39${(v.whatsapp || '').toString().split(',')[0].replace(/\s+/g, '')}`} 
   target="_blank"
   rel="noopener noreferrer"
   style={{ 
