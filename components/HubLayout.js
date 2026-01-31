@@ -20,22 +20,19 @@ export default function HubLayout({
   testoCTA,
   altreSpecialistiche = []
 }) {
- const mediciAttivi = medici && medici.length > 0 ? medici : [];
+const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
-  // --- INIZIO INTERVENTO CHIRURGICO: IL MOTORE DELLA MAPPA (VERSIONE BLINDATA SSR) ---
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
       return;
     }
     const L = window.L; 
-    
     try {
-      // Pulizia istanza precedente
       if (window.mapInstance) { 
         window.mapInstance.remove(); 
         window.mapInstance = null;
       }
-      
+      // Zoom fisso a 11 su Roma, come l'originale
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
       window.mapInstance = map;
 
@@ -43,26 +40,18 @@ export default function HubLayout({
         attribution: '© OSM'
       }).addTo(map);
 
-      const markers = [];
       medici.forEach((m) => {
         if (m.lat && m.lng) {
-          const marker = L.marker([parseFloat(m.lat), parseFloat(m.lng)])
+          L.marker([parseFloat(m.lat), parseFloat(m.lng)])
             .addTo(map)
             .bindPopup(`<b>${m.nome}</b><br>${m.indirizzo}`);
-          markers.push(marker);
         }
       });
-
-      if (markers.length > 0 && map) {
-        const group = L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.1));
-      }
+      // TOLTO fitBounds: la mappa resta dove l'hai impostata tu
     } catch (err) {
       console.error("Errore Mappa:", err);
     }
-  }, [medici]); 
-  // --- FINE INTERVENTO CHIRURGICO ---
-  
+  }, [medici]);
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
@@ -199,18 +188,6 @@ export default function HubLayout({
   La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
 </p>
 
-{/* LISTA MEDICI SINTETICA - SOLO COORDINATE (Il blocco che non trovavi) */}
-<div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
-  {medici && medici.length > 0 ? (
-  medici.map((m, index) => (
-      <div key={index} style={{ backgroundColor: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
-          <div>
-            <h3 style={{ margin: '0 0 5px 0', fontSize: '20px', color: colore }}>{m.nome}</h3>
-            <p style={{ margin: '0', color: '#64748b', fontSize: '15px' }}>
-              📍 {m.indirizzo} — <strong>{m.zona}</strong>
-            </p>
-          </div>
           
           <a 
             /* COORDINATE PURE: Forza Google Maps a mostrare solo la posizione geografica */
