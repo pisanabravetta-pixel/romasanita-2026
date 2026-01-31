@@ -189,27 +189,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 </p>
 
           
-          <a 
-            /* COORDINATE PURE: Forza Google Maps a mostrare solo la posizione geografica */
-            href={`https://www.google.it/maps?q=${m.lat},${m.lng}`}
-            target="_blank" 
-            rel="noopener noreferrer" 
-            style={{ 
-              backgroundColor: colore, 
-              color: 'white', 
-              padding: '10px 20px', 
-              borderRadius: '8px', 
-              fontWeight: '700', 
-              textDecoration: 'none' 
-            }}
-          >
-            Mappa
-          </a>
-        </div>
-      </div>
-    ))
-  ) : null }
-</div>
+         
 
 {/* BLOCCO ANNUNCI DETTAGLIATI (Quello in fondo alla pagina) */}
 <div style={{ display: 'block' }}>
