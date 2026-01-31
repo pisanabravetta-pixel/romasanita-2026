@@ -18,9 +18,8 @@ useEffect(() => {
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          // FILTRO CHIRURGICO: Prendiamo solo le vere visite specialistiche
-          // Aggiungi qui sotto le categorie che vuoi far apparire
-          .or('categoria.ilike.%dermatolog%,categoria.ilike.%cardiolog%,categoria.ilike.%oculist%,categoria.ilike.%ortopedic%,categoria.ilike.%ginecolog%,categoria.ilike.%nutrizionist%,categoria.ilike.%psicolog%')
+          // Torniamo alla tua logica originale che funzionava + un jolly per il futuro
+          .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%,categoria.ilike.%specialistica%`)
           .order('is_top', { ascending: false });
 
         if (data) setAnnunci(data);
