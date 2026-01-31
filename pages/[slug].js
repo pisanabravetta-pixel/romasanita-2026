@@ -9,18 +9,19 @@ import { getDBQuery, quartieriTop } from '../lib/seo-logic';
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
   const { slug } = router.query;
-  // --- AGGIUNGI QUESTO BLOCCO QUI ---
-  const filtri = getDBQuery(slug || '');
+ // --- VERSIONE CORRETTA DEL CONTROLLO ---
+  // Estraiamo la categoria pulita (es. da "dentisti-roma-prati" prende "dentisti")
+  const categoriaPulita = slug ? slug.split('-')[0] : '';
+  const filtri = getDBQuery(categoriaPulita);
   
-  // Se la categoria è quella che abbiamo marchiato come NON_ESISTE, 
-  // o se lo slug è proprio quello che vogliamo eliminare
-  if (filtri.cat === 'NON_ESISTE' || slug === 'specialistica-roma') {
+  // Se la categoria non esiste nel mapping E non è la home o roba vuota
+  if (slug && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
       router.replace('/404'); 
     }
     return null;
   }
-  // --- FINE BLOCCO ---
+  // --- FINE BLOCCO CORRETTO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
