@@ -239,14 +239,16 @@ export default function HubLayout({
     📞 CHIAMA
   </a>
   
-  <a 
-    href={`https://wa.me/${(v.whatsapp || '').toString().replace(/\s+/g, '')}`} 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
-  >
-    💬 WHATSAPP
-  </a>
+<a 
+  href={`https://api.whatsapp.com/send?phone=39${v.whatsapp.replace(/\s+/g, '')}&text=Buongiorno, vi contatto da ServiziSalute per informazioni.`}
+  target="_blank" 
+  rel="noopener noreferrer"
+  style={{
+    // mantieni il tuo stile attuale del pulsante
+  }}
+>
+  {/* icona e testo pulsante */}
+</a>
 
   <a 
     href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
