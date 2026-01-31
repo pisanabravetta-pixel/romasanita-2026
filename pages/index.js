@@ -161,9 +161,29 @@ return (
   <div className="container" style={{ textAlign: 'center' }}>
     
     {/* TITOLO PRINCIPALE (H1) */}
-    <h1 style={{ color: '#065f46', fontWeight: '900', fontSize: '38px', marginBottom: '10px' }}>
-      Servizi Salute: Trova strutture e professionisti sanitari a Roma
-    </h1>
+    <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
+  {/* Nome Brand - Grande e Forte */}
+  <h1 style={{ 
+    fontSize: '42px', 
+    fontWeight: '900', 
+    color: '#1a365d', 
+    letterSpacing: '-1px',
+    marginBottom: '5px'
+  }}>
+    ServiziSalute
+  </h1>
+  
+  {/* Slogan - Più piccolo e grigio, per non appesantire */}
+  <p style={{ 
+    fontSize: '18px', 
+    fontWeight: '500', 
+    color: '#64748b', 
+    maxWidth: '500px', 
+    margin: '0 auto' 
+  }}>
+    Trova strutture e professionisti sanitari a Roma
+  </p>
+</div>
     
     {/* SOTTOTITOLO (P) - rimosso "verificati" */}
     <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
