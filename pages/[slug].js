@@ -78,7 +78,7 @@ async function fetchDati() {
 
         setServizi(risultatiFinali);
 
-       setMeta({ 
+        setMeta({ 
           titolo: `${catSlug.toUpperCase()} a Roma`, 
           zona: zonaInSlug, 
           cat: catSlug,
@@ -92,9 +92,10 @@ async function fetchDati() {
       }
     }
 
-    if (slug) fetchDati();
+    if (slug) {
+      fetchDati();
+    }
   }, [slug]);
-
   useEffect(() => {
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
