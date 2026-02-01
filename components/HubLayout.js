@@ -21,7 +21,8 @@ export default function HubLayout({
   altreSpecialistiche = []
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
-// 1. STATO PER I DATI IN TEMPO REALE (Come nella pagina dinamica)
+  
+  // 1. STATO PER I DATI IN TEMPO REALE
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
 
@@ -29,7 +30,6 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        // Chiamata a Supabase identica a quella che funziona
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
@@ -37,11 +37,10 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
         if (error) throw error;
 
-        // Filtro per la categoria dell'Hub (es. "cardiologi")
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
           const cDB = item.categoria.toLowerCase();
-          const cURL = categoria.toLowerCase(); // Usa la categoria passata all'Hub
+          const cURL = categoria ? categoria.toLowerCase() : ''; 
           return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
         }) : [];
 
@@ -53,13 +52,14 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
       }
     }
     fetchNuoviMedici();
-  }, [categoria]); // Si aggiorna se cambi specialistica
+  }, [categoria]);
 
-  // 2. SOSTITUISCI LA VARIABILE DEI MEDICI
-  // Usiamo quelli di Supabase se disponibili, altrimenti quelli vecchi delle props
+  // 2. DEFINIZIONE LISTA FINALE
   const listaDaMostrare = serviziRealTime.length > 0 ? serviziRealTime : mediciAttivi;
+
+  // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
+    if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
     }
     const L = window.L; 
@@ -68,7 +68,6 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         window.mapInstance.remove(); 
         window.mapInstance = null;
       }
-      // Zoom fisso a 11 su Roma, come l'originale
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 11);
       window.mapInstance = map;
 
@@ -76,18 +75,17 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         attribution: '© OSM'
       }).addTo(map);
 
-      medici.forEach((m) => {
+      listaDaMostrare.forEach((m) => {
         if (m.lat && m.lng) {
           L.marker([parseFloat(m.lat), parseFloat(m.lng)])
             .addTo(map)
             .bindPopup(`<b>${m.nome}</b><br>${m.indirizzo}`);
         }
       });
-      // TOLTO fitBounds: la mappa resta dove l'hai impostata tu
     } catch (err) {
       console.error("Errore Mappa:", err);
     }
-  }, [medici]);
+  }, [listaDaMostrare]); // <--- La mappa ora sente i nuovi medici
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
