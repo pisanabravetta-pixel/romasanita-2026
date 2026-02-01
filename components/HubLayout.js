@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { quartieriTop } from '../lib/seo-logic';
 import Head from 'next/head';
 import Navbar from './Navbar';
