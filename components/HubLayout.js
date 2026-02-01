@@ -21,7 +21,43 @@ export default function HubLayout({
   altreSpecialistiche = []
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
+// 1. STATO PER I DATI IN TEMPO REALE (Come nella pagina dinamica)
+  const [serviziRealTime, setServiziRealTime] = useState([]);
+  const [loadingRealTime, setLoadingRealTime] = useState(true);
 
+  useEffect(() => {
+    async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        // Chiamata a Supabase identica a quella che funziona
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true);
+
+        if (error) throw error;
+
+        // Filtro per la categoria dell'Hub (es. "cardiologi")
+        const filtrati = data ? data.filter(item => {
+          if (!item.categoria) return false;
+          const cDB = item.categoria.toLowerCase();
+          const cURL = categoria.toLowerCase(); // Usa la categoria passata all'Hub
+          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
+        }) : [];
+
+        setServiziRealTime(filtrati);
+      } catch (err) {
+        console.error("Errore fetch Hub:", err);
+      } finally {
+        setLoadingRealTime(false);
+      }
+    }
+    fetchNuoviMedici();
+  }, [categoria]); // Si aggiorna se cambi specialistica
+
+  // 2. SOSTITUISCI LA VARIABILE DEI MEDICI
+  // Usiamo quelli di Supabase se disponibili, altrimenti quelli vecchi delle props
+  const listaDaMostrare = serviziRealTime.length > 0 ? serviziRealTime : mediciAttivi;
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !medici || medici.length === 0) {
       return;
@@ -196,7 +232,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   {loading ? (
     <p>Caricamento...</p>
   ) : medici && medici.length > 0 ? (
-    mediciAttivi.map((v) => (
+    listaDaMostrare.map((v) => (
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
         <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
         <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
