@@ -229,7 +229,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 <div style={{ display: 'block' }}>
   {loading ? (
     <p>Caricamento...</p>
-  ) : medici && medici.length > 0 ? (
+ ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v) => (
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
         <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
