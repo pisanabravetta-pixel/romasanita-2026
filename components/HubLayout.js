@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { theme } from '../styles/theme';
-
+import { supabase } from '../lib/supabaseClient';
 export default function HubLayout({ 
   titolo, 
   categoria, 
