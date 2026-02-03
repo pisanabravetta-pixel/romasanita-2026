@@ -36,7 +36,7 @@ export default function ChiSiamo() {
 
           <section style={{ lineHeight: '1.8', color: '#475569', fontSize: '18px' }}>
             <p style={{ marginBottom: '20px' }}>
-              <strong>ServiziSalute Roma</strong> nasce nel 2026 da un'idea fondamentale: rendere la sanità locale più accessibile, trasparente e vicina ai cittadini.
+              <strong>ServiziSalute.com Roma</strong> nasce nel 2026 da un'idea fondamentale: rendere la sanità locale più accessibile, trasparente e vicina ai cittadini.
             </p>
             
             <p style={{ marginBottom: '20px' }}>
