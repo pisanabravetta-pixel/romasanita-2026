@@ -122,7 +122,7 @@ useEffect(() => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
   <Head>
   <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute.com`}</title>
-  <meta name="description" content={`Scopri tutte le strutture di ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti, servizi e mappa per trovare rapidamente il servizio più vicino.`} />
+  <meta name="description" content={`Scopri i migliori professionisti in ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti diretti, mappa e informazioni utili aggiornate.`} />
 
   <script
     type="application/ld+json"
@@ -130,32 +130,14 @@ useEffect(() => {
       __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": `Come trovare ${meta.nomeSemplice.toLowerCase()} a ${meta.zona}?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `È possibile consultare l’elenco dedicato al quartiere ${meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": `Le strutture di ${meta.zona} offrono servizi sanitari aggiuntivi?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Sì, molte strutture a Roma ${meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.`
-            }
-          },
-          {
-            "@type": "Question",
-            "name": `Posso contattare direttamente le strutture di ${meta.zona}?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": `Sì, ogni scheda dispone di contatti diretti (Telefono o WhatsApp) per richiedere informazioni su orari, servizi e disponibilità.`
-            }
+        "mainEntity": (seoData[meta.cat]?.faq || []).map(f => ({
+          "@type": "Question",
+          "name": f.q.replace(/{{zona}}/g, meta.zona),
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.a.replace(/{{zona}}/g, meta.zona)
           }
-        ]
+        }))
       })
     }}
   />
@@ -395,20 +377,27 @@ useEffect(() => {
 
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '100%', margin: '30px 0' }} />
 
-  <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
+<h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-    <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice.toLowerCase()} a {meta.zona}?</p>
-      <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato al quartiere {meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.</p>
-    </div>
-    <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Le strutture di {meta.zona} offrono servizi sanitari aggiuntivi?</p>
-      <p style={{ margin: 0, color: '#475569' }}>Sì, molte strutture a Roma {meta.zona} offrono servizi come autoanalisi, test rapidi e consulenza professionale specialistica.</p>
-    </div>
-    <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Posso contattare direttamente le strutture di {meta.zona}?</p>
-      <p style={{ margin: 0, color: '#475569' }}>Sì, ogni scheda dispone di contatti diretti (Telefono o WhatsApp) per richiedere informazioni su orari, servizi e disponibilità.</p>
-    </div>
+    {/* Generazione dinamica delle FAQ basata sulla categoria attuale */}
+    {(seoData[meta.cat]?.faq || []).map((f, idx) => (
+      <div key={idx}>
+        <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>
+          {f.q.replace(/{{zona}}/g, meta.zona)}
+        </p>
+        <p style={{ margin: 0, color: '#475569' }}>
+          {f.a.replace(/{{zona}}/g, meta.zona)}
+        </p>
+      </div>
+    ))}
+
+    {/* Fallback di sicurezza: se seoData è vuoto o non caricato, mostra una FAQ standard */}
+    {(!seoData[meta.cat] || seoData[meta.cat].faq.length === 0) && (
+      <div>
+        <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice.toLowerCase()} a {meta.zona}?</p>
+        <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato al quartiere {meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.</p>
+      </div>
+    )}
   </div>
 </section>
 {/* CTA PER PROFESSIONISTI NEL QUARTIERE */}
