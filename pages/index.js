@@ -79,7 +79,7 @@ const eseguiRicerca = () => {
 return (
   <>
   <Head>
- <title key="title">ServiziSalute | Portale della Sanità a Roma - Strutture e Specialisti</title>
+ <title key="title">ServiziSalute.com | Portale della Sanità a Roma - Strutture e Specialisti</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
@@ -171,7 +171,7 @@ return (
     marginBottom: '8px',
     lineHeight: '1'
   }}>
-    ServiziSalute
+    ServiziSalute.com
   </h1>
   
   {/* Slogan - In VERDE SCURO coordinato (più sottile) */}
