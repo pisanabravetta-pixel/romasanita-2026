@@ -1,6 +1,7 @@
 import { specialisticheTop, quartieriTop } from '../lib/seo-logic';
 
-const BASE_URL = 'https://www.servizisalute.com';
+// Cambia BASE_URL in EXTERNAL_DATA_URL o viceversa, l'importante è che il nome sia lo stesso sotto
+const EXTERNAL_DATA_URL = 'https://www.servizisalute.com'; 
 
 function generateSiteMap(pagine) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -19,6 +20,7 @@ function generateSiteMap(pagine) {
    </urlset>
  `;
 }
+// ... tutto il resto del codice rimane identico
 
 function SiteMap() {
   // Il browser non userà questo componente, getServerSideProps farà tutto il lavoro
