@@ -378,27 +378,27 @@ useEffect(() => {
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '100%', margin: '30px 0' }} />
 
 <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-    {/* Generazione dinamica delle FAQ basata sulla categoria attuale */}
-    {(seoData[meta.cat]?.faq || []).map((f, idx) => (
+<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+  {/* Aggiungiamo il controllo: meta.cat && seoData[meta.cat] */}
+  {meta.cat && seoData[meta.cat] ? (
+    seoData[meta.cat].faq.map((f, idx) => (
       <div key={idx}>
         <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>
-          {f.q.replace(/{{zona}}/g, meta.zona)}
+          {f.q.replace(/{{zona}}/g, meta.zona || 'Roma')}
         </p>
         <p style={{ margin: 0, color: '#475569' }}>
-          {f.a.replace(/{{zona}}/g, meta.zona)}
+          {f.a.replace(/{{zona}}/g, meta.zona || 'Roma')}
         </p>
       </div>
-    ))}
-
-    {/* Fallback di sicurezza: se seoData è vuoto o non caricato, mostra una FAQ standard */}
-    {(!seoData[meta.cat] || seoData[meta.cat].faq.length === 0) && (
-      <div>
-        <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice.toLowerCase()} a {meta.zona}?</p>
-        <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato al quartiere {meta.zona} e utilizzare la mappa per individuare la struttura più vicina alla propria posizione.</p>
-      </div>
-    )}
-  </div>
+    ))
+  ) : (
+    /* Se i dati non sono ancora pronti o mancano, mostriamo queste di base per non rompere la pagina */
+    <div>
+      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice?.toLowerCase() || 'il servizio'} a {meta.zona || 'Roma'}?</p>
+      <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato e utilizzare la mappa per individuare la struttura più vicina.</p>
+    </div>
+  )}
+</div>
 </section>
 {/* CTA PER PROFESSIONISTI NEL QUARTIERE */}
 <div style={{ 
