@@ -28,77 +28,70 @@ export default function PaginaQuartiereDinamica() {
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
 useEffect(() => {
-    console.log("Slug rilevato:", slug); // Questo DEVE apparire in console
-    if (!slug || slug === 'index' || slug === '') return;
+  console.log("Slug rilevato:", slug);
+  if (!slug || slug === 'index' || slug === '') return;
 
-    async function fetchDati() {
-      try {
-        setLoading(true);
-        console.log("Avvio fetch da Supabase..."); 
+  async function fetchDati() {
+    try {
+      setLoading(true);
+      
+      // 1. Identifichiamo Categoria e Zona dallo slug
+      const catSlug = slug.split('-roma')[0].toLowerCase();
+      const zonaInSlug = slug.includes('-roma-') ? slug.split('-roma-')[1].toLowerCase() : 'roma';
+      
+      // Prepariamo la stringa per il database (es: "centro-storico" -> "centro storico")
+      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+      const mapping = getDBQuery(catSlug);
 
-        const parti = String(slug).split('-');
-        const catSlug = parti[0].trim().toLowerCase(); 
-        
-        // Chiamata al DB
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
+      // 2. Query OTTIMIZZATA su Supabase
+      let query = supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true);
 
-        if (error) {
-          console.error("Errore Supabase:", error);
-          throw error;
-        }
-
-        console.log("Dati grezzi ricevuti:", data ? data.length : 0);
-
-     // 1. Filtro Categoria (Già funzionante)
-        const filtrati = data ? data.filter(item => {
-          if (!item.categoria) return false;
-          const cDB = item.categoria.toLowerCase();
-          const cURL = catSlug.toLowerCase();
-          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
-        }) : [];
-
-        // 2. FILTRO ZONA CORRETTO (Il colpevole)
-        const zonaInSlug = parti.length > 2 ? parti[parti.length - 1].toLowerCase() : 'roma';
-        
-        const risultatiFinali = (zonaInSlug === 'roma' || zonaInSlug === catSlug) 
-          ? filtrati  // Se siamo nella HUB, mostra TUTTI i medici di quella categoria
-          : filtrati.filter(item => 
-              item.zona && item.zona.toLowerCase().includes(zonaInSlug) // Se siamo nel QUARTIERE, filtra
-            );
-
-        console.log("Zona rilevata:", zonaInSlug, "Risultati:", risultatiFinali.length);
-        setServizi(risultatiFinali);
-        setServizi(risultatiFinali);
-
-        // Meta e Tema
-        const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
-        const zonaBella = zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ');
-        
-        let primario = "#0891b2"; let chiaro = "#ecfeff";
-        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-        if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-        if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-
-        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
-        setMeta({ 
-          titolo: `${nomeCat} a Roma ${zonaBella}`, 
-          zona: zonaBella, 
-          cat: catSlug,
-          nomeSemplice: nomeCat
-        });
-
-      } catch (err) { 
-        console.error("Errore nel catch:", err.message); 
-      } finally { 
-        setLoading(false); 
+      // Filtriamo per categoria direttamente sul server
+      if (mapping.cat !== 'NON_ESISTE') {
+        query = query.ilike('categoria', `%${mapping.cat}%`);
       }
-    }
 
-    fetchDati();
-  }, [slug]);
+      // Se non è la hub generale, filtriamo per zona sul server
+      if (zonaInSlug !== 'roma') {
+        query = query.ilike('zona', `%${zonaQuery}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      // 3. Aggiornamento stati e SEO
+      setServizi(data || []);
+
+      const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
+      // Trasforma centro-storico in Centro Storico per il titolo
+      const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+      let primario = "#0891b2"; let chiaro = "#ecfeff";
+      if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+      if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+      if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
+
+      setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
+      setMeta({ 
+        titolo: `${nomeCat} a Roma ${zonaBella}`, 
+        zona: zonaBella, 
+        cat: catSlug,
+        nomeSemplice: nomeCat 
+      });
+
+    } catch (err) {
+      console.error("Errore nel fetch:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchDati();
+}, [slug]);
 
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
