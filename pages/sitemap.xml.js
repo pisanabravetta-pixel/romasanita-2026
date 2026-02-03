@@ -1,6 +1,6 @@
 import { specialisticheTop, quartieriTop } from '../lib/seo-logic';
 
-const EXTERNAL_DATA_URL = 'https://servizisalute-roma.vercel.app';
+const BASE_URL = 'https://www.servizisalute.com';
 
 function generateSiteMap(pagine) {
   return `<?xml version="1.0" encoding="UTF-8"?>
