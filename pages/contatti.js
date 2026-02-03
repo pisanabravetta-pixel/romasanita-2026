@@ -41,7 +41,7 @@ export default function Contatti() {
                 <span style={{ fontSize: '20px' }}>📧</span> Email
               </h3>
               <p style={{ color: '#475569', margin: '0' }}>
-                <a href="mailto:info@servizisalute.it" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>info@servizisalute.it</a>
+                <a href="mailto:info@servizisalute.com" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>info@servizisalute.it</a>
               </p>
             </div>
             <div>
