@@ -410,9 +410,9 @@ useEffect(() => {
   margin: '35px 0',
   boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'
 }}>
-  <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>
-    Sei un {meta.nomeSemplice.toLowerCase()} a {meta.zona}?
-  </h2>
+  <h2 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '10px', lineHeight: '1.2' }}>
+  Sei un professionista o gestisci {meta.nomeSemplice.toLowerCase()} a {meta.zona}?
+</h2>
   <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px', maxWidth: '500px', margin: '0 auto 20px auto' }}>
     Aumenta la tua visibilità nel quartiere <strong>{meta.zona}</strong>. Inserisci la tua struttura su ServiziSalute e ricevi contatti diretti.
   </p>
