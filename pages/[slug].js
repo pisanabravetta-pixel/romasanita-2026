@@ -11,7 +11,7 @@ export default function PaginaQuartiereDinamica() {
   const { slug } = router.query;
  // --- VERSIONE CORRETTA DEL CONTROLLO ---
   // Estraiamo la categoria pulita (es. da "dentisti-roma-prati" prende "dentisti")
-  const categoriaPulita = slug ? slug.split('-')[0] : '';
+ const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   
   // Se la categoria non esiste nel mapping E non è la home o roba vuota
@@ -195,7 +195,7 @@ useEffect(() => {
     {meta.titolo}
   </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-    I migliori professionisti a {meta.zona} aggiornati a Gennaio 2026
+    I migliori professionisti a {meta.zona} aggiornati a Febbraio 2026
   </p>
 </div>
 
