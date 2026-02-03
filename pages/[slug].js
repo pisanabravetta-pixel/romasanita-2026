@@ -128,7 +128,7 @@ useEffect(() => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
   <Head>
-  <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute`}</title>
+  <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute.com`}</title>
   <meta name="description" content={`Scopri tutte le strutture di ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti, servizi e mappa per trovare rapidamente il servizio più vicino.`} />
 
   <script
