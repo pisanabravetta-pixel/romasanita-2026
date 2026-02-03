@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { quartieriTop } from '../lib/seo-logic';
+import { quartieriTop, seoData } from '../lib/seo-logic';
 import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -96,38 +96,20 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         content={descrizioneMeta || `Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.`} 
       />
       
-      <script
+    <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": `Come trovare servizi di ${titolo} a Roma?`,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": `È possibile consultare l’elenco dei servizi di ${titolo} a Roma suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.`
-                }
-              },
-              {
-                "@type": "Question",
-                "name": `I servizi di ${titolo} a Roma sono disponibili in tutti i quartieri?`,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": `I servizi di ${titolo} sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.`
-                }
-              },
-              {
-                "@type": "Question",
-                "name": `È possibile contattare direttamente le strutture di ${titolo}?`,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": `Sì, ogni struttura elencata mette a disposizione contatti diretti (Telefono o WhatsApp) per richiedere informazioni su servizi, orari e disponibilità.`
-                }
+            "mainEntity": (seoData?.[categoria]?.faq || []).map(f => ({
+              "@type": "Question",
+              "name": f.q.replace(/{{zona}}/g, 'Roma'),
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": f.a.replace(/{{zona}}/g, 'Roma')
               }
-            ]
+            }))
           })
         }}
       />
@@ -406,42 +388,35 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '80%', margin: '30px auto' }} />
 
-  <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
+ <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
     Domande Frequenti su {titolo} a Roma
   </h3>
   
   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
-    <div>
-      <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        1. Come trovare servizi di {titolo} a Roma?
-      </p>
-      <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        È possibile consultare l’elenco dei servizi di <strong>{titolo} a Roma</strong> suddivisi per quartiere e utilizzare la mappa per individuare rapidamente la struttura più vicina.
-      </p>
-    </div>
-
-    <div>
-      <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        2. I servizi di {titolo} a Roma sono disponibili in tutti i quartieri?
-      </p>
-      <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        I servizi di <strong>{titolo}</strong> sono presenti in numerosi quartieri di Roma e vengono organizzati per zona per facilitare la ricerca e l’accesso alle strutture sanitarie.
-      </p>
-    </div>
-
-    <div>
-      <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
-        3. È possibile contattare direttamente le strutture di {titolo}?
-      </p>
-      <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
-        Sì, ogni struttura elencata mette a disposizione contatti diretti (Telefono o WhatsApp) per richiedere informazioni su servizi, orari e disponibilità.
-      </p>
-    </div>
+    {seoData?.[categoria]?.faq ? (
+      seoData[categoria].faq.map((f, idx) => (
+        <div key={idx}>
+          <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
+            {idx + 1}. {f.q.replace(/{{zona}}/g, 'Roma')}
+          </p>
+          <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>
+            {f.a.replace(/{{zona}}/g, 'Roma')}
+          </p>
+        </div>
+      ))
+    ) : (
+      /* Fallback di sicurezza se i dati SEO non sono ancora pronti */
+      <div>
+        <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>1. Come trovare servizi di {titolo} a Roma?</p>
+        <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>È possibile consultare l’elenco suddiviso per quartiere e utilizzare la mappa per individuare la struttura più vicina.</p>
+      </div>
+    )}
   </div>
 </section>
-
           <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>{testoCTA}</h2>
+            <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>
+  Gestisci {titolo.toLowerCase()} a Roma?
+</h2>
             <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
             <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
           </div>
