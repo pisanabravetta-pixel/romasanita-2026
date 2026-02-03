@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, quartieriTop } from '../lib/seo-logic'; 
+import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
