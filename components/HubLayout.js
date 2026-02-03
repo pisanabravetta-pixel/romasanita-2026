@@ -90,7 +90,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
     <Head>
-      <title>{`${titolo} a Roma – Elenco e contatti | ServiziSalute`}</title>
+      <title>{`${titolo} a Roma – Elenco e contatti | ServiziSalute.com`}</title>
       <meta 
         name="description" 
         content={descrizioneMeta || `Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.`} 
@@ -154,7 +154,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     {titolo} a Roma
   </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-    Specialisti aggiornati a <span style={{ color: colore }}>Gennaio 2026</span>
+    Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
   </p>
 </div>
 
