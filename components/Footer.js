@@ -8,7 +8,7 @@ export default function Footer() {
           
           {/* COLONNA 1: DESCRIZIONE */}
           <div>
-            <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute</h4>
+            <h4 style={{ color: '#63b3ed', marginBottom: '15px' }}>ServiziSalute.com</h4>
             <p style={{ fontSize: '14px', color: '#a0aec0', lineHeight: '1.6' }}>
               ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
               Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
@@ -19,7 +19,7 @@ export default function Footer() {
           <div>
             <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
             <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
-              ● Disponibilità aggiornate: Gennaio 2026
+              ● Disponibilità aggiornate: Febbraio 2026
             </p>
             <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
@@ -52,6 +52,7 @@ export default function Footer() {
               <li><a href="/per-i-professionisti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Perché esserci</a></li>
               <li><a href="/come-funziona" style={{ color: '#a0aec0', textDecoration: 'none' }}>Come funziona</a></li>
               <li><a href="/contatti" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contattaci</a></li>
+            <li><a href="mailto:info@servizisalute.com" style={{ color: '#a0aec0', textDecoration: 'none' }}>Email: info@servizisalute.com</a></li>
             </ul>
             {/* BOX AD PICCOLO */}
             <div style={{ marginTop: '20px', padding: '12px', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRadius: '8px', borderLeft: '3px solid #dc2626' }}>
@@ -80,7 +81,7 @@ export default function Footer() {
 
         {/* COPYRIGHT FINALE */}
         <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
-          © 2026 ServiziSalute – Tutti i diritti riservati
+          © 2026 ServiziSalute.com – Tutti i diritti riservati
         </div>
       </div>
     </footer>
