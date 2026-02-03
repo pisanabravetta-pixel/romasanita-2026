@@ -34,7 +34,7 @@ export default function ComeFunziona() {
             Semplice. Diretto. <span style={{ color: '#2563eb' }}>Romano.</span>
           </h1>
           <p style={{ fontSize: '19px', color: '#475569', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-            Abbiamo rimosso ogni complicazione tecnica. Ecco come portiamo il tuo studio sotto gli occhi dei pazienti del tuo quartiere.
+            Abbiamo rimosso ogni complicazione tecnica. Ecco come Servizisalute.com porta il tuo studio sotto gli occhi dei pazienti del tuo quartiere.
           </p>
         </div>
 
