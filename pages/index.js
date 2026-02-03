@@ -695,36 +695,42 @@ return (
           </div>
         </div>
       </section>
-
-      {/* 📧 SEZIONE NEWSLETTER SOFT */}
-      <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
-        <div className="container" style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ backgroundColor: '#ffffff', padding: '45px 30px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', border: '1px solid #edf2f7' }}>
-            <h3 style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '10px', fontWeight: '800' }}>
-              Resta informato sulla salute nel tuo quartiere
-            </h3>
-            <p style={{ color: '#64748b', fontSize: '16px', marginBottom: '30px', lineHeight: '1.6' }}>
-              Ricevi ogni 15 giorni le nuove aperture e i turni delle farmacie aggiornati a Roma.
-            </p>
-            
-            <form style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <input 
-                type="email" 
-                placeholder="La tua email migliore..." 
-                style={{ padding: '16px 22px', borderRadius: '12px', border: '2px solid #edf2f7', width: '340px', fontSize: '16px', backgroundColor: '#f1f5f9' }} 
-              />
-              <button 
-                type="button"
-                onClick={() => alert('Ottimo! Ti abbiamo inserito nella lista aggiornamenti di ServiziSalute Roma.')}
-                style={{ backgroundColor: '#2563eb', color: 'white', padding: '16px 30px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}
-              >
-                Iscrivimi Gratis
-              </button>
-            </form>
-            <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '20px' }}>📍 Servizio dedicato ai cittadini di Roma. Zero Spam.</p>
-          </div>
-        </div>
-      </section>
+{/* 📧 SEZIONE NEWSLETTER FUNZIONANTE - ID: maqbgzzl */}
+<section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
+  <div className="container" style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
+    <div style={{ backgroundColor: '#ffffff', padding: '45px 30px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', border: '1px solid #edf2f7' }}>
+      <h3 style={{ fontSize: '24px', color: '#1e3a8a', marginBottom: '10px', fontWeight: '800' }}>
+        Resta informato sulla salute nel tuo quartiere
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '16px', marginBottom: '30px', lineHeight: '1.6' }}>
+        Ricevi ogni 15 giorni le nuove aperture e i turni delle farmacie aggiornati a Roma.
+      </p>
+      
+      {/* FORM COLLEGATO A FORMSPREE */}
+      <form 
+        action="https://formspree.io/f/maqbgzzl" 
+        method="POST"
+        style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}
+      >
+        <input 
+          type="email" 
+          name="email" // Obbligatorio per Formspree
+          required
+          placeholder="La tua email migliore..." 
+          style={{ padding: '16px 22px', borderRadius: '12px', border: '2px solid #edf2f7', width: '340px', fontSize: '16px', backgroundColor: '#f1f5f9' }} 
+        />
+        <button 
+          type="submit"
+          style={{ backgroundColor: '#2563eb', color: 'white', padding: '16px 30px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}
+        >
+          Iscrivimi Gratis
+        </button>
+      </form>
+      
+      <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '20px' }}>📍 Servizio dedicato ai cittadini di Roma. Zero Spam.</p>
+    </div>
+  </div>
+</section>
 
       <Footer />
     </div>
