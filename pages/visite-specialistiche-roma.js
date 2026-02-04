@@ -40,7 +40,7 @@ const specialistiMedici = [
     { nome: "Ortopedici Roma", slug: "ortopedici", icona: "🦴", colore: "#ea580c", desc: "Cura traumi, ossa e visite specialistiche ortopediche." },
     { nome: "Nutrizionisti Roma", slug: "nutrizionisti", icona: "🥗", colore: "#16a34a", desc: "Piani alimentari e diete personalizzate su misura." },
   ];
- return (
+return (
     <HubLayout 
       medici={annunci}
       loading={loading}
@@ -53,7 +53,7 @@ const specialistiMedici = [
       quartieri={quartieri}
       schemas={schemas}
     >
-      {/* Qui dentro vanno i tuoi Box Specialisti (Dermatologi Roma, Cardiologi Roma, ecc.) */}
+      {/* --- INIZIO BOX SPECIALISTI --- */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
@@ -97,7 +97,10 @@ const specialistiMedici = [
           </a>
         ))}
       </div>
+      {/* --- FINE BOX SPECIALISTI --- */}
     </HubLayout>
+  );
+}
       {/* --- INIZIO BOX SPECIALISTI --- */}
     <div style={{ 
         display: 'grid', 
