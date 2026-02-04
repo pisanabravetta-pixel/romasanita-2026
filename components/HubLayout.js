@@ -18,7 +18,7 @@ export default function HubLayout({
   badgeSpec,
   testoTopBar,
   testoCTA,
-  altreSpecialistiche = []
+  altreSpecialistiche = [],
   children
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
