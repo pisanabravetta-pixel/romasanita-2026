@@ -14,14 +14,13 @@ useEffect(() => {
     async function fetchVisite() {
       try {
         setLoading(true);
-        // ECCO LA RIGA CHE CERCAVI:
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          .ilike('categoria', '%specialistica%')
-          .not('categoria', 'ilike', '%farmac%')
-          .not('categoria', 'ilike', '%dentist%')
+          // Questo prende SOLO i record che iniziano esattamente con "visite-specialistiche"
+          // ignorando farmacie, dentisti e il resto
+          .ilike('categoria', 'visite-specialistiche %') 
           .order('is_top', { ascending: false });
 
         if (error) throw error;
