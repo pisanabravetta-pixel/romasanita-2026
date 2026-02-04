@@ -11,26 +11,26 @@ export default function VisiteSpecialisticheRoma() {
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
 useEffect(() => {
-    async function fetchVisite() {
-      try {
-        setLoading(true);
-        const { data } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          // Aggiungiamo esplicitamente le categorie che vuoi far apparire qui
-          .or(`categoria.ilike.%specialistica%,categoria.eq.ginecologi,categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.ortopedici,categoria.eq.oculisti`)
-          .order('is_top', { ascending: false });
+  async function fetchVisite() {
+    try {
+      setLoading(true);
+      const { data } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        // Carichiamo tutte le categorie specifiche
+        .or(`categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.ginecologi,categoria.eq.ortopedici,categoria.eq.oculisti,categoria.eq.psicologi,categoria.eq.nutrizionisti`)
+        .order('is_top', { ascending: false });
 
-        if (data) setAnnunci(data);
-      } catch (err) {
-        console.error("Errore caricamento:", err);
-      } finally {
-        setLoading(false);
-      }
+      if (data) setAnnunci(data);
+    } catch (err) {
+      console.error("Errore caricamento:", err);
+    } finally {
+      setLoading(false);
     }
-    fetchVisite();
-  }, []);
+  }
+  fetchVisite();
+}, []);
 const specialistiMedici = [
     { nome: "Dermatologi Roma", slug: "dermatologi", icona: "👨‍⚕️", colore: "#be185d", desc: "Mappatura nei, cura acne e visite specialistiche pelle." },
     { nome: "Cardiologi Roma", slug: "cardiologi", icona: "❤️", colore: "#dc2626", desc: "Check-up cardiaci, ECG e prevenzione cardiovascolare." },
@@ -45,16 +45,59 @@ const specialistiMedici = [
       medici={annunci}
       loading={loading}
       titolo="Visite Specialistiche"
-      // categoria={null}  <-- Rimuoviamo o commentiamo questa per non forzare un'unica categoria
       colore="#7c3aed" 
       testoCTA="Sei un Medico Specialista a Roma?"
-      // badgeSpec={null} <-- Rimuoviamo questo per far apparire i singoli badge (Ginecologia, etc.)
       testoTopBar="👨‍⚕️ VISITE MEDICHE SPECIALISTICHE A ROMA — AGGIORNATE A GENNAIO 2026"
       descrizioneMeta="Cerchi una visita specialistica a Roma? Trova i migliori medici specialisti in dermatologia, cardiologia, ginecologia e molto altro a Roma. Aggiornato a Gennaio 2026."
       testoMiniSEO="Cerchi un consulto medico professionale? In questa sezione trovi i contatti per le principali visite specialistiche a Roma. Dai controlli cardiologici alle visite dermatologiche, ginecologiche o ortopediche, puoi contattare direttamente i centri medici e gli studi privati della Capitale."
       quartieri={quartieri}
       schemas={schemas}
     >
+      {/* Qui dentro vanno i tuoi Box Specialisti (Dermatologi Roma, Cardiologi Roma, ecc.) */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+        gap: '10px', 
+        marginBottom: '25px',
+        marginTop: '5px'
+      }}>
+        {specialistiMedici.map((s) => (
+          <a 
+            key={s.slug} 
+            href={`/${s.slug}-roma`} 
+            style={{ 
+              textDecoration: 'none', 
+              backgroundColor: '#f8fafc', 
+              padding: '10px 12px', 
+              borderRadius: '8px', 
+              border: `1px solid #e2e8f0`,
+              borderLeft: `4px solid ${s.colore}`,
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2px' }}>
+              <span style={{ fontSize: '16px', marginRight: '6px' }}>{s.icona}</span>
+              <h3 style={{ color: '#1e293b', fontSize: '13px', fontWeight: '900', margin: 0 }}>
+                {s.nome}
+              </h3>
+            </div>
+            <p style={{ 
+              color: '#1e293b', 
+              fontSize: '11px', 
+              lineHeight: '1.3', 
+              margin: '0 0 6px 0',
+              fontWeight: '500' 
+            }}>
+              {s.desc}
+            </p>
+            <span style={{ color: s.colore, fontSize: '10px', fontWeight: '800', textTransform: 'uppercase' }}>
+              Vai a {s.nome} →
+            </span>
+          </a>
+        ))}
+      </div>
+    </HubLayout>
       {/* --- INIZIO BOX SPECIALISTI --- */}
     <div style={{ 
         display: 'grid', 
