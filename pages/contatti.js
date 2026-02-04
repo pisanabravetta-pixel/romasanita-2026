@@ -44,6 +44,15 @@ export default function Contatti() {
                 <a href="mailto:info@servizisalute.com" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>info@servizisalute.it</a>
               </p>
             </div>
+              {/* TELEFONO E WHATSAPP */}
+<div>
+  <h3 style={{ color: '#0f172a', fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800' }}>
+    <span style={{ fontSize: '20px' }}>📞</span> Telefono / WhatsApp
+  </h3>
+  <p style={{ color: '#475569', margin: '0' }}>
+    <a href="https://wa.me/393203272238" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 'bold' }}>320 327 2238</a>
+  </p>
+</div>
             <div>
               <h3 style={{ color: '#0f172a', fontSize: '18px', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800' }}>
                 <span style={{ fontSize: '20px' }}>📍</span> Sede
