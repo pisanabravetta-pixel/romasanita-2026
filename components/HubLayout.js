@@ -221,7 +221,9 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
           {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>{badgeSpec}</span>
+<span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
+  {v.categoria ? v.categoria.replace('visite-specialistiche', '').trim().toUpperCase() : badgeSpec}
+</span>
         </div>
 
  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
