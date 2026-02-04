@@ -31,14 +31,56 @@ useEffect(() => {
     }
     fetchVisite();
   }, []);
-  const specialistiMedici = [
-    { nome: "Dermatologi", slug: "dermatologi", icona: "👨‍⚕️", colore: "#be185d" },
-    { nome: "Cardiologi", slug: "cardiologi", icona: "❤️", colore: "#dc2626" },
-    { nome: "Psicologi", slug: "psicologi", icona: "🧠", colore: "#7c3aed" },
-    { nome: "Ginecologi", slug: "ginecologi", icona: "🤰", colore: "#db2777" },
-    { nome: "Oculisti", slug: "oculisti", icona: "👁️", colore: "#2563eb" },
-    { nome: "Ortopedici", slug: "ortopedici", icona: "🦴", colore: "#ea580c" },
-    { nome: "Nutrizionisti", slug: "nutrizionisti", icona: "🥗", colore: "#16a34a" },
+ const specialistiMedici = [
+    { 
+      nome: "Dermatologi Roma", 
+      slug: "dermatologi", 
+      icona: "👨‍⚕️", 
+      colore: "#be185d", 
+      desc: "Mappatura nei, cura dell'acne e visite dermatologiche specialistiche per la salute della pelle." 
+    },
+    { 
+      nome: "Cardiologi Roma", 
+      slug: "cardiologi", 
+      icona: "❤️", 
+      colore: "#dc2626", 
+      desc: "Check-up cardiologici, ECG e visite per la prevenzione delle patologie cardiovascolari." 
+    },
+    { 
+      nome: "Psicologi Roma", 
+      slug: "psicologi", 
+      icona: "🧠", 
+      colore: "#7c3aed", 
+      desc: "Sostegno psicologico e psicoterapia per il benessere mentale e la gestione dei disturbi emotivi." 
+    },
+    { 
+      nome: "Ginecologi Roma", 
+      slug: "ginecologi", 
+      icona: "🤰", 
+      colore: "#db2777", 
+      desc: "Controlli ginecologici, prevenzione oncologica e assistenza specialistica per la salute della donna." 
+    },
+    { 
+      nome: "Oculisti Roma", 
+      slug: "oculisti", 
+      icona: "👁️", 
+      colore: "#2563eb", 
+      desc: "Controlli della vista, visite oculistiche e prevenzione visiva per adulti e bambini a Roma." 
+    },
+    { 
+      nome: "Ortopedici Roma", 
+      slug: "ortopedici", 
+      icona: "🦴", 
+      colore: "#ea580c", 
+      desc: "Trattamento di patologie muscolo-scheletriche, traumi e visite specialistiche ortopediche." 
+    },
+    { 
+      nome: "Nutrizionisti Roma", 
+      slug: "nutrizionisti", 
+      icona: "🥗", 
+      colore: "#16a34a", 
+      desc: "Piani alimentari personalizzati, educazione nutrizionale e percorsi di dieta per ogni esigenza." 
+    },
   ];
   return (
     <HubLayout 
