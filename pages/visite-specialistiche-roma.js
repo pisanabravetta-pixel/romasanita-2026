@@ -40,20 +40,20 @@ const specialistiMedici = [
     { nome: "Ortopedici Roma", slug: "ortopedici", icona: "🦴", colore: "#ea580c", desc: "Cura traumi, ossa e visite specialistiche ortopediche." },
     { nome: "Nutrizionisti Roma", slug: "nutrizionisti", icona: "🥗", colore: "#16a34a", desc: "Piani alimentari e diete personalizzate su misura." },
   ];
-  return (
+ return (
     <HubLayout 
-medici={annunci}
+      medici={annunci}
       loading={loading}
       titolo="Visite Specialistiche"
-     categoria="visite-specialistiche"
+      // categoria={null}  <-- Rimuoviamo o commentiamo questa per non forzare un'unica categoria
       colore="#7c3aed" 
       testoCTA="Sei un Medico Specialista a Roma?"
-      badgeSpec="👨‍⚕️ VISITE SPECIALISTICHE"
+      // badgeSpec={null} <-- Rimuoviamo questo per far apparire i singoli badge (Ginecologia, etc.)
       testoTopBar="👨‍⚕️ VISITE MEDICHE SPECIALISTICHE A ROMA — AGGIORNATE A GENNAIO 2026"
       descrizioneMeta="Cerchi una visita specialistica a Roma? Trova i migliori medici specialisti in dermatologia, cardiologia, ginecologia e molto altro a Roma. Aggiornato a Gennaio 2026."
       testoMiniSEO="Cerchi un consulto medico professionale? In questa sezione trovi i contatti per le principali visite specialistiche a Roma. Dai controlli cardiologici alle visite dermatologiche, ginecologiche o ortopediche, puoi contattare direttamente i centri medici e gli studi privati della Capitale."
       quartieri={quartieri}
-   schemas={schemas}
+      schemas={schemas}
     >
       {/* --- INIZIO BOX SPECIALISTI --- */}
     <div style={{ 
