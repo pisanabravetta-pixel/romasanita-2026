@@ -390,13 +390,14 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
   <div style={{ height: '1px', backgroundColor: '#f1f5f9', width: '80%', margin: '30px auto' }} />
 
- <h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
+<h3 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '25px', color: '#2c5282', borderBottom: `3px solid ${colore}`, display: 'inline-block' }}>
     Domande Frequenti su {titolo} a Roma
   </h3>
   
   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
-    {seoData?.[categoria]?.faq ? (
-      seoData[categoria].faq.map((f, idx) => (
+    {/* 1. Prova a usare faqRaw (passate dalla pagina), 2. Altrimenti usa seoData, 3. Altrimenti fallback */}
+    {(schemas?.faqRaw || seoData?.[categoria]?.faq) ? (
+      (schemas?.faqRaw || seoData[categoria].faq).map((f, idx) => (
         <div key={idx}>
           <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>
             {idx + 1}. {f.q.replace(/{{zona}}/g, 'Roma')}
@@ -407,7 +408,6 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         </div>
       ))
     ) : (
-      /* Fallback di sicurezza se i dati SEO non sono ancora pronti */
       <div>
         <p style={{ fontSize: '18px', fontWeight: '800', color: '#1e293b', margin: '0 0 8px 0' }}>1. Come trovare servizi di {titolo} a Roma?</p>
         <p style={{ color: '#475569', lineHeight: '1.6', margin: 0 }}>È possibile consultare l’elenco suddiviso per quartiere e utilizzare la mappa per individuare la struttura più vicina.</p>
@@ -415,14 +415,14 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     )}
   </div>
 </section>
-          <div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>
-  Gestisci {titolo.toLowerCase()} a Roma?
-</h2>
-            <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
-            <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
-          </div>
 
+<div style={{ backgroundColor: '#0f172a', padding: theme.padding.main, borderRadius: theme.radius.main, textAlign: 'center', color: 'white', marginBottom: '40px' }}>
+  <h2 style={{ fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>
+    Gestisci {titolo.toLowerCase()} a Roma?
+  </h2>
+  <p style={{ fontSize: '15px', color: '#94a3b8', marginBottom: '20px' }}>Inserisci la tua struttura e ricevi contatti da nuovi pazienti a Roma.</p>
+  <a href="/pubblica-annuncio" style={{ backgroundColor: colore, color: 'white', padding: '12px 25px', borderRadius: '10px', fontWeight: '900', textDecoration: 'none', display: 'inline-block' }}>ISCRIVITI ORA</a>
+</div>
           {/* SEZIONE CROSS-LINKING FINALE */}
 <div style={{ padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
   <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px', color: '#1e293b' }}>
