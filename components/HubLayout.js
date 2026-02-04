@@ -19,6 +19,7 @@ export default function HubLayout({
   testoTopBar,
   testoCTA,
   altreSpecialistiche = []
+  children
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
   
@@ -170,6 +171,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     ))}
   </div>
 </div>
+{children}
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
 <div style={{ marginBottom: '0px' }}> 
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center' }}>
