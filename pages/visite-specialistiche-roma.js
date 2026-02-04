@@ -10,18 +10,15 @@ export default function VisiteSpecialisticheRoma() {
   const schemas = getSchemas('visite-specialistiche', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-useEffect(() => {
-  async function fetchVisite() {
-    try {
-      setLoading(true);
-      const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        // Cerca tutti i medici che hanno 'specialistica' nella categoria
-        .ilike('categoria', '%specialistica%') 
-        .order('is_top', { ascending: false });
-
+const { data } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .ilike('categoria', '%specialistica%')
+  // AGGIUNGI QUESTE DUE RIGHE PER ESCLUDERE FARMACIE E DENTISTI
+  .not('categoria', 'ilike', '%farmac%')
+  .not('categoria', 'ilike', '%dentist%')
+  .order('is_top', { ascending: false });
       if (data) setAnnunci(data);
     } catch (err) {
       console.error("Errore:", err);
