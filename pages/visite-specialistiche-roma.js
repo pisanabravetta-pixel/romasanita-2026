@@ -84,7 +84,13 @@ medici={annunci}
                 {s.nome}
               </h3>
             </div>
-            <p style={{ color: '#64748b', fontSize: '11px', lineHeight: '1.2', margin: '0 0 5px 0' }}>
+            <p style={{ 
+              color: '#1e293b', 
+              fontSize: '11px', 
+              lineHeight: '1.3', 
+              margin: '0 0 6px 0',
+              fontWeight: '500' 
+            }}>
               {s.desc}
             </p>
             <span style={{ color: s.colore, fontSize: '10px', fontWeight: '800', textTransform: 'uppercase' }}>
