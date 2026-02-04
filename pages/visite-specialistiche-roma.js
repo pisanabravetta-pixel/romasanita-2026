@@ -15,12 +15,12 @@ useEffect(() => {
       try {
         setLoading(true);
         const { data } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  // Questo carica tutti i medici che hanno una delle tue categorie specialistiche
-  .or(`categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.psicologi,categoria.eq.ginecologi,categoria.eq.oculisti,categoria.eq.ortopedici,categoria.eq.nutrizionisti,categoria.ilike.%specialistica%`)
-  .order('is_top', { ascending: false });
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          // Aggiungiamo esplicitamente le categorie che vuoi far apparire qui
+          .or(`categoria.ilike.%specialistica%,categoria.eq.ginecologi,categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.ortopedici,categoria.eq.oculisti`)
+          .order('is_top', { ascending: false });
 
         if (data) setAnnunci(data);
       } catch (err) {
