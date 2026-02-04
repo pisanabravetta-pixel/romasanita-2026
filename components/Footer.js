@@ -73,16 +73,16 @@ export default function Footer() {
             </ul>
             {/* DISCLAIMER LEGALE RICHIESTO */}
             <p style={{ fontSize: '11px', color: '#718096', lineHeight: '1.4', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px', marginTop: '10px' }}>
-              ServiziSalute è un portale di annunci e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
-            </p>
+  ServiziSalute è un portale <strong>indipendente</strong> di annunci <strong>pubblicitari</strong> e informazione. Non fornisce prestazioni sanitarie né consulenze mediche.
+</p>
           </div>
 
         </div>
 
         {/* COPYRIGHT FINALE */}
         <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
-          © 2026 ServiziSalute.com – Tutti i diritti riservati
-        </div>
+  © 2026 <strong>ServiziSalute Roma</strong> – Portale Annunci Medici – Tutti i diritti riservati
+</div>
       </div>
     </footer>
   );
