@@ -15,12 +15,12 @@ useEffect(() => {
       try {
         setLoading(true);
         const { data } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          // Torniamo alla tua logica originale che funzionava + un jolly per il futuro
-          .or(`nome.ilike.%Polo Cardiologico%,nome.ilike.%Studio Medico Prati%,nome.ilike.%Centro Medico Specialistico%,categoria.ilike.%specialistica%`)
-          .order('is_top', { ascending: false });
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  // Questo carica tutti i medici che hanno una delle tue categorie specialistiche
+  .or(`categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.psicologi,categoria.eq.ginecologi,categoria.eq.oculisti,categoria.eq.ortopedici,categoria.eq.nutrizionisti,categoria.ilike.%specialistica%`)
+  .order('is_top', { ascending: false });
 
         if (data) setAnnunci(data);
       } catch (err) {
