@@ -95,19 +95,13 @@ medici={annunci}
       descrizioneMeta="Cerchi una visita specialistica a Roma? Trova i migliori medici specialisti in dermatologia, cardiologia, ginecologia e molto altro a Roma. Aggiornato a Gennaio 2026."
       testoMiniSEO="Cerchi un consulto medico professionale? In questa sezione trovi i contatti per le principali visite specialistiche a Roma. Dai controlli cardiologici alle visite dermatologiche, ginecologiche o ortopediche, puoi contattare direttamente i centri medici e gli studi privati della Capitale."
       quartieri={quartieri}
-     schemas={schemas}
-      altreSpecialistiche={[
-        {nome: "Dermatologi", link: "/dermatologi-roma"},
-        {nome: "Cardiologi", link: "/cardiologi-roma"},
-        {nome: "Oculisti", link: "/oculisti-roma"},
-        {nome: "Ortopedici", link: "/ortopedici-roma"},
-        {nome: "Ginecologi", link: "/ginecologi-roma"}
-      ]}
+   schemas={schemas}
     >
+      {/* --- INIZIO BOX SPECIALISTI --- */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
-        gap: '12px', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+        gap: '15px', 
         marginBottom: '35px',
         marginTop: '10px'
       }}>
@@ -118,22 +112,32 @@ medici={annunci}
             style={{ 
               textDecoration: 'none', 
               backgroundColor: 'white', 
-              padding: '15px 5px', 
+              padding: '20px', 
               borderRadius: '12px', 
               border: `1px solid #e2e8f0`,
               borderTop: `4px solid ${s.colore}`,
               boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-              textAlign: 'center',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
+              flexDirection: 'column'
             }}
           >
-            <span style={{ fontSize: '28px', marginBottom: '5px' }}>{s.icona}</span>
-            <span style={{ color: '#1e293b', fontSize: '13px', fontWeight: '900' }}>{s.nome}</span>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <span style={{ fontSize: '32px', marginRight: '10px' }}>{s.icona}</span>
+              <h3 style={{ color: '#1e293b', fontSize: '16px', fontWeight: '900', margin: 0 }}>
+                {s.nome}
+              </h3>
+            </div>
+            <p style={{ color: '#64748b', fontSize: '13px', lineHeight: '1.4', margin: '0 0 15px 0', flexGrow: 1 }}>
+              {s.desc}
+            </p>
+            <span style={{ color: s.colore, fontSize: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
+              Vai agli specialisti →
+            </span>
           </a>
         ))}
       </div>
+      {/* --- FINE BOX SPECIALISTI --- */}
+
     </HubLayout>
   );
 }
