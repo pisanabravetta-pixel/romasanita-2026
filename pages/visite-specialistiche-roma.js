@@ -18,13 +18,13 @@ useEffect(() => {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Carichiamo tutte le categorie specifiche
-        .or(`categoria.eq.cardiologi,categoria.eq.dermatologi,categoria.eq.ginecologi,categoria.eq.ortopedici,categoria.eq.oculisti,categoria.eq.psicologi,categoria.eq.nutrizionisti`)
+        // Cerca tutti i medici che hanno 'specialistica' nella categoria
+        .ilike('categoria', '%specialistica%') 
         .order('is_top', { ascending: false });
 
       if (data) setAnnunci(data);
     } catch (err) {
-      console.error("Errore caricamento:", err);
+      console.error("Errore:", err);
     } finally {
       setLoading(false);
     }
@@ -97,22 +97,26 @@ return (
         ))}
       </div>
 
+     {/* SEZIONE FAQ DINAMICA */}
       <div style={{ marginTop: '40px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '20px' }}>
           Domande Frequenti (FAQ)
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          {[
-            { q: "Come prenotare una visita specialistica a Roma?", a: "Puoi contattare direttamente i centri o i medici tramite i pulsanti Chiama o WhatsApp presenti in questa pagina." },
-            { q: "Quali sono i tempi di attesa medi?", a: "I tempi variano in base alla specializzazione e alla zona, ma solitamente i professionisti privati garantiscono appuntamenti entro 48-72 ore." },
-            { q: "Le visite sono convenzionate?", a: "Questa pagina elenca principalmente professionisti privati e centri diagnostici. Ti consigliamo di chiedere conferma della convenzione in fase di prenotazione." },
-            { q: "Dove trovo i migliori specialisti a Roma?", a: "Le zone con la maggiore densità di studi medici specialistici sono Prati, Parioli e l'EUR, ma trovi professionisti qualificati in ogni quartiere." }
-          ].map((faq, index) => (
-            <div key={index} style={{ backgroundColor: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-              <p style={{ fontWeight: '800', color: '#7c3aed', marginBottom: '5px', fontSize: '14px' }}>{faq.q}</p>
-              <p style={{ color: '#475569', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>{faq.a}</p>
-            </div>
-          ))}
+          {schemas.faqRaw && schemas.faqRaw.length > 0 ? (
+            schemas.faqRaw.map((faq, index) => (
+              <div key={index} style={{ backgroundColor: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <p style={{ fontWeight: '800', color: '#7c3aed', marginBottom: '5px', fontSize: '14px' }}>
+                  {faq.q}
+                </p>
+                <p style={{ color: '#475569', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+                  {faq.a}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p style={{ fontSize: '14px', color: '#64748b' }}>Caricamento domande frequenti...</p>
+          )}
         </div>
       </div>
     </HubLayout>
