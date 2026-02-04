@@ -53,7 +53,6 @@ return (
       quartieri={quartieri}
       schemas={schemas}
     >
-      {/* --- INIZIO BOX SPECIALISTI --- */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
@@ -70,7 +69,7 @@ return (
               backgroundColor: '#f8fafc', 
               padding: '10px 12px', 
               borderRadius: '8px', 
-              border: `1px solid #e2e8f0`,
+              border: '1px solid #e2e8f0',
               borderLeft: `4px solid ${s.colore}`,
               display: 'flex',
               flexDirection: 'column'
@@ -97,56 +96,6 @@ return (
           </a>
         ))}
       </div>
-      {/* --- FINE BOX SPECIALISTI --- */}
-    </HubLayout>
-  );
-}
-      {/* --- INIZIO BOX SPECIALISTI --- */}
-    <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
-        gap: '10px', 
-        marginBottom: '25px',
-        marginTop: '5px'
-      }}>
-        {specialistiMedici.map((s) => (
-          <a 
-            key={s.slug} 
-            href={`/${s.slug}-roma`} 
-            style={{ 
-              textDecoration: 'none', 
-              backgroundColor: '#f8fafc', 
-              padding: '10px 12px', 
-              borderRadius: '8px', 
-              border: `1px solid #e2e8f0`,
-              borderLeft: `4px solid ${s.colore}`,
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2px' }}>
-              <span style={{ fontSize: '16px', marginRight: '6px' }}>{s.icona}</span>
-              <h3 style={{ color: '#1e293b', fontSize: '13px', fontWeight: '900', margin: 0 }}>
-                {s.nome}
-              </h3>
-            </div>
-            <p style={{ 
-              color: '#1e293b', 
-              fontSize: '11px', 
-              lineHeight: '1.3', 
-              margin: '0 0 6px 0',
-              fontWeight: '500' 
-            }}>
-              {s.desc}
-            </p>
-            <span style={{ color: s.colore, fontSize: '10px', fontWeight: '800', textTransform: 'uppercase' }}>
-              Vai a {s.nome} →
-            </span>
-          </a>
-        ))}
-      </div>
-      {/* --- FINE BOX SPECIALISTI --- */}
-
     </HubLayout>
   );
 }
