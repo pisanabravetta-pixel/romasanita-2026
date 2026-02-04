@@ -10,24 +10,30 @@ export default function VisiteSpecialisticheRoma() {
   const schemas = getSchemas('visite-specialistiche', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-const { data } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  .ilike('categoria', '%specialistica%')
-  // AGGIUNGI QUESTE DUE RIGHE PER ESCLUDERE FARMACIE E DENTISTI
-  .not('categoria', 'ilike', '%farmac%')
-  .not('categoria', 'ilike', '%dentist%')
-  .order('is_top', { ascending: false });
-      if (data) setAnnunci(data);
-    } catch (err) {
-      console.error("Errore:", err);
-    } finally {
-      setLoading(false);
+useEffect(() => {
+    async function fetchVisite() {
+      try {
+        setLoading(true);
+        // ECCO LA RIGA CHE CERCAVI:
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('categoria', '%specialistica%')
+          .not('categoria', 'ilike', '%farmac%')
+          .not('categoria', 'ilike', '%dentist%')
+          .order('is_top', { ascending: false });
+
+        if (error) throw error;
+        if (data) setAnnunci(data);
+      } catch (err) {
+        console.error("Errore fetch:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  fetchVisite();
-}, []);
+    fetchVisite();
+  }, []);
 const specialistiMedici = [
     { nome: "Dermatologi Roma", slug: "dermatologi", icona: "👨‍⚕️", colore: "#be185d", desc: "Mappatura nei, cura acne e visite specialistiche pelle." },
     { nome: "Cardiologi Roma", slug: "cardiologi", icona: "❤️", colore: "#dc2626", desc: "Check-up cardiaci, ECG e prevenzione cardiovascolare." },
