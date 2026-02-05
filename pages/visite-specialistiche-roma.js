@@ -25,22 +25,22 @@ export default function VisiteSpecialisticheRoma() {
           return;
         }
 if (databaseData) {
-          console.log("Dati totali dal DB:", databaseData.length);
-          
           const filtrati = databaseData.filter(item => {
             const cat = (item.categoria || "").toLowerCase().trim();
             
-            // 1. Deve contenere la parola chiave dei medici
-            const eMedico = cat.includes('visite-specialistiche');
-            
-            // 2. MA NON deve essere una delle categorie che non vogliamo
-            // Se la categoria è SOLO "farmacie", questa riga la scarterà
-            const eIntruso = cat === 'farmacie' || cat === 'dentisti' || cat === 'servizi-domicilio' || cat === 'servizi-sanitari';
+            // FILTRO AGGRESSIVO: 
+            // Teniamo l'annuncio SOLO se la categoria contiene 'specialistiche'
+            // MA escludiamo se contiene ANCHE 'farmac' o 'dentist'
+            const haSpecialistica = cat.includes('specialistiche');
+            const eFarmacia = cat.includes('farmac');
+            const eDentista = cat.includes('dentist');
 
-            return eMedico && !eIntruso;
+            return haSpecialistica && !eFarmacia && !eDentista;
           });
 
-          console.log("Dati filtrati finali:", filtrati.length);
+          // QUESTO LOG TI DICE COSA SONO I 19 RISULTATI
+          console.log("Categorie dei 19 filtrati:", filtrati.map(f => f.categoria));
+          
           setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
       } catch (err) {
