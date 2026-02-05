@@ -9,87 +9,79 @@ import ServiziRichiesti from '../components/ServiziRichiesti';
 
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
- const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
+  const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
+  const [catScelta, setCatScelta] = useState(""); // <-- SPOSTATO QUI IN ALTO
   const [idCat, setIdCat] = useState(0);
+
   const zoneRoma = [
     "Appio Latino", "Cassia", "Centro Storico", "EUR", "Flaminio", 
     "Magliana", "Monteverde", "Nomentano", "Ostiense", "Parioli", 
     "Prati", "San Giovanni", "Tiburtina", "Trastevere"
   ];
-const eseguiRicerca = () => {
-  if(!ricerca) {
-    alert("Per favore, scrivi cosa stai cercando.");
-    return;
-  }
 
-  const cosa = ricerca.toLowerCase().trim();
-  const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
-  const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
-
-  // --- 1. DERMATOLOGI ---
-  if (cosa.includes("dermatol")) {
-    window.location.href = "/dermatologi-roma" + parametri;
-  }
-
-  // --- 2. CARDIOLOGI ---
-  else if (cosa.includes("cardiol")) {
-    if (zonaKebab === "prati") {
-      window.location.href = "/cardiologi-roma-prati";
-    } else {
-      window.location.href = "/cardiologi-roma" + parametri;
+  const eseguiRicerca = () => {
+    // Definiamo cosa cercare: se l'utente ha scritto qualcosa, usiamo quello.
+    // Altrimenti usiamo la categoria selezionata.
+    let termineDaCercare = ricerca.trim();
+    
+    if (!termineDaCercare && catScelta) {
+      termineDaCercare = catScelta;
     }
-  }
 
-  // --- 3. PSICOLOGI ---
-  else if (cosa.includes("psicol") || cosa.includes("terapia") || cosa.includes("psicoterap")) {
-    window.location.href = "/psicologi-roma" + parametri;
-  }
-
-  // --- 4. GINECOLOGI ---
-  else if (cosa.includes("ginecol") || cosa.includes("ostetr")) {
-    window.location.href = "/ginecologi-roma" + parametri;
-  }
-
-  // --- 5. OCULISTI ---
-  else if (cosa.includes("oculist") || cosa.includes("vista")) {
-    window.location.href = "/oculisti-roma" + parametri;
-  }
-
-  // --- 6. ORTOPEDICI ---
-  else if (cosa.includes("ortoped")) {
-    window.location.href = "/ortopedici-roma" + parametri;
-  }
-
-  // --- 7. NUTRIZIONISTI ---
-  else if (cosa.includes("nutrizion") || cosa.includes("diet")) {
-    window.location.href = "/nutrizionisti-roma" + parametri;
-  }
-
-  // --- 8. DENTISTI (Categoria principale) ---
-  else if (cosa.includes("dent") || cosa.includes("odont")) {
-    if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
-      window.location.href = "/dentisti-roma-" + zonaKebab;
-    } else {
-      window.location.href = "/dentisti-roma" + parametri;
+    if (!termineDaCercare) {
+      alert("Per favore, scrivi cosa stai cercando o seleziona una categoria.");
+      return;
     }
-  }
 
-  // --- 9. DIAGNOSTICA (Categoria principale) ---
-  else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
-    window.location.href = "/diagnostica-roma" + parametri;
-  }
+    const cosa = termineDaCercare.toLowerCase();
+    const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
+    const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
 
-  // --- 10. FARMACIE (Categoria principale) ---
-  else if (cosa.includes("farmac")) {
-    window.location.href = "/farmacie-roma" + parametri;
-  }
+    // --- LOGICA DI REINDIRIZZAMENTO ---
+    if (cosa.includes("dermatol")) {
+      window.location.href = "/dermatologi-roma" + parametri;
+    } 
+    else if (cosa.includes("cardiol")) {
+      if (zonaKebab === "prati") {
+        window.location.href = "/cardiologi-roma-prati";
+      } else {
+        window.location.href = "/cardiologi-roma" + parametri;
+      }
+    } 
+    else if (cosa.includes("psicol") || cosa.includes("terapia") || cosa.includes("psicoterap")) {
+      window.location.href = "/psicologi-roma" + parametri;
+    } 
+    else if (cosa.includes("ginecol") || cosa.includes("ostetr")) {
+      window.location.href = "/ginecologi-roma" + parametri;
+    } 
+    else if (cosa.includes("oculist") || cosa.includes("vista")) {
+      window.location.href = "/oculisti-roma" + parametri;
+    } 
+    else if (cosa.includes("ortoped")) {
+      window.location.href = "/ortopedici-roma" + parametri;
+    } 
+    else if (cosa.includes("nutrizion") || cosa.includes("diet")) {
+      window.location.href = "/nutrizionisti-roma" + parametri;
+    } 
+    else if (cosa.includes("dent") || cosa.includes("odont")) {
+      if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
+        window.location.href = "/dentisti-roma-" + zonaKebab;
+      } else {
+        window.location.href = "/dentisti-roma" + parametri;
+      }
+    } 
+    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
+      window.location.href = "/diagnostica-roma" + parametri;
+    } 
+    else if (cosa.includes("farmac")) {
+      window.location.href = "/farmacie-roma" + parametri;
+    } 
+    else {
+      window.location.href = "/visite-specialistiche-roma" + parametri;
+    }
+  };
 
-  // --- 11. TUTTO IL RESTO (Il tuo paracadute) ---
-  // Se non è nulla di specifico sopra, finisce qui (es: urologo, fisioterapista, ecc.)
-  else {
-    window.location.href = "/visite-specialistiche-roma" + parametri;
-  }
-};
+  // --- ORA SCENDI NEL RETURN E CERCA IL SELECT DELLA CATEGORIA ---
 
 return (
   <>
@@ -250,11 +242,12 @@ return (
     </select>
   </div>
 
- {/* 3. CATEGORIA - COLLEGATA */}
+{/* 3. CATEGORIA */}
 <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
   <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
   <select 
-    onChange={(e) => setRicerca(e.target.value)} // <--- AGGIUNTO QUESTO
+    value={catScelta} // <-- Collegato al nuovo stato
+    onChange={(e) => setCatScelta(e.target.value)} // <-- Cambia catScelta e NON ricerca
     style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
   >
     <option value="">Tutte le categorie</option>
@@ -265,7 +258,6 @@ return (
     <option value="Domicilio">Servizi a Domicilio</option>
   </select>
 </div>
-
   {/* BOTTONE CERCA */}
   <button 
     className="btn-search" 
