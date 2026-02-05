@@ -8,29 +8,39 @@ export default function VisiteSpecialisticheRoma() {
   const [loading, setLoading] = useState(true);
   
   const schemas = getSchemas('visite-specialistiche', 'roma');
-  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
+ const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-if (data) {
-  const filtrati = data.filter(item => {
-    const cat = (item.categoria || "").toLowerCase();
-    
-    // 1. Deve avere "visite-specialistiche"
-    const haSpecialistica = cat.includes('visite-specialistiche');
-    
-    // 2. MA NON deve contenere queste parole (le escludiamo categoricamente)
-    const eDaEscludere = 
-      cat.includes('farmaci') || 
-      cat.includes('dentist') || 
-      cat.includes('domicilio') || 
-      cat.includes('sanitari');
+  useEffect(() => {
+    async function fetchVisite() {
+      try {
+        setLoading(true);
+        const { data: databaseData, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true);
 
-    return haSpecialistica && !eDaEscludere;
-  });
-  
-  console.log("Dati filtrati finali:", filtrati.length);
-  setAnnunci(filtrati);
-}
-const specialistiMedici = [
+        if (error) throw error;
+
+        if (databaseData) {
+          const filtrati = databaseData.filter(item => {
+            const cat = (item.categoria || "").toLowerCase();
+            const haSpecialistica = cat.includes('visite-specialistiche');
+            const eDaEscludere = cat.includes('farmaci') || cat.includes('dentist') || cat.includes('domicilio') || cat.includes('sanitari');
+            return haSpecialistica && !eDaEscludere;
+          });
+          
+          setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
+        }
+      } catch (err) {
+        console.error("Errore:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchVisite();
+  }, []);
+
+  const specialistiMedici = [
     { nome: "Dermatologi Roma", slug: "dermatologi", icona: "👨‍⚕️", colore: "#be185d", desc: "Mappatura nei, cura acne e visite specialistiche pelle." },
     { nome: "Cardiologi Roma", slug: "cardiologi", icona: "❤️", colore: "#dc2626", desc: "Check-up cardiaci, ECG e prevenzione cardiovascolare." },
     { nome: "Psicologi Roma", slug: "psicologi", icona: "🧠", colore: "#7c3aed", desc: "Sostegno psicologico, psicoterapia e benessere mentale." },
