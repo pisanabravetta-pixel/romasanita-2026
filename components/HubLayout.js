@@ -56,12 +56,14 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     fetchNuoviMedici();
   }, [categoria, pagina]);
 
-  // 2. DEFINIZIONE LISTA FINALE
-  const listaDaMostrare = serviziRealTime;
-  const listaDaMostrare = serviziRealTime;
-const listaDaMostrare = serviziRealTime;
+ // 2. DEFINIZIONE LISTA FINALE
+  // Usiamo serviziRealTime per far funzionare la paginazione. 
+  // Se è ancora in caricamento, usiamo un array vuoto per evitare errori.
+  const listaDaMostrare = serviziRealTime || [];
+
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
+    // Il resto del codice della mappa...
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
     }
