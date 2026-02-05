@@ -23,14 +23,21 @@ export default function VisiteSpecialisticheRoma() {
         if (error) throw error;
 
         if (databaseData) {
-          console.log("Dati ricevuti dal DB:", databaseData.length);
           const filtrati = databaseData.filter(item => {
-            const cat = (item.categoria || "").toLowerCase();
-            const haSpec = cat.includes('visite-specialistiche');
-            const daEscludere = cat.includes('farmaci') || cat.includes('dentist') || cat.includes('domicilio');
-            return haSpec && !daEscludere;
+            // Puliamo la stringa da spazi bianchi extra
+            const cat = (item.categoria || "").trim().toLowerCase();
+            
+            // 1. Deve essere ESATTAMENTE questa categoria
+            const eSpecialistica = cat === 'visite-specialistiche';
+            
+            // 2. Oppure deve iniziare con questa ma NON essere una farmacia/dentista
+            const iniziaConSpec = cat.startsWith('visite-specialistiche');
+            const eFarmacia = cat.includes('farmaci');
+            const eDentista = cat.includes('dentist');
+
+            return (eSpecialistica || iniziaConSpec) && !eFarmacia && !eDentista;
           });
-          console.log("Dati filtrati finali:", filtrati.length);
+          
           setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
       } catch (err) {
