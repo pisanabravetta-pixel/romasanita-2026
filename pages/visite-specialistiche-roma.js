@@ -10,42 +10,26 @@ export default function VisiteSpecialisticheRoma() {
   const schemas = getSchemas('visite-specialistiche', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
-useEffect(() => {
-    console.log("Tentativo di caricamento iniziato..."); // Questo DEVE apparire
+if (data) {
+  const filtrati = data.filter(item => {
+    const cat = (item.categoria || "").toLowerCase();
+    
+    // 1. Deve avere "visite-specialistiche"
+    const haSpecialistica = cat.includes('visite-specialistiche');
+    
+    // 2. MA NON deve contenere queste parole (le escludiamo categoricamente)
+    const eDaEscludere = 
+      cat.includes('farmaci') || 
+      cat.includes('dentist') || 
+      cat.includes('domicilio') || 
+      cat.includes('sanitari');
 
-    async function fetchVisite() {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
-
-        if (error) {
-          console.error("Errore Supabase:", error.message);
-          return;
-        }
-
-        console.log("Dati ricevuti dal DB:", data?.length); 
-
-        if (data) {
-          // Filtriamo solo chi ha 'visite-specialistiche'
-          const filtrati = data.filter(item => 
-            item.categoria && item.categoria.toLowerCase().includes('visite-specialistiche')
-          );
-          
-          console.log("Dati dopo il filtro:", filtrati.length);
-          setAnnunci(filtrati);
-        }
-      } catch (err) {
-        console.error("Errore generico:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchVisite();
-  }, []);
+    return haSpecialistica && !eDaEscludere;
+  });
+  
+  console.log("Dati filtrati finali:", filtrati.length);
+  setAnnunci(filtrati);
+}
 const specialistiMedici = [
     { nome: "Dermatologi Roma", slug: "dermatologi", icona: "👨‍⚕️", colore: "#be185d", desc: "Mappatura nei, cura acne e visite specialistiche pelle." },
     { nome: "Cardiologi Roma", slug: "cardiologi", icona: "❤️", colore: "#dc2626", desc: "Check-up cardiaci, ECG e prevenzione cardiovascolare." },
