@@ -33,20 +33,19 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-const da = (pagina - 1) * 10;
+// DENTRO fetchNuoviMedici, sostituisci la parte della query:
+        const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Prendiamo la parola chiave pulita (es. "dermatologi")
-        const term = categoria ? categoria.replace('-roma', '') : '';
-
-        console.log("Ricerca per:", term, "Range:", da, "-", a); // <--- LOG DI CONTROLLO
+        // Pulizia: se categoria è "dermatologi-roma", cerchiamo solo "dermatologi"
+        const term = categoria ? categoria.split('-')[0] : '';
 
         const { data, error, count } = await supabase
           .from('annunci')
-          .select('*', { count: 'exact' }) // Chiediamo anche il totale esatto a Supabase
+          .select('*', { count: 'exact' })
           .eq('approvato', true)
           .ilike('categoria', `%${term}%`) 
-          .order('id', { ascending: true }) 
+          .order('id', { ascending: true }) // <--- Ordine fisso anti-ripetizione
           .range(da, a);
 
         if (error) throw error;
@@ -352,61 +351,61 @@ const da = (pagina - 1) * 10;
     </div>
   )}
 {/* 4. CONTROLLI PAGINAZIONE */}
-      {listaDaMostrare && listaDaMostrare.length > 0 && (
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          gap: '15px', 
-          margin: '30px 0',
-          padding: '20px',
-          backgroundColor: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-        }}>
-          <button 
-            type="button"
-            onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
-            disabled={pagina === 1}
-            style={{ 
-              padding: '10px 18px', 
-              backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
-              color: pagina === 1 ? '#94a3b8' : 'white', 
-              border: 'none', 
-              borderRadius: '8px', 
-              fontWeight: '800', 
-              cursor: pagina === 1 ? 'not-allowed' : 'pointer',
-              fontSize: '12px'
-            }}
-          >
-            ← PRECEDENTE
-          </button>
-          
-          <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-            Pagina {pagina}
-          </span>
+{listaDaMostrare && listaDaMostrare.length > 0 && (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    gap: '15px', 
+    margin: '30px 0',
+    padding: '20px',
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+  }}>
+    <button 
+      type="button"
+      onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
+      disabled={pagina === 1}
+      style={{ 
+        padding: '10px 18px', 
+        backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
+        color: pagina === 1 ? '#94a3b8' : 'white', 
+        border: 'none', 
+        borderRadius: '8px', 
+        fontWeight: '800', 
+        cursor: pagina === 1 ? 'not-allowed' : 'pointer',
+        fontSize: '12px'
+      }}
+    >
+      ← PRECEDENTE
+    </button>
+    
+    <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+      Pagina {pagina}
+    </span>
 
-          <button 
-            type="button"
-            onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-            disabled={listaDaMostrare.length < 10}
-            style={{ 
-              padding: '10px 18px', 
-              backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
-              color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
-              border: 'none', 
-              borderRadius: '8px', 
-              fontWeight: '800', 
-              cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
-              fontSize: '12px'
-            }}
-          >
-            SUCCESSIVA →
-          </button>
-        </div>
-      )}
-
-    </div> // <--- CHIUDE IL CONTENITORE DEGLI ANNUNCI
+    <button 
+      type="button"
+      onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+      disabled={listaDaMostrare.length < 10}
+      style={{ 
+        padding: '10px 18px', 
+        backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
+        color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
+        border: 'none', 
+        borderRadius: '8px', 
+        fontWeight: '800', 
+        cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
+        fontSize: '12px'
+      }}
+    >
+      SUCCESSIVA →
+    </button>
+  </div>
+)}
+{/* CHIUSURA BOX GENERALE ANNUNCI - QUI MANCAVA LA PARENTESI NEL TUO CODICE */}
+</div>
 
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
