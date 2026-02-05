@@ -14,19 +14,29 @@ useEffect(() => {
     async function fetchVisite() {
       try {
         setLoading(true);
+        // Prendiamo tutto ciò che è approvato
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          // Questo prende SOLO i record che iniziano esattamente con "visite-specialistiche"
-          // ignorando farmacie, dentisti e il resto
-          .ilike('categoria', 'visite-specialistiche %') 
           .order('is_top', { ascending: false });
 
         if (error) throw error;
-        if (data) setAnnunci(data);
+
+        if (data) {
+          // FILTRO MANUALE: Teniamo solo quelli che hanno ESATTAMENTE 
+          // "visite-specialistiche" nel testo della categoria
+          const filtrati = data.filter(item => 
+            item.categoria && 
+            item.categoria.toLowerCase().includes('visite-specialistiche') &&
+            !item.categoria.toLowerCase().includes('farmaci') &&
+            !item.categoria.toLowerCase().includes('dentist')
+          );
+          
+          setAnnunci(filtrati);
+        }
       } catch (err) {
-        console.error("Errore fetch:", err);
+        console.error("Errore:", err);
       } finally {
         setLoading(false);
       }
