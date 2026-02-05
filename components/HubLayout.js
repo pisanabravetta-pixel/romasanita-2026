@@ -38,37 +38,34 @@ async function fetchNuoviMedici() {
   try {
     setLoadingRealTime(true);
     
-    // Calcolo del range per la paginazione
+    // 1. Calcolo del range
     const da = (pagina - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
+    // 2. Query ottimizzata: Filtriamo nel DB prima di fare il range
     let query = supabase
       .from('annunci')
       .select('*')
       .eq('approvato', true)
-      .range(da, a); // <--- LOGICA PAGINAZIONE
+      .ilike('categoria', `%${categoria.slice(0, 4)}%`) // Cerca la categoria nel DB
+      .range(da, a)
+      .order('is_top', { ascending: false }); // Mette i "top" per primi
 
     const { data, error } = await query;
 
     if (error) throw error;
 
-    const filtrati = data ? data.filter(item => {
-      if (!item.categoria) return false;
-      const cDB = item.categoria.toLowerCase();
-      const cURL = categoria ? categoria.toLowerCase() : ''; 
-      return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
-    }) : [];
-
-    setServiziRealTime(filtrati);
+    // 3. Ora i dati sono già pronti e paginati correttamente
+    setServiziRealTime(data || []);
+    
   } catch (err) {
     console.error("Errore fetch Hub:", err);
   } finally {
     setLoadingRealTime(false);
   }
 }
-    fetchNuoviMedici();
-  }, [categoria]);
-
+  fetchNuoviMedici();
+  }, [categoria, pagina]); // <--- Aggiungi 'pagina' qui
  // 2. DEFINIZIONE LISTA FINALE: Se passiamo i medici dalla pagina, usiamo solo quelli.
   const listaDaMostrare = (medici && medici.length > 0) ? medici : serviziRealTime;
 
