@@ -33,24 +33,27 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-// Calcolo limiti
-        const da = (pagina - 1) * 10;
+const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Pulizia categoria: togliamo "-roma" e prendiamo la parola intera
-        // Esempio: "dermatologi-roma" diventa "dermatologi"
+        // Prendiamo la parola chiave pulita (es. "dermatologi")
         const term = categoria ? categoria.replace('-roma', '') : '';
 
-        const { data, error } = await supabase
+        console.log("Ricerca per:", term, "Range:", da, "-", a); // <--- LOG DI CONTROLLO
+
+        const { data, error, count } = await supabase
           .from('annunci')
-          .select('*')
+          .select('*', { count: 'exact' }) // Chiediamo anche il totale esatto a Supabase
           .eq('approvato', true)
-          // Usiamo una ricerca che cerca la parola intera nella colonna categoria
           .ilike('categoria', `%${term}%`) 
           .order('id', { ascending: true }) 
           .range(da, a);
 
         if (error) throw error;
+
+        console.log("Risultati trovati in questa pagina:", data?.length);
+        console.log("Totale annunci nel database per questa ricerca:", count);
+
         setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore fetch Hub:", err);
