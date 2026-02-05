@@ -31,15 +31,11 @@ const [pagina, setPagina] = useState(1);
 const annunciPerPagina = 10; 
 
 useEffect(() => {
-  // Se i medici vengono passati come props dalla pagina, non facciamo il fetch
-  if (medici && medici.length > 0) {
-    setLoadingRealTime(false);
-    return; 
-  }
-
-  async function fetchNuoviMedici() {
-    try {
-      setLoadingRealTime(true);
+    // LE RIGHE SOPRA SONO STATE TOLTE
+    async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        // ... continua il codice del fetch che abbiamo sistemato prima ...
       
       // Calcolo preciso dei limiti per Supabase
       const da = (pagina - 1) * annunciPerPagina;
@@ -70,8 +66,9 @@ useEffect(() => {
   // Qui aggiungiamo pagina come dipendenza
 }, [categoria, pagina]);
  // 2. DEFINIZIONE LISTA FINALE: Se passiamo i medici dalla pagina, usiamo solo quelli.
-  const listaDaMostrare = (medici && medici.length > 0) ? medici : serviziRealTime;
-
+ // Diciamo al sistema di usare i dati paginati di Supabase (serviziRealTime) 
+// e non la lista fissa passata dalla pagina
+const listaDaMostrare = serviziRealTime;
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
