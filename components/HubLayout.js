@@ -27,7 +27,12 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
 
-  useEffect(() => {
+ useEffect(() => {
+    // SE ABBIAMO GIÀ I MEDICI DALLA PAGINA, NON FARE NULLA
+    if (medici && medici.length > 0) {
+      setLoadingRealTime(false);
+      return; 
+    }
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
