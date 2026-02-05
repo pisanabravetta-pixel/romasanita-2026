@@ -67,6 +67,7 @@ return (
       quartieri={quartieri}
       schemas={schemas}
     >
+      {/* Griglia delle specialistiche - Questa rimane perché è specifica di questa pagina hub */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
@@ -111,28 +112,7 @@ return (
         ))}
       </div>
 
-     {/* SEZIONE FAQ DINAMICA */}
-      <div style={{ marginTop: '40px' }}>
-        <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#1e293b', marginBottom: '20px' }}>
-          Domande Frequenti (FAQ)
-        </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          {schemas.faqRaw && schemas.faqRaw.length > 0 ? (
-            schemas.faqRaw.map((faq, index) => (
-              <div key={index} style={{ backgroundColor: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                <p style={{ fontWeight: '800', color: '#7c3aed', marginBottom: '5px', fontSize: '14px' }}>
-                  {faq.q}
-                </p>
-                <p style={{ color: '#475569', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                  {faq.a}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Caricamento domande frequenti...</p>
-          )}
-        </div>
-      </div>
+      {/* IL BLOCCO FAQ CHE C'ERA QUI È STATO RIMOSSO: LO GESTISCE GIÀ HUBLAYOUT IN FONDO */}
+      
     </HubLayout>
   );
-}
