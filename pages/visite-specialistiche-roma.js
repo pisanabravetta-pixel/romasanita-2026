@@ -11,6 +11,8 @@ export default function VisiteSpecialisticheRoma() {
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
 useEffect(() => {
+    console.log("Tentativo di caricamento iniziato..."); // Questo DEVE apparire
+
     async function fetchVisite() {
       try {
         setLoading(true);
@@ -19,32 +21,29 @@ useEffect(() => {
           .select('*')
           .eq('approvato', true);
 
-        if (error) throw error;
+        if (error) {
+          console.error("Errore Supabase:", error.message);
+          return;
+        }
+
+        console.log("Dati ricevuti dal DB:", data?.length); 
 
         if (data) {
-          // DEBUG: Apri la console del browser (F12) per vedere cosa arriva
-          console.log("Tutti i dati arrivati:", data.map(d => d.categoria));
-
-          const filtrati = data.filter(item => {
-            const cat = (item.categoria || "").toLowerCase();
-            // REGOLE FERREE:
-            const isSpecialistica = cat.includes('visite-specialistiche');
-            const isFarmacia = cat.includes('farmacie') || cat.includes('farmacia');
-            const isDentista = cat.includes('dentisti') || cat.includes('dentista');
-            const isServizio = cat.includes('servizi-sanitari') || cat.includes('servizi-domicilio');
-
-            // Tieni solo se è specialistica e NON è tutto il resto
-            return isSpecialistica && !isFarmacia && !isDentista && !isServizio;
-          });
+          // Filtriamo solo chi ha 'visite-specialistiche'
+          const filtrati = data.filter(item => 
+            item.categoria && item.categoria.toLowerCase().includes('visite-specialistiche')
+          );
           
-          setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
+          console.log("Dati dopo il filtro:", filtrati.length);
+          setAnnunci(filtrati);
         }
       } catch (err) {
-        console.error("Errore:", err);
+        console.error("Errore generico:", err);
       } finally {
         setLoading(false);
       }
     }
+
     fetchVisite();
   }, []);
 const specialistiMedici = [
