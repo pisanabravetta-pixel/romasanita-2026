@@ -377,20 +377,29 @@ const da = (pagina - 1) * 10;
     PAGINA {pagina}
   </div>
 
- <button 
-  type="button"
-  onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-  disabled={listaDaMostrare.length < 10} // <--- SCRIVI PROPRIO 10 QUI
-  style={{ 
-    // ... i tuoi stili ...
-    opacity: listaDaMostrare.length < 10 ? 0.5 : 1,
-    cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer'
-  }}
->
-  AVANTI →
-</button>
+<button 
+      type="button"
+      onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+      disabled={listaDaMostrare.length < 10}
+      style={{ 
+        padding: '10px 18px', 
+        backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
+        color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
+        border: 'none', 
+        borderRadius: '8px', 
+        fontWeight: '800', 
+        cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
+        fontSize: '12px',
+        opacity: listaDaMostrare.length < 10 ? 0.6 : 1
+      }}
+    >
+      SUCCESSIVA →
+    </button>
+  </div>
+)} 
 {/* CHIUSURA BOX ANNUNCI */}
 </div>
+
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
