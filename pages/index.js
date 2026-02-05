@@ -17,59 +17,79 @@ export default function Home() {
     "Prati", "San Giovanni", "Tiburtina", "Trastevere"
   ];
 const eseguiRicerca = () => {
-    if(!ricerca) {
-      alert("Per favore, scrivi cosa stai cercando.");
-      return;
+  if(!ricerca) {
+    alert("Per favore, scrivi cosa stai cercando.");
+    return;
+  }
+
+  const cosa = ricerca.toLowerCase().trim();
+  const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
+  const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
+
+  // --- 1. DERMATOLOGI ---
+  if (cosa.includes("dermatol")) {
+    window.location.href = "/dermatologi-roma" + parametri;
+  }
+
+  // --- 2. CARDIOLOGI ---
+  else if (cosa.includes("cardiol")) {
+    if (zonaKebab === "prati") {
+      window.location.href = "/cardiologi-roma-prati";
+    } else {
+      window.location.href = "/cardiologi-roma" + parametri;
     }
+  }
 
-    const cosa = ricerca.toLowerCase();
-    const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
-    const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
+  // --- 3. PSICOLOGI ---
+  else if (cosa.includes("psicol") || cosa.includes("terapia") || cosa.includes("psicoterap")) {
+    window.location.href = "/psicologi-roma" + parametri;
+  }
 
-    // --- AREA DENTISTI ---
-    if (cosa.includes("dent") || cosa.includes("odont") || cosa.includes("carie") || cosa.includes("pulizia") || cosa.includes("apparecch")) {
-      if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
-        window.location.href = "/dentisti-roma-" + zonaKebab;
-      } else {
-        window.location.href = "/dentisti-roma" + parametri;
-      }
-    } 
+  // --- 4. GINECOLOGI ---
+  else if (cosa.includes("ginecol") || cosa.includes("ostetr")) {
+    window.location.href = "/ginecologi-roma" + parametri;
+  }
 
-    // --- AREA CARDIOLOGI ---
-    else if (cosa.includes("cardiol")) {
-      if (zonaKebab === "prati") {
-        window.location.href = "/cardiologi-roma-prati";
-      } else {
-        window.location.href = "/visite-specialistiche-roma" + parametri;
-      }
+  // --- 5. OCULISTI ---
+  else if (cosa.includes("oculist") || cosa.includes("vista")) {
+    window.location.href = "/oculisti-roma" + parametri;
+  }
+
+  // --- 6. ORTOPEDICI ---
+  else if (cosa.includes("ortoped")) {
+    window.location.href = "/ortopedici-roma" + parametri;
+  }
+
+  // --- 7. NUTRIZIONISTI ---
+  else if (cosa.includes("nutrizion") || cosa.includes("diet")) {
+    window.location.href = "/nutrizionisti-roma" + parametri;
+  }
+
+  // --- 8. DENTISTI (Categoria principale) ---
+  else if (cosa.includes("dent") || cosa.includes("odont")) {
+    if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
+      window.location.href = "/dentisti-roma-" + zonaKebab;
+    } else {
+      window.location.href = "/dentisti-roma" + parametri;
     }
+  }
 
-    // --- AREA DIAGNOSTICA (Aggiunto Roma Nord per Parioli/Flaminio) ---
-    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
-      if (zonaKebab === "parioli" || zonaKebab === "flaminio") {
-        window.location.href = "/diagnostica-roma-nord";
-      } else {
-        window.location.href = "/diagnostica-roma" + parametri;
-      }
-    }
+  // --- 9. DIAGNOSTICA (Categoria principale) ---
+  else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
+    window.location.href = "/diagnostica-roma" + parametri;
+  }
 
-    // --- AREA FARMACIE ---
-    else if (cosa.includes("farmac") || cosa.includes("holter") || cosa.includes("pressio")) {
-      if (zonaKebab === "centro-storico") {
-        window.location.href = "/farmacie-roma-centro";
-      } else {
-        window.location.href = "/farmacie-roma" + parametri;
-      }
-    }
+  // --- 10. FARMACIE (Categoria principale) ---
+  else if (cosa.includes("farmac")) {
+    window.location.href = "/farmacie-roma" + parametri;
+  }
 
-    // --- SERVIZI A DOMICILIO (Aggiunto Roma Sud per Magliana/Ostiense) ---
-    else if (cosa.includes("domicilio") || cosa.includes("infermier") || cosa.includes("fisio")) {
-      if (["eur", "ostiense", "magliana"].includes(zonaKebab)) {
-        window.location.href = "/servizi-domicilio-roma-sud";
-      } else {
-        window.location.href = "/servizi-domicilio-roma" + parametri;
-      }
-    }
+  // --- 11. TUTTO IL RESTO (Il tuo paracadute) ---
+  // Se non è nulla di specifico sopra, finisce qui (es: urologo, fisioterapista, ecc.)
+  else {
+    window.location.href = "/visite-specialistiche-roma" + parametri;
+  }
+};
 
     // --- TUTTO IL RESTO ---
     else {
