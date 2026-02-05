@@ -35,25 +35,22 @@ try {
         setLoadingRealTime(true);
         if (!categoria) return; // Se la categoria manca, esce subito senza errori
 
-        const da = (pagina - 1) * 10;
+  const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Puliamo la categoria (es. da "cardiologi-roma" a "cardiologi")
-        const term = categoria.split('-')[0]; 
+        // Usiamo un filtro più semplice: se categoria è "dermatologi-roma", cerchiamo "dermatologi"
+        const term = categoria ? categoria.replace('-roma', '').toLowerCase() : '';
 
         const { data, error, count } = await supabase
           .from('annunci')
           .select('*', { count: 'exact' })
           .eq('approvato', true)
-          .ilike('categoria', `%${term}%`) // Se vuoi i 31 esatti e sai che la categoria è scritta bene, usa .eq('categoria', term)
+          // Usiamo ilike con le % così trova sicuramente i tuoi 31 annunci
+          .ilike('categoria', `%${term}%`) 
           .order('id', { ascending: true }) 
           .range(da, a);
 
         if (error) throw error;
-
-        console.log("Record caricati per pagina:", data?.length);
-        console.log("Totale assoluto nel DB:", count);
-
         setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore Fetch:", err);
@@ -66,7 +63,7 @@ try {
 
  // 2. DEFINIZIONE LISTA FINALE
 // Dimentichiamo la prop "medici" per un attimo, usiamo solo quello che arriva dal DB
-const listaDaMostrare = serviziRealTime || [];
+const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziRealTime : [];
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
     // Il resto del codice della mappa...
@@ -403,9 +400,7 @@ const listaDaMostrare = serviziRealTime || [];
     </button>
   </div>
 )}
-{/* CHIUSURA BOX GENERALE ANNUNCI - QUI MANCAVA LA PARENTESI NEL TUO CODICE */}
-</div>
-
+{/* FINE BLOCCO ANNUNCI E PAGINAZIONE */}
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
