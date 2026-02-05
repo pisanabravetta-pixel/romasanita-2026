@@ -39,7 +39,7 @@ if (databaseData) {
           });
 
           // QUESTO LOG TI DICE COSA SONO I 19 RISULTATI
-          console.log("Categorie dei 19 filtrati:", filtrati.map(f => f.categoria));
+          console.log("CONTROLLO INTRUSI:", filtrati.map(f => `${f.titolo} -> Categoria: ${f.categoria}`));
           
           setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
