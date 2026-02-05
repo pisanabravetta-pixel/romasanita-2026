@@ -33,19 +33,23 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-// DENTRO fetchNuoviMedici, sostituisci la parte della query:
-        const da = (pagina - 1) * 10;
+const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Pulizia: se categoria è "dermatologi-roma", cerchiamo solo "dermatologi"
-        const term = categoria ? categoria.split('-')[0] : '';
+        // Se categoria non esiste ancora, mettiamo una stringa vuota per evitare il crash
+        const term = categoria ? categoria.replace('-roma', '') : '';
+
+        // Se non abbiamo un termine di ricerca, non facciamo la chiamata
+        if (!term) return;
 
         const { data, error, count } = await supabase
           .from('annunci')
           .select('*', { count: 'exact' })
           .eq('approvato', true)
-         .eq('categoria', categoria.replace('-roma', ''))
-          .order('id', { ascending: true }) // <--- Ordine fisso anti-ripetizione
+          // Usiamo .eq se vogliamo solo i 31 esatti (corrispondenza perfetta)
+          // Usiamo .ilike se vogliamo essere più permissivi
+          .ilike('categoria', `%${term}%`) 
+          .order('id', { ascending: true }) 
           .range(da, a);
 
         if (error) throw error;
