@@ -343,7 +343,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
       </p>
     </div>
   )}
-    {/* CONTROLLI PAGINAZIONE */}
+{/* CONTROLLI PAGINAZIONE */}
 {listaDaMostrare && listaDaMostrare.length > 0 && (
   <div style={{ 
     display: 'flex', 
@@ -357,6 +357,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
   }}>
     <button 
+      type="button"
       onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
       disabled={pagina === 1}
       style={{ 
@@ -367,7 +368,8 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
         borderRadius: '8px', 
         fontWeight: '800', 
         cursor: pagina === 1 ? 'not-allowed' : 'pointer',
-        fontSize: '12px'
+        fontSize: '12px',
+        transition: '0.2s'
       }}
     >
       ← PRECEDENTE
@@ -378,23 +380,26 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     </span>
 
     <button 
+      type="button"
       onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-      disabled={listaDaMostrare.length < 10}
+      disabled={listaDaMostrare.length < annunciPerPagina}
       style={{ 
         padding: '10px 18px', 
-        backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
-        color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
+        backgroundColor: listaDaMostrare.length < annunciPerPagina ? '#e2e8f0' : colore, 
+        color: listaDaMostrare.length < annunciPerPagina ? '#94a3b8' : 'white', 
         border: 'none', 
         borderRadius: '8px', 
         fontWeight: '800', 
-        cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
-        fontSize: '12px'
+        cursor: listaDaMostrare.length < annunciPerPagina ? 'not-allowed' : 'pointer',
+        fontSize: '12px',
+        transition: '0.2s'
       }}
     >
       SUCCESSIVA →
     </button>
   </div>
 )}
+{/* CHIUSURA DEL CONTENITORE DEGLI ANNUNCI */}
 </div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
