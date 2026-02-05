@@ -91,11 +91,6 @@ const eseguiRicerca = () => {
   }
 };
 
-    // --- TUTTO IL RESTO ---
-    else {
-      window.location.href = "/visite-specialistiche-roma" + parametri;
-    }
-  };
 return (
   <>
   <Head>
