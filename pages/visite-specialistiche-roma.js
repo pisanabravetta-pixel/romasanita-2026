@@ -24,19 +24,23 @@ export default function VisiteSpecialisticheRoma() {
           console.error("Errore Supabase:", error.message);
           return;
         }
-
-        if (databaseData) {
+if (databaseData) {
           console.log("Dati totali dal DB:", databaseData.length);
           
           const filtrati = databaseData.filter(item => {
-            const cat = (item.categoria || "").trim().toLowerCase();
-            // Teniamo solo se la categoria è "visite-specialistiche" 
-            // Questo escluderà "farmacie" e "dentisti" automaticamente 
-            // perché le loro stringhe sono diverse.
-            return cat === 'visite-specialistiche';
+            const cat = (item.categoria || "").toLowerCase().trim();
+            
+            // 1. Deve contenere la parola chiave dei medici
+            const eMedico = cat.includes('visite-specialistiche');
+            
+            // 2. MA NON deve essere una delle categorie che non vogliamo
+            // Se la categoria è SOLO "farmacie", questa riga la scarterà
+            const eIntruso = cat === 'farmacie' || cat === 'dentisti' || cat === 'servizi-domicilio' || cat === 'servizi-sanitari';
+
+            return eMedico && !eIntruso;
           });
 
-          console.log("Dati dopo filtro esatto:", filtrati.length);
+          console.log("Dati filtrati finali:", filtrati.length);
           setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
       } catch (err) {
