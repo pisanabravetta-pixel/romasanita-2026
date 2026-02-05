@@ -31,35 +31,32 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
   useEffect(() => {
     async function fetchNuoviMedici() {
-      try {
+try {
         setLoadingRealTime(true);
-const da = (pagina - 1) * 10;
+        if (!categoria) return; // Se la categoria manca, esce subito senza errori
+
+        const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Se categoria non esiste ancora, mettiamo una stringa vuota per evitare il crash
-        const term = categoria ? categoria.replace('-roma', '') : '';
-
-        // Se non abbiamo un termine di ricerca, non facciamo la chiamata
-        if (!term) return;
+        // Puliamo la categoria (es. da "cardiologi-roma" a "cardiologi")
+        const term = categoria.split('-')[0]; 
 
         const { data, error, count } = await supabase
           .from('annunci')
           .select('*', { count: 'exact' })
           .eq('approvato', true)
-          // Usiamo .eq se vogliamo solo i 31 esatti (corrispondenza perfetta)
-          // Usiamo .ilike se vogliamo essere più permissivi
-          .ilike('categoria', `%${term}%`) 
+          .ilike('categoria', `%${term}%`) // Se vuoi i 31 esatti e sai che la categoria è scritta bene, usa .eq('categoria', term)
           .order('id', { ascending: true }) 
           .range(da, a);
 
         if (error) throw error;
 
-        console.log("Risultati trovati in questa pagina:", data?.length);
-        console.log("Totale annunci nel database per questa ricerca:", count);
+        console.log("Record caricati per pagina:", data?.length);
+        console.log("Totale assoluto nel DB:", count);
 
         setServiziRealTime(data || []);
       } catch (err) {
-        console.error("Errore fetch Hub:", err);
+        console.error("Errore Fetch:", err);
       } finally {
         setLoadingRealTime(false);
       }
@@ -68,10 +65,8 @@ const da = (pagina - 1) * 10;
   }, [categoria, pagina]);
 
  // 2. DEFINIZIONE LISTA FINALE
-  // Usiamo serviziRealTime per far funzionare la paginazione. 
-  // Se è ancora in caricamento, usiamo un array vuoto per evitare errori.
-  const listaDaMostrare = serviziRealTime || [];
-
+// Dimentichiamo la prop "medici" per un attimo, usiamo solo quello che arriva dal DB
+const listaDaMostrare = serviziRealTime || [];
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
     // Il resto del codice della mappa...
@@ -226,7 +221,7 @@ const da = (pagina - 1) * 10;
 
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
 <div style={{ display: 'block' }}>
-  {loading ? (
+  {loadingRealTime ? (
     <p>Caricamento...</p>
   ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v) => (
