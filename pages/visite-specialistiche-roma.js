@@ -11,6 +11,7 @@ export default function VisiteSpecialisticheRoma() {
  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
+    console.log("Tentativo di caricamento iniziato...");
     async function fetchVisite() {
       try {
         setLoading(true);
@@ -22,13 +23,14 @@ export default function VisiteSpecialisticheRoma() {
         if (error) throw error;
 
         if (databaseData) {
+          console.log("Dati ricevuti dal DB:", databaseData.length);
           const filtrati = databaseData.filter(item => {
             const cat = (item.categoria || "").toLowerCase();
-            const haSpecialistica = cat.includes('visite-specialistiche');
-            const eDaEscludere = cat.includes('farmaci') || cat.includes('dentist') || cat.includes('domicilio') || cat.includes('sanitari');
-            return haSpecialistica && !eDaEscludere;
+            const haSpec = cat.includes('visite-specialistiche');
+            const daEscludere = cat.includes('farmaci') || cat.includes('dentist') || cat.includes('domicilio');
+            return haSpec && !daEscludere;
           });
-          
+          console.log("Dati filtrati finali:", filtrati.length);
           setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
       } catch (err) {
