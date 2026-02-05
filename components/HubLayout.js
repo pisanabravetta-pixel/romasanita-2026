@@ -377,26 +377,18 @@ const da = (pagina - 1) * 10;
     PAGINA {pagina}
   </div>
 
-  <button 
-    type="button"
-    onClick={() => {
-      setPagina((p) => p + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }}
-    disabled={listaDaMostrare.length < 10}
-    style={{ 
-      padding: '12px 24px', 
-      backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
-      color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
-      border: 'none', 
-      borderRadius: '8px', 
-      fontWeight: '900', 
-      cursor: listaDaMostrare.length < 10 ? 'default' : 'pointer'
-    }}
-  >
-    AVANTI →
-  </button>
-</div>
+ <button 
+  type="button"
+  onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+  disabled={listaDaMostrare.length < 10} // <--- SCRIVI PROPRIO 10 QUI
+  style={{ 
+    // ... i tuoi stili ...
+    opacity: listaDaMostrare.length < 10 ? 0.5 : 1,
+    cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer'
+  }}
+>
+  AVANTI →
+</button>
 {/* CHIUSURA BOX ANNUNCI */}
 </div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
