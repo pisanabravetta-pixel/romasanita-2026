@@ -19,67 +19,74 @@ export default function Home() {
     "Prati", "San Giovanni", "Tiburtina", "Trastevere"
   ];
 
-  const eseguiRicerca = () => {
-    // Definiamo cosa cercare: se l'utente ha scritto qualcosa, usiamo quello.
-    // Altrimenti usiamo la categoria selezionata.
-    let termineDaCercare = ricerca.trim();
-    
-    if (!termineDaCercare && catScelta) {
-      termineDaCercare = catScelta;
-    }
+ const eseguiRicerca = () => {
+  let termineDaCercare = ricerca.trim();
+  
+  if (!termineDaCercare && catScelta) {
+    termineDaCercare = catScelta;
+  }
 
-    if (!termineDaCercare) {
-      alert("Per favore, scrivi cosa stai cercando o seleziona una categoria.");
-      return;
-    }
+  if (!termineDaCercare) {
+    alert("Per favore, scrivi cosa stai cercando o seleziona una categoria.");
+    return;
+  }
 
-    const cosa = termineDaCercare.toLowerCase();
-    const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
-    const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
+  const cosa = termineDaCercare.toLowerCase();
+  const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
+  const parametri = "?zona=" + encodeURIComponent(zonaScelta) + "&cerca=" + encodeURIComponent(cosa);
 
-    // --- LOGICA DI REINDIRIZZAMENTO ---
-    if (cosa.includes("dermatol")) {
-      window.location.href = "/dermatologi-roma" + parametri;
-    } 
-    else if (cosa.includes("cardiol")) {
-      if (zonaKebab === "prati") {
-        window.location.href = "/cardiologi-roma-prati";
-      } else {
-        window.location.href = "/cardiologi-roma" + parametri;
-      }
-    } 
-    else if (cosa.includes("psicol") || cosa.includes("terapia") || cosa.includes("psicoterap")) {
-      window.location.href = "/psicologi-roma" + parametri;
-    } 
-    else if (cosa.includes("ginecol") || cosa.includes("ostetr")) {
-      window.location.href = "/ginecologi-roma" + parametri;
-    } 
-    else if (cosa.includes("oculist") || cosa.includes("vista")) {
-      window.location.href = "/oculisti-roma" + parametri;
-    } 
-    else if (cosa.includes("ortoped")) {
-      window.location.href = "/ortopedici-roma" + parametri;
-    } 
-    else if (cosa.includes("nutrizion") || cosa.includes("diet")) {
-      window.location.href = "/nutrizionisti-roma" + parametri;
-    } 
-    else if (cosa.includes("dent") || cosa.includes("odont")) {
-      if (["prati", "eur", "san-giovanni"].includes(zonaKebab)) {
-        window.location.href = "/dentisti-roma-" + zonaKebab;
-      } else {
-        window.location.href = "/dentisti-roma" + parametri;
-      }
-    } 
-    else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
-      window.location.href = "/diagnostica-roma" + parametri;
-    } 
-    else if (cosa.includes("farmac")) {
-      window.location.href = "/farmacie-roma" + parametri;
-    } 
-    else {
-      window.location.href = "/visite-specialistiche-roma" + parametri;
+  // I tuoi 10 quartieri ufficiali
+  const quartieriValidi = [
+    "prati", "eur", "parioli", "centro-storico", "san-giovanni", 
+    "monteverde", "ostia", "tiburtina", "aurelio", "montesacro"
+  ];
+
+  // Funzione per decidere la destinazione
+  const vaiAPagina = (slugBase) => {
+    if (quartieriValidi.includes(zonaKebab)) {
+      window.location.href = `/${slugBase}-${zonaKebab}`;
+    } else {
+      window.location.href = `/${slugBase}` + parametri;
     }
   };
+
+  // --- LOGICA DI REINDIRIZZAMENTO ---
+  if (cosa.includes("dermatol")) {
+    vaiAPagina("dermatologi-roma");
+  } 
+  else if (cosa.includes("cardiol")) {
+    vaiAPagina("cardiologi-roma");
+  } 
+  else if (cosa.includes("psicol") || cosa.includes("terapia") || cosa.includes("psicoterap")) {
+    vaiAPagina("psicologi-roma");
+  } 
+  else if (cosa.includes("ginecol") || cosa.includes("ostetr")) {
+    vaiAPagina("ginecologi-roma");
+  } 
+  else if (cosa.includes("oculist") || cosa.includes("vista")) {
+    vaiAPagina("oculisti-roma");
+  } 
+  else if (cosa.includes("ortoped")) {
+    vaiAPagina("ortopedici-roma");
+  } 
+  else if (cosa.includes("nutrizion") || cosa.includes("diet")) {
+    vaiAPagina("nutrizionisti-roma");
+  } 
+  else if (cosa.includes("dent") || cosa.includes("odont")) {
+    vaiAPagina("dentisti-roma");
+  }
+  // Diagnostica e Farmacie vanno alle loro hub (non hanno pagine quartiere specifiche per ora)
+  else if (cosa.includes("tac") || cosa.includes("risonanza") || cosa.includes("analisi") || cosa.includes("ecograf")) {
+    window.location.href = "/diagnostica-roma" + parametri;
+  } 
+  else if (cosa.includes("farmac")) {
+    window.location.href = "/farmacie-roma" + parametri;
+  } 
+  // FALLBACK: Se non è nulla di quanto sopra, vai alla hub generale
+  else {
+    window.location.href = "/servizi-sanitari-roma" + parametri;
+  }
+};
 
   // --- ORA SCENDI NEL RETURN E CERCA IL SELECT DELLA CATEGORIA ---
 
