@@ -44,7 +44,7 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
           .from('annunci')
           .select('*', { count: 'exact' })
           .eq('approvato', true)
-          .ilike('categoria', `%${term}%`) 
+         .eq('categoria', categoria.replace('-roma', ''))
           .order('id', { ascending: true }) // <--- Ordine fisso anti-ripetizione
           .range(da, a);
 
