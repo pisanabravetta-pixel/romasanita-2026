@@ -26,46 +26,49 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   // 1. STATO PER I DATI IN TEMPO REALE
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
+// 1. Assicurati che questi stati siano sopra l'useEffect
 const [pagina, setPagina] = useState(1);
-const annunciPerPagina = 10; // Quanti medici vuoi per pagina
- useEffect(() => {
-    // SE ABBIAMO GIÀ I MEDICI DALLA PAGINA, NON FARE NULLA
-    if (medici && medici.length > 0) {
-      setLoadingRealTime(false);
-      return; 
-    }
-async function fetchNuoviMedici() {
-  try {
-    setLoadingRealTime(true);
-    
-    // 1. Calcolo del range
-    const da = (pagina - 1) * annunciPerPagina;
-    const a = da + annunciPerPagina - 1;
+const annunciPerPagina = 10; 
 
-    // 2. Query ottimizzata: Filtriamo nel DB prima di fare il range
-    let query = supabase
-      .from('annunci')
-      .select('*')
-      .eq('approvato', true)
-      .ilike('categoria', `%${categoria.slice(0, 4)}%`) // Cerca la categoria nel DB
-      .range(da, a)
-      .order('is_top', { ascending: false }); // Mette i "top" per primi
-
-    const { data, error } = await query;
-
-    if (error) throw error;
-
-    // 3. Ora i dati sono già pronti e paginati correttamente
-    setServiziRealTime(data || []);
-    
-  } catch (err) {
-    console.error("Errore fetch Hub:", err);
-  } finally {
+useEffect(() => {
+  // Se i medici vengono passati come props dalla pagina, non facciamo il fetch
+  if (medici && medici.length > 0) {
     setLoadingRealTime(false);
+    return; 
   }
-}
+
+  async function fetchNuoviMedici() {
+    try {
+      setLoadingRealTime(true);
+      
+      // Calcolo preciso dei limiti per Supabase
+      const da = (pagina - 1) * annunciPerPagina;
+      const a = da + annunciPerPagina - 1;
+
+      // Filtriamo per categoria e applichiamo il RANGE (paginazione) direttamente nel DB
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .ilike('categoria', `%${categoria.toLowerCase().slice(0, 4)}%`) // Filtra es. "derm", "card"
+        .order('id', { ascending: true }) // Ordine costante per non mischiare le pagine
+        .range(da, a); // <--- QUESTA RIGA È FONDAMENTALE
+
+      if (error) throw error;
+
+      // Importante: qui NON fare .filter() in javascript, i dati sono già pronti
+      setServiziRealTime(data || []);
+
+    } catch (err) {
+      console.error("Errore fetch Hub:", err);
+    } finally {
+      setLoadingRealTime(false);
+    }
+  }
+
   fetchNuoviMedici();
-  }, [categoria, pagina]); // <--- Aggiungi 'pagina' qui
+  // Qui aggiungiamo pagina come dipendenza
+}, [categoria, pagina]);
  // 2. DEFINIZIONE LISTA FINALE: Se passiamo i medici dalla pagina, usiamo solo quelli.
   const listaDaMostrare = (medici && medici.length > 0) ? medici : serviziRealTime;
 
