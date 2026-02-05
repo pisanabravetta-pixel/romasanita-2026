@@ -33,24 +33,24 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-// Forza il calcolo basato su 10 annunci per pagina
+// Calcolo limiti
         const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Termine di ricerca (es: "derm" per dermatologi)
-        const term = categoria ? categoria.toLowerCase().slice(0, 4) : '';
+        // Pulizia categoria: togliamo "-roma" e prendiamo la parola intera
+        // Esempio: "dermatologi-roma" diventa "dermatologi"
+        const term = categoria ? categoria.replace('-roma', '') : '';
 
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
+          // Usiamo una ricerca che cerca la parola intera nella colonna categoria
           .ilike('categoria', `%${term}%`) 
-          .order('id', { ascending: true }) // <--- FONDAMENTALE per non ripetere gli annunci
+          .order('id', { ascending: true }) 
           .range(da, a);
 
         if (error) throw error;
-        
-        // Imposta i dati filtrati nello stato
         setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore fetch Hub:", err);
