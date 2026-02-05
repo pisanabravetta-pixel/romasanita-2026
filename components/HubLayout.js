@@ -30,16 +30,11 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   const annunciPerPagina = 10; 
 
   useEffect(() => {
-    // Reset della pagina se cambia la categoria (es. da dentisti a oculisti)
-    // Se non lo facciamo e siamo a pagina 3, cercherà la pagina 3 della nuova categoria
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        
         const da = (pagina - 1) * annunciPerPagina;
         const a = da + annunciPerPagina - 1;
-
-        // Pulizia categoria per la ricerca (es. prende "derm" da "dermatologi")
         const term = categoria ? categoria.toLowerCase().slice(0, 4) : '';
 
         const { data, error } = await supabase
@@ -52,19 +47,17 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
 
         if (error) throw error;
         setServiziRealTime(data || []);
-
       } catch (err) {
         console.error("Errore fetch Hub:", err);
       } finally {
         setLoadingRealTime(false);
       }
     }
-
     fetchNuoviMedici();
-  }, [categoria, pagina]); // <--- Fondamentale che ci siano entrambi
+  }, [categoria, pagina]);
 
   // 2. DEFINIZIONE LISTA FINALE
-  // Usiamo SOLO serviziRealTime per far funzionare la paginazione
+  const listaDaMostrare = serviziRealTime;
   const listaDaMostrare = serviziRealTime;
 const listaDaMostrare = serviziRealTime;
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
