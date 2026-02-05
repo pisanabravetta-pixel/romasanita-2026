@@ -33,8 +33,11 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        const da = (pagina - 1) * annunciPerPagina;
-        const a = da + annunciPerPagina - 1;
+// Forza il calcolo basato su 10 annunci per pagina
+        const da = (pagina - 1) * 10;
+        const a = da + 10 - 1;
+        
+        // Termine di ricerca (es: "derm" per dermatologi)
         const term = categoria ? categoria.toLowerCase().slice(0, 4) : '';
 
         const { data, error } = await supabase
@@ -42,10 +45,12 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
           .select('*')
           .eq('approvato', true)
           .ilike('categoria', `%${term}%`) 
-          .order('id', { ascending: true })
+          .order('id', { ascending: true }) // <--- FONDAMENTALE per non ripetere gli annunci
           .range(da, a);
 
         if (error) throw error;
+        
+        // Imposta i dati filtrati nello stato
         setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore fetch Hub:", err);
@@ -343,63 +348,53 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
       </p>
     </div>
   )}
-{/* CONTROLLI PAGINAZIONE */}
-{listaDaMostrare && listaDaMostrare.length > 0 && (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    gap: '15px', 
-    margin: '30px 0',
-    padding: '20px',
-    backgroundColor: 'white',
-    borderRadius: '12px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-  }}>
-    <button 
-      type="button"
-      onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
-      disabled={pagina === 1}
-      style={{ 
-        padding: '10px 18px', 
-        backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
-        color: pagina === 1 ? '#94a3b8' : 'white', 
-        border: 'none', 
-        borderRadius: '8px', 
-        fontWeight: '800', 
-        cursor: pagina === 1 ? 'not-allowed' : 'pointer',
-        fontSize: '12px',
-        transition: '0.2s'
-      }}
-    >
-      ← PRECEDENTE
-    </button>
-    
-    <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-      Pagina {pagina}
-    </span>
-
-    <button 
-      type="button"
-      onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-      disabled={listaDaMostrare.length < annunciPerPagina}
-      style={{ 
-        padding: '10px 18px', 
-        backgroundColor: listaDaMostrare.length < annunciPerPagina ? '#e2e8f0' : colore, 
-        color: listaDaMostrare.length < annunciPerPagina ? '#94a3b8' : 'white', 
-        border: 'none', 
-        borderRadius: '8px', 
-        fontWeight: '800', 
-        cursor: listaDaMostrare.length < annunciPerPagina ? 'not-allowed' : 'pointer',
-        fontSize: '12px',
-        transition: '0.2s'
-      }}
-    >
-      SUCCESSIVA →
-    </button>
+{/* CONTROLLI PAGINAZIONE DEFINITIVI */}
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', margin: '30px 0', padding: '15px' }}>
+  
+  <button 
+    type="button"
+    onClick={() => {
+      setPagina((p) => Math.max(1, p - 1));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }}
+    style={{ 
+      padding: '12px 24px', 
+      backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
+      color: pagina === 1 ? '#94a3b8' : 'white', 
+      border: 'none', 
+      borderRadius: '8px', 
+      fontWeight: '900', 
+      cursor: pagina === 1 ? 'default' : 'pointer'
+    }}
+  >
+    ← INDIETRO
+  </button>
+  
+  <div style={{ fontWeight: '900', color: '#1e293b', fontSize: '16px', background: 'white', padding: '10px 20px', borderRadius: '50px', border: '1px solid #e2e8f0' }}>
+    PAGINA {pagina}
   </div>
-)}
-{/* CHIUSURA DEL CONTENITORE DEGLI ANNUNCI */}
+
+  <button 
+    type="button"
+    onClick={() => {
+      setPagina((p) => p + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }}
+    disabled={listaDaMostrare.length < 10}
+    style={{ 
+      padding: '12px 24px', 
+      backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
+      color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
+      border: 'none', 
+      borderRadius: '8px', 
+      fontWeight: '900', 
+      cursor: listaDaMostrare.length < 10 ? 'default' : 'pointer'
+    }}
+  >
+    AVANTI →
+  </button>
+</div>
+{/* CHIUSURA BOX ANNUNCI */}
 </div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
