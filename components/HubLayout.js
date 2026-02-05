@@ -347,60 +347,60 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
     </div>
   )}
 {/* 4. CONTROLLI PAGINAZIONE */}
-{listaDaMostrare && listaDaMostrare.length > 0 && (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    gap: '15px', 
-    margin: '30px 0',
-    padding: '20px',
-    backgroundColor: 'white',
-    borderRadius: '12px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-  }}>
-    <button 
-      type="button"
-      onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
-      disabled={pagina === 1}
-      style={{ 
-        padding: '10px 18px', 
-        backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
-        color: pagina === 1 ? '#94a3b8' : 'white', 
-        border: 'none', 
-        borderRadius: '8px', 
-        fontWeight: '800', 
-        cursor: pagina === 1 ? 'not-allowed' : 'pointer',
-        fontSize: '12px'
-      }}
-    >
-      ← PRECEDENTE
-    </button>
-    
-    <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-      Pagina {pagina}
-    </span>
+      {listaDaMostrare && listaDaMostrare.length > 0 && (
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          gap: '15px', 
+          margin: '30px 0',
+          padding: '20px',
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+        }}>
+          <button 
+            type="button"
+            onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
+            disabled={pagina === 1}
+            style={{ 
+              padding: '10px 18px', 
+              backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
+              color: pagina === 1 ? '#94a3b8' : 'white', 
+              border: 'none', 
+              borderRadius: '8px', 
+              fontWeight: '800', 
+              cursor: pagina === 1 ? 'not-allowed' : 'pointer',
+              fontSize: '12px'
+            }}
+          >
+            ← PRECEDENTE
+          </button>
+          
+          <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+            Pagina {pagina}
+          </span>
 
-    <button 
-      type="button"
-      onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-      disabled={listaDaMostrare.length < 10}
-      style={{ 
-        padding: '10px 18px', 
-        backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
-        color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
-        border: 'none', 
-        borderRadius: '8px', 
-        fontWeight: '800', 
-        cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
-        fontSize: '12px'
-      }}
-    >
-      SUCCESSIVA →
-    </button>
-  </div>
-)}
-{/* QUI NON DEVE ESSERCI NESSUN ALTRO DIV ISOLATO */}
+          <button 
+            type="button"
+            onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+            disabled={listaDaMostrare.length < 10}
+            style={{ 
+              padding: '10px 18px', 
+              backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore, 
+              color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white', 
+              border: 'none', 
+              borderRadius: '8px', 
+              fontWeight: '800', 
+              cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
+              fontSize: '12px'
+            }}
+          >
+            SUCCESSIVA →
+          </button>
+        </div>
+      )}
+      {/* FINE SEZIONE ANNUNCI - NON AGGIUNGERE DIV QUI */}
     
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
