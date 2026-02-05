@@ -60,8 +60,8 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
     fetchNuoviMedici();
   }, [categoria]);
 
-  // 2. DEFINIZIONE LISTA FINALE
-  const listaDaMostrare = serviziRealTime.length > 0 ? serviziRealTime : mediciAttivi;
+ // 2. DEFINIZIONE LISTA FINALE: Se passiamo i medici dalla pagina, usiamo solo quelli.
+  const listaDaMostrare = (medici && medici.length > 0) ? medici : serviziRealTime;
 
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
