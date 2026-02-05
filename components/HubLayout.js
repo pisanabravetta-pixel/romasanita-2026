@@ -23,51 +23,49 @@ export default function HubLayout({
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
   
-  // 1. STATO PER I DATI IN TEMPO REALE
+// 1. STATI PER I DATI E PAGINAZIONE
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
-// 1. Assicurati che questi stati siano sopra l'useEffect
-const [pagina, setPagina] = useState(1);
-const annunciPerPagina = 10; 
+  const [pagina, setPagina] = useState(1);
+  const annunciPerPagina = 10; 
 
-useEffect(() => {
-    // LE RIGHE SOPRA SONO STATE TOLTE
+  useEffect(() => {
+    // Reset della pagina se cambia la categoria (es. da dentisti a oculisti)
+    // Se non lo facciamo e siamo a pagina 3, cercherà la pagina 3 della nuova categoria
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        // ... continua il codice del fetch che abbiamo sistemato prima ...
-      
-      // Calcolo preciso dei limiti per Supabase
-      const da = (pagina - 1) * annunciPerPagina;
-      const a = da + annunciPerPagina - 1;
+        
+        const da = (pagina - 1) * annunciPerPagina;
+        const a = da + annunciPerPagina - 1;
 
-      // Filtriamo per categoria e applichiamo il RANGE (paginazione) direttamente nel DB
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('categoria', `%${categoria.toLowerCase().slice(0, 4)}%`) // Filtra es. "derm", "card"
-        .order('id', { ascending: true }) // Ordine costante per non mischiare le pagine
-        .range(da, a); // <--- QUESTA RIGA È FONDAMENTALE
+        // Pulizia categoria per la ricerca (es. prende "derm" da "dermatologi")
+        const term = categoria ? categoria.toLowerCase().slice(0, 4) : '';
 
-      if (error) throw error;
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('categoria', `%${term}%`) 
+          .order('id', { ascending: true })
+          .range(da, a);
 
-      // Importante: qui NON fare .filter() in javascript, i dati sono già pronti
-      setServiziRealTime(data || []);
+        if (error) throw error;
+        setServiziRealTime(data || []);
 
-    } catch (err) {
-      console.error("Errore fetch Hub:", err);
-    } finally {
-      setLoadingRealTime(false);
+      } catch (err) {
+        console.error("Errore fetch Hub:", err);
+      } finally {
+        setLoadingRealTime(false);
+      }
     }
-  }
 
-  fetchNuoviMedici();
-  // Qui aggiungiamo pagina come dipendenza
-}, [categoria, pagina]);
- // 2. DEFINIZIONE LISTA FINALE: Se passiamo i medici dalla pagina, usiamo solo quelli.
- // Diciamo al sistema di usare i dati paginati di Supabase (serviziRealTime) 
-// e non la lista fissa passata dalla pagina
+    fetchNuoviMedici();
+  }, [categoria, pagina]); // <--- Fondamentale che ci siano entrambi
+
+  // 2. DEFINIZIONE LISTA FINALE
+  // Usiamo SOLO serviziRealTime per far funzionare la paginazione
+  const listaDaMostrare = serviziRealTime;
 const listaDaMostrare = serviziRealTime;
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   useEffect(() => {
