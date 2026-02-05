@@ -214,22 +214,33 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
           
          
 
-{/* BLOCCO ANNUNCI DETTAGLIATI (Quello in fondo alla pagina) */}
+{/* BLOCCO ANNUNCI DETTAGLIATI */}
 <div style={{ display: 'block' }}>
   {loading ? (
     <p>Caricamento...</p>
- ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
+  ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v) => (
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
-        <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>{v.nome}</h3>
+        
+        {/* 1. FIX NOME: Cerchiamo sia nome che titolo per evitare undefined */}
+        <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
+          {v.nome || v.titolo || 'Professionista Verificato'}
+        </h3>
+        
         <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
           {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-<span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
-  {v.categoria ? v.categoria.replace('visite-specialistiche', '').trim().toUpperCase() : badgeSpec}
-</span>
+          
+          {/* 2. FIX BADGE: Puliamo la stringa categoria per mostrare solo la specialistica */}
+          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
+            {v.categoria 
+              ? v.categoria.replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
+              : (badgeSpec || 'SPECIALISTA').toUpperCase()}
+          </span>
         </div>
+
+        {/* ... il resto dei bottoni Chiama/Whatsapp rimane uguale ... */}
 
  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
   <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
