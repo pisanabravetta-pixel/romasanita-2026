@@ -116,3 +116,4 @@ return (
       
     </HubLayout>
   );
+} // <--- Questa era la graffa mancante che bloccava la build!
