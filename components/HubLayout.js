@@ -400,7 +400,8 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
           </button>
         </div>
       )}
-    </div> 
+
+      {/* RIMOZIONE DI DIV EXTRA CHE BLOCCANO IL RENDERING */}
     {/* Fine del blocco annunci. Dopo questa riga deve esserci subito il blocco delle GUIDE SPECIFICHE */}
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
