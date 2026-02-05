@@ -20,31 +20,25 @@ export default function VisiteSpecialisticheRoma() {
           .select('*')
           .eq('approvato', true);
 
-        if (error) {
-          console.error("Errore Supabase:", error.message);
-          return;
-        }
-if (databaseData) {
+        if (error) throw error;
+
+        if (databaseData) {
           const filtrati = databaseData.filter(item => {
             const cat = (item.categoria || "").toLowerCase().trim();
-            
-            // FILTRO AGGRESSIVO: 
-            // Teniamo l'annuncio SOLO se la categoria contiene 'specialistiche'
-            // MA escludiamo se contiene ANCHE 'farmac' o 'dentist'
             const haSpecialistica = cat.includes('specialistiche');
             const eFarmacia = cat.includes('farmac');
             const eDentista = cat.includes('dentist');
-
             return haSpecialistica && !eFarmacia && !eDentista;
           });
 
-          // QUESTO LOG TI DICE COSA SONO I 19 RISULTATI
-          console.log("CONTROLLO INTRUSI:", filtrati.map(f => `${f.titolo} -> Categoria: ${f.categoria}`));
-          
-          setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
+          // --- COPIALO DA QUI ---
+          const ordinati = filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0));
+          console.log("Sostituisco la lista in pagina con questi record:", ordinati.length);
+          setAnnunci([...ordinati]); 
+          // --- A QUI ---
         }
       } catch (err) {
-        console.error("Errore nel codice:", err);
+        console.error("Errore:", err);
       } finally {
         setLoading(false);
       }
