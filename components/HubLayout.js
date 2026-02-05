@@ -400,6 +400,7 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
           </button>
         </div>
       )}
+</div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
