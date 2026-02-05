@@ -14,26 +14,30 @@ useEffect(() => {
     async function fetchVisite() {
       try {
         setLoading(true);
-        // Prendiamo tutto ciò che è approvato
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
-          .eq('approvato', true)
-          .order('is_top', { ascending: false });
+          .eq('approvato', true);
 
         if (error) throw error;
 
         if (data) {
-          // FILTRO MANUALE: Teniamo solo quelli che hanno ESATTAMENTE 
-          // "visite-specialistiche" nel testo della categoria
-          const filtrati = data.filter(item => 
-            item.categoria && 
-            item.categoria.toLowerCase().includes('visite-specialistiche') &&
-            !item.categoria.toLowerCase().includes('farmaci') &&
-            !item.categoria.toLowerCase().includes('dentist')
-          );
+          // DEBUG: Apri la console del browser (F12) per vedere cosa arriva
+          console.log("Tutti i dati arrivati:", data.map(d => d.categoria));
+
+          const filtrati = data.filter(item => {
+            const cat = (item.categoria || "").toLowerCase();
+            // REGOLE FERREE:
+            const isSpecialistica = cat.includes('visite-specialistiche');
+            const isFarmacia = cat.includes('farmacie') || cat.includes('farmacia');
+            const isDentista = cat.includes('dentisti') || cat.includes('dentista');
+            const isServizio = cat.includes('servizi-sanitari') || cat.includes('servizi-domicilio');
+
+            // Tieni solo se è specialistica e NON è tutto il resto
+            return isSpecialistica && !isFarmacia && !isDentista && !isServizio;
+          });
           
-          setAnnunci(filtrati);
+          setAnnunci(filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0)));
         }
       } catch (err) {
         console.error("Errore:", err);
