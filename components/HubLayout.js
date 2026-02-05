@@ -39,8 +39,7 @@ try {
         const a = da + 10 - 1;
         
         // Usiamo un filtro più semplice: se categoria è "dermatologi-roma", cerchiamo "dermatologi"
-        const term = categoria ? categoria.replace('-roma', '').toLowerCase() : '';
-
+        const term = categoria ? `visite-specialistiche ${categoria.replace('-roma', '')}` : '';
         const { data, error, count } = await supabase
           .from('annunci')
           .select('*', { count: 'exact' })
