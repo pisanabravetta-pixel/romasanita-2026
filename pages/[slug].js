@@ -242,19 +242,19 @@ async function fetchDati() {
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-{/* CONTEGGIO RISULTATI - LOGICA GRAMMATICALE CORRETTA */}
+{/* CONTEGGIO RISULTATI - FIX DEFINITIVO GRAMMATICA */}
 {totaleAnnunci > 0 && (
   <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
     <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
       {totaleAnnunci}
     </span>
     <span>
-      {/* Se la categoria è "specialistica", mostriamo "Specialisti" */}
-      {meta.nomeSemplice.toLowerCase() === 'specialistica' ? 'Specialisti' : meta.nomeSemplice} 
+      {/* 1. Gestione Nome: Se è "specialistica", scrivi "Specialisti" */}
+      {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice} 
       
-      {/* Logica Maschile/Femminile */}
+      {/* 2. Gestione Genere: Forza il maschile "trovati" a meno che non sia una farmacia o diagnostica */}
       {
-        ['farmacie', 'diagnostica', 'visite'].some(f => meta.cat.toLowerCase().includes(f)) 
+        (meta.cat.toLowerCase().includes('farmaci') || meta.cat.toLowerCase().includes('diagnost'))
         ? (totaleAnnunci === 1 ? ' trovata' : ' trovate') 
         : (totaleAnnunci === 1 ? ' trovato' : ' trovati')
       } a Roma {meta.zona}
