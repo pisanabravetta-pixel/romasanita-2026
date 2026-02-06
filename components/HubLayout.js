@@ -21,20 +21,16 @@ export default function HubLayout({
   altreSpecialistiche = [],
   children
 }) {
-const mediciAttivi = medici && medici.length > 0 ? medici : [];
-  
 const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10;
 
-  // Calcolo dinamico basato sui medici effettivamente trovati
-  const totaleAnnunci = serviziRealTime.length;
-  const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina);
+  const totaleAnnunci = serviziRealTime ? serviziRealTime.length : 0;
+  const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina) || 1;
   
   const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = serviziRealTime.slice(inizio, inizio + annunciPerPagina);
-
+  const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
   useEffect(() => {
     if (medici && medici.length > 0) {
       setLoadingRealTime(false);
