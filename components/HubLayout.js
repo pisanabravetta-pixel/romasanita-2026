@@ -23,55 +23,47 @@ export default function HubLayout({
 }) {
 const mediciAttivi = medici && medici.length > 0 ? medici : [];
   
-// 1. STATI PER I DATI E PAGINAZIONE
-  const [serviziRealTime, setServiziRealTime] = useState([]);
+const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
   const [pagina, setPagina] = useState(1);
-  const annunciPerPagina = 10; 
+  const annunciPerPagina = 10;
 
-useEffect(() => {
-    // SE ABBIAMO GIÀ I MEDICI DALLA PAGINA, NON FARE NULLA
+  useEffect(() => {
     if (medici && medici.length > 0) {
       setLoadingRealTime(false);
       return; 
     }
-async function fetchNuoviMedici() {
-    try {
-      setLoadingRealTime(true);
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true);
+    async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      const filtrati = data ? data.filter(item => {
-        if (!item.categoria) return false;
-        const cDB = item.categoria.toLowerCase();
-        const cURL = categoria ? categoria.toLowerCase() : ''; 
-        // Logica originale che funzionava: confronta le prime 4 lettere
-        return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
-      }) : [];
+        const filtrati = data ? data.filter(item => {
+          if (!item.categoria) return false;
+          const cDB = item.categoria.toLowerCase();
+          const cURL = categoria ? categoria.toLowerCase() : ''; 
+          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
+        }) : [];
 
-      setServiziRealTime(filtrati);
-    } catch (err) {
-      console.error("Errore fetch Hub:", err);
-    } finally {
-      setLoadingRealTime(false);
+        setServiziRealTime(filtrati);
+      } catch (err) {
+        console.error("Errore fetch Hub:", err);
+      } finally {
+        setLoadingRealTime(false);
+      }
     }
-  }
     fetchNuoviMedici();
-  }, [categoria, medici]); // Aggiunto medici come dipendenza per sicurezza
+  }, [categoria, medici]);
 
-
- // 2. DEFINIZIONE LISTA FINALE
-// Dimentichiamo la prop "medici" per un attimo, usiamo solo quello che arriva dal DB
-const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziRealTime : [];
-  // 3. MAPPA COLLEGATA ALLA LISTA FINALE
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
+
   useEffect(() => {
-    // Il resto del codice della mappa...
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
     }
@@ -92,15 +84,14 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
         if (m.lat && m.lng) {
           L.marker([parseFloat(m.lat), parseFloat(m.lng)])
             .addTo(map)
-            .bindPopup(`<b>${m.nome}</b><br>${m.indirizzo}`);
+            .bindPopup(`<b>${m.nome || m.titolo}</b><br>${m.indirizzo}`);
         }
       });
     } catch (err) {
       console.error("Errore Mappa:", err);
     }
-  }, [listaDaMostrare]); // <--- La mappa ora sente i nuovi medici
-  // Applichiamo la paginazione alla lista filtrata
- 
+  }, [listaDaMostrare]);
+
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
