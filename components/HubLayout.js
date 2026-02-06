@@ -39,11 +39,11 @@ try {
         const a = da + 10 - 1;
         
         // Usiamo un filtro più semplice: se categoria è "dermatologi-roma", cerchiamo "dermatologi"
-        const term = categoria ? `visite-specialistiche ${categoria.replace('-roma', '')}` : '';
+        const term = "visite-specialistiche";
         const { data, error, count } = await supabase
           .from('annunci')
           .select('*', { count: 'exact' })
-          .eq('approvato', true)
+          .ilike('categoria', `%${term}%`)
           // Usiamo ilike con le % così trova sicuramente i tuoi 31 annunci
           .ilike('categoria', `%${term}%`) 
           .order('id', { ascending: true }) 
