@@ -242,15 +242,16 @@ async function fetchDati() {
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-{/* CONTEGGIO RISULTATI CON LOGICA GRAMMATICALE CORRETTA */}
+{/* CONTEGGIO RISULTATI CON LOGICA GRAMMATICALE PERFETTA */}
 {totaleAnnunci > 0 && (
   <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
-    <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+    <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
       {totaleAnnunci}
     </span>
     <span>
-      {/* Se è "Specialistica", scriviamo "Specialisti" */}
+      {/* Sostituisce "Specialistica" con "Specialisti" solo per il testo visibile */}
       {meta.nomeSemplice.toLowerCase() === 'specialistica' ? 'Specialisti' : meta.nomeSemplice} {
+        // Elenco delle parole che vogliono il femminile "trovate"
         ['farmacie', 'diagnostica', 'visite'].some(f => meta.cat.toLowerCase().includes(f)) 
         ? (totaleAnnunci === 1 ? 'trovata' : 'trovate') 
         : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
