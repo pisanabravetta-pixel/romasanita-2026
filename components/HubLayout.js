@@ -27,7 +27,7 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
   const annunciPerPagina = 10;
 
   const totaleAnnunci = (serviziRealTime || []).length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina) || 1;
   
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
