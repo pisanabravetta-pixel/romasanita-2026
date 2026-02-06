@@ -26,11 +26,12 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10;
 
-  const totaleAnnunci = (serviziRealTime || []).length;
+  const listaSicura = serviziRealTime || [];
+  const totaleAnnunci = listaSicura.length;
   const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina) || 1;
   
   const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
+  const listaDaMostrare = listaSicura.slice(inizio, inizio + annunciPerPagina);
   useEffect(() => {
     if (medici && medici.length > 0) {
       setLoadingRealTime(false);
