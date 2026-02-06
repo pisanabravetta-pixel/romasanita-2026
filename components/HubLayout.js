@@ -28,6 +28,13 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10;
 
+  // Calcolo dinamico basato sui medici effettivamente trovati
+  const totaleAnnunci = serviziRealTime.length;
+  const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina);
+  
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = serviziRealTime.slice(inizio, inizio + annunciPerPagina);
+
   useEffect(() => {
     if (medici && medici.length > 0) {
       setLoadingRealTime(false);
