@@ -55,25 +55,24 @@ async function fetchDati() {
         const zonaQuery = zonaInSlug.replace(/-/g, ' ');
         const mapping = getDBQuery(catSlug);
 
-        // --- 2. QUERY SUPABASE (FILTRO DOPPIO: ZONA + SLUG) ---
+       // --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO) ---
         let query = supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true);
 
-        // Filtro Categoria
-        if (mapping.cat !== 'NON_ESISTE') {
+        // Filtriamo per categoria SOLO se non è una pagina generica/specialistica
+        if (mapping.cat && mapping.cat !== 'NON_ESISTE' && mapping.cat !== 'specialistica') {
           query = query.ilike('categoria', `%${mapping.cat}%`);
         }
 
-        // Filtro Zona: Cerca sia nel campo 'zona' che dentro lo 'slug' dell'annuncio
-        if (zonaInSlug !== 'roma') {
+        // Se siamo in un quartiere (es. Prati), cerchiamo il termine in 'zona' OR nello 'slug'
+        if (zonaInSlug && zonaInSlug !== 'roma') {
           query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
         }
 
-        const { data, error } = await query;
-        if (error) throw error;
-
+        // Eseguiamo la query senza il "throw error" che blocca tutto
+        const { data } = await query;
         // --- 3. AGGIORNAMENTO STATI, TEMA E SEO (STOP UNDEFINED) ---
         setServizi(data || []);
 
