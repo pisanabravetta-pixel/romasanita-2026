@@ -26,10 +26,10 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10;
 
+  // Usa queste 4 righe esatte:
   const listaSicura = serviziRealTime || [];
   const totaleAnnunci = listaSicura.length;
-  const totalePagine = Math.ceil(totaleAnnunci / annunciPerPagina) || 1;
-  
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaSicura.slice(inizio, inizio + annunciPerPagina);
   useEffect(() => {
@@ -63,9 +63,6 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
     }
     fetchNuoviMedici();
   }, [categoria, medici]);
-
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
@@ -385,18 +382,18 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
             Pagina {pagina} di {Math.ceil(serviziRealTime.length / annunciPerPagina)}
           </span>
 
-          <button  
+        <button  
             type="button"
             onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-            disabled={pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina)}
+            disabled={pagina >= totalePagine}
             style={{  
               padding: '10px 18px',  
-              backgroundColor: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? '#e2e8f0' : colore,  
-              color: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? '#94a3b8' : 'white',  
+              backgroundColor: pagina >= totalePagine ? '#e2e8f0' : colore,  
+              color: pagina >= totalePagine ? '#94a3b8' : 'white',  
               border: 'none',  
               borderRadius: '8px',  
               fontWeight: '800',  
-              cursor: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? 'not-allowed' : 'pointer',
+              cursor: pagina >= totalePagine ? 'not-allowed' : 'pointer',
               fontSize: '12px'
             }}
           >
