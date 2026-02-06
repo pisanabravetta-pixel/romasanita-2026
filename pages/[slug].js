@@ -65,13 +65,12 @@ export default function PaginaQuartiereDinamica() {
         query = query.ilike('categoria', `%${mapping.cat}%`);
       }
 
-      // Se non è la hub generale, filtriamo per zona sul server
+      // MODIFICA QUI: Se non è la hub generale, cerchiamo "prati" sia in zona che nello slug dell'annuncio
       if (zonaInSlug !== 'roma') {
-        query = query.ilike('zona', `%${zonaQuery}%`);
+        query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
       }
 
       const { data, error } = await query;
-
       if (error) throw error;
 
       // 3. Aggiornamento stati e SEO
