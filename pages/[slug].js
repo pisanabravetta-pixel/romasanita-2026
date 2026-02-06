@@ -24,10 +24,21 @@ export default function PaginaQuartiereDinamica() {
   // --- FINE BLOCCO CORRETTO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pagina, setPagina] = useState(1);
+  const annunciPerPagina = 10;
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-useEffect(() => {
+  // LOGICA DERIVATA (Sempre dopo gli stati)
+  const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
+  const totaleAnnunci = listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+
+  useEffect(() => {
+    // ... resto del codice
   console.log("Slug rilevato:", slug);
   if (!slug || slug === 'index' || slug === '') return;
 
@@ -221,9 +232,24 @@ useEffect(() => {
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
+  {/* CONTEGGIO RISULTATI CON LOGICA GRAMMATICALE */}
+{totaleAnnunci > 0 && (
+  <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+      {totaleAnnunci}
+    </span>
+    <span>
+      {meta.nomeSemplice} {
+        ['farmacie', 'diagnostica', 'visite'].some(f => meta.cat.toLowerCase().includes(f)) 
+        ? 'trovate' 
+        : 'trovati'
+      } a Roma {meta.zona}
+    </span>
+  </div>
+)}
       {/* LISTA ANNUNCI AGGIORNATA E BLINDATA */}
 <div style={{ display: 'block' }}>
-  {servizi.map((v) => (
+{listaDaMostrare.map((v) => (
     <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
       <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
       <p style={{ fontSize: '16px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ textTransform: 'uppercase' }}>{v.zona}</strong></p>
@@ -324,6 +350,60 @@ useEffect(() => {
     </div>
   ))}
 </div> 
+{/* CONTROLLI PAGINAZIONE SOTTO LA LISTA */}
+{totaleAnnunci > annunciPerPagina && (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    gap: '15px', 
+    margin: '30px 0',
+    padding: '20px',
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+  }}>
+    <button 
+      type="button"
+      onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
+      disabled={pagina === 1}
+      style={{ 
+        padding: '10px 18px', 
+        backgroundColor: pagina === 1 ? '#e2e8f0' : tema.primario, 
+        color: pagina === 1 ? '#94a3b8' : 'white', 
+        border: 'none', 
+        borderRadius: '8px', 
+        fontWeight: '800', 
+        cursor: pagina === 1 ? 'not-allowed' : 'pointer',
+        fontSize: '12px'
+      }}
+    >
+      ← PRECEDENTE
+    </button>
+    
+    <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+      Pagina {pagina} di {totalePagine}
+    </span>
+
+    <button 
+      type="button"
+      onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+      disabled={pagina >= totalePagine}
+      style={{ 
+        padding: '10px 18px', 
+        backgroundColor: pagina >= totalePagine ? '#e2e8f0' : tema.primario, 
+        color: pagina >= totalePagine ? '#94a3b8' : 'white', 
+        border: 'none', 
+        borderRadius: '8px', 
+        fontWeight: '800', 
+        cursor: pagina >= totalePagine ? 'not-allowed' : 'pointer',
+        fontSize: '12px'
+      }}
+    >
+      SUCCESSIVA →
+    </button>
+  </div>
+)}
 {/* GUIDE SPECIFICHE - DISTRIBUZIONE ARTICOLI REALI */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
