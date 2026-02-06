@@ -109,12 +109,17 @@ async function fetchDati() {
   useEffect(() => {
     if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
+      
+      // Mantenuto il tuo zoom a 13
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
+      
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OSM'
       }).addTo(map);
+
       const group = new L.featureGroup();
+      
       servizi.forEach((s) => {
         if (s.lat && s.lng) {
           const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)])
@@ -123,12 +128,13 @@ async function fetchDati() {
           group.addLayer(marker);
         }
       });
+
       if (servizi.some(s => s.lat && s.lng)) {
         map.fitBounds(group.getBounds().pad(0.1));
       }
     }
   }, [servizi]);
-  // --- FINE AGGIUNTA ---
+
   if (!slug) return null;
 
   return (
@@ -234,17 +240,18 @@ async function fetchDati() {
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-  {/* CONTEGGIO RISULTATI CON LOGICA GRAMMATICALE */}
+{/* CONTEGGIO RISULTATI CON LOGICA GRAMMATICALE CORRETTA */}
 {totaleAnnunci > 0 && (
   <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
     <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
       {totaleAnnunci}
     </span>
     <span>
-      {meta.nomeSemplice} {
+      {/* Se è "Specialistica", scriviamo "Specialisti" */}
+      {meta.nomeSemplice.toLowerCase() === 'specialistica' ? 'Specialisti' : meta.nomeSemplice} {
         ['farmacie', 'diagnostica', 'visite'].some(f => meta.cat.toLowerCase().includes(f)) 
-        ? 'trovate' 
-        : 'trovati'
+        ? (totaleAnnunci === 1 ? 'trovata' : 'trovate') 
+        : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
       } a Roma {meta.zona}
     </span>
   </div>
