@@ -35,10 +35,13 @@ useEffect(() => {
       setLoadingRealTime(false);
       return; 
     }
-    async function fetchNuoviMedici() {
+ async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        // 1. Peschiamo tutto (come facevi nel codice che funzionava)
+        
+        // AGGIUNGI QUESTO LOG QUI SOTTO
+        console.log("DEBUG - Categoria attuale:", categoria);
+
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
@@ -46,14 +49,16 @@ useEffect(() => {
 
         if (error) throw error;
 
-        // 2. Filtriamo in JS (Metodo sicuro che ti dava 31 risultati)
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
+          
           const cDB = item.categoria.toLowerCase();
           const cURL = categoria ? categoria.toLowerCase() : ''; 
-          
-          // Questa è la riga magica che usavi prima:
-          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
+
+          // Se categoria è vuota, non mostrare nulla invece di mostrare tutto
+          if (!cURL) return false;
+
+          return cDB.includes(cURL) || cURL.includes(cDB);
         }) : [];
 
         setServiziRealTime(filtrati);
