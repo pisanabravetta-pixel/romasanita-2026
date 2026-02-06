@@ -35,21 +35,24 @@ try {
         setLoadingRealTime(true);
         if (!categoria) return; // Se la categoria manca, esce subito senza errori
 
-  const da = (pagina - 1) * 10;
+// Forza il calcolo basato su 10 annunci per pagina
+        const da = (pagina - 1) * 10;
         const a = da + 10 - 1;
         
-        // Usiamo un filtro più semplice: se categoria è "dermatologi-roma", cerchiamo "dermatologi"
-      const term = categoria ? categoria.replace('-roma', '').toLowerCase() : '';
+        // Cerchiamo la parola chiave (es. "cardiologi") senza tagliare le prime 4 lettere
+        // Se la categoria è "cardiologi-roma", term diventerà "cardiologi"
+        const term = categoria ? categoria.split('-')[0].toLowerCase() : '';
 
-const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  .ilike('categoria', `%${term}%`) // Questo trovava i tuoi 60 annunci
-  .order('id', { ascending: true })
-  .range(da, a);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*', { count: 'exact' }) // Recuperiamo anche il conteggio totale
+          .eq('approvato', true)
+          .ilike('categoria', `%${term}%`) 
+          .order('id', { ascending: true })
+          .range(da, a);
 
         if (error) throw error;
+        
         setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore Fetch:", err);
