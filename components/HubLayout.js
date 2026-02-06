@@ -21,15 +21,11 @@ export default function HubLayout({
   altreSpecialistiche = [],
   children
 }) {
-const [serviziRealTime, setServiziRealTime] = useState([]);
-  const [loadingRealTime, setLoadingRealTime] = useState(true);
-  const [pagina, setPagina] = useState(1);
-  const annunciPerPagina = 10;
+// 1. Unifichiamo la sorgente dati: se ci sono medici passati come props, usiamo quelli, altrimenti quelli in real-time
+  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
 
-  // 1. Rimuoviamo eventuali duplicati (stesso ID) per sicurezza
-  const listaUnica = Array.from(new Map((serviziRealTime || []).map(item => [item.id, item])).values());
-
-  // 2. Diciamo al codice di creare pagine SOLO per gli annunci presenti davvero
+  // 2. Rimuoviamo duplicati e calcoliamo tutto sulla sorgente corretta
+  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
   const totaleAnnunci = listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
@@ -351,7 +347,7 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
     </div>
   )}
 {/* 4. CONTROLLI PAGINAZIONE */}
-      {totaleAnnunci > 0 && (
+      {totaleAnnunci > annunciPerPagina && (
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
