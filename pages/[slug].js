@@ -42,63 +42,67 @@ export default function PaginaQuartiereDinamica() {
   console.log("Slug rilevato:", slug);
   if (!slug || slug === 'index' || slug === '') return;
 
-  async function fetchDati() {
-    try {
-      setLoading(true);
-      
-      // 1. Identifichiamo Categoria e Zona dallo slug
-      const catSlug = slug.split('-roma')[0].toLowerCase();
-      const zonaInSlug = slug.includes('-roma-') ? slug.split('-roma-')[1].toLowerCase() : 'roma';
-      
-      // Prepariamo la stringa per il database (es: "centro-storico" -> "centro storico")
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      const mapping = getDBQuery(catSlug);
+async function fetchDati() {
+      try {
+        setLoading(true);
+        
+        // --- 1. IDENTIFICAZIONE CATEGORIA E ZONA (PULIZIA SLUG) ---
+        // Gestisce casi come "dentisti-roma-prati" o "servizi-domicilio-roma-centro-storico"
+        const slugPuro = slug.replace('-roma-', '@'); 
+        const catSlug = slugPuro.split('@')[0].replace('-roma', ''); 
+        const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+        
+        const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+        const mapping = getDBQuery(catSlug);
 
-      // 2. Query OTTIMIZZATA su Supabase
-      let query = supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true);
+        // --- 2. QUERY SUPABASE (FILTRO DOPPIO: ZONA + SLUG) ---
+        let query = supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true);
 
-      // Filtriamo per categoria direttamente sul server
-      if (mapping.cat !== 'NON_ESISTE') {
-        query = query.ilike('categoria', `%${mapping.cat}%`);
+        // Filtro Categoria
+        if (mapping.cat !== 'NON_ESISTE') {
+          query = query.ilike('categoria', `%${mapping.cat}%`);
+        }
+
+        // Filtro Zona: Cerca sia nel campo 'zona' che dentro lo 'slug' dell'annuncio
+        if (zonaInSlug !== 'roma') {
+          query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+        }
+
+        const { data, error } = await query;
+        if (error) throw error;
+
+        // --- 3. AGGIORNAMENTO STATI, TEMA E SEO (STOP UNDEFINED) ---
+        setServizi(data || []);
+
+        // Fallback: se il mapping fallisce, usa catSlug per evitare "Undefined"
+        const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
+        const nomeCat = nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1);
+        const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+        // Colori dinamici basati sulla categoria
+        let primario = "#0891b2"; let chiaro = "#ecfeff";
+        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+        else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+        else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+        else if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
+
+        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
+        setMeta({ 
+          titolo: `${nomeCat} a Roma ${zonaBella}`, 
+          zona: zonaBella, 
+          cat: catSlug,
+          nomeSemplice: nomeCat 
+        });
+
+      } catch (err) {
+        console.error("Errore nel fetch:", err.message);
+      } finally {
+        setLoading(false);
       }
-
-      // MODIFICA QUI: Se non è la hub generale, cerchiamo "prati" sia in zona che nello slug dell'annuncio
-      if (zonaInSlug !== 'roma') {
-        query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-      }
-
-      const { data, error } = await query;
-      if (error) throw error;
-
-      // 3. Aggiornamento stati e SEO
-      setServizi(data || []);
-
-      const nomeCat = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
-      // Trasforma centro-storico in Centro Storico per il titolo
-      const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-
-      let primario = "#0891b2"; let chiaro = "#ecfeff";
-      if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-      if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-      if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-
-      setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
-      setMeta({ 
-        titolo: `${nomeCat} a Roma ${zonaBella}`, 
-        zona: zonaBella, 
-        cat: catSlug,
-        nomeSemplice: nomeCat 
-      });
-
-    } catch (err) {
-      console.error("Errore nel fetch:", err.message);
-    } finally {
-      setLoading(false);
     }
-  }
 
   fetchDati();
 }, [slug]);
