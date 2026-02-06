@@ -107,10 +107,10 @@ async function fetchDati() {
 }, [slug]);
 
   useEffect(() => {
-    if (typeof L !== 'undefined' && servizi && servizi.length > 0) {
+    // La mappa ora guarda "listaDaMostrare" (i 10 della pagina corrente)
+    if (typeof L !== 'undefined' && listaDaMostrare && listaDaMostrare.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
       
-      // Mantenuto il tuo zoom a 13
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
       
@@ -120,7 +120,8 @@ async function fetchDati() {
 
       const group = new L.featureGroup();
       
-      servizi.forEach((s) => {
+      // CICLO SU listaDaMostrare (così vedi solo i 10 della pagina)
+      listaDaMostrare.forEach((s) => {
         if (s.lat && s.lng) {
           const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)])
             .addTo(map)
@@ -129,11 +130,12 @@ async function fetchDati() {
         }
       });
 
-      if (servizi.some(s => s.lat && s.lng)) {
+      if (listaDaMostrare.some(s => s.lat && s.lng)) {
         map.fitBounds(group.getBounds().pad(0.1));
       }
     }
-  }, [servizi]);
+    // IMPORTANTE: la mappa si aggiorna quando cambia la lista o la pagina
+  }, [listaDaMostrare, pagina]); 
 
   if (!slug) return null;
 
