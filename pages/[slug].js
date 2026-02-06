@@ -244,23 +244,8 @@ async function fetchDati() {
 </p>
 {/* CONTEGGIO RISULTATI - FIX DEFINITIVO GRAMMATICA */}
 {totaleAnnunci > 0 && (
-  <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
-    <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
-      {totaleAnnunci}
-    </span>
-    <span>
-      {/* 1. Gestione Nome: Se è "specialistica", scrivi "Specialisti" */}
-      {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice} 
-      
-      {/* 2. Gestione Genere: Forza il maschile "trovati" a meno che non sia una farmacia o diagnostica */}
-      {
-        (meta.cat.toLowerCase().includes('farmaci') || meta.cat.toLowerCase().includes('diagnost'))
-        ? (totaleAnnunci === 1 ? ' trovata' : ' trovate') 
-        : (totaleAnnunci === 1 ? ' trovato' : ' trovati')
-      } a Roma {meta.zona}
-    </span>
-  </div>
-)}
+
+<div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}> <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}> {totaleAnnunci} </span> <span> {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice} {(() => { const c = meta.cat.toLowerCase().trim(); const n = meta.nomeSemplice.toLowerCase().trim(); const isFemminile = c.includes('farmac') || c.includes('diagnost') || n.includes('farmac') || n.includes('diagnost'); if (isFemminile) { return totaleAnnunci === 1 ? ' trovata' : ' trovate'; } else { return totaleAnnunci === 1 ? ' trovato' : ' trovati'; } })()} a Roma {meta.zona} </span> </div> )}
       {/* LISTA ANNUNCI AGGIORNATA E BLINDATA */}
 <div style={{ display: 'block' }}>
 {listaDaMostrare.map((v) => (
