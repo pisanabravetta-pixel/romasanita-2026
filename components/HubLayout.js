@@ -68,6 +68,8 @@ async function fetchNuoviMedici() {
 // Dimentichiamo la prop "medici" per un attimo, usiamo solo quello che arriva dal DB
 const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziRealTime : [];
   // 3. MAPPA COLLEGATA ALLA LISTA FINALE
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = (serviziRealTime || []).slice(inizio, inizio + annunciPerPagina);
   useEffect(() => {
     // Il resto del codice della mappa...
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
@@ -98,8 +100,7 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
     }
   }, [listaDaMostrare]); // <--- La mappa ora sente i nuovi medici
   // Applichiamo la paginazione alla lista filtrata
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = serviziRealTime.slice(inizio, inizio + annunciPerPagina);
+ 
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
