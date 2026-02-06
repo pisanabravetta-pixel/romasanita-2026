@@ -347,7 +347,7 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
     </div>
   )}
 {/* 4. CONTROLLI PAGINAZIONE */}
-      {listaDaMostrare && listaDaMostrare.length > 0 && (
+      {serviziRealTime && serviziRealTime.length > 0 && (
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -384,15 +384,15 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
           <button  
             type="button"
             onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-            disabled={listaDaMostrare.length < 10}
+            disabled={pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina)}
             style={{  
               padding: '10px 18px',  
-              backgroundColor: listaDaMostrare.length < 10 ? '#e2e8f0' : colore,  
-              color: listaDaMostrare.length < 10 ? '#94a3b8' : 'white',  
+              backgroundColor: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? '#e2e8f0' : colore,  
+              color: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? '#94a3b8' : 'white',  
               border: 'none',  
               borderRadius: '8px',  
               fontWeight: '800',  
-              cursor: listaDaMostrare.length < 10 ? 'not-allowed' : 'pointer',
+              cursor: pagina >= Math.ceil(serviziRealTime.length / annunciPerPagina) ? 'not-allowed' : 'pointer',
               fontSize: '12px'
             }}
           >
@@ -400,7 +400,6 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
           </button>
         </div>
       )}
-</div>
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
   <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0369a1', marginBottom: '12px' }}>
