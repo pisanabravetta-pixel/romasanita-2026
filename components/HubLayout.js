@@ -222,11 +222,11 @@ export default function HubLayout({
 {/* CONTEGGIO RISULTATI */}
 {totaleAnnunci > 0 && (
   <div style={{ 
-    marginBottom: '15px', 
-    padding: '0 10px', 
-    fontSize: '14px', 
+    marginBottom: '20px', 
+    padding: '0 5px', 
+    fontSize: '15px', 
     fontWeight: '700', 
-    color: '#64748b',
+    color: '#475569',
     display: 'flex',
     alignItems: 'center',
     gap: '8px'
@@ -234,13 +234,14 @@ export default function HubLayout({
     <span style={{ 
       backgroundColor: colore, 
       color: 'white', 
-      padding: '2px 8px', 
+      padding: '3px 10px', 
       borderRadius: '6px',
-      fontSize: '12px' 
+      fontSize: '13px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }}>
       {totaleAnnunci}
     </span>
-    {titolo} trovati a Roma
+    <span>{titolo} <strong>trovate</strong> a Roma</span>
   </div>
 )}
 <div style={{ display: 'block' }}>
