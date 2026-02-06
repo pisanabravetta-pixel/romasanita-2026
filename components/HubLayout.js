@@ -21,10 +21,14 @@ export default function HubLayout({
   altreSpecialistiche = [],
   children
 }) {
-// 1. Unifichiamo la sorgente dati: se ci sono medici passati come props, usiamo quelli, altrimenti quelli in real-time
-  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
+  // DEFINISCI SEMPRE QUESTI PER PRIMI
+  const [serviziRealTime, setServiziRealTime] = useState([]);
+  const [loadingRealTime, setLoadingRealTime] = useState(true);
+  const [pagina, setPagina] = useState(1);
+  const annunciPerPagina = 10;
 
-  // 2. Rimuoviamo duplicati e calcoliamo tutto sulla sorgente corretta
+  // ORA CALCOLA LE VARIABILI DERIVATE
+  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
   const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
   const totaleAnnunci = listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
@@ -347,9 +351,11 @@ export default function HubLayout({
     </div>
   )}
 {/* 4. CONTROLLI PAGINAZIONE */}
-      {totaleAnnunci > annunciPerPagina && (
-        <div style={{ 
-          display: 'flex', 
+      {/* 4. CONTROLLI PAGINAZIONE */}
+{totaleAnnunci > annunciPerPagina && (
+  <div style={{ 
+    display: 'flex', 
+    // ... resto dello stile uguale
           justifyContent: 'center', 
           alignItems: 'center', 
           gap: '15px', 
