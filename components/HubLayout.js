@@ -381,9 +381,9 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
             ← PRECEDENTE
           </button>
           
-          <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-            Pagina {pagina} di {totalePagine}
-          </span>
+         <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+  Pagina {pagina} di {totalePagine}
+</span>
 
           <button  
             type="button"
