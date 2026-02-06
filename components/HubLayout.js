@@ -381,27 +381,27 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
             ← PRECEDENTE
           </button>
           
-         <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+       <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
   Pagina {pagina} di {totalePagine}
 </span>
 
-          <button  
-            type="button"
-            onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-            disabled={pagina >= totalePagine}
-            style={{  
-              padding: '10px 18px',  
-              backgroundColor: pagina >= totalePagine ? '#e2e8f0' : colore,  
-              color: pagina >= totalePagine ? '#94a3b8' : 'white',  
-              border: 'none',  
-              borderRadius: '8px',  
-              fontWeight: '800',  
-              cursor: pagina >= totalePagine ? 'not-allowed' : 'pointer',
-              fontSize: '12px'
-            }}
-          >
-            SUCCESSIVA →
-          </button>
+<button  
+  type="button"
+  onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+  disabled={pagina >= totalePagine}
+  style={{  
+    padding: '10px 18px',  
+    backgroundColor: pagina >= totalePagine ? '#e2e8f0' : colore,  
+    color: pagina >= totalePagine ? '#94a3b8' : 'white',  
+    border: 'none',  
+    borderRadius: '8px',  
+    fontWeight: '800',  
+    cursor: pagina >= totalePagine ? 'not-allowed' : 'pointer',
+    fontSize: '12px'
+  }}
+>
+  SUCCESSIVA →
+</button>
         </div>
       )}
       
