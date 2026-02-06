@@ -35,39 +35,31 @@ useEffect(() => {
       setLoadingRealTime(false);
       return; 
     }
- async function fetchNuoviMedici() {
-      try {
-        setLoadingRealTime(true);
-        
-        // AGGIUNGI QUESTO LOG QUI SOTTO
-        console.log("DEBUG - Categoria attuale:", categoria);
+async function fetchNuoviMedici() {
+    try {
+      setLoadingRealTime(true);
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true);
 
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
+      if (error) throw error;
 
-        if (error) throw error;
+      const filtrati = data ? data.filter(item => {
+        if (!item.categoria) return false;
+        const cDB = item.categoria.toLowerCase();
+        const cURL = categoria ? categoria.toLowerCase() : ''; 
+        // Logica originale che funzionava: confronta le prime 4 lettere
+        return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
+      }) : [];
 
-        const filtrati = data ? data.filter(item => {
-          if (!item.categoria) return false;
-          
-          const cDB = item.categoria.toLowerCase();
-          const cURL = categoria ? categoria.toLowerCase() : ''; 
-
-          // Se categoria è vuota, non mostrare nulla invece di mostrare tutto
-          if (!cURL) return false;
-
-          return cDB.includes(cURL) || cURL.includes(cDB);
-        }) : [];
-
-        setServiziRealTime(filtrati);
-      } catch (err) {
-        console.error("Errore fetch Hub:", err);
-      } finally {
-        setLoadingRealTime(false);
-      }
+      setServiziRealTime(filtrati);
+    } catch (err) {
+      console.error("Errore fetch Hub:", err);
+    } finally {
+      setLoadingRealTime(false);
     }
+  }
     fetchNuoviMedici();
   }, [categoria, medici]); // Aggiunto medici come dipendenza per sicurezza
 
@@ -105,6 +97,9 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
       console.error("Errore Mappa:", err);
     }
   }, [listaDaMostrare]); // <--- La mappa ora sente i nuovi medici
+  // Applichiamo la paginazione alla lista filtrata
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = serviziRealTime.slice(inizio, inizio + annunciPerPagina);
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
