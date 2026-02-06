@@ -39,15 +39,15 @@ try {
         const a = da + 10 - 1;
         
         // Usiamo un filtro più semplice: se categoria è "dermatologi-roma", cerchiamo "dermatologi"
-        const term = "visite-specialistiche";
-        const { data, error, count } = await supabase
-          .from('annunci')
-          .select('*', { count: 'exact' })
-          .ilike('categoria', `%${term}%`)
-          // Usiamo ilike con le % così trova sicuramente i tuoi 31 annunci
-          .ilike('categoria', `%${term}%`) 
-          .order('id', { ascending: true }) 
-          .range(da, a);
+      const term = categoria ? categoria.replace('-roma', '').toLowerCase() : '';
+
+const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .ilike('categoria', `%${term}%`) // Questo trovava i tuoi 60 annunci
+  .order('id', { ascending: true })
+  .range(da, a);
 
         if (error) throw error;
         setServiziRealTime(data || []);
@@ -223,24 +223,26 @@ const listaDaMostrare = serviziRealTime && serviziRealTime.length > 0 ? serviziR
     listaDaMostrare.map((v) => (
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
         
-        {/* 1. FIX NOME: Cerchiamo sia nome che titolo per evitare undefined */}
+       {/* 1. FIX NOME: Fallback su titolo e stringa generica */}
         <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
           {v.nome || v.titolo || 'Professionista Verificato'}
         </h3>
         
-        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>📍 {v.indirizzo} — <strong>{v.zona}</strong></p>
+        {/* 2. FIX INDIRIZZO E ZONA: Aggiunto fallback per evitare Undefined */}
+        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>
+          📍 {v.indirizzo || 'Roma'} — <strong>{v.zona || v.quartiere || 'Roma'}</strong>
+        </p>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
           {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
           
-          {/* 2. FIX BADGE: Puliamo la stringa categoria per mostrare solo la specialistica */}
+          {/* 3. FIX BADGE: Pulizia profonda per mostrare il nome esatto (es. CARDIOLOGI) */}
           <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
             {v.categoria 
-              ? v.categoria.replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
+              ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
               : (badgeSpec || 'SPECIALISTA').toUpperCase()}
           </span>
         </div>
-
         {/* ... il resto dei bottoni Chiama/Whatsapp rimane uguale ... */}
 
  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
