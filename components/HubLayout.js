@@ -26,12 +26,15 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10;
 
-  // Usa queste 4 righe esatte:
-  const listaSicura = serviziRealTime || [];
-  const totaleAnnunci = listaSicura.length;
+  // 1. Rimuoviamo eventuali duplicati (stesso ID) per sicurezza
+  const listaUnica = Array.from(new Map((serviziRealTime || []).map(item => [item.id, item])).values());
+
+  // 2. Diciamo al codice di creare pagine SOLO per gli annunci presenti davvero
+  const totaleAnnunci = listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  
   const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaSicura.slice(inizio, inizio + annunciPerPagina);
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   useEffect(() => {
     if (medici && medici.length > 0) {
       setLoadingRealTime(false);
