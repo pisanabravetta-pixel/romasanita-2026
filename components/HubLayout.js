@@ -378,13 +378,13 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
             ← PRECEDENTE
           </button>
           
-          <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-            Pagina {pagina} di {Math.ceil(serviziRealTime.length / annunciPerPagina)}
+       <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
+            Pagina {pagina} di {totalePagine}
           </span>
 
-        <button  
+          <button  
             type="button"
-            onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
+            onClick={() => { setPagina(p => Math.min(totalePagine, p + 1)); window.scrollTo(0,0); }}
             disabled={pagina >= totalePagine}
             style={{  
               padding: '10px 18px',  
