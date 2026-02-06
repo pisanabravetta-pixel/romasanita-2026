@@ -219,6 +219,30 @@ export default function HubLayout({
          
 
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
+{/* CONTEGGIO RISULTATI */}
+{totaleAnnunci > 0 && (
+  <div style={{ 
+    marginBottom: '15px', 
+    padding: '0 10px', 
+    fontSize: '14px', 
+    fontWeight: '700', 
+    color: '#64748b',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  }}>
+    <span style={{ 
+      backgroundColor: colore, 
+      color: 'white', 
+      padding: '2px 8px', 
+      borderRadius: '6px',
+      fontSize: '12px' 
+    }}>
+      {totaleAnnunci}
+    </span>
+    {titolo} trovati a Roma
+  </div>
+)}
 <div style={{ display: 'block' }}>
   {loadingRealTime ? (
     <p>Caricamento...</p>
