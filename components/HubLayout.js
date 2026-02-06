@@ -29,39 +29,43 @@ const mediciAttivi = medici && medici.length > 0 ? medici : [];
   const [pagina, setPagina] = useState(1);
   const annunciPerPagina = 10; 
 
-  useEffect(() => {
+useEffect(() => {
+    // SE ABBIAMO GIÀ I MEDICI DALLA PAGINA, NON FARE NULLA
+    if (medici && medici.length > 0) {
+      setLoadingRealTime(false);
+      return; 
+    }
     async function fetchNuoviMedici() {
-try {
+      try {
         setLoadingRealTime(true);
-        if (!categoria) return; // Se la categoria manca, esce subito senza errori
-
-// Forza il calcolo basato su 10 annunci per pagina
-        const da = (pagina - 1) * 10;
-        const a = da + 10 - 1;
-        
-        // Cerchiamo la parola chiave (es. "cardiologi") senza tagliare le prime 4 lettere
-        // Se la categoria è "cardiologi-roma", term diventerà "cardiologi"
-        const term = categoria ? categoria.split('-')[0].toLowerCase() : '';
-
+        // 1. Peschiamo tutto (come facevi nel codice che funzionava)
         const { data, error } = await supabase
           .from('annunci')
-          .select('*', { count: 'exact' }) // Recuperiamo anche il conteggio totale
-          .eq('approvato', true)
-          .ilike('categoria', `%${term}%`) 
-          .order('id', { ascending: true })
-          .range(da, a);
+          .select('*')
+          .eq('approvato', true);
 
         if (error) throw error;
-        
-        setServiziRealTime(data || []);
+
+        // 2. Filtriamo in JS (Metodo sicuro che ti dava 31 risultati)
+        const filtrati = data ? data.filter(item => {
+          if (!item.categoria) return false;
+          const cDB = item.categoria.toLowerCase();
+          const cURL = categoria ? categoria.toLowerCase() : ''; 
+          
+          // Questa è la riga magica che usavi prima:
+          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
+        }) : [];
+
+        setServiziRealTime(filtrati);
       } catch (err) {
-        console.error("Errore Fetch:", err);
+        console.error("Errore fetch Hub:", err);
       } finally {
         setLoadingRealTime(false);
       }
     }
     fetchNuoviMedici();
-  }, [categoria, pagina]);
+  }, [categoria, medici]); // Aggiunto medici come dipendenza per sicurezza
+
 
  // 2. DEFINIZIONE LISTA FINALE
 // Dimentichiamo la prop "medici" per un attimo, usiamo solo quello che arriva dal DB
