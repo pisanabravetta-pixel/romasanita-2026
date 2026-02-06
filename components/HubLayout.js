@@ -378,7 +378,7 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
           </button>
           
           <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
-            Pagina {pagina}
+            Pagina {pagina} di {Math.ceil(serviziRealTime.length / annunciPerPagina)}
           </span>
 
           <button  
@@ -399,7 +399,7 @@ const [serviziRealTime, setServiziRealTime] = useState([]);
             SUCCESSIVA →
           </button>
         </div>
-      )} 
+      )}
       
       {/* CHIUSURA DIV DEGLI ANNUNCI */}
       </div>
