@@ -36,7 +36,7 @@ export default function ServiziSanitariRoma() {
     <HubLayout 
       medici={medici}
       loading={loading}
-      titolo="Servizi Sanitari"
+      titolo="Servizi Sanitari Roma" // <--- Scrivilo così, completo
       categoria="generale"
       colore="#10b981" // Verde Smeraldo
       testoCTA="Gestisci una struttura sanitaria a Roma?"
