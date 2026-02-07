@@ -10,11 +10,13 @@ export default function PaginaQuartiereDinamica() {
 const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA DI REDIRECT AGGRESSIVA (Incluso undefined) ---
+  // --- LOGICA DI REDIRECT CHIRURGICA ---
   if (typeof window !== 'undefined' && slug) {
     const s = slug.toString().toLowerCase();
-    // Se lo slug contiene "specialisti" O "undefined"
-    if (s.includes('specialisti') || s.includes('specialistica') || s.includes('undefined')) {
+    
+    // Blocchiamo SOLO se lo slug è ESATTAMENTE una di queste schifezze
+    // o se contiene "undefined"
+    if (s === 'specialisti-roma' || s === 'specialistica-roma' || s === 'specialisti' || s.includes('undefined')) {
       router.replace('/visite-specialistiche-roma');
       return null; 
     }
