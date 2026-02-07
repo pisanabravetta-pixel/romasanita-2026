@@ -219,7 +219,7 @@ export default function HubLayout({
          
 
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
-{/* CONTEGGIO RISULTATI */}
+{/* CONTEGGIO RISULTATI - FIX PLURALE E NOMI */}
 {totaleAnnunci > 0 && (
   <div style={{ 
     marginBottom: '20px', 
@@ -241,7 +241,22 @@ export default function HubLayout({
     }}>
       {totaleAnnunci}
     </span>
-    <span>{titolo} <strong>trovate</strong> a Roma</span>
+    <span>
+      {(() => {
+        let nomeVisualizzato = titolo;
+        // Fix nomi troncati
+        if (nomeVisualizzato.toLowerCase().includes('cardio')) nomeVisualizzato = 'Cardiologi';
+        if (nomeVisualizzato.toLowerCase().includes('derma')) nomeVisualizzato = 'Dermatologi';
+        
+        // Logica plurale/genere
+        const n = nomeVisualizzato.toLowerCase();
+        const finale = (n.includes('farmaci') || n.includes('diagnosti')) 
+          ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
+          : (totaleAnnunci === 1 ? ' trovato' : ' trovati');
+          
+        return `${nomeVisualizzato}${finale}`;
+      })()} a Roma
+    </span>
   </div>
 )}
 <div style={{ display: 'block' }}>
