@@ -21,6 +21,7 @@ export default function HubLayout({
   altreSpecialistiche = [],
   children
 }) {
+  const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
   // DEFINISCI SEMPRE QUESTI PER PRIMI
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
@@ -142,7 +143,7 @@ export default function HubLayout({
         </div>
 
 <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-  {titolo.replace(/( a Roma| Roma)/gi, '')} a Roma
+  {titoloPulito} a Roma
 </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
     Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
@@ -240,9 +241,9 @@ export default function HubLayout({
     }}>
   {totaleAnnunci}
     </span>
-  <span>
-  {titolo.replace(/( a Roma| Roma)/gi, '')} {
-    (titolo.toLowerCase().includes('farmaci') || titolo.toLowerCase().includes('diagnosti'))
+<span>
+  {titoloPulito} {
+    (titoloPulito.toLowerCase().includes('farmaci') || titoloPulito.toLowerCase().includes('diagnosti'))
     ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
     : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
   } a Roma
