@@ -10,27 +10,18 @@ export default function PaginaQuartiereDinamica() {
 const router = useRouter();
   const { slug } = router.query;
 
-  // 1. Pulizia immediata dello slug
-  const s = slug ? slug.toString().toLowerCase() : '';
-  const categoriaPulita = s.replace('-roma-', '@').split('@')[0].replace('-roma', '');
-
-  // 2. CONTROLLO ANTI-ERRORE (Redirect immediato)
-  if (typeof window !== 'undefined' && s) {
-    // Se è esattamente "specialisti-roma" o contiene "undefined", lo mandiamo via
-    if (categoriaPulita === 'specialisti' || categoriaPulita === 'specialistica' || s.includes('undefined')) {
-      router.replace('/visite-specialistiche-roma');
-      return null;
-    }
-  }
-
-  // 3. Logica normale per i quartieri e le altre pagine
+  // --- LOGICA ORIGINALE RIPRISTINATA ---
+  const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
+  
+  // Se la categoria non esiste nel mapping E non è la home o roba vuota
   if (slug && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
       router.replace('/404'); 
     }
     return null;
   }
+  // --- FINE RIPRISTINO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagina, setPagina] = useState(1);
