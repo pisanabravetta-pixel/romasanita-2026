@@ -238,10 +238,10 @@ export default function HubLayout({
       fontSize: '13px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }}>
-    {totaleAnnunci}
+  {totaleAnnunci}
     </span>
     <span>
-      {titolo.replace(/ a Roma/gi, '').replace(/ Roma/gi, '')} {totaleAnnunci === 1 ? 'trovato' : 'trovati'} a Roma
+      {titolo} trovati a Roma
     </span>
   </div>
 )}
