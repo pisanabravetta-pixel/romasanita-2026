@@ -160,27 +160,38 @@ export default function HubLayout({
   <p style={{ fontSize: '14px', fontWeight: '900', marginBottom: '12px', color: '#2c5282', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
     📍 Cerca per Quartiere:
   </p>
-  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-    {quartieriTop.map(q => (
-      <a 
-        key={q.s} 
-        href={`/${categoria}-roma-${q.s}`} 
-        style={{ 
-          padding: '7px 12px', 
-          backgroundColor: '#ebf8ff', 
-          color: '#2c5282', 
-          borderRadius: '8px', 
-          textDecoration: 'none', 
-          fontWeight: '700', 
-          fontSize: '12px' 
-        }}
-      >
-        {q.n}
-      </a>
-    ))}
-  </div>
-</div>
-{children}
+  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
+        <p style={{ fontSize: '14px', fontWeight: '900', marginBottom: '12px', color: '#2c5282', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          📍 Cerca per Quartiere:
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {quartieriTop.map(q => {
+            // Se categoria è vuota, undefined o "specialisti", usiamo lo slug corretto
+            const catSicura = (!categoria || categoria === 'undefined' || categoria === 'specialisti' || categoria === 'specialistica') 
+              ? 'visite-specialistiche' 
+              : categoria;
+
+            return (
+              <a 
+                key={q.s} 
+                href={`/${catSicura}-roma-${q.s}`} 
+                style={{ 
+                  padding: '7px 12px', 
+                  backgroundColor: '#ebf8ff', 
+                  color: '#2c5282', 
+                  borderRadius: '8px', 
+                  textDecoration: 'none', 
+                  fontWeight: '700', 
+                  fontSize: '12px' 
+                }}
+              >
+                {q.n}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+      {children}
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
 <div style={{ marginBottom: '0px' }}> 
   <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center' }}>
