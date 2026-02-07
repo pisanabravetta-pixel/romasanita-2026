@@ -7,33 +7,28 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 
 export default function PaginaQuartiereDinamica() {
-  const router = useRouter();
+ const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA DI REDIRECT E CONTROLLO ---
-  useEffect(() => {
-    if (slug) {
-      const s = slug.toString().toLowerCase();
-      // Se l'utente cerca "specialisti", lo mandiamo alla pagina corretta
-      if (s.includes('specialisti-roma') || s.includes('specialistica-roma')) {
-        router.replace('/visite-specialistiche-roma');
-      }
+  // --- LOGICA DI REDIRECT AGGRESSIVA ---
+  if (typeof window !== 'undefined' && slug) {
+    const s = slug.toString().toLowerCase();
+    if (s.includes('specialisti-roma') || s.includes('specialistica-roma')) {
+      router.replace('/visite-specialistiche-roma');
+      return null; // BLOCCHIAMO TUTTO QUI
     }
-  }, [slug, router]);
+  }
 
   const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   
   if (slug && filtri.cat === 'NON_ESISTE') {
-    // Escludiamo il redirect se è una delle parole chiave che stiamo già gestendo sopra
-    if (!slug.includes('specialist')) {
-      if (typeof window !== 'undefined') {
-        router.replace('/404'); 
-      }
-      return null;
+    if (typeof window !== 'undefined') {
+      router.replace('/404'); 
     }
+    return null;
   }
-  // --- FINE BLOCCO CORRETTO ---
+  // --- FINE BLOCCO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagina, setPagina] = useState(1);
