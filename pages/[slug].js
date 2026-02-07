@@ -104,8 +104,11 @@ else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
 else if (n.includes('diagnosti')) nomeCorretto = 'Centri di Diagnostica';
 
 setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
+
 setMeta({ 
-  titolo: `${nomeCorretto} a Roma ${zonaBella}`, 
+  titolo: zonaBella.toLowerCase() === 'roma' 
+    ? `${nomeCorretto} a Roma` 
+    : `${nomeCorretto} a Roma ${zonaBella}`, 
   zona: zonaBella, 
   cat: catSlug,
   nomeSemplice: nomeCorretto 
