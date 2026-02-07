@@ -486,9 +486,18 @@ setMeta({
 
 <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-  {/* Aggiungiamo il controllo: meta.cat && seoData[meta.cat] */}
-  {meta.cat && seoData[meta.cat] ? (
-    seoData[meta.cat].faq.map((f, idx) => (
+  {(() => {
+    // Identifichiamo la chiave corretta: se è specialistica/specialisti usiamo 'visite-specialistiche'
+    const chiaveFaq = (meta.cat === 'specialistica' || meta.cat === 'specialisti') 
+      ? 'visite-specialistiche' 
+      : meta.cat;
+
+    // Se la chiave esiste in seoData prendiamo quelle, altrimenti usiamo 'visite-specialistiche' come fallback
+    const datiFaq = (seoData[chiaveFaq] && seoData[chiaveFaq].faq) 
+      ? seoData[chiaveFaq].faq 
+      : seoData['visite-specialistiche'].faq;
+
+    return datiFaq.map((f, idx) => (
       <div key={idx}>
         <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>
           {f.q.replace(/{{zona}}/g, meta.zona || 'Roma')}
@@ -497,8 +506,9 @@ setMeta({
           {f.a.replace(/{{zona}}/g, meta.zona || 'Roma')}
         </p>
       </div>
-    ))
-  ) : (
+    ));
+  })()}
+</div>
     /* Se i dati non sono ancora pronti o mancano, mostriamo queste di base per non rompere la pagina */
     <div>
       <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice?.toLowerCase() || 'il servizio'} a {meta.zona || 'Roma'}?</p>
