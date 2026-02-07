@@ -41,18 +41,17 @@ export default function HubLayout({
       setLoadingRealTime(false);
       return; 
     }
-  async function fetchNuoviMedici() {
-  try {
-    setLoadingRealTime(true);
-    const { data, error } = await supabase
-      .from('annunci')
-      .select('*')
-      .eq('approvato', true)
-      .order('is_top', { ascending: false }) // Prima i premium
-      .range(0, 99); // Carica 100 annunci per tutte le hub
+async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .order('is_top', { ascending: false })
+          .range(0, 99);
 
-    if (error) throw error;
-    // ... resto del codice di filtraggio
+        if (error) throw error;
 
         const filtrati = data ? data.filter(item => {
           if (!item.categoria) return false;
