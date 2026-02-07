@@ -9,17 +9,29 @@ import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 export default function PaginaQuartiereDinamica() {
   const router = useRouter();
   const { slug } = router.query;
- // --- VERSIONE CORRETTA DEL CONTROLLO ---
-  // Estraiamo la categoria pulita (es. da "dentisti-roma-prati" prende "dentisti")
- const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
+
+  // --- LOGICA DI REDIRECT E CONTROLLO ---
+  useEffect(() => {
+    if (slug) {
+      const s = slug.toString().toLowerCase();
+      // Se l'utente cerca "specialisti", lo mandiamo alla pagina corretta
+      if (s.includes('specialisti-roma') || s.includes('specialistica-roma')) {
+        router.replace('/visite-specialistiche-roma');
+      }
+    }
+  }, [slug, router]);
+
+  const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   
-  // Se la categoria non esiste nel mapping E non è la home o roba vuota
   if (slug && filtri.cat === 'NON_ESISTE') {
-    if (typeof window !== 'undefined') {
-      router.replace('/404'); 
+    // Escludiamo il redirect se è una delle parole chiave che stiamo già gestendo sopra
+    if (!slug.includes('specialist')) {
+      if (typeof window !== 'undefined') {
+        router.replace('/404'); 
+      }
+      return null;
     }
-    return null;
   }
   // --- FINE BLOCCO CORRETTO ---
   const [servizi, setServizi] = useState([]);
