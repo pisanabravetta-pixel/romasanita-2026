@@ -147,7 +147,7 @@ export default function HubLayout({
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
     Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
   </p>
-</div>
+
 
 <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
   <p>
