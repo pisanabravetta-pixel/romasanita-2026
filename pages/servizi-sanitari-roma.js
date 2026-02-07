@@ -21,7 +21,7 @@ const [medici, setMedici] = useState([]);
           .select('*')
           .eq('approvato', true)
           .order('is_top', { ascending: false })
-          .limit(40);
+         .range(0, 99); // <--- Sostituito .limit(40) con questo
 
         if (!error && data) setMedici(data);
       } catch (err) {
