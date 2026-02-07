@@ -248,16 +248,12 @@ async function fetchDati() {
       {totaleAnnunci}
     </span>
     <span>
-      {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice} 
-      {(() => {
-        const nomeParola = meta.nomeSemplice.toLowerCase();
-        // Se finisce con 'a' (Farmacia, Diagnostica) usa trovata/e
-        if (nomeParola.endsWith('a')) {
-          return totaleAnnunci === 1 ? ' trovata' : ' trovate';
-        } 
-        // Per tutto il resto (Cardiologi, Dermatologi, ecc.) usa trovato/i
-        return totaleAnnunci === 1 ? ' trovato' : ' trovati';
-      })()} a Roma {meta.zona}
+      {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice}
+      {
+        (meta.nomeSemplice.toLowerCase().includes('farmaci') || meta.nomeSemplice.toLowerCase().includes('diagnosti'))
+        ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
+        : (totaleAnnunci === 1 ? ' trovato' : ' trovati')
+      } a Roma {meta.zona}
     </span>
   </div>
 )}
