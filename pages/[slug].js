@@ -487,12 +487,12 @@ setMeta({
 <h3 style={{ fontSize: '20px', fontWeight: '900', color: '#2c5282', marginBottom: '20px' }}>Domande Frequenti</h3>
 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
   {(() => {
-    // Identifichiamo la chiave corretta: se è specialistica/specialisti usiamo 'visite-specialistiche'
+    // Identifichiamo la chiave: se è specialistica/specialisti usiamo 'visite-specialistiche'
     const chiaveFaq = (meta.cat === 'specialistica' || meta.cat === 'specialisti') 
       ? 'visite-specialistiche' 
       : meta.cat;
 
-    // Se la chiave esiste in seoData prendiamo quelle, altrimenti usiamo 'visite-specialistiche' come fallback
+    // Prendiamo le FAQ corrispondenti o quelle di backup
     const datiFaq = (seoData[chiaveFaq] && seoData[chiaveFaq].faq) 
       ? seoData[chiaveFaq].faq 
       : seoData['visite-specialistiche'].faq;
@@ -508,13 +508,6 @@ setMeta({
       </div>
     ));
   })()}
-</div>
-    /* Se i dati non sono ancora pronti o mancano, mostriamo queste di base per non rompere la pagina */
-    <div>
-      <p style={{ fontWeight: '800', color: '#1e293b', margin: '0 0 5px 0' }}>Come trovare {meta.nomeSemplice?.toLowerCase() || 'il servizio'} a {meta.zona || 'Roma'}?</p>
-      <p style={{ margin: 0, color: '#475569' }}>È possibile consultare l’elenco dedicato e utilizzare la mappa per individuare la struttura più vicina.</p>
-    </div>
-  )}
 </div>
 </section>
 {/* CTA PER PROFESSIONISTI NEL QUARTIERE */}
