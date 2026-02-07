@@ -271,7 +271,7 @@ setMeta({
         (meta.nomeSemplice.toLowerCase().includes('farmaci') || meta.nomeSemplice.toLowerCase().includes('diagnosti'))
         ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
         : (totaleAnnunci === 1 ? ' trovato' : ' trovati')
-      } a Roma {meta.zona}
+      } a {meta.zona.toLowerCase() === 'roma' ? 'Roma' : `Roma ${meta.zona}`}
     </span>
   </div>
 )}
