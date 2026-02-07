@@ -4,10 +4,11 @@ import { getDBQuery, getSchemas } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function ServiziSanitariRoma() {
-  const [medici, setMedici] = useState([]);
+const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
- const schemas = getSchemas('servizi-sanitari', 'roma');
+  // Usiamo 'visite-specialistiche' perché nel tuo seo-logic.js è l'unica chiave già pronta con le FAQ giuste
+  const schemas = getSchemas('visite-specialistiche', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function ServiziSanitariRoma() {
       medici={medici}
       loading={loading}
     titolo="Servizi Sanitari"
-      categoria="generale"
+    categoria="visite-specialistiche"
       colore="#10b981" // Verde Smeraldo
       testoCTA="Gestisci una struttura sanitaria a Roma?"
       badgeSpec="🏥 SERVIZI SANITARI"
