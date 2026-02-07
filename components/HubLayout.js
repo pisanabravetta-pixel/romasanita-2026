@@ -142,7 +142,7 @@ export default function HubLayout({
         </div>
 
 <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-  {titolo.toLowerCase().includes('roma') ? titolo : `${titolo} a Roma`}
+  {titolo.replace(/ Roma/gi, '')} a Roma
 </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
     Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
@@ -240,9 +240,9 @@ export default function HubLayout({
     }}>
   {totaleAnnunci}
     </span>
-    <span>
-      {titolo} trovati a Roma
-    </span>
+   <span>
+  {titolo.replace(/ Roma/gi, '')} {totaleAnnunci === 1 ? 'trovato' : 'trovati'} a Roma
+</span>
   </div>
 )}
 <div style={{ display: 'block' }}>
