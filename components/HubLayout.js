@@ -138,12 +138,12 @@ export default function HubLayout({
           <span style={{ margin: '0 8px' }}>{'>'}</span>
           <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
           <span style={{ margin: '0 8px' }}>{'>'}</span>
-          <span style={{ color: '#065f46' }}>{titolo} Roma</span>
+          <span style={{ color: '#065f46' }}>{titolo.includes('Roma') ? titolo : `${titolo} Roma`}</span>
         </div>
 
 <div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
   <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-    {titolo} a Roma
+   {titolo.includes('Roma') ? titolo : `${titolo} a Roma`}
   </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
     Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
