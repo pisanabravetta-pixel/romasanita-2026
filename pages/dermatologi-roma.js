@@ -21,6 +21,7 @@ export default function DermatologiRoma() {
         // CERCA NELLA COLONNA SPECIALISTA (Infallibile)
         .ilike('specialista', `%${queryBusca.spec}%`)
         .order('is_top', { ascending: false });
+      .range(0, 99); // <--- Aggiungi questo per caricarne 100 invece di fermarti al default
       
       if (data) {
         setMedici(data);
