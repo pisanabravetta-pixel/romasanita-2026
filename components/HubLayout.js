@@ -238,18 +238,10 @@ export default function HubLayout({
       fontSize: '13px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }}>
-     {totaleAnnunci}
+    {totaleAnnunci}
     </span>
     <span>
-      {titolo.replace(/\s+a\s+Roma/gi, '').replace(/\s+Roma/gi, '')
-        .replace(/Cardio.*/i, 'Cardiologi')
-        .replace(/Derma.*/i, 'Dermatologi')
-        .replace(/Specialistica.*/i, 'Specialisti')
-      } {
-        (titolo.toLowerCase().includes('farmaci') || titolo.toLowerCase().includes('diagnosti'))
-        ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
-        : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
-      } a Roma
+      {titolo.replace(/ a Roma/gi, '').replace(/ Roma/gi, '')} {totaleAnnunci === 1 ? 'trovato' : 'trovati'} a Roma
     </span>
   </div>
 )}
