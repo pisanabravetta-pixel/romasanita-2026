@@ -10,18 +10,25 @@ export default function PaginaQuartiereDinamica() {
 const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA DI REDIRECT CHIRURGICA ---
-  if (typeof window !== 'undefined' && slug) {
-    const s = slug.toString().toLowerCase();
-    
-    // Blocchiamo SOLO se lo slug è ESATTAMENTE una di queste schifezze
-    // o se contiene "undefined"
-    if (s === 'specialisti-roma' || s === 'specialistica-roma' || s === 'specialisti' || s.includes('undefined')) {
-      router.replace('/visite-specialistiche-roma');
-      return null; 
+  // --- REDIRECT DEFINITIVO ---
+  useEffect(() => {
+    if (slug) {
+      const s = slug.toString().toLowerCase();
+      
+      // 1. Puliamo la categoria come fai nel resto del codice
+      const catCheck = s.replace('-roma-', '@').split('@')[0].replace('-roma', '');
+      
+      // 2. Se è una delle categorie "proibite" o c'è undefined, reindirizziamo
+      if (catCheck === 'specialisti' || catCheck === 'specialistica' || s.includes('undefined')) {
+        // Ma facciamo il redirect SOLO se non siamo già sulla pagina corretta
+        if (s !== 'visite-specialistiche-roma') {
+           router.replace('/visite-specialistiche-roma');
+        }
+      }
     }
-  }
+  }, [slug, router]);
 
+  // Proseguiamo con la logica normale per le pagine valide (inclusi i quartieri)
   const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   
