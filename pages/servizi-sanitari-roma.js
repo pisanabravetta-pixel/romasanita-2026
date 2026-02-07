@@ -7,7 +7,7 @@ export default function ServiziSanitariRoma() {
   const [medici, setMedici] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  const schemas = getSchemas('servizi-sanitari', 'roma');
+  const schemas = getSchemas('generale', 'roma');
   const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
