@@ -242,7 +242,6 @@ async function fetchDati() {
 }}>
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
-{/* CONTEGGIO RISULTATI - FIX DEFINITIVO GRAMMATICA */}
 {totaleAnnunci > 0 && (
   <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
     <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
@@ -251,12 +250,12 @@ async function fetchDati() {
     <span>
       {meta.nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : meta.nomeSemplice} 
       {(() => {
-        const catBassa = meta.cat.toLowerCase();
-        // Se la categoria contiene 'farmac' o 'diagnost', usa il femminile
-        if (catBassa.includes('farmac') || catBassa.includes('diagnost')) {
+        const nomeParola = meta.nomeSemplice.toLowerCase();
+        // Se finisce con 'a' (Farmacia, Diagnostica) usa trovata/e
+        if (nomeParola.endsWith('a')) {
           return totaleAnnunci === 1 ? ' trovata' : ' trovate';
         } 
-        // Per tutto il resto (Dermatologi, Psicologi, Oculisti, ecc.) usa il maschile
+        // Per tutto il resto (Cardiologi, Dermatologi, ecc.) usa trovato/i
         return totaleAnnunci === 1 ? ' trovato' : ' trovati';
       })()} a Roma {meta.zona}
     </span>
