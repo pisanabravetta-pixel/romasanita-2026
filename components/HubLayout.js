@@ -139,7 +139,7 @@ export default function HubLayout({
           <span style={{ margin: '0 8px' }}>{'>'}</span>
           <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
           <span style={{ margin: '0 8px' }}>{'>'}</span>
-        <span style={{ color: '#065f46' }}>{titolo.replace(/\s+Roma/gi, '')} Roma</span>
+        <span style={{ color: '#065f46' }}>{titoloPulito} Roma</span>
         </div>
 
 <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
@@ -212,7 +212,7 @@ export default function HubLayout({
   fontStyle: 'italic',
   lineHeight: '1.5'
 }}>
-  La mappa mostra la distribuzione dei servizi di <strong>{titolo} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
+ La mappa mostra la distribuzione dei servizi di <strong>{titoloPulito} a Roma</strong> , aiutando a individuare le strutture verificate più vicine alla tua posizione.
 </p>
 
           
@@ -365,7 +365,7 @@ export default function HubLayout({
     textTransform: 'uppercase',
     letterSpacing: '0.5px'
   }}>
-    {titolo} A ROMA {v.zona}
+   {titoloPulito} A ROMA {v.zona}
   </span>
 </div>
 </div>
