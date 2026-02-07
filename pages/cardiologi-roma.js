@@ -18,7 +18,9 @@ const { data, error } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .ilike('specialista', `%${queryBusca.spec}%`); // Cerca 'cardio' ovunque e ignora maiuscole
+  .ilike('specialista', `%${queryBusca.spec}%`) // Cerca 'cardio' ovunque
+  .order('is_top', { ascending: false })       // Metti i TOP in alto
+  .range(0, 99);                               // <--- Carica fino a 100 risultati
       
       if (data) {
         setMedici(data);
