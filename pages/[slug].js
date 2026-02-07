@@ -81,7 +81,26 @@ async function fetchDati() {
 
         // Fallback: se il mapping fallisce, usa catSlug per evitare "Undefined"
         const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
-      const nomeCat = nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1);
+   // --- 1. MAPPING DEI NOMI PULITI (Per evitare troncamenti come "Diagnost") ---
+const nomiPuliti = {
+  'diagnostica': 'Diagnostica',
+  'farmacie': 'Farmacie',
+  'dermatologi': 'Dermatologi',
+  'cardiologi': 'Cardiologi',
+  'dentisti': 'Dentisti',
+  'ginecologi': 'Ginecologi',
+  'oculisti': 'Oculisti',
+  'ortopedici': 'Ortopedici',
+  'psicologi': 'Psicologi',
+  'nutrizionisti': 'Nutrizionisti',
+  'servizi-sanitari': 'Servizi Sanitari',
+  'servizi-domicilio': 'Servizi a Domicilio'
+};
+
+// --- 2. LOGICA DI GENERAZIONE NOME CATEGORIA ---
+const chiaveSlug = catSlug.toLowerCase();
+const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
+const nomeCat = chiaveSlug.includes('specialistica') ? 'Specialisti' : nomeBase;
         const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
         // Colori dinamici basati sulla categoria
