@@ -7,15 +7,16 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 
 export default function PaginaQuartiereDinamica() {
- const router = useRouter();
+const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA DI REDIRECT AGGRESSIVA ---
+  // --- LOGICA DI REDIRECT AGGRESSIVA (Incluso undefined) ---
   if (typeof window !== 'undefined' && slug) {
     const s = slug.toString().toLowerCase();
-    if (s.includes('specialisti-roma') || s.includes('specialistica-roma')) {
+    // Se lo slug contiene "specialisti" O "undefined"
+    if (s.includes('specialisti') || s.includes('specialistica') || s.includes('undefined')) {
       router.replace('/visite-specialistiche-roma');
-      return null; // BLOCCHIAMO TUTTO QUI
+      return null; 
     }
   }
 
@@ -28,7 +29,6 @@ export default function PaginaQuartiereDinamica() {
     }
     return null;
   }
-  // --- FINE BLOCCO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagina, setPagina] = useState(1);
