@@ -78,7 +78,7 @@ async function fetchDati() {
 
         // Fallback: se il mapping fallisce, usa catSlug per evitare "Undefined"
         const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
-        const nomeCat = nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1);
+      const nomeCat = nomeSemplice.toLowerCase().includes('specialistica') ? 'Specialisti' : nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1);
         const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
         // Colori dinamici basati sulla categoria
@@ -88,13 +88,28 @@ async function fetchDati() {
         else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
         else if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
 
-        setTema({ primario, chiaro, label: nomeCat.toUpperCase() });
-        setMeta({ 
-          titolo: `${nomeCat} a Roma ${zonaBella}`, 
-          zona: zonaBella, 
-          cat: catSlug,
-          nomeSemplice: nomeCat 
-        });
+      // --- LOGICA DI PULIZIA NOMI E GRAMMATICA ---
+let nomeCorretto = nomeCat; 
+const n = nomeCorretto.toLowerCase();
+
+if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
+else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
+else if (n.includes('psico')) nomeCorretto = 'Psicologi';
+else if (n.includes('oculi')) nomeCorretto = 'Oculisti';
+else if (n.includes('ortope')) nomeCorretto = 'Ortopedici';
+else if (n.includes('gineco')) nomeCorretto = 'Ginecologi';
+else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
+else if (n.includes('specialistica')) nomeCorretto = 'Specialisti';
+else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
+else if (n.includes('diagnosti')) nomeCorretto = 'Centri di Diagnostica';
+
+setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
+setMeta({ 
+  titolo: `${nomeCorretto} a Roma ${zonaBella}`, 
+  zona: zonaBella, 
+  cat: catSlug,
+  nomeSemplice: nomeCorretto 
+});
 
       } catch (err) {
         console.error("Errore nel fetch:", err.message);
