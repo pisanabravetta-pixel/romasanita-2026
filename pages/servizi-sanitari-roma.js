@@ -41,7 +41,7 @@ export default function ServiziSanitariRoma() {
       colore="#10b981" // Verde Smeraldo
       testoCTA="Gestisci una struttura sanitaria a Roma?"
       badgeSpec="🏥 SERVIZI SANITARI"
-      testoTopBar="🏥 PORTALE SERVIZI SANITARI ROMA — TUTTE LE SPECIALISTICHE AGGIORNATE A GENNAIO 2026"
+      testoTopBar="🏥 PORTALE SERVIZI SANITARI ROMA — TUTTE LE SPECIALISTICHE AGGIORNATE A FEBBRAIO 2026"
       descrizioneMeta="Tutti i servizi sanitari a Roma: farmacie, dentisti, psicologi e assistenza a domicilio. Trova il professionista più vicino nel tuo quartiere. Aggiornato 2026."
       testoMiniSEO="ServiziSalute è il punto di riferimento per chi cerca servizi sanitari a Roma. Il nostro portale aggrega i migliori professionisti della Capitale, offrendo una panoramica completa su centri di diagnostica, studi odontoiatrici, psicologi e assistenza infermieristica domiciliare."
       quartieri={quartieri}
