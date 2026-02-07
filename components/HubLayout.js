@@ -141,10 +141,9 @@ export default function HubLayout({
           <span style={{ color: '#065f46' }}>{titolo.includes('Roma') ? titolo : `${titolo} Roma`}</span>
         </div>
 
-<div style={{ marginBottom: '25px', backgroundColor: 'white', padding: theme.padding.main, borderRadius: theme.radius.main, borderLeft: `8px solid ${colore}`, boxShadow: theme.shadows.premium }}>
-  <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
-   {titolo.includes('Roma') ? titolo : `${titolo} a Roma`}
-  </h1>
+<h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
+  {titolo.toLowerCase().includes('roma') ? titolo : `${titolo} a Roma`}
+</h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
     Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
   </p>
@@ -241,22 +240,25 @@ export default function HubLayout({
     }}>
       {totaleAnnunci}
     </span>
-    <span>
-      {(() => {
-        let nomeVisualizzato = titolo;
-        // Fix nomi troncati
-        if (nomeVisualizzato.toLowerCase().includes('cardio')) nomeVisualizzato = 'Cardiologi';
-        if (nomeVisualizzato.toLowerCase().includes('derma')) nomeVisualizzato = 'Dermatologi';
-        
-        // Logica plurale/genere
-        const n = nomeVisualizzato.toLowerCase();
-        const finale = (n.includes('farmaci') || n.includes('diagnosti')) 
-          ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
-          : (totaleAnnunci === 1 ? ' trovato' : ' trovati');
-          
-        return `${nomeVisualizzato}${finale}`;
-      })()} a Roma
-    </span>
+  <span>
+  {(() => {
+    // 1. Puliamo il nome da eventuali "Roma" già presenti
+    let nomePulito = titolo.replace(/\s+a\s+Roma/gi, '').replace(/\s+Roma/gi, '');
+    
+    // 2. Fix nomi troncati
+    if (nomePulito.toLowerCase().includes('cardio')) nomePulito = 'Cardiologi';
+    if (nomePulito.toLowerCase().includes('derma')) nomePulito = 'Dermatologi';
+    if (nomePulito.toLowerCase().includes('specialistica')) nomePulito = 'Specialisti';
+
+    // 3. Logica plurale/genere
+    const n = nomePulito.toLowerCase();
+    const finale = (n.includes('farmaci') || n.includes('diagnosti')) 
+      ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
+      : (totaleAnnunci === 1 ? ' trovato' : ' trovati');
+      
+    return `${nomePulito} ${finale}`;
+  })()} a Roma
+</span>
   </div>
 )}
 <div style={{ display: 'block' }}>
