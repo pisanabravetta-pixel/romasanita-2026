@@ -138,7 +138,7 @@ export default function HubLayout({
           <span style={{ margin: '0 8px' }}>{'>'}</span>
           <a href="/servizi-sanitari-roma" style={{ color: '#059669', textDecoration: 'none' }}>Servizi Roma</a>
           <span style={{ margin: '0 8px' }}>{'>'}</span>
-          <span style={{ color: '#065f46' }}>{titolo.includes('Roma') ? titolo : `${titolo} Roma`}</span>
+        <span style={{ color: '#065f46' }}>{titolo.replace(/\s+Roma/gi, '')} Roma</span>
         </div>
 
 <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
