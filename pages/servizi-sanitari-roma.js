@@ -37,7 +37,7 @@ const [medici, setMedici] = useState([]);
     <HubLayout 
       medici={medici}
       loading={loading}
-   titolo="TEST TITOLO"
+  titolo="Servizi Sanitari"
     categoria="visite-specialistiche"
       colore="#10b981" // Verde Smeraldo
       testoCTA="Gestisci una struttura sanitaria a Roma?"
