@@ -238,27 +238,19 @@ export default function HubLayout({
       fontSize: '13px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }}>
-      {totaleAnnunci}
+     {totaleAnnunci}
     </span>
-  <span>
-  {(() => {
-    // 1. Puliamo il nome da eventuali "Roma" già presenti
-    let nomePulito = titolo.replace(/\s+a\s+Roma/gi, '').replace(/\s+Roma/gi, '');
-    
-    // 2. Fix nomi troncati
-    if (nomePulito.toLowerCase().includes('cardio')) nomePulito = 'Cardiologi';
-    if (nomePulito.toLowerCase().includes('derma')) nomePulito = 'Dermatologi';
-    if (nomePulito.toLowerCase().includes('specialistica')) nomePulito = 'Specialisti';
-
-    // 3. Logica plurale/genere
-    const n = nomePulito.toLowerCase();
-    const finale = (n.includes('farmaci') || n.includes('diagnosti')) 
-      ? (totaleAnnunci === 1 ? ' trovata' : ' trovate')
-      : (totaleAnnunci === 1 ? ' trovato' : ' trovati');
-      
-    return `${nomePulito} ${finale}`;
-  })()} a Roma
-</span>
+    <span>
+      {titolo.replace(/\s+a\s+Roma/gi, '').replace(/\s+Roma/gi, '')
+        .replace(/Cardio.*/i, 'Cardiologi')
+        .replace(/Derma.*/i, 'Dermatologi')
+        .replace(/Specialistica.*/i, 'Specialisti')
+      } {
+        (titolo.toLowerCase().includes('farmaci') || titolo.toLowerCase().includes('diagnosti'))
+        ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
+        : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
+      } a Roma
+    </span>
   </div>
 )}
 <div style={{ display: 'block' }}>
