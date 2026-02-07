@@ -55,7 +55,7 @@ async function fetchDati() {
         const zonaQuery = zonaInSlug.replace(/-/g, ' ');
         const mapping = getDBQuery(catSlug);
 
-       // --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO) ---
+// --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO) ---
         let query = supabase
           .from('annunci')
           .select('*')
@@ -71,8 +71,11 @@ async function fetchDati() {
           query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
         }
 
-        // Eseguiamo la query senza il "throw error" che blocca tutto
-        const { data } = await query;
+        // AGGIUNGIAMO ORDINE E RANGE PRIMA DI ESEGUIRE
+        const { data } = await query
+          .order('is_top', { ascending: false })
+          .range(0, 99); 
+
         // --- 3. AGGIORNAMENTO STATI, TEMA E SEO (STOP UNDEFINED) ---
         setServizi(data || []);
 
