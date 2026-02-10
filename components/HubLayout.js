@@ -108,7 +108,7 @@ async function fetchNuoviMedici() {
         name="description" 
         content={descrizioneMeta || `Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.`} 
       />
-      
+      <link rel="canonical" href={schemas?.canonical || "https://www.servizisalute.com"} />
     <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
