@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import { getDBQuery, getSchemas, seoData } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function VisiteSpecialisticheRoma() {
   const [annunci, setAnnunci] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  const schemas = getSchemas('visite-specialistiche', 'roma');
+ const datiCategoria = seoData['visite-specialistiche'];
+const schemas = getSchemas(datiCategoria, 'roma');
  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
