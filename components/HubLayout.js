@@ -110,22 +110,11 @@ async function fetchNuoviMedici() {
       />
       <link rel="canonical" href={schemas?.canonical || "https://www.servizisalute.com"} />
     <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": (seoData?.[categoria]?.faq || []).map(f => ({
-              "@type": "Question",
-              "name": f.q.replace(/{{zona}}/g, 'Roma'),
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": f.a.replace(/{{zona}}/g, 'Roma')
-              }
-            }))
-          })
-        }}
-      />
+type="application/ld+json"
+dangerouslySetInnerHTML={{
+__html: JSON.stringify(schemas?.faq || {})
+}}
+/>
     </Head>
 
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
