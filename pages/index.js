@@ -113,10 +113,10 @@ return (
       "@graph": [
         {
           "@type": "Organization",
-          "@id": "https://servizisalute.com/#organization",
+          "@id": "https://www.servizisalute.com/#organization",
           "name": "ServiziSalute Roma",
-          "url": "https://servizisalute.com",
-          "logo": "https://servizisalute.com/favicon.ico",
+          "url": "https://www.servizisalute.com",
+          "logo": "https://www.servizisalute.com/favicon.ico",
           "sameAs": [
             "https://www.facebook.com/servizisaluteroma",
             "https://www.instagram.com/servizisaluteroma"
@@ -131,18 +131,18 @@ return (
         },
         {
           "@type": "WebSite",
-          "@id": "https://servizisalute.com/#website",
-          "url": "https://servizisalute.com",
+          "@id": "https://www.servizisalute.com/#website",
+          "url": "https://www.servizisalute.com",
           "name": "ServiziSalute",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://servizisalute.com/visite-specialistiche-roma?cerca={search_term_string}",
+            "target": "https://www.servizisalute.com/visite-specialistiche-roma?cerca={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         },
         {
           "@type": "FAQPage",
-          "@id": "https://servizisalute.com/#faq",
+          "@id": "https://www.servizisalute.com/#faq",
           "mainEntity": [
             {
               "@type": "Question",
