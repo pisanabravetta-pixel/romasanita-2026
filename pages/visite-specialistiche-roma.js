@@ -7,8 +7,7 @@ export default function VisiteSpecialisticheRoma() {
   const [annunci, setAnnunci] = useState([]);
   const [loading, setLoading] = useState(true);
   
- const datiCategoria = seoData['visite-specialistiche'];
-const schemas = getSchemas(datiCategoria, 'roma');
+ const schemas = getSchemas('visite-specialistiche', 'roma');
  const quartieri = ["Prati", "Eur", "Parioli", "San Giovanni", "Trastevere", "Monteverde", "Ostiense", "Cassia", "Flaminio", "Talenti", "Tiburtina", "Appia"];
 
   useEffect(() => {
