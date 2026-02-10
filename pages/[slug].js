@@ -184,7 +184,7 @@ setMeta({
   <Head>
   <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute.com`}</title>
   <meta name="description" content={`Scopri i migliori professionisti in ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti diretti, mappa e informazioni utili aggiornate.`} />
-
+<link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
