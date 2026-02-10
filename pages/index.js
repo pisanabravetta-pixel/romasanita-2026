@@ -92,10 +92,14 @@ export default function Home() {
 
 return (
   <>
-  <Head>
- <title key="title">ServiziSalute.com | Portale della Sanità a Roma - Strutture e Specialisti</title>
+ <Head>
+  <title key="title">ServiziSalute.com | Portale della Sanità a Roma - Strutture e Specialisti</title>
+  {/* AGGIUNGI QUESTA RIGA QUI SOTTO */}
+  <link rel="canonical" href="https://www.servizisalute.com/" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
+  {/* ... resto dei meta ... */}
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
