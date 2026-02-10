@@ -101,18 +101,20 @@ return (
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   {/* --- SCHEMA SEO INTEGRATO: ORGANIZATION + SEARCH + FAQ --- */}
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify([
+ <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@context": "https://schema.org",
           "@type": "Organization",
+          "@id": "https://servizisalute.com/#organization",
           "name": "ServiziSalute Roma",
           "url": "https://servizisalute.com",
           "logo": "https://servizisalute.com/favicon.ico",
           "sameAs": [
-            "https://www.facebook.com/servizisaluteroma", // Aggiungi i tuoi social se li hai
+            "https://www.facebook.com/servizisaluteroma",
             "https://www.instagram.com/servizisaluteroma"
           ],
           "description": "Il portale della sanità romana per trovare farmacie, dentisti e specialisti.",
@@ -124,9 +126,10 @@ return (
           }
         },
         {
-          "@context": "https://schema.org",
           "@type": "WebSite",
+          "@id": "https://servizisalute.com/#website",
           "url": "https://servizisalute.com",
+          "name": "ServiziSalute",
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://servizisalute.com/visite-specialistiche-roma?cerca={search_term_string}",
@@ -134,8 +137,8 @@ return (
           }
         },
         {
-          "@context": "https://schema.org",
           "@type": "FAQPage",
+          "@id": "https://servizisalute.com/#faq",
           "mainEntity": [
             {
               "@type": "Question",
@@ -158,14 +161,15 @@ return (
               "name": "Come prenotare una visita specialistica a Roma?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Puoi filtrare per branca medica (Oculista, Cardiologo, Psicologo) e quartiere di Roma. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico per fissare l'appuntamento."
+                "text": "Puoi filtrare per branca medica e quartiere di Roma. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico diretto per fissare l'appuntamento."
               }
             }
           ]
         }
-      ]),
-    }}
-  />
+      ]
+    }),
+  }}
+/>
 </Head>
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
