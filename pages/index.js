@@ -12,7 +12,11 @@ export default function Home() {
   const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
   const [catScelta, setCatScelta] = useState(""); // <-- SPOSTATO QUI IN ALTO
   const [idCat, setIdCat] = useState(0);
-
+const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const zoneRoma = [
     "Appio Latino", "Cassia", "Centro Storico", "EUR", "Flaminio", 
     "Magliana", "Monteverde", "Nomentano", "Ostiense", "Parioli", 
@@ -93,7 +97,7 @@ export default function Home() {
 return (
   <>
  <Head>
-  <title key="title">ServiziSalute.com | Portale della Sanità a Roma - Strutture e Specialisti</title>
+  <title key="title">{`ServiziSalute.com | Portale Sanità Roma (${dataStringa}) - Strutture e Specialisti`}</title>
   {/* AGGIUNGI QUESTA RIGA QUI SOTTO */}
   <link rel="canonical" href="https://www.servizisalute.com/" />
   
@@ -697,8 +701,8 @@ return (
       <section style={{ padding: '40px 0', background: 'white' }}>
         <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
           <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
-            Domande Frequenti sui Servizi Sanitari a Roma
-          </h2>
+  Domande Frequenti sui Servizi Sanitari a Roma — {dataStringa}
+</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
             
             <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
@@ -711,11 +715,16 @@ return (
               <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
             </div>
 <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come prenotare una visita specialistica a Roma?</h4>
-              <p style={{ color: '#64748b' }}>Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi il link all'agenda digitale o il contatto telefonico diretto per fissare l'appuntamento.</p>
-            </div>
+  <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>
+    Come prenotare una visita specialistica a Roma a {meseCorrente}?
+  </h4>
+  <p style={{ color: '#64748b', lineHeight: '1.6' }}>
+    Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi i contatti aggiornati a <strong>{dataStringa}</strong> per fissare l'appuntamento tramite agenda digitale o telefono.
+  </p>
+</div>
           </div>
         </div>
+      </div>
       </section>
 {/* 📧 SEZIONE NEWSLETTER FUNZIONANTE - ID: maqbgzzl */}
 <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
