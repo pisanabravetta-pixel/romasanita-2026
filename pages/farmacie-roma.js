@@ -33,13 +33,13 @@ export default function FarmacieRoma() {
       medici={medici}
       loading={loading}
       titolo="Farmacie"
-      categoria="farmacie"
+      categoria="farmacie" // Lascialo così, pulito
       colore="#16a34a" 
       testoCTA="Sei il titolare di una Farmacia a Roma?"
       badgeSpec="💊 FARMACIE"
-      testoTopBar="💊 FARMACIE DI TURNO E SERVIZI FARMACEUTICI A ROMA — GENNAIO 2026"
-      descrizioneMeta="Cerca una farmacia a Roma. Trova farmacie di turno, parafarmacie e servizi di consegna farmaci a domicilio nei principali quartieri di Roma."
-      testoMiniSEO="In questa sezione trovi l'elenco delle farmacie a Roma, suddivise per quartiere. Oltre alla vendita di farmaci, molte strutture offrono servizi di autoanalisi, test antigenici, prodotti galenici e parafarmacia. Consulta gli orari e i contatti per trovare la farmacia più vicina a te."
+      testoTopBar="💊 FARMACIE E SERVIZI FARMACEUTICI A ROMA — AGGIORNATO FEBBRAIO 2026"
+      descrizioneMeta="Trova le farmacie a Roma aggiornate a Febbraio 2026. ✅ Elenco completo, contatti WhatsApp/Telefono e mappa delle strutture nel tuo quartiere."
+      testoMiniSEO="In questa sezione trovi l'elenco delle farmacie a Roma, suddivise per quartiere. Oltre alla vendita di farmaci, molte strutture offrono servizi di autoanalisi, test e parafarmacia. Consulta i contatti diretti per trovare la struttura più vicina a te."
       quartieri={quartieri}
       schemas={schemas}
       altreSpecialistiche={[
