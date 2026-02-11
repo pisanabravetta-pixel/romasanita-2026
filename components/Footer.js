@@ -22,7 +22,7 @@ export default function Footer() {
           <div>
             <h4 style={{ marginBottom: '15px' }}>Per gli utenti</h4>
             <p style={{ fontSize: '12px', color: '#48bb78', marginBottom: '10px', fontWeight: 'bold' }}>
-              ● Disponibilità aggiornate: Febbraio 2026
+            ● Disponibilità aggiornate: {dataStringa}
             </p>
             <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.5' }}>
               <li><a href="/" style={{ color: '#a0aec0', textDecoration: 'none' }}>Home</a></li>
@@ -84,7 +84,7 @@ export default function Footer() {
 
         {/* COPYRIGHT FINALE */}
         <div style={{ marginTop: '50px', borderTop: '1px solid #2d3748', paddingTop: '20px', textAlign: 'center', fontSize: '12px', color: '#718096' }}>
-  © 2026 <strong>ServiziSalute Roma</strong> – Portale Annunci Medici – Tutti i diritti riservati
+ © {new Date().getFullYear()} <strong>ServiziSalute Roma</strong> – Portale Annunci Medici – Tutti i diritti riservati
 </div>
       </div>
     </footer>
