@@ -21,6 +21,12 @@ export default function HubLayout({
   altreSpecialistiche = [],
   children
 }) {
+  // 1. Calcolo automatico della data corrente
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
   // DEFINISCI SEMPRE QUESTI PER PRIMI
   const [serviziRealTime, setServiziRealTime] = useState([]);
@@ -102,11 +108,11 @@ async function fetchNuoviMedici() {
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
-   <Head>
-  <title>{`${titoloPulito} a Roma (Febbraio 2026): Elenco e Contatti | ServiziSalute`}</title>
+  <Head>
+  <title>{`${titoloPulito} a Roma (${dataStringa}): Elenco e Contatti | ServiziSalute`}</title>
   <meta 
     name="description" 
-    content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a Febbraio 2026. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
+    content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a ${dataStringa}. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
   />
   <link rel="canonical" href={schemas?.canonical || `https://www.servizisalute.com/${categoria}-roma`} />
   <script
@@ -117,8 +123,8 @@ async function fetchNuoviMedici() {
   />
 </Head>
 
-      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
-        {testoTopBar}
+     <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
+        {testoTopBar.split(' — ')[0]} — {dataStringa.toUpperCase()}
       </div>
       
       <Navbar />
