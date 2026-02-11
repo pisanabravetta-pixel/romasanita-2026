@@ -102,20 +102,20 @@ async function fetchNuoviMedici() {
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
-    <Head>
-      <title>{`${titolo} a Roma – Elenco e contatti | ServiziSalute.com`}</title>
-      <meta 
-        name="description" 
-        content={descrizioneMeta || `Trova i migliori servizi di ${titolo} a Roma. Contatti diretti, mappa e informazioni per quartiere.`} 
-      />
-      <link rel="canonical" href={schemas?.canonical || "https://www.servizisalute.com"} />
-    <script
-type="application/ld+json"
-dangerouslySetInnerHTML={{
-__html: JSON.stringify(schemas?.faq || {})
-}}
-/>
-    </Head>
+   <Head>
+  <title>{`${titoloPulito} a Roma (Febbraio 2026): Elenco e Contatti | ServiziSalute`}</title>
+  <meta 
+    name="description" 
+    content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a Febbraio 2026. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
+  />
+  <link rel="canonical" href={schemas?.canonical || `https://www.servizisalute.com/${categoria}-roma`} />
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify(schemas?.faq || {})
+    }}
+  />
+</Head>
 
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
         {testoTopBar}
@@ -143,10 +143,11 @@ __html: JSON.stringify(schemas?.faq || {})
 
 <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
   <p>
-    Benvenuto su <strong>ServiziSalute</strong>, il portale dedicato alla sanità locale. In questa sezione puoi consultare l'elenco completo di <strong>{titolo} a Roma</strong>, con schede dettagliate che includono orari, indirizzi e tasti di contatto rapido. Il nostro obiettivo è semplificare l'accesso alle cure, mettendo in contatto diretto i cittadini con i migliori professionisti della Capitale, senza attese o intermediari.
+    Trova e contatta i migliori professionisti in <strong>{titoloPulito} a Roma</strong> aggiornati a <strong>Febbraio 2026</strong>. 
+    In questa sezione puoi consultare l'elenco completo, con schede dettagliate che includono indirizzi e tasti di contatto rapido via <strong>WhatsApp o Telefono</strong>. 
+    Il nostro obiettivo è semplificare l'accesso alle cure a Roma, mettendo in contatto diretto i cittadini con le strutture del proprio quartiere, senza attese o intermediari.
   </p>
 </div>
-
  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: theme.radius.main, marginBottom: '25px', border: '1px solid #e2e8f0' }}>
   <p style={{ fontSize: '14px', fontWeight: '900', marginBottom: '12px', color: '#2c5282', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
     📍 Cerca per Quartiere:
