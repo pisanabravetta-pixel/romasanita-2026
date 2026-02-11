@@ -182,9 +182,9 @@ setMeta({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
   <Head>
-  <title>{`${meta.nomeSemplice} a Roma ${meta.zona} – Elenco e contatti | ServiziSalute.com`}</title>
-  <meta name="description" content={`Scopri i migliori professionisti in ${meta.nomeSemplice} nel quartiere ${meta.zona} a Roma. Contatti diretti, mappa e informazioni utili aggiornate.`} />
-<link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
+ <title>{`${meta.nomeSemplice} a Roma ${meta.zona} (Febbraio 2026): Elenco e Orari | ServiziSalute`}</title>
+  <meta name="description" content={`Cerchi ${meta.nomeSemplice} a Roma ${meta.zona}? ✅ Elenco aggiornato a Febbraio 2026. Mappa, contatti diretti e info utili per trovare il professionista più vicino a te.`} />
+  <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
