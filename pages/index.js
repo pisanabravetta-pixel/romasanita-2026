@@ -724,7 +724,6 @@ return (
 </div>
           </div>
         </div>
-      </div>
       </section>
 {/* 📧 SEZIONE NEWSLETTER FUNZIONANTE - ID: maqbgzzl */}
 <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
