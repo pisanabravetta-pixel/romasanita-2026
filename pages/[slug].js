@@ -21,6 +21,17 @@ const router = useRouter();
     }
     return null;
   }
+  // 1. Calcolo automatico della data corrente
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
+
+  // 2. Definizione testi dinamici per questa pagina
+  const quartiereNome = slug ? slug.split('-roma-')[1]?.charAt(0).toUpperCase() + slug.split('-roma-')[1]?.slice(1) : '';
+  const titoloPulito = filtri.spec.toUpperCase();
+  const colore = filtri.colore || '#2563eb';
   // --- FINE RIPRISTINO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -181,9 +192,12 @@ setMeta({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-  <Head>
- <title>{`${meta.nomeSemplice} a Roma ${meta.zona} (Febbraio 2026): Elenco e Orari | ServiziSalute`}</title>
-  <meta name="description" content={`Cerchi ${meta.nomeSemplice} a Roma ${meta.zona}? ✅ Elenco aggiornato a Febbraio 2026. Mappa, contatti diretti e info utili per trovare il professionista più vicino a te.`} />
+<Head>
+  <title>{`${titoloPulito} a Roma ${quartiereNome} (${dataStringa}): Elenco e Contatti`}</title>
+  <meta 
+    name="description" 
+    content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
+  />
   <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
   <script
     type="application/ld+json"
@@ -191,12 +205,12 @@ setMeta({
       __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": (seoData[meta.cat]?.faq || []).map(f => ({
+        "mainEntity": (seoData[filtri.cat]?.faq || []).map(f => ({
           "@type": "Question",
-          "name": f.q.replace(/{{zona}}/g, meta.zona),
+          "name": f.q.replace(/{{zona}}/g, quartiereNome),
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": f.a.replace(/{{zona}}/g, meta.zona)
+            "text": f.a.replace(/{{zona}}/g, quartiereNome)
           }
         }))
       })
@@ -205,10 +219,9 @@ setMeta({
 </Head>
       <Navbar />
 
-      <div style={{ backgroundColor: tema.chiaro, color: tema.primario, padding: '10px', textAlign: 'center', fontWeight: '800', fontSize: '12px', textTransform: 'uppercase' }}>
-        📍 {tema.label} : {meta.zona.toUpperCase()}
-      </div>
-
+   <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+  {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
+</div>
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
         {/* Breadcrumb */}
@@ -228,10 +241,10 @@ setMeta({
   boxShadow: '0 4px 6px rgba(0,0,0,0.1)' 
 }}>
   <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>
-    {meta.titolo}
+    {titoloPulito} Roma {quartiereNome}
   </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-    I migliori professionisti a {meta.zona} aggiornati a Febbraio 2026
+    I migliori professionisti a {quartiereNome} aggiornati a <span style={{ color: colore }}>{dataStringa}</span>
   </p>
 </div>
 
