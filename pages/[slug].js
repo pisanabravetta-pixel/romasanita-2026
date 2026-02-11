@@ -235,10 +235,19 @@ setMeta({
   </p>
 </div>
 
-{/* MINI TESTO SEO INIZIALE (Sotto H1) */}
+{/* TESTO SEO INTELLIGENTE */}
 <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
   <p>
-    Il quartiere <strong>{meta.zona}</strong> è una delle zone di Roma servite da numerose strutture sanitarie e attività dedicate alla salute. In questa pagina trovi l’elenco di <strong>{meta.titolo}</strong>, pensato per aiutare residenti, lavoratori e visitatori a individuare rapidamente un professionista o una farmacia nel quartiere <strong>{meta.zona}</strong> di Roma e verificarne contatti e posizione.
+    Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere. 
+    {meta.cat.includes('farmaci') && (
+      <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
+    )}
+    {meta.cat.includes('psico') && (
+      <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
+    )}
+    {!meta.cat.includes('farmaci') && !meta.cat.includes('psico') && (
+      <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
+    )}
   </p>
 </div>
 
