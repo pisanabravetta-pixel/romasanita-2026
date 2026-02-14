@@ -59,7 +59,20 @@ export default function GuidaCostoDenti() {
             <p>
               Una seduta professionale corretta non comprende solo la rimozione del tartaro, ma anche la lucidatura (polishing), l'eventuale rimozione di macchie con air-flow e un controllo generale della salute gengivale.
             </p>
-          </section>
+            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Dove prenotare nei vari quartieri</h2>
+            <p>
+              La scelta dello studio dentistico a Roma dipende spesso dalla vicinanza a casa o al lavoro. Se cerchi tariffe competitive, zone come <strong>Tiburtina</strong>, <strong>Ostia</strong> o <strong>San Giovanni</strong> offrono diverse opzioni accessibili. Per chi cerca studi in zone centrali o di rappresentanza, <strong>Prati</strong>, <strong>Parioli</strong> e l'<strong>EUR</strong> restano i punti di riferimento per l'eccellenza tecnologica.
+            </p>
+
+            {/* BOX SUGGERIMENTO CORRELATO */}
+            <div style={{ padding: '20px', backgroundColor: '#f0fdf4', borderRadius: '15px', border: '1px solid #bbf7d0', marginTop: '30px' }}>
+              <h4 style={{ color: '#166534', margin: '0 0 10px 0' }}>💡 Lo sapevi?</h4>
+              <p style={{ fontSize: '15px', margin: 0, lineHeight: '1.5' }}>
+                Prima di una pulizia dei denti, alcuni studi consigliano una panoramica dentale. Puoi trovare i centri convenzionati nella nostra sezione dedicata alla <a href="/diagnostica-roma" style={{ color: '#2563eb', fontWeight: 'bold' }}>diagnostica a Roma</a>.
+              </p>
+            </div>
+          </section>    
+        
 
           <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#1e3a8a', borderRadius: '20px', color: 'white', textAlign: 'center' }}>
             <h3 style={{ margin: '0 0 10px 0' }}>Cerchi un dentista nel tuo quartiere?</h3>
