@@ -4,10 +4,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
 export default function GuidaCardiologia() {
+  const dataCorrente = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Costo Visita Cardiologica Roma: Tariffe Private 2026</title>
+        <title>Costo Visita Cardiologica Roma: Tariffe Private {dataCorrente}</title>
         <meta name="description" content="Guida completa ai prezzi per una visita cardiologica a Roma. Scopri i costi medi di ECG e controlli specialistici." />
       </Head>
 
@@ -43,8 +44,8 @@ export default function GuidaCardiologia() {
 
         <article>
           <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
-            Costi Visita Cardiologica a Roma: Guida ai Prezzi 2026
-          </h1>
+  Costi Visita Cardiologica a Roma: Guida ai Prezzi {dataCorrente}
+</h1>
 
           <div style={{ backgroundColor: '#ecfeff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #0891b2', marginBottom: '35px' }}>
             <p style={{ margin: 0, color: '#164e63', fontSize: '18px', lineHeight: '1.6' }}>
@@ -94,7 +95,7 @@ export default function GuidaCardiologia() {
       </main>
 {/* NUOVO DISCLAIMER STANDARD */}
           <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
-            <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel 2026 e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
+           <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel {dataCorrente} e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
           </div>
       <Footer />
     </div>
