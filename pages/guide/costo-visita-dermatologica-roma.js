@@ -4,10 +4,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
 export default function GuidaDermatologia() {
+  const dataCorrente = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Quanto costa una visita dermatologica a Roma? | Prezzi 2026</title>
+        <title>Quanto costa una visita dermatologica a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Guida completa ai prezzi della dermatologia a Roma. Scopri i costi medi per mappatura nei e visite specialistiche." />
       </Head>
 
@@ -43,13 +44,13 @@ export default function GuidaDermatologia() {
 
         <article>
           <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
-            Quanto costa una visita dermatologica a Roma?
-          </h1>
+  Quanto costa una visita dermatologica a Roma? (Aggiornato {dataCorrente})
+</h1>
 
           <div style={{ backgroundColor: '#ecfeff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #0891b2', marginBottom: '35px' }}>
-            <p style={{ margin: 0, color: '#164e63', fontSize: '18px', lineHeight: '1.6' }}>
-              Analizziamo i costi medi del 2026 per le prestazioni dermatologiche nei principali quartieri di Roma, dalla visita di controllo alla mappatura nei.
-            </p>
+           <p style={{ margin: 0, color: '#164e63', fontSize: '18px', lineHeight: '1.6' }}>
+  Analizziamo i costi medi a <strong>{dataCorrente}</strong> per le prestazioni dermatologiche nei principali quartieri di Roma...
+</p>
           </div>
 
           <section style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
@@ -57,7 +58,7 @@ export default function GuidaDermatologia() {
               A Roma, il prezzo di una visita dermatologica varia mediamente tra gli <strong>80€ e i 150€</strong> per una consulenza specialistica privata.
             </p>
             
-            <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Tabella Prezzi Medi 2026</h2>
+           <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Tabella Prezzi Medi {dataCorrente}</h2>
             <ul style={{ paddingLeft: '20px' }}>
               <li><strong>Visita Specialistica:</strong> 90€ - 130€</li>
               <li><strong>Mappatura Nei (Dermatoscopia):</strong> 110€ - 160€</li>
@@ -97,7 +98,7 @@ export default function GuidaDermatologia() {
       </main>
 {/* DISCLAIMER STANDARD */}
           <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
-            <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel 2026 e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
+            <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel {dataCorrente} e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
           </div>
       <Footer />
     </div>
