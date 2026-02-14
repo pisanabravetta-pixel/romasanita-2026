@@ -27,9 +27,14 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }) {
-  // 1. PAGINE FISSE
+// 1. PAGINE FISSE (Aggiornato con le Guide)
   const staticPages = [
     { url: '', priority: 1.0 },
+    { url: '/guide', priority: 0.9 },
+    { url: '/guide/costo-pulizia-denti-roma', priority: 0.8 },
+    { url: '/guide/costo-visita-cardiologica-roma', priority: 0.8 },
+    { url: '/guide/costo-visita-dermatologica-roma', priority: 0.8 },
+    { url: '/guide/trovare-servizio-sanitario-roma', priority: 0.8 },
     { url: '/servizi-sanitari-roma', priority: 0.9 },
     { url: '/visite-specialistiche-roma', priority: 0.9 },
     { url: '/quartieri-roma', priority: 0.8 },
