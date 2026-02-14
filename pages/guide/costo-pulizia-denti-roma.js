@@ -59,7 +59,7 @@ export default function GuidaCostoDenti() {
             <p>
               Una seduta professionale corretta non comprende solo la rimozione del tartaro, ma anche la lucidatura (polishing), l'eventuale rimozione di macchie con air-flow e un controllo generale della salute gengivale.
             </p>
-            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Prezzi e disponibilità nei quartieri di Roma</h2>
+            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Disponibilità nei quartieri di Roma</h2>
             <p>
               La rete di professionisti copre capillarmente la città. Se cerchi uno studio dentistico nelle zone di 
               <strong> <a href="/dentisti-roma?quartiere=Centro%20Storico" style={{ color: '#2563eb', textDecoration: 'none' }}>Centro Storico</a></strong>, 
@@ -78,16 +78,6 @@ export default function GuidaCostoDenti() {
               <strong> <a href="/dentisti-roma?quartiere=Tiburtina" style={{ color: '#2563eb', textDecoration: 'none' }}>Tiburtina</a></strong> ed 
               <strong> <a href="/dentisti-roma?quartiere=EUR" style={{ color: '#2563eb', textDecoration: 'none' }}>EUR</a></strong>.
             </p>
-
-            {/* BOX CROSS-LINK AI DENTISTI */}
-            <div style={{ padding: '20px', backgroundColor: '#eff6ff', borderRadius: '15px', border: '1px solid #bfdbfe', marginTop: '30px' }}>
-              <h4 style={{ color: '#1e40af', margin: '0 0 10px 0' }}>🦷 Prenota ora</h4>
-              <p style={{ fontSize: '15px', margin: 0, lineHeight: '1.5' }}>
-                Trova subito il professionista più vicino a te: 
-                <a href="/dentisti-roma" style={{ color: '#2563eb', fontWeight: 'bold', marginLeft: '5px' }}>
-                  Sfoglia l'elenco completo dei dentisti a Roma →
-                </a>
-              </p>
             </div>
           </section>
 
