@@ -20,15 +20,15 @@ export default function GuideHub() {
       <div style={{ width: '100%', overflowX: 'hidden' }}>
         <Navbar />
         
-        {/* HERO SEZIONE GUIDE */}
-        <section style={{ backgroundColor: '#f0fdf4', padding: '60px 20px', borderBottom: '1px solid #dcfce7', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#065f46', marginBottom: '15px' }}>
-            Guide alla Salute Roma
-          </h1>
-          <p style={{ fontSize: '18px', color: '#475569', maxWidth: '700px', margin: '0 auto' }}>
-            Informazioni utili, costi medi e consigli pratici per orientarsi nella sanità romana aggiornati a Gennaio 2026.
-          </p>
-        </section>
+       {/* HERO SEZIONE GUIDE */}
+<section style={{ backgroundColor: '#f0fdf4', padding: '60px 20px', borderBottom: '1px solid #dcfce7', textAlign: 'center' }}>
+  <h1 style={{ fontSize: '36px', fontWeight: '900', color: '#065f46', marginBottom: '15px' }}>
+    Guide alla Salute Roma
+  </h1>
+  <p style={{ fontSize: '18px', color: '#475569', maxWidth: '700px', margin: '0 auto' }}>
+    Informazioni utili, costi medi e consigli pratici per orientarsi nella sanità romana aggiornati a {new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })}.
+  </p>
+</section>
 
         {/* LISTA DELLE GUIDE CON SPAZIATURA DI SICUREZZA IN FONDO */}
         <section style={{ padding: '60px 20px 100px 20px', backgroundColor: 'white', minHeight: '60vh' }}>
