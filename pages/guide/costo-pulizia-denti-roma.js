@@ -4,10 +4,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
 export default function GuidaCostoDenti() {
+  const dataCorrente = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Quanto costa una pulizia dei denti a Roma? | Prezzi Medi 2026</title>
+      <title>Quanto costa una pulizia dei denti a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Scopri i prezzi medi per l'igiene dentale professionale nei vari quartieri di Roma. Guida completa ai costi e alla scelta del dentista." />
         <meta name="robots" content="max-image-preview:large" />
       </Head>
@@ -91,7 +92,7 @@ export default function GuidaCostoDenti() {
       </main>
 {/* DISCLAIMER STANDARD */}
           <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
-            <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel 2026 e hanno scopo puramente informativo. Le tariffe possono variare in base alla clinica e ai trattamenti accessori necessari.
+<strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel {dataCorrente} e hanno scopo puramente informativo. Le tariffe possono variare in base alla clinica e ai trattamenti accessori necessari.
           </div>
       <Footer />
     </div>
