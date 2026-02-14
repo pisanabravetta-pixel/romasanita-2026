@@ -59,20 +59,37 @@ export default function GuidaCostoDenti() {
             <p>
               Una seduta professionale corretta non comprende solo la rimozione del tartaro, ma anche la lucidatura (polishing), l'eventuale rimozione di macchie con air-flow e un controllo generale della salute gengivale.
             </p>
-            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Dove prenotare nei vari quartieri</h2>
+            <h2 style={{ color: '#1e3a8a', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Prezzi e disponibilità nei quartieri di Roma</h2>
             <p>
-              La scelta dello studio dentistico a Roma dipende spesso dalla vicinanza a casa o al lavoro. Se cerchi tariffe competitive, zone come <strong>Tiburtina</strong>, <strong>Ostia</strong> o <strong>San Giovanni</strong> offrono diverse opzioni accessibili. Per chi cerca studi in zone centrali o di rappresentanza, <strong>Prati</strong>, <strong>Parioli</strong> e l'<strong>EUR</strong> restano i punti di riferimento per l'eccellenza tecnologica.
+              La rete di professionisti copre capillarmente la città. Se cerchi uno studio dentistico nelle zone di 
+              <strong> <a href="/dentisti-roma?quartiere=Centro%20Storico" style={{ color: '#2563eb', textDecoration: 'none' }}>Centro Storico</a></strong>, 
+              <strong> <a href="/dentisti-roma?quartiere=Prati" style={{ color: '#2563eb', textDecoration: 'none' }}>Prati</a></strong> o 
+              <strong> <a href="/dentisti-roma?quartiere=Parioli" style={{ color: '#2563eb', textDecoration: 'none' }}>Parioli</a></strong>, i prezzi possono essere leggermente superiori alla media. 
+            </p>
+            
+            <p>
+              Opzioni con ottimo rapporto qualità-prezzo si trovano spesso a 
+              <strong> <a href="/dentisti-roma?quartiere=San%20Giovanni" style={{ color: '#2563eb', textDecoration: 'none' }}>San Giovanni</a></strong>, 
+              <strong> <a href="/dentisti-roma?quartiere=Monteverde" style={{ color: '#2563eb', textDecoration: 'none' }}>Monteverde</a></strong>, 
+              <strong> <a href="/dentisti-roma?quartiere=Aurelio" style={{ color: '#2563eb', textDecoration: 'none' }}>Aurelio</a></strong> e 
+              <strong> <a href="/dentisti-roma?quartiere=Montesacro" style={{ color: '#2563eb', textDecoration: 'none' }}>Montesacro</a></strong>. 
+              Per chi si trova fuori dal centro o vicino al GRA, sono disponibili ottimi centri anche a 
+              <strong> <a href="/dentisti-roma?quartiere=Ostia" style={{ color: '#2563eb', textDecoration: 'none' }}>Ostia</a></strong>, 
+              <strong> <a href="/dentisti-roma?quartiere=Tiburtina" style={{ color: '#2563eb', textDecoration: 'none' }}>Tiburtina</a></strong> ed 
+              <strong> <a href="/dentisti-roma?quartiere=EUR" style={{ color: '#2563eb', textDecoration: 'none' }}>EUR</a></strong>.
             </p>
 
-            {/* BOX SUGGERIMENTO CORRELATO */}
-            <div style={{ padding: '20px', backgroundColor: '#f0fdf4', borderRadius: '15px', border: '1px solid #bbf7d0', marginTop: '30px' }}>
-              <h4 style={{ color: '#166534', margin: '0 0 10px 0' }}>💡 Lo sapevi?</h4>
+            {/* BOX CROSS-LINK AI DENTISTI */}
+            <div style={{ padding: '20px', backgroundColor: '#eff6ff', borderRadius: '15px', border: '1px solid #bfdbfe', marginTop: '30px' }}>
+              <h4 style={{ color: '#1e40af', margin: '0 0 10px 0' }}>🦷 Prenota ora</h4>
               <p style={{ fontSize: '15px', margin: 0, lineHeight: '1.5' }}>
-                Prima di una pulizia dei denti, alcuni studi consigliano una panoramica dentale. Puoi trovare i centri convenzionati nella nostra sezione dedicata alla <a href="/diagnostica-roma" style={{ color: '#2563eb', fontWeight: 'bold' }}>diagnostica a Roma</a>.
+                Trova subito il professionista più vicino a te: 
+                <a href="/dentisti-roma" style={{ color: '#2563eb', fontWeight: 'bold', marginLeft: '5px' }}>
+                  Sfoglia l'elenco completo dei dentisti a Roma →
+                </a>
               </p>
             </div>
-          </section>    
-        
+          </section>
 
           <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#1e3a8a', borderRadius: '20px', color: 'white', textAlign: 'center' }}>
             <h3 style={{ margin: '0 0 10px 0' }}>Cerchi un dentista nel tuo quartiere?</h3>
