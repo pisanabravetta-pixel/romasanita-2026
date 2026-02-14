@@ -64,6 +64,26 @@ export default function GuidaDermatologia() {
               <li><strong>Crioterapia:</strong> 60€ - 100€</li>
               <li><strong>Visita Dermatologica Pediatrica:</strong> 100€ - 140€</li>
             </ul>
+                <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Disponibilità per zona</h2>
+            <p>
+              I dermatologi a Roma ricevono in studi distribuiti su tutto il territorio. Se cerchi uno specialista in zone centrali come 
+              <strong> <a href="/dermatologi-roma?quartiere=Centro%20Storico" style={{ color: '#0891b2', textDecoration: 'none' }}>Centro Storico</a></strong>, 
+              <strong> <a href="/dermatologi-roma?quartiere=Prati" style={{ color: '#0891b2', textDecoration: 'none' }}>Prati</a></strong> o 
+              <strong> <a href="/dermatologi-roma?quartiere=Parioli" style={{ color: '#0891b2', textDecoration: 'none' }}>Parioli</a></strong>, troverai un'ampia scelta di cliniche private. 
+            </p>
+            
+            <p>
+              Per chi risiede in zone più residenziali o periferiche, sono presenti ottimi professionisti a 
+              <strong> <a href="/dermatologi-roma?quartiere=San%20Giovanni" style={{ color: '#0891b2', textDecoration: 'none' }}>San Giovanni</a></strong>, 
+              <strong> <a href="/dermatologi-roma?quartiere=Monteverde" style={{ color: '#0891b2', textDecoration: 'none' }}>Monteverde</a></strong>, 
+              <strong> <a href="/dermatologi-roma?quartiere=Aurelio" style={{ color: '#0891b2', textDecoration: 'none' }}>Aurelio</a></strong> e 
+              <strong> <a href="/dermatologi-roma?quartiere=Montesacro" style={{ color: '#0891b2', textDecoration: 'none' }}>Montesacro</a></strong>. 
+              Inoltre, puoi trovare studi dermatologici facilmente raggiungibili anche a 
+              <strong> <a href="/dermatologi-roma?quartiere=Ostia" style={{ color: '#0891b2', textDecoration: 'none' }}>Ostia</a></strong>, 
+              <strong> <a href="/dermatologi-roma?quartiere=Tiburtina" style={{ color: '#0891b2', textDecoration: 'none' }}>Tiburtina</a></strong> ed 
+              <strong> <a href="/dermatologi-roma?quartiere=EUR" style={{ color: '#0891b2', textDecoration: 'none' }}>EUR</a></strong>.
+            </p>
+          </section>
           </section>
 
           {/* CTA BOX */}
