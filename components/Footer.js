@@ -19,7 +19,7 @@ export default function Footer() {
 {/* SEZIONE SOCIAL CON ICONE E LINK TESTATI */}
             <h5 style={{ color: 'white', fontSize: '14px', marginBottom: '10px', marginTop: '15px' }}>Seguici su:</h5>
             <div style={{ display: 'flex', gap: '15px' }}>
-              <a href="https://www.facebook.com/profile.php?id=61587757573445" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <a href="https://www.instagram.com/servizisalute" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="18" height="18" alt="FB" /> Facebook
               </a>
               <a href="https://www.instagram.com/servizi_salute/" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
