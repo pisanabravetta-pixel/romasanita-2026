@@ -16,6 +16,17 @@ export default function Footer() {
               ServiziSalute è il portale di annunci dedicato ai servizi sanitari a Roma. 
               Trova farmacie, dentisti, centri diagnostici e visite specialistiche vicino a te.
             </p>
+              {/* INCOLLA DA QUI --> */}
+            <h5 style={{ color: 'white', fontSize: '14px', marginBottom: '10px', marginTop: '15px' }}>Seguici su:</h5>
+            <div style={{ display: 'flex', gap: '15px' }}>
+              <a href="https://www.facebook.com/profile.php?id=61587757573445" target="_blank" rel="noopener noreferrer" style={{ color: '#63b3ed', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ fontSize: '18px' }}>fb</span> Facebook
+              </a>
+              <a href="https://www.instagram.com/servizi_salute/" target="_blank" rel="noopener noreferrer" style={{ color: '#63b3ed', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ fontSize: '18px' }}>ig</span> Instagram
+              </a>
+            </div>
+            {/* <-- A QUI */} 
           </div>
 
         {/* COLONNA 2: PER GLI UTENTI (ORDINATA E COMPLETA) */}
