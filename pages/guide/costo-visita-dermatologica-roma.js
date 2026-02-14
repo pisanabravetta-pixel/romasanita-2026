@@ -84,9 +84,8 @@ export default function GuidaDermatologia() {
               <strong> <a href="/dermatologi-roma?quartiere=EUR" style={{ color: '#0891b2', textDecoration: 'none' }}>EUR</a></strong>.
             </p>
           </section>
-          </section>
 
-          {/* CTA BOX */}
+           {/* CTA BOX */}
           <div style={{ marginTop: '50px', padding: '40px', backgroundColor: '#164e63', borderRadius: '24px', color: 'white', textAlign: 'center' }}>
             <h3 style={{ margin: '0 0 10px 0', fontSize: '24px' }}>Hai bisogno di un Dermatologo?</h3>
             <p style={{ opacity: 0.9, marginBottom: '25px' }}>Trova i migliori specialisti nei quartieri di Roma e prenota la tua visita online.</p>
