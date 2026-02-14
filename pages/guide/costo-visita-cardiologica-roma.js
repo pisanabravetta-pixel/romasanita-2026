@@ -61,6 +61,25 @@ export default function GuidaCardiologia() {
               <li><strong>Livello di specializzazione:</strong> Tariffe in base all'esperienza dello specialista.</li>
               <li><strong>Zona di Roma:</strong> Gli studi in centro (Prati, Parioli) possono avere costi superiori.</li>
             </ul>
+                <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Dove trovare studi cardiologici</h2>
+            <p>
+              A Roma la scelta dello specialista può essere guidata dalla vicinanza territoriale. Nelle zone di 
+              <strong> <a href="/cardiologi-roma?quartiere=Centro%20Storico" style={{ color: '#0891b2', textDecoration: 'none' }}>Centro Storico</a></strong>, 
+              <strong> <a href="/cardiologi-roma?quartiere=Prati" style={{ color: '#0891b2', textDecoration: 'none' }}>Prati</a></strong> e 
+              <strong> <a href="/cardiologi-roma?quartiere=Parioli" style={{ color: '#0891b2', textDecoration: 'none' }}>Parioli</a></strong> si concentrano molti studi storici. 
+            </p>
+            
+            <p>
+              Studi cardiologici moderni e facilmente raggiungibili sono presenti a 
+              <strong> <a href="/cardiologi-roma?quartiere=San%20Giovanni" style={{ color: '#0891b2', textDecoration: 'none' }}>San Giovanni</a></strong>, 
+              <strong> <a href="/cardiologi-roma?quartiere=Monteverde" style={{ color: '#0891b2', textDecoration: 'none' }}>Monteverde</a></strong>, 
+              <strong> <a href="/cardiologi-roma?quartiere=Aurelio" style={{ color: '#0891b2', textDecoration: 'none' }}>Aurelio</a></strong> e 
+              <strong> <a href="/cardiologi-roma?quartiere=Montesacro" style={{ color: '#0891b2', textDecoration: 'none' }}>Montesacro</a></strong>. 
+              Se cerchi specialisti in zone ben collegate o vicino ad aree aziendali e litorale, puoi consultare i professionisti a 
+              <strong> <a href="/cardiologi-roma?quartiere=Ostia" style={{ color: '#0891b2', textDecoration: 'none' }}>Ostia</a></strong>, 
+              <strong> <a href="/cardiologi-roma?quartiere=Tiburtina" style={{ color: '#0891b2', textDecoration: 'none' }}>Tiburtina</a></strong> ed 
+              <strong> <a href="/cardiologi-roma?quartiere=EUR" style={{ color: '#0891b2', textDecoration: 'none' }}>EUR</a></strong>.
+            </p>
           </section>
 
           {/* CTA BOX */}
