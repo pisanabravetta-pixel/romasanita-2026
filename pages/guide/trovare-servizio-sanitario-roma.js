@@ -4,10 +4,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer'; // 1. IMPORT PRECISO
 
 export default function GuidaRicercaSanitaria() {
+  const dataCorrente = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Come trovare il servizio sanitario giusto a Roma | ServiziSalute</title>
+       <title>Come trovare il servizio sanitario a Roma | Guida {dataCorrente}</title>
         <meta name="description" content="Guida pratica su come trovare farmacie, dentisti e specialisti nei quartieri di Roma. Scopri come semplificare la tua ricerca sanitaria locale." />
         <meta name="robots" content="max-image-preview:large" />
       </Head>
@@ -49,13 +50,13 @@ export default function GuidaRicercaSanitaria() {
 
         <article>
           <h1 style={{ color: '#065f46', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
-            Come trovare il servizio sanitario giusto a Roma, nel proprio quartiere
-          </h1>
+  Come trovare il servizio sanitario giusto a Roma ({dataCorrente})
+</h1>
 
           <div style={{ backgroundColor: '#f0fdf4', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #10b981', marginBottom: '35px' }}>
-            <p style={{ margin: 0, color: '#166534', fontSize: '18px', lineHeight: '1.6' }}>
-              Roma è una città grande e complessa. Quando si ha bisogno di un servizio sanitario, sapere dove cercare e a chi rivolgersi fa la differenza tra risolvere un problema o perdere ore nel traffico.
-            </p>
+           <p style={{ margin: 0, color: '#166534', fontSize: '18px', lineHeight: '1.6' }}>
+  Roma è una città complessa. Questa guida, aggiornata a <strong>{dataCorrente}</strong>, ti aiuta a trovare rapidamente specialisti e strutture nel tuo quartiere senza perdere tempo.
+</p>
           </div>
 
           <section style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
@@ -109,7 +110,7 @@ export default function GuidaRicercaSanitaria() {
       </main>
 {/* NUOVO DISCLAIMER SPECIFICO PER RICERCA SERVIZI */}
           <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
-            <strong>Nota Informativa:</strong> Le informazioni fornite in questa guida hanno scopo puramente orientativo per facilitare la ricerca dei servizi sul territorio di Roma. ServiziSalute non effettua una selezione clinica dei professionisti e non risponde della qualità delle prestazioni erogate. Si consiglia sempre di verificare le autorizzazioni sanitarie e le recensioni prima di ogni visita.
+           <strong>Nota Informativa:</strong> Le informazioni fornite in questa guida sono state verificate a {dataCorrente} e hanno scopo puramente orientativo per facilitare la ricerca dei servizi sul territorio di Roma. ServiziSalute non effettua una selezione clinica dei professionisti e non risponde della qualità delle prestazioni erogate. Si consiglia sempre di verificare le autorizzazioni sanitarie e le recensioni prima di ogni visita.
           </div>
       {/* 4. FOOTER MASTER AUTOMATICO (PULIZIA CHIRURGICA) */}
       <Footer />
