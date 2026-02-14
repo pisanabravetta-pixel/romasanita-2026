@@ -22,7 +22,7 @@ export default function Footer() {
             <a href="https://www.instagram.com/servizisalute" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="18" height="18" alt="FB" /> Facebook
               </a>
-              <a href="https://www.instagram.com/servizi_salute/" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+             <a href="https://www.instagram.com/servizisalute/" target="_blank" rel="noopener noreferrer" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" width="18" height="18" alt="IG" /> Instagram
               </a>
             </div>
