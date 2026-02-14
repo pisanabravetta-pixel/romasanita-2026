@@ -67,7 +67,7 @@ export default function GuidaCostoDenti() {
               <strong> <a href="/dentisti-roma?quartiere=Parioli" style={{ color: '#2563eb', textDecoration: 'none' }}>Parioli</a></strong>, i prezzi possono essere leggermente superiori alla media. 
             </p>
             
-            <p>
+           <p>
               Opzioni con ottimo rapporto qualità-prezzo si trovano spesso a 
               <strong> <a href="/dentisti-roma?quartiere=San%20Giovanni" style={{ color: '#2563eb', textDecoration: 'none' }}>San Giovanni</a></strong>, 
               <strong> <a href="/dentisti-roma?quartiere=Monteverde" style={{ color: '#2563eb', textDecoration: 'none' }}>Monteverde</a></strong>, 
@@ -78,7 +78,6 @@ export default function GuidaCostoDenti() {
               <strong> <a href="/dentisti-roma?quartiere=Tiburtina" style={{ color: '#2563eb', textDecoration: 'none' }}>Tiburtina</a></strong> ed 
               <strong> <a href="/dentisti-roma?quartiere=EUR" style={{ color: '#2563eb', textDecoration: 'none' }}>EUR</a></strong>.
             </p>
-            </div>
           </section>
 
           <div style={{ marginTop: '50px', padding: '30px', backgroundColor: '#1e3a8a', borderRadius: '20px', color: 'white', textAlign: 'center' }}>
