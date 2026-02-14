@@ -75,6 +75,26 @@ export default function GuidaRicercaSanitaria() {
               ServiziSalute nasce proprio per questo: raccogliere e organizzare i servizi sanitari presenti a Roma, suddividendoli per categoria e quartiere. 
               In questo modo l’utente può trovare rapidamente ciò che cerca, visualizzando subito i contatti diretti dei professionisti.
             </p>
+                
+       <h2 style={{ color: '#065f46', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Naviga tra i quartieri di Roma</h2>
+            <p>
+              Abbiamo mappato i servizi sanitari nelle principali aree della Capitale per garantirti la massima vicinanza. Puoi iniziare la tua ricerca dai quartieri storici come 
+              <strong> <a href="/quartieri-roma?quartiere=Centro%20Storico" style={{ color: '#059669', textDecoration: 'none' }}>Centro Storico</a></strong>, 
+              <strong> <a href="/quartieri-roma?quartiere=Prati" style={{ color: '#059669', textDecoration: 'none' }}>Prati</a></strong> o 
+              <strong> <a href="/quartieri-roma?quartiere=Parioli" style={{ color: '#059669', textDecoration: 'none' }}>Parioli</a></strong>. 
+            </p>
+            
+            <p>
+              Se vivi in zone residenziali dinamiche, trovi elenchi completi per 
+              <strong> <a href="/quartieri-roma?quartiere=San%20Giovanni" style={{ color: '#059669', textDecoration: 'none' }}>San Giovanni</a></strong>, 
+              <strong> <a href="/quartieri-roma?quartiere=Monteverde" style={{ color: '#059669', textDecoration: 'none' }}>Monteverde</a></strong>, 
+              <strong> <a href="/quartieri-roma?quartiere=Aurelio" style={{ color: '#059669', textDecoration: 'none' }}>Aurelio</a></strong> e 
+              <strong> <a href="/quartieri-roma?quartiere=Montesacro" style={{ color: '#059669', textDecoration: 'none' }}>Montesacro</a></strong>. 
+              Copriamo inoltre i grandi snodi e le aree esterne come 
+              <strong> <a href="/quartieri-roma?quartiere=Ostia" style={{ color: '#059669', textDecoration: 'none' }}>Ostia</a></strong>, 
+              <strong> <a href="/quartieri-roma?quartiere=Tiburtina" style={{ color: '#059669', textDecoration: 'none' }}>Tiburtina</a></strong> e l'
+              <strong> <a href="/quartieri-roma?quartiere=EUR" style={{ color: '#059669', textDecoration: 'none' }}>EUR</a></strong>.
+            </p>
           </section>
 
           {/* CTA PROFESSIONISTI */}
