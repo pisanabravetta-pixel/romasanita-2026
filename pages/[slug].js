@@ -21,17 +21,41 @@ const router = useRouter();
     }
     return null;
   }
-  // 1. Calcolo automatico della data corrente
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataAttuale = new Date();
-  const meseCorrente = mesi[dataAttuale.getMonth()];
-  const annoCorrente = dataAttuale.getFullYear();
-  const dataStringa = `${meseCorrente} ${annoCorrente}`;
+// --- 1. Calcolo automatico della data corrente (già presente nel tuo codice) ---
+const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+const dataAttuale = new Date();
+const meseCorrente = mesi[dataAttuale.getMonth()];
+const annoCorrente = dataAttuale.getFullYear();
+const dataStringa = `${meseCorrente} ${annoCorrente}`;
 
-  // 2. Definizione testi dinamici per questa pagina
- const quartiereNome = slug ? slug.split('-roma-')[1]?.charAt(0).toUpperCase() + slug.split('-roma-')[1]?.slice(1) : '';
-const titoloPulito = filtri.spec.toUpperCase();
-  const colore = filtri.colore || '#2563eb';
+// --- 2. LOGICA CORRETTA PER TITOLI E QUARTIERI (DA INSERIRE ORA) ---
+const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+const catSlug = slugPuro.split('@')[0];
+const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : '';
+
+// Mapping per bloccare gli errori di troncamento (FARMAC -> FARMACIE)
+const nomiCorrettiH1 = {
+  'farmacie': 'FARMACIE',
+  'farmac': 'FARMACIE', 
+  'diagnostica': 'DIAGNOSTICA',
+  'diagnost': 'DIAGNOSTICA',
+  'dentisti': 'DENTISTI',
+  'dermatologi': 'DERMATOLOGI',
+  'cardiologi': 'CARDIOLOGI',
+  'psicologi': 'PSICOLOGI',
+  'oculisti': 'OCULISTI',
+  'ortopedici': 'ORTOPEDICI',
+  'nutrizionisti': 'NUTRIZIONISTI',
+  'ginecologi': 'GINECOLOGI'
+};
+
+// Calcolo del nome quartiere pulito
+const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+
+// Calcolo del titolo della categoria (Top Bar e H1)
+const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
+
+const colore = filtri.colore || '#2563eb';
   // --- FINE RIPRISTINO ---
   const [servizi, setServizi] = useState([]);
   const [loading, setLoading] = useState(true);
