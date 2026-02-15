@@ -29,8 +29,8 @@ const router = useRouter();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
 
   // 2. Definizione testi dinamici per questa pagina
-  const quartiereNome = slug ? slug.split('-roma-')[1]?.charAt(0).toUpperCase() + slug.split('-roma-')[1]?.slice(1) : '';
-  const titoloPulito = filtri.spec.toUpperCase();
+ const quartiereNome = slug ? slug.split('-roma-')[1]?.charAt(0).toUpperCase() + slug.split('-roma-')[1]?.slice(1) : '';
+const titoloPulito = filtri.spec.toUpperCase();
   const colore = filtri.colore || '#2563eb';
   // --- FINE RIPRISTINO ---
   const [servizi, setServizi] = useState([]);
