@@ -277,12 +277,14 @@ setMeta({
   {(() => {
     const slugCorrente = slug?.toLowerCase() || '';
     
-    // Testi calamita per le URGENZE nei quartieri target
-    const testiUrgenza = {
-      'prati': `Cerchi una farmacia di turno o un dentista per un'urgenza a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per visite immediate o farmaci salvavita.`,
-      'eur': `L'Hub sanitario dell'EUR è attivo anche per le emergenze. Se cerchi assistenza rapida o uno specialista reperibile oggi nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
-      'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp per saltare la fila.`
-    };
+   // Testi calamita ottimizzati
+const tipoServizio = meta.cat.includes('farmaci') ? 'farmaci di turno' : 'uno specialista';
+
+const testiUrgenza = {
+  'prati': `Cerchi una farmacia di turno o un'urgenza medica a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per assistenza immediata.`,
+  'eur': `L'Hub sanitario dell'EUR è attivo anche per le emergenze. Se cerchi ${tipoServizio} o assistenza rapida nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
+  'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp.`
+};
 
     // Identifica se siamo in un quartiere "top"
     const chiaveQuartiere = Object.keys(testiUrgenza).find(q => slugCorrente.includes(q));
