@@ -277,7 +277,7 @@ setMeta({
   {(() => {
     const slugCorrente = slug?.toLowerCase() || '';
     
-    // 1. Definiamo i controlli (una sola volta!)
+    // 1. Definiamo i controlli
     const checkFarmacia = slugCorrente.includes('farmac') || (meta.cat && meta.cat.toLowerCase().includes('farmac'));
     const nomePosto = checkFarmacia ? 'Il presidio farmaceutico' : 'L\'Hub sanitario';
     const tipoServizio = checkFarmacia ? 'farmaci di turno' : 'uno specialista';
@@ -292,7 +292,7 @@ setMeta({
     const chiaveQuartiere = Object.keys(testiUrgenza).find(q => slugCorrente.includes(q));
     const introUrgenza = chiaveQuartiere ? testiUrgenza[chiaveQuartiere] : '';
 
-    // 3. Output finale
+    // 3. Output finale del blocco SEO
     return (
       <p>
         {introUrgenza && (
@@ -315,7 +315,15 @@ setMeta({
   })()}
 </div>
 
-    return (
+{/* Selezione Zone */}
+<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '15px', border: '1px solid #e2e8f0' }}>
+  <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    {quartieriTop.map(q => (
+      <a key={q.s} href={`/${meta.cat}-roma-${q.s}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q.n}</a>
+    ))}
+  </div>
+</div>
       <p>
         {introUrgenza && (
           <span style={{ display: 'block', marginBottom: '12px', color: '#b91c1c', fontWeight: '700' }}>
