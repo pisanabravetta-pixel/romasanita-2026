@@ -320,45 +320,6 @@ setMeta({
           ))}
         </div>
       </div>
-{/* Selezione Zone */}
-<div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '15px', border: '1px solid #e2e8f0' }}>
-  <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
-  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-    {quartieriTop.map(q => (
-      <a key={q.s} href={`/${meta.cat}-roma-${q.s}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q.n}</a>
-    ))}
-  </div>
-</div>
-      <p>
-        {introUrgenza && (
-          <span style={{ display: 'block', marginBottom: '12px', color: '#b91c1c', fontWeight: '700' }}>
-            🚨 {introUrgenza}
-          </span>
-        )}
-        Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere. 
-        {checkFarmacia && (
-          <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
-        )}
-        {meta.cat.includes('psico') && (
-          <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
-        )}
-        {!checkFarmacia && !meta.cat.includes('psico') && (
-          <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
-        )}
-      </p>
-    );
-  })()}
-</div>
-        {/* Selezione Zone */}
-        <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '15px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: '15px', fontWeight: '900', marginBottom: '12px' }}>Cerca in altre zone vicino a {meta.zona}:</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {quartieriTop.map(q => (
-              <a key={q.s} href={`/${meta.cat}-roma-${q.s}`} style={{ padding: '7px 12px', backgroundColor: tema.chiaro, color: tema.primario, borderRadius: '8px', textDecoration: 'none', fontWeight: '700', fontSize: '12px' }}>{q.n}</a>
-            ))}
-          </div>
-        </div>
-
     {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
 <div style={{ marginBottom: '0px' }}>
   <div 
