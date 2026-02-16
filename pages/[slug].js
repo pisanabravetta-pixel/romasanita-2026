@@ -272,20 +272,42 @@ setMeta({
   </p>
 </div>
 
-{/* TESTO SEO INTELLIGENTE */}
+{/* TESTO SEO INTELLIGENTE POTENZIATO */}
 <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
-  <p>
-    Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere. 
-    {meta.cat.includes('farmaci') && (
-      <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
-    )}
-    {meta.cat.includes('psico') && (
-      <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
-    )}
-    {!meta.cat.includes('farmaci') && !meta.cat.includes('psico') && (
-      <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
-    )}
-  </p>
+  {(() => {
+    const slugCorrente = slug?.toLowerCase() || '';
+    
+    // Testi calamita per le URGENZE nei quartieri target
+    const testiUrgenza = {
+      'prati': `Cerchi una farmacia di turno o un dentista per un'urgenza a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per visite immediate o farmaci salvavita.`,
+      'eur': `L'Hub sanitario dell'EUR è attivo anche per le emergenze. Se cerchi assistenza rapida o uno specialista reperibile oggi nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
+      'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp per saltare la fila.`
+    };
+
+    // Identifica se siamo in un quartiere "top"
+    const chiaveQuartiere = Object.keys(testiUrgenza).find(q => slugCorrente.includes(q));
+    const introUrgenza = chiaveQuartiere ? testiUrgenza[chiaveQuartiere] : '';
+
+    return (
+      <p>
+        {introUrgenza && (
+          <span style={{ display: 'block', marginBottom: '12px', color: '#b91c1c', fontWeight: '700' }}>
+            🚨 {introUrgenza}
+          </span>
+        )}
+        Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere. 
+        {meta.cat.includes('farmaci') && (
+          <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
+        )}
+        {meta.cat.includes('psico') && (
+          <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
+        )}
+        {!meta.cat.includes('farmaci') && !meta.cat.includes('psico') && (
+          <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
+        )}
+      </p>
+    );
+  })()}
 </div>
 
         {/* Selezione Zone */}
