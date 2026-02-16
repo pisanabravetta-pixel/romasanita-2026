@@ -281,11 +281,15 @@ setMeta({
     const checkFarmacia = slugCorrente.includes('farmac') || (meta.cat && meta.cat.toLowerCase().includes('farmac'));
     const tipoServizio = checkFarmacia ? 'farmaci di turno' : 'uno specialista';
 
-    const testiUrgenza = {
-      'prati': `Cerchi ${checkFarmacia ? 'una farmacia di turno' : 'un\'urgenza medica'} a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per assistenza immediata.`,
-      'eur': `L'Hub sanitario dell'EUR è attivo anche per le emergenze. Se cerchi ${tipoServizio} o assistenza rapida nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
-      'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp.`
-    };
+    // Definiamo come chiamare il posto in base alla categoria
+const nomePosto = checkFarmacia ? 'Il presidio farmaceutico' : 'L\'Hub sanitario';
+const tipoServizio = checkFarmacia ? 'farmaci di turno' : 'uno specialista';
+
+const testiUrgenza = {
+  'prati': `Cerchi ${checkFarmacia ? 'una farmacia di turno' : 'un\'urgenza medica'} a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per assistenza immediata.`,
+  'eur': `${nomePosto} dell'EUR è attivo anche per le emergenze. Se cerchi ${tipoServizio} o assistenza rapida nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
+  'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp.`
+};
 
     const chiaveQuartiere = Object.keys(testiUrgenza).find(q => slugCorrente.includes(q));
     const introUrgenza = chiaveQuartiere ? testiUrgenza[chiaveQuartiere] : '';
