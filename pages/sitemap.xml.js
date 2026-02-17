@@ -27,10 +27,13 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }) {
-// 1. PAGINE FISSE (Aggiornato con le Guide)
+// 1. PAGINE FISSE (Aggiornato con le nuove Guide)
   const staticPages = [
     { url: '', priority: 1.0 },
     { url: '/guide', priority: 0.9 },
+    { url: '/guide/costo-visita-ginecologica-roma', priority: 0.8 }, // NUOVA
+    { url: '/guide/costo-visita-oculistica-roma', priority: 0.8 },   // NUOVA
+    { url: '/guide/costo-risonanza-magnetica-roma', priority: 0.8 }, // NUOVA
     { url: '/guide/costo-pulizia-denti-roma', priority: 0.8 },
     { url: '/guide/costo-visita-cardiologica-roma', priority: 0.8 },
     { url: '/guide/costo-visita-dermatologica-roma', priority: 0.8 },
