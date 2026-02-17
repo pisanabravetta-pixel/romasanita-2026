@@ -4,45 +4,45 @@ export default function UltimiAnnunci() {
   const annunci = [
     { 
       cat: 'FARMACIE', 
-      title: 'Farmacia Igea (H24 Roma)', 
+      title: 'Farmacia Igea H24 (Prati/Trionfale)', 
       img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
       tel: '0635343695',
-      wa: '393408518600' // Numero WhatsApp reale Farmacia Igea
+      wa: '393408518600' 
     },
     { 
       cat: 'DIAGNOSTICA', 
-      title: 'Altamedica Centro Diagnostico', 
+      title: 'Altamedica Viale Liegi', 
       img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
       tel: '068505',
-      wa: '393316461321' // Numero WhatsApp reale Altamedica
+      wa: '393316461321' 
     },
     { 
       cat: 'DENTISTI', 
-      title: 'Studio Dentistico Roma Eur', 
+      title: 'Studio Odontoiatrico Eur', 
       img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
       tel: '065924567',
-      wa: '393339876543' // Placeholder di un cellulare (molti studi Eur usano WA Business)
+      wa: '393478899000' 
     },
     { 
       cat: 'SPECIALISTI', 
-      title: 'Dermatologo Prati - Dott.ssa Rossi', 
+      title: 'Dermatologo Prati - Centro Medico', 
       img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
-      tel: '063214567',
-      wa: '393471234567' 
+      tel: '063701234',
+      wa: '393331234567' 
     },
     { 
       cat: 'DOMICILIO', 
-      title: 'PrivatAssistenza Roma (Domicilio)', 
+      title: 'PrivatAssistenza Roma Domicilio', 
       img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400',
       tel: '0687750841',
-      wa: '393481234567' // PrivatAssistenza usa spesso numeri cellulari per le urgenze
+      wa: '393481234567' 
     }
   ];
 
   const [idx, setIdx] = useState(0);
 
   const getWaLink = (ann) => {
-    const messaggio = encodeURIComponent(`Ciao, ti contatto tramite ServiziSalute.com per informazioni su: ${ann.title}`);
+    const messaggio = encodeURIComponent(`Ciao, ti contatto da ServiziSalute.com per: ${ann.title}`);
     return `https://wa.me/${ann.wa}?text=${messaggio}`;
   };
 
@@ -77,10 +77,12 @@ export default function UltimiAnnunci() {
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
               <img src={ann.img} style={{ width: '100%', height: '140px', objectFit: 'cover' }} alt="" />
-              <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+              <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
-                <h4 className="titolo-card-pc">{ann.title}</h4>
-                <div className="btn-container-pc">
+                <div style={{ minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
+                </div>
+                <div style={{ display: 'flex', gap: '5px', marginTop: 'auto', paddingTop: '10px' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
                   <a href={getWaLink(ann)} target="_blank" rel="noreferrer" className="btn-wa-pc">
                     <i className="fab fa-whatsapp"></i>
@@ -94,21 +96,14 @@ export default function UltimiAnnunci() {
 
       <style jsx>{`
         .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; display: flex; flex-direction: column; }
-        .titolo-card { fontSize: 19px; margin: 5px 0 15px 0; fontWeight: 800; min-height: 50px; }
-        .titolo-card-pc { fontSize: 14px; margin: 5px 0; fontWeight: 800; min-height: 40px; display: flex; align-items: center; justify-content: center; }
-        
+        .titolo-card { font-size: 19px; margin: 5px 0 15px 0; font-weight: 800; min-height: 50px; }
         .btn-container { display: flex; gap: 10px; }
-        .btn-container-pc { display: flex; gap: 5px; margin-top: auto; }
-
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
-        
-        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; }
+        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; }
         .btn-wa-pc { background: #25D366; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; }
-        
-        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; }
+        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; text-align: center; }
         .btn-wa-mobile { background: #25D366; color: white; padding: 15px 25px; border-radius: 10px; font-size: 20px; display: flex; align-items: center; justify-content: center; }
-
         .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
         .solo-mobile-slider { display: none; }
         @media (max-width: 768px) { .solo-pc-grid { display: none; } .solo-mobile-slider { display: block; } }
