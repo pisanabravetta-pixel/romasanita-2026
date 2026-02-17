@@ -1,52 +1,52 @@
 import React, { useState } from 'react';
 
 export default function UltimiAnnunci() {
-  // Ho aggiornato i numeri WA con prefissi da cellulare (3) perché i fissi (06) spesso non hanno WA.
+  // Solo il dentista dell'Eur ha WhatsApp disponibile come richiesto
   const annunci = [
     { 
       cat: 'FARMACIE', 
-      title: 'Farmacia Cola di Rienzo (Prati)', 
+      title: 'Farmacia Prati (Via Cola di Rienzo)', 
       img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
       tel: '063243172',
-      wa: '393281234567' // Numero cellulare fittizio (i fissi 06 non vanno su WA)
+      hasWa: false 
     },
     { 
       cat: 'DIAGNOSTICA', 
-      title: 'Centro RX Eur - Analisi', 
+      title: 'Centro Diagnostico Eur - RX', 
       img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
       tel: '065912345',
-      wa: '393334455666'
+      hasWa: false
     },
     { 
       cat: 'DENTISTI', 
       title: 'Studio Odontoiatrico Eur', 
       img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
       tel: '065924567',
-      wa: '393478899000'
+      wa: '393478899000', // Numero fittizio da sostituire con quello reale del dentista
+      hasWa: true
     },
     { 
       cat: 'SPECIALISTI', 
-      title: 'Dermatologo Prati - Dott. Bianchi', 
+      title: 'Dermatologo Roma Centro', 
       img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
       tel: '063214567',
-      wa: '393491122333'
+      hasWa: false
     },
     { 
       cat: 'DOMICILIO', 
-      title: 'Infermiere a Domicilio - Prati/Centro', 
+      title: 'Infermiere Professionale Prati', 
       img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400',
       tel: '3335554433',
-      wa: '393335554433'
+      hasWa: false
     }
   ];
 
   const [idx, setIdx] = useState(0);
 
   const getWaLink = (ann) => {
-    // Assicuriamoci che non ci siano spazi o simboli nel numero
-    const cleanNumber = ann.wa.replace(/\D/g, '');
+    if (!ann.wa) return '#';
     const messaggio = encodeURIComponent(`Ciao, ti contatto da ServiziSalute.com per l'annuncio: ${ann.title}`);
-    return `https://wa.me/${cleanNumber}?text=${messaggio}`;
+    return `https://wa.me/${ann.wa}?text=${messaggio}`;
   };
 
   return (
@@ -67,9 +67,11 @@ export default function UltimiAnnunci() {
               <h4 style={{ fontSize: '19px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
-                <a href={getWaLink(annunci[idx])} target="_blank" rel="noopener noreferrer" className="btn-wa-mobile">
-                  <i className="fab fa-whatsapp"></i>
-                </a>
+                {annunci[idx].hasWa && (
+                  <a href={getWaLink(annunci[idx])} target="_blank" rel="noopener noreferrer" className="btn-wa-mobile">
+                    <i className="fab fa-whatsapp"></i>
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -85,9 +87,11 @@ export default function UltimiAnnunci() {
                 <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
                 <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
-                  <a href={getWaLink(ann)} target="_blank" rel="noopener noreferrer" className="btn-wa-pc">
-                    <i className="fab fa-whatsapp"></i>
-                  </a>
+                  {ann.hasWa && (
+                    <a href={getWaLink(ann)} target="_blank" rel="noopener noreferrer" className="btn-wa-pc">
+                      <i className="fab fa-whatsapp"></i>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
