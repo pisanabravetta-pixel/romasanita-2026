@@ -44,13 +44,13 @@ export default function Footer() {
               <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
               <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               
-            {/* SEZIONE GUIDE */}
+          {/* SEZIONE GUIDE */}
 <li><a href="/guide/costo-visita-oculistica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Oculistica</a></li>
 <li><a href="/guide/costo-risonanza-magnetica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Risonanza Magnetica</a></li>
-<li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-<li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-<li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
-<li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Trovare servizi a Roma</a></li>
+<li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Pulizia Denti</a></li>
+<li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Cardiologica</a></li>
+<li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Dermatologica</a></li>
+<li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Trovare Servizi Sanitari</a></li>
 </ul>
 
 {/* STATISTICA RICERCHE */}
