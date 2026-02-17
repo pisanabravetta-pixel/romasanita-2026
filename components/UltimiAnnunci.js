@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
 
 export default function UltimiAnnunci() {
-  // Dati reali basati sul tuo database e zone calde (EUR, Prati)
+  // Ho aggiornato i numeri WA con prefissi da cellulare (3) perché i fissi (06) spesso non hanno WA.
   const annunci = [
     { 
       cat: 'FARMACIE', 
       title: 'Farmacia Cola di Rienzo (Prati)', 
       img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
       tel: '063243172',
-      wa: '39063243172' // Esempio numero farmacia
+      wa: '393281234567' // Numero cellulare fittizio (i fissi 06 non vanno su WA)
     },
     { 
       cat: 'DIAGNOSTICA', 
       title: 'Centro RX Eur - Analisi', 
       img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
       tel: '065912345',
-      wa: '393331234567'
+      wa: '393334455666'
     },
     { 
       cat: 'DENTISTI', 
       title: 'Studio Odontoiatrico Eur', 
       img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
       tel: '065924567',
-      wa: '393339876543'
+      wa: '393478899000'
     },
     { 
       cat: 'SPECIALISTI', 
       title: 'Dermatologo Prati - Dott. Bianchi', 
       img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
       tel: '063214567',
-      wa: '393471234567'
+      wa: '393491122333'
     },
     { 
       cat: 'DOMICILIO', 
@@ -42,10 +42,11 @@ export default function UltimiAnnunci() {
 
   const [idx, setIdx] = useState(0);
 
-  // Funzione per generare il link WhatsApp con messaggio
   const getWaLink = (ann) => {
+    // Assicuriamoci che non ci siano spazi o simboli nel numero
+    const cleanNumber = ann.wa.replace(/\D/g, '');
     const messaggio = encodeURIComponent(`Ciao, ti contatto da ServiziSalute.com per l'annuncio: ${ann.title}`);
-    return `https://wa.me/${ann.wa}?text=${messaggio}`;
+    return `https://wa.me/${cleanNumber}?text=${messaggio}`;
   };
 
   return (
@@ -66,7 +67,7 @@ export default function UltimiAnnunci() {
               <h4 style={{ fontSize: '19px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
-                <a href={getWaLink(annunci[idx])} target="_blank" rel="nofollow" className="btn-wa-mobile">
+                <a href={getWaLink(annunci[idx])} target="_blank" rel="noopener noreferrer" className="btn-wa-mobile">
                   <i className="fab fa-whatsapp"></i>
                 </a>
               </div>
@@ -84,7 +85,7 @@ export default function UltimiAnnunci() {
                 <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
                 <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
-                  <a href={getWaLink(ann)} target="_blank" rel="nofollow" className="btn-wa-pc">
+                  <a href={getWaLink(ann)} target="_blank" rel="noopener noreferrer" className="btn-wa-pc">
                     <i className="fab fa-whatsapp"></i>
                   </a>
                 </div>
@@ -95,19 +96,13 @@ export default function UltimiAnnunci() {
       </div>
 
       <style jsx>{`
-        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; transition: transform 0.2s; }
-        .box-rinforzato:hover { transform: translateY(-3px); border-color: #94a3b8; }
+        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; }
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
-        
-        /* TASTI PC */
         .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: bold; text-decoration: none; text-align: center; }
         .btn-wa-pc { background: #25D366; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; }
-        
-        /* TASTI MOBILE */
         .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; text-align: center; }
         .btn-wa-mobile { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-size: 18px; display: flex; align-items: center; justify-content: center; }
-
         .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
         .solo-mobile-slider { display: none; }
         @media (max-width: 768px) { .solo-pc-grid { display: none; } .solo-mobile-slider { display: block; } }
