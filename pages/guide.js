@@ -3,11 +3,13 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function GuideHub() {
-  const guide = [
-    { title: "Costo Pulizia Denti a Roma", link: "/guide/costo-pulizia-denti-roma", desc: "Quanto costa una seduta di igiene orale professionale nei vari quartieri?" },
-    { title: "Costo Visita Cardiologica", link: "/guide/costo-visita-cardiologica-roma", desc: "Prezzi medi e cosa include una visita specialistica al cuore a Roma." },
-    { title: "Costo Visita Dermatologica", link: "/guide/costo-visita-dermatologica-roma", desc: "Guida ai costi per il controllo dei nei e visite dermatologiche." },
-    { title: "Come trovare servizi sanitari", link: "/guide/trovare-servizio-sanitario-roma", desc: "Guida pratica all'uso del portale per i cittadini romani." }
+ const guide = [
+    { title: "Costo Visita Oculistica a Roma", link: "/guide/costo-visita-oculistica-roma", desc: "Quanto costa un controllo della vista e del fondo oculare nei migliori centri romani?", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500" },
+    { title: "Costo Risonanza Magnetica", link: "/guide/costo-risonanza-magnetica-roma", desc: "Prezzi per risonanza a ginocchio, schiena e articolazioni nei centri privati a Roma.", img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=500" },
+    { title: "Costo Pulizia Denti a Roma", link: "/guide/costo-pulizia-denti-roma", desc: "Quanto costa una seduta di igiene orale professionale nei vari quartieri?", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=500" },
+    { title: "Costo Visita Cardiologica", link: "/guide/costo-visita-cardiologica-roma", desc: "Prezzi medi e cosa include una visita specialistica al cuore a Roma.", img: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=500" },
+    { title: "Costo Visita Dermatologica", link: "/guide/costo-visita-dermatologica-roma", desc: "Guida ai costi per il controllo dei nei e visite dermatologiche.", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500" },
+    { title: "Come trovare servizi sanitari", link: "/guide/trovare-servizio-sanitario-roma", desc: "Guida pratica all'uso del portale per i cittadini romani.", img: "https://images.unsplash.com/photo-1505751172107-16781467df84?w=500" }
   ];
 
   return (
@@ -35,26 +37,32 @@ export default function GuideHub() {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
               {guide.map((item, index) => (
-                <a key={index} href={item.link} style={{ textDecoration: 'none' }}>
-                  <div style={{ 
-                    backgroundColor: '#ffffff', 
-                    padding: '30px', 
-                    borderRadius: '20px', 
-                    border: '2px solid #f1f5f9', 
-                    height: '100%',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
-                  }}
-                  className="card-guida"
-                  >
-                    <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px', fontWeight: '800' }}>
-                      {item.title} <span style={{ color: '#2563eb' }}>→</span>
-                    </h3>
-                    <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
-                      {item.desc}
-                    </p>
-                  </div>
-                </a>
+               <a key={index} href={item.link} style={{ textDecoration: 'none' }}>
+  <div style={{ 
+    backgroundColor: '#ffffff', 
+    borderRadius: '20px', 
+    border: '2px solid #f1f5f9', 
+    height: '100%',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
+    overflow: 'hidden' // Serve per non far uscire l'immagine dai bordi arrotondati
+  }}
+  className="card-guida"
+  >
+    {/* PUNTO 3: L'immagine va qui sopra a tutto */}
+    <img src={item.img} alt="" style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+    
+    {/* Questo div serve a ridare spazio ai testi, dato che abbiamo tolto il padding dal contenitore principale */}
+    <div style={{ padding: '25px' }}>
+      <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px', fontWeight: '800' }}>
+        {item.title} <span style={{ color: '#2563eb' }}>→</span>
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+        {item.desc}
+      </p>
+    </div>
+  </div>
+</a>
               ))}
             </div>
           </div>
