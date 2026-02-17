@@ -37,30 +37,24 @@ export default function GuideHub() {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
               {guide.map((item, index) => (
-               <a key={index} href={item.link} style={{ textDecoration: 'none' }}>
+ <a key={index} href={item.link} style={{ textDecoration: 'none' }}>
   <div style={{ 
     backgroundColor: '#ffffff', 
+    padding: '30px', 
     borderRadius: '20px', 
     border: '2px solid #f1f5f9', 
     height: '100%',
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
-    overflow: 'hidden' // Serve per non far uscire l'immagine dai bordi arrotondati
+    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
   }}
   className="card-guida"
   >
-    {/* PUNTO 3: L'immagine va qui sopra a tutto */}
-    <img src={item.img} alt="" style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
-    
-    {/* Questo div serve a ridare spazio ai testi, dato che abbiamo tolto il padding dal contenitore principale */}
-    <div style={{ padding: '25px' }}>
-      <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px', fontWeight: '800' }}>
-        {item.title} <span style={{ color: '#2563eb' }}>→</span>
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
-        {item.desc}
-      </p>
-    </div>
+    <h3 style={{ color: '#1e3a8a', marginBottom: '12px', fontSize: '20px', fontWeight: '800' }}>
+      {item.title} <span style={{ color: '#2563eb' }}>→</span>
+    </h3>
+    <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+      {item.desc}
+    </p>
   </div>
 </a>
               ))}
