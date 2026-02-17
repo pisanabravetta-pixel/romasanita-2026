@@ -42,7 +42,7 @@ export default function UltimiAnnunci() {
   const [idx, setIdx] = useState(0);
 
   const getWaLink = (ann) => {
-    const messaggio = encodeURIComponent(`Salve, la contatto da ServiziSalute.com per: ${ann.title}`);
+    const messaggio = encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com: ${ann.title}`);
     return `https://wa.me/${ann.wa}?text=${messaggio}`;
   };
 
