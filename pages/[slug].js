@@ -381,7 +381,7 @@ setMeta({
         
         {/* WHATSAPP FISSO E SEMPRE VERDE */}
         <a 
-          href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'}
+          href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto tramite ServiziSalute.com per informazioni su: ${v.nome}`)}` : '#'}
           onClick={(e) => { 
             if(!v.whatsapp) { 
               e.preventDefault(); 
