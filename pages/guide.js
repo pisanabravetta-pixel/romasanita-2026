@@ -4,12 +4,41 @@ import Footer from '../components/Footer';
 
 export default function GuideHub() {
  const guide = [
-  { title: "Costo Visita Oculistica a Roma", link: "/guide/costo-visita-oculistica-roma", desc: "Quanto costa un controllo della vista e del fondo oculare nei migliori centri romani?" },
-  { title: "Costo Risonanza Magnetica", link: "/guide/costo-risonanza-magnetica-roma", desc: "Prezzi per risonanza a ginocchio, schiena e articolazioni nei centri privati a Roma." },
-  { title: "Costo Pulizia Denti a Roma", link: "/guide/costo-pulizia-denti-roma", desc: "Quanto costa una seduta di igiene orale professionale nei vari quartieri?" },
-  { title: "Costo Visita Cardiologica", link: "/guide/costo-visita-cardiologica-roma", desc: "Prezzi medi e cosa include una visita specialistica al cuore a Roma." },
-  { title: "Costo Visita Dermatologica", link: "/guide/costo-visita-dermatologica-roma", desc: "Guida ai costi per il controllo dei nei e visite dermatologiche." },
-  { title: "Come trovare servizi sanitari", link: "/guide/trovare-servizio-sanitario-roma", desc: "Guida pratica all'uso del portale per i cittadini romani." }
+  { 
+    title: "Costo Visita Ginecologica a Roma", 
+    link: "/guide/costo-visita-ginecologica-roma", 
+    desc: "Prezzi medi per un controllo ginecologico completo e pap-test nei vari quartieri di Roma." 
+  },
+  { 
+    title: "Costo Visita Oculistica a Roma", 
+    link: "/guide/costo-visita-oculistica-roma", 
+    desc: "Quanto costa un controllo della vista e del fondo oculare nei migliori centri romani?" 
+  },
+  { 
+    title: "Costo Risonanza Magnetica", 
+    link: "/guide/costo-risonanza-magnetica-roma", 
+    desc: "Prezzi per risonanza a ginocchio, schiena e articolazioni nei centri privati a Roma." 
+  },
+  { 
+    title: "Costo Pulizia Denti a Roma", 
+    link: "/guide/costo-pulizia-denti-roma", 
+    desc: "Quanto costa una seduta di igiene orale professionale nei vari quartieri?" 
+  },
+  { 
+    title: "Costo Visita Cardiologica", 
+    link: "/guide/costo-visita-cardiologica-roma", 
+    desc: "Prezzi medi e cosa include una visita specialistica al cuore a Roma." 
+  },
+  { 
+    title: "Costo Visita Dermatologica", 
+    link: "/guide/costo-visita-dermatologica-roma", 
+    desc: "Guida ai costi per il controllo dei nei e visite dermatologiche." 
+  },
+  { 
+    title: "Come trovare servizi sanitari", 
+    link: "/guide/trovare-servizio-sanitario-roma", 
+    desc: "Guida pratica all'uso del portale per i cittadini romani." 
+  }
 ];
 
   return (
