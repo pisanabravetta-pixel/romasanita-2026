@@ -3,20 +3,6 @@ import React, { useState } from 'react';
 export default function UltimiAnnunci() {
   const annunci = [
     { 
-      cat: 'FARMACIE', 
-      title: 'Farmacia Igea H24 (Prati/Trionfale)', 
-      img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
-      tel: '0635343695',
-      wa: '393408518600' 
-    },
-    { 
-      cat: 'DIAGNOSTICA', 
-      title: 'Altamedica Viale Liegi', 
-      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
-      tel: '068505',
-      wa: '393316461321' 
-    },
-    { 
       cat: 'DENTISTI', 
       title: 'Studio Odontoiatrico Eur', 
       img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
@@ -24,18 +10,32 @@ export default function UltimiAnnunci() {
       wa: '393478899000' 
     },
     { 
-      cat: 'SPECIALISTI', 
-      title: 'Dermatologo Prati - Centro Medico', 
-      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
-      tel: '063701234',
-      wa: '393331234567' 
-    },
-    { 
       cat: 'DOMICILIO', 
       title: 'PrivatAssistenza Roma Domicilio', 
       img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400',
       tel: '0687750841',
       wa: '393481234567' 
+    },
+    { 
+      cat: 'SPECIALISTI', 
+      title: 'Osteopatia Roma Centro', 
+      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
+      tel: '3471234567',
+      wa: '393471234567' 
+    },
+    { 
+      cat: 'DIAGNOSTICA', 
+      title: 'Centro Medico Sant\'Agostino', 
+      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
+      tel: '028971001',
+      wa: '393442468889' 
+    },
+    { 
+      cat: 'FARMACIE', 
+      title: 'Farmacia Trionfale (Prenotazioni)', 
+      img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
+      tel: '0639737151',
+      wa: '393284567890' 
     }
   ];
 
@@ -61,8 +61,8 @@ export default function UltimiAnnunci() {
             </div>
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
-              <h4 className="titolo-card">{annunci[idx].title}</h4>
-              <div className="btn-container">
+              <h4 className="titolo-card-mobile">{annunci[idx].title}</h4>
+              <div style={{ display: 'flex', gap: '10px' }}>
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
                 <a href={getWaLink(annunci[idx])} target="_blank" rel="noreferrer" className="btn-wa-mobile">
                   <i className="fab fa-whatsapp"></i>
@@ -77,12 +77,10 @@ export default function UltimiAnnunci() {
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
               <img src={ann.img} style={{ width: '100%', height: '140px', objectFit: 'cover' }} alt="" />
-              <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', height: '160px' }}>
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
-                <div style={{ minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
-                </div>
-                <div style={{ display: 'flex', gap: '5px', marginTop: 'auto', paddingTop: '10px' }}>
+                <h4 className="titolo-card-pc">{ann.title}</h4>
+                <div style={{ display: 'flex', gap: '5px', marginTop: 'auto' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
                   <a href={getWaLink(ann)} target="_blank" rel="noreferrer" className="btn-wa-pc">
                     <i className="fab fa-whatsapp"></i>
@@ -95,15 +93,19 @@ export default function UltimiAnnunci() {
       </div>
 
       <style jsx>{`
-        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; display: flex; flex-direction: column; }
-        .titolo-card { font-size: 19px; margin: 5px 0 15px 0; font-weight: 800; min-height: 50px; }
-        .btn-container { display: flex; gap: 10px; }
+        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; }
+        .titolo-card-mobile { font-size: 19px; margin: 5px 0 15px 0; font-weight: 800; min-height: 50px; }
+        .titolo-card-pc { font-size: 14px; margin: 5px 0; font-weight: 800; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
+        
         .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-        .btn-wa-pc { background: #25D366; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; }
+        .btn-wa-pc { background: #25D366; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; display: flex; align-items: center; }
+        
         .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; text-align: center; }
         .btn-wa-mobile { background: #25D366; color: white; padding: 15px 25px; border-radius: 10px; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+
         .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
         .solo-mobile-slider { display: none; }
         @media (max-width: 768px) { .solo-pc-grid { display: none; } .solo-mobile-slider { display: block; } }
