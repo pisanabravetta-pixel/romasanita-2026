@@ -44,15 +44,16 @@ export default function Footer() {
               <li><a href="/visite-specialistiche-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Visite specialistiche</a></li>
               <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               
-             {/* SEZIONE GUIDE */}
+            {/* SEZIONE GUIDE */}
 <li><a href="/guide/costo-visita-oculistica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Oculistica</a></li>
 <li><a href="/guide/costo-risonanza-magnetica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Risonanza Magnetica</a></li>
-<li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
-<li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
-<li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
-<li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Trovare servizi a Roma</a></li>
+<li><a href="/guide/costo-pulizia-denti-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Pulizia Denti</a></li>
+<li><a href="/guide/costo-visita-cardiologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Visita Cardiologica</a></li>
+<li><a href="/guide/costo-visita-dermatologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Costo Visita Dermatologica</a></li>
+<li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Trovare servizi a Roma</a></li>
 </ul>
-            {/* STATISTICA RICERCHE */}
+
+{/* STATISTICA RICERCHE */}
             <p style={{ fontSize: '11px', color: '#a0aec0', marginTop: '15px', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
               🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
             </p>
