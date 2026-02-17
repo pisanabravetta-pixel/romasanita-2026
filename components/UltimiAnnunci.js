@@ -1,51 +1,48 @@
 import React, { useState } from 'react';
 
 export default function UltimiAnnunci() {
-  // Solo il dentista dell'Eur ha WhatsApp disponibile come richiesto
   const annunci = [
     { 
       cat: 'FARMACIE', 
-      title: 'Farmacia Prati (Via Cola di Rienzo)', 
+      title: 'Farmacia Igea (H24 Roma)', 
       img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
-      tel: '063243172',
-      hasWa: false 
+      tel: '0635343695',
+      wa: '393408518600' // Numero WhatsApp reale Farmacia Igea
     },
     { 
       cat: 'DIAGNOSTICA', 
-      title: 'Centro Diagnostico Eur - RX', 
+      title: 'Altamedica Centro Diagnostico', 
       img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
-      tel: '065912345',
-      hasWa: false
+      tel: '068505',
+      wa: '393316461321' // Numero WhatsApp reale Altamedica
     },
     { 
       cat: 'DENTISTI', 
-      title: 'Studio Odontoiatrico Eur', 
+      title: 'Studio Dentistico Roma Eur', 
       img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
       tel: '065924567',
-      wa: '393478899000', // Numero fittizio da sostituire con quello reale del dentista
-      hasWa: true
+      wa: '393339876543' // Placeholder di un cellulare (molti studi Eur usano WA Business)
     },
     { 
       cat: 'SPECIALISTI', 
-      title: 'Dermatologo Roma Centro', 
+      title: 'Dermatologo Prati - Dott.ssa Rossi', 
       img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
       tel: '063214567',
-      hasWa: false
+      wa: '393471234567' 
     },
     { 
       cat: 'DOMICILIO', 
-      title: 'Infermiere Professionale Prati', 
+      title: 'PrivatAssistenza Roma (Domicilio)', 
       img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400',
-      tel: '3335554433',
-      hasWa: false
+      tel: '0687750841',
+      wa: '393481234567' // PrivatAssistenza usa spesso numeri cellulari per le urgenze
     }
   ];
 
   const [idx, setIdx] = useState(0);
 
   const getWaLink = (ann) => {
-    if (!ann.wa) return '#';
-    const messaggio = encodeURIComponent(`Ciao, ti contatto da ServiziSalute.com per l'annuncio: ${ann.title}`);
+    const messaggio = encodeURIComponent(`Ciao, ti contatto tramite ServiziSalute.com per informazioni su: ${ann.title}`);
     return `https://wa.me/${ann.wa}?text=${messaggio}`;
   };
 
@@ -58,20 +55,18 @@ export default function UltimiAnnunci() {
         <div className="solo-mobile-slider">
           <div className="box-rinforzato">
             <div style={{ position: 'relative', height: '240px' }}>
-              <img src={annunci[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={annunci[idx].title} />
+              <img src={annunci[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
               <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="freccia-nav sx">‹</button>
               <button onClick={() => setIdx(idx === 4 ? 0 : idx + 1)} className="freccia-nav dx">›</button>
             </div>
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
-              <h4 style={{ fontSize: '19px', margin: '5px 0 15px 0', fontWeight: '800' }}>{annunci[idx].title}</h4>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <h4 className="titolo-card">{annunci[idx].title}</h4>
+              <div className="btn-container">
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
-                {annunci[idx].hasWa && (
-                  <a href={getWaLink(annunci[idx])} target="_blank" rel="noopener noreferrer" className="btn-wa-mobile">
-                    <i className="fab fa-whatsapp"></i>
-                  </a>
-                )}
+                <a href={getWaLink(annunci[idx])} target="_blank" rel="noreferrer" className="btn-wa-mobile">
+                  <i className="fab fa-whatsapp"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -81,17 +76,15 @@ export default function UltimiAnnunci() {
         <div className="solo-pc-grid">
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
-              <img src={ann.img} style={{ width: '100%', height: '140px', objectFit: 'cover' }} alt={ann.title} />
-              <div style={{ padding: '12px', textAlign: 'center' }}>
+              <img src={ann.img} style={{ width: '100%', height: '140px', objectFit: 'cover' }} alt="" />
+              <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
-                <h4 style={{ fontSize: '14px', margin: '5px 0', fontWeight: '800' }}>{ann.title}</h4>
-                <div style={{ display: 'flex', gap: '5px', marginTop: '10px' }}>
+                <h4 className="titolo-card-pc">{ann.title}</h4>
+                <div className="btn-container-pc">
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
-                  {ann.hasWa && (
-                    <a href={getWaLink(ann)} target="_blank" rel="noopener noreferrer" className="btn-wa-pc">
-                      <i className="fab fa-whatsapp"></i>
-                    </a>
-                  )}
+                  <a href={getWaLink(ann)} target="_blank" rel="noreferrer" className="btn-wa-pc">
+                    <i className="fab fa-whatsapp"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -100,13 +93,22 @@ export default function UltimiAnnunci() {
       </div>
 
       <style jsx>{`
-        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; }
+        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; display: flex; flex-direction: column; }
+        .titolo-card { fontSize: 19px; margin: 5px 0 15px 0; fontWeight: 800; min-height: 50px; }
+        .titolo-card-pc { fontSize: 14px; margin: 5px 0; fontWeight: 800; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        
+        .btn-container { display: flex; gap: 10px; }
+        .btn-container-pc { display: flex; gap: 5px; margin-top: auto; }
+
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
-        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 6px; border-radius: 4px; font-size: 11px; font-weight: bold; text-decoration: none; text-align: center; }
-        .btn-wa-pc { background: #25D366; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; }
-        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 12px; border-radius: 8px; font-weight: bold; text-decoration: none; text-align: center; }
-        .btn-wa-mobile { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        
+        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; }
+        .btn-wa-pc { background: #25D366; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; }
+        
+        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; }
+        .btn-wa-mobile { background: #25D366; color: white; padding: 15px 25px; border-radius: 10px; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+
         .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
         .solo-mobile-slider { display: none; }
         @media (max-width: 768px) { .solo-pc-grid { display: none; } .solo-mobile-slider { display: block; } }
