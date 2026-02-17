@@ -17,11 +17,11 @@ export default function GuidaCostoGinecologia() {
 
       <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto', padding: '20px' }}>
         <div style={{ width: '100%', height: '400px', overflow: 'hidden', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-          <img 
-            src="https://images.unsplash.com/photo-1579152276503-68fe42d6d62d?w=1200" 
-             alt="Studio medico ginecologico moderno e accogliente a Roma"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-          />
+         <img 
+  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200" 
+  alt="Studio medico ginecologico moderno e accogliente a Roma"
+  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+/>
         </div>
       </div>
 
