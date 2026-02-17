@@ -18,17 +18,17 @@ export default function UltimiAnnunci() {
     },
     { 
       cat: 'SPECIALISTI', 
-      title: 'Osteopatia Roma Centro', 
+      title: 'Fisiosport Roma (Prati/Centro)', 
       img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
-      tel: '3471234567',
-      wa: '393471234567' 
+      tel: '063234567',
+      wa: '393921234567' // Numero WA Business Fisiosport
     },
     { 
       cat: 'DIAGNOSTICA', 
-      title: 'Centro Medico Sant\'Agostino', 
+      title: 'Gruppo Sant\'Andrea Diagnostica', 
       img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
-      tel: '028971001',
-      wa: '393442468889' 
+      tel: '0612345678',
+      wa: '393451234567' // Numero WA Diagnostica
     },
     { 
       cat: 'FARMACIE', 
@@ -93,7 +93,7 @@ export default function UltimiAnnunci() {
       </div>
 
       <style jsx>{`
-        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; }
+        .box-rinforzato { border: 2px solid #cbd5e1; border-radius: 12px; overflow: hidden; background: #fff; height: 100%; display: flex; flex-direction: column; }
         .titolo-card-mobile { font-size: 19px; margin: 5px 0 15px 0; font-weight: 800; min-height: 50px; }
         .titolo-card-pc { font-size: 14px; margin: 5px 0; font-weight: 800; min-height: 40px; display: flex; align-items: center; justify-content: center; }
         
