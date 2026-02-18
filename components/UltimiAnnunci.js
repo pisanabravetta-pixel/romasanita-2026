@@ -72,8 +72,6 @@ const annunci = [
               <a href={getWaLink(annunci[idx])} target="_blank" rel="noreferrer" className="btn-wa-mobile">
   <i className="fab fa-whatsapp"></i>
 </a>
-                  <i className="fab fa-whatsapp"></i>
-                </a>
               </div>
             </div>
           </div>
@@ -97,8 +95,6 @@ const annunci = [
                  <a href={getWaLink(ann)} target="_blank" rel="noreferrer" className="btn-wa-pc">
   <i className="fab fa-whatsapp"></i>
 </a>
-                    <i className="fab fa-whatsapp"></i>
-                  </a>
                 </div>
               </div>
             </div>
