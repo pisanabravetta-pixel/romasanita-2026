@@ -187,7 +187,7 @@ return (
 </Head>
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
-       
+       <main>
 {/* HERO SECTION - AGGIORNATA V2 */}
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
@@ -769,7 +769,7 @@ return (
     </div>
   </div>
 </section>
-
+</main>
       <Footer />
     </div>
   </>
