@@ -266,13 +266,12 @@ setMeta({
   boxShadow: '0 4px 6px rgba(0,0,0,0.1)' 
 }}>
   <h1 style={{ color: '#1e293b', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0' }}>
-    {titoloPulito} Roma {quartiereNome}
+    {titoloPulito} Roma {quartiereNome || 'Centro'}
   </h1>
   <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-    I migliori professionisti a {quartiereNome} aggiornati a <span style={{ color: colore }}>{dataStringa}</span>
+    I migliori professionisti a {quartiereNome || 'Roma'} aggiornati a <span style={{ color: colore }}>{dataStringa}</span>
   </p>
 </div>
-
 {/* TESTO SEO INTELLIGENTE POTENZIATO */}
       <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
         {(() => {
