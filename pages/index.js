@@ -617,66 +617,91 @@ return (
   </div>
 </section>
   {/* SEZIONE PERCHÉ SCEGLIERE NOI */}
-      <section style={{ background: '#f4f7f6', padding: '70px 0' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché scegliere ServiziSalute?</h2>
-            <p style={{ fontSize: '18px', color: '#666' }}>Trovi i migliori servizi sanitari a Roma in pochi click</p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
-              <i className="fas fa-search-location" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Trovi subito ciò che ti serve</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Ricerca per zona, categoria e servizio specifico. Trovi i professionisti sanitari più vicini a casa tua.</p>
-            </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
-              <i className="fas fa-user-check" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Solo professionisti verificati</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Tutti i servizi sono offerti da professionisti qualificati e strutture sanitarie autorizzate.</p>
-            </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
-              <i className="fas fa-hand-holding-usd" style={{ fontSize: '30px', color: '#0070f3', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Gratuito e senza commissioni</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+<section style={{ background: '#f4f7f6', padding: '70px 0' }}>
+  <div className="container">
+    <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché scegliere ServiziSalute?</h2>
+      <p style={{ fontSize: '18px', color: '#666' }}>Trovi i migliori servizi sanitari a Roma in pochi click</p>
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+      
+      {/* Box 1 */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+        <svg viewBox="0 0 512 512" width="40" height="40" fill="#0070f3" style={{ marginBottom: '20px' }}>
+          <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Trovi subito ciò che ti serve</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Ricerca per zona, categoria e servizio specifico. Trovi i professionisti sanitari più vicini a casa tua.</p>
+      </div>
 
+      {/* Box 2 */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+        <svg viewBox="0 0 448 512" width="40" height="40" fill="#0070f3" style={{ marginBottom: '20px' }}>
+          <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Solo professionisti verificati</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Tutti i servizi sono offerti da professionisti qualificati e strutture sanitarie autorizzate.</p>
+      </div>
+
+      {/* Box 3 */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+        <svg viewBox="0 0 576 512" width="40" height="40" fill="#0070f3" style={{ marginBottom: '20px' }}>
+          <path d="M312 32V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm-12 64c0 17.7 14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H332c-17.7 0-32 14.3-32 32zm192 160c0-17.7-14.3-32-32-32H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H460c17.7 0 32-14.3 32-32z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Gratuito e senza commissioni</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* SEZIONE PERCHÉ PUBBLICARE */}
-      <section style={{ background: 'white', padding: '70px 0' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché pubblicare su ServiziSalute?</h2>
-            <p style={{ fontSize: '18px', color: '#666' }}>Raggiungi nuovi pazienti nella tua zona</p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', marginBottom: '50px' }}>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
-              <i className="fas fa-bullhorn" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Pubblicazione gratuita</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Pubblica i tuoi servizi senza costi iniziali. Nessuna commissione sulle prenotazioni ricevute.</p>
-            </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
-              <i className="fas fa-map-marked-alt" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Visibilità su Roma</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Raggiungi migliaia di utenti che cercano servizi sanitari ogni giorno nella capitale.</p>
-            </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
-              <i className="fas fa-chart-line" style={{ fontSize: '30px', color: '#28a745', marginBottom: '20px' }}></i>
-              <h4 style={{ marginBottom: '15px', fontSize: '18px' }}>Cresci la Tua Visibilità</h4>
-              <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Con più contatti puoi far crescere il tuo business sanitario a Roma.</p>
-            </div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <a href="/pubblica-annuncio" style={{ 
-              backgroundColor: '#0070f3', color: 'white', padding: '18px 40px', borderRadius: '50px', 
-              textDecoration: 'none', fontWeight: '700', fontSize: '18px', display: 'inline-block', boxShadow: '0 4px 15px rgba(0,112,243,0.3)' 
-            }}>
-              Pubblica il tuo annuncio gratis
-            </a>
-          </div>
-        </div>
-      </section>
+<section style={{ background: 'white', padding: '70px 0' }}>
+  <div className="container">
+    <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#333' }}>Perché pubblicare su ServiziSalute?</h2>
+      <p style={{ fontSize: '18px', color: '#666' }}>Raggiungi nuovi pazienti nella tua zona</p>
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', marginBottom: '50px' }}>
+      
+      {/* Box 1 - Pubblicazione gratuita */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+        <svg viewBox="0 0 512 512" width="40" height="40" fill="#28a745" style={{ marginBottom: '20px' }}>
+          <path d="M480 32c0-12.9-7.8-24.6-19.8-29.6s-25.7-2.2-34.9 6.9L381.7 53c-48 48-113.1 75-181 75H192 160 64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64l0 128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.1V341.9c-43.7-39.5-100.2-61.9-158.3-61.9H256V168h1.7c58.1 0 114.6-22.4 158.3-61.9z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Pubblicazione gratuita</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Pubblica i tuoi servizi senza costi iniziali. Nessuna commissione sulle prenotazioni ricevute.</p>
+      </div>
+
+      {/* Box 2 - Visibilità su Roma */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+        <svg viewBox="0 0 576 512" width="40" height="40" fill="#28a745" style={{ marginBottom: '20px' }}>
+          <path d="M384 476.1L192 421.2V35.9L384 90.8V476.1zm32-1.2V88.4L543.1 37.5c15.8-6.3 32.9 5.3 32.9 22.3V394.6c0 9.8-6 18.6-15.1 22.3L416 474.9zM15.1 95.1L160 37.1V423.6L32.9 474.5C17.1 480.8 0 469.2 0 452.2V117.4c0-9.8 6-18.6 15.1-22.3z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Visibilità su Roma</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Raggiungi migliaia di utenti che cercano servizi sanitari ogni giorno nella capitale.</p>
+      </div>
+
+      {/* Box 3 - Crescita Visibilità */}
+      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center', border: '1px solid #eee' }}>
+        <svg viewBox="0 0 448 512" width="40" height="40" fill="#28a745" style={{ marginBottom: '20px' }}>
+          <path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 176c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H416c-26.5 0-48-21.5-48-48V176z"/>
+        </svg>
+        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Cresci la Tua Visibilità</h3>
+        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Con più contatti puoi far crescere il tuo business sanitario a Roma.</p>
+      </div>
+
+    </div>
+    <div style={{ textAlign: 'center' }}>
+      <a href="/pubblica-annuncio" style={{ 
+        backgroundColor: '#0070f3', color: 'white', padding: '18px 40px', borderRadius: '50px', 
+        textDecoration: 'none', fontWeight: '700', fontSize: '18px', display: 'inline-block', boxShadow: '0 4px 15px rgba(0,112,243,0.3)' 
+      }}>
+        Pubblica il tuo annuncio gratis
+      </a>
+    </div>
+  </div>
+</section>
 
   {/* SEZIONE SEO ROMA - OTTIMIZZATA CON TITOLI E PAROLE CHIAVE */}
       <section style={{ padding: '60px 0', background: '#f8fbff' }}>
@@ -705,34 +730,35 @@ return (
         </div>
       </section>
 
-      {/* SEZIONE FAQ - AGGIORNATA A 3 DOMANDE PER COERENZA V2 */}
-      <section style={{ padding: '40px 0', background: 'white' }}>
-        <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
-          <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
-  Domande Frequenti sui Servizi Sanitari a Roma — {dataStringa}
-</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-            
-            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come trovo una farmacia di turno a Roma su ServiziSalute?</h4>
-              <p style={{ color: '#64748b' }}>Basta inserire "Farmacia" e il tuo quartiere nella barra di ricerca in alto. Ti mostreremo le strutture più vicine con i riferimenti diretti.</p>
-            </div>
+     {/* SEZIONE FAQ - AGGIORNATA A 3 DOMANDE PER COERENZA V2 */}
+ <section style={{ padding: '40px 0', background: 'white' }}>
+   <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+     <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e3a8a', textAlign: 'center', marginBottom: '40px' }}>
+       Domande Frequenti sui Servizi Sanitari a Roma — {dataStringa}
+     </h2>
+     <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+       
+       <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+         <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>Come trovo una farmacia di turno a Roma su ServiziSalute?</h3>
+         <p style={{ color: '#64748b' }}>Basta inserire "Farmacia" e il tuo quartiere nella barra di ricerca in alto. Ti mostreremo le strutture più vicine con i riferimenti diretti.</p>
+       </div>
 
-            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-              <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>I contatti dei medici sono diretti?</h4>
-              <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
-            </div>
-<div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
-  <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>
-    Come prenotare una visita specialistica a Roma a {meseCorrente}?
-  </h4>
-  <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-    Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi i contatti aggiornati a <strong>{dataStringa}</strong> per fissare l'appuntamento tramite agenda digitale o telefono.
-  </p>
-</div>
-          </div>
-        </div>
-      </section>
+       <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+         <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>I contatti dei medici sono diretti?</h3>
+         <p style={{ color: '#64748b' }}>Certamente. ServiziSalute non fa intermediazione. Troverai i pulsanti per chiamare direttamente lo studio medico o prenotare sul loro sito ufficiale.</p>
+       </div>
+
+       <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '15px' }}>
+         <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#065f46', marginBottom: '10px' }}>
+           Come prenotare una visita specialistica a Roma a {meseCorrente}?
+         </h3>
+         <p style={{ color: '#64748b', lineHeight: '1.6' }}>
+           Puoi filtrare per branca medica e quartiere. Una volta scelto il medico, trovi i contatti aggiornati a <strong>{dataStringa}</strong> per fissare l'appuntamento tramite agenda digitale o telefono.
+         </p>
+       </div>
+     </div>
+   </div>
+ </section>
 {/* 📧 SEZIONE NEWSLETTER FUNZIONANTE - ID: maqbgzzl */}
 <section style={{ backgroundColor: '#f8fafc', padding: '60px 20px', borderTop: '1px solid #e2e8f0' }}>
   <div className="container" style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
