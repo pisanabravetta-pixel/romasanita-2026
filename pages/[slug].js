@@ -217,12 +217,13 @@ setMeta({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
 <Head>
-  <title>{`${titoloPulito} a Roma ${quartiereNome} (${dataStringa}): Elenco e Contatti`}</title>
+  <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
   <meta 
     name="description" 
     content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
   />
   <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
+  <link rel="preconnect" href="https://basemaps.cartocdn.com" />
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -321,7 +322,7 @@ setMeta({
         </div>
       </div>
     {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
-<div style={{ marginBottom: '0px' }}>
+<div style={{ marginBottom: '0px', position: 'relative' }}>
   <div 
     id="map" 
     style={{ 
@@ -330,10 +331,9 @@ setMeta({
       borderRadius: '12px', 
       overflow: 'hidden', 
       border: '1px solid #e2e8f0',
-      background: '#f8fafc',
-      /* Effetto scurito per contrasto */
+      background: '#f8fafc', 
       filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
-      marginBottom: '0px' 
+      zIndex: 1
     }}
   ></div>
 </div>
