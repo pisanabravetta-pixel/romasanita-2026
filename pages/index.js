@@ -643,14 +643,14 @@ return (
         <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Tutti i servizi sono offerti da professionisti qualificati e strutture sanitarie autorizzate.</p>
       </div>
 
-      {/* Box 3 */}
-      <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
-        <svg viewBox="0 0 576 512" width="40" height="40" fill="#0070f3" style={{ marginBottom: '20px' }}>
-          <path d="M312 32V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm-12 64c0 17.7 14.3 32 32 32H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H332c-17.7 0-32 14.3-32 32zm192 160c0-17.7-14.3-32-32-32H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H460c17.7 0 32-14.3 32-32z"/>
-        </svg>
-        <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Gratuito e senza commissioni</h3>
-        <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</p>
-      </div>
+      {/* Box 3 - Sostituisci questo pezzo */}
+<div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', textAlign: 'center' }}>
+  <svg viewBox="0 0 576 512" width="40" height="40" fill="#0070f3" style={{ marginBottom: '20px' }}>
+    <path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM160 336c-13.3 0-24 10.7-24 24s10.7 24 24 24h96c13.3 0 24-10.7 24-24s-10.7-24-24-24H160z"/>
+  </svg>
+  <h3 style={{ marginBottom: '15px', fontSize: '18px', fontWeight: '700' }}>Gratuito e senza commissioni</h3>
+  <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6' }}>Il portale è completamente gratuito per gli utenti. Nessuna intermediazione, contatti diretti.</p>
+</div>
 
     </div>
   </div>
