@@ -5,7 +5,7 @@ export default function Footer() {
   const dataAttuale = new Date();
   const dataStringa = `${mesi[dataAttuale.getMonth()]} ${dataAttuale.getFullYear()}`;
   return (
-    <footer style={{ background: '#1a202c', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', width: '100%', clear: 'both' }}>
+   <footer style={{ background: '#2d3748', color: 'white', padding: '60px 0 30px', borderTop: '4px solid #3182ce', width: '100%', clear: 'both' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
           
