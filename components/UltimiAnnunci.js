@@ -66,7 +66,7 @@ const annunci = [
             </div>
             <div style={{ padding: '20px', textAlign: 'center' }}>
               <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
-              <h4 className="titolo-card-mobile">{annunci[idx].title}</h4>
+              <h3 className="titolo-card-mobile">{annunci[idx].title}</h3>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
             <a 
@@ -95,7 +95,7 @@ const annunci = [
 />
               <div style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', height: '160px' }}>
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
-                <h4 className="titolo-card-pc">{ann.title}</h4>
+               <h3 className="titolo-card-pc">{ann.title}</h3>
                 <div style={{ display: 'flex', gap: '5px', marginTop: 'auto' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
                  <a 
