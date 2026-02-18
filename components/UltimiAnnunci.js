@@ -105,7 +105,7 @@ const annunci = [
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
                <h3 className="titolo-card-pc">{ann.title}</h3>
                 <div style={{ display: 'flex', gap: '5px', marginTop: 'auto' }}>
-             a href={tel:${ann.tel}} className="btn-chiama-pc" aria-label={Chiama ${ann.title}}>Chiama</a>    
+             <a href={ + 'tel:${ann.tel}' + } className="btn-chiama-pc" aria-label={ + 'Chiama ${ann.title}' + }>Chiama</a>  
             <a 
   href={getWaLink(ann)} 
   target="_blank" 
