@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 
 export default function UltimiAnnunci() {
-  const annunci = [
+const annunci = [
     { 
       cat: 'DENTISTI', 
       title: 'Studio Odontoiatrico Eur', 
-      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
+      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=450&fm=webp&q=80',
       tel: '065924567',
       wa: '393478899000' 
     },
     { 
       cat: 'DOMICILIO', 
       title: 'PrivatAssistenza Roma Domicilio', 
-      img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400',
+      img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=450&fm=webp&q=80',
       tel: '0687750841',
       wa: '393481234567' 
     },
     { 
       cat: 'SPECIALISTI', 
       title: 'Fisiosport Roma (Prati/Centro)', 
-      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400',
+      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=450&fm=webp&q=80',
       tel: '063234567',
-      wa: '393921234567' // Numero WA Business Fisiosport
+      wa: '393921234567'
     },
     { 
       cat: 'DIAGNOSTICA', 
       title: 'Gruppo Sant\'Andrea Diagnostica', 
-      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400',
+      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=450&fm=webp&q=80',
       tel: '0612345678',
-      wa: '393451234567' // Numero WA Diagnostica
+      wa: '393451234567'
     },
     { 
       cat: 'FARMACIE', 
       title: 'Farmacia Trionfale (Prenotazioni)', 
-      img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400',
+      img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=450&fm=webp&q=80',
       tel: '0639737151',
       wa: '393284567890' 
     }
