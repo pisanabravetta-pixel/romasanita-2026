@@ -469,9 +469,9 @@ return (
             <button onClick={() => setIdCat(idCat === 0 ? 4 : idCat - 1)} className="btn-in sx">‹</button>
             
             <a href={elencoCategorie[idCat].l} className="cat-content">
-              <div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: '2px solid ' + elencoCategorie[elencoCategorie[idCat].bc] || elencoCategorie[idCat].bc }}>
-                {elencoCategorie[idCat].i}
-              </div>
+<div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: `2px solid ${elencoCategorie[idCat].bc}` }}>
+  {elencoCategorie[idCat].i}
+</div>
               <span className="cat-title-big">{elencoCategorie[idCat].n}</span>
             </a>
 
