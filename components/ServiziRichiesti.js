@@ -5,25 +5,25 @@ export default function ServiziRichiesti() {
     { 
       titolo: "Ginecologi", 
       desc: "Visite specialistiche e prevenzione", 
-      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400", 
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=450&fm=webp&q=80", 
       link: "/ginecologi-roma" 
     },
     { 
       titolo: "Dentisti", 
       desc: "Igiene, impianti e ortodonzia", 
-      img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400", 
+      img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=450&fm=webp&q=80", 
       link: "/dentisti-roma" 
     },
     { 
       titolo: "Analisi del Sangue", 
       desc: "Check-up e prelievi in farmacia", 
-      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400", 
+      img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=450&fm=webp&q=80", 
       link: "/farmacie-roma" 
     },
     { 
       titolo: "Cardiologo", 
       desc: "ECG e controllo pressione", 
-      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=400", 
+      img: "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=450&fm=webp&q=80", 
       link: "/cardiologi-roma" 
     }
   ];
@@ -39,7 +39,12 @@ export default function ServiziRichiesti() {
           <div className="box-rinforzato-servizi">
             <div style={{ position: 'relative', height: '240px' }}>
               <a href={servizi[idx].link}>
-                <img src={servizi[idx].img} style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }} alt={servizi[idx].titolo} />
+<img 
+  src={servizi[idx].img} 
+  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }} 
+  alt={servizi[idx].titolo} 
+  loading="lazy" 
+/>
               </a>
               <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx">‹</button>
               <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} className="freccia-nav dx">›</button>
@@ -58,7 +63,12 @@ export default function ServiziRichiesti() {
           {servizi.map((s, i) => (
             <a key={i} href={s.link} style={{ textDecoration: 'none' }}>
               <div className="box-rinforzato-servizi" style={{ textAlign: 'center' }}>
-                <img src={s.img} style={{ width: '100%', height: '180px', objectFit: 'cover' }} alt={s.titolo} />
+             <img 
+  src={s.img} 
+  style={{ width: '100%', height: '180px', objectFit: 'cover' }} 
+  alt={s.titolo} 
+  loading="lazy" 
+/>  
                 <div style={{ padding: '15px' }}>
                   <h4 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h4>
                   <p style={{ fontSize: '14px', color: '#64748b', marginTop: '5px' }}>{s.desc}</p>
