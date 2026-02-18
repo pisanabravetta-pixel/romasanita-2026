@@ -261,30 +261,32 @@ return (
   <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
     <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>ZONA / QUARTIERE</label>
     <select 
-      value={zonaScelta} 
-      onChange={(e) => setZonaScelta(e.target.value)}
-      style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
-    >
-      <option>Tutta Roma</option>
-      {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
-    </select>
+  aria-label="Seleziona Quartiere"
+  value={zonaScelta} 
+  onChange={(e) => setZonaScelta(e.target.value)}
+  style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
+>
+  <option>Tutta Roma</option>
+  {zoneRoma.map(zona => <option key={zona}>{zona}</option>)}
+</select>
   </div>
 
 {/* 3. CATEGORIA */}
 <div className="search-input-group" style={{ flex: '1', minWidth: '180px', textAlign: 'left', boxSizing: 'border-box' }}>
   <label style={{ fontSize: '11px', fontWeight: '900', color: '#065f46', marginBottom: '5px', display: 'block' }}>CATEGORIA</label>
-  <select 
-    value={catScelta} // <-- Collegato al nuovo stato
-    onChange={(e) => setCatScelta(e.target.value)} // <-- Cambia catScelta e NON ricerca
-    style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
-  >
-    <option value="">Tutte le categorie</option>
-    <option value="Farmacie">Farmacie</option>
-    <option value="Dentisti">Dentisti</option>
-    <option value="Diagnostica">Diagnostica</option>
-    <option value="Specialisti">Visite Specialistiche</option>
-    <option value="Domicilio">Servizi a Domicilio</option>
-  </select>
+ <select 
+  aria-label="Seleziona Categoria"
+  value={catScelta} // <-- Collegato al nuovo stato
+  onChange={(e) => setCatScelta(e.target.value)} // <-- Cambia catScelta e NON ricerca
+  style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', backgroundColor: 'white', fontSize: '14px', boxSizing: 'border-box' }}
+>
+  <option value="">Tutte le categorie</option>
+  <option value="Farmacie">Farmacie</option>
+  <option value="Dentisti">Dentisti</option>
+  <option value="Diagnostica">Diagnostica</option>
+  <option value="Specialisti">Visite Specialistiche</option>
+  <option value="Domicilio">Servizi a Domicilio</option>
+</select>
 </div>
   {/* BOTTONE CERCA */}
   <button 
