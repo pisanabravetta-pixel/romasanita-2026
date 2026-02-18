@@ -109,12 +109,13 @@ async function fetchNuoviMedici() {
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
     
   <Head>
-  <title>{`${titoloPulito} a Roma (${dataStringa}): Elenco e Contatti | ServiziSalute`}</title>
+  <title>{`${titoloPulito} Roma (${dataStringa}): Elenco e Contatti | ServiziSalute`}</title>
   <meta 
     name="description" 
     content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a ${dataStringa}. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
   />
   <link rel="canonical" href={schemas?.canonical || `https://www.servizisalute.com/${categoria}-roma`} />
+  <link rel="preconnect" href="https://basemaps.cartocdn.com" />
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -122,7 +123,6 @@ async function fetchNuoviMedici() {
     }}
   />
 </Head>
-
      <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
         {testoTopBar.split(' — ')[0]} — {dataStringa.toUpperCase()}
       </div>
@@ -142,14 +142,13 @@ async function fetchNuoviMedici() {
 <h1 style={{ color: '#2c5282', fontSize: '32px', fontWeight: '900', margin: '0 0 10px 0', lineHeight: '1.2' }}>
   {titoloPulito} a Roma
 </h1>
-  <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: 0 }}>
-    Specialisti aggiornati a <span style={{ color: colore }}>Febbraio 2026</span>
-  </p>
-
+<p style={{ color: '#64748b', fontSize: '18px', fontWeight: '600', margin: '0 0 25px 0' }}>
+  Specialisti aggiornati a <span style={{ color: colore }}>{dataStringa}</span>
+</p>
 
 <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
   <p>
-    Trova e contatta i migliori professionisti in <strong>{titoloPulito} a Roma</strong> aggiornati a <strong>Febbraio 2026</strong>. 
+    Trova e contatta i migliori professionisti in <strong>{titoloPulito} a Roma</strong> aggiornati a <strong>{dataStringa}</strong>. 
     In questa sezione puoi consultare l'elenco completo, con schede dettagliate che includono indirizzi e tasti di contatto rapido via <strong>WhatsApp o Telefono</strong>. 
     Il nostro obiettivo è semplificare l'accesso alle cure a Roma, mettendo in contatto diretto i cittadini con le strutture del proprio quartiere, senza attese o intermediari.
   </p>
@@ -188,9 +187,9 @@ async function fetchNuoviMedici() {
 </div>
 {children}
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
-<div style={{ marginBottom: '0px' }}> 
-  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center' }}>
-    📍 Strutture presenti in questa zona
+<div style={{ marginBottom: '25px' }}> 
+  <h3 style={{ fontSize: '18px', fontWeight: '900', color: '#1e293b', margin: '0 0 15px 0', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+    📍 Mappa Professionisti a Roma
   </h3>
   
   <div 
@@ -203,25 +202,21 @@ async function fetchNuoviMedici() {
       border: '1px solid #e2e8f0',
       background: '#f8fafc',
       filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
-      marginBottom: '0px' 
+      zIndex: 1
     }}
   ></div>
+
+  <p style={{ 
+    fontSize: '14px', 
+    color: '#64748b', 
+    textAlign: 'center', 
+    marginTop: '12px', 
+    fontStyle: 'italic',
+    lineHeight: '1.5'
+  }}>
+    La mappa mostra la distribuzione dei servizi di <strong>{titoloPulito} a Roma</strong>, aiutando a individuare le strutture verificate più vicine alla tua posizione.
+  </p>
 </div>
-
-{/* TESTO SEO SOTTO MAPPA - ATTACCATO */}
-<p style={{ 
-  fontSize: '14px', 
-  color: '#64748b', 
-  textAlign: 'center', 
-  marginTop: '8px', // Spazio minimo per leggibilità
-  marginBottom: '30px', 
-  fontStyle: 'italic',
-  lineHeight: '1.5'
-}}>
- La mappa mostra la distribuzione dei servizi di <strong>{titoloPulito} a Roma</strong> , aiutando a individuare le strutture verificate più vicine alla tua posizione.
-</p>
-
-          
          
 
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
