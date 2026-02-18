@@ -69,7 +69,13 @@ const annunci = [
               <h4 className="titolo-card-mobile">{annunci[idx].title}</h4>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <a href={`tel:${annunci[idx].tel}`} className="btn-chiama-mobile">Chiama</a>
-              <a href={getWaLink(annunci[idx])} target="_blank" rel="noreferrer" className="btn-wa-mobile">
+            <a 
+  href={getWaLink(annunci[idx])} 
+  target="_blank" 
+  rel="noreferrer" 
+  aria-label="Contatta su WhatsApp" // <-- AGGIUNTO
+  className="btn-wa-mobile"
+>
   <i className="fab fa-whatsapp"></i>
 </a>
               </div>
@@ -92,7 +98,13 @@ const annunci = [
                 <h4 className="titolo-card-pc">{ann.title}</h4>
                 <div style={{ display: 'flex', gap: '5px', marginTop: 'auto' }}>
                   <a href={`tel:${ann.tel}`} className="btn-chiama-pc">Chiama</a>
-                 <a href={getWaLink(ann)} target="_blank" rel="noreferrer" className="btn-wa-pc">
+                 <a 
+  href={getWaLink(ann)} 
+  target="_blank" 
+  rel="noreferrer" 
+  aria-label="Contatta su WhatsApp" // <-- AGGIUNTO
+  className="btn-wa-pc"
+>
   <i className="fab fa-whatsapp"></i>
 </a>
                 </div>
