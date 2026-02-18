@@ -768,7 +768,7 @@ return (
         </button>
       </form>
       
-      <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '20px' }}>📍 Servizio dedicato ai cittadini di Roma. Zero Spam.</p>
+      <p style={{ fontSize: '12px', color: '#475569', marginTop: '20px' }}>📍 Servizio dedicato ai cittadini di Roma. Zero Spam.</p>
     </div>
   </div>
 </section>
