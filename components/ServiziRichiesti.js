@@ -46,12 +46,12 @@ export default function ServiziRichiesti() {
   loading="lazy" 
 />
               </a>
-              <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx">‹</button>
-              <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} className="freccia-nav dx">›</button>
+             <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx" aria-label="Precedente">‹</button>
+             <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} className="freccia-nav dx" aria-label="Successivo">›</button>
             </div>
             <a href={servizi[idx].link} style={{ textDecoration: 'none' }}>
               <div style={{ padding: '20px', textAlign: 'center' }}>
-                <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#065f46', margin: '0' }}>{servizi[idx].titolo}</h4>
+                <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#065f46', margin: '0' }}>{servizi[idx].titolo}</h3>
                 <p style={{ color: '#64748b', fontSize: '15px', marginTop: '5px' }}>{servizi[idx].desc}</p>
               </div>
             </a>
@@ -70,7 +70,7 @@ export default function ServiziRichiesti() {
   loading="lazy" 
 />  
                 <div style={{ padding: '15px' }}>
-                  <h4 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h4>
+                  <h3 style={{ fontWeight: '800', color: '#065f46', margin: '0' }}>{s.titolo}</h3>
                   <p style={{ fontSize: '14px', color: '#64748b', marginTop: '5px' }}>{s.desc}</p>
                 </div>
               </div>
