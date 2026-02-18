@@ -100,7 +100,7 @@ return (
   <title key="title">{`ServiziSalute.com | Portale Sanità Roma (${dataStringa}) - Strutture e Specialisti`}</title>
   <link rel="canonical" href="https://www.servizisalute.com/" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
   
   {/* OTTIMIZZAZIONE VELOCITÀ */}
@@ -110,10 +110,7 @@ return (
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
- <link 
-  rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-/>
+ 
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
   <link rel="icon" href="/favicon.ico" />
 
