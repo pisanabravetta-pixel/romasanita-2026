@@ -238,9 +238,9 @@ return (
   border: '2px solid #065f46',
   maxWidth: '850px', 
   margin: '0 auto', // Centra su PC
-  width: '90%', // Ridotto leggermente per dare aria ai lati su mobile
+ width: '90%', 
   boxSizing: 'border-box',
-  minHeight: '160px'
+  minHeight: typeof window !== 'undefined' && window.innerWidth < 768 ? '160px' : '80px'
 }}>
   
   {/* 1. COSA CERCHI */}
