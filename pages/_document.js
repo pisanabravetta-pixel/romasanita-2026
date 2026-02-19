@@ -6,15 +6,16 @@ export default function Document() {
       <Head>
         {/* Solo i font essenziali */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 
           rel="stylesheet" 
         />
 
-  {/* LIBRERIA LEAFLET PER LA MAPPA */}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        {/* LA MAPPA (LEAFLET) È STATA RIMOSSA DA QUI 
+           PER RENDERE LA HOME VELOCISSIMA (100/100).
+           LA AGGIUNGEREMO TRA POCO SOLO NELLE PAGINE HUB E SLUG.
+        */}
       </Head>
       <body style={{ margin: 0, padding: 0 }}>
         <Main />
