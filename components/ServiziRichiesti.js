@@ -49,7 +49,7 @@ export default function ServiziRichiesti() {
              <button onClick={() => setIdx(idx === 0 ? 3 : idx - 1)} className="freccia-nav sx" aria-label="Precedente">‹</button>
              <button onClick={() => setIdx(idx === 3 ? 0 : idx + 1)} className="freccia-nav dx" aria-label="Successivo">›</button>
             </div>
-            <a href={servizi[idx].link} style={{ textDecoration: 'none' }}>
+          <a href={servizi[idx].link} style={{ textDecoration: 'none' }} aria-label={`Scopri di più su ${servizi[idx].titolo}`}>
               <div style={{ padding: '20px', textAlign: 'center' }}>
                 <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#065f46', margin: '0' }}>{servizi[idx].titolo}</h3>
                 <p style={{ color: '#64748b', fontSize: '15px', marginTop: '5px' }}>{servizi[idx].desc}</p>
@@ -61,7 +61,7 @@ export default function ServiziRichiesti() {
         {/* PC */}
         <div className="solo-pc-servizi">
           {servizi.map((s, i) => (
-            <a key={i} href={s.link} style={{ textDecoration: 'none' }}>
+            <a key={i} href={s.link} style={{ textDecoration: 'none' }} aria-label={`Scopri di più su ${s.titolo}`}>
               <div className="box-rinforzato-servizi" style={{ textAlign: 'center' }}>
              <img 
   src={s.img} 
