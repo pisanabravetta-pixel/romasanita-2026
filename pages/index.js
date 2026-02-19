@@ -108,7 +108,12 @@ return (
   <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
  <link rel="preconnect" href="https://images.unsplash.com" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link 
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 
+  rel="stylesheet" 
+  media="print" 
+  onLoad="this.media='all'" 
+/>
 
  
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
@@ -324,15 +329,19 @@ return (
     }
   `}</style>
 </div>
-    {/* LINK HUB STRATEGICO */}
+   {/* LINK HUB STRATEGICO */}
     <div style={{ marginTop: '30px' }}>
-      <a href="/servizi-sanitari-roma" style={{ 
-        color: '#2563eb', 
-        fontWeight: '800', 
-        textDecoration: 'none', 
-        borderBottom: '2px solid #2563eb',
-        fontSize: '15px'
-      }}>
+      <a 
+        href="/servizi-sanitari-roma" 
+        aria-label="Vedi tutti i servizi sanitari disponibili a Roma"
+        style={{ 
+          color: '#2563eb', 
+          fontWeight: '800', 
+          textDecoration: 'none', 
+          borderBottom: '2px solid #2563eb',
+          fontSize: '15px'
+        }}
+      >
         👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
       </a>
     </div>
@@ -467,12 +476,16 @@ return (
             {/* Freccia SX dentro il box */}
             <button onClick={() => setIdCat(idCat === 0 ? 4 : idCat - 1)} className="btn-in sx">‹</button>
             
-            <a href={elencoCategorie[idCat].l} className="cat-content">
-<div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: `2px solid ${elencoCategorie[idCat].bc}` }}>
-  {elencoCategorie[idCat].i}
-</div>
-              <span className="cat-title-big">{elencoCategorie[idCat].n}</span>
-            </a>
+           <a 
+  href={elencoCategorie[idCat].l} 
+  className="cat-content"
+  aria-label={`Sfoglia categoria ${elencoCategorie[idCat].n}`}
+>
+  <div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: `2px solid ${elencoCategorie[idCat].bc}` }}>
+    {elencoCategorie[idCat].i}
+  </div>
+  <span className="cat-title-big">{elencoCategorie[idCat].n}</span>
+</a>
 
             {/* Freccia DX dentro il box */}
             <button onClick={() => setIdCat(idCat === 4 ? 0 : idCat + 1)} className="btn-in dx">›</button>
@@ -480,14 +493,19 @@ return (
         </div>
 
         {/* PC: GRID ORIGINALE (5 BOX RETTANGOLARI) */}
-        <div className="cat-pc-layout">
-          {elencoCategorie.map((item, idx) => (
-            <a key={idx} href={item.l} className="box-pc-original">
-              <div className="icon-pc-circle" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
-              <span className="label-pc-text">{item.n}</span>
-            </a>
-          ))}
-        </div>
+<div className="cat-pc-layout">
+  {elencoCategorie.map((item, idx) => (
+    <a 
+      key={idx} 
+      href={item.l} 
+      className="box-pc-original" 
+      aria-label={`Sfoglia categoria ${item.n}`}
+    >
+      <div className="icon-pc-circle" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
+      <span className="label-pc-text">{item.n}</span>
+    </a>
+  ))}
+</div>
 
         <style jsx>{`
           /* PC STYLE */
