@@ -40,7 +40,7 @@ export default function ServiziRichiesti() {
             <div style={{ position: 'relative', height: '240px' }}>
               <a href={servizi[idx].link}>
 <img 
-  src={`${servizi[idx].img}?w=500&q=70&fm=webp`} 
+   src={`${servizi[idx].img}?w=400&q=60&fm=webp`}
   style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }} 
   alt={servizi[idx].titolo} 
   loading="lazy" 
@@ -64,7 +64,7 @@ export default function ServiziRichiesti() {
             <a key={i} href={s.link} style={{ textDecoration: 'none' }} aria-label={`Scopri di più su ${s.titolo}`}>
               <div className="box-rinforzato-servizi" style={{ textAlign: 'center' }}>
              <img 
-  src={`${s.img}?w=500&q=70&fm=webp`} 
+  src={`${s.img}?w=400&q=60&fm=webp`} 
   style={{ width: '100%', height: '180px', objectFit: 'cover' }} 
   alt={s.titolo} 
   loading="lazy" 
