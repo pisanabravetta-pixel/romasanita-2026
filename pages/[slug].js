@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
-
+import Script from 'next/script';
 export default function PaginaQuartiereDinamica() {
 const router = useRouter();
   const { slug } = router.query;
@@ -223,7 +223,16 @@ setMeta({
     content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
   />
   <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
+  
+  {/* OTTIMIZZAZIONE MAPPA - PRECONNECT E CSS NON BLOCCANTE */}
   <link rel="preconnect" href="https://basemaps.cartocdn.com" />
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossOrigin=""
+  />
+
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -242,9 +251,18 @@ setMeta({
     }}
   />
 </Head>
-      <Navbar />
 
-   <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+{/* CARICAMENTO JS MAPPA IN MODALITÀ LAZY (DOPP IL RENDERING) */}
+<Script 
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossOrigin=""
+  strategy="lazyOnload" 
+/>
+
+<Navbar />
+
+<div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
   {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
 </div>
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
