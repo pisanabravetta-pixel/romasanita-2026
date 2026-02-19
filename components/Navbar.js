@@ -25,10 +25,12 @@ export default function Navbar() {
           
           {/* LOGO E NOME - GRANDEZZA DINAMICA */}
           <a href="/" className="logo-section" style={{ textDecoration: 'none' }}>
-  <i className="fas fa-heartbeat" style={{ color: '#2563eb' }}></i> 
-  <span style={{ color: '#065f46' }}>Servizi</span><span style={{ color: '#2563eb' }}>Salute</span>
+  {/* L'icona del battito cardiaco blu */}
+  <i className="fas fa-heartbeat" style={{ color: '#2563eb', fontSize: '1.2em' }}></i> 
+  
+  <span style={{ color: '#065f46' }}>Servizi</span>
+  <span style={{ color: '#2563eb' }}>Salute</span>
 </a>
-
           {/* NAVIGAZIONE (MENU + AZIONI) */}
           <nav className="nav-actions">
             <div 
