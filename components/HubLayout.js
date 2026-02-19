@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { theme } from '../styles/theme';
 import { supabase } from '../lib/supabaseClient';
+import Script from 'next/script';
 export default function HubLayout({ 
   titolo, 
   categoria, 
@@ -115,7 +116,16 @@ async function fetchNuoviMedici() {
     content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a ${dataStringa}. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
   />
   <link rel="canonical" href={schemas?.canonical || `https://www.servizisalute.com/${categoria}-roma`} />
+  
+  {/* OTTIMIZZAZIONE MAPPA */}
   <link rel="preconnect" href="https://basemaps.cartocdn.com" />
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossOrigin=""
+  />
+
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -123,12 +133,20 @@ async function fetchNuoviMedici() {
     }}
   />
 </Head>
-     <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
-        {testoTopBar.split(' — ')[0]} — {dataStringa.toUpperCase()}
-      </div>
-      
-      <Navbar />
 
+{/* CARICAMENTO JS MAPPA SOLO QUANDO SERVE */}
+<Script 
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossOrigin=""
+  strategy="lazyOnload" 
+/>
+
+<div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px' }}>
+  {testoTopBar.split(' — ')[0]} — {dataStringa.toUpperCase()}
+</div>
+
+<Navbar />
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
         <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
