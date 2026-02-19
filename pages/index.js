@@ -239,7 +239,7 @@ return (
   maxWidth: '850px', 
   margin: '0 auto', // Centra su PC
   width: '90%', // Ridotto leggermente per dare aria ai lati su mobile
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
   minHeight: '160px'
 }}>
   
