@@ -5,35 +5,35 @@ const annunci = [
     { 
       cat: 'DENTISTI', 
       title: 'Studio Odontoiatrico Eur', 
-      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=450&fm=webp&q=80',
+     img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
       tel: '065924567',
       wa: '393478899000' 
     },
     { 
       cat: 'DOMICILIO', 
       title: 'PrivatAssistenza Roma Domicilio', 
-      img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=450&fm=webp&q=80',
+      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
       tel: '0687750841',
       wa: '393481234567' 
     },
     { 
       cat: 'SPECIALISTI', 
       title: 'Fisiosport Roma (Prati/Centro)', 
-      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=450&fm=webp&q=80',
+      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
       tel: '063234567',
       wa: '393921234567'
     },
     { 
       cat: 'DIAGNOSTICA', 
       title: 'Gruppo Sant\'Andrea Diagnostica', 
-      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=450&fm=webp&q=80',
+      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
       tel: '0612345678',
       wa: '393451234567'
     },
     { 
       cat: 'FARMACIE', 
       title: 'Farmacia Trionfale (Prenotazioni)', 
-      img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=450&fm=webp&q=80',
+     img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
       tel: '0639737151',
       wa: '393284567890' 
     }
@@ -56,7 +56,7 @@ const annunci = [
           <div className="box-rinforzato">
             <div style={{ position: 'relative', height: '240px' }}>
              <img 
-  src={`${annunci[idx].img}?w=400&q=70&fm=webp`} 
+   src={annunci[idx].img}
   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
   alt={annunci[idx].title}
   loading="lazy" 
@@ -96,7 +96,7 @@ const annunci = [
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
           <img 
-  src={`${ann.img}?w=400&q=70&fm=webp`} // Qualità portata a 70
+  src={ann.img}
   style={{ width: '100%', height: '140px', objectFit: 'cover' }} 
   alt={ann.title} 
   loading="lazy"
