@@ -56,10 +56,10 @@ const annunci = [
           <div className="box-rinforzato">
             <div style={{ position: 'relative', height: '240px' }}>
              <img 
-  src={`${annunci[idx].img}?w=600&q=75&fm=webp`}
+  src={`${annunci[idx].img}?w=400&q=70&fm=webp`} 
   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
   alt={annunci[idx].title}
-  loading="eager" 
+  loading="lazy" 
 />
               <button onClick={() => setIdx(idx === 0 ? 4 : idx - 1)} className="freccia-nav sx">‹</button>
               <button onClick={() => setIdx(idx === 4 ? 0 : idx + 1)} className="freccia-nav dx">›</button>
@@ -95,8 +95,8 @@ const annunci = [
         <div className="solo-pc-grid">
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
-           <img 
-  src={`${ann.img}?w=400&q=75&fm=webp`}
+          <img 
+  src={`${ann.img}?w=400&q=70&fm=webp`} // Qualità portata a 70
   style={{ width: '100%', height: '140px', objectFit: 'cover' }} 
   alt={ann.title} 
   loading="lazy"
