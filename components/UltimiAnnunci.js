@@ -56,7 +56,7 @@ const annunci = [
           <div className="box-rinforzato">
             <div style={{ position: 'relative', height: '240px' }}>
              <img 
-  src={annunci[idx].img} 
+  src={`${annunci[idx].img}?w=600&q=75&fm=webp`}
   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
   alt={annunci[idx].title}
   loading="eager" 
@@ -73,7 +73,7 @@ const annunci = [
   href={getWaLink(annunci[idx])} 
   target="_blank" 
   rel="noreferrer" 
-  aria-label="Contatta su WhatsApp"
+  aria-label={`Contatta ${annunci[idx].title} su WhatsApp`}
   className="btn-wa-mobile"
 >
   <svg 
@@ -96,7 +96,7 @@ const annunci = [
           {annunci.map((ann, i) => (
             <div key={i} className="box-rinforzato">
            <img 
-  src={ann.img} 
+  src={`${ann.img}?w=400&q=75&fm=webp`}
   style={{ width: '100%', height: '140px', objectFit: 'cover' }} 
   alt={ann.title} 
   loading="lazy"
@@ -110,7 +110,7 @@ const annunci = [
   href={getWaLink(ann)} 
   target="_blank" 
   rel="noreferrer" 
-  aria-label="Contatta su WhatsApp"
+  aria-label={`Contatta ${ann.title} su WhatsApp`}
   className="btn-wa-pc"
 >
   <svg 
@@ -138,11 +138,10 @@ const annunci = [
         .freccia-nav { position: absolute; top: 50%; transform: translateY(-50%); background: #065f46; color: white; border: 2px solid white; width: 40px; height: 40px; border-radius: 50%; font-size: 25px; cursor: pointer; z-index: 5; }
         .sx { left: 10px; } .dx { right: 10px; }
         
-        .btn-chiama-pc { flex: 1; background: #eef6ff; color: #0070f3; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-        .btn-wa-pc { background: #25D366; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; display: flex; align-items: center; }
-        
-        .btn-chiama-mobile { flex: 1; background: #0070f3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; text-align: center; }
-        .btn-wa-mobile { background: #25D366; color: white; padding: 15px 25px; border-radius: 10px; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        .btn-chiama-pc { flex: 1; background: #0056b3; color: white; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+.btn-wa-pc { background: #128c7e; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; display: flex; align-items: center; }
+.btn-chiama-mobile { flex: 1; background: #0056b3; color: white; padding: 15px; border-radius: 10px; font-weight: bold; text-decoration: none; text-align: center; }
+.btn-wa-mobile { background: #128c7e; color: white; padding: 15px 25px; border-radius: 10px; font-size: 20px; display: flex; align-items: center; justify-content: center; }
 
         .solo-pc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
         .solo-mobile-slider { display: none; }
