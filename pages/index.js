@@ -112,8 +112,9 @@ return (
 
  
   <meta name="google-site-verification" content="JOLNAhLCBewaxp5pArcbUGUa6QheB4wDR6TkuOghgzU" />
-  <link rel="icon" href="/favicon.ico" />
-
+ <link rel="icon" href="/favicon.ico" />
+{/* QUESTA È LA RIGA CHE MANCA E CHE FA APPARIRE IL CUORE BLU */}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   {/* --- SCHEMA SEO INTEGRATO: ORGANIZATION + SEARCH + FAQ --- */}
  <script
   type="application/ld+json"
