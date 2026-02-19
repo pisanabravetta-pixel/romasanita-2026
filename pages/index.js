@@ -103,12 +103,7 @@ return (
 <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
   
-  {/* OTTIMIZZAZIONE VELOCITÀ */}
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
- <link rel="preconnect" href="https://images.unsplash.com" />
-
-  <link 
+    <link 
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 
   rel="stylesheet" 
   media="print" 
