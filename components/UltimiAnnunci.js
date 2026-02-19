@@ -12,28 +12,28 @@ const annunci = [
     { 
       cat: 'DOMICILIO', 
       title: 'PrivatAssistenza Roma Domicilio', 
-      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
+     img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400&q=60&fm=webp',
       tel: '0687750841',
       wa: '393481234567' 
     },
     { 
       cat: 'SPECIALISTI', 
       title: 'Fisiosport Roma (Prati/Centro)', 
-      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
+      img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=60&fm=webp',
       tel: '063234567',
       wa: '393921234567'
     },
     { 
       cat: 'DIAGNOSTICA', 
       title: 'Gruppo Sant\'Andrea Diagnostica', 
-      img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
+      img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=60&fm=webp',
       tel: '0612345678',
       wa: '393451234567'
     },
     { 
       cat: 'FARMACIE', 
       title: 'Farmacia Trionfale (Prenotazioni)', 
-     img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=60&fm=webp',
+     img: 'https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=400&q=60&fm=webp',
       tel: '0639737151',
       wa: '393284567890' 
     }
