@@ -240,6 +240,7 @@ return (
   margin: '0 auto', // Centra su PC
   width: '90%', // Ridotto leggermente per dare aria ai lati su mobile
   boxSizing: 'border-box'
+  minHeight: '160px'
 }}>
   
   {/* 1. COSA CERCHI */}
@@ -726,7 +727,8 @@ return (
             ServiziSalute Roma: Il tuo punto di riferimento per la sanità locale
           </h2>
          <p style={{ marginBottom: '20px' }}>
-  <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, <a href="/dentisti-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>dentisti</a>, <a href="/diagnostica-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>centri diagnostici</a> e <a href="/dermatologi-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>visite specialistiche</a> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
+  <strong>ServiziSalute Roma</strong> è il portale di riferimento progettato per semplificare la ricerca di <a href="/farmacie-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>farmacie a Roma</a>, <a href="/dentisti-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>dentisti</a>, <a href="/diagnostica-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>centri diagnostici</a> {/* CAMBIA SOLO L'ULTIMO LINK COSÌ */}
+e <a href="/dermatologi-roma" style={{color: '#065f46', fontWeight: 'bold', textDecoration: 'none'}}>Dermatologi</a> nella Capitale. Grazie al nostro motore di ricerca ottimizzato, puoi individuare in pochi secondi i migliori <strong>servizi sanitari a Roma</strong>, filtrando i risultati per quartiere e categoria di appartenenza.
 </p>
           
           <h3 style={{ fontSize: '19px', fontWeight: 'bold', color: '#1e3a8a', marginBottom: '10px' }}>
