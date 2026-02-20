@@ -24,7 +24,6 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // LOGICA MAPPA IDENTICA AL TUO CODICE ORIGINALE
   useEffect(() => {
     if (!dato || !dato.lat || !dato.lng) return;
 
@@ -75,13 +74,32 @@ export default function SchedaProfessionale() {
 
   const nomeZona = dato.quartiere || dato.zona || "Roma";
 
-  // I TRE TEMPLATE CORRETTI CON KEYWORD (DOMENICA, H24, WHATSAPP)
-  const varianti = [
-    `La ${dato.nome} è un presidio sanitario specializzato in ${dato.categoria} situato nel cuore di Roma, zona ${nomeZona}. In ${dato.indirizzo}, la struttura offre assistenza dedicata e servizi professionali. Per informazioni su orari di apertura, turni della domenica o disponibilità h24, è fondamentale contattare direttamente la struttura tramite telefono o WhatsApp. Riceverai supporto immediato per ogni tua esigenza sanitaria o per prenotare una prestazione specifica nel quartiere ${nomeZona}.`,
-    `Se cerchi ${dato.categoria} a Roma ${nomeZona}, la ${dato.nome} rappresenta una scelta di prossimità in ${dato.indirizzo}. Questa attività fornisce servizi essenziali per la salute dei cittadini. Consigliamo di contattare direttamente il titolare tramite WhatsApp o chiamata telefonica per ricevere informazioni aggiornate sui servizi offerti e verificare l'apertura domenicale o il servizio h24. Il contatto diretto garantisce velocità e precisione per ogni necessità di cura a ${nomeZona}.`,
-    `Situata in ${dato.indirizzo}, la ${dato.nome} opera nella categoria ${dato.categoria} servendo l'area di Roma ${nomeZona}. La struttura è inserita nella nostra guida per facilitare il reperimento di contatti utili. Per urgenze, turni h24 o per sapere se l'attività è aperta la domenica, ti invitiamo a cliccare sui tasti di contatto diretto. Chiamando o scrivendo via WhatsApp, potrai parlare con il personale specializzato e ottenere chiarimenti su tutti i servizi sanitari e le disponibilità correnti.`
-  ];
-  const testoDinamico = varianti[dato.id % 3] || varianti[0];
+  // LOGICA TEMPLATE CORRETTI PER CATEGORIA
+  const getTemplate = (index) => {
+    const cat = (dato.categoria || "").toLowerCase();
+    const nome = dato.nome;
+    const indirizzo = dato.indirizzo;
+    
+    // Testi specifici per Farmacie
+    if (cat.includes('farmaci')) {
+      const variantiFarmacia = [
+        `La ${nome} è un presidio sanitario fondamentale a Roma, zona ${nomeZona}. In ${indirizzo}, offre assistenza farmaceutica e consulenza professionale. Per conoscere i turni della domenica, la disponibilità di farmaci o l'apertura h24, contatta subito tramite WhatsApp o telefono.`,
+        `Se cerchi una farmacia in zona ${nomeZona}, la ${nome} in ${indirizzo} garantisce supporto per ogni esigenza di salute. Verifica l'apertura domenicale o il servizio h24 contattando direttamente i farmacisti via WhatsApp o chiamata per assistenza immediata.`,
+        `Presso la ${nome} a ${nomeZona}, troverai professionalità e cortesia. Per urgenze e per sapere se l'attività è aperta oggi o effettua turni h24, clicca sui tasti di contatto diretto e parla subito con il personale in sede.`
+      ];
+      return variantiFarmacia[index];
+    }
+
+    // Testi per Specialisti, Dentisti, Diagnostica e Domicilio
+    const variantiSpecialisti = [
+      `Il profilo di ${nome} è specializzato in ${cat} e riceve a Roma nel quartiere ${nomeZona}. Presso la struttura in ${indirizzo}, si offrono consulenze dedicate. Per prenotare una visita, verificare i costi o la disponibilità per appuntamenti urgenti (anche domenica o h24 dove previsto), contatta direttamente tramite WhatsApp o telefono.`,
+      `Cerchi assistenza per ${cat} a Roma ${nomeZona}? La struttura ${nome} in ${indirizzo} è un punto di riferimento per il benessere dei pazienti. Consigliamo di scrivere su WhatsApp o chiamare per conoscere gli orari aggiornati, la disponibilità di visite a domicilio e prenotare il tuo appuntamento specialistico.`,
+      `Situata in ${indirizzo}, la ${nome} opera con esperienza nella categoria ${cat} servendo l'area di ${nomeZona}. Per urgenze o chiarimenti sui servizi sanitari offerti, ti invitiamo a utilizzare i contatti rapidi. Parlare via WhatsApp o telefono ti permetterà di verificare disponibilità e turni nel cuore di Roma.`
+    ];
+    return variantiSpecialisti[index];
+  };
+
+  const testoDinamico = getTemplate(dato.id % 3);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
@@ -106,7 +124,7 @@ export default function SchedaProfessionale() {
 
           <div style={{ backgroundColor: '#f0f9ff', padding: '25px', borderRadius: '12px', marginBottom: '35px', borderLeft: '6px solid #0284c7' }}>
             <p style={{ lineHeight: '1.8', color: '#334155', margin: 0, fontSize: '1.1rem' }}>
-              {testoDinamico}
+              <strong>Dettagli e Servizi:</strong> {testoDinamico}
             </p>
           </div>
 
