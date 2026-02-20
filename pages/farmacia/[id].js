@@ -9,10 +9,12 @@ const supabase = createClient(
 );
 
 export async function getServerSideProps({ params }) {
+  // Cerchiamo l'annuncio usando il parametro che arriva dall'URL (che ora si chiama id)
   const { data, error } = await supabase
     .from("annunci")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", params.id) // Usiamo params.id perché il file si chiama [id].js
+    .eq("approvato", true)
     .single();
 
   if (!data || error) {
