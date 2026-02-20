@@ -24,31 +24,48 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // LOGICA PULIZIA CATEGORIA (Per Farmacie, Medici e Domicilio)
+  // LOGICA PULIZIA CATEGORIA
   const getCategoriaPulita = (cat) => {
     if (!cat) return "Servizio Sanitario";
     let nome = cat.toLowerCase();
-    
-    // 1. Gestione parentesi: visite-specialistiche (cardiologo) -> Cardiologo
     if (nome.includes('(')) {
       return nome.split('(')[1].replace(')', '').trim().toUpperCase();
     }
-    // 2. Gestione servizi-domicilio -> SERVIZI A DOMICILIO
     if (nome.includes('servizi-domicilio')) return "SERVIZI A DOMICILIO";
-    
-    // 3. Pulizia generica trattini
     return nome.replace(/-/g, ' ').toUpperCase();
   };
 
+  // EFFETTO MAPPA CON CONTROLLO RETRY
   useEffect(() => {
-    if (typeof L !== 'undefined' && dato && dato.lat && dato.lng) {
+    if (!dato || !dato.lat || !dato.lng) return;
+
+    const initMap = () => {
+      if (typeof L === 'undefined') {
+        setTimeout(initMap, 200);
+        return;
+      }
+      const container = L.DomUtil.get('map-scheda');
+      if (container != null) { container._leaflet_id = null; }
       if (window.mapInstance) { window.mapInstance.remove(); }
-      const map = L.map('map-scheda', { scrollWheelZoom: false }).setView([parseFloat(dato.lat), parseFloat(dato.lng)], 16);
-      window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
-      L.marker([parseFloat(dato.lat), parseFloat(dato.lng)]).addTo(map).bindPopup(`<b>${dato.nome}</b>`).openPopup();
-      setTimeout(() => { map.invalidateSize(); }, 500);
-    }
+
+      try {
+        const map = L.map('map-scheda', { scrollWheelZoom: false })
+          .setView([parseFloat(dato.lat), parseFloat(dato.lng)], 16);
+        window.mapInstance = map;
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '© OSM'
+        }).addTo(map);
+        L.marker([parseFloat(dato.lat), parseFloat(dato.lng)])
+          .addTo(map)
+          .bindPopup(`<b>${dato.nome}</b>`)
+          .openPopup();
+        setTimeout(() => { map.invalidateSize(); }, 500);
+      } catch (e) { console.error("Errore mappa:", e); }
+    };
+    initMap();
+    return () => {
+      if (window.mapInstance) { window.mapInstance.remove(); window.mapInstance = null; }
+    };
   }, [dato]);
 
   if (loading) return <div style={{padding: '100px', textAlign: 'center'}}>Caricamento...</div>;
@@ -56,13 +73,20 @@ export default function SchedaProfessionale() {
 
   const categoriaDisplay = getCategoriaPulita(dato.categoria);
   const nomeZona = dato.quartiere || dato.zona || "Roma";
+  
+  // RILEVAMENTO TIPO PER TESTI DINAMICI
+  const isFarmacia = categoriaDisplay.includes('FARMACI');
 
-  // I 3 TEMPLATE UNIVERSALI (Applicati a Farmacie, Medici, Infermieri)
-  const varianti = [
-    `La struttura **${dato.nome}** offre servizi professionali di **${categoriaDisplay}** nel quartiere di Roma **${nomeZona}**. Situata in **${dato.indirizzo}**, rappresenta un punto di riferimento per i residenti che necessitano di assistenza qualificata. Per informazioni dettagliate su orari, prestazioni specifiche o disponibilità per urgenze (come turni domenicali o h24), consigliamo di contattare direttamente il personale via telefono o tramite il tasto WhatsApp.`,
-    `Se stai cercando esperti in **${categoriaDisplay}** a Roma zona **${nomeZona}**, **${dato.nome}** riceve presso la sede di **${dato.indirizzo}**. Questa attività garantisce supporto professionale per diverse necessità sanitarie. Ti invitiamo a utilizzare i contatti diretti presenti in questa scheda per richiedere un appuntamento, verificare i tempi di attesa o chiedere chiarimenti sulla disponibilità di servizi a domicilio e visite specialistiche.`,
-    `In **${dato.indirizzo}**, a Roma (**${nomeZona}**), operano i professionisti di **${dato.nome}** all'interno della categoria **${categoriaDisplay}**. La scheda fornisce i recapiti essenziali per entrare in contatto immediato: chiamando o scrivendo su WhatsApp potrai parlare con un operatore per conoscere la disponibilità di assistenza h24, aperture straordinarie o per prenotare una consulenza dedicata alle tue esigenze di salute.`
+  const varianti = isFarmacia ? [
+    `La **${dato.nome}** è un presidio sanitario fondamentale nel quartiere **${nomeZona}**. Situata in **${dato.indirizzo}**, la farmacia offre assistenza farmaceutica completa e consulenza professionale. Per verificare la disponibilità di farmaci specifici o per conoscere i turni della domenica e l'eventuale apertura h24, ti invitiamo a contattare direttamente i farmacisti tramite WhatsApp o telefono.`,
+    `Se cerchi una farmacia di riferimento a Roma zona **${nomeZona}**, la **${dato.nome}** in **${dato.indirizzo}** garantisce una vasta gamma di servizi per la salute. Oltre alla dispensazione di medicinali, puoi richiedere informazioni su preparazioni e test rapidi. Usa i contatti diretti per parlare con il personale e confermare orari di apertura o turni notturni in corso.`,
+    `La **${dato.nome}** serve l'area di **${nomeZona}** con professionalità. Presso la sede in **${dato.indirizzo}** potrai trovare supporto per ogni tua esigenza sanitaria. Per urgenze o per sapere se la farmacia è aperta ora, clicca sui pulsanti di chiamata o WhatsApp: il contatto diretto ti permetterà di ricevere assistenza immediata sui servizi disponibili.`
+  ] : [
+    `Il profilo di **${dato.nome}** è specializzato in **${categoriaDisplay}** a Roma, zona **${nomeZona}**. Presso la struttura in **${dato.indirizzo}**, il professionista offre consulenze dedicate. Per prenotare una visita, conoscere i costi delle prestazioni o verificare la disponibilità per un appuntamento, consigliamo di inviare un messaggio WhatsApp o telefonare direttamente in sede.`,
+    `Se hai bisogno di assistenza per **${categoriaDisplay}** nel quartiere **${nomeZona}**, **${dato.nome}** riceve in **${dato.indirizzo}**. La struttura rappresenta una scelta di prossimità per chi necessita di interventi professionali. Utilizzando i tasti di contatto, potrai parlare con il personale per definire i dettagli della tua prestazione o richiedere informazioni su modalità di visita e orari.`,
+    `In **${dato.indirizzo}**, zona **${nomeZona}**, operano i professionisti di **${dato.nome}** per la categoria **${categoriaDisplay}**. La struttura è disponibile per nuove prenotazioni e consulenze. Ti invitiamo a contattare direttamente il titolare tramite WhatsApp o telefono per ricevere supporto immediato, verificare le tariffe o concordare un appuntamento presso lo studio o a domicilio.`
   ];
+
   const testoDinamico = varianti[dato.id % 3] || varianti[0];
 
   return (
@@ -71,21 +95,21 @@ export default function SchedaProfessionale() {
         <title>{dato.nome} – {categoriaDisplay} Roma {nomeZona}</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </Head>
-      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="lazyOnload" />
+      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="beforeInteractive" />
       <Navbar />
       <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '850px', margin: '0 auto', width: '100%', paddingBottom: '60px' }}>
         <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #e2e8f0' }}>
           <h1 style={{ color: '#1e293b', fontSize: '1.8rem', fontWeight: '900', marginBottom: '5px' }}>{dato.nome}</h1>
           <p style={{ color: '#0284c7', fontSize: '1.1rem', marginBottom: '25px', fontWeight: '700' }}>{categoriaDisplay} — ROMA {nomeZona.toUpperCase()}</p>
           <div style={{ backgroundColor: '#f0f9ff', padding: '20px', borderRadius: '12px', marginBottom: '30px', borderLeft: '6px solid #0284c7' }}>
-            <p style={{ lineHeight: '1.7', color: '#334155', margin: 0 }}>{testoDinamico}</p>
+            <p style={{ lineHeight: '1.7', color: '#334155', margin: 0 }}>{testoDinamico.replace(/\*\*/g, '')}</p>
           </div>
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '35px' }}>
-             <a href={`tel:${dato.telefono}`} style={{ flex: 1, backgroundColor: '#059669', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>📞 CHIAMA</a>
-             {dato.whatsapp && <a href={`https://wa.me/39${dato.whatsapp}`} style={{ flex: 1, backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>💬 WHATSAPP</a>}
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginBottom: '40px' }}>
+            <a href={`tel:${dato.telefono}`} style={{ flex: 1, minWidth: '150px', backgroundColor: '#059669', color: 'white', padding: '18px', borderRadius: '12px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>📞 CHIAMA ORA</a>
+            {dato.whatsapp && <a href={`https://wa.me/39${dato.whatsapp}`} style={{ flex: 1, minWidth: '150px', backgroundColor: '#22c55e', color: 'white', padding: '18px', borderRadius: '12px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>💬 WHATSAPP</a>}
           </div>
-          <h2 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '15px' }}>Posizione in {dato.indirizzo}</h2>
-          <div id="map-scheda" style={{ height: '350px', width: '100%', borderRadius: '12px', border: '1px solid #e2e8f0', zIndex: 1 }}></div>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: '800', marginBottom: '15px', color: '#1e293b' }}>Mappa e Posizione</h2>
+          <div id="map-scheda" style={{ height: '380px', width: '100%', borderRadius: '12px', border: '1px solid #e2e8f0', zIndex: 1 }}></div>
         </div>
       </main>
       <Footer />
