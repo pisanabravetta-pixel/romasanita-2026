@@ -360,9 +360,11 @@ async function fetchNuoviMedici() {
             </a>
           </div>
         </div>
-      );
+      )
     })
-  ) : null}
+  ) : (
+    <p>Nessun risultato trovato</p>
+  )}
 </div>
   {/* --- INIZIO TESTO TITOLARE --- */}
  <p style={{ 
