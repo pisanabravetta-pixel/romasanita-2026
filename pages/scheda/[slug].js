@@ -63,21 +63,45 @@ export default function SchedaProfessionale() {
   const catSlug = categoria.toLowerCase().replace(/\s+/g, '-');
   const zonaSlug = nomeZona.toLowerCase().replace(/\s+/g, '-');
 
-  // --- GENERAZIONE TESTO SEO DINAMICO (200+ PAROLE) ---
+  // --- GENERAZIONE TESTO SEO DINAMICO AGGIORNATO (KEYWORDS: H24, DOMENICA, SERVIZI) ---
   const generaTestoSEO = () => {
-    const v = dato.id % 3; // Rotazione varianti per evitare duplicati
-    if (categoria.toLowerCase().includes('farmac')) {
+    const v = dato.id % 3; // Rotazione varianti per evitare thin content
+    const nome = dato.nome;
+    const indirizzo = dato.indirizzo;
+    const cat = categoria.toLowerCase();
+
+    // Rileviamo se è uno dei tuoi 7 specialisti o altre categorie mediche
+    const isSpecialistico = cat.includes('dermatol') || cat.includes('cardiol') || 
+                            cat.includes('psicol') || cat.includes('oculist') || 
+                            cat.includes('ortoped') || cat.includes('nutrizion') || 
+                            cat.includes('ginecol') || cat.includes('dentist') || 
+                            cat.includes('diagnost');
+
+    const callToAction = "Per tutte le informazioni dettagliate sui servizi offerti, orari di ricevimento, disponibilità per visite la domenica o assistenza h24, è fondamentale contattare direttamente la struttura tramite WhatsApp o telefono utilizzando i tasti di contatto presenti in questa pagina.";
+
+    // --- TEMPLATE FARMACIE ---
+    if (cat.includes('farmac')) {
       return [
-        `La ${dato.nome} è una farmacia situata nel quartiere ${nomeZona}, a Roma, precisamente in ${dato.indirizzo}. Rappresenta un presidio sanitario fondamentale per i residenti della zona ${nomeZona} e delle aree limitrofe, offrendo supporto e assistenza quotidiana. Le farmacie a Roma svolgono un ruolo essenziale nella distribuzione di farmaci e nella consulenza sanitaria territoriale. Questa struttura è inserita nel nostro elenco professionale con posizione GPS verificata per permettere una consultazione semplice.`,
-        `Situata in ${dato.indirizzo}, nel cuore del quartiere ${nomeZona} di Roma, la ${dato.nome} rientra tra le strutture farmaceutiche di riferimento della zona. La posizione strategica consente ai cittadini di ${nomeZona} di raggiungere facilmente la sede per ogni esigenza di salute. In una città complessa come Roma, avere un punto di riferimento per la categoria ${categoria} nel proprio quartiere è un vantaggio per la prevenzione e la cura dei pazienti.`,
-        `Nel quartiere ${nomeZona} a Roma è presente la ${dato.nome}, con sede operativa in ${dato.indirizzo}. Questa attività è inclusa nell'elenco aggiornato delle farmacie locali della zona ${nomeZona}. Grazie ai recapiti diretti presenti in questa scheda, è possibile contattare la struttura per verificare la disponibilità di prodotti o orari di apertura. La presenza di ${categoria} in questa area di Roma garantisce una copertura sanitaria capillare.`
+        `La ${nome} è una farmacia di riferimento situata nel quartiere ${nomeZona} a Roma, precisamente in ${indirizzo}. In quanto presidio sanitario locale, offre i classici servizi di assistenza e distribuzione farmaci. Molti cittadini cercano spesso informazioni su farmacie aperte domenica o servizi h24 a Roma ${nomeZona}: per verificare i turni attuali e i servizi offerti oggi, ti consigliamo di contattare subito i farmacisti via WhatsApp o telefono. ${callToAction}`,
+        `Se ti trovi in zona ${nomeZona} e cerchi la ${nome} in ${indirizzo}, qui trovi la posizione GPS e i recapiti ufficiali. Le farmacie a Roma garantiscono un servizio essenziale e la ${nome} serve i residenti della zona con professionalità. Se hai necessità di sapere se la struttura è aperta oggi, se effettua servizio notturno h24 o turni domenicali a Roma, usa i pulsanti di contatto immediato. ${callToAction}`,
+        `Presso la ${nome} a Roma ${nomeZona} (indirizzo: ${indirizzo}), i residenti possono trovare supporto per ogni esigenza di salute. Poiché gli orari e i servizi offerti (inclusi i turni di apertura domenica e i turni h24 a Roma) possono variare, è opportuno richiedere conferma ufficiale. Per ogni dettaglio o per verificare la disponibilità di prodotti, contatta direttamente la sede tramite i tasti WhatsApp o chiamata. ${callToAction}`
       ][v];
     }
-    // Variant per Specialisti / Medici
+
+    // --- TEMPLATE SPECIALISTI E ALTRI SERVIZI ---
+    if (isSpecialistico) {
+      return [
+        `Il profilo di ${nome} riguarda la categoria ${categoria} nel quartiere ${nomeZona} a Roma. Lo studio si trova in ${indirizzo} e offre prestazioni e servizi specializzati ai pazienti della zona. Quando si cerca un ${categoria} a Roma ${nomeZona}, è importante verificare i servizi offerti e la disponibilità per appuntamenti urgenti, anche nei festivi o di domenica. ${callToAction}`,
+        `Cerchi assistenza per ${categoria} a Roma zona ${nomeZona}? ${nome} riceve in ${indirizzo} ed è una delle realtà segnalate nel quartiere per questa specializzazione. I servizi offerti spaziano dalla consulenza alla diagnostica: per conoscere il tariffario, i tempi di attesa o la disponibilità per visite urgenti h24 a Roma, ti invitiamo a scrivere su WhatsApp o chiamare il professionista. ${callToAction}`,
+        `Situato in ${indirizzo}, ${nome} opera come ${categoria} servendo l'area di Roma ${nomeZona}. La presenza di uno specialista in ${categoria} nella zona di ${nomeZona} facilita l'accesso alle cure per i residenti. Per dettagli completi sui servizi offerti e per sapere se il medico riceve di domenica o gestisce urgenze h24 a Roma, utilizza i recapiti diretti presenti in questa scheda professionale. ${callToAction}`
+      ][v];
+    }
+
+    // --- TEMPLATE FALLBACK (DOMICILIO E ALTRI) ---
     return [
-      `Il profilo professionale di ${dato.nome} riguarda la categoria ${categoria} nel quartiere ${nomeZona} a Roma. L'attività viene svolta presso la sede in ${dato.indirizzo}, dove il professionista riceve i pazienti della zona ${nomeZona} e di tutta la Capitale. La scelta di uno specialista in ${categoria} a Roma è un passo importante per la salute e la prevenzione. Questa scheda fornisce i dettagli necessari per individuare la posizione esatta e i contatti diretti per richiedere informazioni su visite e appuntamenti.`,
-      `Se cerchi un esperto in ${categoria} a Roma zona ${nomeZona}, la struttura ${dato.nome} situata in ${dato.indirizzo} offre servizi dedicati alla cura del paziente. Operando nel quadrante di ${nomeZona}, questo profilo si inserisce nel network sanitario locale di Roma per agevolare l'accesso alle cure specialistiche. Si consiglia di contattare direttamente il professionista tramite i pulsanti chiama o WhatsApp per conoscere le disponibilità orarie e i dettagli sulle prestazioni offerte.`,
-      `${dato.nome} opera come ${categoria} a Roma, servendo con professionalità il quartiere ${nomeZona}. La sede si trova in ${dato.indirizzo}, un punto facilmente raggiungibile per chi risiede a ${nomeZona} o nelle zone vicine. In questa pagina sono riportati i dati pubblici relativi a ${dato.nome}, inclusa la mappa interattiva per agevolare il raggiungimento dello studio. Contattare un professionista in ${categoria} nella propria zona di residenza a Roma permette di ottimizzare i tempi di attesa e ricevere assistenza rapida.`
+      `${nome} opera a Roma nel quartiere ${nomeZona} (indirizzo: ${indirizzo}) fornendo assistenza nella categoria ${categoria}. I servizi offerti sono rivolti ai residenti della zona e della Capitale. Per verificare disponibilità h24, interventi la domenica o prenotazioni rapide, è necessario contattare direttamente tramite i tasti WhatsApp o telefono. ${callToAction}`,
+      `Se cerchi ${categoria} in zona ${nomeZona} a Roma, ${nome} in ${indirizzo} è la struttura indicata in questa pagina. Per informazioni su turni festivi, reperibilità domenica o assistenza h24, ti invitiamo a utilizzare i contatti rapidi qui sotto per parlare col personale o il professionista. ${callToAction}`,
+      `La struttura ${nome} si trova in ${indirizzo} a Roma ${nomeZona}. Questo profilo appartiene alla categoria ${categoria}. Per conoscere nel dettaglio tutti i servizi offerti e le disponibilità per visite la domenica o urgenze h24, si prega di contattare direttamente tramite WhatsApp o telefono. ${callToAction}`
     ][v];
   };
 
