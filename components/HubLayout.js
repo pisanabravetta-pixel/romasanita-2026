@@ -273,11 +273,8 @@ async function fetchNuoviMedici() {
     <p>Caricamento...</p>
   ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v, index) => {
-      const catSlug = (v.categoria || categoria || 'servizi').toLowerCase().replace(/\s+/g, '-');
-      const zonaSlug = (v.zona || v.quartiere || 'roma').toLowerCase().replace(/\s+/g, '-');
-      const linkScheda = `/${catSlug}-roma-${zonaSlug}/${v.slug}`;
-      const mostraLinkScheda = pagina === 1 && index < 5;
-
+     const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+const mostraLinkScheda = pagina === 1 && index < 5 && v.slug;
       return (
         <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
           
