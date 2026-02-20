@@ -12,9 +12,7 @@ export async function getServerSideProps({ params }) {
   const { data, error } = await supabase
     .from("annunci")
     .select("*")
-    .eq("categoria", "Farmacia")
-    .eq("zona", params.zona)
-    .eq("slug", params.slug)
+    .eq("slug", params.slug) // Cerchiamo lo slug intero così come è scritto nel DB
     .eq("approvato", true)
     .single();
 
