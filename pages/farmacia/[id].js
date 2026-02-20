@@ -3,30 +3,43 @@ import { createClient } from "@supabase/supabase-js";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+// Inizializzazione protetta: se le chiavi mancano, non crasha
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey) 
+  : null;
 
 export async function getServerSideProps({ params }) {
-  // Cerchiamo l'annuncio usando il parametro che arriva dall'URL (che ora si chiama id)
-  const { data, error } = await supabase
-    .from("annunci")
-    .select("*")
-    .eq("slug", params.id) // Usiamo params.id perché il file si chiama [id].js
-    .eq("approvato", true)
-    .single();
-
-  if (!data || error) {
+  // Se supabase non è inizializzato o manca il parametro, ritorna 404 senza crashare
+  if (!supabase || !params.id) {
     return { notFound: true };
   }
 
-  return {
-    props: { struttura: data },
-  };
+  try {
+    const { data, error } = await supabase
+      .from("annunci")
+      .select("*")
+      .eq("slug", params.id)
+      .eq("approvato", true)
+      .single();
+
+    if (error || !data) {
+      return { notFound: true };
+    }
+
+    return {
+      props: { struttura: data },
+    };
+  } catch (e) {
+    return { notFound: true };
+  }
 }
 
 export default function SchedaFarmacia({ struttura }) {
+  if (!struttura) return null;
+
   const varianti = [
     `La ${struttura.nome} è una farmacia situata a Roma in zona ${struttura.zona}. Rappresenta un punto di riferimento essenziale per i residenti di ${struttura.zona}, offrendo assistenza e professionalità in ${struttura.indirizzo}.`,
     `Situata in ${struttura.indirizzo}, nel quartiere ${struttura.zona}, la ${struttura.nome} è una struttura sanitaria dedicata alla salute dei cittadini. La sua posizione a Roma ${struttura.zona} la rende facilmente accessibile.`,
@@ -51,7 +64,9 @@ export default function SchedaFarmacia({ struttura }) {
         </div>
 
         <p><strong>Indirizzo:</strong> {struttura.indirizzo}</p>
-        <a href={`tel:${struttura.telefono}`} style={{ display: 'inline-block', marginTop: '20px', background: '#065f46', color: 'white', padding: '12px 25px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>CHIAMA ORA</a>
+        <div style={{ marginTop: '20px' }}>
+             <a href={`tel:${struttura.telefono}`} style={{ display: 'inline-block', background: '#065f46', color: 'white', padding: '12px 25px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>CHIAMA ORA</a>
+        </div>
       </main>
       <Footer />
     </>
