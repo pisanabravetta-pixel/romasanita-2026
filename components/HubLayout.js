@@ -238,7 +238,6 @@ async function fetchNuoviMedici() {
          
 
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
-{/* CONTEGGIO RISULTATI - FIX PLURALE E NOMI */}
 {totaleAnnunci > 0 && (
   <div style={{ 
     marginBottom: '20px', 
@@ -258,89 +257,108 @@ async function fetchNuoviMedici() {
       fontSize: '13px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }}>
-  {totaleAnnunci}
+      {totaleAnnunci}
     </span>
-<span>
-  {titoloPulito} {
-    (titoloPulito.toLowerCase().includes('farmaci') || titoloPulito.toLowerCase().includes('diagnosti'))
-    ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
-    : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
-  } a Roma
-</span>
+    <span>
+      {titoloPulito} {
+        (titoloPulito.toLowerCase().includes('farmaci') || titoloPulito.toLowerCase().includes('diagnosti'))
+        ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
+        : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
+      } a Roma
+    </span>
   </div>
 )}
+
 <div style={{ display: 'block' }}>
   {loadingRealTime ? (
     <p>Caricamento...</p>
   ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
-    listaDaMostrare.map((v) => (
-      <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
-        
-       {/* 1. FIX NOME: Fallback su titolo e stringa generica */}
-        <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
-          {v.nome || v.titolo || 'Professionista Verificato'}
-        </h3>
-        
-        {/* 2. FIX INDIRIZZO E ZONA: Aggiunto fallback per evitare Undefined */}
-        <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>
-          📍 {v.indirizzo || 'Roma'} — <strong>{v.zona || v.quartiere || 'Roma'}</strong>
-        </p>
-        
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-          {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+    listaDaMostrare.map((v, index) => {
+      // LOGICA LINK SCHEDA: calcolo slug per i primi 5 della Pagina 1
+      const catSlug = (v.categoria || categoria || 'servizi').toLowerCase().replace(/\s+/g, '-');
+      const zonaSlug = (v.zona || v.quartiere || 'roma').toLowerCase().replace(/\s+/g, '-');
+      const linkScheda = `/${catSlug}-roma-${zonaSlug}/${v.slug}`;
+      const mostraLinkScheda = pagina === 1 && index < 5;
+
+      return (
+        <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
           
-          {/* 3. FIX BADGE: Pulizia profonda per mostrare il nome esatto (es. CARDIOLOGI) */}
-          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
-            {v.categoria 
-              ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
-              : (badgeSpec || 'SPECIALISTA').toUpperCase()}
-          </span>
-        </div>
-        {/* ... il resto dei bottoni Chiama/Whatsapp rimane uguale ... */}
+          {/* 1. NOME: Linkabile solo per i primi 5 della prima pagina */}
+          <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
+            {mostraLinkScheda ? (
+              <a href={linkScheda} style={{ color: '#2c5282', textDecoration: 'none' }}>
+                {v.nome || v.titolo || 'Professionista Verificato'}
+              </a>
+            ) : (
+              v.nome || v.titolo || 'Professionista Verificato'
+            )}
+          </h3>
+          
+          {/* 2. INDIRIZZO E ZONA */}
+          <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>
+            📍 {v.indirizzo || 'Roma'} — <strong>{v.zona || v.quartiere || 'Roma'}</strong>
+          </p>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+            {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+            
+            <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
+              {v.categoria 
+                ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
+                : (badgeSpec || 'SPECIALISTA').toUpperCase()}
+            </span>
+          </div>
 
- <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
-    📞 CHIAMA
-  </a>
-  
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+              📞 CHIAMA
+            </a>
 
-<a 
- href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
-  onClick={(e) => { 
-    if(!v.whatsapp) { 
-      e.preventDefault(); 
-      alert("WhatsApp non disponibile per questo professionista"); 
-    } 
-  }}
-  target={v.whatsapp ? "_blank" : "_self"}
-  rel="noopener noreferrer"
-  style={{ 
-    flex: '1', 
-    minWidth: '110px', 
-    backgroundColor: '#22c55e', // Verde fisso per tutti
-    color: 'white', 
-    padding: '14px', 
-    borderRadius: '8px', 
-    textAlign: 'center', 
-    fontWeight: '800', 
-    textDecoration: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer'
-  }}
->
-  💬 WHATSAPP
-</a>
-  <a 
-    href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-    target="_blank" 
-    rel="noreferrer" 
-    style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
-  >
-  🗺️ MAPPA
-    </a>
-  </div>
+            {/* NUOVO TASTO SCHEDA: Visibile solo se mostraLinkScheda è true */}
+            {mostraLinkScheda && (
+              <a href={linkScheda} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+                📄 SCHEDA
+              </a>
+            )}
+
+            <a 
+              href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
+              onClick={(e) => { 
+                if(!v.whatsapp) { 
+                  e.preventDefault(); 
+                  alert("WhatsApp non disponibile per questo professionista"); 
+                } 
+              }}
+              target={v.whatsapp ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+              style={{ 
+                flex: '1', 
+                minWidth: '110px', 
+                backgroundColor: '#22c55e', 
+                color: 'white', 
+                padding: '14px', 
+                borderRadius: '8px', 
+                textAlign: 'center', 
+                fontWeight: '800', 
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              💬 WHATSAPP
+            </a>
+
+            <a 
+              href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+              target="_blank" 
+              rel="noreferrer" 
+              style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
+            >
+              🗺️ MAPPA
+            </a>
+          </div>
   
   {/* --- INIZIO TESTO TITOLARE --- */}
  <p style={{ 
