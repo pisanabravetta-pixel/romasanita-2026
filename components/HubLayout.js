@@ -274,7 +274,6 @@ async function fetchNuoviMedici() {
     <p>Caricamento...</p>
   ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v, index) => {
-      // LOGICA LINK SCHEDA: calcolo slug per i primi 5 della Pagina 1
       const catSlug = (v.categoria || categoria || 'servizi').toLowerCase().replace(/\s+/g, '-');
       const zonaSlug = (v.zona || v.quartiere || 'roma').toLowerCase().replace(/\s+/g, '-');
       const linkScheda = `/${catSlug}-roma-${zonaSlug}/${v.slug}`;
@@ -283,7 +282,6 @@ async function fetchNuoviMedici() {
       return (
         <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
           
-          {/* 1. NOME: Linkabile solo per i primi 5 della prima pagina */}
           <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
             {mostraLinkScheda ? (
               <a href={linkScheda} style={{ color: '#2c5282', textDecoration: 'none' }}>
@@ -294,14 +292,12 @@ async function fetchNuoviMedici() {
             )}
           </h3>
           
-          {/* 2. INDIRIZZO E ZONA */}
           <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>
             📍 {v.indirizzo || 'Roma'} — <strong>{v.zona || v.quartiere || 'Roma'}</strong>
           </p>
           
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
             {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-            
             <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
               {v.categoria 
                 ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
@@ -314,7 +310,6 @@ async function fetchNuoviMedici() {
               📞 CHIAMA
             </a>
 
-            {/* NUOVO TASTO SCHEDA: Visibile solo se mostraLinkScheda è true */}
             {mostraLinkScheda && (
               <a href={linkScheda} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
                 📄 SCHEDA
@@ -323,107 +318,44 @@ async function fetchNuoviMedici() {
 
             <a 
               href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
-              onClick={(e) => { 
-                if(!v.whatsapp) { 
-                  e.preventDefault(); 
-                  alert("WhatsApp non disponibile per questo professionista"); 
-                } 
-              }}
+              onClick={(e) => { if(!v.whatsapp) { e.preventDefault(); alert("WhatsApp non disponibile"); } }}
               target={v.whatsapp ? "_blank" : "_self"}
               rel="noopener noreferrer"
-              style={{ 
-                flex: '1', 
-                minWidth: '110px', 
-                backgroundColor: '#22c55e', 
-                color: 'white', 
-                padding: '14px', 
-                borderRadius: '8px', 
-                textAlign: 'center', 
-                fontWeight: '800', 
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
+              style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               💬 WHATSAPP
             </a>
 
-            <a 
-              href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-              target="_blank" 
-              rel="noreferrer" 
-              style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}
-            >
+            <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noreferrer" style={{ flex: '1', minWidth: '110px', backgroundColor: '#f1f5f9', color: '#1e293b', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none', border: '1px solid #e2e8f0' }}>
               🗺️ MAPPA
             </a>
           </div>
+
+          {/* TESTO TITOLARE - DEVE STARE DENTRO IL MAP */}
+          <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '16px', marginBottom: '10px', textAlign: 'center', lineHeight: '1.5', borderTop: '1px solid #f1f5f9', paddingTop: '10px' }}>
+            Dati estratti da fonti pubbliche. Sei il titolare? <br/>
+            Puoi richiedere la modifica di questo annuncio 
+            <a href={`mailto:info@servizisalute.com?subject=Richiesta: ${v.nome}`} style={{ color: colore, marginLeft: '4px', fontWeight: '700', textDecoration: 'underline' }}>cliccando qui</a>
+          </p>
+
+          <div style={{ textAlign: 'center', marginTop: '12px' }}>
+            <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: `${colore}15`, color: colore, padding: '6px 15px', borderRadius: '20px', border: `1px solid ${colore}33`, display: 'inline-block', textTransform: 'uppercase' }}>
+              {titoloPulito} A ROMA {v.zona || v.quartiere || ''}
+            </span>
+          </div>
         </div>
-      )
+      );
     })
   ) : (
-    <p>Nessun risultato trovato</p>
-  )}
-</div>
-  {/* --- INIZIO TESTO TITOLARE --- */}
- <p style={{ 
-  fontSize: '11px', 
-  color: '#94a3b8', 
-  marginTop: '16px', 
-  marginBottom: '10px',
-  textAlign: 'center', 
-  lineHeight: '1.5',
-  borderTop: '1px solid #f1f5f9', 
-  paddingTop: '10px' 
-}}>
-  Dati estratti da fonti pubbliche. Sei il titolare? <br/>
-  Puoi richiedere la gestione o la modifica di questo annuncio 
-  <a 
-    href={`mailto:info@servizisalute.com?subject=Richiesta gestione annuncio: ${v.nome}`}
-    style={{ 
-      color: colore, 
-      marginLeft: '4px', 
-      fontWeight: '700', 
-      textDecoration: 'underline',
-      cursor: 'pointer',
-      display: 'inline-block'
-    }}
-  >
-    cliccando qui
-  </a>
-</p>
-  {/* --- FINE TESTO TITOLARE --- */}
-
-<div style={{ textAlign: 'center', marginTop: '12px' }}>
-  <span style={{ 
-    fontSize: '11px', 
-    fontWeight: '800', 
-    backgroundColor: `${colore}15`, 
-    color: colore, 
-    padding: '6px 15px', 
-    borderRadius: '20px', 
-    border: `1px solid ${colore}33`,
-    display: 'inline-block',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px'
-  }}>
-   {titoloPulito} A ROMA {v.zona}
-  </span>
-</div>
-</div>
-    ))
-  ) : (
-    /* BOX CORTESIA SE LISTA VUOTA */
     <div style={{ backgroundColor: 'white', padding: '40px 20px', borderRadius: theme.radius.main, textAlign: 'center', border: '2px dashed #cbd5e1', marginBottom: '30px' }}>
       <span style={{ fontSize: '40px', marginBottom: '10px', display: 'block' }}>🔎</span>
       <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Ricerca in corso a Roma</h3>
       <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.6', maxWidth: '500px', margin: '0 auto' }}>
-        Stiamo selezionando e verificando i migliori profili per <strong>{titolo} a Roma</strong>.<br/>
-        I nuovi annunci professionali saranno disponibili a breve.
+        Stiamo selezionando i migliori profili per <strong>{titolo} a Roma</strong>.
       </p>
     </div>
   )}
+</div>
 {/* 4. CONTROLLI PAGINAZIONE */}
       {/* 4. CONTROLLI PAGINAZIONE */}
 {totaleAnnunci > annunciPerPagina && (
