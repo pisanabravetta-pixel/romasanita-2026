@@ -296,7 +296,7 @@ async function fetchNuoviMedici() {
           </p>
           
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-            {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+            {v.urgency_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
             <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#ebf8ff', color: colore, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${colore}44` }}>
               {v.categoria 
                 ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
@@ -330,7 +330,6 @@ async function fetchNuoviMedici() {
             </a>
           </div>
 
-          {/* TESTO TITOLARE - DENTRO IL MAP */}
           <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '16px', marginBottom: '10px', textAlign: 'center', lineHeight: '1.5', borderTop: '1px solid #f1f5f9', paddingTop: '10px' }}>
             Dati estratti da fonti pubbliche. Sei il titolare? <br/>
             Puoi richiedere la modifica di questo annuncio 
@@ -338,24 +337,7 @@ async function fetchNuoviMedici() {
           </p>
 
           <div style={{ textAlign: 'center', marginTop: '12px' }}>
-            <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: `${colore}15`, color: colore, padding: '6px 15px', borderRadius: '20px', border: `1px solid ${colore}33`, display: 'inline-block', textTransform: 'uppercase' }}>
-              {titoloPulito} A ROMA {v.zona || v.quartiere || ''}
-            </span>
-          </div>
-        </div>
-      );
-    })
-  ) : (
-    <div style={{ backgroundColor: 'white', padding: '40px 20px', borderRadius: theme.radius.main, textAlign: 'center', border: '2px dashed #cbd5e1', marginBottom: '30px' }}>
-      <span style={{ fontSize: '40px', marginBottom: '10px', display: 'block' }}>🔎</span>
-      <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', marginBottom: '10px' }}>Ricerca in corso a Roma</h3>
-      <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.6', maxWidth: '500px', margin: '0 auto' }}>
-        Stiamo selezionando i migliori profili per <strong>{titolo} a Roma</strong>.
-      </p>
-    </div>
-  )}
-</div>
-
+            <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: `${colore}15`, color: colore, padding: '6px 1
 {/* 4. CONTROLLI PAGINAZIONE */}
       {/* 4. CONTROLLI PAGINAZIONE */}
 {totaleAnnunci > annunciPerPagina && (
