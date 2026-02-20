@@ -410,8 +410,7 @@ async function fetchNuoviMedici() {
           </button>
         </div>
       )}
-      {/* CHIUSURA DIV DEGLI ANNUNCI */}
-      </div>
+  
      
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
