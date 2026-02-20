@@ -236,7 +236,6 @@ async function fetchNuoviMedici() {
   </p>
 </div>
          
-
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
 {totaleAnnunci > 0 && (
   <div style={{ 
@@ -331,7 +330,7 @@ async function fetchNuoviMedici() {
             </a>
           </div>
 
-          {/* TESTO TITOLARE - DEVE STARE DENTRO IL MAP */}
+          {/* TESTO TITOLARE - DENTRO IL MAP */}
           <p style={{ fontSize: '11px', color: '#94a3b8', marginTop: '16px', marginBottom: '10px', textAlign: 'center', lineHeight: '1.5', borderTop: '1px solid #f1f5f9', paddingTop: '10px' }}>
             Dati estratti da fonti pubbliche. Sei il titolare? <br/>
             Puoi richiedere la modifica di questo annuncio 
@@ -356,6 +355,7 @@ async function fetchNuoviMedici() {
     </div>
   )}
 </div>
+
 {/* 4. CONTROLLI PAGINAZIONE */}
       {/* 4. CONTROLLI PAGINAZIONE */}
 {totaleAnnunci > annunciPerPagina && (
