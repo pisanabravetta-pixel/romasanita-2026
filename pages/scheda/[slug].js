@@ -24,28 +24,49 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // MAPPA RIPRISTINATA (Logica standard funzionante)
+  // CODICE MAPPA ESATTO (Quello che mi hai incollato tu)
   useEffect(() => {
-    if (typeof L !== 'undefined' && dato && (dato.lat || dato.latitudine) && (dato.lng || dato.lon || dato.longitudine)) {
-      const latitude = parseFloat(dato.lat || dato.latitudine);
-      const longitude = parseFloat(dato.lng || dato.lon || dato.longitudine);
+    if (!dato || !dato.lat || !dato.lng) return;
 
+    const initMap = () => {
+      if (typeof L === 'undefined') {
+        setTimeout(initMap, 200);
+        return;
+      }
+      const container = L.DomUtil.get('map-scheda');
+      if (container != null) { container._leaflet_id = null; }
       if (window.mapInstance) { window.mapInstance.remove(); }
-      
-      const map = L.map('map-scheda', { scrollWheelZoom: false }).setView([latitude, longitude], 16);
-      window.mapInstance = map;
-      
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OSM'
-      }).addTo(map);
 
-      L.marker([latitude, longitude])
-        .addTo(map)
-        .bindPopup(`<b>${dato.nome}</b>`)
-        .openPopup();
+      try {
+        const map = L.map('map-scheda', { 
+          scrollWheelZoom: false 
+        }).setView([parseFloat(dato.lat), parseFloat(dato.lng)], 16);
+        
+        window.mapInstance = map;
 
-      setTimeout(() => { map.invalidateSize(); }, 500);
-    }
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '© OSM'
+        }).addTo(map);
+
+        L.marker([parseFloat(dato.lat), parseFloat(dato.lng)])
+          .addTo(map)
+          .bindPopup(`<b>${dato.nome}</b>`)
+          .openPopup();
+
+        setTimeout(() => { map.invalidateSize(); }, 500);
+      } catch (e) {
+        console.error("Errore mappa:", e);
+      }
+    };
+
+    initMap();
+
+    return () => {
+      if (window.mapInstance) {
+        window.mapInstance.remove();
+        window.mapInstance = null;
+      }
+    };
   }, [dato]);
 
   if (loading) return <div style={{padding: '100px', textAlign: 'center'}}>Caricamento...</div>;
@@ -54,11 +75,11 @@ export default function SchedaProfessionale() {
   const nomeZona = dato.quartiere || dato.zona || "Roma";
   const catPulita = (dato.categoria || "").replace(/-/g, ' ').toUpperCase();
 
-  // TEMPLATE CON KEYWORD OBBLIGATORIE (Aperta Domenica, h24, WhatsApp)
+  // TESTI CON KEYWORD: DOMENICA, H24, WHATSAPP
   const varianti = [
-    `La struttura **${dato.nome}** opera a Roma in zona **${nomeZona}** per la categoria **${catPulita}**. Per sapere se è **aperta la domenica**, se effettua servizio **h24** o per conoscere la disponibilità di farmaci e visite urgenti, è necessario contattare direttamente la sede. Inviando un messaggio **WhatsApp** o telefonando al numero indicato, potrai ricevere assistenza immediata e dettagli sugli orari aggiornati in **${dato.indirizzo}**.`,
-    `Se cerchi **${catPulita}** nel quartiere **${nomeZona}**, la **${dato.nome}** in **${dato.indirizzo}** è il punto di riferimento più vicino. Per informazioni su **turni domenicali**, disponibilità **h24** o per prenotare una prestazione specifica, ti invitiamo a cliccare sui tasti di contatto diretto. Parlare con il personale tramite **WhatsApp** o telefono ti permetterà di verificare l'effettiva apertura e i servizi sanitari attivi oggi.`,
-    `In **${dato.indirizzo}** troviamo la **${dato.nome}**, specializzata in **${catPulita}** a Roma (**${nomeZona}**). La scheda fornisce i recapiti per parlare subito con un operatore: contattali ora per sapere se la struttura è **aperta la domenica**, se offre reperibilità **h24** o per urgenze mediche. Il contatto via **WhatsApp** o chiamata garantisce una risposta rapida su ogni esigenza di salute e orari di ricezione.`
+    `La struttura ${dato.nome} è specializzata in ${catPulita} a Roma, zona ${nomeZona}. Per sapere se è aperta la domenica, se effettua servizio h24 o per conoscere la disponibilità di farmaci e visite urgenti in ${dato.indirizzo}, è necessario contattare direttamente la sede. Tramite WhatsApp o telefono potrai ricevere assistenza immediata e dettagli sugli orari aggiornati.`,
+    `Se cerchi ${catPulita} nel quartiere ${nomeZona}, ${dato.nome} in ${dato.indirizzo} è a tua disposizione. Per informazioni su turni domenicali, reperibilità h24 o per prenotare una prestazione, ti invitiamo a cliccare sui tasti di contatto. Parlare direttamente via WhatsApp o chiamando in sede ti permetterà di verificare l'apertura effettiva e i servizi sanitari attivi.`,
+    `In ${dato.indirizzo} (zona ${nomeZona}) opera ${dato.nome} per la categoria ${catPulita}. Contattali direttamente per sapere se la struttura è aperta la domenica o se offre servizio h24 per urgenze. Il contatto rapido via WhatsApp o telefono garantisce una risposta immediata su ogni esigenza di salute e disponibilità oraria.`
   ];
   const testoDinamico = varianti[dato.id % 3] || varianti[0];
 
@@ -69,18 +90,20 @@ export default function SchedaProfessionale() {
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </Head>
       
-      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="lazyOnload" />
+      {/* SCRIPT CON STRATEGY ESATTA */}
+      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="beforeInteractive" />
 
       <Navbar />
 
-      <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '850px', margin: '0 auto', width: '100%' }}>
+      <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '850px', margin: '0 auto', width: '100%', paddingBottom: '60px' }}>
         <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #e2e8f0' }}>
+          
           <h1 style={{ color: '#1e293b', fontSize: '1.8rem', fontWeight: '900', marginBottom: '5px' }}>{dato.nome}</h1>
           <p style={{ color: '#0284c7', fontSize: '1.1rem', marginBottom: '25px', fontWeight: '700' }}>{catPulita} — ROMA {nomeZona.toUpperCase()}</p>
 
           <div style={{ backgroundColor: '#f0f9ff', padding: '25px', borderRadius: '12px', marginBottom: '35px', borderLeft: '6px solid #0284c7' }}>
             <p style={{ lineHeight: '1.8', color: '#334155', margin: 0, fontSize: '1.1rem' }}>
-              {testoDinamico.replace(/\*\*/g, '')}
+              {testoDinamico}
             </p>
           </div>
 
