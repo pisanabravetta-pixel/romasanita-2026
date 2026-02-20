@@ -24,27 +24,59 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // LOGICA MAPPA RIPRESA DAL TUO CODICE QUARTIERE
-  useEffect(() => {
-    // Usiamo 'lng' perché nel tuo DB la colonna si chiama così
-    if (typeof L !== 'undefined' && dato && dato.lat && dato.lng) {
-      if (window.mapInstance) { window.mapInstance.remove(); }
+// 1. Cambia lo Script in Head o subito sotto (togli lazyOnload)
+<Script 
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+  strategy="beforeInteractive" // Carica prima del resto per essere pronti
+/>
+
+// 2. Sostituisci lo useEffect della mappa con questo che ha il controllo "retry"
+useEffect(() => {
+  if (!dato || !dato.lat || !dato.lng) return;
+
+  const initMap = () => {
+    // Controllo se Leaflet è pronto
+    if (typeof L === 'undefined') {
+      setTimeout(initMap, 200); // Riprova tra 200ms se non è ancora pronto
+      return;
+    }
+
+    // Pulizia
+    const container = L.DomUtil.get('map-scheda');
+    if (container != null) { container._leaflet_id = null; }
+    if (window.mapInstance) { window.mapInstance.remove(); }
+
+    try {
+      const map = L.map('map-scheda', { 
+        scrollWheelZoom: false 
+      }).setView([parseFloat(dato.lat), parseFloat(dato.lng)], 16);
       
-      const map = L.map('map-scheda', { scrollWheelZoom: false }).setView([parseFloat(dato.lat), parseFloat(dato.lng)], 16);
       window.mapInstance = map;
-      
+
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OSM'
       }).addTo(map);
 
       L.marker([parseFloat(dato.lat), parseFloat(dato.lng)])
         .addTo(map)
-        .bindPopup(`<b>${dato.nome}</b><br>${dato.indirizzo}`)
+        .bindPopup(`<b>${dato.nome}</b>`)
         .openPopup();
 
       setTimeout(() => { map.invalidateSize(); }, 500);
+    } catch (e) {
+      console.error("Errore mappa:", e);
     }
-  }, [dato]);
+  };
+
+  initMap();
+
+  return () => {
+    if (window.mapInstance) {
+      window.mapInstance.remove();
+      window.mapInstance = null;
+    }
+  };
+}, [dato]);
 
   if (loading) return <div style={{padding: '100px', textAlign: 'center'}}>Caricamento...</div>;
   if (!dato) return <div style={{padding: '100px', textAlign: 'center'}}>Scheda non trovata.</div>;
