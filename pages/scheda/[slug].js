@@ -24,7 +24,7 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // LA TUA MAPPA FUNZIONANTE (NON TOCCARE)
+  // LA TUA MAPPA FUNZIONANTE - RIPRISTINATA INTEGRALMENTE
   useEffect(() => {
     if (!dato || !dato.lat || !dato.lng) return;
 
@@ -74,34 +74,27 @@ export default function SchedaProfessionale() {
   if (!dato) return <div style={{padding: '100px', textAlign: 'center'}}>Scheda non trovata.</div>;
 
   const nomeZona = dato.quartiere || dato.zona || "Roma";
+  const catPulita = (dato.categoria || "").replace(/-/g, ' ').toUpperCase();
 
-  // PULIZIA CATEGORIA PER I TESTI
-  const getCatPulita = (cat) => {
-    if (!cat) return "Servizi Sanitari";
-    let c = cat.toLowerCase();
-    if (c.includes('(')) return c.split('(')[1].replace(')', '').trim().toUpperCase();
-    if (c.includes('servizi-domicilio')) return "SERVIZI A DOMICILIO";
-    return c.replace(/-/g, ' ').toUpperCase();
-  };
-  const categoriaDisplay = getCatPulita(dato.categoria);
-
-  // TESTI CON KEYWORD OBBLIGATORIE
   const varianti = [
-    `La struttura **${dato.nome}** è un presidio specializzato in **${categoriaDisplay}** situato a Roma, zona **${nomeZona}**. Presso la sede in **${dato.indirizzo}**, è possibile ricevere assistenza dedicata. Per sapere se l'attività è **aperta la domenica**, se effettua servizio **h24** o per urgenze, è fondamentale contattare direttamente il personale tramite **WhatsApp** o telefono. Riceverai supporto immediato per ogni tua esigenza nel quartiere ${nomeZona}.`,
-    `Se cerchi esperti in **${categoriaDisplay}** a Roma ${nomeZona}, la **${dato.nome}** in **${dato.indirizzo}** rappresenta una scelta di prossimità. Consigliamo di contattare il titolare via **WhatsApp** o chiamata per verificare l'**apertura domenicale**, la disponibilità **h24** o per prenotare una visita specialistica. Il contatto diretto garantisce velocità e precisione per ogni necessità di cura.`,
-    `Situata in **${dato.indirizzo}**, la **${dato.nome}** opera nella categoria **${categoriaDisplay}** servendo l'area di Roma **${nomeZona}**. Per conoscere i turni, sapere se è **aperta la domenica** o se il servizio è attivo **h24**, ti invitiamo a cliccare sui tasti di contatto rapido. Parlare con il personale via **WhatsApp** ti permetterà di ottenere chiarimenti immediati su prestazioni e disponibilità.`
+    `La struttura **${dato.nome}** è specializzata in **${catPulita}** a Roma, zona **${nomeZona}**. Per sapere se è **aperta la domenica**, se effettua servizio **h24** o per conoscere la disponibilità di farmaci e visite urgenti in **${dato.indirizzo}**, è fondamentale contattare direttamente la sede. Tramite **WhatsApp** o telefono potrai ricevere assistenza immediata e dettagli sugli orari aggiornati.`,
+    `Se cerchi **${catPulita}** nel quartiere **${nomeZona}**, **${dato.nome}** in **${dato.indirizzo}** è a tua disposizione. Per informazioni su **turni domenicali**, reperibilità **h24** o per prenotare una prestazione, ti invitiamo a cliccare sui tasti di contatto. Parlare direttamente via **WhatsApp** o chiamando in sede ti permetterà di verificare l'apertura effettiva e i servizi sanitari attivi.`,
+    `In **${dato.indirizzo}** (zona **${nomeZona}**) opera **${dato.nome}** per la categoria **${catPulita}**. Contattali direttamente per sapere se la struttura è **aperta la domenica** o se offre servizio **h24** per urgenze. Il contatto rapido via **WhatsApp** o telefono garantisce una risposta immediata su ogni esigenza di salute e disponibilità oraria.`
   ];
   const testoDinamico = varianti[dato.id % 3] || varianti[0];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>{dato.nome} – {categoriaDisplay} Roma {nomeZona}</title>
+        <title>{dato.nome} – {catPulita} Roma {nomeZona}</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </Head>
       
-      {/* SCRIPT STRATEGY PER SICUREZZA MAPPA */}
-      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="beforeInteractive" />
+      {/* SCRIPT CARICATO CON PRIORITÀ MASSIMA */}
+      <Script 
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+        strategy="beforeInteractive" 
+      />
 
       <Navbar />
 
@@ -109,11 +102,11 @@ export default function SchedaProfessionale() {
         <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #e2e8f0' }}>
           
           <h1 style={{ color: '#1e293b', fontSize: '2rem', fontWeight: '900', marginBottom: '5px' }}>{dato.nome}</h1>
-          <p style={{ color: '#64748b', fontSize: '1.2rem', marginBottom: '25px', fontWeight: '600' }}>{categoriaDisplay} — Roma {nomeZona}</p>
+          <p style={{ color: '#64748b', fontSize: '1.2rem', marginBottom: '25px', fontWeight: '600' }}>{catPulita} — Roma {nomeZona}</p>
 
           <div style={{ backgroundColor: '#f0f9ff', padding: '25px', borderRadius: '12px', marginBottom: '35px', borderLeft: '6px solid #0284c7' }}>
             <p style={{ lineHeight: '1.8', color: '#334155', margin: 0, fontSize: '1.1rem' }}>
-              {testoDinamico.replace(/\*\*/g, '')}
+              <strong>Dettagli e Servizi:</strong> {testoDinamico.replace(/\*\*/g, '')}
             </p>
           </div>
 
@@ -126,7 +119,7 @@ export default function SchedaProfessionale() {
 
           <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '15px', color: '#1e293b' }}>Mappa e Indicazioni</h2>
           <div id="map-scheda" style={{ height: '380px', width: '100%', borderRadius: '12px', border: '1px solid #e2e8f0', zIndex: 1, marginBottom: '10px' }}></div>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', textAlign: 'center' }}>Posizione GPS di {dato.nome} in {dato.indirizzo}</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', textAlign: 'center' }}>Posizione GPS di {dato.nome} a Roma {nomeZona}</p>
 
         </div>
       </main>
