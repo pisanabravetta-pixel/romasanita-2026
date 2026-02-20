@@ -24,21 +24,27 @@ export default function SchedaProfessionale() {
     fetchDati();
   }, [slug]);
 
-  // FIX MAPPA: Caricamento Leaflet sicuro
+  // LOGICA MAPPA LEAFLET - FIX DEFINITIVO
   useEffect(() => {
     if (dato && dato.lat && dato.lon && typeof L !== 'undefined') {
+      // Pulizia eventuale mappa esistente
       const container = L.DomUtil.get('map-scheda');
-      if (container != null) { container._leaflet_id = null; } // Reset per evitare errori di inizializzazione
+      if (container != null) { container._leaflet_id = null; }
 
-      const map = L.map('map-scheda', { scrollWheelZoom: false }).setView([dato.lat, dato.lon], 16);
+      const map = L.map('map-scheda', { 
+        scrollWheelZoom: false,
+        dragging: !L.Browser.mobile 
+      }).setView([dato.lat, dato.lon], 16);
+
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap'
       }).addTo(map);
       
       L.marker([dato.lat, dato.lon]).addTo(map)
         .bindPopup(`<b>${dato.nome}</b><br>${dato.indirizzo}`).openPopup();
-        
-      setTimeout(() => { map.invalidateSize(); }, 500); // Forza il rendering corretto
+
+      // Forza il ricalcolo delle dimensioni dopo il caricamento
+      setTimeout(() => { map.invalidateSize(); }, 400);
     }
   }, [dato]);
 
@@ -46,21 +52,22 @@ export default function SchedaProfessionale() {
   if (!dato) return <div style={{padding: '100px', textAlign: 'center'}}>Scheda non trovata.</div>;
 
   const nomeZona = dato.quartiere || dato.zona || "Roma";
-  const cat = dato.categoria.toLowerCase();
 
-  // VARIANTI TESTO OTTIMIZZATE (Keyword: H24, Domenica, WhatsApp, Servizi)
+  // --- I 3 TEMPLATE DIVERSI (Punto 1 degli appunti) ---
   const varianti = [
-    `La ${dato.nome} è un punto di riferimento per chi cerca ${cat} a Roma in zona ${nomeZona}. La struttura offre assistenza nel quartiere e, per garantire la massima trasparenza sui servizi offerti, consigliamo di contattare direttamente il personale. È possibile richiedere informazioni su orari di apertura, disponibilità di farmaci o visite, e verificare se il servizio è attivo h24 o durante la domenica. Contatta la struttura tramite telefono o WhatsApp per ricevere assistenza immediata in ${dato.indirizzo}.`,
-    `Se hai bisogno di una struttura specializzata come ${dato.nome} a ${nomeZona}, qui trovi i riferimenti aggiornati. Situata in ${dato.indirizzo}, questa attività opera nel settore ${cat} a Roma. Per conoscere i dettagli sulle prestazioni erogate o per urgenze notturne e festivi (apertura domenica), ti invitiamo a chiamare direttamente o inviare un messaggio WhatsApp. Riceverai tutte le informazioni utili sui servizi sanitari disponibili e sulle modalità di accesso alla struttura.`,
-    `Cerchi ${cat} nel quartiere ${nomeZona}? La ${dato.nome} serve l'area di Roma con professionalità. Per ogni esigenza legata a servizi specialistici, disponibilità h24 o turni domenicali, il modo più veloce è contattare direttamente il titolare tramite i pulsanti in questa pagina. Inviando un WhatsApp o telefonando in sede in ${dato.indirizzo}, potrai ottenere chiarimenti su orari, costi e appuntamenti, evitando attese inutili e ricevendo un supporto diretto e qualificato.`
+    `La ${dato.nome} è un presidio sanitario fondamentale per chi cerca ${dato.categoria} a Roma in zona ${nomeZona}. La struttura offre assistenza diretta in ${dato.indirizzo} e, per conoscere nel dettaglio i servizi offerti (come tamponi, autoanalisi o consulenze), consigliamo di contattare il personale. È possibile verificare se la struttura è aperta h24 o di domenica chiamando direttamente o inviando un messaggio WhatsApp per ricevere informazioni utili in tempo reale.`,
+    `Se ti trovi nel quartiere ${nomeZona} e cerchi ${dato.categoria}, la ${dato.nome} in ${dato.indirizzo} è una delle opzioni disponibili a Roma. Per avere certezza sugli orari di apertura, inclusi i turni notturni (h24) o l'apertura domenicale, ti invitiamo a utilizzare i contatti telefonici o il tasto WhatsApp. Contattare direttamente la struttura è il modo più rapido per conoscere la disponibilità di servizi specifici e ricevere assistenza personalizzata.`,
+    `Nel quadrante di Roma ${nomeZona}, la ${dato.nome} opera nel settore ${dato.categoria} fornendo supporto ai residenti locali. Situata precisamente in ${dato.indirizzo}, la struttura può essere contattata direttamente per ogni esigenza sanitaria. Se necessiti di sapere se è aperta la domenica, se effettua servizio h24 o per scoprire l'elenco completo dei servizi offerti, scrivi su WhatsApp o telefona in sede per parlare con un operatore e ricevere tutte le info utili.`
   ];
+  
+  // Sceglie il template in base all'ID (così ogni farmacia ha sempre lo stesso testo, ma diverso dalle vicine)
   const testoDinamico = varianti[dato.id % 3] || varianti[0];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Head>
-        <title>{dato.nome} – {dato.categoria} Roma {nomeZona} | Contatti</title>
-        <meta name="description" content={`${dato.nome} a Roma ${nomeZona}. Info su servizi offerti, apertura h24 o domenica. Contatta ora via WhatsApp o telefono.`} />
+        <title>{dato.nome} – {dato.categoria} Roma {nomeZona} | Contatti e Mappa</title>
+        <meta name="description" content={`${dato.nome} in zona ${nomeZona} a Roma. Scopri i servizi offerti, contatta via WhatsApp o telefono per info su apertura h24 e domenica.`} />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </Head>
       
@@ -68,42 +75,41 @@ export default function SchedaProfessionale() {
 
       <Navbar />
 
-      <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '850px', margin: '0 auto', width: '100%', paddingBottom: '60px' }}>
-        <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #f1f5f9' }}>
+      <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '800px', margin: '0 auto', width: '100%', paddingBottom: '60px' }}>
+        <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '15px', boxShadow: '0 2px 15px rgba(0,0,0,0.1)', border: '1px solid #eee' }}>
           
-          <h1 style={{ color: '#0f172a', fontSize: '1.8rem', fontWeight: '900', marginBottom: '5px' }}>{dato.nome}</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '25px' }}>{dato.categoria} a Roma {nomeZona}</p>
+          <h1 style={{ color: '#111', fontSize: '1.8rem', fontWeight: '800', marginBottom: '5px' }}>{dato.nome}</h1>
+          <p style={{ color: '#666', fontSize: '1.1rem', marginBottom: '20px' }}>{dato.categoria} a Roma {nomeZona}</p>
 
-          <div style={{ backgroundColor: '#f0fdf4', padding: '20px', borderRadius: '12px', marginBottom: '30px', borderLeft: '5px solid #22c55e' }}>
-            <p style={{ lineHeight: '1.7', color: '#166534', margin: 0, fontSize: '1.05rem' }}>
-              <strong>Nota informativa:</strong> {testoDinamico}
+          <div style={{ backgroundColor: '#f9fafb', padding: '20px', borderRadius: '10px', marginBottom: '25px', borderLeft: '4px solid #16a34a' }}>
+            <p style={{ lineHeight: '1.6', color: '#333', margin: 0 }}>
+              <strong>Servizi e Informazioni:</strong> {testoDinamico}
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
-            <div style={{ padding: '15px', background: '#f8fafc', borderRadius: '10px' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 'bold', display: 'block' }}>INDIRIZZO</span>
-              <span style={{ fontWeight: '700', color: '#1e293b' }}>{dato.indirizzo}</span>
-            </div>
-            <div style={{ padding: '15px', background: '#f8fafc', borderRadius: '10px' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 'bold', display: 'block' }}>ZONA</span>
-              <span style={{ fontWeight: '700', color: '#1e293b' }}>{nomeZona}</span>
-            </div>
+          <div style={{ marginBottom: '25px' }}>
+            <p style={{ margin: '5px 0' }}>📍 <strong>Indirizzo:</strong> {dato.indirizzo}</p>
+            <p style={{ margin: '5px 0' }}>🏘️ <strong>Quartiere:</strong> {nomeZona}</p>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '35px' }}>
-            <a href={`tel:${dato.telefono}`} style={{ flex: 1, minWidth: '160px', backgroundColor: '#059669', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>📞 CHIAMA ORA</a>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
+            <a href={`tel:${dato.telefono}`} style={{ flex: 1, minWidth: '150px', backgroundColor: '#16a34a', color: 'white', padding: '15px', borderRadius: '8px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>CHIAMA ORA</a>
             {dato.whatsapp && (
-              <a href={`https://wa.me/39${dato.whatsapp}`} style={{ flex: 1, minWidth: '160px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '10px', textAlign: 'center', fontWeight: '900', textDecoration: 'none' }}>💬 WHATSAPP</a>
+              <a href={`https://wa.me/39${dato.whatsapp}`} style={{ flex: 1, minWidth: '150px', backgroundColor: '#25D366', color: 'white', padding: '15px', borderRadius: '8px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }}>WHATSAPP</a>
             )}
           </div>
 
-          <h2 style={{ fontSize: '1.3rem', fontWeight: '800', marginBottom: '15px' }}>Posizione e Mappa</h2>
-          <div id="map-scheda" style={{ height: '350px', width: '100%', borderRadius: '12px', border: '1px solid #e2e8f0', zIndex: 1, marginBottom: '20px' }}></div>
+          <h2 style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '15px' }}>Posizione su Mappa</h2>
+          {/* IL DIV DELLA MAPPA DEVE AVERE UN ID UNICO E ALTEZZA DEFINITA */}
+          <div id="map-scheda" style={{ height: '350px', width: '100%', borderRadius: '10px', border: '1px solid #ddd', zIndex: 1, marginBottom: '20px' }}></div>
 
-          <p style={{ fontSize: '0.9rem', color: '#94a3b8', textAlign: 'center', fontStyle: 'italic' }}>
-            Dati estratti da fonti pubbliche. Si consiglia di contattare la struttura per confermare orari e servizi.
-          </p>
+          <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '30px 0' }} />
+          
+          <div style={{ textAlign: 'center' }}>
+             <a href={`/${dato.categoria.toLowerCase().replace(/\s+/g, '-')}-roma-${nomeZona.toLowerCase().replace(/\s+/g, '-')}`} style={{ color: '#16a34a', fontWeight: 'bold', textDecoration: 'none' }}>
+              ← Torna a {dato.categoria} {nomeZona}
+            </a>
+          </div>
         </div>
       </main>
 
