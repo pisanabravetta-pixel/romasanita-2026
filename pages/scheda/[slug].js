@@ -1,75 +1,73 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+// IMPORTIAMO IL TUO CLIENT GIÀ CONFIGURATO
+import { supabase } from "../../lib/supabaseClient";
 
-export default function SchedaProfessionale() {
+export default function SchedaDinamica() {
   const router = useRouter();
   const { slug } = router.query;
   const [dato, setDato] = useState(null);
-  const [erroreSQL, setErroreSQL] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
 
-    // Inizializzazione
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (!supabaseUrl || !supabaseAnonKey) {
-      setErroreSQL("Mancano le chiavi API di Supabase su Vercel!");
-      setLoading(false);
-      return;
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-    async function scaricaDati() {
+    async function fetchDati() {
       try {
+        setLoading(true);
         const { data, error } = await supabase
           .from("annunci")
           .select("*")
           .eq("slug", slug)
           .single();
-        
-        if (error) {
-          setErroreSQL(error.message);
-        } else {
+
+        if (data) {
           setDato(data);
         }
       } catch (err) {
-        setErroreSQL("Errore di connessione al database.");
+        console.error("Errore fetch scheda:", err);
       } finally {
         setLoading(false);
       }
     }
-    scaricaDati();
+    fetchDati();
   }, [slug]);
 
-  if (loading) return <div style={{padding: '100px', textAlign: 'center'}}>Connessione al database...</div>;
+  if (loading) return <div style={{padding: '100px', textAlign: 'center'}}>Caricamento dati...</div>;
+  if (!dato) return <div style={{padding: '100px', textAlign: 'center'}}>Scheda non trovata.</div>;
 
   return (
     <>
-      <Head><title>Debug Supabase</title></Head>
+      <Head>
+        <title>{dato.nome} - {dato.categoria} {dato.zona}</title>
+      </Head>
       <Navbar />
-      <main style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
-        {erroreSQL ? (
-          <div style={{ padding: '20px', background: '#fee2e2', border: '1px solid #ef4444', borderRadius: '10px' }}>
-            <h2 style={{ color: '#b91c1c' }}>⚠️ Errore Database</h2>
-            <p><strong>Messaggio:</strong> {erroreSQL}</p>
-            <p>Slug cercato: <code>{slug}</code></p>
-            <p><em>Suggerimento: Controlla che le variabili d'ambiente su Vercel siano corrette.</em></p>
+      <main style={{ maxWidth: '800px', margin: '40px auto', padding: '0 20px', minHeight: '60vh' }}>
+        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '15px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #f1f5f9' }}>
+          <h1 style={{ color: '#0f172a', fontSize: '2.5rem', marginBottom: '10px' }}>{dato.nome}</h1>
+          <p style={{ color: '#64748b', fontSize: '1.2rem', marginBottom: '25px' }}>{dato.categoria} a Roma {dato.zona}</p>
+          
+          <div style={{ backgroundColor: '#f0fdf4', padding: '20px', borderRadius: '12px', marginBottom: '30px' }}>
+            <p style={{ margin: 0, lineHeight: '1.6', color: '#166534' }}>
+              <strong>{dato.nome}</strong> è una struttura specializzata in <strong>{dato.categoria}</strong> situata nel quartiere {dato.zona} a Roma. 
+              Puoi trovarla in {dato.indirizzo}.
+            </p>
           </div>
-        ) : (
-          <div style={{ padding: '20px', background: '#f0fdf4', borderRadius: '10px' }}>
-            <h1 style={{color: '#166534'}}>✅ Dati Trovati!</h1>
-            <h2>{dato?.nome}</h2>
-            <p>Indirizzo: {dato?.indirizzo}</p>
+
+          <div style={{ fontSize: '1.1rem', display: 'grid', gap: '15px' }}>
+            <p>📍 <strong>Indirizzo:</strong> {dato.indirizzo}</p>
+            <p>📞 <strong>Telefono:</strong> <a href={`tel:${dato.telefono}`} style={{ color: '#16a34a', fontWeight: 'bold' }}>{dato.telefono}</a></p>
           </div>
-        )}
+
+          <div style={{ marginTop: '30px' }}>
+            <a href={`tel:${dato.telefono}`} style={{ display: 'block', backgroundColor: '#16a34a', color: 'white', padding: '15px', textAlign: 'center', borderRadius: '10px', fontWeight: 'bold', textDecoration: 'none' }}>
+              CHIAMA ORA
+            </a>
+          </div>
+        </div>
       </main>
       <Footer />
     </>
