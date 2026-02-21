@@ -90,42 +90,65 @@ useEffect(() => {
 useEffect(() => {
   if (!slug || slug === 'index' || slug === '') return;
 
-  // IDENTIFICA SE SEI NELLA HUB
   const slugPuro = slug.replace('-roma-', '@');
   const catSlug = slugPuro.split('@')[0].replace('-roma', ''); 
   const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
   const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-  // SE SEI NELLA HUB E HAI DATI DAL SERVER, FERMATI SUBITO.
+  // --- LOGICA METADATI E TEMA (Sempre necessaria per la grafica) ---
+  const mapping = getDBQuery(catSlug);
+  const nomiPuliti = {
+    'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
+    'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
+    'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
+    'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
+    'servizi-domicilio': 'Servizi a Domicilio'
+  };
+  const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
+  const chiaveSlug = catSlug.toLowerCase();
+  const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
+  let nomeCorretto = nomeBase;
+  const n = nomeCorretto.toLowerCase();
+  if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
+  else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
+  else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
+  else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
+  
+  const zonaBella = (zonaInSlug === 'roma') ? 'Roma' : zonaInSlug.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+  let primario = "#0891b2"; let chiaro = "#ecfeff";
+  if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+  else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+  else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+
+  setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
+  setMeta({ 
+    titolo: isHub ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
+    zona: zonaBella, cat: catSlug, nomeSemplice: nomeCorretto 
+  });
+  // --- FINE METADATI ---
+
+  // BLOCCO HUB: Se il server ha già i dati, usali e non fare la fetch
   if (isHub && datiIniziali && datiIniziali.length > 0) {
     setServizi(datiIniziali);
     setLoading(false);
     return; 
   }
 
-  // Se invece siamo in un quartiere o i dati mancano, allora cerchiamo
   async function fetchDati() {
     try {
       setLoading(true);
-      
       const keyword = catSlug.toLowerCase().substring(0, 4);
       let query = supabase.from('annunci').select('*').eq('approvato', true);
-
-      // Applichiamo il filtro categoria/nome
       query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-
-      // Filtro zona solo se NON è hub
       if (!isHub) {
         const zQuery = zonaInSlug.replace(/-/g, ' ');
         query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlug}%`);
       }
-
       const { data } = await query.order('is_top', { ascending: false }).range(0, 99);
-      
       setServizi(data || []);
-      
     } catch (err) {
-      console.error("Errore nel fetch:", err.message);
+      console.error("Errore fetch:", err.message);
     } finally {
       setLoading(false);
     }
