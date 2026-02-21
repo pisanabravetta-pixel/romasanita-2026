@@ -32,7 +32,16 @@ export default function HubLayout({
   // DEFINISCI SEMPRE QUESTI PER PRIMI
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
-  const [pagina, setPagina] = useState(1);
+ const [pagina, setPagina] = useState(1);
+
+// Aggiungi questo subito sotto per leggere la pagina dall'URL
+useEffect(() => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const p = parseInt(params.get('page')) || 1;
+    setPagina(p);
+  }
+}, []);
   const annunciPerPagina = 10;
 
   // ORA CALCOLA LE VARIABILI DERIVATE
@@ -351,11 +360,10 @@ async function fetchNuoviMedici() {
   )}
 </div>
 
-      {/* 4. CONTROLLI PAGINAZIONE */}
-{totaleAnnunci > annunciPerPagina && (
-  <div style={{ 
-    display: 'flex', 
-    // ... resto dello stile uguale
+    {/* 4. CONTROLLI PAGINAZIONE SEO */}
+      {totaleAnnunci > annunciPerPagina && (
+        <div style={{ 
+          display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
           gap: '15px', 
@@ -365,48 +373,47 @@ async function fetchNuoviMedici() {
           borderRadius: '12px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
         }}>
-          <button 
-            type="button"
-            onClick={() => { setPagina(p => Math.max(1, p - 1)); window.scrollTo(0,0); }}
-            disabled={pagina === 1}
+          <a 
+            href={pagina > 1 ? `?page=${pagina - 1}` : '#'}
+            onClick={(e) => { if(pagina === 1) e.preventDefault(); else window.scrollTo(0,0); }}
             style={{ 
               padding: '10px 18px', 
               backgroundColor: pagina === 1 ? '#e2e8f0' : colore, 
               color: pagina === 1 ? '#94a3b8' : 'white', 
-              border: 'none', 
               borderRadius: '8px', 
               fontWeight: '800', 
+              textDecoration: 'none',
               cursor: pagina === 1 ? 'not-allowed' : 'pointer',
-              fontSize: '12px'
+              fontSize: '12px',
+              display: 'inline-block'
             }}
           >
             ← PRECEDENTE
-          </button>
+          </a>
           
           <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '14px' }}>
             Pagina {pagina} di {totalePagine}
           </span>
 
-          <button  
-            type="button"
-            onClick={() => { setPagina(p => p + 1); window.scrollTo(0,0); }}
-            disabled={pagina >= totalePagine}
+          <a  
+            href={pagina < totalePagine ? `?page=${pagina + 1}` : '#'}
+            onClick={(e) => { if(pagina >= totalePagine) e.preventDefault(); else window.scrollTo(0,0); }}
             style={{  
               padding: '10px 18px',  
               backgroundColor: pagina >= totalePagine ? '#e2e8f0' : colore,  
               color: pagina >= totalePagine ? '#94a3b8' : 'white',  
-              border: 'none',  
               borderRadius: '8px',  
               fontWeight: '800',  
+              textDecoration: 'none',
               cursor: pagina >= totalePagine ? 'not-allowed' : 'pointer',
-              fontSize: '12px'
+              fontSize: '12px',
+              display: 'inline-block'
             }}
           >
             SUCCESSIVA →
-          </button>
+          </a>
         </div>
       )}
-  
      
 {/* GUIDE SPECIFICHE - VERSIONE PER HUBLAYOUT */}
 <div style={{ marginTop: '25px', marginBottom: '30px', padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd' }}>
