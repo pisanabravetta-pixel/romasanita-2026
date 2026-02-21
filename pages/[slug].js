@@ -126,9 +126,8 @@ useEffect(() => {
     titolo: isHub ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
     zona: zonaBella, cat: catSlug, nomeSemplice: nomeCorretto 
   });
-  // --- FINE METADATI ---
 
-  // BLOCCO HUB: Se il server ha già i dati, usali e non fare la fetch
+  // BLOCCO HUB: Se il server ha già i dati, usali e fermati
   if (isHub && datiIniziali && datiIniziali.length > 0) {
     setServizi(datiIniziali);
     setLoading(false);
@@ -141,10 +140,12 @@ useEffect(() => {
       const keyword = catSlug.toLowerCase().substring(0, 4);
       let query = supabase.from('annunci').select('*').eq('approvato', true);
       query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+      
       if (!isHub) {
         const zQuery = zonaInSlug.replace(/-/g, ' ');
         query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlug}%`);
       }
+      
       const { data } = await query.order('is_top', { ascending: false }).range(0, 99);
       setServizi(data || []);
     } catch (err) {
