@@ -90,11 +90,10 @@ useEffect(() => {
 useEffect(() => {
   if (!slug || slug === 'index' || slug === '') return;
 
-  // 1. BLOCCANTE SSR: Se abbiamo i dati dal server per la pagina 1, fermati qui
+  // 1. BLOCCANTE SSR: Se abbiamo già i dati, non ricaricare (evita lo sfarfallio e le sparizioni)
   if (datiIniziali && datiIniziali.length > 0 && pagina === paginaIniziale) {
     setLoading(false);
-    // Nota: I metadati (titolo, tema) vengono comunque calcolati sotto se necessario
-    // ma per ora evitiamo la fetch doppia che ti cancella i risultati
+    // In questo caso, calcoliamo i metadati direttamente dai dati SSR se necessario
     return;
   }
 
@@ -102,128 +101,93 @@ useEffect(() => {
     try {
       setLoading(true);
 
-      // --- 2. IDENTIFICAZIONE (LOGICA IDENTICA AL SERVER) ---
+      // --- 2. IDENTIFICAZIONE CATEGORIA E ZONA ---
       const slugPuro = slug.replace('-roma-', '@');
       const catSlug = slugPuro.split('@')[0].replace('-roma', '');
       const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
       const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+      const mapping = getDBQuery(catSlug);
 
-      // Usiamo la radice (es. "cardio", "dermat") per beccare tutto nel DB
-      const termineRicerca = catSlug.toLowerCase().substring(0, 6);
-
+      // --- 3. QUERY SUPABASE (LOGICA RADICE FLESSIBILE) ---
       let query = supabase
         .from('annunci')
         .select('*', { count: 'exact' })
         .eq('approvato', true);
 
-      // --- 3. FILTRO CATEGORIA (IL "SETACCIO" LARGO) ---
-      if (catSlug.includes('specialist')) {
-        // Se cerchi "specialisti", escludi i non-medici
+      const termineRicerca = catSlug.toLowerCase().substring(0, 6);
+
+      if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
         query = query
           .not('categoria', 'ilike', '%farmac%')
           .not('categoria', 'ilike', '%diagnost%')
           .not('categoria', 'ilike', '%dentist%')
           .not('categoria', 'ilike', '%domicilio%');
       } else {
-        // Altrimenti usa la radice: becca "cardiologo" e "cardiologi"
         query = query.ilike('categoria', `%${termineRicerca}%`);
       }
 
-      // --- 4. FILTRO QUARTIERE ---
       if (zonaInSlug && zonaInSlug !== 'roma') {
         query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
       }
 
-      // --- 5. PAGINAZIONE ---
       const da = (pagina - 1) * 10;
       const a = da + 9;
 
-      const { data, count } = await query
+      const { data } = await query
         .order('is_top', { ascending: false })
         .range(da, a);
 
       setServizi(data || []);
 
-      // --- 6. LOGICA TEMI E SEO (Mantieni quella che avevi) ---
-      // ... qui continua il tuo codice per setTema e setMeta ...
-      // (Se lo hai già sotto non serve riscriverlo, l'importante è la query sopra)
+      // --- 4. LOGICA DI GENERAZIONE NOMI E METADATI (SPOSTATA QUI DENTRO) ---
+      const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
+      const nomiPuliti = {
+        'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
+        'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
+        'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
+        'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
+        'servizi-domicilio': 'Servizi a Domicilio'
+      };
+
+      const chiaveSlug = catSlug.toLowerCase();
+      const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
+      const nomeCat = chiaveSlug.includes('specialistica') ? 'Specialisti' : nomeBase;
+      const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+      // Colori dinamici
+      let primario = "#0891b2"; let chiaro = "#ecfeff";
+      if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+      else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+      else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+      else if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
+
+      let nomeCorretto = nomeCat; 
+      const n = nomeCorretto.toLowerCase();
+      if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
+      else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
+      else if (n.includes('psico')) nomeCorretto = 'Psicologi';
+      else if (n.includes('oculi')) nomeCorretto = 'Oculisti';
+      else if (n.includes('ortope')) nomeCorretto = 'Ortopedici';
+      else if (n.includes('gineco')) nomeCorretto = 'Ginecologi';
+      else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
+      else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
+      else if (n.includes('diagnosti')) nomeCorretto = 'Centri di Diagnostica';
+
+      setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
+      setMeta({ 
+        titolo: zonaBella.toLowerCase() === 'roma' ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
+        zona: zonaBella, cat: catSlug, nomeSemplice: nomeCorretto 
+      });
 
     } catch (err) {
-      console.error("Errore fetchDati:", err);
+      console.error("Errore nel fetch:", err.message);
     } finally {
       setLoading(false);
     }
   }
 
   fetchDati();
-}, [slug, pagina]); // Aggiunto pagina tra le dipendenze
-
-        // Fallback: se il mapping fallisce, usa catSlug per evitare "Undefined"
-        const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
-   // --- 1. MAPPING DEI NOMI PULITI (Per evitare troncamenti come "Diagnost") ---
-const nomiPuliti = {
-  'diagnostica': 'Diagnostica',
-  'farmacie': 'Farmacie',
-  'dermatologi': 'Dermatologi',
-  'cardiologi': 'Cardiologi',
-  'dentisti': 'Dentisti',
-  'ginecologi': 'Ginecologi',
-  'oculisti': 'Oculisti',
-  'ortopedici': 'Ortopedici',
-  'psicologi': 'Psicologi',
-  'nutrizionisti': 'Nutrizionisti',
-  'servizi-sanitari': 'Servizi Sanitari',
-  'servizi-domicilio': 'Servizi a Domicilio'
-};
-
-// --- 2. LOGICA DI GENERAZIONE NOME CATEGORIA ---
-const chiaveSlug = catSlug.toLowerCase();
-const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
-const nomeCat = chiaveSlug.includes('specialistica') ? 'Specialisti' : nomeBase;
-        const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-
-        // Colori dinamici basati sulla categoria
-        let primario = "#0891b2"; let chiaro = "#ecfeff";
-        if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-        else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-        else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
-        else if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-
-      // --- LOGICA DI PULIZIA NOMI E GRAMMATICA ---
-let nomeCorretto = nomeCat; 
-const n = nomeCorretto.toLowerCase();
-
-if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
-else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
-else if (n.includes('psico')) nomeCorretto = 'Psicologi';
-else if (n.includes('oculi')) nomeCorretto = 'Oculisti';
-else if (n.includes('ortope')) nomeCorretto = 'Ortopedici';
-else if (n.includes('gineco')) nomeCorretto = 'Ginecologi';
-else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
-else if (n.includes('specialistica')) nomeCorretto = 'Specialisti';
-else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
-else if (n.includes('diagnosti')) nomeCorretto = 'Centri di Diagnostica';
-
-setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
-
-setMeta({ 
-  titolo: zonaBella.toLowerCase() === 'roma' 
-    ? `${nomeCorretto} a Roma` 
-    : `${nomeCorretto} a Roma ${zonaBella}`, 
-  zona: zonaBella, 
-  cat: catSlug,
-  nomeSemplice: nomeCorretto 
-});
-
-      } catch (err) {
-        console.error("Errore nel fetch:", err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-  fetchDati();
-}, [slug]);
+}, [slug, pagina]);
 
   useEffect(() => {
     // La mappa ora guarda "listaDaMostrare" (i 10 della pagina corrente)
