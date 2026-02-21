@@ -409,7 +409,11 @@ setMeta({
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
           {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${tema.primario}44` }}>{tema.label}</span>
+       <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${tema.primario}44` }}>
+  {v.categoria 
+    ? v.categoria.toLowerCase().replace('visite-specialistiche', '').replace(/-/g, ' ').trim().toUpperCase() 
+    : tema.label}
+</span>
         </div>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -504,10 +508,10 @@ setMeta({
     textTransform: 'uppercase',
     letterSpacing: '0.5px'
   }}>
+    {/* Qui usiamo meta.nomeSemplice che è già calcolato sopra */}
     {meta.nomeSemplice} A ROMA {meta.zona}
   </span>
 </div>
-
 {/* CONTROLLI PAGINAZIONE SOTTO LA LISTA */}
 {totaleAnnunci > annunciPerPagina && (
   <div style={{ 
