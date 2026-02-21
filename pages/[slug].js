@@ -6,7 +6,14 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-export default function PaginaQuartiereDinamica({ datiIniziali, totaleDalServer, paginaIniziale, slugSSR }) {
+export default function PaginaQuartiereDinamica({ 
+  datiIniziali, 
+  totaleDalServer, 
+  paginaIniziale, 
+  slugSSR,
+  categoriaSSR, // <--- AGGIUNTA
+  zonaSSR       // <--- AGGIUNTA
+}) {
 const router = useRouter();
   const { slug } = router.query;
 
@@ -60,6 +67,8 @@ const colore = filtri.colore || '#2563eb';
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
+  const catSlug = categoriaSSR || (slugSSR ? slugSSR.split('-roma')[0] : '');
+const zonaInSlug = zonaSSR || 'roma';
 // 2. Aggiungi questo subito sotto (fondamentale per far funzionare i link)
 useEffect(() => {
   if (typeof window !== 'undefined') {
@@ -238,53 +247,64 @@ setMeta({
 
   if (!slug) return null;
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-<Head>
-  <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
-  <meta 
-    name="description" 
-    content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
-  />
-  <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
-  
-  {/* OTTIMIZZAZIONE MAPPA - PRECONNECT E CSS NON BLOCCANTE */}
-  <link rel="preconnect" href="https://basemaps.cartocdn.com" />
-  <link 
-    rel="stylesheet" 
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossOrigin=""
-  />
+ return (
+  <>
+    {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
+    {zonaInSlug === 'roma' ? (
+      <HubLayout 
+        titolo={catSlug.replace(/-/g, ' ')}
+        categoria={catSlug}
+        colore="#2c5282"
+        datiIniziali={servizi}
+        totaleDalServer={totaleDalServer}
+        paginaIniziale={pagina}
+        testoTopBar={`${catSlug.toUpperCase()} ROMA`}
+        badgeSpec={catSlug}
+      />
+    ) : (
+      /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
+        <Head>
+          <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
+          <meta 
+            name="description" 
+            content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
+          />
+          <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
+          
+          <link rel="preconnect" href="https://basemaps.cartocdn.com" />
+          <link 
+            rel="stylesheet" 
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossOrigin=""
+          />
 
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": (seoData[filtri.cat]?.faq || []).map(f => ({
-          "@type": "Question",
-          "name": f.q.replace(/{{zona}}/g, quartiereNome),
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": f.a.replace(/{{zona}}/g, quartiereNome)
-          }
-        }))
-      })
-    }}
-  />
-</Head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": (seoData[filtri.cat]?.faq || []).map(f => ({
+                  "@type": "Question",
+                  "name": f.q.replace(/{{zona}}/g, quartiereNome),
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f.a.replace(/{{zona}}/g, quartiereNome)
+                  }
+                }))
+              })
+            }}
+          />
+        </Head>
 
-{/* CARICAMENTO JS MAPPA IN MODALITÀ LAZY (DOPP IL RENDERING) */}
-<Script 
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossOrigin=""
-  strategy="lazyOnload" 
-/>
-
-<Navbar />
+        <Script 
+          src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossOrigin=""
+          strategy="lazyOnload" 
+        />
 
 <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
   {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
