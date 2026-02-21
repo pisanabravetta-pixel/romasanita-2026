@@ -92,11 +92,11 @@ useEffect(() => {
 
   // IDENTIFICA SE SEI NELLA HUB
   const slugPuro = slug.replace('-roma-', '@');
+  const catSlug = slugPuro.split('@')[0].replace('-roma', ''); 
   const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
   const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
   // SE SEI NELLA HUB E HAI DATI DAL SERVER, FERMATI SUBITO.
-  // Non lasciare che il browser faccia altre query che svuotano la pagina.
   if (isHub && datiIniziali && datiIniziali.length > 0) {
     setServizi(datiIniziali);
     setLoading(false);
@@ -107,7 +107,32 @@ useEffect(() => {
   async function fetchDati() {
     try {
       setLoading(true);
-      // ... (il resto del codice fetchDati che abbiamo scritto prima)
+      
+      const keyword = catSlug.toLowerCase().substring(0, 4);
+      let query = supabase.from('annunci').select('*').eq('approvato', true);
+
+      // Applichiamo il filtro categoria/nome
+      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+
+      // Filtro zona solo se NON è hub
+      if (!isHub) {
+        const zQuery = zonaInSlug.replace(/-/g, ' ');
+        query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlug}%`);
+      }
+
+      const { data } = await query.order('is_top', { ascending: false }).range(0, 99);
+      
+      setServizi(data || []);
+      
+    } catch (err) {
+      console.error("Errore nel fetch:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchDati();
+}, [slug, datiIniziali]);
 
       // --- 2. IDENTIFICAZIONE CATEGORIA E ZONA ---
       const slugPuro = slug.replace('-roma-', '@');
