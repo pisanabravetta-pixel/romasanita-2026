@@ -759,30 +759,25 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. COSTRUZIONE QUERY "TRONCA" (Per beccare dermatologo/a/i/e) ---
+// --- 2. COSTRUZIONE QUERY "LOGICA 4 LETTERE" (COPIATA DAL TUO VECCHIO FILE) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Prendiamo solo l'inizio della parola (es: "dermatol", "cardiol", "psicol")
-// Questo ignora se finisce con o, a, i oppure e.
-let radice = catRicercata.toLowerCase();
-if (radice.length > 7) {
-  radice = radice.substring(0, 7); // Prende "dermato", "cardiolo", "psicolo"
-} else {
-  radice = radice.replace(/i$/, '').replace(/e$/, ''); // Toglie la i o la e finale (es: farmaci)
-}
+// Prendiamo solo le prime 4 lettere come faceva il tuo vecchio codice (es. "derm")
+const radice4 = catRicercata.toLowerCase().substring(0, 4);
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  // Filtro Quartiere: Radice categoria AND (Quartiere nella zona o nello slug)
+  // Filtro Quartiere: (Categoria contiene le 4 lettere) AND (Zona contiene quartiere)
   query = query
-    .ilike('categoria', `%${radice}%`)
+    .ilike('categoria', `%${radice4}%`)
     .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // HUB ROMA: Deve pescare TUTTI quelli che contengono la radice
-  query = query.ilike('categoria', `%${radice}%`);
+  // HUB ROMA: Becca tutto ciò che inizia con quelle 4 lettere
+  // Questo troverà "dermatologo", "dermatologa", "dermatologi"
+  query = query.ilike('categoria', `%${radice4}%`);
 }
 // 3. PAGINAZIONE (Resta uguale)
 const da = (page - 1) * annunciPerPagina;
