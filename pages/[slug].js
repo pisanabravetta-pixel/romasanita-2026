@@ -90,16 +90,24 @@ useEffect(() => {
 useEffect(() => {
   if (!slug || slug === 'index' || slug === '') return;
 
-  // 1. BLOCCANTE SSR: Se abbiamo già i dati, non ricaricare (evita lo sfarfallio e le sparizioni)
-  if (datiIniziali && datiIniziali.length > 0 && pagina === paginaIniziale) {
+  // IDENTIFICA SE SEI NELLA HUB
+  const slugPuro = slug.replace('-roma-', '@');
+  const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+  const isHub = !zonaInSlug || zonaInSlug === 'roma';
+
+  // SE SEI NELLA HUB E HAI DATI DAL SERVER, FERMATI SUBITO.
+  // Non lasciare che il browser faccia altre query che svuotano la pagina.
+  if (isHub && datiIniziali && datiIniziali.length > 0) {
+    setServizi(datiIniziali);
     setLoading(false);
-    // In questo caso, calcoliamo i metadati direttamente dai dati SSR se necessario
-    return;
+    return; 
   }
 
+  // Se invece siamo in un quartiere o i dati mancano, allora cerchiamo
   async function fetchDati() {
     try {
       setLoading(true);
+      // ... (il resto del codice fetchDati che abbiamo scritto prima)
 
       // --- 2. IDENTIFICAZIONE CATEGORIA E ZONA ---
       const slugPuro = slug.replace('-roma-', '@');
