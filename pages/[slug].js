@@ -759,27 +759,29 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. LOGICA UNIFICATA (IDENTICA AI QUARTIERI) ---
+// --- 2. QUERY ATOMICA (Semplificata al massimo) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Usiamo la radice di 4 lettere che si è dimostrata vincente nei quartieri
-const radiceFlessibile = catRicercata.toLowerCase().substring(0, 4);
+// Prendiamo la radice (es. "cardio", "dermato", "farma")
+// Usiamo 5 lettere per evitare confusione ma beccare tutto
+const searchST = catRicercata.toLowerCase().substring(0, 5);
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
-  // LOGICA QUARTIERI (Quella che ti sta funzionando)
+  // QUARTIERE: Categoria contiene "cardio" E (Zona contiene "prati" O Slug contiene "prati")
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
   query = query
-    .ilike('categoria', `%${radiceFlessibile}%`)
+    .ilike('categoria', `%${searchST}%`)
     .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // LOGICA HUB (Ora identica a quella dei quartieri, ma senza il filtro zona)
-  // Se "derm" funziona per dermatologi-roma-prati, DEVE funzionare anche qui
-  query = query.ilike('categoria', `%${radiceFlessibile}%`);
+  // HUB ROMA: Categoria deve contenere "cardio". FINE. 
+  // Non aggiungiamo altri filtri che potrebbero sporcare il risultato.
+  query = query.ilike('categoria', `%${searchST}%`);
 }
-// 3. PAGINAZIONE (Resta uguale)
+
+// 3. PAGINAZIONE
 const da = (page - 1) * annunciPerPagina;
 const a = da + annunciPerPagina - 1;
 
