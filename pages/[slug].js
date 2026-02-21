@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-export default function PaginaQuartiereDinamica() {
+export default function PaginaQuartiereDinamica({ datiIniziali, totaleDalServer, paginaIniziale, slugSSR }) {
 const router = useRouter();
   const { slug } = router.query;
 
@@ -56,12 +56,10 @@ const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSl
 const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
 
 const colore = filtri.colore || '#2563eb';
-  // --- FINE RIPRISTINO ---
-  const [servizi, setServizi] = useState([]);
-  const [loading, setLoading] = useState(true);
- // 1. Questa è la riga che avevi già
-const [pagina, setPagina] = useState(1);
-
+  // --- STATI AGGIORNATI PER SERVER SIDE RENDERING ---
+  const [servizi, setServizi] = useState(datiIniziali || []);
+  const [loading, setLoading] = useState(false);
+  const [pagina, setPagina] = useState(paginaIniziale || 1);
 // 2. Aggiungi questo subito sotto (fondamentale per far funzionare i link)
 useEffect(() => {
   if (typeof window !== 'undefined') {
@@ -82,14 +80,21 @@ useEffect(() => {
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
 
-  useEffect(() => {
-    // ... resto del codice
-  console.log("Slug rilevato:", slug);
-  if (!slug || slug === 'index' || slug === '') return;
+ useEffect(() => {
+    if (!slug || slug === 'index' || slug === '') return;
 
-async function fetchDati() {
+    // BLOCCANTE: Se abbiamo già i dati dal server per questa pagina, non ricaricare
+    if (servizi.length > 0 && pagina === paginaIniziale) {
+      // Calcoliamo comunque i metadati e il tema se necessario, 
+      // ma saltiamo la chiamata a Supabase (fetchDati)
+      setLoading(false);
+      return;
+    }
+
+    async function fetchDati() {
       try {
         setLoading(true);
+        // ... tutto il resto del tuo codice fetchDati ...
         
         // --- 1. IDENTIFICAZIONE CATEGORIA E ZONA (PULIZIA SLUG) ---
         // Gestisce casi come "dentisti-roma-prati" o "servizi-domicilio-roma-centro-storico"
@@ -717,4 +722,61 @@ setMeta({
       <Footer />
     </div>
   );
+}
+// --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE ---
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  const page = parseInt(context.query.page) || 1;
+  const annunciPerPagina = 10;
+
+  // 1. Identificazione Categoria e Zona (stessa logica che usi sopra)
+  const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+  const catSlug = slugPuro.split('@')[0].replace('-roma', '');
+  const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+
+  // Importiamo la logica di mapping (getDBQuery deve essere esportata)
+  const { getDBQuery } = require('../lib/seo-logic');
+  const mapping = getDBQuery(catSlug);
+
+  // 2. Query Supabase lato Server
+  let query = supabase
+    .from('annunci')
+    .select('*', { count: 'exact' })
+    .eq('approvato', true);
+
+  if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
+    query = query
+      .not('categoria', 'ilike', '%farmac%')
+      .not('categoria', 'ilike', '%diagnost%')
+      .not('categoria', 'ilike', '%dentist%')
+      .not('categoria', 'ilike', '%domicilio%');
+  } else if (mapping.cat && mapping.cat !== 'NON_ESISTE') {
+    query = query.ilike('categoria', `%${mapping.cat}%`);
+  }
+
+  if (zonaInSlug && zonaInSlug !== 'roma') {
+    query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+  }
+
+  // Calcolo Range Paginazione
+  const da = (page - 1) * annunciPerPagina;
+  const a = da + annunciPerPagina - 1;
+
+  const { data, count, error } = await query
+    .order('is_top', { ascending: false })
+    .range(da, a);
+
+  if (error) {
+    console.error("Errore SSR:", error);
+  }
+
+  return {
+    props: {
+      datiIniziali: data || [],
+      totaleDalServer: count || 0,
+      paginaIniziale: page,
+      slugSSR: slug
+    }
+  };
 }
