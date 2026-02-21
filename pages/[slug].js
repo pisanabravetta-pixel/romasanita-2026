@@ -447,59 +447,58 @@ setMeta({
           >
             🗺️ MAPPA
        </a>
-        </div>
+     </div>
       </div>
     );
   })}
 </div>
-      {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
-      <p style={{ 
-        fontSize: '11px', 
-        color: '#94a3b8', 
-        marginTop: '16px', 
-        marginBottom: '10px',
-        textAlign: 'center', 
-        lineHeight: '1.5',
-        borderTop: '1px solid #f1f5f9', 
-        paddingTop: '10px' 
-      }}>
-        Dati estratti da fonti pubbliche. Sei il titolare? <br/>
-        Puoi richiedere la gestione o la modifica di questo annuncio 
-        <a 
-          href={`mailto:info@servizisalute.com?subject=Richiesta gestione annuncio: ${v.nome}`} 
-          style={{ 
-            color: tema.primario, 
-            marginLeft: '4px', 
-            fontWeight: '700', 
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            display: 'inline-block'
-          }}
-        >
-          cliccando qui
-        </a>
-      </p>
 
-      {/* BADGE DINAMICO SEO QUARTIERE */}
-      <div style={{ textAlign: 'center', marginTop: '12px' }}>
-        <span style={{ 
-          fontSize: '11px', 
-          fontWeight: '800', 
-          backgroundColor: `${tema.primario}15`, 
-          color: tema.primario, 
-          padding: '6px 15px', 
-          borderRadius: '20px', 
-          border: `1px solid ${tema.primario}33`,
-          display: 'inline-block',
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px'
-        }}>
-          {meta.nomeSemplice} A ROMA {v.zona}
-        </span>
-      </div>
-    </div>
-  ))}
-</div> 
+{/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
+<p style={{ 
+  fontSize: '11px', 
+  color: '#94a3b8', 
+  marginTop: '16px', 
+  marginBottom: '10px',
+  textAlign: 'center', 
+  lineHeight: '1.5',
+  borderTop: '1px solid #f1f5f9', 
+  paddingTop: '10px' 
+}}>
+  Dati estratti da fonti pubbliche. Sei il titolare di una di queste strutture? <br/>
+  Puoi richiedere la gestione o la modifica dei dati 
+  <a 
+    href={`mailto:info@servizisalute.com?subject=Richiesta gestione annuncio`} 
+    style={{ 
+      color: tema.primario, 
+      marginLeft: '4px', 
+      fontWeight: '700', 
+      textDecoration: 'underline',
+      cursor: 'pointer',
+      display: 'inline-block'
+    }}
+  >
+    cliccando qui
+  </a>
+</p>
+
+{/* BADGE DINAMICO SEO QUARTIERE */}
+<div style={{ textAlign: 'center', marginTop: '12px', marginBottom: '30px' }}>
+  <span style={{ 
+    fontSize: '11px', 
+    fontWeight: '800', 
+    backgroundColor: `${tema.primario}15`, 
+    color: tema.primario, 
+    padding: '6px 15px', 
+    borderRadius: '20px', 
+    border: `1px solid ${tema.primario}33`,
+    display: 'inline-block',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px'
+  }}>
+    {meta.nomeSemplice} A ROMA {meta.zona}
+  </span>
+</div>
+
 {/* CONTROLLI PAGINAZIONE SOTTO LA LISTA */}
 {totaleAnnunci > annunciPerPagina && (
   <div style={{ 
