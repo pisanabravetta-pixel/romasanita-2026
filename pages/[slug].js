@@ -759,30 +759,34 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-    // 2. COSTRUZIONE QUERY
-    let query = supabase
-      .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('approvato', true);
+ // --- 2. COSTRUZIONE QUERY (CORRETTA PER FORMATO PARENTESI E FILTRO INCROCIATO) ---
+let query = supabase
+  .from('annunci')
+  .select('*', { count: 'exact' })
+  .eq('approvato', true);
 
-    // FILTRO CATEGORIA (Cerca la parola chiave sia nella colonna categoria che nello slug dell'annuncio)
-    // Questo permette al Dr. Valenti di apparire se cerchi "cardiologo" o "visite-specialistiche"
-    query = query.or(`categoria.ilike.%${catRicercata}%,slug.ilike.%${catRicercata}%`);
+// Radice per beccare "cardiologo" dentro "visite-specialistiche (cardiologo)"
+const radiceCat = catRicercata.toLowerCase().substring(0, 6);
 
-    // FILTRO ZONA (Solo se non siamo nella Hub generica di Roma)
-    if (zonaInSlug && zonaInSlug !== 'roma') {
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      // Cerca la zona sia nella colonna zona che nello slug dell'annuncio
-      query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-    }
+if (zonaInSlug && zonaInSlug !== 'roma') {
+  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+  
+  // FILTRO INCROCIATO: Deve avere la categoria AND (deve avere la zona nello slug o nel campo zona)
+  query = query
+    .ilike('categoria', `%${radiceCat}%`)
+    .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+} else {
+  // HUB ROMA: Solo filtro categoria (becca tutti i medici della specialistica a Roma)
+  query = query.ilike('categoria', `%${radiceCat}%`);
+}
 
-    // 3. PAGINAZIONE
-    const da = (page - 1) * annunciPerPagina;
-    const a = da + annunciPerPagina - 1;
+// 3. PAGINAZIONE (Resta uguale)
+const da = (page - 1) * annunciPerPagina;
+const a = da + annunciPerPagina - 1;
 
-    const { data, count, error } = await query
-      .order('is_top', { ascending: false })
-      .range(da, a);
+const { data, count, error } = await query
+  .order('is_top', { ascending: false })
+  .range(da, a);
 
     if (error) throw error;
 
