@@ -71,19 +71,24 @@ const generaTestoSEO = () => {
   const zona = nomeZona;
   const cat = categoria;
 
-  return [
-`La struttura ${nome} opera nel quartiere ${zona} di Roma, con sede in ${indirizzo}. 
-Questa scheda fornisce le informazioni principali per individuare la posizione e contattare direttamente la struttura sanitaria. 
-Per dettagli su servizi disponibili, modalità di accesso o prenotazioni, si consiglia di utilizzare i recapiti ufficiali indicati in pagina.`,
+  // Variante 1 – Istituzionale
+  if (v === 0) {
+    return `${nome} è una struttura appartenente alla categoria ${cat} con sede in ${indirizzo}, nel quartiere ${zona} di Roma. 
+La scheda fornisce le informazioni principali per identificare correttamente la posizione e i riferimenti ufficiali della struttura. 
+Per qualsiasi dettaglio operativo o organizzativo è consigliabile contattare direttamente la sede.`;
+  }
 
-`Situata in ${indirizzo}, nel quartiere ${zona} a Roma, ${nome} rientra nella categoria ${cat}. 
-La pagina riporta indirizzo e localizzazione sulla mappa per facilitare l’individuazione. 
-Per informazioni aggiornate su attività, disponibilità o prestazioni offerte, è opportuno contattare direttamente la struttura.`,
+  // Variante 2 – Orientata all’utente
+  if (v === 1) {
+    return `Se cerchi ${cat} a Roma ${zona}, ${nome} si trova in ${indirizzo}. 
+In questa pagina puoi visualizzare la localizzazione precisa e accedere rapidamente ai contatti diretti. 
+Per conoscere disponibilità, modalità di accesso o eventuali informazioni aggiuntive è opportuno rivolgersi direttamente alla struttura.`;
+  }
 
-`Nel territorio di Roma ${zona} è presente ${nome}, appartenente alla categoria ${cat} e con sede in ${indirizzo}. 
-Questa pagina consente di visualizzare la posizione e accedere ai contatti diretti. 
-Per ricevere informazioni specifiche o organizzare un appuntamento, si invita a contattare la struttura tramite i recapiti disponibili.`
-  ][v];
+  // Variante 3 – Territoriale
+  return `Nel quartiere ${zona} di Roma opera ${nome}, realtà appartenente alla categoria ${cat}. 
+La presenza di servizi sanitari sul territorio facilita l’accesso alle prestazioni per i residenti della zona. 
+L’indirizzo completo (${indirizzo}) e la mappa interattiva consentono di individuare facilmente la struttura e contattarla in modo diretto.`;
 };
 <h2 style={{fontSize: '1.1rem', fontWeight: '700', marginTop: '20px'}}>
 Informazioni su {dato.nome} a Roma {nomeZona}
