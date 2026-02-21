@@ -87,63 +87,76 @@ useEffect(() => {
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
 
- useEffect(() => {
-    if (!slug || slug === 'index' || slug === '') return;
+useEffect(() => {
+  if (!slug || slug === 'index' || slug === '') return;
 
-    // BLOCCANTE: Se abbiamo già i dati dal server per questa pagina, non ricaricare
-    if (servizi.length > 0 && pagina === paginaIniziale) {
-      // Calcoliamo comunque i metadati e il tema se necessario, 
-      // ma saltiamo la chiamata a Supabase (fetchDati)
+  // 1. BLOCCANTE SSR: Se abbiamo i dati dal server per la pagina 1, fermati qui
+  if (datiIniziali && datiIniziali.length > 0 && pagina === paginaIniziale) {
+    setLoading(false);
+    // Nota: I metadati (titolo, tema) vengono comunque calcolati sotto se necessario
+    // ma per ora evitiamo la fetch doppia che ti cancella i risultati
+    return;
+  }
+
+  async function fetchDati() {
+    try {
+      setLoading(true);
+
+      // --- 2. IDENTIFICAZIONE (LOGICA IDENTICA AL SERVER) ---
+      const slugPuro = slug.replace('-roma-', '@');
+      const catSlug = slugPuro.split('@')[0].replace('-roma', '');
+      const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+
+      // Usiamo la radice (es. "cardio", "dermat") per beccare tutto nel DB
+      const termineRicerca = catSlug.toLowerCase().substring(0, 6);
+
+      let query = supabase
+        .from('annunci')
+        .select('*', { count: 'exact' })
+        .eq('approvato', true);
+
+      // --- 3. FILTRO CATEGORIA (IL "SETACCIO" LARGO) ---
+      if (catSlug.includes('specialist')) {
+        // Se cerchi "specialisti", escludi i non-medici
+        query = query
+          .not('categoria', 'ilike', '%farmac%')
+          .not('categoria', 'ilike', '%diagnost%')
+          .not('categoria', 'ilike', '%dentist%')
+          .not('categoria', 'ilike', '%domicilio%');
+      } else {
+        // Altrimenti usa la radice: becca "cardiologo" e "cardiologi"
+        query = query.ilike('categoria', `%${termineRicerca}%`);
+      }
+
+      // --- 4. FILTRO QUARTIERE ---
+      if (zonaInSlug && zonaInSlug !== 'roma') {
+        query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+      }
+
+      // --- 5. PAGINAZIONE ---
+      const da = (pagina - 1) * 10;
+      const a = da + 9;
+
+      const { data, count } = await query
+        .order('is_top', { ascending: false })
+        .range(da, a);
+
+      setServizi(data || []);
+
+      // --- 6. LOGICA TEMI E SEO (Mantieni quella che avevi) ---
+      // ... qui continua il tuo codice per setTema e setMeta ...
+      // (Se lo hai già sotto non serve riscriverlo, l'importante è la query sopra)
+
+    } catch (err) {
+      console.error("Errore fetchDati:", err);
+    } finally {
       setLoading(false);
-      return;
     }
+  }
 
-    async function fetchDati() {
-      try {
-        setLoading(true);
-        // ... tutto il resto del tuo codice fetchDati ...
-        
-        // --- 1. IDENTIFICAZIONE CATEGORIA E ZONA (PULIZIA SLUG) ---
-        // Gestisce casi come "dentisti-roma-prati" o "servizi-domicilio-roma-centro-storico"
-        const slugPuro = slug.replace('-roma-', '@'); 
-        const catSlug = slugPuro.split('@')[0].replace('-roma', ''); 
-        const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-        
-        const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-        const mapping = getDBQuery(catSlug);
-
-// --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO PER SPECIALISTI) ---
-        let query = supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true);
-
-        // Se è una pagina di specialisti, escludiamo le categorie "non mediche"
-        if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
-          query = query
-            .not('categoria', 'ilike', '%farmac%')
-            .not('categoria', 'ilike', '%diagnost%')
-            .not('categoria', 'ilike', '%dentist%')
-            .not('categoria', 'ilike', '%domicilio%');
-        } 
-        // Altrimenti, se è una categoria specifica (es. farmacie), filtriamo normalmente
-        else if (mapping.cat && mapping.cat !== 'NON_ESISTE') {
-          query = query.ilike('categoria', `%${mapping.cat}%`);
-        }
-
-        // Filtro per Quartiere: deve essere sempre attivo se siamo in una pagina quartiere
-        if (zonaInSlug && zonaInSlug !== 'roma') {
-          // Usiamo zonaQuery che è già definita sopra nel tuo codice
-          query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-        }
-
-        // AGGIUNGIAMO ORDINE E RANGE PRIMA DI ESEGUIRE
-        const { data } = await query
-          .order('is_top', { ascending: false })
-          .range(0, 99);
-
-        // --- 3. AGGIORNAMENTO STATI, TEMA E SEO (STOP UNDEFINED) ---
-        setServizi(data || []);
+  fetchDati();
+}, [slug, pagina]); // Aggiunto pagina tra le dipendenze
 
         // Fallback: se il mapping fallisce, usa catSlug per evitare "Undefined"
         const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
