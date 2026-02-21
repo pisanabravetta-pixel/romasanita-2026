@@ -723,33 +723,39 @@ setMeta({
     </div>
   );
 }
-// --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE ---
+// --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
   const { slug } = context.query;
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
   try {
-    // Importiamo supabase e la logica (senza require se possibile, o usando percorsi certi)
     const { supabase } = require('../lib/supabaseClient');
     
-    // 1. Pulizia slug per capire categoria e zona
+    // 1. ANALISI DELLO SLUG (Logica per smistare Hub e Quartieri)
+    // Se lo slug è 'cardiologi-roma-prati', catRicercata = 'cardiologi', zonaInSlug = 'prati'
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
-    const catSlug = slugPuro.split('@')[0].replace('-roma', '');
+    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const zonaQuery = zonaInSlug.replace(/-/g, ' ');
 
-    // 2. Query super-semplice (senza filtri complessi per ora, così non crasha)
+    // 2. COSTRUZIONE QUERY
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // Filtro zona base
+    // FILTRO CATEGORIA (Cerca la parola chiave sia nella colonna categoria che nello slug dell'annuncio)
+    // Questo permette al Dr. Valenti di apparire se cerchi "cardiologo" o "visite-specialistiche"
+    query = query.or(`categoria.ilike.%${catRicercata}%,slug.ilike.%${catRicercata}%`);
+
+    // FILTRO ZONA (Solo se non siamo nella Hub generica di Roma)
     if (zonaInSlug && zonaInSlug !== 'roma') {
+      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+      // Cerca la zona sia nella colonna zona che nello slug dell'annuncio
       query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
     }
 
+    // 3. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -764,7 +770,10 @@ export async function getServerSideProps(context) {
         datiIniziali: data || [],
         totaleDalServer: count || 0,
         paginaIniziale: page,
-        slugSSR: slug
+        slugSSR: slug,
+        // Passiamo queste per aiutare il componente a decidere quale layout mostrare
+        categoriaSSR: catRicercata,
+        zonaSSR: zonaInSlug
       }
     };
   } catch (err) {
