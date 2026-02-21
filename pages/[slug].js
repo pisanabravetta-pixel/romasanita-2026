@@ -759,25 +759,26 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
- // --- 2. COSTRUZIONE QUERY (CORRETTA PER FORMATO PARENTESI E FILTRO INCROCIATO) ---
+// --- 2. COSTRUZIONE QUERY "FORZA BRUTA" ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Radice per beccare "cardiologo" dentro "visite-specialistiche (cardiologo)"
-const radiceCat = catRicercata.toLowerCase().substring(0, 6);
+// Prendiamo solo le prime 5 lettere (es. "cardi", "dentis", "farma")
+// Così becchiamo sia "cardiologo" che "cardiologi" che "cardiologia"
+const radiceMorbida = catRicercata.toLowerCase().substring(0, 5);
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
   
-  // FILTRO INCROCIATO: Deve avere la categoria AND (deve avere la zona nello slug o nel campo zona)
+  // Filtro Quartiere: Categoria DEVE contenere la radice AND (Zona o Slug contengono il quartiere)
   query = query
-    .ilike('categoria', `%${radiceCat}%`)
+    .ilike('categoria', `%${radiceMorbida}%`)
     .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // HUB ROMA: Solo filtro categoria (becca tutti i medici della specialistica a Roma)
-  query = query.ilike('categoria', `%${radiceCat}%`);
+  // HUB ROMA: Deve far vedere TUTTI quelli che hanno la radice nella categoria
+  query = query.ilike('categoria', `%${radiceMorbida}%`);
 }
 
 // 3. PAGINAZIONE (Resta uguale)
