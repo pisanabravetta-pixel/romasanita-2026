@@ -12,6 +12,7 @@ export default function HubLayout({
   colore, 
   datiIniziali = [], // AGGIUNTO
   totaleDalServer = 0, // AGGIUNTO
+  paginaIniziale = 1,
   medici = [], 
   loading,
   // ... resto dei parametri invariato
