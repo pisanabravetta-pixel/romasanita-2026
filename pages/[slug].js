@@ -739,10 +739,13 @@ setMeta({
           </div>
       </main>
 
-      <Footer />
+<Footer />
     </div>
-  );
+    )}
+  </>
+);
 }
+
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
   const { slug } = context.query;
