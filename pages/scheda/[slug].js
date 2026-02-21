@@ -63,33 +63,104 @@ export default function SchedaProfessionale() {
   const catSlug = categoria.toLowerCase().replace(/\s+/g, '-');
   const zonaSlug = nomeZona.toLowerCase().replace(/\s+/g, '-');
 
-
 const generaTestoSEO = () => {
   const v = dato.id % 3;
   const nome = dato.nome;
   const indirizzo = dato.indirizzo;
   const zona = nomeZona;
-  const cat = categoria;
+  const cat = categoria.toLowerCase();
 
-  // Variante 1 – Istituzionale
+  const isFarmacia = cat.includes("farmac");
+  const isDentista = cat.includes("dent");
+  const isDiagnostica = cat.includes("diagnost");
+  const isDomicilio = cat.includes("domicilio");
+  const isSpecialista = !isFarmacia && !isDentista && !isDiagnostica && !isDomicilio;
+
+  // =========================
+  // FARMACIE
+  // =========================
+  if (isFarmacia) {
+    if (v === 0) {
+      return `La ${nome} si trova in ${indirizzo}, nel quartiere ${zona} di Roma. 
+Rappresenta un presidio sanitario territoriale a servizio dei residenti della zona. 
+Per informazioni aggiornate su orari, turni o disponibilità di prodotti, è consigliabile contattare direttamente la farmacia.`;
+    }
+    if (v === 1) {
+      return `Situata nel quartiere ${zona}, la ${nome} è una farmacia con sede in ${indirizzo}. 
+Questa pagina riporta indirizzo e posizione per facilitarne l’individuazione. 
+Per dettagli operativi o chiarimenti sui servizi disponibili è opportuno rivolgersi direttamente al punto vendita.`;
+    }
+    return `Nel territorio di Roma ${zona} è presente la ${nome}, con sede in ${indirizzo}. 
+La farmacia offre supporto sanitario di prossimità per i cittadini della zona. 
+Per ricevere informazioni specifiche si invita a utilizzare i contatti ufficiali indicati in pagina.`;
+  }
+
+  // =========================
+  // DENTISTI
+  // =========================
+  if (isDentista) {
+    if (v === 0) {
+      return `${nome} opera come studio odontoiatrico nel quartiere ${zona} di Roma, in ${indirizzo}. 
+La scheda consente di visualizzare la posizione e accedere ai recapiti ufficiali. 
+Per informazioni su visite o trattamenti è necessario contattare direttamente lo studio.`;
+    }
+    if (v === 1) {
+      return `Lo studio dentistico ${nome} si trova in ${indirizzo}, zona ${zona} a Roma. 
+Questa pagina riporta le informazioni utili per individuare la sede e mettersi in contatto con il professionista. 
+Per conoscere modalità di prenotazione o disponibilità è consigliato rivolgersi direttamente alla struttura.`;
+    }
+    return `Nel quartiere ${zona} di Roma è presente ${nome}, realtà odontoiatrica con sede in ${indirizzo}. 
+La localizzazione precisa e i recapiti consentono un contatto diretto con lo studio per ogni informazione necessaria.`;
+  }
+
+  // =========================
+  // DIAGNOSTICA
+  // =========================
+  if (isDiagnostica) {
+    if (v === 0) {
+      return `${nome} è una struttura di diagnostica situata in ${indirizzo}, nel quartiere ${zona} di Roma. 
+La scheda fornisce i riferimenti utili per individuare la sede e richiedere informazioni direttamente alla struttura.`;
+    }
+    if (v === 1) {
+      return `Situato a Roma ${zona}, in ${indirizzo}, ${nome} rientra tra i centri di diagnostica presenti sul territorio. 
+Per conoscere modalità di accesso o informazioni operative è consigliabile contattare direttamente la sede.`;
+    }
+    return `Nel quartiere ${zona} opera ${nome}, centro di diagnostica con sede in ${indirizzo}. 
+La pagina consente di visualizzare la posizione e accedere ai recapiti ufficiali per ogni richiesta informativa.`;
+  }
+
+  // =========================
+  // SERVIZI A DOMICILIO
+  // =========================
+  if (isDomicilio) {
+    if (v === 0) {
+      return `${nome} fornisce servizi a domicilio nell’area di Roma ${zona}. 
+La sede amministrativa risulta in ${indirizzo}. 
+Per informazioni sulle modalità di intervento o disponibilità è necessario contattare direttamente il servizio.`;
+    }
+    if (v === 1) {
+      return `Operativo nel quartiere ${zona} di Roma, ${nome} offre servizi sanitari a domicilio. 
+La pagina riporta i recapiti utili per richiedere informazioni direttamente al referente del servizio.`;
+    }
+    return `${nome} è attivo nell’area di Roma ${zona} per servizi a domicilio, con riferimento in ${indirizzo}. 
+Per dettagli organizzativi o richieste specifiche si invita a contattare direttamente la struttura.`;
+  }
+
+  // =========================
+  // SPECIALISTI (7 categorie)
+  // =========================
   if (v === 0) {
-    return `${nome} è una struttura appartenente alla categoria ${cat} con sede in ${indirizzo}, nel quartiere ${zona} di Roma. 
-La scheda fornisce le informazioni principali per identificare correttamente la posizione e i riferimenti ufficiali della struttura. 
-Per qualsiasi dettaglio operativo o organizzativo è consigliabile contattare direttamente la sede.`;
+    return `${nome} opera come ${categoria} nel quartiere ${zona} di Roma, con studio in ${indirizzo}. 
+La scheda riporta la localizzazione e i riferimenti utili per contattare direttamente il professionista.`;
   }
-
-  // Variante 2 – Orientata all’utente
   if (v === 1) {
-    return `Se cerchi ${cat} a Roma ${zona}, ${nome} si trova in ${indirizzo}. 
-In questa pagina puoi visualizzare la localizzazione precisa e accedere rapidamente ai contatti diretti. 
-Per conoscere disponibilità, modalità di accesso o eventuali informazioni aggiuntive è opportuno rivolgersi direttamente alla struttura.`;
+    return `Lo studio di ${nome}, specializzato in ${categoria}, si trova in ${indirizzo} a Roma ${zona}. 
+Questa pagina consente di individuare facilmente la sede e accedere ai recapiti ufficiali.`;
   }
-
-  // Variante 3 – Territoriale
-  return `Nel quartiere ${zona} di Roma opera ${nome}, realtà appartenente alla categoria ${cat}. 
-La presenza di servizi sanitari sul territorio facilita l’accesso alle prestazioni per i residenti della zona. 
-L’indirizzo completo (${indirizzo}) e la mappa interattiva consentono di individuare facilmente la struttura e contattarla in modo diretto.`;
+  return `Nel territorio di Roma ${zona} è presente ${nome}, ${categoria}, con sede in ${indirizzo}. 
+Per informazioni su attività e disponibilità è opportuno rivolgersi direttamente allo studio tramite i contatti indicati.`;
 };
+
 <h2 style={{fontSize: '1.1rem', fontWeight: '700', marginTop: '20px'}}>
 Informazioni su {dato.nome} a Roma {nomeZona}
 </h2>
