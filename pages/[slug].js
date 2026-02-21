@@ -20,6 +20,8 @@ const router = useRouter();
   // --- LOGICA ORIGINALE RIPRISTINATA ---
   const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
+  const catSlug = categoriaSSR || categoriaPulita.replace('-roma', '');
+  const zonaInSlug = zonaSSR || (slug && slug.includes('-roma-') ? slug.split('-roma-')[1] : 'roma');
   
   // Se la categoria non esiste nel mapping E non è la home o roba vuota
   if (slug && filtri.cat === 'NON_ESISTE') {
@@ -67,8 +69,7 @@ const colore = filtri.colore || '#2563eb';
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
-  const catSlug = categoriaSSR || (slugSSR ? slugSSR.split('-roma')[0] : '');
-const zonaInSlug = zonaSSR || 'roma';
+  
 // 2. Aggiungi questo subito sotto (fondamentale per far funzionare i link)
 useEffect(() => {
   if (typeof window !== 'undefined') {
