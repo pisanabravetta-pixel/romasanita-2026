@@ -75,19 +75,20 @@ const colore = filtri.colore || '#2563eb';
       const p = parseInt(params.get('page')) || 1;
       setPagina(p);
     }
-  }, []);
+  }, [router.query]);
 
-  // 2. EFFETTO PRINCIPALE: METADATI E CARICAMENTO DATI
+  // 2. EFFETTO UNICO: METADATI, TEMA E CARICAMENTO
   useEffect(() => {
     if (!slug || slug === 'index' || slug === '') return;
 
+    // Estrazione pulita dei parametri
     const slugPuro = slug.replace('-roma-', '@');
-    const catSlugInterno = slugPuro.split('@')[0].replace('-roma', ''); 
-    const zonaInSlugInterno = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaInSlugInterno || zonaInSlugInterno === 'roma';
+    const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
+    const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
-    // --- LOGICA METADATI E TEMA ---
-    const mapping = getDBQuery(catSlugInterno);
+    // Calcolo Metadati e Tema (Sempre necessario per evitare pagine bianche)
+    const mapping = getDBQuery(catEstratta);
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
@@ -96,64 +97,57 @@ const colore = filtri.colore || '#2563eb';
       'servizi-domicilio': 'Servizi a Domicilio'
     };
     
-    const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlugInterno;
-    const chiaveSlug = catSlugInterno.toLowerCase();
-    const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
-    let nomeCorretto = nomeBase;
-    
-    if (nomeCorretto.toLowerCase().includes('cardio')) nomeCorretto = 'Cardiologi';
-    else if (nomeCorretto.toLowerCase().includes('derma')) nomeCorretto = 'Dermatologi';
-    else if (nomeCorretto.toLowerCase().includes('dentis')) nomeCorretto = 'Dentisti';
-    else if (nomeCorretto.toLowerCase().includes('farmaci')) nomeCorretto = 'Farmacie';
-    
-    const zonaBella = (zonaInSlugInterno === 'roma') ? 'Roma' : zonaInSlugInterno.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
+    const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
     let primario = "#0891b2"; let chiaro = "#ecfeff";
-    if (catSlugInterno.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-    else if (catSlugInterno.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-    else if (catSlugInterno.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+    if (catEstratta.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+    else if (catEstratta.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+    else if (catEstratta.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
 
-    setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
+    setTema({ primario, chiaro, label: nomeBase.toUpperCase() });
     setMeta({ 
-      titolo: isHub ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
-      zona: zonaBella, cat: catSlugInterno, nomeSemplice: nomeCorretto 
+      titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, 
+      zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    // --- LOGICA CARICAMENTO DATI ---
+    // --- LOGICA DATI ---
+    // Se siamo nella HUB e abbiamo i dati SSR, non fare la fetch (evita il 500 e lo svuotamento)
     if (isHub && datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
       return; 
     }
 
-    const fetchDatiAvanzata = async () => {
+    // Se siamo in un quartiere o mancano i dati, carichiamo dal client
+    const caricaDatiClient = async () => {
       try {
         setLoading(true);
-        const keyword = catSlugInterno.toLowerCase().substring(0, 4);
+        const keyword = catEstratta.toLowerCase().substring(0, 4);
         let q = supabase.from('annunci').select('*').eq('approvato', true);
 
         q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
 
         if (!isHub) {
-          const zQuery = zonaInSlugInterno.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlugInterno}%`);
+          const zQuery = zonaEstratta.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
         }
 
-        const { data, error: fError } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (!fError) setServizi(data || []);
+        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
+        if (!error) setServizi(data || []);
       } catch (err) {
-        console.error("Errore fetch:", err.message);
+        console.error("Errore critico fetch:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDatiAvanzata();
+    caricaDatiClient();
   }, [slug, datiIniziali]);
 
-  // 3. EFFETTO MAPPA
+  // 3. EFFETTO MAPPA (Sincronizzato con listaDaMostrare)
   useEffect(() => {
-    if (typeof L !== 'undefined' && listaDaMostrare && listaDaMostrare.length > 0) {
+    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
@@ -161,13 +155,13 @@ const colore = filtri.colore || '#2563eb';
       const group = new L.featureGroup();
       listaDaMostrare.forEach((s) => {
         if (s.lat && s.lng) {
-          const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b><br>${s.indirizzo}`);
-          group.addLayer(marker);
+          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
+          group.addLayer(m);
         }
       });
-      if (listaDaMostrare.some(s => s.lat && s.lng)) { map.fitBounds(group.getBounds().pad(0.1)); }
+      if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
-  }, [listaDaMostrare, pagina]);
+  }, [listaDaMostrare]);
 
   if (!slug) return null;
 
