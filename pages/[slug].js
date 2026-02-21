@@ -759,26 +759,29 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. COSTRUZIONE QUERY "FORZA BRUTA" ---
+// --- 2. COSTRUZIONE QUERY "TRIPLA CORRISPONDENZA" (Maschile, Femminile, Plurale) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Prendiamo solo le prime 5 lettere (es. "cardi", "dentis", "farma")
-// Così becchiamo sia "cardiologo" che "cardiologi" che "cardiologia"
-const radiceMorbida = catRicercata.toLowerCase().substring(0, 5);
+// Creiamo le tre varianti basandoci sulla categoria cercata
+const radice = catRicercata.toLowerCase().replace(/i$/, ''); // da "cardiologi" a "cardiolog"
+const maschile = `${radice}o`;
+const femminile = `${radice}a`;
+const plurale = `${radice}i`;
+
+// Creiamo una stringa di ricerca OR per Supabase
+const ricercaTripla = `categoria.ilike.%${maschile}%,categoria.ilike.%${femminile}%,categoria.ilike.%${plurale}%`;
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  
-  // Filtro Quartiere: Categoria DEVE contenere la radice AND (Zona o Slug contengono il quartiere)
   query = query
-    .ilike('categoria', `%${radiceMorbida}%`)
-    .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+    .or(ricercaTripla) // Deve essere uno dei tre tipi di medico
+    .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`); // E deve stare in questo quartiere
 } else {
-  // HUB ROMA: Deve far vedere TUTTI quelli che hanno la radice nella categoria
-  query = query.ilike('categoria', `%${radiceMorbida}%`);
+  // HUB ROMA: Becca tutto ciò che è cardiologo/a/i a Roma
+  query = query.or(ricercaTripla);
 }
 
 // 3. PAGINAZIONE (Resta uguale)
