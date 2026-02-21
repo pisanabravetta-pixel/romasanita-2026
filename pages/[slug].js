@@ -730,41 +730,53 @@ export async function getServerSideProps(context) {
   try {
     const { supabase } = require('../lib/supabaseClient');
     
-    // 1. ANALISI DELLO SLUG (Logica per smistare Hub e Quartieri)
-    // Se lo slug è 'cardiologi-roma-prati', catRicercata = 'cardiologi', zonaInSlug = 'prati'
+    // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. PULIZIA E QUERY DEFINITIVA ---
-let query = supabase
-  .from('annunci')
-  .select('*', { count: 'exact' })
-  .eq('approvato', true);
+    // Determiniamo se è una HUB (es. cardiologi-roma) o un QUARTIERE (es. cardiologi-roma-prati)
+    const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-// 1. Puliamo la categoria: togliamo "-roma" e la "i" finale
-// Esempio: "cardiologi-roma" -> "cardiolog"
-let terminePulito = catRicercata.toLowerCase()
-  .replace('-roma', '')
-  .replace('specialistici', 'specialistic')
-  .substring(0, 6); // Prende solo "cardio", "dermat", "farmac"
+    // 2. QUERY BASE
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' })
+      .eq('approvato', true);
 
-// 2. Applichiamo il filtro categoria (Il setaccio largo)
-query = query.ilike('categoria', `%${terminePulito}%`);
+    // 3. FILTRO CATEGORIA "KILLER" (4 lettere per beccare tutto: cardio, derm, dent, farm)
+    // Usiamo una radice corta così "Dermatologia" e "Dermatologi" vengono presi entrambi
+    let keyword = catRicercata.toLowerCase()
+      .replace('-roma', '')
+      .replace('specialistici', 'specialistic')
+      .substring(0, 4); 
 
-// 3. Filtro Zona (Solo se c'è un quartiere nell'URL)
-if (zonaInSlug && zonaInSlug !== 'roma') {
-  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-}
+    if (catRicercata.includes('specialist')) {
+      // Se cerchi specialisti generici, escludi le categorie specifiche
+      query = query
+        .not('categoria', 'ilike', '%farmac%')
+        .not('categoria', 'ilike', '%diagnost%')
+        .not('categoria', 'ilike', '%dentist%')
+        .not('categoria', 'ilike', '%domicilio%');
+    } else {
+      // CERCA NELLA CATEGORIA OPPURE NEL NOME (Massima flessibilità)
+      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+    }
 
-// 3. PAGINAZIONE
-const da = (page - 1) * annunciPerPagina;
-const a = da + annunciPerPagina - 1;
+    // 4. FILTRO ZONA: Solo se NON siamo nella Hub
+    if (!isHub) {
+      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+      // Filtriamo per zona o per slug che contiene il quartiere
+      query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+    }
 
-const { data, count, error } = await query
-  .order('is_top', { ascending: false })
-  .range(da, a);
+    // 5. PAGINAZIONE
+    const da = (page - 1) * annunciPerPagina;
+    const a = da + annunciPerPagina - 1;
+
+    const { data, count, error } = await query
+      .order('is_top', { ascending: false })
+      .range(da, a);
 
     if (error) throw error;
 
@@ -774,7 +786,6 @@ const { data, count, error } = await query
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug,
-        // Passiamo queste per aiutare il componente a decidere quale layout mostrare
         categoriaSSR: catRicercata,
         zonaSSR: zonaInSlug
       }
