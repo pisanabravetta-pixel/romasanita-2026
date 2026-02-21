@@ -383,59 +383,74 @@ setMeta({
   </div>
 )}
 <div style={{ display: 'block' }}>
-{listaDaMostrare.map((v) => (
-    <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
-      <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>{v.nome}</h3>
-      <p style={{ fontSize: '16px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ textTransform: 'uppercase' }}>{v.zona}</strong></p>
-      
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-        {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
-        <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${tema.primario}44` }}>{tema.label}</span>
-      </div>
-      
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+{listaDaMostrare.map((v, index) => {
+    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+    const mostraLinkScheda = (pagina === 1 && index < 5 && v.slug);
+
+    return (
+      <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+        <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>
+          {mostraLinkScheda ? (
+            <a href={linkScheda} style={{ color: '#1e293b', textDecoration: 'none' }}>{v.nome}</a>
+          ) : (
+            v.nome
+          )}
+        </h3>
+        <p style={{ fontSize: '16px', color: '#475569', marginBottom: '15px' }}>📍 {v.indirizzo} — <strong style={{ textTransform: 'uppercase' }}>{v.zona}</strong></p>
         
-        {/* WHATSAPP FISSO E SEMPRE VERDE */}
-        <a 
-         href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
-          onClick={(e) => { 
-            if(!v.whatsapp) { 
-              e.preventDefault(); 
-              alert("WhatsApp non disponibile per questo professionista"); 
-            } 
-          }}
-          target={v.whatsapp ? "_blank" : "_self"}
-          rel="noopener noreferrer"
-          style={{ 
-            flex: '1', 
-            minWidth: '100px', 
-            backgroundColor: '#22c55e', 
-            color: 'white', 
-            padding: '14px', 
-            borderRadius: '10px', 
-            textAlign: 'center', 
-            fontWeight: '800', 
-            textDecoration: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}
-        >
-          💬 WHATSAPP
-        </a>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+          {v.urgenza_24h && <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: '#fee2e2', color: '#dc2626', padding: '4px 10px', borderRadius: '6px', border: '1px solid #fecaca' }}>🚨 URGENZE</span>}
+          <span style={{ fontSize: '11px', fontWeight: '800', backgroundColor: tema.chiaro, color: tema.primario, padding: '4px 10px', borderRadius: '6px', border: `1px solid ${tema.primario}44` }}>{tema.label}</span>
+        </div>
+        
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+          
+          {mostraLinkScheda && (
+            <a href={linkScheda} style={{ flex: '1', minWidth: '100px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📄 SCHEDA</a>
+          )}
 
-        <a 
-          href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
-          target="_blank" 
-          rel="noopener noreferrer" 
-          style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
-        >
-          🗺️ MAPPA
-        </a>
+          <a 
+            href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
+            onClick={(e) => { 
+              if(!v.whatsapp) { 
+                e.preventDefault(); 
+                alert("WhatsApp non disponibile per questo professionista"); 
+              } 
+            }}
+            target={v.whatsapp ? "_blank" : "_self"}
+            rel="noopener noreferrer"
+            style={{ 
+              flex: '1', 
+              minWidth: '100px', 
+              backgroundColor: '#22c55e', 
+              color: 'white', 
+              padding: '14px', 
+              borderRadius: '10px', 
+              textAlign: 'center', 
+              fontWeight: '800', 
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer'
+            }}
+          >
+            💬 WHATSAPP
+          </a>
+
+          <a 
+            href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+          >
+            🗺️ MAPPA
+          </a>
+        </div>
       </div>
-
+    );
+})}
       {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
       <p style={{ 
         fontSize: '11px', 
