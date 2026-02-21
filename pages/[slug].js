@@ -759,30 +759,29 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. COSTRUZIONE QUERY "WILDCARD" (RISOLVE DERMATOLOGI/O/A) ---
+// --- 2. COSTRUZIONE QUERY "TRONCA" (Per beccare dermatologo/a/i/e) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Prendiamo la radice (es. "dermatolog", "cardiolog", "dentist")
-// Togliamo la 'i' finale se presente
+// Prendiamo solo l'inizio della parola (es: "dermatol", "cardiol", "psicol")
+// Questo ignora se finisce con o, a, i oppure e.
 let radice = catRicercata.toLowerCase();
-if (radice.endsWith('i')) {
-  radice = radice.slice(0, -1);
+if (radice.length > 7) {
+  radice = radice.substring(0, 7); // Prende "dermato", "cardiolo", "psicolo"
+} else {
+  radice = radice.replace(/i$/, '').replace(/e$/, ''); // Toglie la i o la e finale (es: farmaci)
 }
-
-// Se stiamo cercando dermatologi, radice sarà "dermatolog"
-// La ricerca %dermatolog% troverà sia (dermatologo) che (dermatologa)
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  // Filtro: (Categoria contiene radice) AND (Zona contiene quartiere OR Slug contiene quartiere)
+  // Filtro Quartiere: Radice categoria AND (Quartiere nella zona o nello slug)
   query = query
     .ilike('categoria', `%${radice}%`)
     .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // HUB ROMA: Cerca solo per categoria
+  // HUB ROMA: Deve pescare TUTTI quelli che contengono la radice
   query = query.ilike('categoria', `%${radice}%`);
 }
 // 3. PAGINAZIONE (Resta uguale)
