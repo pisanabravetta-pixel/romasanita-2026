@@ -74,7 +74,7 @@ useEffect(() => {
 
   // LOGICA DERIVATA (Sempre dopo gli stati)
   const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
-  const totaleAnnunci = listaUnica.length;
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
   const inizio = (pagina - 1) * annunciPerPagina;
@@ -729,52 +729,45 @@ export async function getServerSideProps(context) {
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
-  // 1. Identificazione Categoria e Zona (stessa logica che usi sopra)
+  // 1. Identificazione Categoria e Zona (Logica identica alla tua)
   const slugPuro = slug ? slug.replace('-roma-', '@') : '';
   const catSlug = slugPuro.split('@')[0].replace('-roma', '');
   const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
 
-  // Importiamo la logica di mapping (getDBQuery deve essere esportata)
   const { getDBQuery } = require('../lib/seo-logic');
   const mapping = getDBQuery(catSlug);
+  const { supabase } = require('../lib/supabaseClient');
 
-  // 2. Query Supabase lato Server
   let query = supabase
     .from('annunci')
-    .select('*', { count: 'exact' })
+    .select('*', { count: 'exact' }) // Questo 'exact' ci restituisce il numero totale (es. 23)
     .eq('approvato', true);
 
+  // Filtro Categoria
   if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
-    query = query
-      .not('categoria', 'ilike', '%farmac%')
-      .not('categoria', 'ilike', '%diagnost%')
-      .not('categoria', 'ilike', '%dentist%')
-      .not('categoria', 'ilike', '%domicilio%');
+    query = query.not('categoria', 'ilike', '%farmac%').not('categoria', 'ilike', '%diagnost%').not('categoria', 'ilike', '%dentist%').not('categoria', 'ilike', '%domicilio%');
   } else if (mapping.cat && mapping.cat !== 'NON_ESISTE') {
     query = query.ilike('categoria', `%${mapping.cat}%`);
   }
 
+  // FILTRO QUARTIERE RIGOROSO
   if (zonaInSlug && zonaInSlug !== 'roma') {
+    // Cerchiamo il quartiere sia nel campo 'zona' che nello 'slug' dell'annuncio
     query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
   }
 
-  // Calcolo Range Paginazione
   const da = (page - 1) * annunciPerPagina;
   const a = da + annunciPerPagina - 1;
 
-  const { data, count, error } = await query
+  const { data, count } = await query
     .order('is_top', { ascending: false })
     .range(da, a);
-
-  if (error) {
-    console.error("Errore SSR:", error);
-  }
 
   return {
     props: {
       datiIniziali: data || [],
-      totaleDalServer: count || 0,
+      totaleDalServer: count || 0, // Questo numero ora tornerà a essere 23 o quello corretto
       paginaIniziale: page,
       slugSSR: slug
     }
