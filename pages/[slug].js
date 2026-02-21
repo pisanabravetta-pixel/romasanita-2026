@@ -759,26 +759,26 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. LOGICA CHIRURGICA PER HUB E QUARTIERI ---
+// --- 2. PULIZIA E QUERY DEFINITIVA ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Prendiamo la radice togliendo la "i" finale (es: "cardiologi" -> "cardiolog")
-// Questo becca perfettamente "(cardiologo)" e "(cardiologa)"
-const termineRicerca = catRicercata.toLowerCase().endsWith('i') 
-  ? catRicercata.toLowerCase().slice(0, -1) 
-  : catRicercata.toLowerCase();
+// 1. Puliamo la categoria: togliamo "-roma" e la "i" finale
+// Esempio: "cardiologi-roma" -> "cardiolog"
+let terminePulito = catRicercata.toLowerCase()
+  .replace('-roma', '')
+  .replace('specialistici', 'specialistic')
+  .substring(0, 6); // Prende solo "cardio", "dermat", "farmac"
 
-// Applichiamo SEMPRE il filtro categoria (sia in Hub che in Quartiere)
-query = query.ilike('categoria', `%${termineRicerca}%`);
+// 2. Applichiamo il filtro categoria (Il setaccio largo)
+query = query.ilike('categoria', `%${terminePulito}%`);
 
-// Se siamo in un QUARTIERE, aggiungiamo il filtro zona
+// 3. Filtro Zona (Solo se c'è un quartiere nell'URL)
 if (zonaInSlug && zonaInSlug !== 'roma') {
-  const zonaPulita = zonaInSlug.replace(/-/g, ' ');
-  // Filtro zona: cerca nel campo zona o nello slug
-  query = query.or(`zona.ilike.%${zonaPulita}%,slug.ilike.%${zonaInSlug}%`);
+  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+  query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 }
 
 // 3. PAGINAZIONE
