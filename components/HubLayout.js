@@ -10,8 +10,11 @@ export default function HubLayout({
   titolo, 
   categoria, 
   colore, 
+  datiIniziali = [], // AGGIUNTO
+  totaleDalServer = 0, // AGGIUNTO
   medici = [], 
-  loading, 
+  loading,
+  // ... resto dei parametri invariato
   quartieri = [], 
   schemas, 
   descrizioneMeta,
@@ -30,9 +33,9 @@ export default function HubLayout({
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
   // DEFINISCI SEMPRE QUESTI PER PRIMI
-  const [serviziRealTime, setServiziRealTime] = useState([]);
-  const [loadingRealTime, setLoadingRealTime] = useState(true);
- const [pagina, setPagina] = useState(1);
+const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
+  const [loadingRealTime, setLoadingRealTime] = useState(datiIniziali?.length > 0 ? false : true);
+  const [pagina, setPagina] = useState(paginaIniziale || 1);
 
 // Aggiungi questo subito sotto per leggere la pagina dall'URL
 useEffect(() => {
@@ -44,11 +47,11 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-  // ORA CALCOLA LE VARIABILI DERIVATE
-  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
-  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
-  const totaleAnnunci = listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+// ORA CALCOLA LE VARIABILI DERIVATE
+const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
+const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
+const totaleAnnunci = totaleDalServer || listaUnica.length;
+const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
@@ -57,6 +60,16 @@ useEffect(() => {
       setLoadingRealTime(false);
       return; 
     }
+
+
+    // AGGIUNGI QUESTO QUI SOTTO:
+    // Se abbiamo già caricato i dati dal server (nuovo metodo SSR)
+    if (serviziRealTime.length > 0 && pagina === 1) {
+      setLoadingRealTime(false);
+      return;
+    }
+    
+   
 async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
