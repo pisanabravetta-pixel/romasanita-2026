@@ -729,47 +729,48 @@ export async function getServerSideProps(context) {
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
-  // 1. Identificazione Categoria e Zona (Logica identica alla tua)
-  const slugPuro = slug ? slug.replace('-roma-', '@') : '';
-  const catSlug = slugPuro.split('@')[0].replace('-roma', '');
-  const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+  try {
+    // Importiamo supabase e la logica (senza require se possibile, o usando percorsi certi)
+    const { supabase } = require('../lib/supabaseClient');
+    
+    // 1. Pulizia slug per capire categoria e zona
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const catSlug = slugPuro.split('@')[0].replace('-roma', '');
+    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const zonaQuery = zonaInSlug.replace(/-/g, ' ');
 
-  const { supabase } = require('../lib/supabaseClient');
-  const moduloSeo = require('../lib/seo-logic');
-  const mapping = moduloSeo.getDBQuery ? moduloSeo.getDBQuery(catSlug) : { cat: 'specialistica' };
+    // 2. Query super-semplice (senza filtri complessi per ora, così non crasha)
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' })
+      .eq('approvato', true);
 
-  let query = supabase
-    .from('annunci')
-    .select('*', { count: 'exact' }) // Questo 'exact' ci restituisce il numero totale (es. 23)
-    .eq('approvato', true);
-
-  // Filtro Categoria
-  if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
-    query = query.not('categoria', 'ilike', '%farmac%').not('categoria', 'ilike', '%diagnost%').not('categoria', 'ilike', '%dentist%').not('categoria', 'ilike', '%domicilio%');
-  } else if (mapping.cat && mapping.cat !== 'NON_ESISTE') {
-    query = query.ilike('categoria', `%${mapping.cat}%`);
-  }
-
-  // FILTRO QUARTIERE RIGOROSO
-  if (zonaInSlug && zonaInSlug !== 'roma') {
-    // Cerchiamo il quartiere sia nel campo 'zona' che nello 'slug' dell'annuncio
-    query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-  }
-
-  const da = (page - 1) * annunciPerPagina;
-  const a = da + annunciPerPagina - 1;
-
-  const { data, count } = await query
-    .order('is_top', { ascending: false })
-    .range(da, a);
-
-  return {
-    props: {
-      datiIniziali: data || [],
-      totaleDalServer: count || 0, // Questo numero ora tornerà a essere 23 o quello corretto
-      paginaIniziale: page,
-      slugSSR: slug
+    // Filtro zona base
+    if (zonaInSlug && zonaInSlug !== 'roma') {
+      query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
     }
-  };
+
+    const da = (page - 1) * annunciPerPagina;
+    const a = da + annunciPerPagina - 1;
+
+    const { data, count, error } = await query
+      .order('is_top', { ascending: false })
+      .range(da, a);
+
+    if (error) throw error;
+
+    return {
+      props: {
+        datiIniziali: data || [],
+        totaleDalServer: count || 0,
+        paginaIniziale: page,
+        slugSSR: slug
+      }
+    };
+  } catch (err) {
+    console.error("ERRORE SSR:", err);
+    return {
+      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" }
+    };
+  }
 }
