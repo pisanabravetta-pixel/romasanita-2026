@@ -759,31 +759,32 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. COSTRUZIONE QUERY "TRIPLA CORRISPONDENZA" (Maschile, Femminile, Plurale) ---
+// --- 2. COSTRUZIONE QUERY "WILDCARD" (RISOLVE DERMATOLOGI/O/A) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Creiamo le tre varianti basandoci sulla categoria cercata
-const radice = catRicercata.toLowerCase().replace(/i$/, ''); // da "cardiologi" a "cardiolog"
-const maschile = `${radice}o`;
-const femminile = `${radice}a`;
-const plurale = `${radice}i`;
+// Prendiamo la radice (es. "dermatolog", "cardiolog", "dentist")
+// Togliamo la 'i' finale se presente
+let radice = catRicercata.toLowerCase();
+if (radice.endsWith('i')) {
+  radice = radice.slice(0, -1);
+}
 
-// Creiamo una stringa di ricerca OR per Supabase
-const ricercaTripla = `categoria.ilike.%${maschile}%,categoria.ilike.%${femminile}%,categoria.ilike.%${plurale}%`;
+// Se stiamo cercando dermatologi, radice sarà "dermatolog"
+// La ricerca %dermatolog% troverà sia (dermatologo) che (dermatologa)
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+  // Filtro: (Categoria contiene radice) AND (Zona contiene quartiere OR Slug contiene quartiere)
   query = query
-    .or(ricercaTripla) // Deve essere uno dei tre tipi di medico
-    .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`); // E deve stare in questo quartiere
+    .ilike('categoria', `%${radice}%`)
+    .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // HUB ROMA: Becca tutto ciò che è cardiologo/a/i a Roma
-  query = query.or(ricercaTripla);
+  // HUB ROMA: Cerca solo per categoria
+  query = query.ilike('categoria', `%${radice}%`);
 }
-
 // 3. PAGINAZIONE (Resta uguale)
 const da = (page - 1) * annunciPerPagina;
 const a = da + annunciPerPagina - 1;
