@@ -68,36 +68,26 @@ const colore = filtri.colore || '#2563eb';
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   
 // 2. Aggiungi questo subito sotto (fondamentale per far funzionare i link)
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    const params = new URLSearchParams(window.location.search);
-    const p = parseInt(params.get('page')) || 1;
-    setPagina(p);
-  }
-}, []);
-  const annunciPerPagina = 10;
-  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
-  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
+// 1. SINCRONIZZAZIONE PAGINA DA URL
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const p = parseInt(params.get('page')) || 1;
+      setPagina(p);
+    }
+  }, []);
 
-  // LOGICA DERIVATA (Sempre dopo gli stati)
-  const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-  
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-
-useEffect(() => {
+  // 2. EFFETTO PRINCIPALE: METADATI E CARICAMENTO DATI
+  useEffect(() => {
     if (!slug || slug === 'index' || slug === '') return;
 
-    // 1. IDENTIFICAZIONE
     const slugPuro = slug.replace('-roma-', '@');
-    const catSlug = slugPuro.split('@')[0].replace('-roma', ''); 
-    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaInSlug || zonaInSlug === 'roma';
+    const catSlugInterno = slugPuro.split('@')[0].replace('-roma', ''); 
+    const zonaInSlugInterno = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaInSlugInterno || zonaInSlugInterno === 'roma';
 
-    // 2. METADATI E TEMA (Sempre necessari)
-    const mapping = getDBQuery(catSlug);
+    // --- LOGICA METADATI E TEMA ---
+    const mapping = getDBQuery(catSlugInterno);
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
@@ -105,56 +95,52 @@ useEffect(() => {
       'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
       'servizi-domicilio': 'Servizi a Domicilio'
     };
-    const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
-    const chiaveSlug = catSlug.toLowerCase();
+    
+    const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlugInterno;
+    const chiaveSlug = catSlugInterno.toLowerCase();
     const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
     let nomeCorretto = nomeBase;
-    const n = nomeCorretto.toLowerCase();
-    if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
-    else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
-    else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
-    else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
     
-    const zonaBella = (zonaInSlug === 'roma') ? 'Roma' : zonaInSlug.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    if (nomeCorretto.toLowerCase().includes('cardio')) nomeCorretto = 'Cardiologi';
+    else if (nomeCorretto.toLowerCase().includes('derma')) nomeCorretto = 'Dermatologi';
+    else if (nomeCorretto.toLowerCase().includes('dentis')) nomeCorretto = 'Dentisti';
+    else if (nomeCorretto.toLowerCase().includes('farmaci')) nomeCorretto = 'Farmacie';
+    
+    const zonaBella = (zonaInSlugInterno === 'roma') ? 'Roma' : zonaInSlugInterno.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
     let primario = "#0891b2"; let chiaro = "#ecfeff";
-    if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-    else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-    else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+    if (catSlugInterno.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+    else if (catSlugInterno.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+    else if (catSlugInterno.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
 
     setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
     setMeta({ 
       titolo: isHub ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
-      zona: zonaBella, cat: catSlug, nomeSemplice: nomeCorretto 
+      zona: zonaBella, cat: catSlugInterno, nomeSemplice: nomeCorretto 
     });
 
-    // 3. CONTROLLO BLOCCANTE
+    // --- LOGICA CARICAMENTO DATI ---
     if (isHub && datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
       return; 
     }
 
-    // 4. FUNZIONE FETCH (Chiuse correttamente le graffe)
     const fetchDatiAvanzata = async () => {
       try {
         setLoading(true);
-        const keyword = catSlug.toLowerCase().substring(0, 4);
-        let query = supabase.from('annunci').select('*').eq('approvato', true);
+        const keyword = catSlugInterno.toLowerCase().substring(0, 4);
+        let q = supabase.from('annunci').select('*').eq('approvato', true);
 
-        query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
 
         if (!isHub) {
-          const zQuery = zonaInSlug.replace(/-/g, ' ');
-          query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlug}%`);
+          const zQuery = zonaInSlugInterno.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlugInterno}%`);
         }
 
-        const { data, error: fError } = await query
-          .order('is_top', { ascending: false })
-          .range(0, 99);
-
-        if (fError) throw fError;
-        setServizi(data || []);
+        const { data, error: fError } = await q.order('is_top', { ascending: false }).range(0, 99);
+        if (!fError) setServizi(data || []);
       } catch (err) {
         console.error("Errore fetch:", err.message);
       } finally {
@@ -164,124 +150,24 @@ useEffect(() => {
 
     fetchDatiAvanzata();
   }, [slug, datiIniziali]);
-      // --- 2. IDENTIFICAZIONE CATEGORIA E ZONA ---
-      const slugPuro = slug.replace('-roma-', '@');
-      const catSlug = slugPuro.split('@')[0].replace('-roma', '');
-      const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      const mapping = getDBQuery(catSlug);
 
-      // --- 3. QUERY SUPABASE (LOGICA RADICE FLESSIBILE) ---
-      let query = supabase
-        .from('annunci')
-        .select('*', { count: 'exact' })
-        .eq('approvato', true);
-
-      const termineRicerca = catSlug.toLowerCase().substring(0, 6);
-
-      if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
-        query = query
-          .not('categoria', 'ilike', '%farmac%')
-          .not('categoria', 'ilike', '%diagnost%')
-          .not('categoria', 'ilike', '%dentist%')
-          .not('categoria', 'ilike', '%domicilio%');
-      } else {
-        query = query.ilike('categoria', `%${termineRicerca}%`);
-      }
-
-      if (zonaInSlug && zonaInSlug !== 'roma') {
-        query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-      }
-
-      const da = (pagina - 1) * 10;
-      const a = da + 9;
-
-      const { data } = await query
-        .order('is_top', { ascending: false })
-        .range(da, a);
-
-      setServizi(data || []);
-
-      // --- 4. LOGICA DI GENERAZIONE NOMI E METADATI (SPOSTATA QUI DENTRO) ---
-      const nomeSemplice = (mapping.cat && mapping.cat !== 'NON_ESISTE') ? mapping.cat : catSlug;
-      const nomiPuliti = {
-        'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
-        'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
-        'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
-        'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
-        'servizi-domicilio': 'Servizi a Domicilio'
-      };
-
-      const chiaveSlug = catSlug.toLowerCase();
-      const nomeBase = nomiPuliti[chiaveSlug] || (nomeSemplice.charAt(0).toUpperCase() + nomeSemplice.slice(1));
-      const nomeCat = chiaveSlug.includes('specialistica') ? 'Specialisti' : nomeBase;
-      const zonaBella = zonaQuery.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-
-      // Colori dinamici
-      let primario = "#0891b2"; let chiaro = "#ecfeff";
-      if (catSlug.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-      else if (catSlug.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-      else if (catSlug.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
-      else if (catSlug.includes('diagnost')) { primario = "#1e40af"; chiaro = "#eff6ff"; }
-
-      let nomeCorretto = nomeCat; 
-      const n = nomeCorretto.toLowerCase();
-      if (n.includes('cardio')) nomeCorretto = 'Cardiologi';
-      else if (n.includes('derma')) nomeCorretto = 'Dermatologi';
-      else if (n.includes('psico')) nomeCorretto = 'Psicologi';
-      else if (n.includes('oculi')) nomeCorretto = 'Oculisti';
-      else if (n.includes('ortope')) nomeCorretto = 'Ortopedici';
-      else if (n.includes('gineco')) nomeCorretto = 'Ginecologi';
-      else if (n.includes('dentis')) nomeCorretto = 'Dentisti';
-      else if (n.includes('farmaci')) nomeCorretto = 'Farmacie';
-      else if (n.includes('diagnosti')) nomeCorretto = 'Centri di Diagnostica';
-
-      setTema({ primario, chiaro, label: nomeCorretto.toUpperCase() });
-      setMeta({ 
-        titolo: zonaBella.toLowerCase() === 'roma' ? `${nomeCorretto} a Roma` : `${nomeCorretto} a Roma ${zonaBella}`, 
-        zona: zonaBella, cat: catSlug, nomeSemplice: nomeCorretto 
-      });
-
-    } catch (err) {
-      console.error("Errore nel fetch:", err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  fetchDati();
-}, [slug, pagina]);
-
+  // 3. EFFETTO MAPPA
   useEffect(() => {
-    // La mappa ora guarda "listaDaMostrare" (i 10 della pagina corrente)
     if (typeof L !== 'undefined' && listaDaMostrare && listaDaMostrare.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
-      
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-      
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OSM'
-      }).addTo(map);
-
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
       const group = new L.featureGroup();
-      
-      // CICLO SU listaDaMostrare (così vedi solo i 10 della pagina)
       listaDaMostrare.forEach((s) => {
         if (s.lat && s.lng) {
-          const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)])
-            .addTo(map)
-            .bindPopup(`<b>${s.nome}</b><br>${s.indirizzo}`);
+          const marker = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b><br>${s.indirizzo}`);
           group.addLayer(marker);
         }
       });
-
-      if (listaDaMostrare.some(s => s.lat && s.lng)) {
-        map.fitBounds(group.getBounds().pad(0.1));
-      }
+      if (listaDaMostrare.some(s => s.lat && s.lng)) { map.fitBounds(group.getBounds().pad(0.1)); }
     }
-    // IMPORTANTE: la mappa si aggiorna quando cambia la lista o la pagina
-  }, [listaDaMostrare, pagina]); 
+  }, [listaDaMostrare, pagina]);
 
   if (!slug) return null;
 
