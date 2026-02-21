@@ -735,9 +735,9 @@ export async function getServerSideProps(context) {
   const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
 
-  const { getDBQuery } = require('../lib/seo-logic');
-  const mapping = getDBQuery(catSlug);
   const { supabase } = require('../lib/supabaseClient');
+  const moduloSeo = require('../lib/seo-logic');
+  const mapping = moduloSeo.getDBQuery ? moduloSeo.getDBQuery(catSlug) : { cat: 'specialistica' };
 
   let query = supabase
     .from('annunci')
