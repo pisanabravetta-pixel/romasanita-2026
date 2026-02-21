@@ -175,29 +175,55 @@ Informazioni su {dato.nome} a Roma {nomeZona}
         <meta name="description" content={`${dato.nome} a Roma quartiere ${nomeZona}. Indirizzo: ${dato.indirizzo}. Contatti diretti e posizione sulla mappa per ${categoria}.`} />
         <link rel="canonical" href={`https://www.servizisalute.com/scheda/${dato.slug}`} />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        <script
+    <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": schemaType,
-      "name": dato.nome,
-      "url": `https://www.servizisalute.com/scheda/${dato.slug}`,
-      "telephone": dato.telefono || "",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": dato.indirizzo,
-        "addressLocality": "Roma",
-        "addressRegion": "Lazio",
-        "postalCode": "00100",
-        "addressCountry": "IT"
+    __html: JSON.stringify([
+      {
+        "@context": "https://schema.org",
+        "@type": schemaType,
+        "name": dato.nome,
+        "url": `https://www.servizisalute.com/scheda/${dato.slug}`,
+        "telephone": dato.telefono || "",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": dato.indirizzo,
+          "addressLocality": "Roma",
+          "addressRegion": "Lazio",
+          "postalCode": "00100",
+          "addressCountry": "IT"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": dato.lat,
+          "longitude": dato.lng
+        }
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": dato.lat,
-        "longitude": dato.lng
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.servizisalute.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": `${categoria} Roma ${nomeZona}`,
+            "item": `https://www.servizisalute.com/${catSlug}-roma-${zonaSlug}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": dato.nome,
+            "item": `https://www.servizisalute.com/scheda/${dato.slug}`
+          }
+        ]
       }
-    })
+    ])
   }}
 />
       </Head>
@@ -207,7 +233,28 @@ Informazioni su {dato.nome} a Roma {nomeZona}
 
       <main style={{ flex: '1 0 auto', padding: '20px', maxWidth: '850px', margin: '0 auto', width: '100%' }}>
         <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
-          
+          {/* ✅ BREADCRUMB QUI */}
+    <div style={{ 
+      fontSize: "0.9rem",
+      marginBottom: "20px",
+      color: "#64748b"
+    }}>
+      <a href="/" style={{ textDecoration: "none", color: "#0284c7" }}>
+        Home
+      </a>
+      {" > "}
+      <a 
+        href={`/${catSlug}-roma-${zonaSlug}`} 
+        style={{ textDecoration: "none", color: "#0284c7" }}
+      >
+        {categoria} Roma {nomeZona}
+      </a>
+      {" > "}
+      <span style={{ color: "#1e293b" }}>
+        {dato.nome}
+      </span>
+    </div>
+ 
           <h1 style={{ color: '#1e293b', fontSize: '1.8rem', fontWeight: '900', marginBottom: '10px', lineHeight: '1.2' }}>
             {dato.nome} – {categoria} a {nomeZona}, Roma
           </h1>
