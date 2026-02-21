@@ -446,11 +446,12 @@ setMeta({
             style={{ flex: '1', minWidth: '100px', backgroundColor: '#64748b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
           >
             🗺️ MAPPA
-          </a>
+       </a>
         </div>
       </div>
     );
-})}
+  })}
+</div>
       {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
       <p style={{ 
         fontSize: '11px', 
