@@ -274,19 +274,19 @@ async function fetchNuoviMedici() {
   ) : listaDaMostrare && listaDaMostrare.length > 0 ? (
     listaDaMostrare.map((v, index) => {
      const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-const mostraLinkScheda = pagina === 1 && index < 5 && v.slug;
+
       return (
         <div key={v.id} style={{ backgroundColor: 'white', borderRadius: theme.radius.card, padding: theme.padding.card, marginBottom: '20px', border: v.is_top ? `4px solid ${colore}` : '1px solid #e2e8f0', boxShadow: theme.shadows.premium, width: '100%', boxSizing: 'border-box' }}>
           
           <h3 style={{ color: '#2c5282', fontSize: '24px', fontWeight: '900', margin: '0 0 8px 0' }}>
-            {mostraLinkScheda ? (
-              <a href={linkScheda} style={{ color: '#2c5282', textDecoration: 'none' }}>
-                {v.nome || v.titolo || 'Professionista Verificato'}
-              </a>
-            ) : (
-              v.nome || v.titolo || 'Professionista Verificato'
-            )}
-          </h3>
+  {v.slug ? (
+    <a href={linkScheda} style={{ color: '#2c5282', textDecoration: 'none' }}>
+      {v.nome || v.titolo || 'Professionista Verificato'}
+    </a>
+  ) : (
+    v.nome || v.titolo || 'Professionista Verificato'
+  )}
+</h3>
           
           <p style={{ fontSize: '17px', color: '#475569', marginBottom: '12px' }}>
             📍 {v.indirizzo || 'Roma'} — <strong>{v.zona || v.quartiere || 'Roma'}</strong>
@@ -305,12 +305,11 @@ const mostraLinkScheda = pagina === 1 && index < 5 && v.slug;
             <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
               📞 CHIAMA
             </a>
-
-            {mostraLinkScheda && (
-              <a href={linkScheda} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
-                📄 SCHEDA
-              </a>
-            )}
+{v.slug && (
+  <a href={linkScheda} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+    📄 SCHEDA
+  </a>
+)}
 
             <a 
               href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
