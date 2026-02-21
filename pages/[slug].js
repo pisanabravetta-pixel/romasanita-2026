@@ -759,25 +759,25 @@ export async function getServerSideProps(context) {
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
 
-// --- 2. COSTRUZIONE QUERY "LOGICA 4 LETTERE" (COPIATA DAL TUO VECCHIO FILE) ---
+// --- 2. LOGICA UNIFICATA (IDENTICA AI QUARTIERI) ---
 let query = supabase
   .from('annunci')
   .select('*', { count: 'exact' })
   .eq('approvato', true);
 
-// Prendiamo solo le prime 4 lettere come faceva il tuo vecchio codice (es. "derm")
-const radice4 = catRicercata.toLowerCase().substring(0, 4);
+// Usiamo la radice di 4 lettere che si è dimostrata vincente nei quartieri
+const radiceFlessibile = catRicercata.toLowerCase().substring(0, 4);
 
 if (zonaInSlug && zonaInSlug !== 'roma') {
+  // LOGICA QUARTIERI (Quella che ti sta funzionando)
   const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  // Filtro Quartiere: (Categoria contiene le 4 lettere) AND (Zona contiene quartiere)
   query = query
-    .ilike('categoria', `%${radice4}%`)
+    .ilike('categoria', `%${radiceFlessibile}%`)
     .or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
 } else {
-  // HUB ROMA: Becca tutto ciò che inizia con quelle 4 lettere
-  // Questo troverà "dermatologo", "dermatologa", "dermatologi"
-  query = query.ilike('categoria', `%${radice4}%`);
+  // LOGICA HUB (Ora identica a quella dei quartieri, ma senza il filtro zona)
+  // Se "derm" funziona per dermatologi-roma-prati, DEVE funzionare anche qui
+  query = query.ilike('categoria', `%${radiceFlessibile}%`);
 }
 // 3. PAGINAZIONE (Resta uguale)
 const da = (page - 1) * annunciPerPagina;
