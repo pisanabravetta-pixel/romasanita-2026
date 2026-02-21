@@ -83,12 +83,15 @@ async function fetchNuoviMedici() {
 
         if (error) throw error;
 
-        const filtrati = data ? data.filter(item => {
-          if (!item.categoria) return false;
-          const cDB = item.categoria.toLowerCase();
-          const cURL = categoria ? categoria.toLowerCase() : ''; 
-          return cDB.includes(cURL.slice(0, 4)) || cURL.includes(cDB.slice(0, 4));
-        }) : [];
+       const filtrati = data ? data.filter(item => {
+  if (!item.categoria) return false;
+  const cDB = item.categoria.toLowerCase();
+  const cURL = (categoria || "").toLowerCase();
+  
+  // Ritorna vero se la categoria nel DB contiene quella dell'URL o viceversa
+  // Esempio: "cardiologi" contiene "cardio"
+  return cDB.includes(cURL) || cURL.includes(cDB.split('-')[0]);
+}) : [];
 
         setServiziRealTime(filtrati);
       } catch (err) {
