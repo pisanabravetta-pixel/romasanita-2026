@@ -37,11 +37,7 @@ const meseCorrente = mesi[dataAttuale.getMonth()];
 const annoCorrente = dataAttuale.getFullYear();
 const dataStringa = `${meseCorrente} ${annoCorrente}`;
 
-// --- 2. LOGICA CORRETTA PER TITOLI E QUARTIERI (DA INSERIRE ORA) ---
-// MODIFICA SOLO QUESTE RIGHE (Cerca queste nel tuo codice)
-const slugPuro = slug ? slug.replace('-roma-', '@') : '';
-const catSlug = categoriaSSR || (slugPuro.split('@')[0] || '');
-const zonaInSlug = zonaSSR || (slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma');
+
 
 // Mapping per bloccare gli errori di troncamento (FARMAC -> FARMACIE)
 const nomiCorrettiH1 = {
