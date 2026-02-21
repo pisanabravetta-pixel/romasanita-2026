@@ -90,26 +90,35 @@ async function fetchDati() {
         const zonaQuery = zonaInSlug.replace(/-/g, ' ');
         const mapping = getDBQuery(catSlug);
 
-// --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO) ---
+// --- 2. QUERY SUPABASE (FILTRO OTTIMIZZATO PER SPECIALISTI) ---
         let query = supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true);
 
-        // Filtriamo per categoria SOLO se non è una pagina generica/specialistica
-        if (mapping.cat && mapping.cat !== 'NON_ESISTE' && mapping.cat !== 'specialistica') {
+        // Se è una pagina di specialisti, escludiamo le categorie "non mediche"
+        if (catSlug.includes('specialist') || mapping.cat === 'specialistica') {
+          query = query
+            .not('categoria', 'ilike', '%farmac%')
+            .not('categoria', 'ilike', '%diagnost%')
+            .not('categoria', 'ilike', '%dentist%')
+            .not('categoria', 'ilike', '%domicilio%');
+        } 
+        // Altrimenti, se è una categoria specifica (es. farmacie), filtriamo normalmente
+        else if (mapping.cat && mapping.cat !== 'NON_ESISTE') {
           query = query.ilike('categoria', `%${mapping.cat}%`);
         }
 
-        // Se siamo in un quartiere (es. Prati), cerchiamo il termine in 'zona' OR nello 'slug'
+        // Filtro per Quartiere: deve essere sempre attivo se siamo in una pagina quartiere
         if (zonaInSlug && zonaInSlug !== 'roma') {
+          // Usiamo zonaQuery che è già definita sopra nel tuo codice
           query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
         }
 
         // AGGIUNGIAMO ORDINE E RANGE PRIMA DI ESEGUIRE
         const { data } = await query
           .order('is_top', { ascending: false })
-          .range(0, 99); 
+          .range(0, 99);
 
         // --- 3. AGGIORNAMENTO STATI, TEMA E SEO (STOP UNDEFINED) ---
         setServizi(data || []);
