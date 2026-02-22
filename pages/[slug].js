@@ -15,16 +15,16 @@ export default function PaginaQuartiereDinamica({
   zonaSSR        
 }) {
   const router = useRouter();
-  const { slug } = router.query;
+ 
 
   // --- LOGICA ORIGINALE ---
-  const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
+  const slugAttivo = slugSSR;
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   
-  if (slug && filtri.cat === 'NON_ESISTE') {
+  if (slugSSR && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
       router.replace('/404'); 
     }
@@ -72,7 +72,7 @@ export default function PaginaQuartiereDinamica({
   }, [router.query]);
 
   useEffect(() => {
-    const s = slug || slugSSR; // FIX: coerenza con slugSSR
+    const s = slugSSR;
     if (!s || s === 'index' || s === '') return;
 
     const slugPuro = s.replace('-roma-', '@');
@@ -126,12 +126,8 @@ export default function PaginaQuartiereDinamica({
       }
     };
     fetchData();
-  }, [slug, slugSSR, datiIniziali]);
-  // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
-  if (!slug && !slugSSR) return null;
+ }, [slugSSR, datiIniziali]);
 
-  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
-  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
 
   // 3. MAPPA
   useEffect(() => {
