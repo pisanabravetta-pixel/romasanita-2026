@@ -156,26 +156,24 @@ const fetchData = async () => {
 
 return (
   <>
-    {/* Se siamo su Roma (HUB) o su un Quartiere, usiamo sempre HubLayout per ora per uniformità */}
+    {/* Se siamo su Roma (HUB) o su un Quartiere */}
     {zonaInSlug === 'roma' ? (
-      <>
-        <HubLayout 
-          {...seoData[catSlug]}
-          titolo={titoloPulito}
-          categoria={catSlug}
-          colore={colore}
-          datiIniziali={datiIniziali}
-          totaleDalServer={totaleDalServer}
-          paginaIniziale={pagina}
-          testoTopBar={`${titoloPulito} ROMA`}
-          badgeSpec={catSlug}
-        >
-          {/* STRISCIA ROSSA DI CONFERMA */}
-          <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold' }}>
-            DEBUG: IL SERVER HA INVIATO {datiIniziali?.length || 0} ANNUNCI
-          </div>
-        </HubLayout>
-      </>
+      <HubLayout 
+        {...seoData[catSlug]}
+        titolo={titoloPulito}
+        categoria={catSlug}
+        colore={colore}
+        datiIniziali={datiIniziali || []}
+        totaleDalServer={totaleDalServer || 0}
+        paginaIniziale={pagina}
+        testoTopBar={`${titoloPulito} ROMA`}
+        badgeSpec={catSlug}
+      >
+        {/* STRISCIA ROSSA DI CONFERMA - Se questa appare, il crash è risolto */}
+        <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', width: '100%' }}>
+          DEBUG: IL SERVER HA INVIATO {datiIniziali?.length || 0} ANNUNCI
+        </div>
+      </HubLayout>
     ) : (
       /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
