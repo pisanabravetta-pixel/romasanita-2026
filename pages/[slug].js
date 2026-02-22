@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-import { createClient } from '@supabase/supabase-js';
+
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
@@ -650,54 +650,47 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
   const { slug } = context.query;
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
   try {
-  
-    
-    // 1. ANALISI DELLO SLUG
-    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const { supabase } = require('../lib/supabaseClient');
+
+    if (!slug) {
+      return {
+        props: {
+          datiIniziali: [],
+          totaleDalServer: 0,
+          paginaIniziale: 1,
+          slugSSR: "",
+          categoriaSSR: "",
+          zonaSSR: "roma"
+        }
+      };
+    }
+
+    const slugPuro = slug.replace('-roma-', '@');
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-
-    // Determiniamo se è una HUB (es. cardiologi-roma) o un QUARTIERE (es. cardiologi-roma-prati)
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 2. QUERY BASE
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    const keyword = catRicercata.toLowerCase().replace('-roma', '');
+    // FILTRO CATEGORIA SEMPLICE (niente OR, niente roba strana)
+    if (catRicercata) {
+      query = query.ilike('categoria', `%${catRicercata}%`);
+    }
 
-if (catRicercata.includes('specialist')) {
-  query = query
-    .not('categoria', 'ilike', '%farmac%')
-    .not('categoria', 'ilike', '%diagnost%')
-    .not('categoria', 'ilike', '%dentist%')
-    .not('categoria', 'ilike', '%domicilio%');
-} else {
-  query = query.filter(
-    'categoria',
-    'ilike',
-    `%${keyword}%`
-  );
-}
-
-    // 4. FILTRO ZONA: Solo se NON siamo nella Hub
+    // FILTRO ZONA solo se NON hub
     if (!isHub) {
-  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-  query = query.ilike('zona', `%${zonaQuery}%`);
-}
+      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+      query = query.ilike('zona', `%${zonaQuery}%`);
+    }
 
-    // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -705,7 +698,10 @@ if (catRicercata.includes('specialist')) {
       .order('is_top', { ascending: false })
       .range(da, a);
 
-    if (error) throw error;
+    if (error) {
+      console.error("SUPABASE ERROR:", error);
+      throw error;
+    }
 
     return {
       props: {
@@ -720,7 +716,14 @@ if (catRicercata.includes('specialist')) {
   } catch (err) {
     console.error("ERRORE SSR:", err);
     return {
-      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" }
+      props: {
+        datiIniziali: [],
+        totaleDalServer: 0,
+        paginaIniziale: 1,
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: "roma"
+      }
     };
   }
 }
