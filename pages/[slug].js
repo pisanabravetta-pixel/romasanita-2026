@@ -672,17 +672,19 @@ export async function getServerSideProps(context) {
 
     const keyword = catRicercata.toLowerCase().replace('-roma', '');
 
-    if (catRicercata.includes('specialist')) {
-      // Se cerchi specialisti generici, escludi le categorie specifiche
-      query = query
-        .not('categoria', 'ilike', '%farmac%')
-        .not('categoria', 'ilike', '%diagnost%')
-        .not('categoria', 'ilike', '%dentist%')
-        .not('categoria', 'ilike', '%domicilio%');
-    } else {
-      // CERCA NELLA CATEGORIA OPPURE NEL NOME (Massima flessibilità)
-   query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-    }
+if (catRicercata.includes('specialist')) {
+  query = query
+    .not('categoria', 'ilike', '%farmac%')
+    .not('categoria', 'ilike', '%diagnost%')
+    .not('categoria', 'ilike', '%dentist%')
+    .not('categoria', 'ilike', '%domicilio%');
+} else {
+  query = query.filter(
+    'categoria',
+    'ilike',
+    `%${keyword}%`
+  );
+}
 
     // 4. FILTRO ZONA: Solo se NON siamo nella Hub
     if (!isHub) {
