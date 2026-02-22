@@ -670,12 +670,7 @@ export async function getServerSideProps(context) {
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // 3. FILTRO CATEGORIA "KILLER" (4 lettere per beccare tutto: cardio, derm, dent, farm)
-    // Usiamo una radice corta così "Dermatologia" e "Dermatologi" vengono presi entrambi
-    let keyword = catRicercata.toLowerCase()
-      .replace('-roma', '')
-      .replace('specialistici', 'specialistic')
-      .substring(0, 4); 
+    const keyword = catRicercata.toLowerCase().replace('-roma', '');
 
     if (catRicercata.includes('specialist')) {
       // Se cerchi specialisti generici, escludi le categorie specifiche
@@ -686,7 +681,7 @@ export async function getServerSideProps(context) {
         .not('categoria', 'ilike', '%domicilio%');
     } else {
       // CERCA NELLA CATEGORIA OPPURE NEL NOME (Massima flessibilità)
-      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+    query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,descrizione.ilike.%${keyword}%`);
     }
 
     // 4. FILTRO ZONA: Solo se NON siamo nella Hub
