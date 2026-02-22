@@ -650,7 +650,7 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
-  const { slug } = context.query;
+  const { slug } = context.params;
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
