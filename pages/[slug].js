@@ -688,10 +688,9 @@ if (catRicercata.includes('specialist')) {
 
     // 4. FILTRO ZONA: Solo se NON siamo nella Hub
     if (!isHub) {
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      // Filtriamo per zona o per slug che contiene il quartiere
-      query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
-    }
+  const zonaQuery = zonaInSlug.replace(/-/g, ' ');
+  query = query.ilike('zona', `%${zonaQuery}%`);
+}
 
     // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
