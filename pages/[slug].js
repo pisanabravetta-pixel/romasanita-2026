@@ -674,17 +674,18 @@ export async function getServerSideProps(context) {
                            catPart.toLowerCase().includes('dermatol') ? 'dermatol' : 
                            catPart.toLowerCase().substring(0, 6);
 
-    let query = supabase
+let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // Cerca la radice in categoria, nome o slug
-    query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
-
-    if (!isHub) {
+    // Se è una HUB (es. cardiologi-roma), cerchiamo solo la specializzazione
+    if (isHub) {
+      query = query.ilike('categoria', `%${termineRicerca}%`);
+    } else {
+      // Se è un QUARTIERE, usiamo la logica che già ti funziona
       const zQuery = zonaPart.replace(/-/g, ' ');
-      query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+      query = query.and(`categoria.ilike.%${termineRicerca}%,or(zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%)`);
     }
 
     const da = (page - 1) * annunciPerPagina;
