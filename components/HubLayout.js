@@ -33,32 +33,32 @@ export default function HubLayout({
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
-// 1. Stati iniziali: diamo priorità assoluta ai dati del server (datiIniziali)
+// STATI SEMPLIFICATI
   const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
-  const [loadingRealTime, setLoadingRealTime] = useState(!datiIniziali || datiIniziali.length === 0);
+  const [loadingRealTime, setLoadingRealTime] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
 
-  // 2. Sincronizzazione pagina dall'URL
+  // SINCRONIZZAZIONE PAGINA
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const p = parseInt(params.get('page')) || 1;
-    if (p !== pagina) setPagina(p);
+    setPagina(p);
   }, []);
 
-  // 3. CALCOLO LOGICA DATI (Senza slice se i dati sono già paginati dal server)
-  const annunciPerPagina = 10;
-  
-  // Usiamo medici (vecchio sistema) o serviziRealTime (nuovo sistema SSR)
-  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
-  
-  // Rimuoviamo duplicati per ID
-  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
+  // LOGICA DATI - KILLER DEI LOOP
+  // Priorità: 1. Dati dal server, 2. Medici da prop, 3. Stato locale
+  const datiFinali = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : 
+                     (medici && medici.length > 0) ? medici : serviziRealTime;
+
+  // RIMOZIONE DUPLICATI SICURA
+  const listaUnica = Array.isArray(datiFinali) 
+    ? Array.from(new Map(datiFinali.filter(i => i && i.id).map(item => [item.id, item])).values())
+    : [];
   
   const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  const annunciPerPagina = 10;
 
-  // LOGICA MOSTRA: Se i dati arrivano dal Server (datiIniziali), sono già la fetta corretta (es. 1-10)
-  // Se invece sono stati caricati via Client (fetchNuoviMedici), dobbiamo tagliarli noi.
+  // Se i dati vengono dal server sono già pronti, altrimenti facciamo lo slice
   const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
     ? listaUnica 
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
