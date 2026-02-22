@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
+import { createClient } from '@supabase/supabase-js';
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
@@ -649,12 +650,16 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
   const { slug } = context.query;
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
   try {
-    const { supabase } = require('../lib/supabaseClient');
+  
     
     // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
