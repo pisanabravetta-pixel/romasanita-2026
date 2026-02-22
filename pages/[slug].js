@@ -673,24 +673,21 @@ export async function getServerSideProps(context) {
     const catPart = slugPuro.split('@')[0].replace('-roma', '');
     const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = zonaPart === 'roma';
+// 1. Definiamo il termine jolly (senza 'i' o 'o' finale)
+    const termineJolly = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
+                         catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
+                         catPart.toLowerCase().substring(0, 5);
 
-   // Questo pezzo di codice forza il sistema a cercare la parola dentro le parentesi
-const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
-                       catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
-                       catPart.toLowerCase().substring(0, 5);
+    let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
 
-let query = supabase
-      .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('approvato', true);
-
-    // Se è una HUB (es. cardiologi-roma), cerchiamo solo la specializzazione
     if (isHub) {
-      query = query.ilike('categoria', `%${termineRicerca}%`);
+      // NELLA HUB: Cerchiamo il termine in TUTTE le colonne possibili
+      // Questo pescherà anche quelli che Prati vede ma la Hub ora scarta
+      query = query.or(`categoria.ilike.%${termineJolly}%,nome.ilike.%${termineJolly}%,slug.ilike.%${termineJolly}%`);
     } else {
-      // Se è un QUARTIERE, usiamo la logica che già ti funziona
+      // NEI QUARTIERI: manteniamo la logica che già ti funziona
       const zQuery = zonaPart.replace(/-/g, ' ');
-      query = query.and(`categoria.ilike.%${termineRicerca}%,or(zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%)`);
+      query = query.and(`categoria.ilike.%${termineJolly}%,or(zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%)`);
     }
 
     const da = (page - 1) * annunciPerPagina;
