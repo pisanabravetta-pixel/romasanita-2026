@@ -108,28 +108,33 @@ export default function PaginaQuartiereDinamica({
     }
 
 const fetchData = async () => {
-  setLoading(true);
-  // Se catEstratta è "cardiologi", la radice diventa "cardiolog"
-  const radice = catEstratta.toLowerCase().endsWith('i') 
-    ? catEstratta.toLowerCase().slice(0, -1) 
-    : catEstratta.toLowerCase();
+      try {
+        setLoading(true);
+        // Se catEstratta è "cardiologi", la radice diventa "cardiolog"
+        const radice = catEstratta.toLowerCase().endsWith('i') 
+          ? catEstratta.toLowerCase().slice(0, -1) 
+          : catEstratta.toLowerCase();
 
-  let q = supabase.from('annunci').select('*').eq('approvato', true);
-  
-  // Questa query "sporca" entra dentro "visite-specialistiche(cardiologo)"
-  q = q.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
+        let q = supabase.from('annunci').select('*').eq('approvato', true);
+        
+        // Questa query entra dentro "visite-specialistiche(cardiologo)"
+        q = q.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
 
-  if (!isHub) {
-    const z = zonaEstratta.replace(/-/g, ' ');
-    q = q.or(`zona.ilike.%${z}%,slug.ilike.%${zonaEstratta}%`);
-  }
-  const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
-  setServizi(data || []);
-  setLoading(false);
-};
-    };
+        if (!isHub) {
+          const z = zonaEstratta.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${z}%,slug.ilike.%${zonaEstratta}%`);
+        }
+        const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
+        setServizi(data || []);
+      } catch (err) {
+        console.error("Errore fetch:", err);
+      } finally {
+        setLoading(false);
+      }
+    }; // <--- Una sola graffa qui.
+
     fetchData();
- }, [slugSSR, datiIniziali]);
+  }, [slugSSR, datiIniziali]);
 
 
   // 3. MAPPA
