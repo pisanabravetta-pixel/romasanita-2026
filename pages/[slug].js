@@ -22,7 +22,8 @@ export default function PaginaQuartiereDinamica({
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
-  const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  // Forza il riconoscimento della Hub se lo slug non contiene il secondo trattino di zona
+const zonaInSlug = slugSSR?.includes('-roma-') ? slugSSR.split('-roma-')[1] : 'roma';
   
   if (slug && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
