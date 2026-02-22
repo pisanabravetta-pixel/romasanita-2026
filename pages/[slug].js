@@ -110,28 +110,28 @@ export default function PaginaQuartiereDinamica({
 const fetchData = async () => {
       try {
         setLoading(true);
-        // Se catEstratta è "cardiologi", la radice diventa "cardiolog"
-        const radice = catEstratta.toLowerCase().endsWith('i') 
-          ? catEstratta.toLowerCase().slice(0, -1) 
-          : catEstratta.toLowerCase();
+        
+        // Identica logica del server
+        const termineRicerca = catEstratta.toLowerCase().includes('cardiolog') ? 'cardiolog' : 
+                               catEstratta.toLowerCase().includes('dermatol') ? 'dermatol' : 
+                               catEstratta.toLowerCase().substring(0, 7);
 
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        
-        // Questa query entra dentro "visite-specialistiche(cardiologo)"
-        q = q.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
+        q = q.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
 
         if (!isHub) {
           const z = zonaEstratta.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${z}%,slug.ilike.%${zonaEstratta}%`);
         }
+        
         const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
         setServizi(data || []);
       } catch (err) {
-        console.error("Errore fetch:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
-    }; // <--- Una sola graffa qui.
+    };
 
     fetchData();
   }, [slugSSR, datiIniziali]);
@@ -671,24 +671,29 @@ export async function getServerSideProps(context) {
 
     // ... dentro getServerSideProps
 if (slug) {
+// --- NUOVA LOGICA DI ESTRAZIONE TERMINE ---
   const slugPuro = slug.replace('-roma-', '@');
-  const catPart = slugPuro.split('@')[0].replace('-roma', ''); // es: "cardiologi"
+  const catPart = slugPuro.split('@')[0].replace('-roma', ''); 
   
-  // Creiamo una radice (es: cardiolog) per beccare cardiologo e cardiologa
+  // Pulizia per ottenere la radice (es. da "cardiologi" a "cardiolog")
   const radice = catPart.toLowerCase().endsWith('i') 
-    ? catPart.toLowerCase().slice(0, -1) 
-    : catPart.toLowerCase();
+    ? catPart.toLowerCase().slice(0, -5) // Prende la parte iniziale se molto lunga
+    : catPart.toLowerCase().substring(0, 7); // O taglia a 7 caratteri
 
-  // Cerchiamo la radice ovunque, ignorando la struttura della stringa categoria
-  query = query.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
+  // Se è cardiologi, usiamo "cardiolog" manualmente per sicurezza
+  const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolog' : 
+                         catPart.toLowerCase().includes('dermatol') ? 'dermatol' : radice;
 
-  // Se non è Hub, aggiungi il filtro zona
+  let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
+  
+  // Cerchiamo il termine ovunque (Categoria, Nome o Slug)
+  query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
+
   const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
   if (zonaPart !== 'roma') {
     const zQuery = zonaPart.replace(/-/g, ' ');
     query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
   }
-}
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
