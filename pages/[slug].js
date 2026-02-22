@@ -118,43 +118,44 @@ const colore = filtri.colore || '#2563eb';
     });
 
     // --- GESTIONE DATI (TUA LOGICA POTENZIATA) ---
-    const caricaDatiClient = async (categoria, hubMode, zona) => {
+const caricaDatiClient = async (categoria, hubMode, zona) => {
       try {
         setLoading(true);
         const catLower = categoria.toLowerCase();
+        
+        // Log di controllo: apri la console del browser (F12) per vedere cosa succede
+        console.log("DEBUG: Cerco per", catLower, "HubMode:", hubMode, "Zona:", zona);
+
         let q = supabase.from('annunci').select('*').eq('approvato', true);
 
-        // 1. DISTINZIONE LOGICA DI RICERCA
-        if (catLower === 'visite-specialistiche' || catLower === 'specialisti') {
-          // HUB GENERICA SPECIALISTI
+        // LOGICA DI RICERCA OTTIMIZZATA
+        if (catLower.includes('specialist')) {
           q = q.ilike('categoria', '%specialist%');
-        }
-        else if (
-          catLower.includes('cardiolog') || catLower.includes('dermatolog') ||
-          catLower.includes('dentist') || catLower.includes('ginecolog') ||
-          catLower.includes('oculist') || catLower.includes('ortopedic') ||
-          catLower.includes('psicolog') || catLower.includes('nutrizionist')
-        ) {
-          // SPECIALISTA SPECIFICO (Cerca nello slug o nel nome)
-          const keyword = catLower.substring(0, 6);
-          q = q.or(`slug.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-        }
-        else {
-          // Farmacie, diagnostica, domicilio ecc.
-          const keyword = catLower.substring(0, 6);
-          q = q.ilike('categoria', `%${keyword}%`);
+        } else {
+          // Per cardiologi, dermatologi, ecc. cerchiamo ovunque (categoria, nome o slug)
+          const keyword = catLower.substring(0, 5); 
+          q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
         }
 
-        // 2. FILTRO ZONA (Solo se non è HUB)
-        if (!hubMode) {
+        // Se non siamo in HUB, aggiungiamo il filtro zona
+        if (!hubMode && zona) {
           const zQuery = zona.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zona}%`);
         }
 
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (!error && data) setServizi(data);
+        
+        if (error) {
+          console.error("ERRORE SUPABASE:", error.message);
+        }
+
+        console.log("RISULTATI TROVATI:", data?.length || 0);
+        
+        if (!error && data) {
+          setServizi(data);
+        }
       } catch (err) {
-        console.error("Errore fetch:", err);
+        console.error("Errore critico:", err);
       } finally {
         setLoading(false);
       }
