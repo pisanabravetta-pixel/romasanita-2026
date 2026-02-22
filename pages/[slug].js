@@ -26,12 +26,12 @@ export default function PaginaQuartiereDinamica({
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   const totalePagine = Math.max(1, Math.ceil((totaleDalServer || listaUnica.length) / annunciPerPagina));
 
-  // 3. EFFETTO UNICO: GESTIONE DATI E METADATI (PROTEGGE DAL 500)
+ // 3. EFFETTO UNICO: GESTIONE DATI E METADATI
   useEffect(() => {
-    // Usiamo lo slug dallo stato SSR se il router non è pronto, per evitare il 500
     const currentSlug = slug || slugSSR;
     if (!currentSlug) return;
 
+    // Estrazione parametri (messa qui dentro per non rompere il server)
     const slugPuro = currentSlug.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
@@ -53,23 +53,23 @@ export default function PaginaQuartiereDinamica({
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    // --- CARICAMENTO DATI ---
-    // Se siamo in HUB e abbiamo dati SSR, li usiamo e non facciamo fetch
-    if (isHub && datiIniziali?.length > 0) {
-      setServizi(datiIniziali);
-      return;
-    }
-
-    // Se siamo in un quartiere o la Hub è vuota, carichiamo dal client
+    // --- LOGICA CARICAMENTO ORIGINALE ---
     const caricaDati = async () => {
       setLoading(true);
       try {
+        const keyword = catEstratta.toLowerCase().substring(0, 4); // Tornato a 4 come prima
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        const keyword = catEstratta.toLowerCase().substring(0, 5);
-        
-        // Logica OR per trovare i medici anche se la categoria è generica
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
-        
+
+        // Se è HUB e abbiamo dati SSR, li usiamo, altrimenti fetch client
+        if (isHub && datiIniziali?.length > 0) {
+          setServizi(datiIniziali);
+          setLoading(false);
+          return;
+        }
+
+        // Query originale per quartieri
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
@@ -77,8 +77,8 @@ export default function PaginaQuartiereDinamica({
 
         const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
         setServizi(data || []);
-      } catch (e) {
-        console.error("Errore Fetch:", e);
+      } catch (err) {
+        console.error("Errore fetch:", err);
       } finally {
         setLoading(false);
       }
@@ -86,6 +86,7 @@ export default function PaginaQuartiereDinamica({
 
     caricaDati();
   }, [slug, slugSSR, datiIniziali]);
+  
 
   // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
   if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
