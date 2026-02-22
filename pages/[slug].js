@@ -650,45 +650,22 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
-  const { slug } = context.params;
+  const { slug } = context.query;
   const page = parseInt(context.query.page) || 1;
   const annunciPerPagina = 10;
 
   try {
     const { supabase } = require('../lib/supabaseClient');
 
-    if (!slug) {
-      return {
-        props: {
-          datiIniziali: [],
-          totaleDalServer: 0,
-          paginaIniziale: 1,
-          slugSSR: "",
-          categoriaSSR: "",
-          zonaSSR: "roma"
-        }
-      };
-    }
-
-    const slugPuro = slug.replace('-roma-', '@');
-    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
-    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaInSlug || zonaInSlug === 'roma';
-
+    // Fetch semplice, filtriamo solo per categoria se slug esiste
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // FILTRO CATEGORIA SEMPLICE (niente OR, niente roba strana)
-    if (catRicercata) {
-      query = query.ilike('categoria', `%${catRicercata}%`);
-    }
-
-    // FILTRO ZONA solo se NON hub
-    if (!isHub) {
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      query = query.ilike('zona', `%${zonaQuery}%`);
+    if (slug) {
+      const keyword = slug.toLowerCase().replace('-roma', '').substring(0, 4);
+      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
     }
 
     const da = (page - 1) * annunciPerPagina;
@@ -698,32 +675,20 @@ export async function getServerSideProps(context) {
       .order('is_top', { ascending: false })
       .range(da, a);
 
-    if (error) {
-      console.error("SUPABASE ERROR:", error);
-      throw error;
-    }
+    if (error) throw error;
 
     return {
       props: {
         datiIniziali: data || [],
         totaleDalServer: count || 0,
         paginaIniziale: page,
-        slugSSR: slug,
-        categoriaSSR: catRicercata,
-        zonaSSR: zonaInSlug
-      }
+        slugSSR: slug || '',
+      },
     };
   } catch (err) {
     console.error("ERRORE SSR:", err);
     return {
-      props: {
-        datiIniziali: [],
-        totaleDalServer: 0,
-        paginaIniziale: 1,
-        slugSSR: slug || "",
-        categoriaSSR: "",
-        zonaSSR: "roma"
-      }
+      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || '' },
     };
   }
 }
