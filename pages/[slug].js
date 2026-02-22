@@ -156,25 +156,36 @@ const fetchData = async () => {
 
 return (
   <>
-    {/* Se siamo su Roma (HUB) o su un Quartiere */}
+    {/* 1. SE SIAMO SU ROMA (HUB) */}
     {zonaInSlug === 'roma' ? (
       <HubLayout 
-        {...seoData[catSlug]}
-        titolo={titoloPulito}
+        titolo={titoloPulito || 'Specialisti'}
         categoria={catSlug}
         colore={colore}
         datiIniziali={datiIniziali || []}
         totaleDalServer={totaleDalServer || 0}
-        paginaIniziale={pagina}
-        testoTopBar={`${titoloPulito} ROMA`}
+        paginaIniziale={pagina || 1}
+        testoTopBar={`${titoloPulito || catSlug} ROMA`}
         badgeSpec={catSlug}
+        {...(seoData[catSlug] || {})} 
       >
-        {/* STRISCIA ROSSA DI CONFERMA - Se questa appare, il crash è risolto */}
-        <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', width: '100%' }}>
-          DEBUG: IL SERVER HA INVIATO {datiIniziali?.length || 0} ANNUNCI
+        {/* STRISCIA ROSSA - APPARE SOLO SE IL CRASH È RISOLTO */}
+        <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', width: '100%', position: 'relative', zIndex: 999 }}>
+          DEBUG: SERVER OK - TROVATI {datiIniziali?.length || 0} ANNUNCI
         </div>
       </HubLayout>
     ) : (
+      /* 2. SE SIAMO IN UN QUARTIERE */
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h1 style={{ color: colore }}>{titoloPulito} {quartiereNome}</h1>
+        <p>Sezione quartieri in fase di aggiornamento SSR...</p>
+        {/* Qui puoi rimettere il tuo vecchio layout del quartiere se vuoi, 
+            ma per ora lasciamolo semplice per evitare crash */}
+      </div>
+    )}
+  </>
+ );
+}
       /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
         <Head>
