@@ -11,64 +11,75 @@ export default function PaginaQuartiereDinamica({
   totaleDalServer, 
   paginaIniziale, 
   slugSSR,
-  categoriaSSR,
-  zonaSSR 
+  categoriaSSR, 
+  zonaSSR        
 }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  // --- STATI ---
-  const [servizi, setServizi] = useState(datiIniziali || []);
-  const [loading, setLoading] = useState(false);
-  const [pagina, setPagina] = useState(paginaIniziale || 1);
-  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
-  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
-
-  // --- LOGICA DERIVATA (Paginazione) ---
-  const annunciPerPagina = 10;
-  // Protezione: assicuriamoci che servizi sia un array per evitare .map error
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
-  // --- PROTEZIONE ANTI-500: Calcolo variabili solo se lo slug esiste ---
-  // Se lo slug non c'è ancora, usiamo slugSSR o valori vuoti per non crashare
-  const slugAttivo = slug || slugSSR;
+  // --- LOGICA ORIGINALE ---
+  const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   
-  // Mapping e Date (come li avevi tu)
+  if (slug && filtri.cat === 'NON_ESISTE') {
+    if (typeof window !== 'undefined') {
+      router.replace('/404'); 
+    }
+    return null;
+  }
+
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
+
   const nomiCorrettiH1 = {
     'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
     'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
     'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
     'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
   };
+
   const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
+  const colore = filtri.colore || '#2563eb';
 
-  // 1. SINCRONIZZAZIONE PAGINA DA URL
+  // --- STATI E LOGICA ---
+  const [servizi, setServizi] = useState(datiIniziali || []);
+  const [loading, setLoading] = useState(false);
+  const [pagina, setPagina] = useState(paginaIniziale || 1);
+  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
+  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
+
+  const annunciPerPagina = 10;
+  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
+  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && router.query.page) {
-      setPagina(parseInt(router.query.page) || 1);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const p = parseInt(params.get('page')) || 1;
+      setPagina(p);
     }
-  }, [router.query.page]);
+  }, [router.query]);
 
-  // 2. EFFETTO UNICO PER METADATI E DATI
   useEffect(() => {
-    const s = slug || slugSSR;
-    if (!s || s === 'index') return;
+    const s = slug || slugSSR; // FIX: coerenza con slugSSR
+    if (!s || s === 'index' || s === '') return;
 
     const slugPuro = s.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
-    // Logica Grafica e Metadati
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
@@ -90,28 +101,22 @@ export default function PaginaQuartiereDinamica({
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    // Gestione Dati: Se abbiamo SSR, usiamoli e basta
     if (isHub && datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
       return; 
     }
 
-    // Caricamento Client-Side (per i quartieri o se SSR è vuoto)
     const fetchData = async () => {
       try {
         setLoading(true);
         const keyword = catEstratta.toLowerCase().substring(0, 4);
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        
-        // Logica flessibile per trovare i medici (slug/nome) o categoria
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
-
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
         }
-
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
         if (!error) setServizi(data || []);
       } catch (err) {
@@ -120,10 +125,8 @@ export default function PaginaQuartiereDinamica({
         setLoading(false);
       }
     };
-    
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
-
   // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
   if (!slug && !slugSSR) return null;
 
