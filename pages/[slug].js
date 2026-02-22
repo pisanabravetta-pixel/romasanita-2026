@@ -85,7 +85,7 @@ const colore = filtri.colore || '#2563eb';
     }
   }, [router.query]);
 
-  // 2. EFFETTO UNICO PER METADATI E DATI (EVITA IL 500)
+// 2. EFFETTO UNICO PER METADATI E DATI (LOGICA RICERCA POTENZIATA)
   useEffect(() => {
     if (!slug || slug === 'index' || slug === '') return;
 
@@ -94,7 +94,7 @@ const colore = filtri.colore || '#2563eb';
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
-    // Logica Grafica
+    // --- LOGICA GRAFICA (METADATI E TEMA) ---
     const mapping = getDBQuery(catEstratta);
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
@@ -117,33 +117,56 @@ const colore = filtri.colore || '#2563eb';
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    // Controllo SSR: Se abbiamo già i dati, non fare fetch client-side
-    if (datiIniziali && datiIniziali.length > 0) {
-      setServizi(datiIniziali);
-      setLoading(false);
-      return; 
-    }
-
-    // Caricamento Client-Side (per i quartieri)
-    const fetchData = async () => {
+    // --- GESTIONE DATI (TUA LOGICA POTENZIATA) ---
+    const caricaDatiClient = async (categoria, hubMode, zona) => {
       try {
         setLoading(true);
-        const keyword = catEstratta.toLowerCase().substring(0, 4);
+        const catLower = categoria.toLowerCase();
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-        if (!isHub) {
-          const zQuery = zonaEstratta.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+
+        // 1. DISTINZIONE LOGICA DI RICERCA
+        if (catLower === 'visite-specialistiche' || catLower === 'specialisti') {
+          // HUB GENERICA SPECIALISTI
+          q = q.ilike('categoria', '%specialist%');
         }
+        else if (
+          catLower.includes('cardiolog') || catLower.includes('dermatolog') ||
+          catLower.includes('dentist') || catLower.includes('ginecolog') ||
+          catLower.includes('oculist') || catLower.includes('ortopedic') ||
+          catLower.includes('psicolog') || catLower.includes('nutrizionist')
+        ) {
+          // SPECIALISTA SPECIFICO (Cerca nello slug o nel nome)
+          const keyword = catLower.substring(0, 6);
+          q = q.or(`slug.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        }
+        else {
+          // Farmacie, diagnostica, domicilio ecc.
+          const keyword = catLower.substring(0, 6);
+          q = q.ilike('categoria', `%${keyword}%`);
+        }
+
+        // 2. FILTRO ZONA (Solo se non è HUB)
+        if (!hubMode) {
+          const zQuery = zona.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zona}%`);
+        }
+
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (!error) setServizi(data || []);
+        if (!error && data) setServizi(data);
       } catch (err) {
-        console.error("Errore fetch client:", err);
+        console.error("Errore fetch:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+
+    if (isHub && datiIniziali && datiIniziali.length > 0) {
+      setServizi(datiIniziali);
+      setLoading(false);
+    } else {
+      caricaDatiClient(catEstratta, isHub, zonaEstratta);
+    }
+
   }, [slug, datiIniziali]);
 
   // 3. MAPPA
