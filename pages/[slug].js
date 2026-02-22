@@ -165,16 +165,23 @@ const fetchData = async () => {
       {/* --- FINE DEBUG --- */}
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
-      <HubLayout 
-        titolo={catSlug.replace(/-/g, ' ')}
-        categoria={catSlug}
-        colore="#2c5282"
-        datiIniziali={servizi}
-        totaleDalServer={totaleDalServer}
-        paginaIniziale={pagina}
-        testoTopBar={`${catSlug.toUpperCase()} ROMA`}
-        badgeSpec={catSlug}
-      />
+      <>
+        {/* STRISCIA DI DEBUG ROSSA */}
+        <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', zIndex: 9999 }}>
+          DEBUG HUB: Trovati {servizi?.length || 0} annunci | Cercando: "{catSlug}"
+        </div>
+
+        <HubLayout 
+          titolo={catSlug.replace(/-/g, ' ')}
+          categoria={catSlug}
+          colore="#2c5282"
+          datiIniziali={servizi}
+          totaleDalServer={totaleDalServer}
+          paginaIniziale={pagina}
+          testoTopBar={`${catSlug.toUpperCase()} ROMA`}
+          badgeSpec={catSlug}
+        />
+      </>
     ) : (
       /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
