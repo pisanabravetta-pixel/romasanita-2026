@@ -7,41 +7,37 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 export default function PaginaQuartiereDinamica({ 
-  datiIniziali, totaleDalServer, paginaIniziale, slugSSR, categoriaSSR, zonaSSR 
+  datiIniziali, totaleDalServer, paginaIniziale, slugSSR 
 }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  // 1. STATI FONDAMENTALI
+  // 1. STATI (L'unica fonte di verità)
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DERIVATA (Paginazione)
+  // 2. LOGICA DERIVATA (Sempre sicura)
   const annunciPerPagina = 10;
   const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil((totaleDalServer || listaUnica.length) / annunciPerPagina));
 
-  // 3. LOG DI CONTROLLO IMMEDIATO (Se non vedi questo, il file è rotto)
-  console.log("RENDER - Slug:", slug, "Dati SSR:", datiIniziali?.length);
-
-  // 4. EFFETTO UNICO: GESTIONE URL, METADATI E DATI
+  // 3. EFFETTO UNICO: GESTIONE DATI E METADATI (PROTEGGE DAL 500)
   useEffect(() => {
-    if (!router.isReady || !slug) return;
+    // Usiamo lo slug dallo stato SSR se il router non è pronto, per evitare il 500
+    const currentSlug = slug || slugSSR;
+    if (!currentSlug) return;
 
-    // A. Identificazione Categoria e Zona
-    const slugPuro = slug.replace('-roma-', '@');
+    const slugPuro = currentSlug.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = zonaEstratta === 'roma';
 
-    console.log("EFFETTO AVVIATO - Cat:", catEstratta, "Zona:", zonaEstratta);
-
-    // B. Metadati e Tema
+    // --- METADATI E TEMA ---
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
@@ -52,44 +48,47 @@ export default function PaginaQuartiereDinamica({
     const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
     const zonaBella = isHub ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-    setMeta({ titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase });
+    setMeta({ 
+      titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, 
+      zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
+    });
 
-    // C. Caricamento Dati (Priorità SSR o Fetch)
+    // --- CARICAMENTO DATI ---
+    // Se siamo in HUB e abbiamo dati SSR, li usiamo e non facciamo fetch
     if (isHub && datiIniziali?.length > 0) {
       setServizi(datiIniziali);
-    } else {
-      const caricaDati = async () => {
-        setLoading(true);
-        try {
-          let q = supabase.from('annunci').select('*').eq('approvato', true);
-          const keyword = catEstratta.toLowerCase().substring(0, 5);
-          
-          if (catEstratta.includes('specialist')) {
-            q = q.ilike('categoria', '%specialist%');
-          } else {
-            q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
-          }
-
-          if (!isHub) {
-            const zQuery = zonaEstratta.replace(/-/g, ' ');
-            q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
-          }
-
-          const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
-          console.log("FETCH COMPLETATA - Trovati:", data?.length);
-          setServizi(data || []);
-        } catch (e) {
-          console.error("Errore Fetch:", e);
-        } finally {
-          setLoading(false);
-        }
-      };
-      caricaDati();
+      return;
     }
-  }, [slug, router.isReady, datiIniziali]);
 
-  // Se lo slug non c'è, non renderizzare nulla per evitare errori
-  if (!slug) return null;
+    // Se siamo in un quartiere o la Hub è vuota, carichiamo dal client
+    const caricaDati = async () => {
+      setLoading(true);
+      try {
+        let q = supabase.from('annunci').select('*').eq('approvato', true);
+        const keyword = catEstratta.toLowerCase().substring(0, 5);
+        
+        // Logica OR per trovare i medici anche se la categoria è generica
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
+        
+        if (!isHub) {
+          const zQuery = zonaEstratta.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+        }
+
+        const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
+        setServizi(data || []);
+      } catch (e) {
+        console.error("Errore Fetch:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    caricaDati();
+  }, [slug, slugSSR, datiIniziali]);
+
+  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
+  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
 
   // 3. MAPPA
   useEffect(() => {
