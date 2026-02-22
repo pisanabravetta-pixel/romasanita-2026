@@ -33,32 +33,27 @@ export default function HubLayout({
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
-// STATI SEMPLIFICATI
-  const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
-  const [loadingRealTime, setLoadingRealTime] = useState(false);
+// 1. STATI: Usiamo lo stato solo se NON abbiamo dati dal server
+  const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
 
-  // SINCRONIZZAZIONE PAGINA
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const p = parseInt(params.get('page')) || 1;
-    setPagina(p);
-  }, []);
+  // 2. LOGICA DATI: Decidiamo subito chi comanda per evitare loop
+  // Se datiIniziali esiste, usiamo SOLO quelli (SSR). Altrimenti usiamo lo stato locale.
+  const datiDaUsare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : serviziRealTime;
 
-  // LOGICA DATI - KILLER DEI LOOP
-  // Priorità: 1. Dati dal server, 2. Medici da prop, 3. Stato locale
-  const datiFinali = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : 
-                     (medici && medici.length > 0) ? medici : serviziRealTime;
+  // 3. RIMOZIONE DUPLICATI: Con controllo di sicurezza Array.isArray
+  const listaUnica = React.useMemo(() => {
+    if (!Array.isArray(datiDaUsare)) return [];
+    return Array.from(new Map(datiDaUsare.filter(i => i?.id).map(item => [item.id, item])).values());
+  }, [datiDaUsare]);
 
-  // RIMOZIONE DUPLICATI SICURA
-  const listaUnica = Array.isArray(datiFinali) 
-    ? Array.from(new Map(datiFinali.filter(i => i && i.id).map(item => [item.id, item])).values())
-    : [];
-  
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  // 4. CALCOLO LISTA DA MOSTRARE
   const annunciPerPagina = 10;
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // Se i dati vengono dal server sono già pronti, altrimenti facciamo lo slice
+  // Se i dati vengono dal server (SSR), non dobbiamo tagliarli (sono già 10)
+  // Se vengono dal client (fallback), facciamo lo slice
   const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
     ? listaUnica 
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
