@@ -6,26 +6,22 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-export default function PaginaQuartiereDinamica({ 
-  datiIniziali, 
-  totaleDalServer, 
-  paginaIniziale, 
-  slugSSR,
-  categoriaSSR, 
-  zonaSSR        
-}) {
-  const router = useRouter();
-  const { slug } = router.query;
+const router = useRouter();
+  const slugAttivo = slugSSR || router.query.slug || "";
 
-  // --- LOGICA ORIGINALE ---
-  const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
-  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
-  const filtri = getDBQuery(categoriaPulita);
-  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
-  // Forza il riconoscimento della Hub se lo slug non contiene il secondo trattino di zona
-const zonaInSlug = slugSSR?.includes('-roma-') ? slugSSR.split('-roma-')[1] : 'roma';
+  // Determina se è Hub (es. cardiologi-roma) o Quartiere (es. cardiologi-roma-prati)
+  const isHub = slugAttivo && !slugAttivo.includes('-roma-');
   
-  if (slug && filtri.cat === 'NON_ESISTE') {
+  // Estrae la categoria (es. cardiologi)
+  const catSlug = categoriaSSR || (slugAttivo ? slugAttivo.split('-roma')[0] : '');
+  
+  // Estrae la zona (se non c'è -roma- allora è roma)
+  const zonaInSlug = isHub ? 'roma' : (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  
+  const filtri = getDBQuery(catSlug);
+
+  // Se lo slug non esiste proprio, allora manda al 404
+  if (slugAttivo && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
       router.replace('/404'); 
     }
