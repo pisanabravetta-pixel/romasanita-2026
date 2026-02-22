@@ -674,21 +674,22 @@ export async function getServerSideProps(context) {
     const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = zonaPart === 'roma';
 // 1. Definiamo il termine jolly (senza 'i' o 'o' finale)
-    const termineJolly = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
-                         catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
-                         catPart.toLowerCase().substring(0, 5);
+// Cerca questo pezzo in getServerSideProps e sostituiscilo
+const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
+                       catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
+                       catPart.toLowerCase().substring(0, 5);
 
-    let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
+let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
 
-    if (isHub) {
-      // NELLA HUB: Cerchiamo il termine in TUTTE le colonne possibili
-      // Questo pescherà anche quelli che Prati vede ma la Hub ora scarta
-      query = query.or(`categoria.ilike.%${termineJolly}%,nome.ilike.%${termineJolly}%,slug.ilike.%${termineJolly}%`);
-    } else {
-      // NEI QUARTIERI: manteniamo la logica che già ti funziona
-      const zQuery = zonaPart.replace(/-/g, ' ');
-      query = query.and(`categoria.ilike.%${termineJolly}%,or(zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%)`);
-    }
+// Se è HUB (Roma), cerchiamo solo per specializzazione in ogni campo
+if (isHub) {
+  query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
+} else {
+  // Se è QUARTIERE, deve contenere la specializzazione E la zona
+  const zQuery = zonaPart.replace(/-/g, ' ');
+  query = query.ilike('categoria', `%${termineRicerca}%`)
+               .or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+}
 
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
