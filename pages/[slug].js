@@ -107,16 +107,23 @@ export default function PaginaQuartiereDinamica({
       return; 
     }
 
-    const fetchData = async () => {
+const fetchData = async () => {
       try {
         setLoading(true);
-        const keyword = catEstratta.toLowerCase().substring(0, 4);
+        const catLower = catEstratta.toLowerCase();
+        // Usiamo 5 lettere per beccare "cardi" e "derma" correttamente
+        const keyword = catLower.substring(0, 5);
+        
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        
+        // Ricerca espansa: Categoria OR Nome OR Slug
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
+        
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
         }
+
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
         if (!error) setServizi(data || []);
       } catch (err) {
@@ -656,15 +663,28 @@ export async function getServerSideProps(context) {
   try {
     const { supabase } = require('../lib/supabaseClient');
 
-    // Fetch semplice, filtriamo solo per categoria se slug esiste
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
     if (slug) {
-      const keyword = slug.toLowerCase().replace('-roma', '').substring(0, 4);
-      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+      const slugPuro = slug.replace('-roma-', '@');
+      const catPart = slugPuro.split('@')[0].replace('-roma', '');
+      const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+      const isHub = zonaPart === 'roma';
+
+      // Usiamo 5 lettere per essere più precisi (es. cardi, derma)
+      const kw = catPart.toLowerCase().substring(0, 5);
+      
+      // Cerchiamo ovunque: categoria, nome o slug
+      query = query.or(`categoria.ilike.%${kw}%,nome.ilike.%${kw}%,slug.ilike.%${kw}%`);
+
+      // Se non è la Hub, filtra anche per zona
+      if (!isHub) {
+        const zQuery = zonaPart.replace(/-/g, ' ');
+        query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+      }
     }
 
     const da = (page - 1) * annunciPerPagina;
