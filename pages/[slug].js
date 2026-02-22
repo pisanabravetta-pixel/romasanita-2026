@@ -683,28 +683,34 @@ export async function getServerSideProps(context) {
   try {
     const { supabase } = require('../lib/supabaseClient');
 
+    // 1. Identificazione Categoria e Zona
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catPart = slugPuro.split('@')[0].replace('-roma', '');
     const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = zonaPart === 'roma';
-// 1. Definiamo il termine jolly (senza 'i' o 'o' finale)
-// Cerca questo pezzo in getServerSideProps e sostituiscilo
-const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
-                       catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
-                       catPart.toLowerCase().substring(0, 5);
 
-let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
+    // 2. Definizione Radice di ricerca (fondamentale per trovare "dermatologo" nelle parentesi)
+    const radice = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
+                   catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
+                   catPart.toLowerCase().substring(0, 5);
 
-// Se è HUB (Roma), cerchiamo solo per specializzazione in ogni campo
-if (isHub) {
-  query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
-} else {
-  // Se è QUARTIERE, deve contenere la specializzazione E la zona
-  const zQuery = zonaPart.replace(/-/g, ' ');
-  query = query.ilike('categoria', `%${termineRicerca}%`)
-               .or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
-}
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' })
+      .eq('approvato', true);
 
+    // 3. Logica della Query differenziata
+    if (isHub) {
+      // Se siamo sulla HUB (Roma), cerchiamo la radice ovunque (categoria, nome o slug)
+      query = query.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
+    } else {
+      // Se siamo nel QUARTIERE, la categoria deve contenere la radice E la zona deve corrispondere
+      const zQuery = zonaPart.replace(/-/g, ' ');
+      query = query.ilike('categoria', `%${radice}%`)
+                   .or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+    }
+
+    // 4. Paginazione e Ordinamento
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -725,9 +731,16 @@ if (isHub) {
       },
     };
   } catch (err) {
-    console.error("ERRORE SSR:", err);
+    console.error("ERRORE SSR NELLA PAGINA [SLUG]:", err);
     return {
-      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || '' },
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || '',
+        categoriaSSR: '',
+        zonaSSR: 'roma'
+      },
     };
   }
 }
