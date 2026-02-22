@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
@@ -16,16 +15,16 @@ export default function PaginaQuartiereDinamica({
   zonaSSR        
 }) {
   const router = useRouter();
- 
+  const { slug } = router.query;
 
   // --- LOGICA ORIGINALE ---
-  const slugAttivo = slugSSR;
+  const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   
-  if (slugSSR && filtri.cat === 'NON_ESISTE') {
+  if (slug && filtri.cat === 'NON_ESISTE') {
     if (typeof window !== 'undefined') {
       router.replace('/404'); 
     }
