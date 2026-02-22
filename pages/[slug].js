@@ -3,11 +3,21 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import HubLayout from '../components/HubLayout'; // Assicurati che l'import ci sia
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-const router = useRouter();
-  const slugAttivo = slugSSR || router.query.slug || "";
+
+export default function PaginaQuartiereDinamica({ 
+  datiIniziali, 
+  totaleDalServer, 
+  paginaIniziale, 
+  slugSSR,
+  categoriaSSR, 
+  zonaSSR         
+}) {
+  const router = useRouter();
+  const slugAttivo = slugSSR || (router.query && router.query.slug) || "";
 
   // Determina se è Hub (es. cardiologi-roma) o Quartiere (es. cardiologi-roma-prati)
   const isHub = slugAttivo && !slugAttivo.includes('-roma-');
