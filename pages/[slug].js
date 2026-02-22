@@ -161,10 +161,15 @@ const caricaDatiClient = async (categoria, hubMode, zona) => {
       }
     };
 
+   // --- LOGICA DI ATTIVAZIONE (CORRETTA) ---
     if (isHub && datiIniziali && datiIniziali.length > 0) {
+      // Se il server ha mandato dati reali, li usiamo
+      console.log("Dati caricati da SSR:", datiIniziali.length);
       setServizi(datiIniziali);
       setLoading(false);
     } else {
+      // Se siamo in un quartiere, o se la Hub è vuota, forziamo il caricamento client
+      console.log("Avvio caricamento client-side...");
       caricaDatiClient(catEstratta, isHub, zonaEstratta);
     }
 
