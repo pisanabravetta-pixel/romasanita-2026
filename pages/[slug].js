@@ -108,29 +108,25 @@ export default function PaginaQuartiereDinamica({
     }
 
 const fetchData = async () => {
-      try {
-        setLoading(true);
-        const catLower = catEstratta.toLowerCase();
-        // Usiamo 5 lettere per beccare "cardi" e "derma" correttamente
-        const keyword = catLower.substring(0, 5);
-        
-        let q = supabase.from('annunci').select('*').eq('approvato', true);
-        
-        // Ricerca espansa: Categoria OR Nome OR Slug
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
-        
-        if (!isHub) {
-          const zQuery = zonaEstratta.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
-        }
+  setLoading(true);
+  // Se catEstratta è "cardiologi", la radice diventa "cardiolog"
+  const radice = catEstratta.toLowerCase().endsWith('i') 
+    ? catEstratta.toLowerCase().slice(0, -1) 
+    : catEstratta.toLowerCase();
 
-        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (!error) setServizi(data || []);
-      } catch (err) {
-        console.error("Errore fetch client:", err);
-      } finally {
-        setLoading(false);
-      }
+  let q = supabase.from('annunci').select('*').eq('approvato', true);
+  
+  // Questa query "sporca" entra dentro "visite-specialistiche(cardiologo)"
+  q = q.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
+
+  if (!isHub) {
+    const z = zonaEstratta.replace(/-/g, ' ');
+    q = q.or(`zona.ilike.%${z}%,slug.ilike.%${zonaEstratta}%`);
+  }
+  const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
+  setServizi(data || []);
+  setLoading(false);
+};
     };
     fetchData();
  }, [slugSSR, datiIniziali]);
@@ -668,25 +664,26 @@ export async function getServerSideProps(context) {
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    if (slug) {
-      const slugPuro = slug.replace('-roma-', '@');
-      const catPart = slugPuro.split('@')[0].replace('-roma', '');
-      const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-      const isHub = zonaPart === 'roma';
+    // ... dentro getServerSideProps
+if (slug) {
+  const slugPuro = slug.replace('-roma-', '@');
+  const catPart = slugPuro.split('@')[0].replace('-roma', ''); // es: "cardiologi"
+  
+  // Creiamo una radice (es: cardiolog) per beccare cardiologo e cardiologa
+  const radice = catPart.toLowerCase().endsWith('i') 
+    ? catPart.toLowerCase().slice(0, -1) 
+    : catPart.toLowerCase();
 
-      // Usiamo 5 lettere per essere più precisi (es. cardi, derma)
-      const kw = catPart.toLowerCase().substring(0, 5);
-      
-      // Cerchiamo ovunque: categoria, nome o slug
-      query = query.or(`categoria.ilike.%${kw}%,nome.ilike.%${kw}%,slug.ilike.%${kw}%`);
+  // Cerchiamo la radice ovunque, ignorando la struttura della stringa categoria
+  query = query.or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%,slug.ilike.%${radice}%`);
 
-      // Se non è la Hub, filtra anche per zona
-      if (!isHub) {
-        const zQuery = zonaPart.replace(/-/g, ' ');
-        query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
-      }
-    }
-
+  // Se non è Hub, aggiungi il filtro zona
+  const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+  if (zonaPart !== 'roma') {
+    const zQuery = zonaPart.replace(/-/g, ' ');
+    query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+  }
+}
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
