@@ -681,7 +681,7 @@ export async function getServerSideProps(context) {
         .not('categoria', 'ilike', '%domicilio%');
     } else {
       // CERCA NELLA CATEGORIA OPPURE NEL NOME (Massima flessibilità)
-    query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,descrizione.ilike.%${keyword}%`);
+   query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
     }
 
     // 4. FILTRO ZONA: Solo se NON siamo nella Hub
