@@ -47,10 +47,6 @@ useEffect(() => {
   }
 }, []);
   const annunciPerPagina = 10;
-  useEffect(() => {
-  setServiziRealTime(datiIniziali || []);
-  setLoadingRealTime(false);
-}, [datiIniziali]);
 
 // ORA CALCOLA LE VARIABILI DERIVATE
 const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
@@ -60,7 +56,52 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  useEffect(() => {
+    if (medici && medici.length > 0) {
+      setLoadingRealTime(false);
+      return; 
+    }
 
+
+    // AGGIUNGI QUESTO QUI SOTTO:
+    // Se abbiamo già caricato i dati dal server (nuovo metodo SSR)
+    if (serviziRealTime.length > 0 && pagina === 1) {
+      setLoadingRealTime(false);
+      return;
+    }
+    
+   
+async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .order('is_top', { ascending: false })
+          .range(0, 99);
+
+        if (error) throw error;
+
+       const filtrati = data ? data.filter(item => {
+  if (!item.categoria) return false;
+  const cDB = item.categoria.toLowerCase();
+  const cURL = (categoria || "").toLowerCase();
+  
+  // Ritorna vero se la categoria nel DB contiene quella dell'URL o viceversa
+  // Esempio: "cardiologi" contiene "cardio"
+  return cDB.includes(cURL) || cURL.includes(cDB.split('-')[0]);
+}) : [];
+
+        setServiziRealTime(filtrati);
+      } catch (err) {
+        console.error("Errore fetch Hub:", err);
+      } finally {
+        setLoadingRealTime(false);
+      }
+    }
+    fetchNuoviMedici();
+  }, [categoria, medici]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
@@ -90,6 +131,7 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
       console.error("Errore Mappa:", err);
     }
   }, [listaDaMostrare]);
+
 
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
