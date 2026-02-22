@@ -664,36 +664,29 @@ export async function getServerSideProps(context) {
   try {
     const { supabase } = require('../lib/supabaseClient');
 
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const catPart = slugPuro.split('@')[0].replace('-roma', '');
+    const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = zonaPart === 'roma';
+
+    // Logica radice per beccare le parentesi nel DB
+    const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolog' : 
+                           catPart.toLowerCase().includes('dermatol') ? 'dermatol' : 
+                           catPart.toLowerCase().substring(0, 6);
+
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // ... dentro getServerSideProps
-if (slug) {
-// --- NUOVA LOGICA DI ESTRAZIONE TERMINE ---
-  const slugPuro = slug.replace('-roma-', '@');
-  const catPart = slugPuro.split('@')[0].replace('-roma', ''); 
-  
-  // Pulizia per ottenere la radice (es. da "cardiologi" a "cardiolog")
-  const radice = catPart.toLowerCase().endsWith('i') 
-    ? catPart.toLowerCase().slice(0, -5) // Prende la parte iniziale se molto lunga
-    : catPart.toLowerCase().substring(0, 7); // O taglia a 7 caratteri
+    // Cerca la radice in categoria, nome o slug
+    query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
 
-  // Se è cardiologi, usiamo "cardiolog" manualmente per sicurezza
-  const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolog' : 
-                         catPart.toLowerCase().includes('dermatol') ? 'dermatol' : radice;
+    if (!isHub) {
+      const zQuery = zonaPart.replace(/-/g, ' ');
+      query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
+    }
 
-  let query = supabase.from('annunci').select('*', { count: 'exact' }).eq('approvato', true);
-  
-  // Cerchiamo il termine ovunque (Categoria, Nome o Slug)
-  query = query.or(`categoria.ilike.%${termineRicerca}%,nome.ilike.%${termineRicerca}%,slug.ilike.%${termineRicerca}%`);
-
-  const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-  if (zonaPart !== 'roma') {
-    const zQuery = zonaPart.replace(/-/g, ' ');
-    query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaPart}%`);
-  }
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -709,6 +702,8 @@ if (slug) {
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug || '',
+        categoriaSSR: catPart,
+        zonaSSR: zonaPart
       },
     };
   } catch (err) {
