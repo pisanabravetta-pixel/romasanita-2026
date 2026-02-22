@@ -192,41 +192,6 @@ return (
     </>
   );
 }
-      /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-        <Head>
-          <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
-          <meta 
-            name="description" 
-            content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
-          />
-          <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
-          
-          <link rel="preconnect" href="https://basemaps.cartocdn.com" />
-          <link 
-            rel="stylesheet" 
-            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-            crossOrigin=""
-          />
-
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": (seoData[filtri.cat]?.faq || []).map(f => ({
-                  "@type": "Question",
-                  "name": f.q.replace(/{{zona}}/g, quartiereNome),
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": f.a.replace(/{{zona}}/g, quartiereNome)
-                  }
-                }))
-              })
-            }}
-          />
         </Head>
 
         <Script 
