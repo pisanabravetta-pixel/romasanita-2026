@@ -33,15 +33,17 @@ export default function HubLayout({
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
-// 1. STATI: Usiamo lo stato solo se NON abbiamo dati dal server
+// 1. STATI
   const [serviziRealTime, setServiziRealTime] = useState([]);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
+  
+  // AGGIUNGI QUESTA RIGA PER RISOLVERE IL REFERENCE ERROR
+  const loadingRealTime = false; 
 
-  // 2. LOGICA DATI: Decidiamo subito chi comanda per evitare loop
-  // Se datiIniziali esiste, usiamo SOLO quelli (SSR). Altrimenti usiamo lo stato locale.
+  // 2. LOGICA DATI
   const datiDaUsare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : serviziRealTime;
 
-  // 3. RIMOZIONE DUPLICATI: Con controllo di sicurezza Array.isArray
+  // 3. RIMOZIONE DUPLICATI
   const listaUnica = React.useMemo(() => {
     if (!Array.isArray(datiDaUsare)) return [];
     return Array.from(new Map(datiDaUsare.filter(i => i?.id).map(item => [item.id, item])).values());
@@ -52,8 +54,6 @@ export default function HubLayout({
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // Se i dati vengono dal server (SSR), non dobbiamo tagliarli (sono già 10)
-  // Se vengono dal client (fallback), facciamo lo slice
   const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
     ? listaUnica 
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
