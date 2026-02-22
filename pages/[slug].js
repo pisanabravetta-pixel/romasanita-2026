@@ -674,10 +674,10 @@ export async function getServerSideProps(context) {
     const zonaPart = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = zonaPart === 'roma';
 
-    // Logica radice per beccare le parentesi nel DB
-    const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolog' : 
-                           catPart.toLowerCase().includes('dermatol') ? 'dermatol' : 
-                           catPart.toLowerCase().substring(0, 6);
+   // Questo pezzo di codice forza il sistema a cercare la parola dentro le parentesi
+const termineRicerca = catPart.toLowerCase().includes('cardiolog') ? 'cardiolo' : 
+                       catPart.toLowerCase().includes('dermatol') ? 'dermato' : 
+                       catPart.toLowerCase().substring(0, 5);
 
 let query = supabase
       .from('annunci')
