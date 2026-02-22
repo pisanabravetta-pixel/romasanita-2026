@@ -56,44 +56,33 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  useEffect(() => {
-    if (medici && medici.length > 0) {
+useEffect(() => {
+    // 1. Se abbiamo già i medici passati come prop o dati dal server, non fare nulla
+    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0)) {
+      setServiziRealTime(datiIniziali.length > 0 ? datiIniziali : medici);
       setLoadingRealTime(false);
       return; 
     }
 
-
-    // AGGIUNGI QUESTO QUI SOTTO:
-    // Se abbiamo già caricato i dati dal server (nuovo metodo SSR)
-    if (serviziRealTime.length > 0 && pagina === 1) {
-      setLoadingRealTime(false);
-      return;
-    }
-    
-   
-async function fetchNuoviMedici() {
+    // 2. Solo se non abbiamo nulla, facciamo la fetch di emergenza
+    async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
+        // Usiamo la stessa logica della radice del server per coerenza
+        const radice = (categoria || "").toLowerCase().includes('dermatol') ? 'dermato' : 
+                       (categoria || "").toLowerCase().includes('cardiolog') ? 'cardiolo' : 
+                       (categoria || "").toLowerCase().substring(0, 5);
+
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
+          .or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%`) // Ricerca flessibile
           .order('is_top', { ascending: false })
           .range(0, 99);
 
         if (error) throw error;
-
-       const filtrati = data ? data.filter(item => {
-  if (!item.categoria) return false;
-  const cDB = item.categoria.toLowerCase();
-  const cURL = (categoria || "").toLowerCase();
-  
-  // Ritorna vero se la categoria nel DB contiene quella dell'URL o viceversa
-  // Esempio: "cardiologi" contiene "cardio"
-  return cDB.includes(cURL) || cURL.includes(cDB.split('-')[0]);
-}) : [];
-
-        setServiziRealTime(filtrati);
+        setServiziRealTime(data || []);
       } catch (err) {
         console.error("Errore fetch Hub:", err);
       } finally {
@@ -101,7 +90,7 @@ async function fetchNuoviMedici() {
       }
     }
     fetchNuoviMedici();
-  }, [categoria, medici]);
+  }, [categoria, medici, datiIniziali]); // Aggiunto datiIniziali alle dipendenze
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
