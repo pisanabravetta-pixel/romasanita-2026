@@ -62,13 +62,21 @@ const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSl
 const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
 
 const colore = filtri.colore || '#2563eb';
-  // --- STATI AGGIORNATI PER SERVER SIDE RENDERING ---
+  // --- STATI E LOGICA (PULIZIA TOTALE) ---
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
-  
-// 2. Aggiungi questo subito sotto (fondamentale per far funzionare i link)
-// 1. SINCRONIZZAZIONE PAGINA DA URL
+  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
+  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
+
+  const annunciPerPagina = 10;
+  const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
+  // 1. SINCRONIZZAZIONE PAGINA DA URL
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -77,17 +85,16 @@ const colore = filtri.colore || '#2563eb';
     }
   }, [router.query]);
 
-  // 2. EFFETTO UNICO: METADATI, TEMA E CARICAMENTO
+  // 2. EFFETTO UNICO PER METADATI E DATI (EVITA IL 500)
   useEffect(() => {
     if (!slug || slug === 'index' || slug === '') return;
 
-    // Estrazione pulita dei parametri
     const slugPuro = slug.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
-    // Calcolo Metadati e Tema (Sempre necessario per evitare pagine bianche)
+    // Logica Grafica
     const mapping = getDBQuery(catEstratta);
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
@@ -96,7 +103,6 @@ const colore = filtri.colore || '#2563eb';
       'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
       'servizi-domicilio': 'Servizi a Domicilio'
     };
-    
     const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
     const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
@@ -111,41 +117,36 @@ const colore = filtri.colore || '#2563eb';
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    // --- LOGICA DATI ---
-    // Se siamo nella HUB e abbiamo i dati SSR, non fare la fetch (evita il 500 e lo svuotamento)
-    if (isHub && datiIniziali && datiIniziali.length > 0) {
+    // Controllo SSR: Se abbiamo già i dati, non fare fetch client-side
+    if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
       return; 
     }
 
-    // Se siamo in un quartiere o mancano i dati, carichiamo dal client
-    const caricaDatiClient = async () => {
+    // Caricamento Client-Side (per i quartieri)
+    const fetchData = async () => {
       try {
         setLoading(true);
         const keyword = catEstratta.toLowerCase().substring(0, 4);
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-
         q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
         }
-
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
         if (!error) setServizi(data || []);
       } catch (err) {
-        console.error("Errore critico fetch:", err);
+        console.error("Errore fetch client:", err);
       } finally {
         setLoading(false);
       }
     };
-
-    caricaDatiClient();
+    fetchData();
   }, [slug, datiIniziali]);
 
-  // 3. EFFETTO MAPPA (Sincronizzato con listaDaMostrare)
+  // 3. MAPPA
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
@@ -162,7 +163,6 @@ const colore = filtri.colore || '#2563eb';
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrare]);
-
   if (!slug) return null;
 
  return (
