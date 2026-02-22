@@ -33,29 +33,35 @@ export default function HubLayout({
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
-  // DEFINISCI SEMPRE QUESTI PER PRIMI
-const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
-  const [loadingRealTime, setLoadingRealTime] = useState(datiIniziali?.length > 0 ? false : true);
+// 1. Stati iniziali: diamo priorità assoluta ai dati del server (datiIniziali)
+  const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
+  const [loadingRealTime, setLoadingRealTime] = useState(!datiIniziali || datiIniziali.length === 0);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
 
-// Aggiungi questo subito sotto per leggere la pagina dall'URL
-useEffect(() => {
-  if (typeof window !== 'undefined') {
+  // 2. Sincronizzazione pagina dall'URL
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const p = parseInt(params.get('page')) || 1;
-    setPagina(p);
-  }
-}, []);
-  const annunciPerPagina = 10;
+    if (p !== pagina) setPagina(p);
+  }, []);
 
-// ORA CALCOLA LE VARIABILI DERIVATE
-const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
-const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
-const totaleAnnunci = totaleDalServer || listaUnica.length;
-const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  // 3. CALCOLO LOGICA DATI (Senza slice se i dati sono già paginati dal server)
+  const annunciPerPagina = 10;
   
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  // Usiamo medici (vecchio sistema) o serviziRealTime (nuovo sistema SSR)
+  const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
+  
+  // Rimuoviamo duplicati per ID
+  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
+  
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
+  // LOGICA MOSTRA: Se i dati arrivano dal Server (datiIniziali), sono già la fetta corretta (es. 1-10)
+  // Se invece sono stati caricati via Client (fetchNuoviMedici), dobbiamo tagliarli noi.
+  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
+    ? listaUnica 
+    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
 useEffect(() => {
     // 1. Se abbiamo già i medici passati come prop o dati dal server, non fare nulla
     if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0)) {
