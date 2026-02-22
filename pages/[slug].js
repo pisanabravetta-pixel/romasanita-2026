@@ -158,6 +158,11 @@ const fetchData = async () => {
 
  return (
   <>
+   {/* --- INCOLLA QUI IL DEBUG --- */}
+      <div style={{ background: '#ffff00', color: '#000', padding: '10px', textAlign: 'center', fontWeight: 'bold', borderBottom: '2px solid black' }}>
+        DEBUG: Categoria: "{meta.cat}" | Radice: "{meta.cat ? meta.cat.substring(0,6) : '...'}" | Zona: "{zonaInSlug}"
+      </div>
+      {/* --- FINE DEBUG --- */}
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
       <HubLayout 
