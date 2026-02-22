@@ -7,95 +7,41 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 export default function PaginaQuartiereDinamica({ 
-  datiIniziali, 
-  totaleDalServer, 
-  paginaIniziale, 
-  slugSSR,
-  categoriaSSR, // <--- AGGIUNTA
-  zonaSSR       // <--- AGGIUNTA
+  datiIniziali, totaleDalServer, paginaIniziale, slugSSR, categoriaSSR, zonaSSR 
 }) {
-const router = useRouter();
+  const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA ORIGINALE RIPRISTINATA ---
-  const categoriaPulita = slug ? slug.replace('-roma-', '@').split('@')[0] : '';
-  const filtri = getDBQuery(categoriaPulita);
-  const catSlug = categoriaSSR || categoriaPulita.replace('-roma', '');
-  const zonaInSlug = zonaSSR || (slug && slug.includes('-roma-') ? slug.split('-roma-')[1] : 'roma');
-  
-  // Se la categoria non esiste nel mapping E non è la home o roba vuota
-  if (slug && filtri.cat === 'NON_ESISTE') {
-    if (typeof window !== 'undefined') {
-      router.replace('/404'); 
-    }
-    return null;
-  }
-// --- 1. Calcolo automatico della data corrente (già presente nel tuo codice) ---
-const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-const dataAttuale = new Date();
-const meseCorrente = mesi[dataAttuale.getMonth()];
-const annoCorrente = dataAttuale.getFullYear();
-const dataStringa = `${meseCorrente} ${annoCorrente}`;
-
-
-
-// Mapping per bloccare gli errori di troncamento (FARMAC -> FARMACIE)
-const nomiCorrettiH1 = {
-  'farmacie': 'FARMACIE',
-  'farmac': 'FARMACIE', 
-  'diagnostica': 'DIAGNOSTICA',
-  'diagnost': 'DIAGNOSTICA',
-  'dentisti': 'DENTISTI',
-  'dermatologi': 'DERMATOLOGI',
-  'cardiologi': 'CARDIOLOGI',
-  'psicologi': 'PSICOLOGI',
-  'oculisti': 'OCULISTI',
-  'ortopedici': 'ORTOPEDICI',
-  'nutrizionisti': 'NUTRIZIONISTI',
-  'ginecologi': 'GINECOLOGI'
-};
-
-// Calcolo del nome quartiere pulito
-const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-
-// Calcolo del titolo della categoria (Top Bar e H1)
-const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-
-const colore = filtri.colore || '#2563eb';
-  // --- STATI E LOGICA (PULIZIA TOTALE) ---
+  // 1. STATI FONDAMENTALI
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
+  // 2. LOGICA DERIVATA (Paginazione)
   const annunciPerPagina = 10;
   const listaUnica = Array.from(new Map(servizi.map(item => [item.id, item])).values());
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // 1. SINCRONIZZAZIONE PAGINA DA URL
+  // 3. LOG DI CONTROLLO IMMEDIATO (Se non vedi questo, il file è rotto)
+  console.log("RENDER - Slug:", slug, "Dati SSR:", datiIniziali?.length);
+
+  // 4. EFFETTO UNICO: GESTIONE URL, METADATI E DATI
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const p = parseInt(params.get('page')) || 1;
-      setPagina(p);
-    }
-  }, [router.query]);
+    if (!router.isReady || !slug) return;
 
-// 2. EFFETTO UNICO PER METADATI E DATI (LOGICA RICERCA POTENZIATA)
-  useEffect(() => {
-    if (!slug || slug === 'index' || slug === '') return;
-
+    // A. Identificazione Categoria e Zona
     const slugPuro = slug.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaEstratta || zonaEstratta === 'roma';
+    const isHub = zonaEstratta === 'roma';
 
-    // --- LOGICA GRAFICA (METADATI E TEMA) ---
-    const mapping = getDBQuery(catEstratta);
+    console.log("EFFETTO AVVIATO - Cat:", catEstratta, "Zona:", zonaEstratta);
+
+    // B. Metadati e Tema
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
@@ -104,76 +50,46 @@ const colore = filtri.colore || '#2563eb';
       'servizi-domicilio': 'Servizi a Domicilio'
     };
     const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
-    const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    const zonaBella = isHub ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-    let primario = "#0891b2"; let chiaro = "#ecfeff";
-    if (catEstratta.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-    else if (catEstratta.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-    else if (catEstratta.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+    setMeta({ titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase });
 
-    setTema({ primario, chiaro, label: nomeBase.toUpperCase() });
-    setMeta({ 
-      titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, 
-      zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
-    });
-
-    // --- GESTIONE DATI (TUA LOGICA POTENZIATA) ---
-const caricaDatiClient = async (categoria, hubMode, zona) => {
-      try {
-        setLoading(true);
-        const catLower = categoria.toLowerCase();
-        
-        // Log di controllo: apri la console del browser (F12) per vedere cosa succede
-        console.log("DEBUG: Cerco per", catLower, "HubMode:", hubMode, "Zona:", zona);
-
-        let q = supabase.from('annunci').select('*').eq('approvato', true);
-
-        // LOGICA DI RICERCA OTTIMIZZATA
-        if (catLower.includes('specialist')) {
-          q = q.ilike('categoria', '%specialist%');
-        } else {
-          // Per cardiologi, dermatologi, ecc. cerchiamo ovunque (categoria, nome o slug)
-          const keyword = catLower.substring(0, 5); 
-          q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
-        }
-
-        // Se non siamo in HUB, aggiungiamo il filtro zona
-        if (!hubMode && zona) {
-          const zQuery = zona.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zona}%`);
-        }
-
-        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-        
-        if (error) {
-          console.error("ERRORE SUPABASE:", error.message);
-        }
-
-        console.log("RISULTATI TROVATI:", data?.length || 0);
-        
-        if (!error && data) {
-          setServizi(data);
-        }
-      } catch (err) {
-        console.error("Errore critico:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-   // --- LOGICA DI ATTIVAZIONE (CORRETTA) ---
-    if (isHub && datiIniziali && datiIniziali.length > 0) {
-      // Se il server ha mandato dati reali, li usiamo
-      console.log("Dati caricati da SSR:", datiIniziali.length);
+    // C. Caricamento Dati (Priorità SSR o Fetch)
+    if (isHub && datiIniziali?.length > 0) {
       setServizi(datiIniziali);
-      setLoading(false);
     } else {
-      // Se siamo in un quartiere, o se la Hub è vuota, forziamo il caricamento client
-      console.log("Avvio caricamento client-side...");
-      caricaDatiClient(catEstratta, isHub, zonaEstratta);
-    }
+      const caricaDati = async () => {
+        setLoading(true);
+        try {
+          let q = supabase.from('annunci').select('*').eq('approvato', true);
+          const keyword = catEstratta.toLowerCase().substring(0, 5);
+          
+          if (catEstratta.includes('specialist')) {
+            q = q.ilike('categoria', '%specialist%');
+          } else {
+            q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%,slug.ilike.%${keyword}%`);
+          }
 
-  }, [slug, datiIniziali]);
+          if (!isHub) {
+            const zQuery = zonaEstratta.replace(/-/g, ' ');
+            q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+          }
+
+          const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
+          console.log("FETCH COMPLETATA - Trovati:", data?.length);
+          setServizi(data || []);
+        } catch (e) {
+          console.error("Errore Fetch:", e);
+        } finally {
+          setLoading(false);
+        }
+      };
+      caricaDati();
+    }
+  }, [slug, router.isReady, datiIniziali]);
+
+  // Se lo slug non c'è, non renderizzare nulla per evitare errori
+  if (!slug) return null;
 
   // 3. MAPPA
   useEffect(() => {
