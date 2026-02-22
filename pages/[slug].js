@@ -55,21 +55,12 @@ export default function PaginaQuartiereDinamica({
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
   const colore = filtri.colore || '#2563eb';
 
-  // --- STATI E LOGICA ---
-  const [servizi, setServizi] = useState(datiIniziali || []);
-  const [loading, setLoading] = useState(false);
-  const [pagina, setPagina] = useState(paginaIniziale || 1);
-  const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
-  const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
-
+ // --- LOGICA SEMPLIFICATA SSR ---
   const annunciPerPagina = 10;
-  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const listaDaMostrare = datiIniziali || [];
+  const totaleAnnunci = totaleDalServer || listaDaMostrare.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
+  const pagina = paginaIniziale || 1;
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -163,31 +154,27 @@ const fetchData = async () => {
   }, [listaDaMostrare]);
   if (!slug) return null;
 
- return (
+return (
   <>
-   {/* --- INCOLLA QUI IL DEBUG --- */}
-      <div style={{ background: '#ffff00', color: '#000', padding: '10px', textAlign: 'center', fontWeight: 'bold', borderBottom: '2px solid black' }}>
-        DEBUG: Categoria: "{meta.cat}" | Radice: "{meta.cat ? meta.cat.substring(0,6) : '...'}" | Zona: "{zonaInSlug}"
-      </div>
-      {/* --- FINE DEBUG --- */}
-    {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
+    {/* Se siamo su Roma (HUB) o su un Quartiere, usiamo sempre HubLayout per ora per uniformità */}
     {zonaInSlug === 'roma' ? (
       <>
-        {/* STRISCIA DI DEBUG ROSSA */}
-        <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold', zIndex: 9999 }}>
-          DEBUG HUB: Trovati {servizi?.length || 0} annunci | Cercando: "{catSlug}"
-        </div>
-
         <HubLayout 
-          titolo={catSlug.replace(/-/g, ' ')}
+          {...seoData[catSlug]}
+          titolo={titoloPulito}
           categoria={catSlug}
-          colore="#2c5282"
-          datiIniziali={servizi}
+          colore={colore}
+          datiIniziali={datiIniziali}
           totaleDalServer={totaleDalServer}
           paginaIniziale={pagina}
-          testoTopBar={`${catSlug.toUpperCase()} ROMA`}
+          testoTopBar={`${titoloPulito} ROMA`}
           badgeSpec={catSlug}
-        />
+        >
+          {/* STRISCIA ROSSA DI CONFERMA */}
+          <div style={{ background: 'red', color: 'white', padding: '15px', textAlign: 'center', fontWeight: 'bold' }}>
+            DEBUG: IL SERVER HA INVIATO {datiIniziali?.length || 0} ANNUNCI
+          </div>
+        </HubLayout>
       </>
     ) : (
       /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
