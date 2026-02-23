@@ -18,20 +18,17 @@ function generateSiteMap(pagine) {
  `;
 }
 
-export default function SiteMap() {
-  // Questa pagina non renderizza nulla sul lato client
-}
+export default function SiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  // 1. RECUPERO TUTTI GLI ANNUNCI (Test flessibile per sbloccare i dati)
-  const { data: annunci, error } = await supabase
+  // 1. RECUPERO TUTTI GLI ANNUNCI (Ora leggiamo la colonna 'zona')
+  const { data: annunci } = await supabase
     .from('annunci')
-    .select('slug, categoria, quartiere, zona, approvato');
+    .select('slug, categoria, zona, approvato'); // Rimosso quartiere, aggiunto zona
 
-  // Filtro manuale per gestire TRUE (booleano), 'TRUE' (testo) o 'SI'
+  // Filtro flessibile per l'approvazione
   const annunciApprovati = annunci?.filter(a => 
     a.approvato === true || 
-    a.approvato === 'TRUE' || 
     String(a.approvato).toUpperCase() === 'TRUE' ||
     a.approvato === 'SI'
   ) || [];
@@ -49,11 +46,16 @@ export async function getServerSideProps({ res }) {
     { url: '/contatti', priority: 0.5 },
   ];
 
-  // 3. PAGINE HUB + PAGINAZIONE (Usando annunciApprovati)
+  // 3. PAGINE HUB + PAGINAZIONE
   const pagineHub = [];
   specialisticheTop.forEach(cat => {
     pagineHub.push({ url: `/${cat}-roma`, priority: 0.8 });
-    const count = annunciApprovati.filter(a => a.categoria?.toLowerCase().includes(cat.substring(0,4))).length;
+    
+    // Filtro per categoria
+    const count = annunciApprovati.filter(a => 
+        a.categoria?.toLowerCase().includes(cat.substring(0,4))
+    ).length;
+
     const numPagine = Math.ceil(count / annunciPerPagina);
     if (numPagine > 1) {
       for (let i = 2; i <= numPagine; i++) {
@@ -62,16 +64,17 @@ export async function getServerSideProps({ res }) {
     }
   });
 
-  // 4. PAGINE QUARTIERE + PAGINAZIONE
+  // 4. PAGINE QUARTIERE + PAGINAZIONE (Corretto: usa solo 'zona')
   const pagineQuartieri = [];
   specialisticheTop.forEach(cat => {
     quartieriTop.forEach(q => {
       const slugQuartiere = `/${cat}-roma-${q.s}`;
       pagineQuartieri.push({ url: slugQuartiere, priority: 0.7 });
 
+      // CONTEGGIO: Usiamo la colonna 'zona' del DB confrontandola con lo slug del quartiere
       const countInQuartiere = annunciApprovati.filter(a => {
         const catMatch = a.categoria?.toLowerCase().includes(cat.substring(0,4));
-        const zonaMatch = (a.quartiere?.toLowerCase() === q.s || a.zona?.toLowerCase() === q.s);
+        const zonaMatch = a.zona?.toLowerCase() === q.s.toLowerCase();
         return catMatch && zonaMatch;
       }).length;
 
