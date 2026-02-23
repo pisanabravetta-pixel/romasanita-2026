@@ -53,6 +53,9 @@ const categoria = rawCategoria.replace("-roma", "");
 };
 
 let filtroCategoria = mappaCategorie[categoria] || [categoria];
+  console.log("RAW:", rawCategoria);
+console.log("CATEGORIA:", categoria);
+console.log("FILTRO:", filtroCategoria);
 
   if (specialisti[categoria]) {
     const base = specialisti[categoria];
