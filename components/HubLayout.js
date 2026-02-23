@@ -74,12 +74,15 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 async function fetchNuoviMedici() {
   try {
     setLoadingRealTime(true);
+    
+    // Alziamo il range a 200: è il "giusto mezzo" per non appesantire 
+    // ma trovare tutti gli specialisti sparsi nel database.
     const { data, error } = await supabase
       .from('annunci')
       .select('*')
-      .eq('approvato', true) // Usiamo approvato come confermato
+      .eq('approvato', true)
       .order('is_top', { ascending: false })
-      .range(0, 99);
+      .range(0, 199); 
 
     if (error) throw error;
 
@@ -89,11 +92,12 @@ async function fetchNuoviMedici() {
       const cDB = item.categoria.toLowerCase();
       const cURL = (categoria || "").toLowerCase();
 
-      // Prendiamo la radice (es. "derm") per beccare dermatologo, dermatologa, dermatologi
+      // RADICE KILLER (4 lettere): "derm" becca tutto quello che ti serve
       const radice = cURL.substring(0, 4); 
 
-      // Se la categoria nel DB contiene la radice o il nome della categoria cercata
-      return cDB.includes(radice) || cDB.includes(cURL);
+      // Se la radice è presente nella categoria del DB, l'annuncio passa.
+      // Questo recupera i "7" che vedevi prima + tutti quelli che erano rimasti fuori.
+      return cDB.includes(radice);
     }) : [];
 
     setServiziRealTime(filtrati);
