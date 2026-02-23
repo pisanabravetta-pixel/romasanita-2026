@@ -57,13 +57,15 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
  const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
 
-  useEffect(() => {
-    // 1. Se abbiamo medici (statici) o dati già caricati dal server, non fare nulla
-    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0 && pagina === 1)) {
+ useEffect(() => {
+    // 1. Se abbiamo già i dati (da SSR o props statiche), usiamoli e fermiamoci.
+    // Non mettiamo 'pagina' nelle dipendenze per evitare il freeze della mappa.
+    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0)) {
       setLoadingRealTime(false);
       return; 
     }
 
+    // 2. Altrimenti, scarichiamo i dati una volta sola per categoria
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
@@ -76,12 +78,9 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
         if (error) throw error;
 
+        const radice = (categoria || "").toLowerCase().substring(0, 4);
         const filtrati = data ? data.filter(item => {
-          if (!item.categoria) return false;
-          const cDB = item.categoria.toLowerCase();
-          const cURL = (categoria || "").toLowerCase();
-          const radice = cURL.substring(0, 4); 
-          return cDB.includes(radice);
+          return item.categoria?.toLowerCase().includes(radice);
         }) : [];
 
         setServiziRealTime(filtrati);
@@ -93,8 +92,7 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
     }
 
     fetchNuoviMedici();
-  }, [categoria, medici, datiIniziali, pagina]); // <--- AGGIUNTO PAGINA E DATIINIZIALI
-
+  }, [categoria]); // <--- LASCIAMO SOLO CATEGORIA: IL FREEZE SPARISCE
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
