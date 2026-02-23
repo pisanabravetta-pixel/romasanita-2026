@@ -34,7 +34,7 @@ export default function HubLayout({
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
   // DEFINISCI SEMPRE QUESTI PER PRIMI
-const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
+const [serviziRealTime, setServiziRealTime] = useState(datiIniziali?.length > 0 ? datiIniziali : (medici || []));
   const [loadingRealTime, setLoadingRealTime] = useState(datiIniziali?.length > 0 ? false : true);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
 
@@ -72,33 +72,37 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
     
    
 async function fetchNuoviMedici() {
-      try {
-        setLoadingRealTime(true);
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          .order('is_top', { ascending: false })
-          .range(0, 99);
+  try {
+    setLoadingRealTime(true);
+    const { data, error } = await supabase
+      .from('annunci')
+      .select('*')
+      .eq('approvato', true) // Usiamo approvato come confermato
+      .order('is_top', { ascending: false })
+      .range(0, 99);
 
-        if (error) throw error;
+    if (error) throw error;
 
-const filtrati = data ? data.filter(item => {
-  if (!item.categoria) return false;
-  const cDB = item.categoria.toLowerCase(); // categoria dal DB
-  const cURL = (categoria || "").toLowerCase(); // categoria dalla pagina
+    const filtrati = data ? data.filter(item => {
+      if (!item.categoria) return false;
+      
+      const cDB = item.categoria.toLowerCase();
+      const cURL = (categoria || "").toLowerCase();
 
-  // Controllo più ampio: include se la pagina è contenuta nel DB o viceversa
-  return cDB.includes(cURL) || cURL.includes(cDB.replace(/[^a-z0-9]/g, ''));
-}) : [];
+      // Prendiamo la radice (es. "derm") per beccare dermatologo, dermatologa, dermatologi
+      const radice = cURL.substring(0, 4); 
 
-        setServiziRealTime(filtrati);
-      } catch (err) {
-        console.error("Errore fetch Hub:", err);
-      } finally {
-        setLoadingRealTime(false);
-      }
-    }
+      // Se la categoria nel DB contiene la radice o il nome della categoria cercata
+      return cDB.includes(radice) || cDB.includes(cURL);
+    }) : [];
+
+    setServiziRealTime(filtrati);
+  } catch (err) {
+    console.error("Errore fetch Hub:", err);
+  } finally {
+    setLoadingRealTime(false);
+  }
+}
     fetchNuoviMedici();
   }, [categoria, medici]);
 
