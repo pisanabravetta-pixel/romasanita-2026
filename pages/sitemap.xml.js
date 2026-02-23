@@ -19,21 +19,22 @@ function generateSiteMap(pagine) {
 }
 
 export async function getServerSideProps({ res }) {
- // 1. RECUPERO TUTTI GLI ANNUNCI - Versione "Blindata"
+export async function getServerSideProps({ res }) {
+  // 1. RECUPERO TUTTI GLI ANNUNCI (Test senza filtri per sbloccare la sitemap)
   const { data: annunci, error } = await supabase
     .from('annunci')
-    .select('slug, categoria, quartiere, zona')
-    // Questa istruzione OR copre ogni possibilità di scrittura del valore TRUE
-    .or('approvato.eq.true,approvato.eq.TRUE,approvato.eq.SI'); 
+    .select('slug, categoria, quartiere, zona, approvato');
 
-  // Debug rapido per te: se non vedi i medici, controlla i log del server
-  if (error) console.error("Errore query sitemap:", error);
-  if (annunci) console.log("Medici trovati per sitemap:", annunci.length);
-
-  if (error) console.error("Errore recupero annunci:", error);
+  // Filtriamo i dati direttamente in JavaScript per essere più flessibili
+  const annunciApprovati = annunci?.filter(a => 
+    a.approvato === true || 
+    a.approvato === 'TRUE' || 
+    a.approvato === 'SI'
+  ) || [];
 
   const annunciPerPagina = 10;
-
+  
+  // Da qui in poi usa "annunciApprovati" invece di "annunci"
   // 2. PAGINE FISSE
   const staticPages = [
     { url: '', priority: 1.0 },
