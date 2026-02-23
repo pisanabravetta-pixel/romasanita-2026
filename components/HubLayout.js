@@ -33,57 +33,67 @@ export default function HubLayout({
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
-// 1. STATI
-  const [serviziRealTime, setServiziRealTime] = useState([]);
+  // DEFINISCI SEMPRE QUESTI PER PRIMI
+const [serviziRealTime, setServiziRealTime] = useState(datiIniziali || []);
+  const [loadingRealTime, setLoadingRealTime] = useState(datiIniziali?.length > 0 ? false : true);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
-  
-  // AGGIUNGI QUESTA RIGA PER RISOLVERE IL REFERENCE ERROR
-  const loadingRealTime = false; 
 
-  // 2. LOGICA DATI
-  const datiDaUsare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : serviziRealTime;
-
-  // 3. RIMOZIONE DUPLICATI
-  const listaUnica = React.useMemo(() => {
-    if (!Array.isArray(datiDaUsare)) return [];
-    return Array.from(new Map(datiDaUsare.filter(i => i?.id).map(item => [item.id, item])).values());
-  }, [datiDaUsare]);
-
-  // 4. CALCOLO LISTA DA MOSTRARE
-  const annunciPerPagina = 10;
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
-  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
-    ? listaUnica 
-    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+// Aggiungi questo subito sotto per leggere la pagina dall'URL
 useEffect(() => {
-    // 1. Se abbiamo già i medici passati come prop o dati dal server, non fare nulla
-    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0)) {
-      setServiziRealTime(datiIniziali.length > 0 ? datiIniziali : medici);
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const p = parseInt(params.get('page')) || 1;
+    setPagina(p);
+  }
+}, []);
+  const annunciPerPagina = 10;
+
+// ORA CALCOLA LE VARIABILI DERIVATE
+const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
+const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
+const totaleAnnunci = totaleDalServer || listaUnica.length;
+const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  useEffect(() => {
+    if (medici && medici.length > 0) {
       setLoadingRealTime(false);
       return; 
     }
 
-    // 2. Solo se non abbiamo nulla, facciamo la fetch di emergenza
-    async function fetchNuoviMedici() {
+
+    // AGGIUNGI QUESTO QUI SOTTO:
+    // Se abbiamo già caricato i dati dal server (nuovo metodo SSR)
+    if (serviziRealTime.length > 0 && pagina === 1) {
+      setLoadingRealTime(false);
+      return;
+    }
+    
+   
+async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        // Usiamo la stessa logica della radice del server per coerenza
-        const radice = (categoria || "").toLowerCase().includes('dermatol') ? 'dermato' : 
-                       (categoria || "").toLowerCase().includes('cardiolog') ? 'cardiolo' : 
-                       (categoria || "").toLowerCase().substring(0, 5);
-
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          .or(`categoria.ilike.%${radice}%,nome.ilike.%${radice}%`) // Ricerca flessibile
           .order('is_top', { ascending: false })
           .range(0, 99);
 
         if (error) throw error;
-        setServiziRealTime(data || []);
+
+       const filtrati = data ? data.filter(item => {
+  if (!item.categoria) return false;
+  const cDB = item.categoria.toLowerCase();
+  const cURL = (categoria || "").toLowerCase();
+  
+  // Ritorna vero se la categoria nel DB contiene quella dell'URL o viceversa
+  // Esempio: "cardiologi" contiene "cardio"
+  return cDB.includes(cURL) || cURL.includes(cDB.split('-')[0]);
+}) : [];
+
+        setServiziRealTime(filtrati);
       } catch (err) {
         console.error("Errore fetch Hub:", err);
       } finally {
@@ -91,7 +101,7 @@ useEffect(() => {
       }
     }
     fetchNuoviMedici();
-  }, [categoria, medici, datiIniziali]); // Aggiunto datiIniziali alle dipendenze
+  }, [categoria, medici]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
@@ -121,7 +131,6 @@ useEffect(() => {
       console.error("Errore Mappa:", err);
     }
   }, [listaDaMostrare]);
-
 
   return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
