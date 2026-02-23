@@ -1,6 +1,6 @@
+import { supabase } from '../lib/supabaseClient';
 import { specialisticheTop, quartieriTop } from '../lib/seo-logic';
 
-// Cambia BASE_URL in EXTERNAL_DATA_URL o viceversa, l'importante è che il nome sia lo stesso sotto
 const EXTERNAL_DATA_URL = 'https://www.servizisalute.com'; 
 
 function generateSiteMap(pagine) {
@@ -20,20 +20,26 @@ function generateSiteMap(pagine) {
    </urlset>
  `;
 }
-// ... tutto il resto del codice rimane identico
-
-function SiteMap() {
-  // Il browser non userà questo componente, getServerSideProps farà tutto il lavoro
-}
 
 export async function getServerSideProps({ res }) {
-// 1. PAGINE FISSE (Aggiornato con le nuove Guide)
+  // 1. RECUPERO DINAMICO DI TUTTI I MEDICI DAL DATABASE
+  // Usiamo una select specifica per lo slug di tutti gli annunci approvati
+  const { data: annunci, error } = await supabase
+    .from('annunci')
+    .select('slug')
+    .eq('approvato', true);
+
+  if (error) {
+    console.error("Errore recupero annunci per sitemap:", error);
+  }
+
+  // 2. PAGINE FISSE (Guide e Info)
   const staticPages = [
     { url: '', priority: 1.0 },
     { url: '/guide', priority: 0.9 },
-    { url: '/guide/costo-visita-ginecologica-roma', priority: 0.8 }, // NUOVA
-    { url: '/guide/costo-visita-oculistica-roma', priority: 0.8 },   // NUOVA
-    { url: '/guide/costo-risonanza-magnetica-roma', priority: 0.8 }, // NUOVA
+    { url: '/guide/costo-visita-ginecologica-roma', priority: 0.8 },
+    { url: '/guide/costo-visita-oculistica-roma', priority: 0.8 },
+    { url: '/guide/costo-risonanza-magnetica-roma', priority: 0.8 },
     { url: '/guide/costo-pulizia-denti-roma', priority: 0.8 },
     { url: '/guide/costo-visita-cardiologica-roma', priority: 0.8 },
     { url: '/guide/costo-visita-dermatologica-roma', priority: 0.8 },
@@ -46,22 +52,34 @@ export async function getServerSideProps({ res }) {
     { url: '/pubblica-annuncio', priority: 0.7 },
   ];
 
-  // 2. PAGINE HUB (Es: /psicologi-roma, /dentisti-roma)
+  // 3. PAGINE HUB (Es: /dermatologi-roma)
   const pagineHub = specialisticheTop.map(cat => ({
     url: `/${cat}-roma`,
     priority: 0.8
   }));
 
-  // 3. PAGINE QUARTIERE (Es: /psicologi-roma-prati)
-  const pagineDinamiche = specialisticheTop.flatMap(cat => 
+  // 4. PAGINE QUARTIERE (Es: /dermatologi-roma-prati)
+  const pagineDinamicheQuartieri = specialisticheTop.flatMap(cat => 
     quartieriTop.map(q => ({
       url: `/${cat}-roma-${q.s}`,
       priority: 0.7
     }))
   );
 
-  // UNISCO TUTTO
-  const tutteLePagine = [...staticPages, ...pagineHub, ...pagineDinamiche];
+  // 5. SCHEDE PROFESSIONISTI (Le singole pagine dei medici)
+  // Genera un link per ogni medico presente nel database
+  const schedeMedici = (annunci || []).map(medico => ({
+    url: `/scheda/${medico.slug}`,
+    priority: 0.6
+  }));
+
+  // UNISCO TUTTO: Statiche + Hub + Quartieri + Tutti i Medici
+  const tutteLePagine = [
+    ...staticPages, 
+    ...pagineHub, 
+    ...pagineDinamicheQuartieri, 
+    ...schedeMedici
+  ];
 
   const sitemap = generateSiteMap(tutteLePagine);
 
@@ -74,4 +92,4 @@ export async function getServerSideProps({ res }) {
   };
 }
 
-export default SiteMap;
+export default function SiteMap() {}
