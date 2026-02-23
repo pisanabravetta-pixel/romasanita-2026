@@ -60,8 +60,16 @@ export default function SchedaProfessionale() {
 
   const nomeZona = dato.quartiere || dato.zona || "Roma";
   const categoria = dato.categoria || "Specialista";
-  const catSlug = categoria.toLowerCase().replace(/\s+/g, '-');
-  const zonaSlug = nomeZona.toLowerCase().replace(/\s+/g, '-');
+  
+  // Funzione per creare slug puliti identici a quelli delle tue pagine
+  const cleanSlug = (text) => text.toString().toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')     // Cambia spazi in trattini
+    .replace(/[^\w-]+/g, '')  // Rimuove tutto ciò che non è testo o trattini
+    .replace(/--+/g, '-');    // Evita doppi trattini --
+
+  const catSlug = cleanSlug(categoria);
+  const zonaSlug = cleanSlug(nomeZona);
 
 const generaTestoSEO = () => {
   const v = dato.id % 3;
