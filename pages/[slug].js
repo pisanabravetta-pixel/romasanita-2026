@@ -660,8 +660,8 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
-  const { slug } = context.query;
-  const page = parseInt(context.query.page) || 1;
+  const { slug, page: queryPage } = context.query;
+  const page = parseInt(queryPage) || 1;
   const annunciPerPagina = 10;
 
   try {
@@ -676,30 +676,29 @@ export async function getServerSideProps(context) {
     // 2. QUERY BASE
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('visibile', true); // Usiamo 'visibile' come da tuoi dati DB
+      .select('*', { count: 'exact' });
 
-    // 3. LOGICA RADICE KILLER (Corretta per Dermatolog-o/a/i)
-    // Se è "dermatologi" -> radice "dermatolog"
+    // 3. FILTRO APPROVATO (FINALMENTE QUELLO GIUSTO)
+    query = query.eq('approvato', true); 
+
+    // 4. LOGICA RADICE (Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
-    if (radice.length > 9) radice = radice.substring(0, 10); // Tagliamo a "dermatolog"
-
-    // Cerchiamo la radice nella colonna categoria (che contiene "visite-specialistiche dermatologo")
+    if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
-    // 4. FILTRO ZONA (Corretto per colonna 'quartiere' e 'zona')
+    // 5. FILTRO ZONA (Colonna 'zona' confermata dalla sitemap)
     if (!isHub) {
-      const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      // Cerchiamo sia nella colonna 'quartiere' che 'zona' per sicurezza
-      query = query.or(`quartiere.ilike.%${zonaQuery}%,zona.ilike.%${zonaQuery}%`);
+      const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
+      query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
+    // 6. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
     const { data, count, error } = await query
-      .order('is_top', { ascending: false })
+      .order('id', { ascending: false })
       .range(da, a);
 
     if (error) throw error;
@@ -716,6 +715,15 @@ export async function getServerSideProps(context) {
     };
   } catch (err) {
     console.error("ERRORE SSR:", err);
-    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" } };
+    return { 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: ""
+      } 
+    };
   }
 }
