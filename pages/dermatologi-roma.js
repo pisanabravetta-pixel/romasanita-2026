@@ -18,18 +18,9 @@ export default function DermatologiRoma() {
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // CERCA NELLA COLONNA SPECIALISTA (Infallibile)
-        .ilike('specialista', `%${queryBusca.spec}%`)
-        .order('is_top', { ascending: false })
-      .range(0, 99); // <--- Aggiungi questo per caricarne 100 invece di fermarti al default
-      
-      if (data) {
-        setMedici(data);
-      }
-      setLoading(false);
-    }
-    fetchDocs();
-  }, []);
+     useEffect(() => {
+  setLoading(false); // HubLayout gestirà il fetch dei dermatologi
+}, []);
 
   return (
     <HubLayout 
