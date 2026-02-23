@@ -54,60 +54,46 @@ const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item]))
 const totaleAnnunci = totaleDalServer || listaUnica.length;
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   
-  const inizio = (pagina - 1) * annunciPerPagina;
+ const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+
   useEffect(() => {
-    if (medici && medici.length > 0) {
+    // 1. Se abbiamo medici (statici) o dati già caricati dal server, non fare nulla
+    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0 && pagina === 1)) {
       setLoadingRealTime(false);
       return; 
     }
 
+    async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .order('is_top', { ascending: false })
+          .range(0, 399); 
 
-    // AGGIUNGI QUESTO QUI SOTTO:
-    // Se abbiamo già caricato i dati dal server (nuovo metodo SSR)
-    if (serviziRealTime.length > 0 && pagina === 1) {
-      setLoadingRealTime(false);
-      return;
+        if (error) throw error;
+
+        const filtrati = data ? data.filter(item => {
+          if (!item.categoria) return false;
+          const cDB = item.categoria.toLowerCase();
+          const cURL = (categoria || "").toLowerCase();
+          const radice = cURL.substring(0, 4); 
+          return cDB.includes(radice);
+        }) : [];
+
+        setServiziRealTime(filtrati);
+      } catch (err) {
+        console.error("Errore fetch Hub:", err);
+      } finally {
+        setLoadingRealTime(false);
+      }
     }
-    
-   
-async function fetchNuoviMedici() {
-  try {
-    setLoadingRealTime(true);
-    
-   // In fetchNuoviMedici
-const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('approvato', true)
-  .order('is_top', { ascending: false })
-  .range(0, 399); // <--- PORTALO A 400
 
-    if (error) throw error;
-
-    const filtrati = data ? data.filter(item => {
-      if (!item.categoria) return false;
-      
-      const cDB = item.categoria.toLowerCase();
-      const cURL = (categoria || "").toLowerCase();
-
-      // RADICE KILLER (4 lettere): "derm" becca tutto quello che ti serve
-      const radice = cURL.substring(0, 4); 
-
-      // Se la radice è presente nella categoria del DB, l'annuncio passa.
-      // Questo recupera i "7" che vedevi prima + tutti quelli che erano rimasti fuori.
-      return cDB.includes(radice);
-    }) : [];
-
-    setServiziRealTime(filtrati);
-  } catch (err) {
-    console.error("Errore fetch Hub:", err);
-  } finally {
-    setLoadingRealTime(false);
-  }
-}
     fetchNuoviMedici();
-  }, [categoria, medici]);
+  }, [categoria, medici, datiIniziali, pagina]); // <--- AGGIUNTO PAGINA E DATIINIZIALI
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
