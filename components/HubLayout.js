@@ -49,7 +49,7 @@ useEffect(() => {
   const annunciPerPagina = 10;
 
 // ORA CALCOLA LE VARIABILI DERIVATE
-const sorgenteDati = (medici && medici.length > 0) ? medici : (serviziRealTime || []);
+const sorgenteDati = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
 const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
 const totaleAnnunci = totaleDalServer || listaUnica.length;
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
@@ -83,14 +83,13 @@ async function fetchNuoviMedici() {
 
         if (error) throw error;
 
-       const filtrati = data ? data.filter(item => {
+const filtrati = data ? data.filter(item => {
   if (!item.categoria) return false;
-  const cDB = item.categoria.toLowerCase();
-  const cURL = (categoria || "").toLowerCase();
-  
-  // Ritorna vero se la categoria nel DB contiene quella dell'URL o viceversa
-  // Esempio: "cardiologi" contiene "cardio"
-  return cDB.includes(cURL) || cURL.includes(cDB.split('-')[0]);
+  const cDB = item.categoria.toLowerCase(); // categoria dal DB
+  const cURL = (categoria || "").toLowerCase(); // categoria dalla pagina
+
+  // Controllo più ampio: include se la pagina è contenuta nel DB o viceversa
+  return cDB.includes(cURL) || cURL.includes(cDB.replace(/[^a-z0-9]/g, ''));
 }) : [];
 
         setServiziRealTime(filtrati);
