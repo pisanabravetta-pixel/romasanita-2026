@@ -28,7 +28,5 @@ export default function DermatologiRoma() {
   altreSpecialistiche={[ ... ]}
   datiIniziali={[]} // <- aggiungi questa prop vuota per test
     />
-   ]}
-    />
-  );
+    );
 }
