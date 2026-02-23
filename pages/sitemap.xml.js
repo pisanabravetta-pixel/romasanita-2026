@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabaseClient';
 import { specialisticheTop, quartieriTop } from '../lib/seo-logic';
 
-const EXTERNAL_DATA_URL = 'https://www.servizisalute.com'; 
+const EXTERNAL_DATA_URL = 'https://www.servizisalute.com';
 
 function generateSiteMap(pagine) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -18,23 +18,26 @@ function generateSiteMap(pagine) {
  `;
 }
 
+export default function SiteMap() {
+  // Questa pagina non renderizza nulla sul lato client
+}
+
 export async function getServerSideProps({ res }) {
-export async function getServerSideProps({ res }) {
-  // 1. RECUPERO TUTTI GLI ANNUNCI (Test senza filtri per sbloccare la sitemap)
+  // 1. RECUPERO TUTTI GLI ANNUNCI (Test flessibile per sbloccare i dati)
   const { data: annunci, error } = await supabase
     .from('annunci')
     .select('slug, categoria, quartiere, zona, approvato');
 
-  // Filtriamo i dati direttamente in JavaScript per essere più flessibili
+  // Filtro manuale per gestire TRUE (booleano), 'TRUE' (testo) o 'SI'
   const annunciApprovati = annunci?.filter(a => 
     a.approvato === true || 
     a.approvato === 'TRUE' || 
+    String(a.approvato).toUpperCase() === 'TRUE' ||
     a.approvato === 'SI'
   ) || [];
 
   const annunciPerPagina = 10;
-  
-  // Da qui in poi usa "annunciApprovati" invece di "annunci"
+
   // 2. PAGINE FISSE
   const staticPages = [
     { url: '', priority: 1.0 },
@@ -46,13 +49,11 @@ export async function getServerSideProps({ res }) {
     { url: '/contatti', priority: 0.5 },
   ];
 
-  // 3. PAGINE HUB + PAGINAZIONE SEO
+  // 3. PAGINE HUB + PAGINAZIONE (Usando annunciApprovati)
   const pagineHub = [];
   specialisticheTop.forEach(cat => {
     pagineHub.push({ url: `/${cat}-roma`, priority: 0.8 });
-    
-    // Filtro per categoria (radice 4 lettere)
-    const count = annunci?.filter(a => a.categoria?.toLowerCase().includes(cat.substring(0,4))).length || 0;
+    const count = annunciApprovati.filter(a => a.categoria?.toLowerCase().includes(cat.substring(0,4))).length;
     const numPagine = Math.ceil(count / annunciPerPagina);
     if (numPagine > 1) {
       for (let i = 2; i <= numPagine; i++) {
@@ -61,19 +62,18 @@ export async function getServerSideProps({ res }) {
     }
   });
 
-  // 4. PAGINE QUARTIERE + PAGINAZIONE SEO (Dinamica)
+  // 4. PAGINE QUARTIERE + PAGINAZIONE
   const pagineQuartieri = [];
   specialisticheTop.forEach(cat => {
     quartieriTop.forEach(q => {
       const slugQuartiere = `/${cat}-roma-${q.s}`;
       pagineQuartieri.push({ url: slugQuartiere, priority: 0.7 });
 
-      // CONTEGGIO SPECIFICO: Quanti medici di QUESTA categoria in QUESTO quartiere?
-      const countInQuartiere = annunci?.filter(a => {
+      const countInQuartiere = annunciApprovati.filter(a => {
         const catMatch = a.categoria?.toLowerCase().includes(cat.substring(0,4));
         const zonaMatch = (a.quartiere?.toLowerCase() === q.s || a.zona?.toLowerCase() === q.s);
         return catMatch && zonaMatch;
-      }).length || 0;
+      }).length;
 
       const numPagineQ = Math.ceil(countInQuartiere / annunciPerPagina);
       if (numPagineQ > 1) {
@@ -85,13 +85,12 @@ export async function getServerSideProps({ res }) {
   });
 
   // 5. SCHEDE SINGOLE
-  const schedeMedici = (annunci || []).map(a => ({
+  const schedeMedici = annunciApprovati.map(a => ({
     url: `/scheda/${a.slug}`,
     priority: 0.6
   }));
 
   const tutteLePagine = [...staticPages, ...pagineHub, ...pagineQuartieri, ...schedeMedici];
-
   const sitemap = generateSiteMap(tutteLePagine);
 
   res.setHeader('Content-Type', 'text/xml');
@@ -100,5 +99,3 @@ export async function getServerSideProps({ res }) {
 
   return { props: {} };
 }
-
-export default function SiteMap() {}
