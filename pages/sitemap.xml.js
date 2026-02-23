@@ -19,11 +19,14 @@ function generateSiteMap(pagine) {
 }
 
 export async function getServerSideProps({ res }) {
-  // 1. RECUPERO TUTTI GLI ANNUNCI
-  const { data: annunci } = await supabase
+  // 1. RECUPERO TUTTI GLI ANNUNCI (Versione rinforzata)
+  const { data: annunci, error } = await supabase
     .from('annunci')
     .select('slug, categoria, quartiere, zona')
-    .eq('approvato', true);
+    // Cerchiamo sia il booleano true che la stringa 'TRUE' per sicurezza
+    .or('approvato.eq.true,approvato.eq.TRUE'); 
+
+  if (error) console.error("Errore recupero annunci:", error);
 
   const annunciPerPagina = 10;
 
