@@ -13,18 +13,45 @@ export async function getServerSideProps(context) {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
-  // 👇 Mappa specialisti
-  const specialisti = {
-    dermatologi: "dermatolog",
-    cardiologi: "cardiolog",
-    psicologi: "psicolog",
-    ginecologi: "ginecolog",
-    oculisti: "oculist",
-    ortopedici: "ortopedic",
-    nutrizionisti: "nutrizionist"
-  };
+  const mappaCategorie = {
+  dermatologi: [
+    "visite-specialistiche (dermatologo)",
+    "visite-specialistiche (dermatologa)",
+    "visite-specialistiche (dermatologi)"
+  ],
+  cardiologi: [
+    "visite-specialistiche (cardiologo)",
+    "visite-specialistiche (cardiologa)",
+    "visite-specialistiche (cardiologi)"
+  ],
+  psicologi: [
+    "visite-specialistiche (psicologo)",
+    "visite-specialistiche (psicologa)",
+    "visite-specialistiche (psicologi)"
+  ],
+  ginecologi: [
+    "visite-specialistiche (ginecologo)",
+    "visite-specialistiche (ginecologa)",
+    "visite-specialistiche (ginecologi)"
+  ],
+  oculisti: [
+    "visite-specialistiche (oculista)",
+    "visite-specialistiche (oculista donna)",
+    "visite-specialistiche (oculisti)"
+  ],
+  ortopedici: [
+    "visite-specialistiche (ortopedico)",
+    "visite-specialistiche (ortopedica)",
+    "visite-specialistiche (ortopedici)"
+  ],
+  nutrizionisti: [
+    "visite-specialistiche (nutrizionista)",
+    "visite-specialistiche (nutrizionista donna)",
+    "visite-specialistiche (nutrizionisti)"
+  ]
+};
 
-  let filtroCategoria;
+let filtroCategoria = mappaCategorie[categoria] || [categoria];
 
   if (specialisti[categoria]) {
     const base = specialisti[categoria];
@@ -38,13 +65,12 @@ export async function getServerSideProps(context) {
     filtroCategoria = [categoria];
   }
 
-  const { data, count, error } = await supabase
-    .from("annunci")
-    .select("*", { count: "exact" })
-    .in("categoria", filtroCategoria)
-    .eq("approvato", true)
-    .range(offset, offset + limit - 1);
-
+ const { data, count, error } = await supabase
+  .from("annunci")
+  .select("*", { count: "exact" })
+  .in("categoria", filtroCategoria)
+  .eq("approvato", true)
+  .range(offset, offset + limit - 1);
   if (error) {
     console.error("Errore Supabase:", error);
     return { notFound: true };
