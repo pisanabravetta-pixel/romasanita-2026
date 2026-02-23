@@ -106,6 +106,13 @@ export default function PaginaQuartiereDinamica({
       setLoading(false);
       return; 
     }
+    // --- AGGIUNGI QUESTO QUI SOTTO ---
+    if (datiIniziali && datiIniziali.length > 0) {
+      setServizi(datiIniziali);
+      setLoading(false);
+      return; 
+    }
+    // --- FINE AGGIUNTA ---
 
     const fetchData = async () => {
       try {
@@ -664,43 +671,30 @@ export async function getServerSideProps(context) {
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-
-    // Determiniamo se è una HUB (es. cardiologi-roma) o un QUARTIERE (es. cardiologi-roma-prati)
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
     // 2. QUERY BASE
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
-      .eq('approvato', true);
+      .eq('visibile', true); // Usiamo 'visibile' come da tuoi dati DB
 
-    // 3. FILTRO CATEGORIA "KILLER" (4 lettere per beccare tutto: cardio, derm, dent, farm)
-    // Usiamo una radice corta così "Dermatologia" e "Dermatologi" vengono presi entrambi
-    let keyword = catRicercata.toLowerCase()
-      .replace('-roma', '')
-      .replace('specialistici', 'specialistic')
-      .substring(0, 4); 
+    // 3. LOGICA RADICE KILLER (Corretta per Dermatolog-o/a/i)
+    // Se è "dermatologi" -> radice "dermatolog"
+    let radice = catRicercata.toLowerCase();
+    if (radice.endsWith('i')) radice = radice.slice(0, -1);
+    if (radice.length > 9) radice = radice.substring(0, 10); // Tagliamo a "dermatolog"
 
-    if (catRicercata.includes('specialist')) {
-      // Se cerchi specialisti generici, escludi le categorie specifiche
-      query = query
-        .not('categoria', 'ilike', '%farmac%')
-        .not('categoria', 'ilike', '%diagnost%')
-        .not('categoria', 'ilike', '%dentist%')
-        .not('categoria', 'ilike', '%domicilio%');
-    } else {
-      // CERCA NELLA CATEGORIA OPPURE NEL NOME (Massima flessibilità)
-      query = query.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-    }
+    // Cerchiamo la radice nella colonna categoria (che contiene "visite-specialistiche dermatologo")
+    query = query.ilike('categoria', `%${radice}%`);
 
-    // 4. FILTRO ZONA: Solo se NON siamo nella Hub
+    // 4. FILTRO ZONA (Corretto per colonna 'quartiere' e 'zona')
     if (!isHub) {
       const zonaQuery = zonaInSlug.replace(/-/g, ' ');
-      // Filtriamo per zona o per slug che contiene il quartiere
-      query = query.or(`zona.ilike.%${zonaQuery}%,slug.ilike.%${zonaInSlug}%`);
+      // Cerchiamo sia nella colonna 'quartiere' che 'zona' per sicurezza
+      query = query.or(`quartiere.ilike.%${zonaQuery}%,zona.ilike.%${zonaQuery}%`);
     }
 
-    // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -715,15 +709,13 @@ export async function getServerSideProps(context) {
         datiIniziali: data || [],
         totaleDalServer: count || 0,
         paginaIniziale: page,
-        slugSSR: slug,
+        slugSSR: slug || "",
         categoriaSSR: catRicercata,
         zonaSSR: zonaInSlug
       }
     };
   } catch (err) {
     console.error("ERRORE SSR:", err);
-    return {
-      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" }
-    };
+    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" } };
   }
 }
