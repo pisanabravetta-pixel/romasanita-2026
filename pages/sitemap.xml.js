@@ -19,12 +19,16 @@ function generateSiteMap(pagine) {
 }
 
 export async function getServerSideProps({ res }) {
-  // 1. RECUPERO TUTTI GLI ANNUNCI (Versione rinforzata)
+ // 1. RECUPERO TUTTI GLI ANNUNCI - Versione "Blindata"
   const { data: annunci, error } = await supabase
     .from('annunci')
     .select('slug, categoria, quartiere, zona')
-    // Cerchiamo sia il booleano true che la stringa 'TRUE' per sicurezza
-    .or('approvato.eq.true,approvato.eq.TRUE'); 
+    // Questa istruzione OR copre ogni possibilità di scrittura del valore TRUE
+    .or('approvato.eq.true,approvato.eq.TRUE,approvato.eq.SI'); 
+
+  // Debug rapido per te: se non vedi i medici, controlla i log del server
+  if (error) console.error("Errore query sitemap:", error);
+  if (annunci) console.log("Medici trovati per sitemap:", annunci.length);
 
   if (error) console.error("Errore recupero annunci:", error);
 
