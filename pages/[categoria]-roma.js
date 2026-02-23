@@ -2,7 +2,8 @@ import HubLayout from "../components/HubLayout";
 import { createClient } from "@supabase/supabase-js";
 
 export async function getServerSideProps(context) {
-  const { categoria } = context.params;
+  const rawCategoria = context.params.categoria;
+const categoria = rawCategoria.replace("-roma", "");
   const page = parseInt(context.query.page) || 1;
 
   const limit = 10;
