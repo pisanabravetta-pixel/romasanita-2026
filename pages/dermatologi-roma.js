@@ -27,6 +27,7 @@ export default function DermatologiRoma() {
   testoMiniSEO="In questa pagina trovi i migliori dermatologi a Roma..."
   altreSpecialistiche={[ ... ]}
   datiIniziali={[]} // <- aggiungi questa prop vuota per test
+    />
    ]}
     />
   );
