@@ -32,6 +32,6 @@ export default function DermatologiRoma() {
     {nome: "Oculisti", link: "/oculisti-roma"},
     {nome: "Ginecologi", link: "/ginecologi-roma"}
    ]}
-    />  {/* <-- CHIUSURA CORRETTA */}
+    />
   );
 }
