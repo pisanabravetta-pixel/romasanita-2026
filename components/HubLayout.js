@@ -75,14 +75,13 @@ async function fetchNuoviMedici() {
   try {
     setLoadingRealTime(true);
     
-    // Alziamo il range a 200: è il "giusto mezzo" per non appesantire 
-    // ma trovare tutti gli specialisti sparsi nel database.
-    const { data, error } = await supabase
-      .from('annunci')
-      .select('*')
-      .eq('approvato', true)
-      .order('is_top', { ascending: false })
-      .range(0, 199); 
+   // In fetchNuoviMedici
+const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('approvato', true)
+  .order('is_top', { ascending: false })
+  .range(0, 399); // <--- PORTALO A 400
 
     if (error) throw error;
 
