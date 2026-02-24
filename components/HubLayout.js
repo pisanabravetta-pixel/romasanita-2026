@@ -127,10 +127,10 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
     
   <Head>
   <title>{`${titoloPulito} Roma (${dataStringa}): Elenco e Contatti | ServiziSalute`}</title>
-  <meta 
-    name="description" 
-    content={`Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a ${dataStringa}. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
-  />
+ <meta 
+  name="description" 
+  content={descrizioneMeta || `Cerchi ${titoloPulito} a Roma? ✅ Elenco aggiornato a ${dataStringa}. Trova i migliori professionisti, guarda la mappa e contattali direttamente su WhatsApp o telefono.`} 
+/>
   <link rel="canonical" href={schemas?.canonical || `https://www.servizisalute.com/${categoria}-roma`} />
   
   {/* OTTIMIZZAZIONE MAPPA */}
