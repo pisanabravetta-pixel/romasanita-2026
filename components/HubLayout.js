@@ -318,18 +318,29 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+            <a href={`tel:${v.telefono}`} 
+onClick={() => window.gtag?.('event', 'click_telefono', { 'event_label': v.nome })} // <--- AGGIUNGI QUESTA RIGA QUI
+style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', padding: '14px', borderRadius: theme.radius.button, textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
               📞 CHIAMA
             </a>
 {v.slug && (
-  <a href={linkScheda} style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
+  <a href={linkScheda}
+ onClick={() => window.gtag?.('event', 'click_scheda', { 'event_label': v.nome })}
+  style={{ flex: '1', minWidth: '110px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>
     📄 SCHEDA
   </a>
 )}
 
             <a 
               href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^0039/, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
-              onClick={(e) => { if(!v.whatsapp) { e.preventDefault(); alert("WhatsApp non disponibile"); } }}
+              onClick={(e) => { 
+  if(!v.whatsapp) { 
+    e.preventDefault(); 
+    alert("WhatsApp non disponibile"); 
+  } else { 
+    window.gtag?.('event', 'click_whatsapp', { 'event_label': v.nome }); 
+  } 
+}}
               target={v.whatsapp ? "_blank" : "_self"}
               rel="noopener noreferrer"
               style={{ flex: '1', minWidth: '110px', backgroundColor: '#22c55e', color: 'white', padding: '14px', borderRadius: '8px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
