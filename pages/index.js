@@ -112,7 +112,20 @@ return (
   
 <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
-  
+  {/* --- TAG SOCIAL INSERITI QUI --- */}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.servizisalute.com/" />
+  <meta property="og:title" content={`ServiziSalute.com | Portale Sanità Roma (${dataStringa})`} />
+  <meta property="og:description" content="Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti. Trova i professionisti vicino a te e contattali direttamente." />
+  <meta property="og:image" content="https://www.servizisalute.com/images/guida-roma-salute.png" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="ServiziSalute Roma" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`ServiziSalute.com | Portale Sanità Roma (${dataStringa})`} />
+  <meta name="twitter:description" content="Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti." />
+  <meta name="twitter:image" content="https://www.servizisalute.com/images/guida-roma-salute.png" />
+  {/* --- FINE TAG SOCIAL --- */}
     <link 
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 
   rel="stylesheet" 
