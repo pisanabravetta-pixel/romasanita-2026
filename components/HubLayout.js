@@ -529,13 +529,8 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
     {(categoria || '') !== 'diagnostica' && <a href="/diagnostica-roma" style={{ color: '#1e40af', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🔬 Diagnostica Roma</a>}
     {(categoria || '') !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
 {(categoria || '') !== 'servizi-domicilio' && (
-  <a 
-    href="/servizi-domicilio-roma" 
-    style={{ color: '#ea580c', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}
-  >
-    🏠 Servizi a Domicilio
-  </a>
-)}
+  
+{(categoria || '') !== 'servizi-a-domicilio' && <a href="/servizi-a-domicilio-roma" style={{ color: '#ea580c', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🏠 Servizi a Domicilio</a>}
   </div>
   
   <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
