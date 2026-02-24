@@ -346,9 +346,13 @@ export default function PaginaQuartiereDinamica({
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
        <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>
   {v.slug ? (
-    <a href={linkScheda} style={{ color: '#1e293b', textDecoration: 'none' }}>
-      {v.nome}
-    </a>
+   <a 
+  href={linkScheda} 
+  onClick={() => window.gtag?.('event', 'click_scheda_dal_nome', { 'event_label': v.nome })}
+  style={{ color: '#1e293b', textDecoration: 'none' }}
+>
+  {v.nome}
+</a>
   ) : (
     v.nome
   )}
@@ -365,11 +369,15 @@ export default function PaginaQuartiereDinamica({
         </div>
         
        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+  <a href={`tel:${v.telefono}`}
+onClick={() => window.gtag?.('event', 'click_telefono_scheda', { 'event_label': v.nome })}
+style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
           
   {/* Modificato qui: usiamo v.slug invece di mostraLinkScheda */}
   {v.slug && (
-    <a href={linkScheda} style={{ flex: '1', minWidth: '100px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📄 SCHEDA</a>
+    <a href={linkScheda} 
+   onClick={() => window.gtag?.('event', 'click_scheda_pulsante', { 'event_label': v.nome })}
+    style={{ flex: '1', minWidth: '100px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📄 SCHEDA</a>
           )}
 
           <a 
@@ -378,6 +386,8 @@ export default function PaginaQuartiereDinamica({
               if(!v.whatsapp) { 
                 e.preventDefault(); 
                 alert("WhatsApp non disponibile per questo professionista"); 
+                } else { 
+    window.gtag?.('event', 'click_whatsapp_scheda', { 'event_label': v.nome });
               } 
             }}
             target={v.whatsapp ? "_blank" : "_self"}
