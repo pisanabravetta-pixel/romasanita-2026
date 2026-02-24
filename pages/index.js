@@ -1,7 +1,7 @@
 // Versione 1.0.1 - Aggiornamento titoli 2026-01-21
 
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import UltimiAnnunci from '../components/UltimiAnnunci';
