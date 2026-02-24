@@ -541,8 +541,8 @@ style={{ flex: '1', minWidth: '110px', backgroundColor: colore, color: 'white', 
     {(categoria || '') !== 'dermatologi' && <a href="/dermatologi-roma" style={{ color: '#be185d', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>👨‍⚕️ Dermatologi Roma</a>}
 {categoria !== 'servizi-domicilio' && <a href="/servizi-domicilio-roma" style={{ color: '#ea580c', fontWeight: '700', textDecoration: 'none', fontSize: '14px' }}>🏠 Servizi a Domicilio</a>}
   </div>
-{/* Usa ZONA per la condizione */}
-    {typeof zona !== 'undefined' && zona && (
+{/* Ora usiamo categoria: il link apparirà in tutte le hub specifiche */}
+    {categoria && (
       <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
         <a href="/servizi-sanitari-roma" style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>
           ← Torna a tutte le specialistiche a Roma
