@@ -20,7 +20,7 @@ export default function Footer() {
             <h5 style={{ color: 'white', fontSize: '14px', marginBottom: '10px', marginTop: '15px' }}>Seguici su:</h5>
             <div style={{ display: 'flex', gap: '15px' }}>
              <a 
-  href="https://www.facebook.com/people/Servizi-Salute-Roma/61587757573445/" 
+  href="https://www.facebook.com/61587757573445" 
   target="_blank" 
   rel="noopener noreferrer" 
   style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}
