@@ -241,7 +241,7 @@ return (
   margin: '0 auto', // Centra su PC
  width: '90%', 
   boxSizing: 'border-box',
-  minHeight: isMobile ? '160px' : '80px'
+ minHeight: typeof window !== 'undefined' && window.innerWidth < 768 ? '160px' : '80px'
 }}>
   
   {/* 1. COSA CERCHI */}
