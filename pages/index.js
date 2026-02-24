@@ -12,15 +12,25 @@ export default function Home() {
   const [zonaScelta, setZonaScelta] = useState("Tutta Roma");
   const [catScelta, setCatScelta] = useState(""); // <-- SPOSTATO QUI IN ALTO
   const [idCat, setIdCat] = useState(0);
+  // --- AGGIUNGI DA QUI ---
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); 
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  // --- A QUI ---
 const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataAttuale = new Date();
   const meseCorrente = mesi[dataAttuale.getMonth()];
   const annoCorrente = dataAttuale.getFullYear();
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
+  // SOSTITUISCI IL VECCHIO zoneRoma CON QUESTO:
   const zoneRoma = [
-    "Appio Latino", "Cassia", "Centro Storico", "EUR", "Flaminio", 
-    "Magliana", "Monteverde", "Nomentano", "Ostiense", "Parioli", 
-    "Prati", "San Giovanni", "Tiburtina", "Trastevere"
+    "Prati", "EUR", "Parioli", "Centro Storico", "San Giovanni", 
+    "Monteverde", "Ostia", "Tiburtina", "Aurelio", "Montesacro"
   ];
 
  const eseguiRicerca = () => {
@@ -241,7 +251,7 @@ return (
   margin: '0 auto', // Centra su PC
  width: '90%', 
   boxSizing: 'border-box',
- minHeight: typeof window !== 'undefined' && window.innerWidth < 768 ? '160px' : '80px'
+minHeight: isMobile ? '160px' : '80px'
 }}>
   
   {/* 1. COSA CERCHI */}
