@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { supabase } from '../lib/supabaseClient';
+
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import HubLayout from '../components/HubLayout';
@@ -697,25 +697,26 @@ return { notFound: true };
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 2. QUERY BASE
-    let query = supabase
-      .from('annunci')
-      .select('*', { count: 'exact' });
-
-    // 3. FILTRO APPROVATO (FINALMENTE QUELLO GIUSTO)
-    query = query.eq('approvato', true); 
-
-    // 4. LOGICA RADICE (Dermatolog...)
+// 2. LOGICA RADICE (Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
-    query = query.ilike('categoria', `%${radice}%`);
 
-    // 5. FILTRO ZONA (Colonna 'zona' confermata dalla sitemap)
+    // 3. COSTRUZIONE QUERY UNIFICATA (Evita errori "undefined")
+    let baseQuery = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' })
+      .eq('approvato', true)
+      .ilike('categoria', `%${radice}%`);
+
+    // 4. FILTRO ZONA (Aggiunto solo se non è una pagina Hub)
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-      query = query.ilike('zona', `%${zonaRicerca}%`);
+      baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
     }
+
+    // 5. ESECUZIONE (Assegnazione a query per il passaggio successivo)
+    let query = baseQuery;
 
     // 6. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
