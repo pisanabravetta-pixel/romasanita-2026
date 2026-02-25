@@ -669,7 +669,14 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    const { supabase } = require('../lib/supabaseClient');
+    // MODIFICA QUESTA RIGA: Importa l'intero modulo
+    const supabaseModule = require('../lib/supabaseClient');
+    // E prendi la costante 'supabase' da lì
+    const supabase = supabaseModule.supabase; 
+    
+    // Ora 'supabase.from' funzionerà perché l'oggetto esiste
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    // ... resto del codice identico
     
     // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
