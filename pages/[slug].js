@@ -24,12 +24,6 @@ export default function PaginaQuartiereDinamica({
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   
-  if (slug && filtri.cat === 'NON_ESISTE') {
-    if (typeof window !== 'undefined') {
-      router.replace('/404'); 
-    }
-    return null;
-  }
 
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataAttuale = new Date();
@@ -134,12 +128,7 @@ export default function PaginaQuartiereDinamica({
     };
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
-  // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
-  if (!slug && !slugSSR) return null;
-
-  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
-  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
-
+  
   // 3. MAPPA
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
@@ -157,10 +146,25 @@ export default function PaginaQuartiereDinamica({
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrare]);
+  
+ // 1. Prima controlliamo se siamo in una pagina 404 (categoria non esistente)
+  if (slug && filtri.cat === 'NON_ESISTE') {
+    if (typeof window !== 'undefined') {
+      router.replace('/404'); 
+    }
+    return null;
+  }
+
+  // 2. Poi controlliamo se manca lo slug (situazione di caricamento o errore)
+  if (!slug && !slugSSR) {
+    return <div className="min-h-screen bg-gray-50" />;
+  }
+
   if (!slug) return null;
 
- return (
-  <>
+  // 3. Solo ora facciamo il return del sito
+  return (
+    <>
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
       <HubLayout 
