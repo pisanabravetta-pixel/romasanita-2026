@@ -637,9 +637,20 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 export async function getServerSideProps(context) {
   const { slug, page: queryPage } = context.query;
   
-  // --- PARACADUTE ANTI-ERRORE 500 ---
+  // 1. IMPORTAZIONE SICURA (Sposta l'import in alto nel file se possibile, altrimenti usa questo)
+  // Assicurati che il percorso sia corretto. Se il client è esportato come default, togli le graffe.
+  const { supabase } = require('../lib/supabaseClient');
+
+  if (!supabase) {
+    console.error("ERRORE: Supabase client non inizializzato");
+    return { props: { datiIniziali: [], totaleDalServer: 0 } };
+  }
+
+  // 2. PARACADUTE ANTI-ERRORE
   const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi', 'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'];
-  const checkSlug = slug ? slug.split('-roma')[0] : '';
+  
+  // Estraiamo la categoria dallo slug in modo sicuro
+  const checkSlug = slug ? slug.split('-roma')[0].toLowerCase() : '';
 
   if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
     return { notFound: true };
@@ -647,25 +658,22 @@ export async function getServerSideProps(context) {
 
   const page = parseInt(queryPage) || 1;
   const annunciPerPagina = 10;
-  // Spostiamo qui il calcolo del range per poterlo usare sotto
   const da = (page - 1) * annunciPerPagina;
   const a = da + annunciPerPagina - 1;
 
   try {
-    const { supabase } = require('../lib/supabaseClient');
-    
-    // 1. ANALISI DELLO SLUG
+    // 3. ANALISI DELLO SLUG
     const slugPuro = slug.replace('-roma-', '@');
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 2. PREPARAZIONE RADICE
+    // 4. PREPARAZIONE RADICE (Logica stringa per database)
     let radice = catRicercata.toLowerCase();
-    if (radice.endsWith('i')) radice = radice.slice(0, -1);
+    if (radice.endsWith('i')) radice = radice.slice(0, -1); // es. dentisti -> dentist
     if (radice.length > 9) radice = radice.substring(0, 10); 
 
-    // 3. QUERY UNIFICATA
+    // 5. QUERY UNIFICATA
     let baseQuery = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
@@ -677,12 +685,15 @@ export async function getServerSideProps(context) {
       baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 4. ESECUZIONE FINALE (Eseguita una sola volta)
+    // 6. ESECUZIONE (Aggiunto timeout concettuale e range)
     const { data, count, error } = await baseQuery
       .order('id', { ascending: false })
       .range(da, a);
 
-    if (error) throw error;
+    if (error) {
+      console.error("Errore query Supabase:", error.message);
+      throw error;
+    }
 
     return {
       props: {
@@ -696,7 +707,7 @@ export async function getServerSideProps(context) {
     };
 
   } catch (err) {
-    console.error("ERRORE SSR:", err);
+    console.error("ERRORE SSR CRITICO:", err.message);
     return { 
       props: { 
         datiIniziali: [], 
