@@ -19,6 +19,10 @@ const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
+  const router = useRouter();
+  const { slug } = router.query;
+  const slugAttivo = slug || slugSSR || '';
+
   // 1. STATI
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
@@ -26,33 +30,38 @@ const router = useRouter();
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI - VERSIONE ANTI-CRASH (Risolve il 500)
+  // 2. LOGICA DATI - CORRETTA PER IL .MAP() SOTTO
   const annunciPerPagina = 10;
-  
-  // Usiamo una variabile sicura: se servizi è vuoto, guarda datiIniziali, altrimenti array vuoto
   const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
   
-  // Evita crash se sorgenteDati è nullo
   const listaUnica = sorgenteDati.length > 0 
     ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
     : [];
 
-  // Se i dati dal server sono già <= 10, non paginiamo ulteriormente (evita box vuoti)
-  const listaDaMostrarePaginata = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
+  // FIX: Sotto nel tuo codice usi "listaDaMostrare", quindi la chiamiamo così qui
+  const listaDaMostrare = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
     ? listaUnica
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+
+  // Per compatibilità con lo useEffect della mappa
+  const listaDaMostrarePaginata = listaDaMostrare;
 
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // 3. LOGICA DATE E FILTRI
+  // 3. LOGICA DATE E FILTRI (Aggiunto colore e quartiereNome)
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
   
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
-  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
+  
+  // FIX: Definiamo 'colore' e 'quartiereNome' perché il tuo JSX li richiede!
+  const colore = filtri?.colore || '#0891b2';
   const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+
+  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   
   const nomiCorrettiH1 = {
     'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
@@ -60,7 +69,6 @@ const router = useRouter();
     'oculisti': 'OCULISTI', 'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
   };
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-
   // 4. HOOKS (Senza modifiche alla tua logica di caricamento)
   useEffect(() => {
     if (typeof window !== 'undefined') {
