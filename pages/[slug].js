@@ -674,35 +674,36 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
   const { slug, page: queryPage } = context.query;
+  
   // --- PARACADUTE ANTI-ERRORE 500 ---
+  const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi', 'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'];
+  const checkSlug = slug ? slug.split('-roma')[0] : '';
 
-const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi', 'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'];
+  if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
+    return { notFound: true };
+  }
 
-const checkSlug = slug ? slug.split('-roma')[0] : '';
-
-if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
-return { notFound: true };
-}
-
-// ------------------------------------
   const page = parseInt(queryPage) || 1;
   const annunciPerPagina = 10;
+  // Spostiamo qui il calcolo del range per poterlo usare sotto
+  const da = (page - 1) * annunciPerPagina;
+  const a = da + annunciPerPagina - 1;
 
   try {
     const { supabase } = require('../lib/supabaseClient');
     
     // 1. ANALISI DELLO SLUG
-    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const slugPuro = slug.replace('-roma-', '@');
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-// 2. PREPARAZIONE RADICE (es. Dermatolog...)
+    // 2. PREPARAZIONE RADICE
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
 
-    // 3. QUERY UNIFICATA (Punto 5 audit: evita che la query diventi undefined)
+    // 3. QUERY UNIFICATA
     let baseQuery = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
@@ -714,15 +715,8 @@ return { notFound: true };
       baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 4. ESECUZIONE FINALE
+    // 4. ESECUZIONE FINALE (Eseguita una sola volta)
     const { data, count, error } = await baseQuery
-      .order('id', { ascending: false })
-      .range(da, a);
-    // 5. PAGINAZIONE SERVER-SIDE
-    const da = (page - 1) * annunciPerPagina;
-    const a = da + annunciPerPagina - 1;
-
-    const { data, count, error } = await query
       .order('id', { ascending: false })
       .range(da, a);
 
@@ -738,6 +732,7 @@ return { notFound: true };
         zonaSSR: zonaInSlug
       }
     };
+
   } catch (err) {
     console.error("ERRORE SSR:", err);
     return { 
