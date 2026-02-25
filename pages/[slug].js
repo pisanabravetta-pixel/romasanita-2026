@@ -619,94 +619,10 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 }
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
-export async function getServerSideProps(context) {
-  const { slug, page: queryPage } = context.query;
-
-  // 1. IMPORTAZIONE ULTRA-SICURA
-  // Proviamo a caricare supabase sia come named export che come default per evitare il 500
-  let supabase;
-  try {
-    const clientModule = require('../lib/supabaseClient');
-    supabase = clientModule.supabase || clientModule.default || clientModule;
-  } catch (e) {
-    console.error("ERRORE CARICAMENTO MODULO SUPABASE:", e);
-  }
-
-  if (!supabase || typeof supabase.from !== 'function') {
-    console.error("ERRORE: Client Supabase non valido o non inizializzato");
-    return { props: { datiIniziali: [], totaleDalServer: 0, slugSSR: slug || "" } };
-  }
-
-  // 2. PARACADUTE ANTI-ERRORE SLUG
-  const categorieProtette = [
-    'farmacie', 'diagnostica', 'dentisti', 'dermatologi', 
-    'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 
-    'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'
-  ];
+const sorgenteDati = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : servizi;
+  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
   
-  const checkSlug = slug ? slug.split('-roma')[0].toLowerCase() : '';
-
-  if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
-    return { notFound: true };
-  }
-
-  const page = parseInt(queryPage) || 1;
-  const annunciPerPagina = 10;
-  const da = (page - 1) * annunciPerPagina;
-  const a = da + annunciPerPagina - 1;
-
-  try {
-    // 3. ANALISI DELLO SLUG
-    const slugPuro = slug.replace('-roma-', '@');
-    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
-    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaInSlug || zonaInSlug === 'roma';
-
-    // 4. LOGICA STRINGA DATABASE
-    let radice = catRicercata.toLowerCase();
-    if (radice.endsWith('i')) radice = radice.slice(0, -1);
-    if (radice.length > 9) radice = radice.substring(0, 10); 
-
-    // 5. QUERY
-    let baseQuery = supabase
-      .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('approvato', true)
-      .ilike('categoria', `%${radice}%`);
-
-    if (!isHub) {
-      const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-      baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
-    }
-
-    const { data, count, error } = await baseQuery
-      .order('id', { ascending: false })
-      .range(da, a);
-
-    if (error) throw error;
-
-    return {
-      props: {
-        datiIniziali: data || [],
-        totaleDalServer: count || 0,
-        paginaIniziale: page,
-        slugSSR: slug || "",
-        categoriaSSR: catRicercata,
-        zonaSSR: zonaInSlug
-      }
-    };
-
-  } catch (err) {
-    console.error("ERRORE SSR DURANTE QUERY:", err.message);
-    return { 
-      props: { 
-        datiIniziali: [], 
-        totaleDalServer: 0, 
-        paginaIniziale: 1, 
-        slugSSR: slug || "",
-        categoriaSSR: "",
-        zonaSSR: ""
-      } 
-    };
-  }
-}
+  // Se arrivano da SSR, sono già 10, non tagliarli ancora
+  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
+    ? listaUnica 
+    : listaUnica.slice((pagina - 1) * 10, pagina * 10);
