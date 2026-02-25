@@ -17,51 +17,47 @@ export default function PaginaQuartiereDinamica({
 }) {
 const router = useRouter();
   const { slug } = router.query;
-  const slugAttivo = slug || slugSSR || '';
 
-  // 1. STATI
+  // 1. STATI (Tutti qui in cima come da regole React)
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI (Centralizzata - RISOLVE BOX VUOTI)
-  const annunciPerPagina = 10;
-  const datiDaUsare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : (servizi || []);
-  const listaUnica = Array.from(new Map(datiDaUsare.map(item => [item.id, item])).values());
-
-  const listaDaMostrare = (datiDaUsare.length <= annunciPerPagina) 
-    ? listaUnica 
-    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
-
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
-  // 3. LOGICA DATE E TITOLI (Quella che mancava)
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataAttuale = new Date();
-  const meseCorrente = mesi[dataAttuale.getMonth()];
-  const annoCorrente = dataAttuale.getFullYear();
-  const dataStringa = `${meseCorrente} ${annoCorrente}`;
-
-  const nomiCorrettiH1 = {
-    'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
-    'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
-    'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
-    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
-  };
-
+  // 2. LOGICA DI DEFINIZIONE SLUG E DATE
+  const slugAttivo = slug || slugSSR || '';
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-  
-  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-  const colore = filtri.colore || '#2563eb';
 
-  // 4. HOOKS
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
+
+  const nomiCorrettiH1 = {
+    'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
+    'dermatologi': 'DERMATOLOGI', 'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI',
+    'oculisti': 'OCULISTI', 'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
+  };
+  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
+
+  // 3. LOGICA ANNUNCI (La tua originale, corretta per SSR)
+  const annunciPerPagina = 10;
+  // Usiamo datiIniziali se presenti, altrimenti lo stato servizi
+  const datiDaMostrare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : (servizi || []);
+  const listaUnica = Array.from(new Map(datiDaMostrare.map(item => [item.id, item])).values());
+
+  // Se la lista ha già 10 o meno elementi (SSR), la usiamo tutta.
+  const listaDaMostrarePaginata = (listaUnica.length <= annunciPerPagina) 
+    ? listaUnica 
+    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  // DEFINIZIONE UNICA: risolve l'errore del log di Vercel
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
+  // --- HOOK 1: URL ---
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -69,66 +65,66 @@ const router = useRouter();
     }
   }, [router.query]);
 
+  // --- HOOK 2: META E PESCAGGIO ---
   useEffect(() => {
-    const s = slugAttivo;
-    if (!s || s === 'index' || s === '') return;
+    const s = slug || slugSSR;
+    if (!s || s === 'index') return;
 
     const slugPuro = s.replace('-roma-', '@');
-    const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
-    const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaEstratta || zonaEstratta === 'roma';
+    const catE = slugPuro.split('@')[0].replace('-roma', ''); 
+    const zonaE = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaE || zonaE === 'roma';
 
-    const nomiPuliti = {
-      'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
-      'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
-      'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
-      'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
-      'servizi-domicilio': 'Servizi a Domicilio'
-    };
-    
-    const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
-    const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    // Set Temi e Meta
+    setTema({ primario: "#0891b2", chiaro: "#ecfeff", label: catE.toUpperCase() });
+    setMeta({ 
+      titolo: isHub ? `${catE} a Roma` : `${catE} a Roma ${zonaE}`, 
+      zona: zonaE, cat: catE 
+    });
 
-    let primario = "#0891b2";
-    if (catEstratta.includes('dentist')) primario = "#0f766e";
-    else if (catEstratta.includes('dermatol')) primario = "#be185d";
-    else if (catEstratta.includes('cardiolog')) primario = "#dc2626";
-
-    setTema({ primario, chiaro: '#f0fdfa', label: nomeBase.toUpperCase() });
-    setMeta({ titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase });
-
+    // Se abbiamo i dati dal server, li carichiamo e STOP.
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
-      setLoading(false);
       return; 
     }
-  }, [slugAttivo, datiIniziali]);
 
+    // Altrimenti (fallback) facciamo la fetch
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const keyword = catE.toLowerCase().substring(0, 4);
+        let q = supabase.from('annunci').select('*').eq('approvato', true);
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        if (!isHub) q = q.ilike('zona', `%${zonaE.replace(/-/g, ' ')}%`);
+        const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
+        if (data) setServizi(data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData(); 
+  }, [slug, slugSSR, datiIniziali]);
+
+  // --- HOOK 3: MAPPA ---
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
-      if (window.mapInstance) { window.mapInstance.remove(); }
+    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrarePaginata?.length > 0) {
+      if (window.mapInstance) window.mapInstance.remove();
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
       const group = new L.featureGroup();
-      listaDaMostrare.forEach((s) => {
+      listaDaMostrarePaginata.forEach(s => {
         if (s.lat && s.lng) {
-          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
+          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map);
           group.addLayer(m);
         }
       });
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
-  }, [listaDaMostrare]);
+  }, [listaDaMostrarePaginata]);
 
-  // 5. CONTROLLI FINALI
   if (!slugAttivo) return null;
-  if (filtri.cat === 'NON_ESISTE') {
-    if (typeof window !== 'undefined') router.replace('/404');
-    return null;
-  }
 
-  // --- RENDER ---
   return (
     <>
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
