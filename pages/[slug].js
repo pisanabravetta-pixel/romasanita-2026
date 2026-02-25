@@ -18,19 +18,22 @@ export default function PaginaQuartiereDinamica({
   const router = useRouter();
   const { slug } = router.query;
 
-  // --- LOGICA DI SICUREZZA E DEFINIZIONE ---
+// --- LOGICA DI SICUREZZA E DEFINIZIONE ---
 const slugAttivo = slug || slugSSR || '';
 
-if (!slugAttivo || slugAttivo === '-roma' || slugAttivo === 'undefined') {
+// 1. Se lo slug è vuoto o chiaramente sbagliato, manda in 404
+if (!slugAttivo || slugAttivo === '-roma' || slugAttivo === 'undefined' || slugAttivo.startsWith('-')) {
 if (typeof window !== 'undefined') {
 router.replace('/404');
 }
 return null;
 }
 
+// 2. Pulizia categoria
 const categoriaPulita = slugAttivo.replace('-roma-', '@').split('@')[0];
 const filtri = getDBQuery(categoriaPulita);
 
+// 3. Se la categoria non esiste nel tuo file seo-logic
 if (filtri.cat === 'NON_ESISTE') {
 if (typeof window !== 'undefined') {
 router.replace('/404');
