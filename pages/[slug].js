@@ -636,20 +636,29 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
   const { slug, page: queryPage } = context.query;
-  
-  // 1. IMPORTAZIONE SICURA (Sposta l'import in alto nel file se possibile, altrimenti usa questo)
-  // Assicurati che il percorso sia corretto. Se il client è esportato come default, togli le graffe.
-  const { supabase } = require('../lib/supabaseClient');
 
-  if (!supabase) {
-    console.error("ERRORE: Supabase client non inizializzato");
-    return { props: { datiIniziali: [], totaleDalServer: 0 } };
+  // 1. IMPORTAZIONE ULTRA-SICURA
+  // Proviamo a caricare supabase sia come named export che come default per evitare il 500
+  let supabase;
+  try {
+    const clientModule = require('../lib/supabaseClient');
+    supabase = clientModule.supabase || clientModule.default || clientModule;
+  } catch (e) {
+    console.error("ERRORE CARICAMENTO MODULO SUPABASE:", e);
   }
 
-  // 2. PARACADUTE ANTI-ERRORE
-  const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi', 'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'];
+  if (!supabase || typeof supabase.from !== 'function') {
+    console.error("ERRORE: Client Supabase non valido o non inizializzato");
+    return { props: { datiIniziali: [], totaleDalServer: 0, slugSSR: slug || "" } };
+  }
+
+  // 2. PARACADUTE ANTI-ERRORE SLUG
+  const categorieProtette = [
+    'farmacie', 'diagnostica', 'dentisti', 'dermatologi', 
+    'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 
+    'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'
+  ];
   
-  // Estraiamo la categoria dallo slug in modo sicuro
   const checkSlug = slug ? slug.split('-roma')[0].toLowerCase() : '';
 
   if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
@@ -668,12 +677,12 @@ export async function getServerSideProps(context) {
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 4. PREPARAZIONE RADICE (Logica stringa per database)
+    // 4. LOGICA STRINGA DATABASE
     let radice = catRicercata.toLowerCase();
-    if (radice.endsWith('i')) radice = radice.slice(0, -1); // es. dentisti -> dentist
+    if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
 
-    // 5. QUERY UNIFICATA
+    // 5. QUERY
     let baseQuery = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
@@ -685,15 +694,11 @@ export async function getServerSideProps(context) {
       baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 6. ESECUZIONE (Aggiunto timeout concettuale e range)
     const { data, count, error } = await baseQuery
       .order('id', { ascending: false })
       .range(da, a);
 
-    if (error) {
-      console.error("Errore query Supabase:", error.message);
-      throw error;
-    }
+    if (error) throw error;
 
     return {
       props: {
@@ -707,7 +712,7 @@ export async function getServerSideProps(context) {
     };
 
   } catch (err) {
-    console.error("ERRORE SSR CRITICO:", err.message);
+    console.error("ERRORE SSR DURANTE QUERY:", err.message);
     return { 
       props: { 
         datiIniziali: [], 
