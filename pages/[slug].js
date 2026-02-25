@@ -70,7 +70,7 @@ export default function PaginaQuartiereDinamica({
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
-      return; 
+      // Rimosso il return per far proseguire la logica dei Meta e del Tema
     }
 
     const fetchData = async () => {
@@ -120,31 +120,62 @@ export default function PaginaQuartiereDinamica({
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
   const colore = filtri.colore || '#2563eb';
 
+  // --- CORREZIONE VITALA ---
   const annunciPerPagina = 10;
   const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+
+  // Se la lista ha già 10 o meno elementi, significa che è già paginata dal server: usala tutta.
+  // Se ne ha di più (fallback client), allora applica lo slice.
+  const listaDaMostrare = (listaUnica.length <= annunciPerPagina) 
+    ? listaUnica 
+    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
-  // Hook 3: inizializzazione mappa Leaflet
+// Hook 3: inizializzazione mappa Leaflet (VERSIONE BLINDATA)
   useEffect(() => {
+    // Verifichiamo che siamo nel browser e che Leaflet (L) sia caricato
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
-      if (window.mapInstance) { window.mapInstance.remove(); }
+      
+      // 1. Pulizia istanza precedente
+      if (window.mapInstance) { 
+        window.mapInstance.remove(); 
+        window.mapInstance = null;
+      }
+
+      // 2. Creazione Mappa
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
+        attribution: '© OSM' 
+      }).addTo(map);
+
       const group = new L.featureGroup();
+
+      // 3. Aggiunta Marker
       listaDaMostrare.forEach((s) => {
-        if (s.lat && s.lng) {
-          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
+        // Usiamo lat e lng (come confermato)
+        const latitude = parseFloat(s.lat);
+        const longitude = parseFloat(s.lng);
+
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+          const m = L.marker([latitude, longitude])
+            .addTo(map)
+            .bindPopup(`<b>${s.nome}</b><br><small>${s.indirizzo || ''}</small>`);
           group.addLayer(m);
         }
       });
-      if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
-    }
-  }, [listaDaMostrare]);
 
+      // 4. Centratura automatica sugli annunci trovati
+      if (group.getLayers().length > 0) {
+        map.addLayer(group);
+        map.fitBounds(group.getBounds().pad(0.1));
+      }
+    }
+    // L'effetto deve scattare quando cambiano gli annunci o quando Leaflet viene caricato
+  }, [listaDaMostrare, typeof L]);
+  
   // --- GUARD: ora i return condizionali stanno DOPO tutti gli Hook ---
 
   // Se lo slug non è ancora disponibile (hydration), non renderizzare
@@ -218,7 +249,7 @@ export default function PaginaQuartiereDinamica({
           src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
           crossOrigin=""
-          strategy="lazyOnload" 
+          strategy="afterInteractive"
         />
 
 <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
