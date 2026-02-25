@@ -15,22 +15,27 @@ export default function PaginaQuartiereDinamica({
   categoriaSSR, 
   zonaSSR        
 }) {
-const router = useRouter();
+// 1. ROUTING E SLUG (Dichiarati UNA sola volta)
+  const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
-const router = useRouter();
-  const { slug } = router.query;
-  const slugAttivo = slug || slugSSR || '';
-
-  // 1. STATI
+  // 2. STATI
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI - SINCRONIZZATA
+  // 3. LOGICA DATI E FILTRI (Definiamo le variabili mancanti per evitare il 500)
+  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
+  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
+  
+  const colore = filtri?.colore || '#0891b2'; // Fondamentale per il rendering
+  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
+
   const annunciPerPagina = 10;
   const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
   
@@ -46,17 +51,8 @@ const router = useRouter();
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // 3. LOGICA DATE E FILTRI
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
-  
-  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
-  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
-  
-  const colore = filtri?.colore || '#0891b2';
-  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   
   const nomiCorrettiH1 = {
     'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
@@ -65,7 +61,7 @@ const router = useRouter();
   };
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
 
-  // 4. HOOKS PULITI (Senza chiamate a supabase esterne)
+  // 4. HOOKS (Sincronizzazione dati)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -93,7 +89,7 @@ const router = useRouter();
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
     }
-  }, [slug, slugSSR, datiIniziali]);
+  }, [slug, slugSSR, datiIniziali, colore]);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrarePaginata?.length > 0) {
@@ -111,7 +107,6 @@ const router = useRouter();
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrarePaginata]);
-
   if (!slugAttivo) return null;
 
   return (
