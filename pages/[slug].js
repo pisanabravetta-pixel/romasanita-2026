@@ -26,6 +26,24 @@ export default function PaginaQuartiereDinamica({
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
+  // --- INSERISCI DA QUI ---
+  const annunciPerPagina = 10;
+  
+  // Scegliamo la sorgente: se datiIniziali (dal server) esiste, usiamo quelli.
+  const datiDaUsare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : (servizi || []);
+  
+  // Creiamo la lista unica per sicurezza
+  const listaUnica = Array.from(new Map(datiDaUsare.map(item => [item.id, item])).values());
+
+  // LOGICA SALVA-ANNUNCI: 
+  // Se la lista è già corta (<=10), significa che il server ha già fatto il lavoro. Mostriamoli tutti.
+  const listaDaMostrare = (datiDaUsare.length <= annunciPerPagina) 
+    ? listaUnica 
+    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  // --- A QUI ---
 
   // Hook 1: legge il parametro ?page= dall'URL
   useEffect(() => {
