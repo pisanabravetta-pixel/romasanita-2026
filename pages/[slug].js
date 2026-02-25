@@ -7,49 +7,46 @@ import Footer from '../components/Footer';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import HubLayout from '../components/HubLayout';
-export default function PaginaQuartiereDinamica({ 
-  datiIniziali, 
-  totaleDalServer, 
-  paginaIniziale, 
-  slugSSR,
-  categoriaSSR, 
-  zonaSSR        
+ export default function PaginaQuartiereDinamica({ 
+  datiIniziali = [],       // AGGIUNTO DEFAULT
+  totaleDalServer = 0,    // AGGIUNTO DEFAULT
+  paginaIniziale = 1, 
+  slugSSR = "",
+  categoriaSSR = "", 
+  zonaSSR = ""            
 }) {
-// 1. ROUTING E SLUG (Dichiarati UNA sola volta)
   const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
-  // 2. STATI
-  const [servizi, setServizi] = useState(datiIniziali || []);
+  // 1. STATI
+  const [servizi, setServizi] = useState(datiIniziali);
   const [loading, setLoading] = useState(false);
-  const [pagina, setPagina] = useState(paginaIniziale || 1);
+  const [pagina, setPagina] = useState(paginaIniziale);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 3. LOGICA DATI E FILTRI (Definiamo le variabili mancanti per evitare il 500)
-  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
-  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
-  
-  const colore = filtri?.colore || '#0891b2'; // Fondamentale per il rendering
-  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
-
+  // 2. LOGICA DATI - Deve usare la props datiIniziali passata dal server
   const annunciPerPagina = 10;
-  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
+  
+  // Usiamo datiIniziali (che ora ha il default []) per evitare il ReferenceError
+  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : datiIniziali;
   
   const listaUnica = sorgenteDati.length > 0 
     ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
     : [];
 
-  const listaDaMostrare = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
-    ? listaUnica
+  // Se i dati arrivano da SSR (datiIniziali popolato), il server ha già fatto il range
+  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
+    ? listaUnica 
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
 
   const listaDaMostrarePaginata = listaDaMostrare;
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  
+  // ... il resto del tuo codice (Logic filtri, nomiCorrettiH1, useEffect ecc.)
+
 
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
