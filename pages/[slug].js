@@ -689,7 +689,7 @@ const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi',
 
 const checkSlug = slug ? slug.split('-roma')[0] : '';
 
-if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug)) {
+if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug) || slug.includes('.php')) {
 return { notFound: true };
 }
 
