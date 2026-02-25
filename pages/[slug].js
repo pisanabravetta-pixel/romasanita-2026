@@ -697,28 +697,28 @@ return { notFound: true };
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-// 2. LOGICA RADICE (Dermatolog...)
+// 2. PREPARAZIONE RADICE (es. Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
 
-    // 3. COSTRUZIONE QUERY UNIFICATA (Evita errori "undefined")
+    // 3. QUERY UNIFICATA (Punto 5 audit: evita che la query diventi undefined)
     let baseQuery = supabase
       .from('annunci')
       .select('*', { count: 'exact' })
       .eq('approvato', true)
       .ilike('categoria', `%${radice}%`);
 
-    // 4. FILTRO ZONA (Aggiunto solo se non è una pagina Hub)
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       baseQuery = baseQuery.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 5. ESECUZIONE (Assegnazione a query per il passaggio successivo)
-    let query = baseQuery;
-
-    // 6. PAGINAZIONE SERVER-SIDE
+    // 4. ESECUZIONE FINALE
+    const { data, count, error } = await baseQuery
+      .order('id', { ascending: false })
+      .range(da, a);
+    // 5. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
