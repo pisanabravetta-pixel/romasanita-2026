@@ -669,36 +669,42 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // Questa parte è quella che causa l'errore: va scritta esattamente così
+    // 1. IMPORTAZIONE SICURA DI SUPABASE
+    // Usiamo una logica che controlla tutti i tipi di export (default o named)
     const supabaseModule = require('../lib/supabaseClient');
-    const supabase = supabaseModule.supabase; 
+    const supabase = supabaseModule.supabase || supabaseModule.default || supabaseModule;
 
-    // Se supabase è caricato correttamente, ora .from() funzionerà
+    if (!supabase || typeof supabase.from !== 'function') {
+      throw new Error("Client Supabase non inizializzato correttamente");
+    }
+
+    // 2. ANALISI DELLO SLUG (UNA SOLA VOLTA)
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
+    // 3. COSTRUZIONE QUERY
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' });
 
-    // 4. FILTRO APPROVATO
-    query = query.eq('approvato', true); 
+    // Filtro approvati
+    query = query.eq('visibile', true); 
 
-    // 5. LOGICA RADICE (Dermatolog...)
+    // 4. LOGICA RADICE CATEGORIA (es. Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
-    // 6. FILTRO ZONA
+    // 5. FILTRO ZONA
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-      query = query.ilike('zona', `%${zonaRicerca}%`);
+      query = query.ilike('quartiere', `%${zonaRicerca}%`);
     }
 
-    // 7. PAGINAZIONE SERVER-SIDE
+    // 6. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -718,8 +724,9 @@ export async function getServerSideProps(context) {
         zonaSSR: zonaInSlug
       }
     };
+
   } catch (err) {
-    console.error("ERRORE SSR:", err);
+    console.error("ERRORE CRITICO SSR:", err.message);
     return { 
       props: { 
         datiIniziali: [], 
