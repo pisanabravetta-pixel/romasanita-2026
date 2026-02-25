@@ -3,116 +3,164 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
-import HubLayout from '../components/HubLayout';
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
   paginaIniziale, 
-  slugSSR, 
+  slugSSR,
   categoriaSSR, 
-  zonaSSR 
+  zonaSSR        
 }) {
   const router = useRouter();
   const { slug } = router.query;
-  const slugAttivo = slug || slugSSR || '';
 
-  // 1. STATI
+  // --- LOGICA ORIGINALE ---
+  const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
+  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
+  const filtri = getDBQuery(categoriaPulita);
+  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
+  const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  
+  if (slug && filtri.cat === 'NON_ESISTE') {
+    if (typeof window !== 'undefined') {
+      router.replace('/404'); 
+    }
+    return null;
+  }
+
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
+
+  const nomiCorrettiH1 = {
+    'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
+    'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
+    'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
+    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
+  };
+
+  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
+  const colore = filtri.colore || '#2563eb';
+
+  // --- STATI E LOGICA ---
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI (La tua logica originale)
   const annunciPerPagina = 10;
-  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
-  
-  const listaUnica = sorgenteDati.length > 0 
-    ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
-    : [];
-
-  const listaDaMostrare = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
-    ? listaUnica
-    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
-
-  const listaDaMostrarePaginata = listaDaMostrare;
+  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
+  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // 3. LOGICA FILTRI E COLORI
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
-  
-  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
-  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
-  
-  const colore = filtri?.colore || '#0891b2';
-  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
-  
-  const nomiCorrettiH1 = {
-    'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
-    'dermatologi': 'DERMATOLOGI', 'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI',
-    'oculisti': 'OCULISTI', 'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
-  };
-  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-
-  // 4. HOOKS (Ripristinati esattamente come ieri)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      setPagina(parseInt(params.get('page')) || 1);
+      const p = parseInt(params.get('page')) || 1;
+      setPagina(p);
     }
   }, [router.query]);
 
   useEffect(() => {
-    const s = slug || slugSSR;
-    if (!s || s === 'index') return;
+    const s = slug || slugSSR; // FIX: coerenza con slugSSR
+    if (!s || s === 'index' || s === '') return;
 
     const slugPuro = s.replace('-roma-', '@');
-    const catE = slugPuro.split('@')[0].replace('-roma', ''); 
-    const zonaE = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-    const isHub = !zonaE || zonaE === 'roma';
+    const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
+    const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
-    setTema({ primario: colore, chiaro: `${colore}15`, label: catE.toUpperCase() });
+    const nomiPuliti = {
+      'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
+      'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
+      'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
+      'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
+      'servizi-domicilio': 'Servizi a Domicilio'
+    };
+    const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
+    const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+    let primario = "#0891b2"; let chiaro = "#ecfeff";
+    if (catEstratta.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
+    else if (catEstratta.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
+    else if (catEstratta.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
+
+    setTema({ primario, chiaro, label: nomeBase.toUpperCase() });
     setMeta({ 
-      titolo: isHub ? `${catE} a Roma` : `${catE} a Roma ${zonaE}`, 
-      zona: zonaE, 
-      cat: catE,
-      nomeSemplice: catE.replace(/-/g, ' ')
+      titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, 
+      zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
+    if (isHub && datiIniziali && datiIniziali.length > 0) {
+      setServizi(datiIniziali);
+      setLoading(false);
+      return; 
+    }
+    // --- AGGIUNGI QUESTO QUI SOTTO ---
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
+      setLoading(false);
+      return; 
     }
-  }, [slug, slugSSR, datiIniziali, colore]);
+    // --- FINE AGGIUNTA ---
 
-  // ... (Resto del codice della mappa e return che avevi già incollato)
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const keyword = catEstratta.toLowerCase().substring(0, 4);
+        let q = supabase.from('annunci').select('*').eq('approvato', true);
+        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        if (!isHub) {
+          const zQuery = zonaEstratta.replace(/-/g, ' ');
+          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+        }
+        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
+        if (!error) setServizi(data || []);
+      } catch (err) {
+        console.error("Errore fetch client:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [slug, slugSSR, datiIniziali]);
+  // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
+  if (!slug && !slugSSR) return null;
 
+  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
+  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
+
+  // 3. MAPPA
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrarePaginata?.length > 0) {
-      if (window.mapInstance) window.mapInstance.remove();
+    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
+      if (window.mapInstance) { window.mapInstance.remove(); }
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
       const group = new L.featureGroup();
-      listaDaMostrarePaginata.forEach(s => {
+      listaDaMostrare.forEach((s) => {
         if (s.lat && s.lng) {
-          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map);
+          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
           group.addLayer(m);
         }
       });
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
-  }, [listaDaMostrarePaginata]);
-  if (!slugAttivo) return null;
+  }, [listaDaMostrare]);
+  if (!slug) return null;
 
-  return (
-    <>
+ return (
+  <>
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
       <HubLayout 
@@ -167,7 +215,7 @@ export default function PaginaQuartiereDinamica({
           src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
           crossOrigin=""
-          strategy="afterInteractive"
+          strategy="lazyOnload" 
         />
 
 <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
@@ -298,13 +346,9 @@ export default function PaginaQuartiereDinamica({
       <div key={v.id} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '25px', marginBottom: '20px', border: v.is_top ? `4px solid ${tema.primario}` : '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
        <h3 style={{ color: '#1e293b', fontSize: '24px', fontWeight: '900', margin: '0 0 10px 0' }}>
   {v.slug ? (
-   <a 
-  href={linkScheda} 
-  onClick={() => window.gtag?.('event', 'click_scheda_dal_nome', { 'event_label': v.nome })}
-  style={{ color: '#1e293b', textDecoration: 'none' }}
->
-  {v.nome}
-</a>
+    <a href={linkScheda} style={{ color: '#1e293b', textDecoration: 'none' }}>
+      {v.nome}
+    </a>
   ) : (
     v.nome
   )}
@@ -321,25 +365,19 @@ export default function PaginaQuartiereDinamica({
         </div>
         
        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-  <a href={`tel:${v.telefono}`}
-onClick={() => window.gtag?.('event', 'click_telefono_scheda', { 'event_label': v.nome })}
-style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
+  <a href={`tel:${v.telefono}`} style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📞 CHIAMA</a>
           
   {/* Modificato qui: usiamo v.slug invece di mostraLinkScheda */}
   {v.slug && (
-    <a href={linkScheda} 
-   onClick={() => window.gtag?.('event', 'click_scheda_pulsante', { 'event_label': v.nome })}
-    style={{ flex: '1', minWidth: '100px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📄 SCHEDA</a>
+    <a href={linkScheda} style={{ flex: '1', minWidth: '100px', backgroundColor: '#1e293b', color: 'white', padding: '14px', borderRadius: '10px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>📄 SCHEDA</a>
           )}
 
           <a 
-            href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^0039/, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
+            href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}?text=${encodeURIComponent(`Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com`)}` : '#'}
             onClick={(e) => { 
               if(!v.whatsapp) { 
                 e.preventDefault(); 
                 alert("WhatsApp non disponibile per questo professionista"); 
-                } else { 
-    window.gtag?.('event', 'click_whatsapp_scheda', { 'event_label': v.nome });
               } 
             }}
             target={v.whatsapp ? "_blank" : "_self"}
@@ -629,26 +667,33 @@ export async function getServerSideProps(context) {
   try {
     const { supabase } = require('../lib/supabaseClient');
     
+    // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
+    // 2. QUERY BASE
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('approvato', true);
+      .select('*', { count: 'exact' });
 
+    // 3. FILTRO APPROVATO (FINALMENTE QUELLO GIUSTO)
+    query = query.eq('approvato', true); 
+
+    // 4. LOGICA RADICE (Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
+    // 5. FILTRO ZONA (Colonna 'zona' confermata dalla sitemap)
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-      query = query.ilike('zona', `%${zonaRicerca}%`); // COLONNA ZONA
+      query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
+    // 6. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -669,6 +714,16 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" } };
+    console.error("ERRORE SSR:", err);
+    return { 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: ""
+      } 
+    };
   }
 }
