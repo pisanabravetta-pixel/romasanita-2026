@@ -669,42 +669,37 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // MODIFICA QUESTA RIGA: Importa l'intero modulo
+    // 1. IMPORT SUPABASE (Corretto per SSR)
     const supabaseModule = require('../lib/supabaseClient');
-    // E prendi la costante 'supabase' da lì
     const supabase = supabaseModule.supabase; 
     
-    // Ora 'supabase.from' funzionerà perché l'oggetto esiste
-    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
-    // ... resto del codice identico
-    
-    // 1. ANALISI DELLO SLUG
+    // 2. ANALISI DELLO SLUG (UNA SOLA VOLTA)
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 2. QUERY BASE
+    // 3. QUERY BASE
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' });
 
-    // 3. FILTRO APPROVATO (FINALMENTE QUELLO GIUSTO)
+    // 4. FILTRO APPROVATO
     query = query.eq('approvato', true); 
 
-    // 4. LOGICA RADICE (Dermatolog...)
+    // 5. LOGICA RADICE (Dermatolog...)
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
-    // 5. FILTRO ZONA (Colonna 'zona' confermata dalla sitemap)
+    // 6. FILTRO ZONA
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 6. PAGINAZIONE SERVER-SIDE
+    // 7. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
