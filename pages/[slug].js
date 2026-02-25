@@ -664,74 +664,70 @@ export default function PaginaQuartiereDinamica({
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
-const { slug, page: queryPage } = context.query;
-const page = parseInt(queryPage) || 1;
-const annunciPerPagina = 10;
+  const { slug, page: queryPage } = context.query;
+  const page = parseInt(queryPage) || 1;
+  const annunciPerPagina = 10;
 
-try {
-// 1. IMPORTAZIONE CORRETTA PER IL TUO FILE
-const supabaseModule = await import('../lib/supabaseClient');
-const supabase = supabaseModule.supabase;
+  try {
+    const supabaseModule = await import('../lib/supabaseClient');
+    const supabase = supabaseModule.supabase; 
 
-if (!supabase) {
-  throw new Error("Impossibile trovare la costante supabase nel modulo");
-}
+    if (!supabase) throw new Error("Client non trovato");
 
-// 2. ANALISI DELLO SLUG (UNA SOLA VOLTA)
-const slugPuro = slug ? slug.replace('-roma-', '@') : '';
-const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
-const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
-const isHub = !zonaInSlug || zonaInSlug === 'roma';
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
+    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-// 3. QUERY BASE
-let query = supabase
-  .from('annunci')
-  .select('*', { count: 'exact' });
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' });
 
-// 4. FILTRI (Secondo le tue colonne: visibile e quartiere)
-query = query.eq('visibile', 'Sì'); 
+    // FILTRO APPROVATO (Come richiesto)
+    query = query.eq('approvato', true); 
 
-let radice = catRicercata.toLowerCase();
-if (radice.endsWith('i')) radice = radice.slice(0, -1);
-if (radice.length > 9) radice = radice.substring(0, 10); 
-query = query.ilike('categoria', `%${radice}%`);
+    let radice = catRicercata.toLowerCase();
+    if (radice.endsWith('i')) radice = radice.slice(0, -1);
+    if (radice.length > 9) radice = radice.substring(0, 10); 
+    query = query.ilike('categoria', `%${radice}%`);
 
-if (!isHub) {
-  const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-  query = query.ilike('quartiere', `%${zonaRicerca}%`);
-}
+    // FILTRO ZONA (Come richiesto)
+    if (!isHub) {
+      const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
+      query = query.ilike('zona', `%${zonaRicerca}%`);
+    }
 
-// 5. PAGINAZIONE
-const da = (page - 1) * annunciPerPagina;
-const a = da + annunciPerPagina - 1;
+    const da = (page - 1) * annunciPerPagina;
+    const a = da + annunciPerPagina - 1;
 
-const { data, count, error } = await query
-  .order('id', { ascending: false })
-  .range(da, a);
+    const { data, count, error } = await query
+      .order('id', { ascending: false })
+      .range(da, a);
 
-if (error) throw error;
+    if (error) throw error;
 
-return {
-  props: {
-    datiIniziali: data || [],
-    totaleDalServer: count || 0,
-    paginaIniziale: page,
-    slugSSR: slug || "",
-    categoriaSSR: catRicercata,
-    zonaSSR: zonaInSlug
+    return {
+      props: {
+        datiIniziali: data || [],
+        totaleDalServer: count || 0,
+        paginaIniziale: page,
+        slugSSR: slug || "",
+        categoriaSSR: catRicercata,
+        zonaSSR: zonaInSlug
+      }
+    };
+
+  } catch (err) {
+    console.error("ERRORE SSR:", err.message);
+    return { 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "", 
+        categoriaSSR: "", 
+        zonaSSR: "" 
+      } 
+    };
   }
-};
-} catch (err) {
-console.error("ERRORE SSR:", err.message);
-return {
-props: {
-datiIniziali: [],
-totaleDalServer: 0,
-paginaIniziale: 1,
-slugSSR: slug || "",
-categoriaSSR: "",
-zonaSSR: ""
-}
-};
-}
 }
