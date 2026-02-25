@@ -669,17 +669,16 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // 1. IMPORT SUPABASE (Corretto per SSR)
+    // Questa parte è quella che causa l'errore: va scritta esattamente così
     const supabaseModule = require('../lib/supabaseClient');
     const supabase = supabaseModule.supabase; 
-    
-    // 2. ANALISI DELLO SLUG (UNA SOLA VOLTA)
+
+    // Se supabase è caricato correttamente, ora .from() funzionerà
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 3. QUERY BASE
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' });
