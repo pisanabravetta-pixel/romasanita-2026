@@ -7,49 +7,52 @@ import Footer from '../components/Footer';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import HubLayout from '../components/HubLayout';
- export default function PaginaQuartiereDinamica({ 
-  datiIniziali = [],       // AGGIUNTO DEFAULT
-  totaleDalServer = 0,    // AGGIUNTO DEFAULT
-  paginaIniziale = 1, 
-  slugSSR = "",
-  categoriaSSR = "", 
-  zonaSSR = ""            
+export default function PaginaQuartiereDinamica({ 
+  datiIniziali, 
+  totaleDalServer, 
+  paginaIniziale, 
+  slugSSR, 
+  categoriaSSR, 
+  zonaSSR 
 }) {
   const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
   // 1. STATI
-  const [servizi, setServizi] = useState(datiIniziali);
+  const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
-  const [pagina, setPagina] = useState(paginaIniziale);
+  const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI - Deve usare la props datiIniziali passata dal server
+  // 2. LOGICA DATI (La tua logica originale)
   const annunciPerPagina = 10;
-  
-  // Usiamo datiIniziali (che ora ha il default []) per evitare il ReferenceError
-  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : datiIniziali;
+  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
   
   const listaUnica = sorgenteDati.length > 0 
     ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
     : [];
 
-  // Se i dati arrivano da SSR (datiIniziali popolato), il server ha già fatto il range
-  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
-    ? listaUnica 
+  const listaDaMostrare = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
+    ? listaUnica
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
 
   const listaDaMostrarePaginata = listaDaMostrare;
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-  
-  // ... il resto del tuo codice (Logic filtri, nomiCorrettiH1, useEffect ecc.)
 
-
+  // 3. LOGICA FILTRI E COLORI
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
+  
+  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
+  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
+  
+  const colore = filtri?.colore || '#0891b2';
+  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   
   const nomiCorrettiH1 = {
     'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
@@ -58,7 +61,7 @@ import HubLayout from '../components/HubLayout';
   };
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
 
-  // 4. HOOKS (Sincronizzazione dati)
+  // 4. HOOKS (Ripristinati esattamente come ieri)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -87,6 +90,8 @@ import HubLayout from '../components/HubLayout';
       setServizi(datiIniziali);
     }
   }, [slug, slugSSR, datiIniziali, colore]);
+
+  // ... (Resto del codice della mappa e return che avevi già incollato)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrarePaginata?.length > 0) {
@@ -616,10 +621,54 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 }
 
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
-const sorgenteDati = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : servizi;
-  const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
-  
-  // Se arrivano da SSR, sono già 10, non tagliarli ancora
-  const listaDaMostrare = (datiIniziali && datiIniziali.length > 0) 
-    ? listaUnica 
-    : listaUnica.slice((pagina - 1) * 10, pagina * 10);
+export async function getServerSideProps(context) {
+  const { slug, page: queryPage } = context.query;
+  const page = parseInt(queryPage) || 1;
+  const annunciPerPagina = 10;
+
+  try {
+    const { supabase } = require('../lib/supabaseClient');
+    
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
+    const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
+    const isHub = !zonaInSlug || zonaInSlug === 'roma';
+
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' })
+      .eq('approvato', true);
+
+    let radice = catRicercata.toLowerCase();
+    if (radice.endsWith('i')) radice = radice.slice(0, -1);
+    if (radice.length > 9) radice = radice.substring(0, 10); 
+    query = query.ilike('categoria', `%${radice}%`);
+
+    if (!isHub) {
+      const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
+      query = query.ilike('zona', `%${zonaRicerca}%`); // COLONNA ZONA
+    }
+
+    const da = (page - 1) * annunciPerPagina;
+    const a = da + annunciPerPagina - 1;
+
+    const { data, count, error } = await query
+      .order('id', { ascending: false })
+      .range(da, a);
+
+    if (error) throw error;
+
+    return {
+      props: {
+        datiIniziali: data || [],
+        totaleDalServer: count || 0,
+        paginaIniziale: page,
+        slugSSR: slug || "",
+        categoriaSSR: catRicercata,
+        zonaSSR: zonaInSlug
+      }
+    };
+  } catch (err) {
+    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "" } };
+  }
+}
