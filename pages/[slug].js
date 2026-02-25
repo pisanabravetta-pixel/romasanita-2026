@@ -139,8 +139,7 @@ export default function PaginaQuartiereDinamica({
   const colore = filtri.colore || '#2563eb';
 
   
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+  
 // Hook 3: inizializzazione mappa Leaflet (VERSIONE BLINDATA)
   useEffect(() => {
     // Verifichiamo che siamo nel browser e che Leaflet (L) sia caricato
