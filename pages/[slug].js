@@ -19,7 +19,7 @@ const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
-  const router = useRouter();
+const router = useRouter();
   const { slug } = router.query;
   const slugAttivo = slug || slugSSR || '';
 
@@ -30,7 +30,7 @@ const router = useRouter();
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DATI - CORRETTA PER IL .MAP() SOTTO
+  // 2. LOGICA DATI - SINCRONIZZATA
   const annunciPerPagina = 10;
   const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
   
@@ -38,29 +38,24 @@ const router = useRouter();
     ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
     : [];
 
-  // FIX: Sotto nel tuo codice usi "listaDaMostrare", quindi la chiamiamo così qui
   const listaDaMostrare = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
     ? listaUnica
     : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
 
-  // Per compatibilità con lo useEffect della mappa
   const listaDaMostrarePaginata = listaDaMostrare;
-
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
-  // 3. LOGICA DATE E FILTRI (Aggiunto colore e quartiereNome)
+  // 3. LOGICA DATE E FILTRI
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
   
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
   
-  // FIX: Definiamo 'colore' e 'quartiereNome' perché il tuo JSX li richiede!
   const colore = filtri?.colore || '#0891b2';
   const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   
   const nomiCorrettiH1 = {
@@ -69,7 +64,8 @@ const router = useRouter();
     'oculisti': 'OCULISTI', 'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
   };
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-  // 4. HOOKS (Senza modifiche alla tua logica di caricamento)
+
+  // 4. HOOKS PULITI (Senza chiamate a supabase esterne)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -86,31 +82,17 @@ const router = useRouter();
     const zonaE = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaE || zonaE === 'roma';
 
-    setTema({ primario: "#0891b2", chiaro: "#ecfeff", label: catE.toUpperCase() });
+    setTema({ primario: colore, chiaro: `${colore}15`, label: catE.toUpperCase() });
     setMeta({ 
       titolo: isHub ? `${catE} a Roma` : `${catE} a Roma ${zonaE}`, 
-      zona: zonaE, cat: catE 
+      zona: zonaE, 
+      cat: catE,
+      nomeSemplice: catE.replace(/-/g, ' ')
     });
 
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
-      return; 
     }
-
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const keyword = catE.toLowerCase().substring(0, 4);
-        let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
-        if (!isHub) q = q.ilike('zona', `%${zonaE.replace(/-/g, ' ')}%`);
-        const { data } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (data) setServizi(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData(); 
   }, [slug, slugSSR, datiIniziali]);
 
   useEffect(() => {
