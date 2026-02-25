@@ -683,6 +683,17 @@ style={{ flex: '1', minWidth: '100px', backgroundColor: tema.primario, color: 'w
 // --- QUESTA FUNZIONE VA FUORI DAL COMPONENTE, IN FONDO AL FILE [slug].js ---
 export async function getServerSideProps(context) {
   const { slug, page: queryPage } = context.query;
+  // --- PARACADUTE ANTI-ERRORE 500 ---
+
+const categorieProtette = ['farmacie', 'diagnostica', 'dentisti', 'dermatologi', 'cardiologi', 'psicologi', 'oculisti', 'ortopedici', 'nutrizionisti', 'ginecologi', 'servizi-sanitari', 'servizi-domicilio'];
+
+const checkSlug = slug ? slug.split('-roma')[0] : '';
+
+if (!slug || slug.endsWith('-') || !categorieProtette.includes(checkSlug)) {
+return { notFound: true };
+}
+
+// ------------------------------------
   const page = parseInt(queryPage) || 1;
   const annunciPerPagina = 10;
 
