@@ -17,24 +17,43 @@ export default function PaginaQuartiereDinamica({
 }) {
 const router = useRouter();
   const { slug } = router.query;
+  const slugAttivo = slug || slugSSR || '';
 
-  // 1. STATI (Tutti qui in cima come da regole React)
+  // 1. STATI
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // 2. LOGICA DI DEFINIZIONE SLUG E DATE
-  const slugAttivo = slug || slugSSR || '';
+  // 2. LOGICA DATI - VERSIONE ANTI-CRASH (Risolve il 500)
+  const annunciPerPagina = 10;
+  
+  // Usiamo una variabile sicura: se servizi è vuoto, guarda datiIniziali, altrimenti array vuoto
+  const sorgenteDati = (servizi && servizi.length > 0) ? servizi : (datiIniziali || []);
+  
+  // Evita crash se sorgenteDati è nullo
+  const listaUnica = sorgenteDati.length > 0 
+    ? Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values())
+    : [];
+
+  // Se i dati dal server sono già <= 10, non paginiamo ulteriormente (evita box vuoti)
+  const listaDaMostrarePaginata = (sorgenteDati === datiIniziali && sorgenteDati.length <= annunciPerPagina)
+    ? listaUnica
+    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
+
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
+  // 3. LOGICA DATE E FILTRI
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
+  
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataStringa = `${mesi[new Date().getMonth()]} ${new Date().getFullYear()}`;
-
+  
   const nomiCorrettiH1 = {
     'farmacie': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA', 'dentisti': 'DENTISTI',
     'dermatologi': 'DERMATOLOGI', 'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI',
@@ -42,22 +61,7 @@ const router = useRouter();
   };
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
 
-  // 3. LOGICA ANNUNCI (La tua originale, corretta per SSR)
-  const annunciPerPagina = 10;
-  // Usiamo datiIniziali se presenti, altrimenti lo stato servizi
-  const datiDaMostrare = (datiIniziali && datiIniziali.length > 0) ? datiIniziali : (servizi || []);
-  const listaUnica = Array.from(new Map(datiDaMostrare.map(item => [item.id, item])).values());
-
-  // Se la lista ha già 10 o meno elementi (SSR), la usiamo tutta.
-  const listaDaMostrarePaginata = (listaUnica.length <= annunciPerPagina) 
-    ? listaUnica 
-    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
-
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  // DEFINIZIONE UNICA: risolve l'errore del log di Vercel
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
-  // --- HOOK 1: URL ---
+  // 4. HOOKS (Senza modifiche alla tua logica di caricamento)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -65,7 +69,6 @@ const router = useRouter();
     }
   }, [router.query]);
 
-  // --- HOOK 2: META E PESCAGGIO ---
   useEffect(() => {
     const s = slug || slugSSR;
     if (!s || s === 'index') return;
@@ -75,20 +78,17 @@ const router = useRouter();
     const zonaE = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaE || zonaE === 'roma';
 
-    // Set Temi e Meta
     setTema({ primario: "#0891b2", chiaro: "#ecfeff", label: catE.toUpperCase() });
     setMeta({ 
       titolo: isHub ? `${catE} a Roma` : `${catE} a Roma ${zonaE}`, 
       zona: zonaE, cat: catE 
     });
 
-    // Se abbiamo i dati dal server, li carichiamo e STOP.
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       return; 
     }
 
-    // Altrimenti (fallback) facciamo la fetch
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -105,7 +105,6 @@ const router = useRouter();
     fetchData(); 
   }, [slug, slugSSR, datiIniziali]);
 
-  // --- HOOK 3: MAPPA ---
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrarePaginata?.length > 0) {
       if (window.mapInstance) window.mapInstance.remove();
