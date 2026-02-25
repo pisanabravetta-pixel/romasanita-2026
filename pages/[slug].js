@@ -88,7 +88,7 @@ export default function PaginaQuartiereDinamica({
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
-      // Rimosso il return per far proseguire la logica dei Meta e del Tema
+      return; // <-- RIMETTI QUESTO
     }
 
     const fetchData = async () => {
@@ -105,13 +105,13 @@ export default function PaginaQuartiereDinamica({
         if (!error) setServizi(data || []);
       } catch (err) {
         console.error("Errore fetch client:", err);
-      } finally {
+     } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    
+    // fetchData();  <-- AGGIUNGI LE DUE SBARRETTE QUI PER DISATTIVARLO
   }, [slug, slugSSR, datiIniziali]);
-
   // --- LOGICA DI SICUREZZA E DEFINIZIONE (dopo gli Hook) ---
   const slugAttivo = slug || slugSSR || '';
 
@@ -138,16 +138,7 @@ export default function PaginaQuartiereDinamica({
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
   const colore = filtri.colore || '#2563eb';
 
-  // --- CORREZIONE VITALA ---
-  const annunciPerPagina = 10;
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
-
-  // Se la lista ha già 10 o meno elementi, significa che è già paginata dal server: usala tutta.
-  // Se ne ha di più (fallback client), allora applica lo slice.
-  const listaDaMostrare = (listaUnica.length <= annunciPerPagina) 
-    ? listaUnica 
-    : listaUnica.slice((pagina - 1) * annunciPerPagina, pagina * annunciPerPagina);
-
+  
   const totaleAnnunci = totaleDalServer || listaUnica.length;
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 // Hook 3: inizializzazione mappa Leaflet (VERSIONE BLINDATA)
