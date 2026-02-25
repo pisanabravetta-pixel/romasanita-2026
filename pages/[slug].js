@@ -18,63 +18,16 @@ export default function PaginaQuartiereDinamica({
   const router = useRouter();
   const { slug } = router.query;
 
-// --- LOGICA DI SICUREZZA E DEFINIZIONE ---
-const slugAttivo = slug || slugSSR || '';
+  // --- TUTTI GLI HOOK DEVONO STARE QUI IN CIMA, PRIMA DI OGNI return ---
+  // (Rules of Hooks: non si possono chiamare Hook dopo un return condizionale)
 
-// 1. Se lo slug è vuoto o chiaramente sbagliato, manda in 404
-if (!slugAttivo || slugAttivo === '-roma' || slugAttivo === 'undefined' || slugAttivo.startsWith('-')) {
-if (typeof window !== 'undefined') {
-router.replace('/404');
-}
-return null;
-}
-
-// 2. Pulizia categoria
-const categoriaPulita = slugAttivo.replace('-roma-', '@').split('@')[0];
-const filtri = getDBQuery(categoriaPulita);
-
-// 3. Se la categoria non esiste nel tuo file seo-logic
-if (filtri.cat === 'NON_ESISTE') {
-if (typeof window !== 'undefined') {
-router.replace('/404');
-}
-return null;
-}
-
-const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
-const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataAttuale = new Date();
-  const meseCorrente = mesi[dataAttuale.getMonth()];
-  const annoCorrente = dataAttuale.getFullYear();
-  const dataStringa = `${meseCorrente} ${annoCorrente}`;
-
-  const nomiCorrettiH1 = {
-    'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
-    'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
-    'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
-    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
-  };
-
-  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
-  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
-  const colore = filtri.colore || '#2563eb';
-
-  // --- STATI E LOGICA ---
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  const annunciPerPagina = 10;
-  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
-  const inizio = (pagina - 1) * annunciPerPagina;
-  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-
+  // Hook 1: legge il parametro ?page= dall'URL
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -83,8 +36,9 @@ const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split(
     }
   }, [router.query]);
 
+  // Hook 2: aggiorna meta, tema e scarica i dati se necessario
   useEffect(() => {
-    const s = slug || slugSSR; // FIX: coerenza con slugSSR
+    const s = slug || slugSSR;
     if (!s || s === 'index' || s === '') return;
 
     const slugPuro = s.replace('-roma-', '@');
@@ -113,18 +67,11 @@ const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split(
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    if (isHub && datiIniziali && datiIniziali.length > 0) {
-      setServizi(datiIniziali);
-      setLoading(false);
-      return; 
-    }
-    // --- AGGIUNGI QUESTO QUI SOTTO ---
     if (datiIniziali && datiIniziali.length > 0) {
       setServizi(datiIniziali);
       setLoading(false);
       return; 
     }
-    // --- FINE AGGIUNTA ---
 
     const fetchData = async () => {
       try {
@@ -146,13 +93,41 @@ const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split(
     };
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
-  // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
-  if (!slug && !slugSSR) return null;
 
-  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
-  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
+  // --- LOGICA DI SICUREZZA E DEFINIZIONE (dopo gli Hook) ---
+  const slugAttivo = slug || slugSSR || '';
 
-  // 3. MAPPA
+  // Calcola le variabili derivate dallo slug (usate nel render e nell'Hook 3)
+  const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
+  const filtri = slugAttivo ? getDBQuery(categoriaPulita) : { cat: '', colore: '#2563eb' };
+  const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
+  const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
+
+  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  const dataAttuale = new Date();
+  const meseCorrente = mesi[dataAttuale.getMonth()];
+  const annoCorrente = dataAttuale.getFullYear();
+  const dataStringa = `${meseCorrente} ${annoCorrente}`;
+
+  const nomiCorrettiH1 = {
+    'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
+    'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
+    'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
+    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
+  };
+
+  const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
+  const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
+  const colore = filtri.colore || '#2563eb';
+
+  const annunciPerPagina = 10;
+  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
+  const inizio = (pagina - 1) * annunciPerPagina;
+  const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+  const totaleAnnunci = totaleDalServer || listaUnica.length;
+  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
+
+  // Hook 3: inizializzazione mappa Leaflet
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
@@ -169,7 +144,23 @@ const zonaInSlug = zonaSSR || (slugAttivo.includes('-roma-') ? slugAttivo.split(
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrare]);
-  if (!slug) return null;
+
+  // --- GUARD: ora i return condizionali stanno DOPO tutti gli Hook ---
+
+  // Se lo slug non è ancora disponibile (hydration), non renderizzare
+  if (!slug && !slugSSR) return null;
+
+  // Se lo slug è chiaramente invalido, redirect a 404
+  if (!slugAttivo || slugAttivo === '-roma' || slugAttivo === 'undefined' || slugAttivo.startsWith('-')) {
+    if (typeof window !== 'undefined') router.replace('/404');
+    return null;
+  }
+
+  // Se la categoria non esiste in seo-logic, redirect a 404
+  if (filtri.cat === 'NON_ESISTE') {
+    if (typeof window !== 'undefined') router.replace('/404');
+    return null;
+  }
 
  return (
   <>
