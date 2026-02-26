@@ -670,24 +670,22 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // 1. IMPORTAZIONE SICURA (Niente require che fa crashare)
-    const supabaseModule = await import('../lib/supabaseClient');
-    const supabase = supabaseModule.supabase;
+    // Usiamo l'import standard del client che hai già nel file
+    // Assicurati che in cima al file ci sia: import { supabase } from '../lib/supabaseClient';
+    // Se non vuoi toccare gli import in alto, usiamo questa logica:
+    const { supabase } = require('../lib/supabaseClient');
 
-    if (!supabase) throw new Error("Client Supabase non trovato");
-
-    // 2. LOGICA SLUG
-    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const s = slug || "";
+    const slugPuro = s.replace('-roma-', '@');
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 3. QUERY (Uso '*' per far funzionare la mappa come prima)
     let query = supabase
       .from('annunci')
       .select('*', { count: 'exact' });
 
-    // 4. FILTRI (Colonne confermate: approvato e zona)
+    // Filtri aggiornati alle tue colonne
     query = query.eq('approvato', true); 
 
     let radice = catRicercata.toLowerCase();
@@ -700,7 +698,6 @@ export async function getServerSideProps(context) {
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -710,26 +707,27 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // 6. FIX COORDINATE (Sdoppiamo lon/lng per far felice la mappa)
-    const datiMappa = (data || []).map(item => ({
+    // FIX DEFINITIVO MAPPA: 
+    // Sdoppiamo i nomi così il frontend legge quello che vuole
+    const datiMappati = (data || []).map(item => ({
       ...item,
-      lng: item.lng || item.lon || 0,
-      lon: item.lng || item.lon || 0
+      lat: item.lat ? parseFloat(item.lat) : null,
+      lng: item.lng || item.lon || null,
+      lon: item.lng || item.lon || null
     }));
 
     return {
       props: {
-        datiIniziali: datiMappa,
+        datiIniziali: datiMappati,
         totaleDalServer: count || 0,
         paginaIniziale: page,
-        slugSSR: slug || "",
+        slugSSR: s,
         categoriaSSR: catRicercata,
         zonaSSR: zonaInSlug
       }
     };
-
   } catch (err) {
-    console.error("ERRORE SSR FINALE:", err.message);
+    console.error("ERRORE SSR:", err);
     return { 
       props: { 
         datiIniziali: [], 
