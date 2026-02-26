@@ -270,8 +270,9 @@ if (!mounted) return null;
         </div>
       </div>
     {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
-<Mappa lista={listaDaMostrare} />
-
+{mounted && listaDaMostrare.length > 0 && (
+  <Mappa lista={listaDaMostrare} />
+)}
 {/* MINI TESTO SEO SOTTO LA MAPPA - ATTACCATO */}
 <p style={{ 
   fontSize: '14px', 
