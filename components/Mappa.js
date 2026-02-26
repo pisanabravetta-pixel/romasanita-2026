@@ -4,17 +4,17 @@ import Script from 'next/script';
 export default function Mappa({ lista }) {
   const mapRef = useRef(null);
 
-  useEffect(() => {
-    if (!lista || lista.length === 0) return;
-    if (typeof window === 'undefined') return;
+useEffect(() => {
+  if (!lista || lista.length === 0) return;
+  if (typeof window === 'undefined') return;
 
-    // Controlla se Leaflet è caricato
-    if (!window.L) return;
-
-    // Rimuove eventuali mappe precedenti
-    if (mapRef.current) {
-      mapRef.current.remove();
+  const waitLeaflet = () => {
+    if (!window.L) {
+      setTimeout(waitLeaflet, 50); // riprova finché non è caricato
+      return;
     }
+
+    if (mapRef.current) mapRef.current.remove();
 
     const map = window.L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
     mapRef.current = map;
@@ -25,7 +25,7 @@ export default function Mappa({ lista }) {
     ).addTo(map);
 
     const group = window.L.featureGroup();
-    lista.forEach((s) => {
+    lista.forEach(s => {
       if (s.lat && s.lng) {
         const marker = window.L.marker([parseFloat(s.lat), parseFloat(s.lng)])
           .addTo(map)
@@ -37,8 +37,10 @@ export default function Mappa({ lista }) {
     if (group.getLayers().length > 0) {
       map.fitBounds(group.getBounds().pad(0.1));
     }
+  };
 
-  }, [lista]);
+  waitLeaflet();
+}, [lista]);
 
   return (
     <>
