@@ -19,18 +19,15 @@ export default function PaginaQuartiereDinamica({
 
   // --- LOGICA ORIGINALE ---
   const slugAttivo = slug || slugSSR; // FIX: usa slugSSR se slug è undefined
+  if (!slugAttivo) {
+  return <div className="min-h-screen bg-gray-50" />;
+}
   const categoriaPulita = slugAttivo ? slugAttivo.replace('-roma-', '@').split('@')[0] : '';
   const filtri = getDBQuery(categoriaPulita);
   const catSlug = categoriaSSR || (categoriaPulita ? categoriaPulita.replace('-roma', '') : '');
   const zonaInSlug = zonaSSR || (slugAttivo && slugAttivo.includes('-roma-') ? slugAttivo.split('-roma-')[1] : 'roma');
   
-  if (slug && filtri.cat === 'NON_ESISTE') {
-    if (typeof window !== 'undefined') {
-      router.replace('/404'); 
-    }
-    return null;
-  }
-
+  
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   const dataAttuale = new Date();
   const meseCorrente = mesi[dataAttuale.getMonth()];
@@ -54,7 +51,10 @@ export default function PaginaQuartiereDinamica({
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
-
+const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+  setMounted(true);
+}, []);
   const annunciPerPagina = 10;
   // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
   const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
@@ -125,7 +125,7 @@ export default function PaginaQuartiereDinamica({
           q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
         }
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-        if (!error) setServizi(data || []);
+       setServizi(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Errore fetch client:", err);
       } finally {
@@ -134,31 +134,27 @@ export default function PaginaQuartiereDinamica({
     };
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
-  // Se lo slug non c'è e non abbiamo SSR, non renderizzare per evitare errori di idratazione
-  if (!slug && !slugSSR) return null;
-
-  // Se non c'è lo slug, mostriamo uno scheletro per evitare il crash del server
-  if (!slug && !slugSSR) return <div className="min-h-screen bg-gray-50" />;
-
+ 
   // 3. MAPPA
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
-      if (window.mapInstance) { window.mapInstance.remove(); }
-      const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
-      window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
-      const group = new L.featureGroup();
-      listaDaMostrare.forEach((s) => {
-        if (s.lat && s.lng) {
-          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
-          group.addLayer(m);
-        }
-      });
-      if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
-    }
-  }, [listaDaMostrare]);
-  if (!slug) return null;
-
+  if (!mounted) return; // ← blocca la mappa finché non siamo sul client
+  if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
+    if (window.mapInstance) { window.mapInstance.remove(); }
+    const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
+    window.mapInstance = map;
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
+    const group = new L.featureGroup();
+    listaDaMostrare.forEach((s) => {
+      if (s.lat && s.lng) {
+        const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
+        group.addLayer(m);
+      }
+    });
+    if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
+  }
+}, [listaDaMostrare, mounted]);
+  
+if (!mounted) return null;
  return (
   <>
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
@@ -670,6 +666,9 @@ export async function getServerSideProps(context) {
     // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
+    if (!catRicercata || catRicercata.length < 3) {
+  return { notFound: true };
+}
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
