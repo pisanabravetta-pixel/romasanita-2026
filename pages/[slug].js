@@ -674,39 +674,29 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // Importazione dinamica per evitare il crash 'undefined' su Vercel
+    // Import corretto per il tuo file che usa 'export const'
     const supabaseModule = await import('../lib/supabaseClient');
-    const supabase = supabaseModule.supabase; 
+    const supabase = supabaseModule.supabase;
 
-    if (!supabase) throw new Error("Supabase non trovato");
-
-    // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 2. QUERY BASE (Usiamo * così non dimentichiamo nulla)
-    let query = supabase
-      .from('annunci')
-      .select('*', { count: 'exact' });
+    let query = supabase.from('annunci').select('*', { count: 'exact' });
 
-    // 3. FILTRO APPROVATO (Hai confermato si chiama 'approvato')
     query = query.eq('approvato', true); 
 
-    // 4. LOGICA RADICE
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
-    // 5. FILTRO ZONA (Hai confermato si chiama 'zona')
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 6. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -716,18 +706,16 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // --- IL TRUCCO PER LA MAPPA ---
-    // Se nel DB hai rinominato la colonna in 'lng', ma il componente mappa 
-    // cerca ancora 'lon' (o viceversa), questo risolve tutto:
-    const datiSicuri = (data || []).map(item => ({
+    // --- QUESTO È QUELLO CHE FA TORNARE I SEGNAPOSTI ---
+    const datiMappaOk = (data || []).map(item => ({
       ...item,
-      lng: item.lng || item.lon || 0, // Prende lng, se manca prende lon, altrimenti 0
-      lon: item.lng || item.lon || 0  // Per sicurezza li popoliamo entrambi
+      lon: item.lng || item.lon, // Se il db invia lng, lo sdoppia in lon per il frontend
+      lng: item.lng || item.lon  // Viceversa
     }));
 
     return {
       props: {
-        datiIniziali: datiSicuri,
+        datiIniziali: datiMappaOk,
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug || "",
@@ -736,16 +724,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.error("ERRORE SSR:", err.message);
-    return { 
-      props: { 
-        datiIniziali: [], 
-        totaleDalServer: 0, 
-        paginaIniziale: 1, 
-        slugSSR: slug || "",
-        categoriaSSR: "",
-        zonaSSR: ""
-      } 
-    };
+    console.error("ERRORE SSR:", err);
+    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "", categoriaSSR: "", zonaSSR: "" } };
   }
 }
