@@ -138,11 +138,16 @@ export default function PaginaQuartiereDinamica({
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
       const group = new L.featureGroup();
       listaDaMostrare.forEach((s) => {
-        if (s.lat && s.lng) {
-          const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
-          group.addLayer(m);
-        }
-      });
+  // Verifichiamo quale proprietà della longitudine esiste: lng o lon
+  const longitudine = s.lng || s.lon; 
+  
+  if (s.lat && longitudine) {
+    const m = L.marker([parseFloat(s.lat), parseFloat(longitudine)])
+      .addTo(map)
+      .bindPopup(`<b>${s.nome}</b>`);
+    group.addLayer(m);
+  }
+});
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrare]);
