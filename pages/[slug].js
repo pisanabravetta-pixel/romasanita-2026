@@ -49,18 +49,21 @@ export default function PaginaQuartiereDinamica({
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
-  // Sincronizza lo stato quando cambiano i dati dal server
-  useEffect(() => {
-    if (datiIniziali && datiIniziali.length > 0) {
-      setServizi(datiIniziali);
-    }
-  }, [datiIniziali]);
-
   const annunciPerPagina = 10;
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
+  
+  // FIX: Usiamo un filtro per evitare ID nulli che fanno crashare la Map
+  const listaUnica = Array.from(
+    new Map(
+      (servizi || [])
+        .filter(item => item && item.id) 
+        .map(item => [item.id, item])
+    ).values()
+  );
+
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   const totaleAnnunci = totaleDalServer || listaUnica.length;
+
 
   useEffect(() => {
     const s = slug || slugSSR;
