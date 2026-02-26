@@ -130,24 +130,34 @@ export default function PaginaQuartiereDinamica({
   }, [slug, slugSSR, datiIniziali]);
   
   // 3. MAPPA
-  useEffect(() => {
+useEffect(() => {
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
+      
       const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
       window.mapInstance = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
+      
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
+        attribution: '© OSM' 
+      }).addTo(map);
+      
       const group = new L.featureGroup();
+      
       listaDaMostrare.forEach((s) => {
-  // Verifichiamo quale proprietà della longitudine esiste: lng o lon
-  const longitudine = s.lng || s.lon; 
-  
-  if (s.lat && longitudine) {
-    const m = L.marker([parseFloat(s.lat), parseFloat(longitudine)])
-      .addTo(map)
-      .bindPopup(`<b>${s.nome}</b>`);
-    group.addLayer(m);
-  }
-});
+        // PROVA TUTTE LE COMBINAZIONI POSSIBILI DI NOMI
+        const latitudine = s.lat || s.latitude;
+        const longitudine = s.lng || s.lon || s.longitude;
+
+        if (latitudine && longitudine) {
+          const m = L.marker([parseFloat(latitudine), parseFloat(longitudine)])
+            .addTo(map)
+            .bindPopup(`<b>${s.nome}</b>`);
+          group.addLayer(m);
+        } else {
+          console.log("Mancano coordinate per:", s.nome, "Dati ricevuti:", { lat: s.lat, lng: s.lng, lon: s.lon });
+        }
+      });
+      
       if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
     }
   }, [listaDaMostrare]);
