@@ -684,7 +684,7 @@ export async function getServerSideProps(context) {
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // Selezioniamo esplicitamente le colonne per essere sicuri che 'lng' arrivi
+    // 1. SELEZIONE ESPLICITA DELLE COLONNE (Verifica che 'lng' sia scritto così nel DB)
     let query = supabase
       .from('annunci')
       .select('id, nome, categoria, zona, indirizzo, telefono, whatsapp, approvato, lat, lng, is_top, slug', { count: 'exact' });
@@ -710,14 +710,15 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // DEBUG LOG: Controlliamo se nel primo risultato esiste 'lng'
-    if (data && data.length > 0) {
-      console.log("DEBUG COORDINATE:", data[0].lat, data[0].lng);
-    }
+    // 2. PARACADUTE: Se per caso nel DB hai ancora 'lon', lo mappiamo su 'lng' per non rompere la mappa
+    const datiFormattati = (data || []).map(item => ({
+      ...item,
+      lng: item.lng || item.lon || null // Se lng è vuoto, prova a prendere lon
+    }));
 
     return {
       props: {
-        datiIniziali: data || [],
+        datiIniziali: datiFormattati,
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug || "",
