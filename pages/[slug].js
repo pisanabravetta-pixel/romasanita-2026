@@ -136,24 +136,7 @@ const [mounted, setMounted] = useState(false);
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
  
-  // 3. MAPPA
-  useEffect(() => {
-  if (!mounted) return; // ← blocca la mappa finché non siamo sul client
-  if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
-    if (window.mapInstance) { window.mapInstance.remove(); }
-    const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
-    window.mapInstance = map;
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
-    const group = new L.featureGroup();
-    listaDaMostrare.forEach((s) => {
-      if (s.lat && s.lng) {
-        const m = L.marker([parseFloat(s.lat), parseFloat(s.lng)]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
-        group.addLayer(m);
-      }
-    });
-    if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
-  }
-}, [listaDaMostrare, mounted]);
+  
   
 if (!mounted) return null;
  return (
@@ -208,12 +191,7 @@ if (!mounted) return null;
           />
         </Head>
 
-        <Script 
-          src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-          crossOrigin=""
-          strategy="lazyOnload" 
-        />
+        
 
 <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
   {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
