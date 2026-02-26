@@ -665,58 +665,65 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // Import dinamico per eliminare l'errore nei log
-    const supabaseModule = await import('../lib/supabaseClient');
-    const supabase = supabaseModule.supabase;
-
-    const s = slug || "";
-    const slugPuro = s.replace('-roma-', '@');
-    const catEstratta = slugPuro.split('@')[0].replace('-roma', '');
+    const { supabase } = require('../lib/supabaseClient');
+    
+    // 1. ANALISI DELLO SLUG
+    const slugPuro = slug ? slug.replace('-roma-', '@') : '';
+    const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // QUERY IDENTICA AL CLIENT: usiamo la logica della radice a 4 lettere
-    const keyword = catEstratta.toLowerCase().substring(0, 4);
+    // 2. QUERY BASE
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' })
-      .eq('approvato', true) // Usa approvato
-      .or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+      .select('*', { count: 'exact' });
 
+    // 3. FILTRO APPROVATO (FINALMENTE QUELLO GIUSTO)
+    query = query.eq('approvato', true); 
+
+    // 4. LOGICA RADICE (Dermatolog...)
+    let radice = catRicercata.toLowerCase();
+    if (radice.endsWith('i')) radice = radice.slice(0, -1);
+    if (radice.length > 9) radice = radice.substring(0, 10); 
+    query = query.ilike('categoria', `%${radice}%`);
+
+    // 5. FILTRO ZONA (Colonna 'zona' confermata dalla sitemap)
     if (!isHub) {
-      const zQuery = zonaInSlug.replace(/-/g, ' ');
-      // Cerchiamo sia nella colonna 'zona' che nello 'slug' come fa il tuo client
-      query = query.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaInSlug}%`);
+      const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
+      query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
+    // 6. PAGINAZIONE SERVER-SIDE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
     const { data, count, error } = await query
-      .order('is_top', { ascending: false })
+      .order('id', { ascending: false })
       .range(da, a);
 
     if (error) throw error;
 
-    // Sdoppiamento nomi per la mappa (lng/lon)
-    const datiMappa = (data || []).map(item => ({
-      ...item,
-      lng: item.lng || item.lon || 0,
-      lon: item.lng || item.lon || 0
-    }));
-
     return {
       props: {
-        datiIniziali: datiMappa,
+        datiIniziali: data || [],
         totaleDalServer: count || 0,
         paginaIniziale: page,
-        slugSSR: s,
-        categoriaSSR: catEstratta,
+        slugSSR: slug || "",
+        categoriaSSR: catRicercata,
         zonaSSR: zonaInSlug
       }
     };
   } catch (err) {
     console.error("ERRORE SSR:", err);
-    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "", categoriaSSR: "", zonaSSR: "" } };
+    return { 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: ""
+      } 
+    };
   }
 }
