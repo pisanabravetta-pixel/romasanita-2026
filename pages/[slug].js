@@ -674,33 +674,39 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
+    // Importazione dinamica per evitare il crash 'undefined' su Vercel
     const supabaseModule = await import('../lib/supabaseClient');
     const supabase = supabaseModule.supabase; 
 
-    if (!supabase) throw new Error("Client non trovato");
+    if (!supabase) throw new Error("Supabase non trovato");
 
+    // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    // 1. SELEZIONE ESPLICITA DELLE COLONNE (Verifica che 'lng' sia scritto così nel DB)
+    // 2. QUERY BASE (Usiamo * così non dimentichiamo nulla)
     let query = supabase
       .from('annunci')
-      .select('id, nome, categoria, zona, indirizzo, telefono, whatsapp, approvato, lat, lng, is_top, slug', { count: 'exact' });
+      .select('*', { count: 'exact' });
 
+    // 3. FILTRO APPROVATO (Hai confermato si chiama 'approvato')
     query = query.eq('approvato', true); 
 
+    // 4. LOGICA RADICE
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
+    // 5. FILTRO ZONA (Hai confermato si chiama 'zona')
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
+    // 6. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -710,15 +716,18 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // 2. PARACADUTE: Se per caso nel DB hai ancora 'lon', lo mappiamo su 'lng' per non rompere la mappa
-    const datiFormattati = (data || []).map(item => ({
+    // --- IL TRUCCO PER LA MAPPA ---
+    // Se nel DB hai rinominato la colonna in 'lng', ma il componente mappa 
+    // cerca ancora 'lon' (o viceversa), questo risolve tutto:
+    const datiSicuri = (data || []).map(item => ({
       ...item,
-      lng: item.lng || item.lon || null // Se lng è vuoto, prova a prendere lon
+      lng: item.lng || item.lon || 0, // Prende lng, se manca prende lon, altrimenti 0
+      lon: item.lng || item.lon || 0  // Per sicurezza li popoliamo entrambi
     }));
 
     return {
       props: {
-        datiIniziali: datiFormattati,
+        datiIniziali: datiSicuri,
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug || "",
@@ -726,11 +735,17 @@ export async function getServerSideProps(context) {
         zonaSSR: zonaInSlug
       }
     };
-
   } catch (err) {
     console.error("ERRORE SSR:", err.message);
     return { 
-      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "", categoriaSSR: "", zonaSSR: "" } 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: ""
+      } 
     };
   }
 }
