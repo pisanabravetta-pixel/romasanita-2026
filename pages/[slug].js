@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
+import Mappa from '../components/Mappa';
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
@@ -291,21 +292,7 @@ if (!mounted) return null;
         </div>
       </div>
     {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
-<div style={{ marginBottom: '0px', position: 'relative' }}>
-  <div 
-    id="map" 
-    style={{ 
-      height: '350px', 
-      width: '100%',
-      borderRadius: '12px', 
-      overflow: 'hidden', 
-      border: '1px solid #e2e8f0',
-      background: '#f8fafc', 
-      filter: 'grayscale(0.2) contrast(1.1) brightness(0.92)',
-      zIndex: 1
-    }}
-  ></div>
-</div>
+<Mappa lista={listaDaMostrare} />
 
 {/* MINI TESTO SEO SOTTO LA MAPPA - ATTACCATO */}
 <p style={{ 
