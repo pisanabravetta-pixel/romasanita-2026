@@ -15,10 +15,10 @@ export default function GuidaCardiologia() {
   useEffect(() => {
     async function fetchCardiologi() {
       const { data, error } = await supabase
-        .from('cardiologi')           // nome tabella supabase
+        .from('cardiologi')
         .select('nome, quartiere, link, telefono')
-        .eq('in_annuncio', true)      // solo quelli attivi negli annunci
-        .limit(3);                    // prendi 3 cardiologi
+        .eq('in_annuncio', true)
+        .limit(3);
       if (error) console.log('Errore Supabase:', error);
       else setCardiologi(data);
     }
@@ -83,3 +83,26 @@ export default function GuidaCardiologia() {
               ))}
             </div>
           )}
+
+        </article>
+
+        {/* CTA FINALE */}
+        <div style={{ marginTop: '50px', padding: '40px', backgroundColor: '#164e63', borderRadius: '24px', color: 'white', textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 10px 0', fontSize: '24px' }}>Cerchi un Cardiologo a Roma?</h3>
+          <p style={{ opacity: 0.9, marginBottom: '25px' }}>Trova i migliori specialisti nei quartieri della Capitale e prenota la tua visita.</p>
+          <a href="/cardiologi-roma" style={{ display: 'inline-block', backgroundColor: 'white', color: '#164e63', fontWeight: '800', textDecoration: 'none', padding: '12px 30px', borderRadius: '12px' }}>
+            VEDI CARDIOLOGI A ROMA
+          </a>
+        </div>
+
+        {/* DISCLAIMER */}
+        <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic' }}>
+          <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel {dataCorrente} e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
+        </div>
+
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
