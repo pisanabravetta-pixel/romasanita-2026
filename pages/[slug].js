@@ -654,44 +654,43 @@ if (!mounted) return null;
 );
 }
 
-import { supabase } from '../lib/supabaseClient';
-
 export async function getServerSideProps(context) {
   const { slug, page: queryPage } = context.query;
   const page = parseInt(queryPage) || 1;
   const annunciPerPagina = 10;
 
   try {
+
     // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     if (!catRicercata || catRicercata.length < 3) {
       return { notFound: true };
     }
+
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
     // 2. QUERY BASE
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' });
+      .select('*', { count: 'exact' })
+      .eq('approvato', true);
 
-    // 3. FILTRO APPROVATO
-    query = query.eq('approvato', true); 
-
-    // 4. LOGICA RADICE
+    // 3. LOGICA RADICE
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
     if (radice.length > 9) radice = radice.substring(0, 10); 
+
     query = query.ilike('categoria', `%${radice}%`);
 
-    // 5. FILTRO ZONA
+    // 4. FILTRO ZONA
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
-    // 6. PAGINAZIONE
+    // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -711,8 +710,10 @@ export async function getServerSideProps(context) {
         zonaSSR: zonaInSlug
       }
     };
+
   } catch (err) {
     console.error("ERRORE SSR:", err);
+
     return { 
       props: { 
         datiIniziali: [], 
