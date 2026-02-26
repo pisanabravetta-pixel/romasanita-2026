@@ -141,6 +141,7 @@ const [mounted, setMounted] = useState(false);
 if (!mounted) return null;
  return (
   <>
+   <Navbar />
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
       <HubLayout 
