@@ -49,16 +49,20 @@ export default function PaginaQuartiereDinamica({
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
+  // Sincronizzazione dati dal server (SSR)
+  useEffect(() => {
+    if (datiIniziali && datiIniziali.length > 0) {
+      setServizi(datiIniziali);
+    }
+  }, [datiIniziali]);
+
   const annunciPerPagina = 10;
-  
-  // FIX: Usiamo un filtro per evitare ID nulli che fanno crashare la Map
-  const listaUnica = Array.from(
-    new Map(
-      (servizi || [])
-        .filter(item => item && item.id) 
-        .map(item => [item.id, item])
-    ).values()
-  );
+
+  // Protezione contro ID duplicati o nulli che mandano in crash React
+  const listaUnica = useMemo(() => {
+    const validi = (servizi || []).filter(item => item && item.id);
+    return Array.from(new Map(validi.map(item => [item.id, item])).values());
+  }, [servizi]);
 
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
@@ -120,32 +124,35 @@ export default function PaginaQuartiereDinamica({
   
   // 3. MAPPA
 useEffect(() => {
-    // Verifichiamo che siamo nel browser e che Leaflet (L) sia caricato
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
-      if (window.mapInstance) { window.mapInstance.remove(); }
-      
-      const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
-      window.mapInstance = map;
-      
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
-        attribution: '© OSM' 
-      }).addTo(map);
-      
-      const group = new L.featureGroup();
-      
-      listaDaMostrare.forEach((s) => {
-        // PRESA SICURA DELLE COORDINATE
-        const la = parseFloat(s.lat);
-        const lo = parseFloat(s.lng || s.lon);
+      try {
+        if (window.mapInstance) { window.mapInstance.remove(); }
+        
+        const map = L.map('map', { scrollWheelZoom: false }).setView([41.9028, 12.4964], 13);
+        window.mapInstance = map;
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { 
+          attribution: '© OSM' 
+        }).addTo(map);
+        
+        const group = new L.featureGroup();
+        
+        listaDaMostrare.forEach((s) => {
+          // Prendiamo le coordinate convertendole sempre in numeri
+          const la = parseFloat(s.lat);
+          const lo = parseFloat(s.lng || s.lon); // Gestisce entrambi i nomi
 
-        if (!isNaN(la) && !isNaN(lo)) {
-          const m = L.marker([la, lo]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
-          group.addLayer(m);
+          if (!isNaN(la) && !isNaN(lo)) {
+            const m = L.marker([la, lo]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
+            group.addLayer(m);
+          }
+        });
+        
+        if (group.getLayers().length > 0) {
+          map.fitBounds(group.getBounds().pad(0.1));
         }
-      });
-      
-      if (group.getLayers().length > 0) {
-        map.fitBounds(group.getBounds().pad(0.1));
+      } catch (e) {
+        console.error("Errore Mappa:", e);
       }
     }
   }, [listaDaMostrare]);
