@@ -684,11 +684,11 @@ export async function getServerSideProps(context) {
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
+    // Selezioniamo esplicitamente le colonne per essere sicuri che 'lng' arrivi
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' });
+      .select('id, nome, categoria, zona, indirizzo, telefono, whatsapp, approvato, lat, lng, is_top, slug', { count: 'exact' });
 
-    // FILTRO APPROVATO (Come richiesto)
     query = query.eq('approvato', true); 
 
     let radice = catRicercata.toLowerCase();
@@ -696,7 +696,6 @@ export async function getServerSideProps(context) {
     if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
-    // FILTRO ZONA (Come richiesto)
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
       query = query.ilike('zona', `%${zonaRicerca}%`);
@@ -710,6 +709,11 @@ export async function getServerSideProps(context) {
       .range(da, a);
 
     if (error) throw error;
+
+    // DEBUG LOG: Controlliamo se nel primo risultato esiste 'lng'
+    if (data && data.length > 0) {
+      console.log("DEBUG COORDINATE:", data[0].lat, data[0].lng);
+    }
 
     return {
       props: {
@@ -725,14 +729,7 @@ export async function getServerSideProps(context) {
   } catch (err) {
     console.error("ERRORE SSR:", err.message);
     return { 
-      props: { 
-        datiIniziali: [], 
-        totaleDalServer: 0, 
-        paginaIniziale: 1, 
-        slugSSR: slug || "", 
-        categoriaSSR: "", 
-        zonaSSR: "" 
-      } 
+      props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "", categoriaSSR: "", zonaSSR: "" } 
     };
   }
 }
