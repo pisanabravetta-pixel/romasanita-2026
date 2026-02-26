@@ -42,81 +42,66 @@ export default function PaginaQuartiereDinamica({
   const titoloPulito = nomiCorrettiH1[catSlug.toLowerCase()] || catSlug.toUpperCase().replace(/-/g, ' ');
   const colore = filtri.colore || '#2563eb';
 
-  // --- STATI E LOGICA ---
+// --- STATI E LOGICA ---
   const [servizi, setServizi] = useState(datiIniziali || []);
   const [loading, setLoading] = useState(false);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
   const [meta, setMeta] = useState({ titolo: "", zona: "", cat: "", nomeSemplice: "" });
   const [tema, setTema] = useState({ primario: '#0891b2', chiaro: '#ecfeff', label: 'SERVIZI' });
 
+  // Sincronizza lo stato quando cambiano i dati dal server
+  useEffect(() => {
+    if (datiIniziali && datiIniziali.length > 0) {
+      setServizi(datiIniziali);
+    }
+  }, [datiIniziali]);
+
   const annunciPerPagina = 10;
-  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
   const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   const totaleAnnunci = totaleDalServer || listaUnica.length;
-  const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const p = parseInt(params.get('page')) || 1;
-      setPagina(p);
-    }
-  }, [router.query]);
-
-  useEffect(() => {
-    const s = slug || slugSSR; // FIX: coerenza con slugSSR
-    if (!s || s === 'index' || s === '') return;
+    const s = slug || slugSSR;
+    if (!s || s === 'index') return;
 
     const slugPuro = s.replace('-roma-', '@');
     const catEstratta = slugPuro.split('@')[0].replace('-roma', ''); 
     const zonaEstratta = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaEstratta || zonaEstratta === 'roma';
 
+    // Impostazione Tema e Meta (lasciala invariata come hai nel tuo file)
     const nomiPuliti = {
       'diagnostica': 'Diagnostica', 'farmacie': 'Farmacie', 'dermatologi': 'Dermatologi',
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
       'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
-      'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
-      'servizi-domicilio': 'Servizi a Domicilio'
+      'nutrizionisti': 'Nutrizionisti'
     };
     const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
     const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-    let primario = "#0891b2"; let chiaro = "#ecfeff";
-    if (catEstratta.includes('dentist')) { primario = "#0f766e"; chiaro = "#f0fdfa"; }
-    else if (catEstratta.includes('dermatol')) { primario = "#be185d"; chiaro = "#fdf2f8"; }
-    else if (catEstratta.includes('cardiolog')) { primario = "#dc2626"; chiaro = "#fef2f2"; }
-
-    setTema({ primario, chiaro, label: nomeBase.toUpperCase() });
     setMeta({ 
       titolo: isHub ? `${nomeBase} a Roma` : `${nomeBase} a Roma ${zonaBella}`, 
       zona: zonaBella, cat: catEstratta, nomeSemplice: nomeBase 
     });
 
-    if (isHub && datiIniziali && datiIniziali.length > 0) {
-      setServizi(datiIniziali);
-      setLoading(false);
-      return; 
-    }
-    // --- AGGIUNGI QUESTO QUI SOTTO ---
+    // --- LOGICA DI CARICAMENTO FIXATA ---
     if (datiIniziali && datiIniziali.length > 0) {
-      setServizi(datiIniziali);
-      setLoading(false);
-      return; 
+        // Se abbiamo i dati dal server, non fare il fetch client
+        setLoading(false);
+        return; 
     }
-    // --- FINE AGGIUNTA ---
 
     const fetchData = async () => {
       try {
         setLoading(true);
         const keyword = catEstratta.toLowerCase().substring(0, 4);
+        // Usa le colonne corrette: approvato e zona
         let q = supabase.from('annunci').select('*').eq('approvato', true);
         q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
         if (!isHub) {
-          const zQuery = zonaEstratta.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+          q = q.ilike('zona', `%${zonaEstratta.replace(/-/g, ' ')}%`);
         }
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
         if (!error) setServizi(data || []);
@@ -126,6 +111,7 @@ export default function PaginaQuartiereDinamica({
         setLoading(false);
       }
     };
+    
     fetchData();
   }, [slug, slugSSR, datiIniziali]);
   
