@@ -670,17 +670,24 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // Import corretto per il tuo file che usa 'export const'
+    // 1. IMPORTAZIONE SICURA (Niente require che fa crashare)
     const supabaseModule = await import('../lib/supabaseClient');
     const supabase = supabaseModule.supabase;
 
+    if (!supabase) throw new Error("Client Supabase non trovato");
+
+    // 2. LOGICA SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
     const catRicercata = slugPuro.split('@')[0].replace('-roma', '');
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
-    let query = supabase.from('annunci').select('*', { count: 'exact' });
+    // 3. QUERY (Uso '*' per far funzionare la mappa come prima)
+    let query = supabase
+      .from('annunci')
+      .select('*', { count: 'exact' });
 
+    // 4. FILTRI (Colonne confermate: approvato e zona)
     query = query.eq('approvato', true); 
 
     let radice = catRicercata.toLowerCase();
@@ -693,6 +700,7 @@ export async function getServerSideProps(context) {
       query = query.ilike('zona', `%${zonaRicerca}%`);
     }
 
+    // 5. PAGINAZIONE
     const da = (page - 1) * annunciPerPagina;
     const a = da + annunciPerPagina - 1;
 
@@ -702,16 +710,16 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // --- QUESTO È QUELLO CHE FA TORNARE I SEGNAPOSTI ---
-    const datiMappaOk = (data || []).map(item => ({
+    // 6. FIX COORDINATE (Sdoppiamo lon/lng per far felice la mappa)
+    const datiMappa = (data || []).map(item => ({
       ...item,
-      lon: item.lng || item.lon, // Se il db invia lng, lo sdoppia in lon per il frontend
-      lng: item.lng || item.lon  // Viceversa
+      lng: item.lng || item.lon || 0,
+      lon: item.lng || item.lon || 0
     }));
 
     return {
       props: {
-        datiIniziali: datiMappaOk,
+        datiIniziali: datiMappa,
         totaleDalServer: count || 0,
         paginaIniziale: page,
         slugSSR: slug || "",
@@ -719,8 +727,18 @@ export async function getServerSideProps(context) {
         zonaSSR: zonaInSlug
       }
     };
+
   } catch (err) {
-    console.error("ERRORE SSR:", err);
-    return { props: { datiIniziali: [], totaleDalServer: 0, paginaIniziale: 1, slugSSR: slug || "", categoriaSSR: "", zonaSSR: "" } };
+    console.error("ERRORE SSR FINALE:", err.message);
+    return { 
+      props: { 
+        datiIniziali: [], 
+        totaleDalServer: 0, 
+        paginaIniziale: 1, 
+        slugSSR: slug || "",
+        categoriaSSR: "",
+        zonaSSR: ""
+      } 
+    };
   }
 }
