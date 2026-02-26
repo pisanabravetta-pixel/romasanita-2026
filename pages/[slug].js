@@ -665,7 +665,8 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    const { supabase } = require('../lib/supabaseClient');
+  const supabaseModule = await import('../lib/supabaseClient');
+const supabase = supabaseModule.supabase;
     
     // 1. ANALISI DELLO SLUG
     const slugPuro = slug ? slug.replace('-roma-', '@') : '';
