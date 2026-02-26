@@ -120,6 +120,7 @@ export default function PaginaQuartiereDinamica({
   
   // 3. MAPPA
 useEffect(() => {
+    // Verifichiamo che siamo nel browser e che Leaflet (L) sia caricato
     if (typeof window !== 'undefined' && typeof L !== 'undefined' && listaDaMostrare?.length > 0) {
       if (window.mapInstance) { window.mapInstance.remove(); }
       
@@ -133,21 +134,19 @@ useEffect(() => {
       const group = new L.featureGroup();
       
       listaDaMostrare.forEach((s) => {
-        // PROVA TUTTE LE COMBINAZIONI POSSIBILI DI NOMI
-        const latitudine = s.lat || s.latitude;
-        const longitudine = s.lng || s.lon || s.longitude;
+        // PRESA SICURA DELLE COORDINATE
+        const la = parseFloat(s.lat);
+        const lo = parseFloat(s.lng || s.lon);
 
-        if (latitudine && longitudine) {
-          const m = L.marker([parseFloat(latitudine), parseFloat(longitudine)])
-            .addTo(map)
-            .bindPopup(`<b>${s.nome}</b>`);
+        if (!isNaN(la) && !isNaN(lo)) {
+          const m = L.marker([la, lo]).addTo(map).bindPopup(`<b>${s.nome}</b>`);
           group.addLayer(m);
-        } else {
-          console.log("Mancano coordinate per:", s.nome, "Dati ricevuti:", { lat: s.lat, lng: s.lng, lon: s.lon });
         }
       });
       
-      if (group.getLayers().length > 0) map.fitBounds(group.getBounds().pad(0.1));
+      if (group.getLayers().length > 0) {
+        map.fitBounds(group.getBounds().pad(0.1));
+      }
     }
   }, [listaDaMostrare]);
   
