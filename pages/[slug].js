@@ -679,10 +679,11 @@ export async function getServerSideProps(context) {
   const annunciPerPagina = 10;
 
   try {
-    // Usiamo l'import standard del client che hai già nel file
-    // Assicurati che in cima al file ci sia: import { supabase } from '../lib/supabaseClient';
-    // Se non vuoi toccare gli import in alto, usiamo questa logica:
-    const { supabase } = require('../lib/supabaseClient');
+    // IMPORTANTE: Assicurati che il percorso sia corretto
+    const supabaseModule = await import('../lib/supabaseClient');
+    const supabase = supabaseModule.supabase;
+
+    if (!supabase) throw new Error("Client Supabase non trovato");
 
     const s = slug || "";
     const slugPuro = s.replace('-roma-', '@');
@@ -690,21 +691,19 @@ export async function getServerSideProps(context) {
     const zonaInSlug = slugPuro.includes('@') ? slugPuro.split('@')[1] : 'roma';
     const isHub = !zonaInSlug || zonaInSlug === 'roma';
 
+    // Query pulita con le tue nuove colonne: approvato, zona, lng
     let query = supabase
       .from('annunci')
-      .select('*', { count: 'exact' });
-
-    // Filtri aggiornati alle tue colonne
-    query = query.eq('approvato', true); 
+      .select('*', { count: 'exact' })
+      .eq('approvato', true); // Colonna aggiornata
 
     let radice = catRicercata.toLowerCase();
     if (radice.endsWith('i')) radice = radice.slice(0, -1);
-    if (radice.length > 9) radice = radice.substring(0, 10); 
     query = query.ilike('categoria', `%${radice}%`);
 
     if (!isHub) {
       const zonaRicerca = zonaInSlug.replace(/-/g, ' ');
-      query = query.ilike('zona', `%${zonaRicerca}%`);
+      query = query.ilike('zona', `%${zonaRicerca}%`); // Colonna aggiornata
     }
 
     const da = (page - 1) * annunciPerPagina;
@@ -716,11 +715,10 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
-    // FIX DEFINITIVO MAPPA: 
-    // Sdoppiamo i nomi così il frontend legge quello che vuole
+    // FIX PER LA MAPPA: Sdoppiamo lng e lon così il frontend non impazzisce
     const datiMappati = (data || []).map(item => ({
       ...item,
-      lat: item.lat ? parseFloat(item.lat) : null,
+      lat: item.lat || null,
       lng: item.lng || item.lon || null,
       lon: item.lng || item.lon || null
     }));
@@ -736,7 +734,7 @@ export async function getServerSideProps(context) {
       }
     };
   } catch (err) {
-    console.error("ERRORE SSR:", err);
+    console.error("ERRORE SSR:", err.message);
     return { 
       props: { 
         datiIniziali: [], 
