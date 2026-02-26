@@ -1,13 +1,10 @@
-// pages/guide/costo-visita-cardiologica-roma.js
 import React from 'react';
 import Head from 'next/head';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
-export default function GuidaCardiologica() {
-  const dataAttuale = new Date();
-  const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-  const dataStringa = `${mesi[dataAttuale.getMonth()]} ${dataAttuale.getFullYear()}`;
+export default function GuidaCardiologia() {
+  const dataCorrente = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
 
   const quartieri = [
     { slug: 'prati', nome: 'Prati' },
@@ -23,74 +20,108 @@ export default function GuidaCardiologica() {
   ];
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       <Head>
-        <title>Costo visita cardiologica a Roma | ServiziSalute</title>
-        <meta name="description" content={`Guida aggiornata su quanto costa una visita cardiologica a Roma. Contatti diretti dei professionisti e indirizzi per il quartiere scelto, aggiornati a ${dataStringa}.`} />
-        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-visita-cardiologica-roma" />
+        <title>Costo Visita Cardiologica Roma: Tariffe Private {dataCorrente}</title>
+        <meta name="description" content={`Guida completa ai prezzi delle visite cardiologiche a Roma aggiornata a ${dataCorrente}. Trova cardiologi nei principali quartieri della città.`} />
+        <link rel="canonical" href="https://www.tuosito.com/guide/costo-visita-cardiologica-roma" />
       </Head>
 
       <Navbar />
 
-      <main style={{ padding: '20px', maxWidth:'800px', margin:'0 auto' }}>
-        <h1>Costo visita cardiologica a Roma</h1>
-        <p>Se stai cercando informazioni su <strong>quanto costa una visita cardiologica a Roma</strong>, sei nella pagina giusta. Qui troverai indicazioni sui prezzi medi, contatti diretti dei cardiologi e link alle strutture presenti nei principali quartieri della città, aggiornati a <strong>{dataStringa}</strong>.</p>
+      {/* IMMAGINE PRINCIPALE */}
+      <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
+        <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+          <img 
+            src="/images/costo-visita-cardiologica-roma.png" 
+            alt="Tracciato elettrocardiografico ECG con panorama di Roma sullo sfondo" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
+          />
+        </div>
+      </div>
 
-        <h2>Prezzi indicativi delle visite cardiologiche</h2>
-        <ul>
-          <li>Visita cardiologica privata: 80€ – 150€</li>
-          <li>Elettrocardiogramma (ECG): 30€ – 60€</li>
-          <li>Ecocardiogramma: 60€ – 120€</li>
-          <li>Holter cardiaco: 80€ – 130€</li>
-        </ul>
-
-        <p>I costi possono variare in base alla struttura, alla zona e all’esperienza del medico. Ti consigliamo di contattare direttamente la struttura per confermare disponibilità e prezzi aggiornati.</p>
-
-        <h2>Cardiologi nei principali quartieri di Roma</h2>
-        <p>Seleziona il quartiere di tuo interesse per vedere i cardiologi disponibili:</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '20px' }}>
-          {quartieri.map(q => (
-            <a 
-              key={q.slug} 
-              href={`/cardiologi-roma-${q.slug}`} 
-              style={{ 
-                padding: '8px 12px', 
-                backgroundColor: '#f0f9ff', 
-                color: '#0369a1', 
-                borderRadius: '8px', 
-                textDecoration: 'none', 
-                fontWeight: '700', 
-                fontSize: '14px' 
-              }}
-            >
-              {q.nome}
-            </a>
-          ))}
+      <main style={{ flex: '1 0 auto', maxWidth: '850px', margin: '0 auto', padding: '0 20px', width: '100%', marginBottom: '80px' }}>
+        
+        {/* BREADCRUMB */}
+        <div style={{ marginBottom: '20px', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
+          <a href="/" style={{ color: '#0891b2', textDecoration: 'none' }}>Home</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <a href="/guide" style={{ color: '#0891b2', textDecoration: 'none' }}>Guide</a>
+          <span style={{ margin: '0 8px' }}>&gt;</span>
+          <span style={{ color: '#164e63' }}>Costo Cardiologia</span>
         </div>
 
-        <h2>Come prenotare una visita cardiologica a Roma</h2>
-        <p>Per prenotare una visita cardiologica puoi:</p>
-        <ul>
-          <li>Contattare direttamente il medico o la struttura tramite telefono o WhatsApp.</li>
-          <li>Verificare la disponibilità online se la struttura offre prenotazioni digitali.</li>
-          <li>Consultare la mappa per individuare la struttura più vicina a te nel quartiere di interesse.</li>
-        </ul>
+        <article>
+          <h1 style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '25px' }}>
+            Costi Visita Cardiologica a Roma: Guida ai Prezzi {dataCorrente}
+          </h1>
 
-        <h2>Domande frequenti</h2>
-        <h3>Quanto dura una visita cardiologica?</h3>
-        <p>Di solito tra 20 e 40 minuti, a seconda degli esami richiesti.</p>
+          <div style={{ backgroundColor: '#ecfeff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #0891b2', marginBottom: '35px' }}>
+            <p style={{ margin: 0, color: '#164e63', fontSize: '18px', lineHeight: '1.6' }}>
+              Una visita cardiologica privata a Roma ha un prezzo medio tra <strong>80€ e 150€</strong>. Analizziamo i fattori che influenzano il costo e dove trovare i migliori specialisti.
+            </p>
+          </div>
 
-        <h3>Serve la ricetta del medico di base?</h3>
-        <p>Per visite private non serve, per visite in convenzione con il SSN sì.</p>
+          <section style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
+            <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Cosa determina il costo di una visita cardiologica</h2>
+            <ul style={{ paddingLeft: '20px' }}>
+              <li><strong>Elettrocardiogramma (ECG):</strong> spesso incluso nella visita (100-120€ totali).</li>
+              <li><strong>Ecocardiogramma:</strong> se richiesto, il costo può arrivare a 150-200€.</li>
+              <li><strong>Esperienza del medico:</strong> specialisti con lunga carriera o fama nazionale possono avere tariffe più alte.</li>
+              <li><strong>Zona di Roma:</strong> centri storici e quartieri centrali come Prati e Parioli tendono ad avere costi superiori.</li>
+            </ul>
+          </section>
 
-        <h3>Posso pagare con carta o solo contanti?</h3>
-        <p>Molti centri accettano pagamenti elettronici; verifica sempre con la struttura prima della visita.</p>
+          <section style={{ marginTop: '40px' }}>
+            <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800' }}>Cardiologi nei principali quartieri di Roma</h2>
+            <p>Seleziona il quartiere di tuo interesse per consultare i professionisti disponibili:</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '20px' }}>
+              {quartieri.map(q => (
+                <a 
+                  key={q.slug} 
+                  href={`/cardiologi-roma-${q.slug}`} 
+                  style={{ 
+                    padding: '8px 12px', 
+                    backgroundColor: '#f0f9ff', 
+                    color: '#0369a1', 
+                    borderRadius: '8px', 
+                    textDecoration: 'none', 
+                    fontWeight: '700', 
+                    fontSize: '14px' 
+                  }}
+                >
+                  {q.nome}
+                </a>
+              ))}
+            </div>
+          </section>
 
-        <p>Per avere una panoramica completa dei cardiologi in città, puoi <a href="/cardiologi-roma" style={{ color: '#059669', fontWeight: '700', textDecoration: 'underline' }}>tornare alla lista generale di cardiologi a Roma</a>.</p>
+          <section style={{ marginTop: '40px', lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
+            <h2 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800' }}>Come prenotare una visita cardiologica a Roma</h2>
+            <ul style={{ paddingLeft: '20px' }}>
+              <li>Contatta direttamente lo specialista o la struttura tramite telefono o WhatsApp.</li>
+              <li>Verifica eventuali prenotazioni online se la struttura offre servizi digitali.</li>
+              <li>Consulta la mappa dei quartieri per individuare la struttura più comoda da raggiungere.</li>
+            </ul>
+          </section>
 
+          {/* CTA BOX */}
+          <div style={{ marginTop: '50px', padding: '40px', backgroundColor: '#164e63', borderRadius: '24px', color: 'white', textAlign: 'center' }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '24px' }}>Cerchi un Cardiologo a Roma?</h3>
+            <p style={{ opacity: 0.9, marginBottom: '25px' }}>Trova i migliori specialisti nei quartieri della Capitale e prenota la tua visita direttamente online o telefonicamente.</p>
+            <a href="/cardiologi-roma" style={{ display: 'inline-block', backgroundColor: 'white', color: '#164e63', fontWeight: '800', textDecoration: 'none', padding: '12px 30px', borderRadius: '12px' }}>
+              VEDI CARDIOLOGI A ROMA
+            </a>
+          </div>
+        </article>
       </main>
 
+      {/* DISCLAIMER STANDARD */}
+      <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '14px', color: '#64748b', fontStyle: 'italic', maxWidth: '850px', marginLeft: 'auto', marginRight: 'auto' }}>
+        <strong>Nota Informativa:</strong> I prezzi indicati in questa guida sono frutto di una media di mercato rilevata a Roma nel {dataCorrente} e hanno scopo puramente informativo. Le tariffe possono variare in base alla complessità del caso clinico e alla strumentazione utilizzata. Questo contenuto non costituisce in alcun modo parere medico o diagnosi.
+      </div>
+
       <Footer />
-    </>
+    </div>
   );
 }
