@@ -141,6 +141,20 @@ const [mounted, setMounted] = useState(false);
 if (!mounted) return null;
  return (
   <>
+   {/* --- TOP BAR: prima di tutto --- */}
+    <div style={{ 
+      backgroundColor: '#2c5282', 
+      color: 'white', 
+      padding: '12px', 
+      textAlign: 'center', 
+      fontWeight: '900', 
+      fontSize: '15px', 
+      width: '100%', 
+      letterSpacing: '0.5px', 
+      textTransform: 'uppercase' 
+    }}>
+      {catSlug.toUpperCase()} ROMA {quartiereNome} — {dataStringa.toUpperCase()}
+    </div>
    <Navbar />
     {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
     {zonaInSlug === 'roma' ? (
