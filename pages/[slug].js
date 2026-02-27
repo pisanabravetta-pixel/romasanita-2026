@@ -163,13 +163,12 @@ if (!mounted) return null;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
       
-      {/* 1. SPOSTA LA BARRA QUI (Sopra Navbar) */}
+      {/* QUESTA DEVE ESSERE L'UNICA TOPBAR */}
       <div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
         {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
       </div>
 
-      {/* 2. POI LA NAVBAR */}
-      <Navbar /> 
+      <Navbar />
 
       {/* 3. POI IL HEAD (Che non si vede graficamente) */}
       <Head>
