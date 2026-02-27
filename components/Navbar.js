@@ -25,16 +25,14 @@ export default function Navbar() {
 
           {/* ── SINISTRA: MENU (solo desktop) ── */}
           <div
-            onMouseEnter={() => setMenuAperto(true)}
-            onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
             className="menu-wrapper desktop-left"
           >
-            <div className="menu-trigger">
-              MENU <i className="fas fa-chevron-down"></i>
+            <div className="menu-trigger" onClick={() => { setMenuAperto(!menuAperto); setCatAperto(false); }}>
+              MENU <i className={`fas ${menuAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
             </div>
 
             {menuAperto && (
-              <div className="dropdown-main">
+              <div className="dropdown-main" onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}>
                 <div className="cat-section">
                   <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                     <span>🧩 Categorie</span>
@@ -75,16 +73,14 @@ export default function Navbar() {
           {/* ── MOBILE: MENU + AZIONI in una sola riga ── */}
           <nav className="nav-actions mobile-only">
             <div
-              onMouseEnter={() => setMenuAperto(true)}
-              onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
               className="menu-wrapper"
             >
-              <div className="menu-trigger">
-                MENU <i className="fas fa-chevron-down"></i>
+              <div className="menu-trigger" onClick={() => { setMenuAperto(!menuAperto); setCatAperto(false); }}>
+                MENU <i className={`fas ${menuAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
               </div>
 
               {menuAperto && (
-                <div className="dropdown-main">
+                <div className="dropdown-main" onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}>
                   <div className="cat-section">
                     <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                       <span>🧩 Categorie</span>
@@ -169,7 +165,7 @@ export default function Navbar() {
           .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
 
           .dropdown-main {
-            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 100%; left: 0; transform: none;
             background: white; min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9; z-index: 999;
           }
