@@ -221,33 +221,28 @@ return (
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
     
-{/* TITOLO PRINCIPALE E BRAND */}
-<div style={{ 
-  textAlign: 'center', 
-  marginTop: '40px', 
-  marginBottom: '30px',
-  padding: '0 15px', // spazio ai lati su mobile
-}}>
-
+{/* TITOLO PRINCIPALE (H1) */}
+<div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px', padding: '0 15px' }}>
+  
   {/* Nome Brand - Grande e VERDE SCURO */}
-  <div style={{ 
-    fontSize: '44px', 
+  <h1 style={{ 
+    fontSize: '44px', // dimensione originale che si vedeva bene
     fontWeight: '900', 
-    color: '#064e3b',
+    color: '#064e3b', // Verde scuro profondo
     letterSpacing: '-1.5px',
     marginBottom: '12px',
     lineHeight: '1',
-    display: 'inline-block', // ✅ forza il brand a stare in una riga
-    maxWidth: '100%',
+    display: 'inline-block', // forza il brand a rimanere su una riga
+    maxWidth: '100%'
   }}>
     ServiziSalute.com
-  </div>
+  </h1>
 
   {/* H1 SEO-Friendly */}
   <h1 style={{ 
     fontSize: '28px', 
     fontWeight: '700', 
-    color: '#065f46',
+    color: '#065f46', // verde coordinato
     marginBottom: '12px',
     lineHeight: '1.2',
     maxWidth: '700px',
@@ -264,7 +259,7 @@ return (
     maxWidth: '650px', 
     margin: '0 auto'
   }}>
-    Il portale completo della sanità romana: contatti diretti, mappe aggiornate e orari di Farmacie, Dentisti, Centri Diagnostici e Specialisti.
+    Il portale completo della sanità romana: contatti diretti, mappe aggiornate e indirizzi di Farmacie, Dentisti, Centri Diagnostici e Specialisti.
   </p>
 
 </div>
