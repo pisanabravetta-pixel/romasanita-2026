@@ -209,9 +209,7 @@ if (!mounted) return null;
 
         
 
-<div style={{ backgroundColor: colore, color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-  {titoloPulito} A ROMA {quartiereNome} — {dataStringa.toUpperCase()}
-</div>
+
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
         {/* Breadcrumb */}
