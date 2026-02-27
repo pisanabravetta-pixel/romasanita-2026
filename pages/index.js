@@ -230,7 +230,7 @@ return (
     fontWeight: '900', 
     color: '#064e3b', // Verde scuro profondo
     letterSpacing: '-1.5px',
-    marginBottom: '12px',
+    marginBottom: '8px',
     lineHeight: '1',
     display: 'inline-block', // forza il brand a rimanere su una riga
     maxWidth: '100%'
@@ -243,7 +243,7 @@ return (
     fontSize: '28px', 
     fontWeight: '700', 
     color: '#065f46', // verde coordinato
-    marginBottom: '12px',
+    marginBottom: '8px',
     lineHeight: '1.2',
     maxWidth: '700px',
     margin: '0 auto'
