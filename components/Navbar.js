@@ -79,68 +79,60 @@ export default function Navbar() {
           .nav-container {
             max-width: 1250px;
             margin: 0 auto;
-            padding: 12px 20px;
-            display: flex;
+            padding: 15px 20px;
+            display: grid; /* Passiamo a Grid per precisione millimetrica */
+            grid-template-columns: 1fr auto 1fr; /* Sinistra (1), Centro (Auto), Destra (1) */
             align-items: center;
-            justify-content: space-between;
           }
 
-          /* AREA SINISTRA: SOLO MENU */
+          /* COLONNA SINISTRA: SOLO MENU */
           .nav-left-menu { 
-            flex: 1; /* Prende spazio a sx */
             display: flex; 
             justify-content: flex-start; 
           }
 
-          /* AREA CENTRALE: LOGO */
+          /* COLONNA CENTRALE: LOGO (Sempre al centro) */
           .logo-section { 
-            flex: 0; /* Non si allunga, resta al centro */
             display: flex; 
             align-items: center; 
             gap: 10px; 
             font-weight: 900; 
             font-size: 30px; 
             letter-spacing: -1px; 
+            text-decoration: none;
             white-space: nowrap;
           }
 
-          /* AREA DESTRA: ACCEDI E PUBBLICA */
+          /* COLONNA DESTRA: ACCEDI E PUBBLICA */
           .nav-right-actions { 
-            flex: 1; /* Prende spazio a dx uguale a quello di sx */
             display: flex; 
             justify-content: flex-end; 
           }
           
-          .menu-wrapper { position: relative; }
           .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
-          
           .dropdown-main {
             position: absolute; top: 100%; left: 0; 
             background: white; min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9;
-            z-index: 2000;
+            border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9; z-index: 2000;
           }
           
           .user-actions { display: flex; align-items: center; gap: 20px; }
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
           .pubblica-btn { 
-            background: #2563eb; 
-            color: white; 
-            padding: 10px 20px; 
-            border-radius: 25px; 
-            text-decoration: none; 
-            font-weight: 800; 
-            font-size: 13px; 
-            text-transform: uppercase; 
+            background: #2563eb; color: white; padding: 10px 22px; border-radius: 25px; 
+            text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; 
           }
 
-          /* MOBILE: TORNA TUTTO NORMALE */
+          /* MOBILE: Torniamo al layout verticale classico per non rompere nulla */
           @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 10px; padding-bottom: 15px; }
-            .logo-section { order: 1; font-size: 22px; width: 100%; justify-content: center; }
-            .nav-left-menu { order: 2; width: 100%; justify-content: center; border-top: 1px solid #f1f5f9; padding-top: 10px; }
-            .nav-right-actions { order: 3; width: 100%; justify-content: center; }
-            .user-actions { gap: 15px; }
+            .nav-container { 
+              display: flex; 
+              flex-direction: column; 
+              gap: 10px; 
+            }
+            .logo-section { font-size: 24px; order: 1; }
+            .nav-left-menu { width: 100%; justify-content: space-between; order: 2; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+            .nav-right-actions { width: 100%; justify-content: center; order: 3; }
           }
         `}</style>
       </header>
