@@ -76,14 +76,14 @@ export default function Navbar() {
           </div>
         </div>
 
-        <style jsx>{`
-          /* --- STILE DESKTOP (LOGO AL CENTRO) --- */
+<style jsx>{`
+          /* --- DESKTOP (PC) --- */
           .nav-container {
             max-width: 1250px;
             margin: 0 auto;
             padding: 15px 20px;
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Forza il logo al centro */
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
           }
 
@@ -108,30 +108,42 @@ export default function Navbar() {
             border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9; z-index: 2000;
           }
           
-          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; padding: 5px 0; }
-          .submenu-vertical a { display: block; padding: 8px 20px; font-size: 13px; text-decoration: none; color: #475569; font-weight: 600; }
-          .menu-link { display: block; padding: 12px 15px; text-decoration: none; color: #475569; font-size: 15px; font-weight: 600; border-radius: 8px; }
-          
           .user-actions { display: flex; align-items: center; gap: 20px; }
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
           .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; }
 
-          /* --- STILE MOBILE (IL TUO ORIGINALE) --- */
+          /* --- MOBILE (Smartphone) --- */
           @media (max-width: 768px) {
             .nav-container { 
               display: flex; 
               flex-direction: column; 
               gap: 15px; 
               padding: 10px; 
+              position: relative;
             }
-            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
+            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; order: 1; }
             
-            /* Rimettiamo Menu e Bottoni sulla stessa riga come nel tuo vecchio file */
-            .nav-left { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; order: 2; }
-            .nav-right { width: 100%; justify-content: flex-end; margin-top: -45px; order: 3; } 
+            /* Riga inferiore */
+            .nav-left { 
+              width: 100%; 
+              display: flex;
+              justify-content: flex-start; /* MENU A SINISTRA */
+              border-top: 1px solid #f1f5f9; 
+              padding-top: 10px; 
+              order: 2; 
+            }
+            
+            .nav-right { 
+              position: absolute; 
+              bottom: 10px; 
+              right: 15px; /* BOTTONI TUTTO A DESTRA */
+              order: 3; 
+              width: auto;
+            } 
             
             .dropdown-main { left: 0; width: 250px; }
             .pubblica-btn { padding: 8px 16px; font-size: 12px; }
+            .user-actions { gap: 15px; }
           }
         `}</style>
       </header>
