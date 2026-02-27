@@ -139,9 +139,10 @@ const [mounted, setMounted] = useState(false);
   
   
 if (!mounted) return null;
- return (
+
+return (
   <>
-   {/* --- TOP BAR: prima di tutto --- */}
+    {/* 1. TOP BAR: Comune a tutte le pagine, rimane fuori */}
     <div style={{ 
       backgroundColor: '#2c5282', 
       color: 'white', 
@@ -155,9 +156,11 @@ if (!mounted) return null;
     }}>
       {catSlug.toUpperCase()} ROMA {quartiereNome} — {dataStringa.toUpperCase()}
     </div>
-   <Navbar />
-    {/* AGGIUNGI QUESTA RIGA: Se siamo su Roma usa HubLayout */}
+
+    {/* 2. LOGICA CONDIZIONALE: Sceglie il layout giusto */}
     {zonaInSlug === 'roma' ? (
+      /* --- CASO A: PAGINA HUB (ROMA) --- */
+      /* Qui NON mettiamo <Navbar /> perché è già dentro HubLayout */
       <HubLayout 
         titolo={catSlug.replace(/-/g, ' ')}
         categoria={catSlug}
@@ -169,8 +172,12 @@ if (!mounted) return null;
         badgeSpec={catSlug}
       />
     ) : (
-      /* --- DA QUI IN POI È IL TUO CODICE ORIGINALE --- */
+      /* --- CASO B: PAGINA QUARTIERE --- */
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
+        
+        {/* LA NAVBAR VA QUI: Solo per i quartieri */}
+        <Navbar />
+
         <Head>
           <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
           <meta 
