@@ -106,7 +106,7 @@ export default function Navbar() {
             </div>
 
             <div className="user-actions">
-              <a href="/login" className="accedi-link" style={{ textAlign: 'center' }}>Accedi</a>
+              <a href="/login" className="accedi-link">Accedi</a>
               <a href="/pubblica-annuncio" className="pubblica-btn">Pubblica</a>
             </div>
           </nav>
@@ -219,7 +219,8 @@ export default function Navbar() {
 
             .dropdown-main { left: 0; transform: none; width: 250px; }
             .pubblica-btn { padding: 8px 16px; font-size: 12px; }
-            .accedi-link { display: block; text-align: center; }
+            .user-actions { flex-direction: column; align-items: center; gap: 8px; }
+            .accedi-link { width: 100%; text-align: center; }
           }
         `}</style>
       </header>
