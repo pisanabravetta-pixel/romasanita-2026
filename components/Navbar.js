@@ -58,13 +58,13 @@ export default function Navbar() {
       </div>
 
 <style jsx>{`
-        /* --- VERSIONE PC --- */
+        /* --- PC: LOGO AL CENTRO, MENU SX, BOTTONI DX --- */
         .nav-container {
           max-width: 1250px;
           margin: 0 auto;
           padding: 0 20px;
           display: grid;
-          grid-template-columns: 1fr auto 1fr; /* 3 colonne: Sinistra, Centro, Destra */
+          grid-template-columns: 1fr auto 1fr; /* Tre colonne fisse */
           align-items: center;
           height: 80px;
         }
@@ -79,7 +79,7 @@ export default function Navbar() {
         .login-txt { text-decoration: none; color: #475569; font-weight: 700; }
         .btn-pubblica { background: #2563eb; color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 
-        /* --- VERSIONE CELLULARE (Ripristino tuo stile) --- */
+        /* --- MOBILE: LOGO SOPRA, MENU E BOTTONI SOTTO --- */
         @media (max-width: 768px) {
           .nav-container { 
             display: flex; 
@@ -92,12 +92,13 @@ export default function Navbar() {
           .nav-col-center { width: 100%; order: 1; justify-content: center; }
           .logo-link { font-size: 24px; }
 
-          /* Riga sotto: Menu a sinistra e Bottoni a destra */
-          .nav-col-left { order: 2; width: 100%; justify-content: flex-start; border-top: 1px solid #f1f5f9; padding-top: 10px; }
-          .nav-col-right { order: 2; width: 100%; justify-content: flex-end; margin-top: -38px; } /* Allinea ai bottoni */
+          /* Contenitore per mettere Menu e Bottoni sulla stessa riga */
+          .nav-col-left { order: 2; width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+          .nav-col-right { order: 3; width: 100%; justify-content: flex-end; margin-top: -42px; } 
           
           .auth-buttons { gap: 10px; }
           .btn-pubblica { padding: 8px 15px; font-size: 11px; }
+          .login-txt { font-size: 13px; }
         }
       `}</style>
     </header>
