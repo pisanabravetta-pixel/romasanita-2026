@@ -107,11 +107,16 @@ const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Lug
 return (
   <>
 <Head>
-  <title key="title">{`ServiziSalute.com | Portale Sanità Roma (${dataStringa}) - Strutture e Specialisti`}</title>
+  <title key="title">
+    {`Medici, Specialisti e Farmacie a Roma | Cardiologi, Dermatologi, Dentisti per Quartiere (${dataStringa})`}
+  </title>
   <link rel="canonical" href="https://www.servizisalute.com/" />
   
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Il network di riferimento per la sanità a Roma. Trova rapidamente medici, farmacie e centri diagnostici suddivisi per quartiere. Contatti diretti, mappe e orari aggiornati." />
+<meta
+  name="description"
+  content="Trova medici, specialisti e farmacie a Roma suddivisi per quartiere. Cerca cardiologi, dermatologi, dentisti e centri diagnostici vicino a te con contatti diretti, orari aggiornati e informazioni dettagliate."
+/>
   {/* --- TAG SOCIAL INSERITI QUI --- */}
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.servizisalute.com/" />
@@ -216,37 +221,46 @@ return (
 <section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
     
-    {/* TITOLO PRINCIPALE (H1) */}
+{/* TITOLO PRINCIPALE E BRAND */}
 <div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
+  
   {/* Nome Brand - Grande e VERDE SCURO */}
-  <h1 style={{ 
+  <div style={{ 
     fontSize: '44px', 
     fontWeight: '900', 
-    color: '#064e3b', // Verde scuro profondo (molto autorevole)
+    color: '#064e3b', // Verde scuro profondo
     letterSpacing: '-1.5px',
-    marginBottom: '8px',
+    marginBottom: '12px',
     lineHeight: '1'
   }}>
     ServiziSalute.com
-  </h1>
-  
-  {/* Slogan - In VERDE SCURO coordinato (più sottile) */}
-  <p style={{ 
-    fontSize: '19px', 
-    fontWeight: '600', 
-    color: '#065f46', // Verde scuro leggermente più chiaro per staccare
-    maxWidth: '600px', 
-    margin: '0 auto',
-    letterSpacing: '-0.2px'
+  </div>
+
+  {/* H1 SEO-Friendly */}
+  <h1 style={{ 
+    fontSize: '28px', 
+    fontWeight: '700', 
+    color: '#065f46', // Verde coordinato leggermente più chiaro
+    marginBottom: '12px',
+    lineHeight: '1.2',
+    maxWidth: '700px',
+    margin: '0 auto'
   }}>
-    Trova strutture e professionisti sanitari a Roma
+    Trova medici, farmacie e centri diagnostici a Roma facilmente
+  </h1>
+
+  {/* Mini testo SEO di supporto */}
+  <p style={{ 
+    fontSize: '18px', 
+    fontWeight: '500', 
+    color: '#475569', 
+    maxWidth: '650px', 
+    margin: '0 auto'
+  }}>
+    Il portale completo della sanità romana: contatti diretti, mappe aggiornate e orari di Farmacie, Dentisti, Centri Diagnostici e Specialisti.
   </p>
+
 </div>
-    
-    {/* SOTTOTITOLO (P) - rimosso "verificati" */}
-    <p style={{ marginBottom: '40px', color: '#475569', fontWeight: '500', fontSize: '18px' }}>
-      Il portale della sanità romana: Farmacie, Dentisti, Centri Diagnostici e Specialisti.
-    </p>
 
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
