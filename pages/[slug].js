@@ -613,7 +613,7 @@ if (!mounted) return null;
   </a>
 </div>
 
-          {/* CROSS LINKING */}
+{/* CROSS LINKING */}
           <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
             <p style={{ fontWeight: '800', fontSize: '14px', textTransform: 'uppercase', marginBottom: '15px' }}>Esplora altri servizi a {meta.zona}:</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
@@ -624,14 +624,13 @@ if (!mounted) return null;
             </div>
             <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
               <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>← Torna a {meta.nomeSemplice} a Roma</a>
-          
+            </div>
           </div>
         </main>
         <Footer />
       </div>
-    )}
-  </>
-);
+    </>
+  );
 }
 
 export async function getServerSideProps(context) {
