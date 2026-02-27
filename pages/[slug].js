@@ -626,10 +626,9 @@ if (!mounted) return null;
               <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>← Torna a {meta.nomeSemplice} a Roma</a>
             </div>
           </div>
-      </main>
-
-<Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
     )}
   </>
 );
