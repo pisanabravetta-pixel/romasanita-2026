@@ -261,7 +261,7 @@ return (
 }}>
   Trova subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
 </p>
-
+</div>
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
   backgroundColor: 'white', 
@@ -379,6 +379,7 @@ minHeight: isMobile ? '160px' : '80px'
     👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
   </a>
 </div>
+  </div> {/* <-- chiusura container */}     
 </section>
   {/* TESTO SEO DI TRANSIZIONE (SPOSTATO PRIMA DELLE STATISTICHE) */}
 <div className="container" style={{ textAlign: 'center', marginTop: '40px', marginBottom: '10px', padding: '0 20px' }}>
