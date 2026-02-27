@@ -144,30 +144,27 @@ if (!mounted) return null;
   if (zonaInSlug === 'roma') {
     return (
       <>
-        <div style={{ backgroundColor: '#2c5282', color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-          {catSlug.toUpperCase()} ROMA — {dataStringa.toUpperCase()}
-        </div>
-        {/* Proviamo a NON mettere Navbar qui. Se sparisce del tutto dall'Hub, sapremo che HubLayout non ce l'ha */}
-        <HubLayout 
-          titolo={catSlug.replace(/-/g, ' ')}
-          categoria={catSlug}
-          colore="#2c5282"
-          datiIniziali={servizi}
-          totaleDalServer={totaleDalServer}
-          paginaIniziale={pagina}
-          testoTopBar={`${catSlug.toUpperCase()} ROMA`}
-          badgeSpec={catSlug}
-        />
-      </>
+       
+  // --- SE SIAMO NELL'HUB (ROMA) ---
+  if (zonaInSlug === 'roma') {
+    return (
+      <HubLayout 
+        titolo={catSlug.replace(/-/g, ' ')}
+        categoria={catSlug}
+        colore="#2c5282"
+        datiIniziali={servizi}
+        totaleDalServer={totaleDalServer}
+        paginaIniziale={pagina}
+        testoTopBar={`${catSlug.toUpperCase()} ROMA`}
+        badgeSpec={catSlug}
+      />
     );
   }
 
   // --- SE SIAMO NEL QUARTIERE ---
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#fdfdfd' }}>
-      <div style={{ backgroundColor: '#2c5282', color: 'white', padding: '12px', textAlign: 'center', fontWeight: '900', fontSize: '15px', width: '100%', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
-        {catSlug.toUpperCase()} ROMA {quartiereNome} — {dataStringa.toUpperCase()}
-      </div>
+    
       
       <Navbar /> 
 
