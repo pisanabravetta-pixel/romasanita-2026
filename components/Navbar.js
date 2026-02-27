@@ -75,55 +75,72 @@ export default function Navbar() {
           </nav>
         </div>
 
-        <style jsx>{`
+<style jsx>{`
           .nav-container {
             max-width: 1250px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-          }
-          
-          /* LOGO GRANDE SU PC */
-          .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 900;
-            font-size: 32px; /* Ingrandito per PC */
-            letter-spacing: -1px;
-            cursor: pointer;
           }
 
-          .nav-actions { display: flex; align-items: center; gap: 40px; }
+          /* AREA SINISTRA: SOLO MENU */
+          .nav-left-menu { 
+            flex: 1; /* Prende spazio a sx */
+            display: flex; 
+            justify-content: flex-start; 
+          }
+
+          /* AREA CENTRALE: LOGO */
+          .logo-section { 
+            flex: 0; /* Non si allunga, resta al centro */
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-weight: 900; 
+            font-size: 30px; 
+            letter-spacing: -1px; 
+            white-space: nowrap;
+          }
+
+          /* AREA DESTRA: ACCEDI E PUBBLICA */
+          .nav-right-actions { 
+            flex: 1; /* Prende spazio a dx uguale a quello di sx */
+            display: flex; 
+            justify-content: flex-end; 
+          }
+          
           .menu-wrapper { position: relative; }
           .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
           
           .dropdown-main {
-            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 100%; left: 0; 
             background: white; min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9;
+            z-index: 2000;
           }
-          
-          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; padding: 5px 0; }
-          .submenu-vertical a { display: block; padding: 8px 20px; font-size: 13px; text-decoration: none; color: #475569; font-weight: 600; }
-          .submenu-vertical a:hover { color: #2563eb; background: #f1f5f9; }
-
-          .menu-link { display: block; padding: 12px 15px; text-decoration: none; color: #475569; font-size: 15px; font-weight: 600; border-radius: 8px; }
-          .menu-link:hover { background-color: #f8fafc; color: #2563eb; }
           
           .user-actions { display: flex; align-items: center; gap: 20px; }
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
-          .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+          .pubblica-btn { 
+            background: #2563eb; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 25px; 
+            text-decoration: none; 
+            font-weight: 800; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+          }
 
-          /* ADATTAMENTO MOBILE */
+          /* MOBILE: TORNA TUTTO NORMALE */
           @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 15px; padding: 10px; }
-            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
-            .nav-actions { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; gap: 0; }
-            .dropdown-main { left: 0; transform: none; width: 250px; }
-            .pubblica-btn { padding: 8px 16px; font-size: 12px; }
+            .nav-container { flex-direction: column; gap: 10px; padding-bottom: 15px; }
+            .logo-section { order: 1; font-size: 22px; width: 100%; justify-content: center; }
+            .nav-left-menu { order: 2; width: 100%; justify-content: center; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+            .nav-right-actions { order: 3; width: 100%; justify-content: center; }
+            .user-actions { gap: 15px; }
           }
         `}</style>
       </header>
