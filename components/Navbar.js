@@ -12,148 +12,82 @@ export default function Navbar() {
   }, []);
 
   return (
-    <>
-      {/* TOP BAR VERDE - SOLO IN HOME */}
+    <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
+      {/* TOP BAR VERDE SOLO HOME */}
       {isHome && (
-        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '10px', textAlign: 'center', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
+        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '10px', textAlign: 'center', fontSize: '12px', fontWeight: '800' }}>
           🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
         </div>
       )}
 
-      <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
-        <div className="nav-container">
-          
-          {/* LOGO E NOME - GRANDEZZA DINAMICA */}
-          <a href="/" className="logo-section" style={{ textDecoration: 'none' }}>
-  {/* L'icona del battito cardiaco blu */}
-  <i className="fas fa-heartbeat" style={{ color: '#2563eb', fontSize: '1.2em' }}></i> 
-  
-  <span style={{ color: '#065f46' }}>Servizi</span>
-  <span style={{ color: '#2563eb' }}>Salute</span>
-</a>
-          {/* NAVIGAZIONE (MENU + AZIONI) */}
-          <nav className="nav-actions">
-            <div 
-              onMouseEnter={() => setMenuAperto(true)}
-              onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
-              className="menu-wrapper"
-            >
-              <div className="menu-trigger">
-                MENU <i className="fas fa-chevron-down"></i>
+      <div className="nav-main-row">
+        
+        {/* SINISTRA: MENU */}
+        <div className="nav-col-left">
+          <div className="menu-wrapper" onMouseEnter={() => setMenuAperto(true)} onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}>
+            <div className="menu-trigger">MENU <i className="fas fa-chevron-down"></i></div>
+            {menuAperto && (
+              <div className="dropdown-box">
+                <a href="/farmacie-roma" className="menu-link">💊 Farmacie</a>
+                <a href="/dentisti-roma" className="menu-link">🦷 Dentisti</a>
+                <a href="/diagnostica-roma" className="menu-link">🔬 Diagnostica</a>
+                <a href="/visite-specialistiche-roma" className="menu-link">👨‍⚕️ Specialisti</a>
+                <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
               </div>
-              
-              {menuAperto && (
-                <div className="dropdown-main">
-                  <div className="cat-section">
-                    <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-                      <span>🧩 Categorie</span>
-                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`} style={{fontSize: '10px'}}></i>
-                    </div>
-                    
-                    {catAperto && (
-                      <div className="submenu-vertical">
-                        <a href="/farmacie-roma">💊 Farmacie</a>
-                        <a href="/dentisti-roma">🦷 Dentisti</a>
-                        <a href="/diagnostica-roma">🔬 Diagnostica</a>
-                        <a href="/visite-specialistiche-roma">👨‍⚕️ Specialisti</a>
-                        <a href="/servizi-domicilio-roma">🏠 Domicilio</a>
-                      </div>
-                    )}
-                  </div>
-
-                  <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
-                  <a href="/guide" className="menu-link">📘 Guide</a>
-                  <a href="/chi-siamo" className="menu-link">ℹ️ Chi siamo</a>
-                </div>
-              )}
-            </div>
-
-            <div className="user-actions">
-              <a href="/login" className="accedi-link">Accedi</a>
-              <a href="/pubblica-annuncio" className="pubblica-btn">Pubblica</a>
-            </div>
-          </nav>
+            )}
+          </div>
         </div>
 
-<style jsx>{`
-  /* CONTENITORE PRINCIPALE PC */
-  .nav-container {
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 15px 20px;
-    display: flex;
-    flex-direction: row; /* Forza l'allineamento orizzontale */
-    align-items: center;
-    justify-content: space-between; /* Distribuisce i tre blocchi */
-  }
+        {/* CENTRO: LOGO */}
+        <div className="nav-col-center">
+          <a href="/" className="logo-link">
+            <i className="fas fa-heartbeat" style={{ color: '#2563eb' }}></i> 
+            <span style={{ color: '#065f46' }}>Servizi</span>
+            <span style={{ color: '#2563eb' }}>Salute</span>
+          </a>
+        </div>
 
-  /* BLOCCO SINISTRA (1/3 dello spazio) */
-  .nav-left-menu { 
-    flex: 1; 
-    display: flex; 
-    justify-content: flex-start; 
-  }
+        {/* DESTRA: PULSANTI */}
+        <div className="nav-col-right">
+          <div className="auth-buttons">
+            <a href="/login" className="login-txt">Accedi</a>
+            <a href="/pubblica-annuncio" className="btn-pubblica">Pubblica</a>
+          </div>
+        </div>
 
-  /* BLOCCO CENTRO (Prende solo lo spazio del logo) */
-  .logo-section { 
-    flex: 0 0 auto; 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    font-weight: 900; 
-    font-size: 30px; 
-    letter-spacing: -1px; 
-    text-decoration: none;
-    white-space: nowrap;
-  }
+      </div>
 
-  /* BLOCCO DESTRA (1/3 dello spazio) */
-  .nav-right-actions { 
-    flex: 1; 
-    display: flex; 
-    justify-content: flex-end; 
-  }
-  
-  .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
-  
-  .dropdown-main {
-    position: absolute; 
-    top: 100%; 
-    left: 0; 
-    background: white; 
-    min-width: 240px; 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    border-radius: 12px; 
-    padding: 10px; 
-    border: 1px solid #f1f5f9; 
-    z-index: 2000;
-  }
-  
-  .user-actions { display: flex; align-items: center; gap: 20px; }
-  .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
-  .pubblica-btn { 
-    background: #2563eb; 
-    color: white; 
-    padding: 10px 22px; 
-    border-radius: 25px; 
-    text-decoration: none; 
-    font-weight: 800; 
-    font-size: 13px; 
-    text-transform: uppercase; 
-  }
+      <style jsx>{`
+        .nav-main-row {
+          max-width: 1250px;
+          margin: 0 auto;
+          padding: 10px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 70px;
+        }
 
-  /* MOBILE (Sotto i 768px) */
-  @media (max-width: 768px) {
-    .nav-container { 
-      flex-direction: column; /* Qui sì, li mettiamo uno sotto l'altro */
-      gap: 15px; 
-    }
-    .nav-left-menu { order: 2; width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; }
-    .logo-section { order: 1; font-size: 24px; }
-    .nav-right-actions { order: 3; width: 100%; justify-content: center; }
-  }
-`}</style>
-      </header>
-    </>
+        .nav-col-left { flex: 1; display: flex; justify-content: flex-start; }
+        .nav-col-center { flex: 0; display: flex; justify-content: center; }
+        .nav-col-right { flex: 1; display: flex; justify-content: flex-end; }
+
+        .logo-link { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 28px; text-decoration: none; white-space: nowrap; }
+        
+        .menu-trigger { cursor: pointer; font-weight: 700; color: #475569; padding: 10px; }
+        .dropdown-box { position: absolute; top: 60px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); z-index: 2000; min-width: 200px; }
+        .menu-link { display: block; padding: 10px; text-decoration: none; color: #475569; font-weight: 600; }
+        
+        .auth-buttons { display: flex; align-items: center; gap: 20px; }
+        .login-txt { text-decoration: none; color: #475569; font-weight: 700; }
+        .btn-pubblica { background: #2563eb; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 13px; }
+
+        @media (max-width: 768px) {
+          .nav-main-row { flex-direction: column; height: auto; padding: 15px; gap: 10px; }
+          .nav-col-left, .nav-col-center, .nav-col-right { justify-content: center; width: 100%; }
+          .auth-buttons { margin-top: 5px; }
+        }
+      `}</style>
+    </header>
   );
 }
