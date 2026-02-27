@@ -112,40 +112,16 @@ export default function Navbar() {
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
           .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; }
 
-          /* --- MOBILE (Smartphone) --- */
+          /* ADATTAMENTO MOBILE */
           @media (max-width: 768px) {
-            .nav-container { 
-              display: flex; 
-              flex-direction: column; 
-              gap: 15px; 
-              padding: 10px; 
-              position: relative;
-            }
-            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; order: 1; }
-            
-            /* Riga inferiore */
-            .nav-left { 
-              width: 100%; 
-              display: flex;
-              justify-content: flex-start; /* MENU A SINISTRA */
-              border-top: 1px solid #f1f5f9; 
-              padding-top: 10px; 
-              order: 2; 
-            }
-            
-            .nav-right { 
-              position: absolute; 
-              bottom: 10px; 
-              right: 15px; /* BOTTONI TUTTO A DESTRA */
-              order: 3; 
-              width: auto;
-            } 
-            
-            .dropdown-main { left: 0; width: 250px; }
+            .nav-container { flex-direction: column; gap: 15px; padding: 10px; }
+            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
+            .nav-actions { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; gap: 0; }
+            .dropdown-main { left: 0; transform: none; width: 250px; }
             .pubblica-btn { padding: 8px 16px; font-size: 12px; }
-            .user-actions { gap: 15px; }
           }
         `}</style>
+
       </header>
     </>
   );
