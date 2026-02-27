@@ -222,7 +222,7 @@ return (
   <div className="container" style={{ textAlign: 'center' }}>
     
 {/* TITOLO PRINCIPALE (H1) */}
-<div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px', padding: '0 15px' }}>
+<div style={{ textAlign: 'center', marginTop: '25px', marginBottom: '30px', padding: '0 15px' }}>
   
   {/* Nome Brand - Grande e VERDE SCURO */}
   <h1 style={{ 
