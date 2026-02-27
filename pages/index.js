@@ -252,17 +252,15 @@ return (
   </h1>
 
   {/* Mini testo SEO di supporto */}
-  <p style={{ 
-    fontSize: '18px', 
-    fontWeight: '500', 
-    color: '#475569', 
-    maxWidth: '650px', 
-    margin: '0 auto'
-  }}>
-    Il portale completo della sanità romana: contatti diretti, mappe aggiornate e indirizzi di Farmacie, Dentisti, Centri Diagnostici e Specialisti.
-  </p>
-
-</div>
+ <p style={{ 
+  fontSize: '18px', 
+  fontWeight: '500', 
+  color: '#475569', 
+  maxWidth: '650px', 
+  margin: '0 auto'
+}}>
+  Trova subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
+</p>
 
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
@@ -387,7 +385,8 @@ minHeight: isMobile ? '160px' : '80px'
   {/* TESTO SEO DI TRANSIZIONE (SPOSTATO PRIMA DELLE STATISTICHE) */}
 <div className="container" style={{ textAlign: 'center', marginTop: '40px', marginBottom: '10px', padding: '0 20px' }}>
   <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500', maxWidth: '850px', margin: '0 auto' }}>
-    ServiziSalute ti aiuta a trovare farmacie, medici e centri diagnostici nei quartieri di Roma: un sistema veloce e gratuito per contattare direttamente i migliori professionisti sanitari della Capitale.
+    ServiziSalute ti aiuta a trovare rapidamente medici, farmacie e centri diagnostici nei principali quartieri di Roma: Prati, EUR, Parioli, Centro Storico, San Giovanni e molti altri.  
+    Contatta direttamente i professionisti, consulta orari aggiornati e scopri servizi a domicilio e visite specialistiche nella Capitale. Tutto in un unico portale semplice, veloce e gratuito.
   </p>
 </div>
 
