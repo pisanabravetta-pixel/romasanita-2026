@@ -140,10 +140,8 @@ const [mounted, setMounted] = useState(false);
   
 if (!mounted) return null;
 
-  // --- SE SIAMO NELL'HUB (ROMA) ---
-  if (zonaInSlug === 'roma') {
-    return (
-      <>
+  
+  
        
   // --- SE SIAMO NELL'HUB (ROMA) ---
   if (zonaInSlug === 'roma') {
