@@ -112,11 +112,55 @@ export default function Navbar() {
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
           .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; }
 
-          /* ADATTAMENTO MOBILE */
+         /* ADATTAMENTO MOBILE */
           @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 15px; padding: 10px; }
-            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
-            .nav-actions { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; gap: 0; }
+            .nav-container { 
+              flex-direction: column; 
+              gap: 15px; 
+              padding: 10px; 
+            }
+            
+            /* Logo sopra al centro */
+            .logo-section { 
+              font-size: 22px; 
+              justify-content: center; 
+              width: 100%; 
+              gap: 6px; 
+              order: 1; 
+            }
+            
+            /* Riga sotto: Menu a sx e Bottoni a dx */
+            .nav-col-left, .nav-col-right { 
+              display: contents; /* Annulla i contenitori superflui per usare il flex del padre */
+            }
+
+            /* Trasformiamo la nav-actions o i blocchi interni per stare sulla stessa riga */
+            .nav-container {
+              display: flex;
+            }
+
+            /* Creiamo la riga inferiore */
+            .nav-col-left { 
+              order: 2; 
+              width: 100%; 
+              display: flex; 
+              justify-content: space-between; /* Spinge Menu a sx e Bottoni a dx */
+              align-items: center;
+              border-top: 1px solid #f1f5f9; 
+              padding-top: 10px; 
+            }
+            
+            .nav-col-right { 
+              order: 3;
+              margin-top: -45px; /* Tira su i bottoni sulla riga del menu */
+              width: 100%;
+              display: flex;
+              justify-content: flex-end;
+              pointer-events: none; /* Evita che il contenitore copra il menu */
+            }
+
+            .nav-col-right > * { pointer-events: auto; } /* Riabilita i click sui bottoni */
+
             .dropdown-main { left: 0; transform: none; width: 250px; }
             .pubblica-btn { padding: 8px 16px; font-size: 12px; }
           }
