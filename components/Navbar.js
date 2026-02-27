@@ -106,7 +106,7 @@ export default function Navbar() {
             </div>
 
             <div className="user-actions">
-              <a href="/login" className="accedi-link">Accedi</a>
+              <a href="/login" className="accedi-link" style={{ textAlign: 'center' }}>Accedi</a>
               <a href="/pubblica-annuncio" className="pubblica-btn">Pubblica</a>
             </div>
           </nav>
@@ -144,7 +144,7 @@ export default function Navbar() {
             align-items: center;
             gap: 10px;
             font-weight: 900;
-            font-size: 32px;
+            font-size: 40px;
             letter-spacing: -1px;
             cursor: pointer;
             white-space: nowrap;
@@ -194,7 +194,7 @@ export default function Navbar() {
             .logo-section {
               position: static;
               transform: none;
-              font-size: 22px;
+              font-size: 28px;
               justify-content: center;
               width: 100%;
               gap: 6px;
@@ -205,6 +205,7 @@ export default function Navbar() {
               display: flex;
               width: 100%;
               justify-content: space-between;
+              align-items: center;
               border-top: 1px solid #f1f5f9;
               padding-top: 10px;
               gap: 0;
@@ -218,6 +219,7 @@ export default function Navbar() {
 
             .dropdown-main { left: 0; transform: none; width: 250px; }
             .pubblica-btn { padding: 8px 16px; font-size: 12px; }
+            .accedi-link { display: block; text-align: center; }
           }
         `}</style>
       </header>
