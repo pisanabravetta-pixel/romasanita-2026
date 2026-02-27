@@ -226,7 +226,7 @@ return (
   textAlign: 'center', 
   marginTop: '40px', 
   marginBottom: '30px',
-  padding: '0 15px' // ✅ aggiunge spazio ai lati su mobile
+  padding: '0 15px', // spazio ai lati su mobile
 }}>
 
   {/* Nome Brand - Grande e VERDE SCURO */}
@@ -237,8 +237,8 @@ return (
     letterSpacing: '-1.5px',
     marginBottom: '12px',
     lineHeight: '1',
+    display: 'inline-block', // ✅ forza il brand a stare in una riga
     maxWidth: '100%',
-    overflowWrap: 'break-word' // ✅ previene overflow orizzontale
   }}>
     ServiziSalute.com
   </div>
