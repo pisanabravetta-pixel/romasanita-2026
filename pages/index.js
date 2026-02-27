@@ -384,7 +384,7 @@ minHeight: isMobile ? '160px' : '80px'
   {/* TESTO SEO DI TRANSIZIONE (SPOSTATO PRIMA DELLE STATISTICHE) */}
 <div className="container" style={{ textAlign: 'center', marginTop: '40px', marginBottom: '10px', padding: '0 20px' }}>
   <p style={{ color: '#64748b', fontSize: '15px', lineHeight: '1.6', fontWeight: '500', maxWidth: '850px', margin: '0 auto' }}>
-    {`ServiziSalute ti aiuta a trovare rapidamente medici, farmacie e centri diagnostici nei principali quartieri di Roma: Prati, EUR, Parioli, Centro Storico, San Giovanni e molti altri. Contatta direttamente i professionisti, consulta orari aggiornati e scopri servizi a domicilio e visite specialistiche nella Capitale. Tutto in un unico portale semplice, veloce e gratuito.`}
+    {`ServiziSalute ti aiuta a trovare rapidamente medici, farmacie e centri diagnostici nei principali quartieri di Roma: Prati, EUR, Parioli, Centro Storico, San Giovanni e molti altri. Contatta direttamente i professionisti, consulta indirizzi aggiornati e scopri servizi a domicilio e visite specialistiche nella Capitale. Tutto in un unico portale semplice, veloce e gratuito.`}
   </p>
 </div>
 
