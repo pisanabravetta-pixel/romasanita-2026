@@ -629,7 +629,6 @@ if (!mounted) return null;
         </main>
         <Footer />
       </div>
-    </>
   );
 }
 
