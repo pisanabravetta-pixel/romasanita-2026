@@ -222,16 +222,23 @@ return (
   <div className="container" style={{ textAlign: 'center' }}>
     
 {/* TITOLO PRINCIPALE E BRAND */}
-<div style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
-  
+<div style={{ 
+  textAlign: 'center', 
+  marginTop: '40px', 
+  marginBottom: '30px',
+  padding: '0 15px' // ✅ aggiunge spazio ai lati su mobile
+}}>
+
   {/* Nome Brand - Grande e VERDE SCURO */}
   <div style={{ 
     fontSize: '44px', 
     fontWeight: '900', 
-    color: '#064e3b', // Verde scuro profondo
+    color: '#064e3b',
     letterSpacing: '-1.5px',
     marginBottom: '12px',
-    lineHeight: '1'
+    lineHeight: '1',
+    maxWidth: '100%',
+    overflowWrap: 'break-word' // ✅ previene overflow orizzontale
   }}>
     ServiziSalute.com
   </div>
@@ -240,7 +247,7 @@ return (
   <h1 style={{ 
     fontSize: '28px', 
     fontWeight: '700', 
-    color: '#065f46', // Verde coordinato leggermente più chiaro
+    color: '#065f46',
     marginBottom: '12px',
     lineHeight: '1.2',
     maxWidth: '700px',
