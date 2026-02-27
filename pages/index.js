@@ -363,24 +363,22 @@ minHeight: isMobile ? '160px' : '80px'
     }
   `}</style>
 </div>
-   {/* LINK HUB STRATEGICO */}
-   <a 
-  href="/servizi-sanitari-roma" 
-  aria-label="Vedi tutti i servizi sanitari disponibili a Roma"
-  style={{ 
-    display: 'inline-block',
-    marginTop: '30px',
-    color: '#2563eb', 
-    fontWeight: '800', 
-    textDecoration: 'none', 
-    borderBottom: '2px solid #2563eb',
-    fontSize: '15px'
-  }}
->
-  👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
-</a> 
-
-  </div>
+  {/* LINK HUB STRATEGICO */}
+<div style={{ marginTop: '30px' }}>
+  <a 
+    href="/servizi-sanitari-roma" 
+    aria-label="Vedi tutti i servizi sanitari disponibili a Roma"
+    style={{ 
+      color: '#2563eb', 
+      fontWeight: '800', 
+      textDecoration: 'none', 
+      borderBottom: '2px solid #2563eb',
+      fontSize: '15px'
+    }}
+  >
+    👉 VEDI TUTTI I SERVIZI DISPONIBILI A ROMA
+  </a>
+</div>
 </section>
   {/* TESTO SEO DI TRANSIZIONE (SPOSTATO PRIMA DELLE STATISTICHE) */}
 <div className="container" style={{ textAlign: 'center', marginTop: '40px', marginBottom: '10px', padding: '0 20px' }}>
