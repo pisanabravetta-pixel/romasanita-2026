@@ -624,7 +624,7 @@ if (!mounted) return null;
             </div>
             <div style={{ marginTop: '20px', paddingTop: '15px', borderTop: '1px solid #e2e8f0' }}>
               <a href={`/${meta.cat}-roma`} style={{ color: '#64748b', fontWeight: '600', fontSize: '13px', textDecoration: 'none' }}>← Torna a {meta.nomeSemplice} a Roma</a>
-            </div>
+          
           </div>
         </main>
         <Footer />
