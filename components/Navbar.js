@@ -12,95 +12,129 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
-      {/* TOP BAR VERDE SOLO HOME */}
+    <>
+      {/* TOP BAR VERDE - SOLO IN HOME */}
       {isHome && (
-        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '10px', textAlign: 'center', fontSize: '12px', fontWeight: '800' }}>
+        <div style={{ backgroundColor: '#065f46', color: 'white', padding: '10px', textAlign: 'center', fontSize: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
           🚀 PUBBLICA ANNUNCI SENZA COSTI - IL PORTALE DELLA SANITÀ A ROMA
         </div>
       )}
 
-      <div className="nav-main-row">
-        
-        {/* SINISTRA: MENU */}
-        <div className="nav-col-left">
-          <div className="menu-wrapper" onMouseEnter={() => setMenuAperto(true)} onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}>
-            <div className="menu-trigger">MENU <i className="fas fa-chevron-down"></i></div>
-            {menuAperto && (
-              <div className="dropdown-box">
-                <a href="/farmacie-roma" className="menu-link">💊 Farmacie</a>
-                <a href="/dentisti-roma" className="menu-link">🦷 Dentisti</a>
-                <a href="/diagnostica-roma" className="menu-link">🔬 Diagnostica</a>
-                <a href="/visite-specialistiche-roma" className="menu-link">👨‍⚕️ Specialisti</a>
-                <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
+      <header style={{ backgroundColor: 'white', borderBottom: '2px solid #e2e8f0', width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
+        <div className="nav-container">
+          
+          {/* SINISTRA: MENU (PC) */}
+          <div className="nav-col nav-left">
+            <div 
+              onMouseEnter={() => setMenuAperto(true)}
+              onMouseLeave={() => { setMenuAperto(false); setCatAperto(false); }}
+              className="menu-wrapper"
+            >
+              <div className="menu-trigger">
+                MENU <i className="fas fa-chevron-down"></i>
               </div>
-            )}
+              
+              {menuAperto && (
+                <div className="dropdown-main">
+                  <div className="cat-section">
+                    <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+                      <span>🧩 Categorie</span>
+                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`} style={{fontSize: '10px'}}></i>
+                    </div>
+                    
+                    {catAperto && (
+                      <div className="submenu-vertical">
+                        <a href="/farmacie-roma">💊 Farmacie</a>
+                        <a href="/dentisti-roma">🦷 Dentisti</a>
+                        <a href="/diagnostica-roma">🔬 Diagnostica</a>
+                        <a href="/visite-specialistiche-roma">👨‍⚕️ Specialisti</a>
+                        <a href="/servizi-domicilio-roma">🏠 Domicilio</a>
+                      </div>
+                    )}
+                  </div>
+                  <a href="/quartieri-roma" className="menu-link">📍 Quartieri</a>
+                  <a href="/guide" className="menu-link">📘 Guide</a>
+                  <a href="/chi-siamo" className="menu-link">ℹ️ Chi siamo</a>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* CENTRO: LOGO */}
-        <div className="nav-col-center">
-          <a href="/" className="logo-link">
-            <i className="fas fa-heartbeat" style={{ color: '#2563eb' }}></i> 
+          {/* CENTRO: LOGO */}
+          <a href="/" className="logo-section" style={{ textDecoration: 'none' }}>
+            <i className="fas fa-heartbeat" style={{ color: '#2563eb', fontSize: '1.2em' }}></i> 
             <span style={{ color: '#065f46' }}>Servizi</span>
             <span style={{ color: '#2563eb' }}>Salute</span>
           </a>
-        </div>
 
-        {/* DESTRA: PULSANTI */}
-        <div className="nav-col-right">
-          <div className="auth-buttons">
-            <a href="/login" className="login-txt">Accedi</a>
-            <a href="/pubblica-annuncio" className="btn-pubblica">Pubblica</a>
+          {/* DESTRA: AZIONI (PC) */}
+          <div className="nav-col nav-right">
+            <div className="user-actions">
+              <a href="/login" className="accedi-link">Accedi</a>
+              <a href="/pubblica-annuncio" className="pubblica-btn">Pubblica</a>
+            </div>
           </div>
         </div>
 
-      </div>
-
-<style jsx>{`
-        /* --- PC: LOGO AL CENTRO, MENU SX, BOTTONI DX --- */
-        .nav-container {
-          max-width: 1250px;
-          margin: 0 auto;
-          padding: 0 20px;
-          display: grid;
-          grid-template-columns: 1fr auto 1fr; /* Tre colonne fisse */
-          align-items: center;
-          height: 80px;
-        }
-
-        .nav-col-left { display: flex; justify-content: flex-start; }
-        .nav-col-center { display: flex; justify-content: center; }
-        .nav-col-right { display: flex; justify-content: flex-end; }
-
-        .logo-link { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 32px; text-decoration: none; white-space: nowrap; }
-        .menu-trigger { cursor: pointer; font-weight: 700; color: #475569; font-size: 15px; }
-        .auth-buttons { display: flex; align-items: center; gap: 20px; }
-        .login-txt { text-decoration: none; color: #475569; font-weight: 700; }
-        .btn-pubblica { background: #2563eb; color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; }
-
-        /* --- MOBILE: LOGO SOPRA, MENU E BOTTONI SOTTO --- */
-        @media (max-width: 768px) {
-          .nav-container { 
-            display: flex; 
-            flex-direction: column; 
-            height: auto; 
-            padding: 15px 10px;
-            gap: 10px;
+        <style jsx>{`
+          /* --- STILE DESKTOP (LOGO AL CENTRO) --- */
+          .nav-container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Forza il logo al centro */
+            align-items: center;
           }
-          /* Logo in alto al centro */
-          .nav-col-center { width: 100%; order: 1; justify-content: center; }
-          .logo-link { font-size: 24px; }
 
-          /* Contenitore per mettere Menu e Bottoni sulla stessa riga */
-          .nav-col-left { order: 2; width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; }
-          .nav-col-right { order: 3; width: 100%; justify-content: flex-end; margin-top: -42px; } 
+          .nav-left { display: flex; justify-content: flex-start; }
+          .nav-right { display: flex; justify-content: flex-end; }
           
-          .auth-buttons { gap: 10px; }
-          .btn-pubblica { padding: 8px 15px; font-size: 11px; }
-          .login-txt { font-size: 13px; }
-        }
-      `}</style>
-    </header>
+          .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            font-size: 32px;
+            letter-spacing: -1px;
+          }
+
+          .menu-wrapper { position: relative; }
+          .menu-trigger { cursor: pointer; color: #475569; font-weight: 700; font-size: 15px; padding: 10px; }
+          
+          .dropdown-main {
+            position: absolute; top: 100%; left: 0;
+            background: white; min-width: 240px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-radius: 12px; padding: 10px; border: 1px solid #f1f5f9; z-index: 2000;
+          }
+          
+          .submenu-vertical { background: #f8fafc; border-radius: 8px; margin: 5px 0; padding: 5px 0; }
+          .submenu-vertical a { display: block; padding: 8px 20px; font-size: 13px; text-decoration: none; color: #475569; font-weight: 600; }
+          .menu-link { display: block; padding: 12px 15px; text-decoration: none; color: #475569; font-size: 15px; font-weight: 600; border-radius: 8px; }
+          
+          .user-actions { display: flex; align-items: center; gap: 20px; }
+          .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
+          .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; }
+
+          /* --- STILE MOBILE (IL TUO ORIGINALE) --- */
+          @media (max-width: 768px) {
+            .nav-container { 
+              display: flex; 
+              flex-direction: column; 
+              gap: 15px; 
+              padding: 10px; 
+            }
+            .logo-section { font-size: 22px; justify-content: center; width: 100%; gap: 6px; }
+            
+            /* Rimettiamo Menu e Bottoni sulla stessa riga come nel tuo vecchio file */
+            .nav-left { width: 100%; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 10px; order: 2; }
+            .nav-right { width: 100%; justify-content: flex-end; margin-top: -45px; order: 3; } 
+            
+            .dropdown-main { left: 0; width: 250px; }
+            .pubblica-btn { padding: 8px 16px; font-size: 12px; }
+          }
+        `}</style>
+      </header>
+    </>
   );
 }
