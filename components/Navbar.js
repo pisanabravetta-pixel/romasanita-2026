@@ -57,35 +57,48 @@ export default function Navbar() {
 
       </div>
 
-      <style jsx>{`
-        .nav-main-row {
+<style jsx>{`
+        /* --- DESKTOP (PC) --- */
+        .nav-container {
           max-width: 1250px;
           margin: 0 auto;
           padding: 10px 20px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 70px;
+          height: 80px;
         }
-
         .nav-col-left { flex: 1; display: flex; justify-content: flex-start; }
         .nav-col-center { flex: 0; display: flex; justify-content: center; }
         .nav-col-right { flex: 1; display: flex; justify-content: flex-end; }
 
-        .logo-link { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 28px; text-decoration: none; white-space: nowrap; }
-        
-        .menu-trigger { cursor: pointer; font-weight: 700; color: #475569; padding: 10px; }
-        .dropdown-box { position: absolute; top: 60px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); z-index: 2000; min-width: 200px; }
+        .logo-link { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 32px; text-decoration: none; white-space: nowrap; }
+        .menu-trigger { cursor: pointer; font-weight: 700; color: #475569; font-size: 15px; }
+        .dropdown-box { position: absolute; top: 50px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); z-index: 2000; min-width: 200px; }
         .menu-link { display: block; padding: 10px; text-decoration: none; color: #475569; font-weight: 600; }
-        
         .auth-buttons { display: flex; align-items: center; gap: 20px; }
         .login-txt { text-decoration: none; color: #475569; font-weight: 700; }
-        .btn-pubblica { background: #2563eb; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 800; font-size: 13px; }
+        .btn-pubblica { background: #2563eb; color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 13px; text-transform: uppercase; }
 
+        /* --- MOBILE (Smartphone) --- */
         @media (max-width: 768px) {
-          .nav-main-row { flex-direction: column; height: auto; padding: 15px; gap: 10px; }
-          .nav-col-left, .nav-col-center, .nav-col-right { justify-content: center; width: 100%; }
-          .auth-buttons { margin-top: 5px; }
+          .nav-container { 
+            flex-direction: column; 
+            height: auto; 
+            padding: 15px 10px;
+            gap: 15px;
+          }
+          /* Logo al centro in alto */
+          .nav-col-center { order: 1; width: 100%; }
+          .logo-link { font-size: 24px; justify-content: center; }
+
+          /* Riga sotto: Menu a sx e Pulsanti a dx */
+          .nav-col-left { order: 2; width: 100%; justify-content: space-between; display: flex; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+          .nav-col-right { order: 3; position: absolute; bottom: 15px; right: 10px; }
+          
+          .auth-buttons { gap: 10px; }
+          .btn-pubblica { padding: 8px 15px; font-size: 11px; }
+          .login-txt { font-size: 13px; }
         }
       `}</style>
     </header>
