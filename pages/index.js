@@ -259,7 +259,7 @@ return (
   maxWidth: '650px', 
   margin: '0 auto'
 }}>
-  Trova subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
+  Cerca subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
 </p>
 </div>
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
