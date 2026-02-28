@@ -337,14 +337,20 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-{listaDaMostrare.map((v, i) => { // <--- Aggiunto "i" qui
+{listaDaMostrare.map((v, i) => {
   const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
   const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
   
-  // 1. Chiave categoria pulita
-  const catKey = v.categoria ? v.categoria.toLowerCase().replace('visite-specialistiche-', '') : '';
+  // 1. PULIZIA TOTALE DELLA CHIAVE (Rimuoviamo tutto il superfluo)
+  let catKey = v.categoria ? v.categoria.toLowerCase() : '';
+  catKey = catKey.replace('visite-specialistiche-', '')
+                 .replace('-roma', '')
+                 .replace(/\s+/g, '-') // sostituisce spazi con trattini
+                 .trim();
 
-  // 2. Prezzi Medici (Medie Reali Roma)
+  // DEBUG: Decommenta la riga sotto per vedere le chiavi nella console del browser (F12)
+  // console.log("Categoria rilevata:", catKey);
+
   const listinoMedie = {
     'cardiologi': '100€ – 150€',
     'dentisti': '80€ – 180€',
@@ -356,22 +362,23 @@ if (!mounted) return null;
     'nutrizionisti': '70€ – 110€'
   };
 
-  // 3. LOGICA ROTAZIONE SERVIZI (USA L'INDICE i)
-  let badgeTesto = "";
-  const serviziDisponibili = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
+  // 2. RECUPERO SERVIZI (con controllo di sicurezza)
+  // Proviamo a cercare 'farmacie', poi 'farmacia', poi 'specialisti'
+  const serviziDisponibili = prezziIndicativi[catKey] 
+    || prezziIndicativi[catKey.replace(/e$/, 'a')] // prova il singolare
+    || prezziIndicativi['specialisti'];
   
-  // Scegliamo il servizio in base alla posizione del box (0, 1, 2...)
+  // Scegliamo il servizio in base all'indice i del map
   const s = serviziDisponibili[i % serviziDisponibili.length];
 
+  let badgeTesto = "";
   if (listinoMedie[catKey] && (i % serviziDisponibili.length === 0)) {
-    // Se è un medico e siamo al primo servizio della lista, mostriamo la visita generale
     badgeTesto = `Prezzo medio zona: ${listinoMedie[catKey]}`;
   } else {
-    // Per tutti gli altri box o categorie speciali, ruotiamo i servizi
     badgeTesto = `Prezzo medio zona ${s.servizio}: ${s.min}€ – ${s.max}€`;
   }
 
-  // 4. Pulizia Label Specialista (Badge Blu)
+  // 3. Label per il badge blu
   let lb = catKey.replace(/-/g, ' ').toUpperCase();
   if (v.approvato === 'f') lb = lb.replace(/I$/, 'A');
   if (v.approvato === 'm') lb = lb.replace(/I$/, 'O');
