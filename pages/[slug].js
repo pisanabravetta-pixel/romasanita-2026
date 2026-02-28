@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
+import ListaPrezzi from '../components/ListaPrezzi';
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
@@ -283,6 +284,12 @@ if (!mounted) return null;
           ))}
         </div>
       </div>
+{/* --- AGGIUNTA LISTA PREZZI QUARTIERE --- */}
+<ListaPrezzi 
+  categoria={meta.nomeSemplice} 
+  zona={meta.zona} 
+/>
+
     {/* BOX MAPPA QUARTIERE - VERSIONE SCURA E COMPATTA */}
 {mounted && listaDaMostrare.length > 0 && (
   <Mappa lista={listaDaMostrare} />
