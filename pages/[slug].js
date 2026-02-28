@@ -9,6 +9,7 @@ import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
 import PrezzoDinamico from '../components/PrezzoDinamico';
+import Breadcrumbs from '../components/Breadcrumbs';
 const prezziIndicativi = {
   farmacie: [ { servizio: "Misurazione pressione", min: 2, max: 5 } ],
   dentisti: [ { servizio: "Visita odontoiatrica", min: 50, max: 100 } ],
@@ -229,13 +230,8 @@ if (!mounted) return null;
 
       <main style={{ flex: '1 0 auto', maxWidth: '900px', margin: '0 auto', padding: '20px', width: '100%' }}>
         
-        {/* Breadcrumb */}
-        <div style={{ margin: '15px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>
-          <a href="/" style={{ color: tema.primario, textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px' }}>{'>'}</span>
-          <a href={`/${meta.cat}-roma`} style={{ color: tema.primario, textDecoration: 'none' }}>{meta.nomeSemplice} Roma</a>
-        </div>
-
+     
+       <Breadcrumbs categoria={meta.cat} quartiere={meta.zona} />
       {/* Header SEO */}
 <div style={{ 
   marginBottom: '25px', 
