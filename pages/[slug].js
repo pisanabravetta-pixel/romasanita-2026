@@ -337,47 +337,46 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-  {listaDaMostrare.map((v) => {
-    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-    const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
-    
-// 1. Chiave pulita per categoria
-    const catKey = v.categoria ? v.categoria.toLowerCase().replace('visite-specialistiche-', '') : '';
+{listaDaMostrare.map((v, i) => { // <--- Aggiunto "i" qui
+  const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+  
+  // 1. Chiave categoria pulita
+  const catKey = v.categoria ? v.categoria.toLowerCase().replace('visite-specialistiche-', '') : '';
 
-    // 2. Prezzi Medici (Medie Reali Roma)
-    const listinoMedie = {
-      'cardiologi': '100€ – 150€',
-      'dentisti': '80€ – 180€',
-      'dermatologi': '90€ – 130€',
-      'psicologi': '60€ – 90€',
-      'ginecologi': '100€ – 140€',
-      'oculisti': '90€ – 130€',
-      'ortopedici': '100€ – 150€',
-      'nutrizionisti': '70€ – 110€'
-    };
+  // 2. Prezzi Medici (Medie Reali Roma)
+  const listinoMedie = {
+    'cardiologi': '100€ – 150€',
+    'dentisti': '80€ – 180€',
+    'dermatologi': '90€ – 130€',
+    'psicologi': '60€ – 90€',
+    'ginecologi': '100€ – 140€',
+    'oculisti': '90€ – 130€',
+    'ortopedici': '100€ – 150€',
+    'nutrizionisti': '70€ – 110€'
+  };
 
-    // 3. LOGICA ROTAZIONE SERVIZI CON DICITURA "PREZZO MEDIO ZONA"
-    let badgeTesto = "";
-    const serviziDisponibili = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
-    
-    // Calcoliamo l'indice per far ruotare i servizi nei diversi box
-    const indiceServizio = listaDaMostrare.indexOf(v) % serviziDisponibili.length;
-    const s = serviziDisponibili[indiceServizio];
+  // 3. LOGICA ROTAZIONE SERVIZI (USA L'INDICE i)
+  let badgeTesto = "";
+  const serviziDisponibili = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
+  
+  // Scegliamo il servizio in base alla posizione del box (0, 1, 2...)
+  const s = serviziDisponibili[i % serviziDisponibili.length];
 
-    if (listinoMedie[catKey] && indiceServizio === 0) {
-      // Per i medici, il primo box mostra la visita generale con la dicitura
-      badgeTesto = `Prezzo medio zona: ${listinoMedie[catKey]}`;
-    } else {
-      // Per gli altri servizi (ECG, Gliceamia, ecc.) o farmacie/diagnostica
-      badgeTesto = `Prezzo medio zona ${s.servizio}: ${s.min}€ – ${s.max}€`;
-    }
+  if (listinoMedie[catKey] && (i % serviziDisponibili.length === 0)) {
+    // Se è un medico e siamo al primo servizio della lista, mostriamo la visita generale
+    badgeTesto = `Prezzo medio zona: ${listinoMedie[catKey]}`;
+  } else {
+    // Per tutti gli altri box o categorie speciali, ruotiamo i servizi
+    badgeTesto = `Prezzo medio zona ${s.servizio}: ${s.min}€ – ${s.max}€`;
+  }
 
-    // 4. Pulizia Badge Categoria (Blu)
-    let lb = catKey.replace(/-/g, ' ').toUpperCase();
-    if (v.approvato === 'f') lb = lb.replace(/I$/, 'A');
-    if (v.approvato === 'm') lb = lb.replace(/I$/, 'O');
+  // 4. Pulizia Label Specialista (Badge Blu)
+  let lb = catKey.replace(/-/g, ' ').toUpperCase();
+  if (v.approvato === 'f') lb = lb.replace(/I$/, 'A');
+  if (v.approvato === 'm') lb = lb.replace(/I$/, 'O');
 
-    return (
+  return (
       <div key={v.id} style={{maxWidth:'600px',margin:'15px auto',backgroundColor:'#fff',borderRadius:'16px',padding:'20px',boxShadow:'0 4px 12px rgba(0,0,0,0.08)',fontFamily:'Arial,sans-serif',border:'2px solid #cbd5e1'}}>
         <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#1e293b',fontWeight:'900'}}>{v.nome}</h2>
         <div style={{borderBottom:'1px solid #e2e8f0',marginBottom:'12px'}}></div>
