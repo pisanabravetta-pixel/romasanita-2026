@@ -340,7 +340,18 @@ if (!mounted) return null;
     };
     const categoriaKey = v.categoria ? v.categoria.toLowerCase() : '';
     const prezzoMedio = listinoMedie[categoriaKey] || "80€ – 130€";
-    let lb = v.categoria ? v.categoria.replace('visite-specialistiche-', '').replace(/-/g, ' ').toUpperCase() : meta.nomeSemplice;
+    
+    // Pulizia profonda della categoria
+    let lb = categoriaKey
+      .replace(/visite-specialistiche-/g, '')
+      .replace(/visite-specialistiche/g, '')
+      .replace(/visite/g, '')
+      .replace(/specialistiche/g, '')
+      .replace(/-/g, ' ')
+      .trim()
+      .toUpperCase();
+
+    // Gestione Genere
     if (v.approvato === 'f') lb = lb.replace(/I$/, 'A');
     if (v.approvato === 'm') lb = lb.replace(/I$/, 'O');
 
