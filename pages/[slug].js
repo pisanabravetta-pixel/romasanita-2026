@@ -341,30 +341,35 @@ if (!mounted) return null;
     const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
     const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
     
-    // 1. Chiave pulita per cercare nel listino o nell'oggetto prezziIndicativi
+// 1. Chiave pulita per categoria
     const catKey = v.categoria ? v.categoria.toLowerCase().replace('visite-specialistiche-', '') : '';
 
-    // 2. Prezzi Medici (Reali)
+    // 2. Prezzi Medici (Medie Reali Roma)
     const listinoMedie = {
       'cardiologi': '100€ – 150€',
-      'dentisti': '80€ – 200€',
+      'dentisti': '80€ – 180€',
       'dermatologi': '90€ – 130€',
       'psicologi': '60€ – 90€',
-      'ginecologi': '100€ – 150€',
+      'ginecologi': '100€ – 140€',
       'oculisti': '90€ – 130€',
       'ortopedici': '100€ – 150€',
       'nutrizionisti': '70€ – 110€'
     };
 
-    // 3. Logica Badge Arancione (Prezzi o Servizi)
+    // 3. LOGICA ROTAZIONE SERVIZI CON DICITURA "PREZZO MEDIO ZONA"
     let badgeTesto = "";
-    if (listinoMedie[catKey]) {
-      badgeTesto = `Prezzo medio: ${listinoMedie[catKey]}`;
+    const serviziDisponibili = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
+    
+    // Calcoliamo l'indice per far ruotare i servizi nei diversi box
+    const indiceServizio = listaDaMostrare.indexOf(v) % serviziDisponibili.length;
+    const s = serviziDisponibili[indiceServizio];
+
+    if (listinoMedie[catKey] && indiceServizio === 0) {
+      // Per i medici, il primo box mostra la visita generale con la dicitura
+      badgeTesto = `Prezzo medio zona: ${listinoMedie[catKey]}`;
     } else {
-      // Pescaggio dal tuo oggetto prezziIndicativi (Farmacie, Diagnostica, Domicilio)
-      const infoSrv = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
-      const s = infoSrv[0];
-      badgeTesto = `${s.servizio}: ${s.min}€ – ${s.max}€`;
+      // Per gli altri servizi (ECG, Gliceamia, ecc.) o farmacie/diagnostica
+      badgeTesto = `Prezzo medio zona ${s.servizio}: ${s.min}€ – ${s.max}€`;
     }
 
     // 4. Pulizia Badge Categoria (Blu)
