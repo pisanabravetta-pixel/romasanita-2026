@@ -217,51 +217,37 @@ return (
     <div style={{ width: '100%', overflowX: 'hidden', position: 'relative' }}>
       <Navbar />
        <main>
-{/* HERO SECTION - AGGIORNATA V2 */}
-<section className="hero" style={{ backgroundColor: '#f0fdf4', paddingBottom: '50px', borderBottom: '1px solid #dcfce7' }}>
+{/* HERO SECTION - SPOSTATA IN ALTO SENZA BRAND */}
+<section className="hero" style={{ backgroundColor: '#f0fdf4', padding: '20px 0 50px 0', borderBottom: '1px solid #dcfce7' }}>
   <div className="container" style={{ textAlign: 'center' }}>
     
-{/* TITOLO PRINCIPALE (H1) */}
-<div style={{ textAlign: 'center', paddingTop: '10px', marginBottom: '30px', padding: '0 15px' }}>
-  
-  {/* Nome Brand - Grande e VERDE SCURO */}
-  <h1 style={{ 
-    fontSize: '44px', // dimensione originale che si vedeva bene
-    fontWeight: '900', 
-    color: '#064e3b', // Verde scuro profondo
-    letterSpacing: '-1.5px',
-    marginBottom: '8px',
-    lineHeight: '1',
-    display: 'inline-block', // forza il brand a rimanere su una riga
-    maxWidth: '100%'
-  }}>
-    ServiziSalute.com
-  </h1>
+    {/* TITOLO PRINCIPALE SEO (H1) - ORA PIÙ IN ALTO */}
+    <div style={{ textAlign: 'center', marginBottom: '30px', padding: '0 15px' }}>
+      
+      <h1 style={{ 
+        fontSize: '32px', // Leggermente aumentato visto che è l'unico titolo ora
+        fontWeight: '800', 
+        color: '#065f46', 
+        marginBottom: '12px',
+        lineHeight: '1.2',
+        maxWidth: '800px',
+        margin: '0 auto'
+      }}>
+        Trova medici, farmacie e centri diagnostici a Roma facilmente
+      </h1>
 
-  {/* H1 SEO-Friendly */}
-  <h1 style={{ 
-    fontSize: '28px', 
-    fontWeight: '700', 
-    color: '#065f46', // verde coordinato
-    marginBottom: '8px',
-    lineHeight: '1.2',
-    maxWidth: '700px',
-    margin: '0 auto'
-  }}>
-    Trova medici, farmacie e centri diagnostici a Roma facilmente
-  </h1>
+      <p style={{ 
+        fontSize: '18px', 
+        fontWeight: '500', 
+        color: '#475569', 
+        maxWidth: '650px', 
+        margin: '0 auto'
+      }}>
+        Cerca subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
+      </p>
+    </div>
 
-  {/* Mini testo SEO di supporto */}
- <p style={{ 
-  fontSize: '18px', 
-  fontWeight: '500', 
-  color: '#475569', 
-  maxWidth: '650px', 
-  margin: '0 auto'
-}}>
-  Cerca subito Farmacie, Dentisti, Centri Diagnostici e Specialisti a Roma. Contatti diretti, mappe aggiornate e indirizzi a portata di click.
-</p>
-</div>
+    {/* ... qui prosegue con la tua search-box-container ... */}
  {/* LA TUA BARRA INTELLIGENTE - VERSIONE DEFINITIVA CENTRATA */}
 <div className="search-box-container" style={{ 
   backgroundColor: 'white', 
