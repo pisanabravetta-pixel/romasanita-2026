@@ -322,9 +322,8 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-{listaDaMostrare.map((v, index) => {
+{listaDaMostrare.map((v) => {
   const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-  // Usiamo una fascia di prezzo fittizia basata sulla categoria per ora
   const fasciaDefault = "50€ – 70€";
 
   return (
@@ -334,21 +333,17 @@ if (!mounted) return null;
       padding: '24px', 
       marginBottom: '20px', 
       border: '1px solid #e2e8f0', 
-      boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
+      boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)'
     }}>
-      {/* Nome Professionista */}
       <h3 style={{ color: '#1e3a8a', fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0' }}>
         {v.nome}
       </h3>
 
-      {/* Categoria e Quartiere */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '16px', marginBottom: '12px' }}>
         <span style={{ fontSize: '20px' }}>🩺</span> 
         <span>{v.categoria ? v.categoria.replace(/-/g, ' ') : meta.nomeSemplice} a <strong>{v.zona}</strong></span>
       </div>
 
-      {/* BADGE PREZZO ARANCIONE A PILLOLA */}
       <div style={{
         display: 'inline-block',
         background: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
@@ -363,19 +358,14 @@ if (!mounted) return null;
         Fascia prezzo: {fasciaDefault}
       </div>
 
-      {/* Indirizzo con Icona Blu */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '15px', marginBottom: '20px' }}>
         <span style={{ color: '#2563eb', fontSize: '18px' }}>📍</span>
         <span>{v.indirizzo}, Roma ({v.zona})</span>
       </div>
 
-      {/* Separatore tratteggiato come in immagine */}
       <div style={{ borderTop: '1px dashed #e2e8f0', margin: '0 -24px 20px -24px' }}></div>
 
-      {/* Riga Azioni: Mappa + Testo + Bottoni */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-        
-        {/* Mini Mappa a sinistra */}
         <div style={{ 
           width: '100px', 
           height: '75px', 
@@ -384,15 +374,37 @@ if (!mounted) return null;
           border: '1px solid #e2e8f0',
           flexShrink: 0 
         }}>
-          <img 
-            src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+ff0000(${v.lng},${v.lat})/${v.lng},${v.lat},14/100x75?access_token=TUO_TOKEN_O_USA_PLACEHOLDER`} 
-            alt="Mappa"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            onError={(e) => { e.target.src = "https://via.placeholder.com/100x75?text=Mappa"; }}
-          />
-        </div>
-
-        {/* Blocco Bottoni e Testo Prenota */}
+          <div style={{ 
+  width: '100px', 
+  height: '75px', 
+  borderRadius: '10px', 
+  overflow: 'hidden', 
+  border: '1px solid #e2e8f0',
+  flexShrink: 0,
+  backgroundColor: '#f1f5f9', // Grigio chiaro di sfondo
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative'
+}}>
+  {/* Un'icona mappa semplice che non richiede API key */}
+  <span style={{ fontSize: '30px' }}>🗺️</span>
+  
+  {/* Opzionale: un piccolo overlay che ricorda una mappa vera */}
+  <div style={{ 
+    position: 'absolute', 
+    bottom: 0, 
+    width: '100%', 
+    height: '20px', 
+    backgroundColor: 'rgba(255,255,255,0.5)', 
+    fontSize: '9px', 
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#475569'
+  }}>
+    MAPPA GPS
+  </div>
+</div>
         <div style={{ flex: 1, minWidth: '200px' }}>
           <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#475569', fontWeight: '500' }}>
             Prenota subito per telefono o WhatsApp
@@ -409,13 +421,9 @@ if (!mounted) return null;
               textDecoration: 'none',
               fontWeight: '700',
               fontSize: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
               boxShadow: '0 4px 6px rgba(37, 99, 235, 0.2)'
             }}>
-              📞 Chiama ora
+              Chiama ora
             </a>
 
             <a href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '')}` : '#'} style={{
@@ -428,19 +436,14 @@ if (!mounted) return null;
               textDecoration: 'none',
               fontWeight: '700',
               fontSize: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
               boxShadow: '0 4px 6px rgba(34, 197, 94, 0.2)'
             }}>
-              <span style={{ fontSize: '18px' }}>💬</span> WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
       </div>
 
-      {/* Tasto Scheda (Opzionale, rimpicciolito in basso) */}
       {v.slug && (
         <div style={{ marginTop: '15px', textAlign: 'right' }}>
           <a href={linkScheda} style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: '600' }}>
