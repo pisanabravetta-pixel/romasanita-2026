@@ -322,114 +322,99 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-  {listaDaMostrare.map((v) => {
-    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-    const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
-    const fasciaPrezzo = "50€ – 70€";
-    
-    // 1. PULIZIA TOTALE: Toglie "visite-specialistiche", "visite", "specialistiche" e i trattini
-    let labelSpecialista = v.categoria ? v.categoria.toLowerCase() : meta.nomeSemplice.toLowerCase();
-    labelSpecialista = labelSpecialista
-      .replace('visite-specialistiche-', '')
-      .replace('visite-specialistiche', '')
-      .replace('visite', '')
-      .replace('specialistiche', '')
-      .replace(/-/g, ' ')
-      .trim()
-      .toUpperCase();
-    
-    // 2. GENERE: cardiologi -> cardiologo/a (usando v.approvato come 'm' o 'f')
-    if (v.approvato === 'f') labelSpecialista = labelSpecialista.replace(/I$/, 'A');
-    if (v.approvato === 'm') labelSpecialista = labelSpecialista.replace(/I$/, 'O');
+{listaDaMostrare.map((v) => {
+  const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+  
+  // Logica Prezzi Medi per Categoria
+  const listinoMedie = {
+    'cardiologi': '100€ – 150€',
+    'dentisti': '80€ – 180€',
+    'dermatologi': '90€ – 130€',
+    'psicologi': '60€ – 90€',
+    'ginecologi': '100€ – 140€',
+    'oculisti': '90€ – 130€',
+    'ortopedici': '100€ – 150€',
+    'nutrizionisti': '70€ – 110€',
+    'farmacie': 'Listino SSN',
+    'centri-diagnostici': 'da 50€'
+  };
 
-    return (
-      <div key={v.id} style={{maxWidth:'600px',margin:'15px auto',backgroundColor:'#fff',borderRadius:'16px',padding:'20px',boxShadow:'0 4px 12px rgba(0,0,0,0.08)',fontFamily:'Arial, sans-serif',border:'2px solid #cbd5e1'}}>
-        <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#1e293b',fontWeight:'900'}}>{v.nome}</h2>
-        <div style={{borderBottom:'1px solid #e2e8f0',marginBottom:'12px'}}></div>
-        
-        <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}}>
-          <span style={{fontSize:'12px',fontWeight:'800',backgroundColor:'#dbeafe',color:'#1e40af',padding:'5px 12px',borderRadius:'8px',textTransform:'uppercase',border:'1px solid #bfdbfe'}}>
-            {labelSpecialista}
-          </span>
-          <span style={{fontSize:'14px',color:'#64748b',fontWeight:'600'}}>A {v.zona}</span>
+  const categoriaKey = v.categoria ? v.categoria.toLowerCase() : '';
+  const prezzoMedio = listinoMedie[categoriaKey] || "80€ – 130€";
+
+  // Pulizia Badge Categoria
+  let labelSpecialista = v.categoria 
+    ? v.categoria.replace('visite-specialistiche-', '').replace(/-/g, ' ').toUpperCase() 
+    : meta.nomeSemplice;
+  
+  if (v.approvato === 'f') labelSpecialista = labelSpecialista.replace(/I$/, 'A');
+  if (v.approvato === 'm') labelSpecialista = labelSpecialista.replace(/I$/, 'O');
+
+  return (
+    <div key={v.id} style={{maxWidth:'600px', margin:'15px auto', backgroundColor:'#fff', borderRadius:'16px', padding:'20px', boxShadow:'0 4px 12px rgba(0,0,0,0.08)', fontFamily:'Arial, sans-serif', border:'2px solid #cbd5e1'}}>
+      
+      {/* Nome e Separatore */}
+      <h2 style={{margin:'0 0 8px 0', fontSize:'22px', color:'#1e293b', fontWeight:'900'}}>{v.nome}</h2>
+      <div style={{borderBottom:'1px solid #e2e8f0', marginBottom:'12px'}}></div>
+      
+      {/* Badge Specialista */}
+      <div style={{display:'flex', alignItems:'center', gap:'8px', marginBottom:'12px'}}>
+        <span style={{fontSize:'12px', fontWeight:'800', backgroundColor:'#dbeafe', color:'#1e40af', padding:'5px 12px', borderRadius:'8px', textTransform:'uppercase', border: '1px solid #bfdbfe'}}>
+          {labelSpecialista}
+        </span>
+        <span style={{fontSize:'14px', color:'#64748b', fontWeight:'600'}}>A {v.zona}</span>
+      </div>
+
+      {/* RIGA DOPPIO BADGE PREZZI */}
+      <div style={{display:'flex', flexWrap:'wrap', gap:'8px', marginBottom:'15px'}}>
+        {/* Badge Arancione: Prezzo Medio */}
+        <div style={{padding:'6px 14px', background:'linear-gradient(90deg, #f97316, #fb923c)', color:'#fff', borderRadius:'20px', fontWeight:'bold', fontSize:'13px'}}>
+          Prezzo medio zona: {prezzoMedio}
         </div>
-
-        <div style={{display:'inline-block',padding:'6px 14px',background:'linear-gradient(90deg, #f97316, #fb923c)',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'14px',marginBottom:'15px'}}>
-          Fascia prezzo: {fasciaPrezzo}
-        </div>
-
-        <div style={{color:'#475569',fontSize:'14px',marginBottom:'15px',fontWeight:'500'}}>
-          📍 {v.indirizzo}, Roma
-        </div>
-
-{/* Avviso Prezzi e Prenotazioni */}
-        <div style={{ 
-          marginTop: '15px', 
-          marginBottom: '10px', 
-          fontSize: '12px', 
-          color: '#64748b', 
-          lineHeight: '1.4',
-          fontStyle: 'italic',
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: '5px'
-        }}>
-          <span>⚠️</span>
-          <span>
-            I prezzi sono indicativi: contattare direttamente per conferma e prenotazioni 👇
-          </span>
-        </div>
-
-       {/* RIGA 1: TELEFONO E WHATSAPP */}
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-          <a href={`tel:${v.telefono}`} style={{
-            flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-            borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', 
-            backgroundColor: '#2563eb', fontSize: '13px'
-          }}>
-            📞 CHIAMA
-          </a>
-          <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{
-            flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-            borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', 
-            backgroundColor: '#22c55e', fontSize: '13px'
-          }}>
-            💬 WHATSAPP
-          </a>
-        </div>
-
-        {/* RIGA 2: MAPPA E SCHEDA */}
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'stretch' }}>
-          <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{
-            flex: '1', height: '50px', borderRadius: '10px', textDecoration: 'none', 
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', 
-            fontWeight: '900', color: '#fff', overflow: 'hidden', position: 'relative', 
-            border: '2px solid #1e293b', 
-            background: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=300,70&z=14&l=map&lang=it_IT)`,
-            backgroundSize: 'cover'
-          }}>
-            <span style={{ position: 'relative', zIndex: 1, textShadow: '2px 2px 3px #000, -1px -1px 3px #000, 1px -1px 3px #000, -1px 1px 3px #000' }}>
-              🗺️ VEDI MAPPA
-            </span>
-          </a>
-          
-          {v.slug ? (
-            <a href={linkScheda} style={{
-              flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-              borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', 
-              backgroundColor: '#1e293b', fontSize: '13px'
-            }}>
-              📄 SCHEDA
-            </a>
-          ) : (
-            <div style={{ flex: '1', height: '50px' }}></div>
-          )}
+        {/* Badge Blu/Viola: Contatta per preventivo */}
+        <div style={{padding:'6px 14px', backgroundColor:'#6366f1', color:'#fff', borderRadius:'20px', fontWeight:'bold', fontSize:'13px', border:'1px solid #4338ca'}}>
+          Richiedi preventivo esatto
         </div>
       </div>
-    );
-  })}
-</div>
 
+      <div style={{color:'#475569', fontSize:'14px', marginBottom:'15px', fontWeight:'500'}}>
+        📍 {v.indirizzo}, Roma
+      </div>
+
+      {/* Disclaimer aggiornato */}
+      <div style={{ marginTop: '15px', marginBottom: '10px', fontSize: '11px', color: '#64748b', lineHeight: '1.4', backgroundColor: '#f8fafc', padding: '8px', borderRadius: '8px', borderLeft: '3px solid #cbd5e1' }}>
+        <strong>Nota informativa:</strong> I prezzi indicati rappresentano la media statistica della zona. Per conferme su tariffe, convenzioni e prenotazioni, contatta direttamente il professionista 👇
+      </div>
+
+      {/* RIGA 1: TELEFONO E WHATSAPP */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+        <a href={`tel:${v.telefono}`} style={{ flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', backgroundColor: '#2563eb', fontSize: '13px' }}>
+          📞 CHIAMA
+        </a>
+        <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{ flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', backgroundColor: '#22c55e', fontSize: '13px' }}>
+          💬 WHATSAPP
+        </a>
+      </div>
+
+      {/* RIGA 2: MAPPA E SCHEDA */}
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'stretch' }}>
+        <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', height: '50px', borderRadius: '10px', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: '900', color: '#fff', overflow: 'hidden', position: 'relative', border: '2px solid #1e293b', background: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=300,70&z=14&l=map&lang=it_IT)`, backgroundSize: 'cover' }}>
+          <span style={{ position: 'relative', zIndex: 1, textShadow: '2px 2px 3px #000, -1px -1px 3px #000, 1px -1px 3px #000, -1px 1px 3px #000' }}>
+            🗺️ VEDI MAPPA
+          </span>
+        </a>
+        {v.slug ? (
+          <a href={linkScheda} style={{ flex: '1', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', color: '#fff', fontWeight: '800', textDecoration: 'none', backgroundColor: '#1e293b', fontSize: '13px' }}>
+            📄 SCHEDA
+          </a>
+        ) : (
+          <div style={{ flex: '1', height: '50px' }}></div>
+        )}
+      </div>
+    </div>
+  );
+})}
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
   fontSize: '11px', 
