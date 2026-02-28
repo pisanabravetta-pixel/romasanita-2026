@@ -8,6 +8,7 @@ import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
+import PrezzoDinamico from '../components/PrezzoDinamico';
 const prezziIndicativi = {
   farmacie: [ { servizio: "Misurazione pressione", min: 2, max: 5 } ],
   dentisti: [ { servizio: "Visita odontoiatrica", min: 50, max: 100 } ],
@@ -394,7 +395,7 @@ if (!mounted) return null;
         </div>
 
         <div style={{display:'flex',flexWrap:'wrap',gap:'8px',marginBottom:'15px'}}>
-          <div style={{padding:'6px 14px',background:'linear-gradient(90deg, #f97316, #fb923c)',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'13px'}}>{badgeTesto}</div>
+          <PrezzoDinamico categoria={v.categoria} index={i} />
           <div style={{padding:'6px 14px',backgroundColor:'#6366f1',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'13px',border:'1px solid #4338ca'}}>Richiedi preventivo esatto</div>
         </div>
 
