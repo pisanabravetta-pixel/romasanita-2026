@@ -6,6 +6,7 @@ import Footer from './Footer';
 import { theme } from '../styles/theme';
 import { supabase } from '../lib/supabaseClient';
 import Script from 'next/script';
+import ListaPrezzi from '../components/ListaPrezzi';
 export default function HubLayout({ 
   titolo, 
   categoria, 
@@ -220,6 +221,12 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   </div>
 </div>
 {children}
+{/* --- INSERIMENTO LISTA PREZZI QUI --- */}
+<ListaPrezzi 
+  categoria={badgeSpec || titoloPulito} 
+  zona="Roma" 
+/>
+
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
 <div style={{ marginBottom: '25px' }}> 
   <h3 style={{ fontSize: '18px', fontWeight: '900', color: '#1e293b', margin: '0 0 15px 0', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
