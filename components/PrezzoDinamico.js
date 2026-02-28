@@ -68,14 +68,24 @@ const prezziIndicativi = {
 };
 
 export default function PrezzoDinamico({ categoria, index }) {
-  // Pulizia chiave
-  let key = categoria ? categoria.toLowerCase().replace('visite-specialistiche-', '').replace('-roma', '') : 'specialisti';
+  // 1. Pulizia aggressiva della chiave
+  let key = categoria ? categoria.toLowerCase()
+    .replace('visite-specialistiche-', '')
+    .replace('-roma', '')
+    .trim() : 'specialisti';
+
+  // 2. Correzione manuale per far combaciare i plurali/singolari del database
+  // Se la chiave finisce in 'o' o 'a', proviamo a mandarla al plurale 'i'
+  if (key.endsWith('o') || key.endsWith('a')) {
+     const pluralKey = key.slice(0, -1) + 'i';
+     if (prezziIndicativi[pluralKey]) key = pluralKey;
+  }
   
-  // Trova i servizi per la categoria (o usa specialisti come fallback)
-  const listaServizi = prezziIndicativi[key] || prezziIndicativi['specialisti'];
+  // 3. Recupero lista (con fallback su specialisti se non trova nulla)
+  const lista = prezziIndicativi[key] || prezziIndicativi['specialisti'];
   
-  // Seleziona il servizio in base all'indice (0, 1, 2...)
-  const s = listaServizi[index % listaServizi.length];
+  // 4. Selezione servizio
+  const s = lista[index % lista.length];
 
   return (
     <div style={{
