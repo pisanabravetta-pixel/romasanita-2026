@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
+import { getDBQuery, quartieriTop, seoData, prezziIndicativi } from '../lib/seo-logic';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
