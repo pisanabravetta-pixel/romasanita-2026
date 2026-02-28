@@ -319,7 +319,21 @@ if (!mounted) return null;
   La mappa mostra la posizione di <strong>{meta.titolo}</strong> nel quartiere <strong>{meta.zona}</strong> a Roma, permettendo di individuare rapidamente le strutture più vicine alla tua posizione.
 </p>
 {totaleAnnunci > 0 && (
-  <div style={{ marginBottom: '20px', padding: '0 5px', fontSize: '15px', fontWeight: '700', color: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <div style={{ 
+    marginBottom: '20px', 
+    padding: '0 5px', 
+    fontSize: '15px', 
+    fontWeight: '700', 
+    color: '#475569', 
+    display: 'flex', 
+    alignItems: 'center', 
+    gap: '8px',
+    // --- MODIFICHE PER CENTRATURA ---
+    justifyContent: 'center', 
+    textAlign: 'center',
+    flexWrap: 'wrap' 
+    // --------------------------------
+  }}>
     <span style={{ backgroundColor: tema.primario, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
       {totaleAnnunci}
     </span>
