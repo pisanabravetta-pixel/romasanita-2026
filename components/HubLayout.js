@@ -221,11 +221,12 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   </div>
 </div>
 {children}
-{/* --- INSERIMENTO LISTA PREZZI QUI --- */}
+{/* TEST TEMPORANEO */}
 <ListaPrezzi 
-  categoria={badgeSpec || titoloPulito} 
+  categoria="dentisti" 
   zona="Roma" 
 />
+
 
 {/* BOX MAPPA LEAFLET - SPAZIO AZZERATO */}
 <div style={{ marginBottom: '25px' }}> 
