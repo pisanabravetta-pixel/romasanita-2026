@@ -322,7 +322,7 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-<div style={{ display: 'block' }}>
+
   {listaDaMostrare.map((v) => {
     const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
     const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
