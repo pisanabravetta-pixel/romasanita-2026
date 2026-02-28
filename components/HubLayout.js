@@ -221,9 +221,8 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   </div>
 </div>
 {children}
-{/* COPIAMI E SOSTITUISCI IL TEST TEMPORANEO */}
 <ListaPrezzi 
-  categoria={(badgeSpec || categoria || titoloPulito || "").toLowerCase().replace('-roma', '').trim()} 
+  categoria={(categoria || "").replace('-roma', '').toLowerCase().trim()} 
   zona="Roma" 
 />
 
