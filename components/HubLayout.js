@@ -221,9 +221,9 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
   </div>
 </div>
 {children}
-{/* TEST TEMPORANEO */}
+{/* COPIAMI E SOSTITUISCI IL TEST TEMPORANEO */}
 <ListaPrezzi 
-  categoria="dentisti" 
+  categoria={(badgeSpec || categoria || titoloPulito || "").toLowerCase().replace('-roma', '').trim()} 
   zona="Roma" 
 />
 
