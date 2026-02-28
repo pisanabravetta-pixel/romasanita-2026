@@ -322,11 +322,8 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-{listaDaMostrare.map((v, index) => {
+  {listaDaMostrare.map((v, index) => {
     const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-    
-    // Recuperiamo il range dalla tabella prezzi che abbiamo creato prima (prezziIndicativi)
-    // Se non trova nulla, mettiamo un range generico per non lasciare vuoto
     const fasciaDefault = "60€ – 120€";
 
     return (
@@ -336,21 +333,16 @@ if (!mounted) return null;
         padding: '20px', 
         marginBottom: '20px', 
         border: v.is_top ? `3px solid #f97316` : '1px solid #e2e8f0', 
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        fontFamily: 'sans-serif'
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
       }}>
-        {/* Nome Professionista */}
         <h3 style={{ color: '#1e293b', fontSize: '22px', fontWeight: '900', margin: '0 0 6px 0' }}>
           {v.slug ? (
-            <a href={linkScheda} style={{ color: '#1e293b', textDecoration: 'none' }}>
-              {v.nome}
-            </a>
+            <a href={linkScheda} style={{ color: '#1e293b', textDecoration: 'none' }}>{v.nome}</a>
           ) : (
             v.nome
           )}
         </h3>
 
-        {/* Categoria e Quartiere */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#64748b', fontSize: '14px', marginBottom: '10px', fontWeight: '600' }}>
           <span>🩺</span> 
           <span style={{ textTransform: 'uppercase' }}>
@@ -358,7 +350,6 @@ if (!mounted) return null;
           </span>
         </div>
 
-        {/* BADGE PREZZO ARANCIONE - Stile Subito.it */}
         <div style={{
           display: 'inline-block',
           backgroundColor: '#f97316', 
@@ -367,106 +358,48 @@ if (!mounted) return null;
           borderRadius: '20px',
           fontWeight: '800',
           fontSize: '14px',
-          marginBottom: '15px',
-          boxShadow: '0 2px 4px rgba(249, 115, 22, 0.2)'
+          marginBottom: '15px'
         }}>
           Fascia prezzo: {fasciaDefault}*
         </div>
 
-        {/* Indirizzo */}
         <div style={{ display: 'flex', alignItems: 'start', gap: '6px', color: '#475569', fontSize: '14px', marginBottom: '18px' }}>
           <span>📍</span>
           <span>{v.indirizzo}</span>
         </div>
 
-        {/* Riga Azioni: Mappa + Bottoni */}
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '10px', 
-          borderTop: '1px solid #f1f5f9', 
-          paddingTop: '15px' 
-        }}>
-          
-          {/* Icona Mappa (Placeholder immagine nell'originale) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', borderTop: '1px solid #f1f5f9', paddingTop: '15px' }}>
           <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{
-            width: '60px', 
-            height: '50px', 
-            backgroundColor: '#f8fafc', 
-            borderRadius: '8px', 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid #e2e8f0',
-            textDecoration: 'none',
-            fontSize: '20px',
-            flexShrink: 0
+            width: '60px', height: '50px', backgroundColor: '#f8fafc', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e2e8f0', textDecoration: 'none', fontSize: '20px', flexShrink: 0
           }}>
             🗺️
           </a>
 
-          {/* Bottoni Principali */}
           <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
-            <a href={`tel:${v.telefono}`} style={{
-              flex: 1,
-              backgroundColor: tema.primario,
-              color: 'white',
-              textAlign: 'center',
-              padding: '12px 5px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontWeight: '800',
-              fontSize: '13px'
-            }}>
+            <a href={`tel:${v.telefono}`} style={{ flex: 1, backgroundColor: tema.primario, color: 'white', textAlign: 'center', padding: '12px 5px', borderRadius: '8px', textDecoration: 'none', fontWeight: '800', fontSize: '13px' }}>
               📞 CHIAMA
             </a>
 
-            <a 
-              href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1,
-                backgroundColor: '#22c55e',
-                color: 'white',
-                textAlign: 'center',
-                padding: '12px 5px',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontWeight: '800',
-                fontSize: '13px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '4px'
-              }}
-            >
+            <a href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '').replace(/^39/, '')}` : '#'} target="_blank" rel="noopener noreferrer" style={{
+              flex: 1, backgroundColor: '#22c55e', color: 'white', textAlign: 'center', padding: '12px 5px', borderRadius: '8px', textDecoration: 'none', fontWeight: '800', fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px'
+            }}>
               💬 WHATSAPP
             </a>
 
             {v.slug && (
-              <a href={linkScheda} style={{
-                backgroundColor: '#1e293b',
-                color: 'white',
-                padding: '12px 10px',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontWeight: '800',
-                fontSize: '13px'
-              }}>
+              <a href={linkScheda} style={{ backgroundColor: '#1e293b', color: 'white', padding: '12px 12px', borderRadius: '8px', textDecoration: 'none', fontWeight: '800', fontSize: '13px' }}>
                 📄
               </a>
             )}
           </div>
         </div>
-        
-        {/* Nota legale */}
         <p style={{ fontSize: '9px', color: '#cbd5e1', marginTop: '12px', fontStyle: 'italic', textAlign: 'right' }}>
           * Stima indicativa basata su dati medi a Roma {v.zona}
         </p>
       </div>
     );
-})}
+  })}
+</div>
 
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
