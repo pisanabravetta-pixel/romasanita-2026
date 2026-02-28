@@ -4,10 +4,25 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, quartieriTop, seoData, prezziIndicativi } from '../lib/seo-logic';
+import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
+const prezziIndicativi = {
+  farmacie: [ { servizio: "Misurazione pressione", min: 2, max: 5 } ],
+  dentisti: [ { servizio: "Visita odontoiatrica", min: 50, max: 100 } ],
+  diagnostica: [ { servizio: "Ecografia", min: 60, max: 110 } ],
+  'centri-diagnostici': [ { servizio: "Ecografia", min: 60, max: 110 } ],
+  'servizi-domicilio': [ { servizio: "Prelievo sangue a domicilio", min: 30, max: 50 } ],
+  specialisti: [ { servizio: "Visita specialistica", min: 70, max: 120 } ],
+  cardiologi: [ { servizio: "Visita cardiologica", min: 80, max: 140 } ],
+  psicologi: [ { servizio: "Colloquio psicologico", min: 50, max: 100 } ],
+  dermatologi: [ { servizio: "Visita dermatologica", min: 65, max: 120 } ],
+  ginecologi: [ { servizio: "Visita ginecologica", min: 65, max: 120 } ],
+  nutrizionisti: [ { servizio: "Visita nutrizionale", min: 60, max: 100 } ],
+  ortopedici: [ { servizio: "Visita ortopedica", min: 70, max: 120 } ],
+  oculisti: [ { servizio: "Visita oculistica", min: 60, max: 110 } ]
+};
 export default function PaginaQuartiereDinamica({ 
   datiIniziali, 
   totaleDalServer, 
