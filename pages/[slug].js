@@ -362,6 +362,24 @@ if (!mounted) return null;
           📍 {v.indirizzo}, Roma
         </div>
 
+{/* Avviso Prezzi e Prenotazioni */}
+        <div style={{ 
+          marginTop: '15px', 
+          marginBottom: '10px', 
+          fontSize: '12px', 
+          color: '#64748b', 
+          lineHeight: '1.4',
+          fontStyle: 'italic',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '5px'
+        }}>
+          <span>⚠️</span>
+          <span>
+            I prezzi sono indicativi: contattare direttamente per conferma e prenotazioni 👇
+          </span>
+        </div>
+
        {/* RIGA 1: TELEFONO E WHATSAPP */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
           <a href={`tel:${v.telefono}`} style={{
