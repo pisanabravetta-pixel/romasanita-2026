@@ -322,95 +322,125 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-  {listaDaMostrare.map((v) => {
-    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-    const fasciaDefault = "50€ – 70€";
-    const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+ {listaDaMostrare.map((v) => {
+  const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+  // Logica per il numero WhatsApp
+  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+  
+  // Fascia prezzo predefinita (che cambieremo in base alla categoria nel prossimo step)
+  const fasciaPrezzo = "50€ – 70€";
 
-    return (
-      <div key={v.id} style={{ 
-        backgroundColor: 'white', 
-        borderRadius: '16px', 
-        padding: '24px', 
-        marginBottom: '20px', 
-        border: '1px solid #e2e8f0', 
-        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)'
-      }}>
-        <h3 style={{ color: '#1e3a8a', fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0' }}>
-          {v.nome}
-        </h3>
+  return (
+    <div key={v.id} style={{
+      maxWidth: '700px',
+      margin: '20px auto',
+      backgroundColor: '#fff',
+      borderRadius: '20px',
+      padding: '30px',
+      boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+      fontFamily: 'Arial, sans-serif',
+      border: '1px solid #e2e8f0'
+    }}>
+      {/* Titolo: Nome Medico o Struttura */}
+      <h2 style={{ margin: '0', fontSize: '30px', color: '#2c3e50', fontWeight: 'bold' }}>
+        {v.nome}
+      </h2>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '16px', marginBottom: '12px' }}>
-          <span>🩺</span> 
-          <span>{v.categoria ? v.categoria.replace(/-/g, ' ').toUpperCase() : meta.nomeSemplice} a <strong>{v.zona}</strong></span>
-        </div>
-
-        <div style={{
-          display: 'inline-block',
-          background: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
-          color: 'white',
-          padding: '8px 20px',
-          borderRadius: '50px',
-          fontWeight: '700',
-          fontSize: '16px',
-          marginBottom: '16px'
-        }}>
-          Fascia prezzo: {fasciaDefault}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '15px', marginBottom: '20px' }}>
-          <span style={{ color: '#2563eb' }}>📍</span>
-          <span>{v.indirizzo}, Roma ({v.zona})</span>
-        </div>
-
-        <div style={{ borderTop: '1px dashed #e2e8f0', margin: '0 -24px 20px -24px' }}></div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-          <div style={{ 
-            width: '100px', height: '75px', borderRadius: '10px', 
-            backgroundColor: '#f1f5f9', display: 'flex', 
-            alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            border: '1px solid #e2e8f0'
-          }}>
-            <span style={{ fontSize: '30px' }}>🗺️</span>
-          </div>
-
-          <div style={{ flex: 1, minWidth: '200px' }}>
-            <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#475569', fontWeight: '500' }}>
-              Prenota subito per telefono o WhatsApp
-            </p>
-            
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <a href={`tel:${v.telefono}`} style={{
-                flex: 1, backgroundColor: '#2563eb', color: 'white', textAlign: 'center',
-                padding: '12px', borderRadius: '8px', textDecoration: 'none',
-                fontWeight: '700', fontSize: '14px'
-              }}>
-                Chiama ora
-              </a>
-
-              <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{
-                flex: 1, backgroundColor: '#22c55e', color: 'white', textAlign: 'center',
-                padding: '12px', borderRadius: '8px', textDecoration: 'none',
-                fontWeight: '700', fontSize: '14px'
-              }}>
-                WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {v.slug && (
-          <div style={{ marginTop: '15px', textAlign: 'right' }}>
-            <a href={linkScheda} style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: '600' }}>
-              Visualizza scheda dettagliata ›
-            </a>
-          </div>
-        )}
+      {/* Specializzazione e Zona */}
+      <div style={{ marginTop: '10px', color: '#555', fontSize: '18px' }}>
+        {v.categoria ? v.categoria.replace(/-/g, ' ') : meta.nomeSemplice} a {v.zona}
       </div>
-    );
-  })}
-</div>
+
+      {/* Badge Prezzo Arancione */}
+      <div style={{
+        display: 'inline-block',
+        marginTop: '20px',
+        padding: '10px 20px',
+        background: 'linear-gradient(90deg, #ff7a00, #ffa733)',
+        color: '#fff',
+        borderRadius: '30px',
+        fontWeight: 'bold',
+        fontSize: '18px'
+      }}>
+        Fascia prezzo: {fasciaPrezzo}
+      </div>
+
+      {/* Indirizzo */}
+      <div style={{ marginTop: '20px', color: '#444', fontSize: '16px' }}>
+        📍 {v.indirizzo}, Roma ({v.zona})
+      </div>
+
+      {/* Mappa - Usiamo un segnaposto visuale sicuro per la build */}
+      <div style={{ marginTop: '20px' }}>
+        <div style={{
+          width: '100%',
+          height: '180px',
+          borderRadius: '12px',
+          backgroundColor: '#f1f5f9',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '1px solid #e2e8f0'
+        }}>
+          <span style={{ fontSize: '14px', color: '#64748b', fontWeight: 'bold' }}>
+             🗺️ MAPPA GPS DISPONIBILE
+          </span>
+        </div>
+      </div>
+
+      {/* CTA Text */}
+      <div style={{ marginTop: '20px', fontWeight: 'bold', color: '#333' }}>
+        Prenota subito per telefono o WhatsApp
+      </div>
+
+      {/* Bottoni Azione */}
+      <div style={{ marginTop: '15px', display: 'flex', gap: '15px' }}>
+        <a 
+          href={`tel:${v.telefono}`} 
+          style={{
+            flex: '1',
+            textAlign: 'center',
+            padding: '14px',
+            borderRadius: '10px',
+            color: '#fff',
+            fontWeight: 'bold',
+            textDecoration: 'none',
+            backgroundColor: '#2d7ff9'
+          }}
+        >
+          📞 Chiama ora
+        </a>
+        
+        <a 
+          href={waNumber ? `https://wa.me/39${waNumber}` : '#'} 
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            flex: '1',
+            textAlign: 'center',
+            padding: '14px',
+            borderRadius: '10px',
+            color: '#fff',
+            fontWeight: 'bold',
+            textDecoration: 'none',
+            backgroundColor: '#25D366'
+          }}
+        >
+          WhatsApp
+        </a>
+      </div>
+      
+      {/* Link alla scheda in piccolo per SEO */}
+      {v.slug && (
+        <div style={{ marginTop: '15px', textAlign: 'center' }}>
+          <a href={linkScheda} style={{ fontSize: '12px', color: '#94a3b8', textDecoration: 'none' }}>
+            Visualizza dettagli e orari ›
+          </a>
+        </div>
+      )}
+    </div>
+  );
+})}
 
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
