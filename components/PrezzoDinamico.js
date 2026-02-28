@@ -1,55 +1,70 @@
 import React from 'react';
 
 const prezziIndicativi = {
+  // --- CATEGORIE SPECIALI ---
   farmacie: [
     { servizio: "Misurazione pressione", min: 2, max: 5 },
     { servizio: "Test glicemia", min: 3, max: 6 },
     { servizio: "Tampone Covid", min: 8, max: 15 },
-  ],
-  dentisti: [
-    { servizio: "Visita odontoiatrica", min: 50, max: 100 },
-    { servizio: "Igiene dentale", min: 45, max: 80 },
-    { servizio: "Otturazione", min: 70, max: 120 },
+    { servizio: "Holter Cardiaco", min: 60, max: 90 }
   ],
   diagnostica: [
     { servizio: "Ecografia", min: 60, max: 110 },
-    { servizio: "TAC senza contrasto", min: 120, max: 250 },
-    { servizio: "Analisi sangue base", min: 20, max: 40 },
+    { servizio: "TAC senza contrasto", min: 150, max: 280 },
+    { servizio: "Risonanza Magnetica", min: 180, max: 350 },
+    { servizio: "Analisi del sangue", min: 15, max: 45 }
   ],
   'servizi-domicilio': [
-    { servizio: "Prelievo sangue a domicilio", min: 30, max: 50 },
-    { servizio: "Assistenza infermieristica", min: 60, max: 120 },
-    { servizio: "Fisioterapia a casa", min: 35, max: 60 },
+    { servizio: "Prelievo a domicilio", min: 35, max: 60 },
+    { servizio: "Assistenza infermieristica", min: 25, max: 50 },
+    { servizio: "Fisioterapia a casa", min: 45, max: 80 }
   ],
+
+  // --- I 7 SPECIALISTI (CON 3 PREZZI OGNUNO) ---
   cardiologi: [
-    { servizio: "Visita cardiologica", min: 80, max: 140 },
-    { servizio: "ECG", min: 35, max: 60 }
-  ],
-  psicologi: [
-    { servizio: "Colloquio psicologico", min: 50, max: 100 },
-    { servizio: "Terapia individuale", min: 60, max: 110 }
+    { servizio: "Visita Cardiologica", min: 100, max: 150 },
+    { servizio: "Elettrocardiogramma (ECG)", min: 40, max: 70 },
+    { servizio: "Ecocardiogramma", min: 90, max: 140 }
   ],
   dermatologi: [
-    { servizio: "Visita dermatologica", min: 65, max: 120 },
-    { servizio: "Mappatura nei", min: 80, max: 150 }
+    { servizio: "Visita Dermatologica", min: 90, max: 130 },
+    { servizio: "Mappatura nei", min: 120, max: 180 },
+    { servizio: "Crioterapia", min: 80, max: 150 }
+  ],
+  psicologi: [
+    { servizio: "Colloquio individuale", min: 60, max: 90 },
+    { servizio: "Terapia di coppia", min: 90, max: 130 },
+    { servizio: "Sostegno psicologico", min: 50, max: 80 }
   ],
   ginecologi: [
-    { servizio: "Visita ginecologica", min: 65, max: 120 },
-    { servizio: "Pap test", min: 25, max: 50 }
-  ],
-  nutrizionisti: [
-    { servizio: "Visita nutrizionale", min: 60, max: 100 },
-    { servizio: "Piano alimentare personalizzato", min: 80, max: 150 }
-  ],
-  ortopedici: [
-    { servizio: "Visita ortopedica", min: 70, max: 120 },
-    { servizio: "Infiltrazione articolare", min: 65, max: 100 }
+    { servizio: "Visita Ginecologica", min: 100, max: 150 },
+    { servizio: "Ecografia pelvica", min: 80, max: 120 },
+    { servizio: "Pap Test", min: 30, max: 60 }
   ],
   oculisti: [
-    { servizio: "Visita oculistica", min: 60, max: 110 },
-    { servizio: "Campo visivo", min: 30, max: 70 }
+    { servizio: "Visita Oculistica completa", min: 90, max: 140 },
+    { servizio: "Esame del fondo oculare", min: 50, max: 80 },
+    { servizio: "Misurazione pressione occhio", min: 40, max: 70 }
   ],
-  specialisti: [{ servizio: "Visita specialistica", min: 70, max: 120 }]
+  ortopedici: [
+    { servizio: "Visita Ortopedica", min: 100, max: 160 },
+    { servizio: "Infiltrazione articolare", min: 70, max: 120 },
+    { servizio: "Controllo post-operatorio", min: 80, max: 130 }
+  ],
+  nutrizionisti: [
+    { servizio: "Prima Visita Nutrizionale", min: 80, max: 130 },
+    { servizio: "Piano alimentare personalizzato", min: 100, max: 180 },
+    { servizio: "Bioimpedenziometria (BIA)", min: 40, max: 70 }
+  ],
+  dentisti: [
+    { servizio: "Visita Odontoiatrica", min: 0, max: 50 },
+    { servizio: "Igiene dentale professionale", min: 60, max: 100 },
+    { servizio: "Otturazione semplice", min: 80, max: 150 }
+  ],
+  specialisti: [
+    { servizio: "Visita Specialistica", min: 90, max: 150 },
+    { servizio: "Consulto di controllo", min: 70, max: 110 }
+  ]
 };
 
 export default function PrezzoDinamico({ categoria, index }) {
