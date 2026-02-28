@@ -182,15 +182,14 @@ export default function Navbar() {
           .accedi-link { text-decoration: none; color: #475569; font-weight: 700; font-size: 15px; }
           .pubblica-btn { background: #2563eb; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: 800; font-size: 14px; text-transform: uppercase; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
 
-          /* ═══════════════════════════════════════
-             MOBILE (≤ 768px): layout originale
-          ═══════════════════════════════════════ */
+         /* ═══════════════════════════════════════
+              MOBILE (≤ 768px): RIGA UNICA
+             ═══════════════════════════════════════ */
           @media (max-width: 768px) {
             /* Nascondi elementi desktop */
-            .desktop-left  { display: none; }
-            .desktop-right { display: none; }
+            .desktop-left, .desktop-right { display: none; }
 
-            /* Il logo torna in flusso normale, centrato */
+            /* Il logo torna in flusso normale, centrato in alto */
             .logo-section {
               position: static;
               transform: none;
@@ -200,27 +199,48 @@ export default function Navbar() {
               gap: 6px;
             }
 
-            /* Mostra la nav mobile */
-            .mobile-only {
-              display: flex;
-              width: 100%;
-              justify-content: space-between;
-              align-items: center;
-              border-top: 1px solid #f1f5f9;
-              padding-top: 10px;
-              gap: 0;
-            }
-
             .nav-container {
               flex-direction: column;
               gap: 15px;
               padding: 10px;
             }
 
+            /* Riga inferiore: Menu a sx, Accedi al centro, Pubblica a dx */
+            .mobile-only {
+              display: flex;
+              width: 100%;
+              justify-content: space-between; 
+              align-items: center;
+              border-top: 1px solid #f1f5f9;
+              padding-top: 12px;
+            }
+
+            /* Contenitore azioni utente in riga */
+            .mobile-only .user-actions { 
+              display: flex; 
+              flex-direction: row; 
+              align-items: center; 
+              flex: 1; 
+              justify-content: space-between; 
+              margin-left: 15px;
+            }
+
+            /* Accedi centrato tra Menu e Pubblica */
+            .accedi-link { 
+              text-align: center; 
+              flex: 1; 
+              font-size: 14px;
+              white-space: nowrap;
+            }
+
+            .pubblica-btn { 
+              padding: 8px 14px; 
+              font-size: 11px; 
+              white-space: nowrap;
+              flex-shrink: 0;
+            }
+
             .dropdown-main { left: 0; transform: none; width: 250px; }
-            .pubblica-btn { padding: 8px 16px; font-size: 12px; }
-            .user-actions { flex-direction: column; align-items: center; gap: 8px; }
-            .accedi-link { width: 100%; text-align: center; }
           }
         `}</style>
       </header>
