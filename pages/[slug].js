@@ -322,100 +322,38 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
- {listaDaMostrare.map((v) => {
-  const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
-  const fasciaPrezzo = "50€ – 70€";
+  {listaDaMostrare.map((v) => {
+    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+    const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+    const fasciaPrezzo = "50€ – 70€";
+    
+    // Logica Genere/Tipo per il badge
+    let labelSpecialista = v.categoria ? v.categoria.replace(/-/g, ' ').toUpperCase() : meta.nomeSemplice;
+    if (v.approvato === 'f') labelSpecialista = labelSpecialista.replace(/I$/, 'A');
+    if (v.approvato === 'm') labelSpecialista = labelSpecialista.replace(/I$/, 'O');
 
-  // LOGICA BADGE DINAMICO (Genere/Struttura)
-  // Assumendo che 'categoria' contenga il nome base (es. cardiologi)
-  // e che tu abbia una colonna 'genere' o 'tipo' (m, f, struttura)
-  let labelSpecialista = v.categoria ? v.categoria.replace(/-/g, ' ') : meta.nomeSemplice;
-  
-  if (v.tipo === 'f') {
-    labelSpecialista = labelSpecialista.replace(/i$/, 'a'); // cardiologi -> cardiologa
-  } else if (v.tipo === 'm') {
-    labelSpecialista = labelSpecialista.replace(/i$/, 'o'); // cardiologi -> cardiologo
-  }
-
-  return (
-    <div key={v.id} style={{
-      maxWidth: '600px', // Ridotto per non essere "gigante"
-      margin: '15px auto',
-      backgroundColor: '#fff',
-      borderRadius: '16px',
-      padding: '20px', // Padding ridotto
-      boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-      fontFamily: 'Arial, sans-serif',
-      border: '1px solid #e2e8f0'
-    }}>
-      {/* Nome Medico / Struttura */}
-      <h2 style={{ margin: '0 0 8px 0', fontSize: '22px', color: '#2c3e50', fontWeight: 'bold' }}>
-        {v.nome}
-      </h2>
-
-      {/* Linea leggera divisoria */}
-      <div style={{ borderBottom: '1px solid #f1f5f9', marginBottom: '12px' }}></div>
-
-      {/* Badge Specializzazione (Genere-Sensitive) */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-        <span style={{ 
-          fontSize: '11px', 
-          fontWeight: '800', 
-          backgroundColor: '#f1f5f9', 
-          color: '#475569', 
-          padding: '4px 10px', 
-          borderRadius: '6px',
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px'
-        }}>
-          {labelSpecialista}
-        </span>
-        <span style={{ fontSize: '14px', color: '#64748b' }}>a {v.zona}</span>
+    return (
+      <div key={v.id} style={{maxWidth:'600px',margin:'15px auto',backgroundColor:'#fff',borderRadius:'16px',padding:'20px',boxShadow:'0 4px 12px rgba(0,0,0,0.05)',fontFamily:'Arial, sans-serif',border:'1px solid #e2e8f0'}}>
+        <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#2c3e50',fontWeight:'bold'}}>{v.nome}</h2>
+        <div style={{borderBottom:'1px solid #f1f5f9',marginBottom:'12px'}}></div>
+        <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}}>
+          <span style={{fontSize:'11px',fontWeight:'800',backgroundColor:'#f1f5f9',color:'#475569',padding:'4px 10px',borderRadius:'6px',textTransform:'uppercase'}}>{labelSpecialista}</span>
+          <span style={{fontSize:'14px',color:'#64748b'}}>A {v.zona}</span>
+        </div>
+        <div style={{display:'inline-block',padding:'6px 14px',background:'linear-gradient(90deg, #ff7a00, #ffa733)',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'14px',marginBottom:'15px'}}>Fascia prezzo: {fasciaPrezzo}</div>
+        <div style={{color:'#444',fontSize:'14px',marginBottom:'15px'}}>📍 {v.indirizzo}, Roma</div>
+        <div style={{display:'flex',gap:'10px',marginBottom:'10px'}}>
+          <a href={`tel:${v.telefono}`} style={{flex:'1',textAlign:'center',padding:'12px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#2d7ff9',fontSize:'14px'}}>📞 CHIAMA</a>
+          <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{flex:'1',textAlign:'center',padding:'12px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#25D366',fontSize:'14px'}}>💬 WHATSAPP</a>
+        </div>
+        <div style={{display:'flex',gap:'10px'}}>
+          <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{flex:'1',textAlign:'center',padding:'10px',borderRadius:'8px',color:'#475569',fontWeight:'bold',textDecoration:'none',backgroundColor:'#f1f5f9',fontSize:'13px',border:'1px solid #e2e8f0'}}>🗺️ MAPPA</a>
+          {v.slug && <a href={linkScheda} style={{flex:'1',textAlign:'center',padding:'10px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#1e293b',fontSize:'13px'}}>📄 SCHEDA</a>}
+        </div>
       </div>
-
-      {/* Badge Prezzo Arancione (Più compatto) */}
-      <div style={{
-        display: 'inline-block',
-        padding: '6px 14px',
-        background: 'linear-gradient(90deg, #ff7a00, #ffa733)',
-        color: '#fff',
-        borderRadius: '20px',
-        fontWeight: 'bold',
-        fontSize: '14px',
-        marginBottom: '15px'
-      }}>
-        Fascia prezzo: {fasciaPrezzo}
-      </div>
-
-      <div style={{ color: '#444', fontSize: '14px', marginBottom: '15px' }}>
-        📍 {v.indirizzo}, Roma
-      </div>
-
-      {/* PRIMA RIGA: TELEFONO E WHATSAPP */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-        <a href={`tel:${v.telefono}`} style={{ flex: '1', textAlign: 'center', padding: '12px', borderRadius: '8px', color: '#fff', fontWeight: 'bold', textDecoration: 'none', backgroundColor: '#2d7ff9', fontSize: '14px' }}>
-          📞 CHIAMA
-        </a>
-        <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{ flex: '1', textAlign: 'center', padding: '12px', borderRadius: '8px', color: '#fff', fontWeight: 'bold', textDecoration: 'none', backgroundColor: '#25D366', fontSize: '14px' }}>
-          💬 WHATSAPP
-        </a>
-      </div>
-
-      {/* SECONDA RIGA: MAPPA E SCHEDA */}
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{ flex: '1', textAlign: 'center', padding: '10px', borderRadius: '8px', color: '#475569', fontWeight: 'bold', textDecoration: 'none', backgroundColor: '#f1f5f9', fontSize: '13px', border: '1px solid #e2e8f0' }}>
-          🗺️ MAPPA
-        </a>
-        {v.slug && (
-          <a href={linkScheda} style={{ flex: '1', textAlign: 'center', padding: '10px', borderRadius: '8px', color: '#fff', fontWeight: 'bold', textDecoration: 'none', backgroundColor: '#1e293b', fontSize: '13px' }}>
-            📄 SCHEDA
-          </a>
-        )}
-      </div>
-    </div>
-  );
-})}
+    );
+  })}
+</div>
 
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
