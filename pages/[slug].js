@@ -325,6 +325,8 @@ if (!mounted) return null;
 {listaDaMostrare.map((v) => {
   const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
   const fasciaDefault = "50€ – 70€";
+  // Pulizia sicura del numero WhatsApp
+  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
 
   return (
     <div key={v.id} style={{ 
@@ -340,7 +342,7 @@ if (!mounted) return null;
       </h3>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '16px', marginBottom: '12px' }}>
-        <span style={{ fontSize: '20px' }}>🩺</span> 
+        <span>🩺</span> 
         <span>{v.categoria ? v.categoria.replace(/-/g, ' ') : meta.nomeSemplice} a <strong>{v.zona}</strong></span>
       </div>
 
@@ -352,14 +354,13 @@ if (!mounted) return null;
         borderRadius: '50px',
         fontWeight: '700',
         fontSize: '16px',
-        marginBottom: '16px',
-        boxShadow: '0 4px 12px rgba(249, 115, 22, 0.3)'
+        marginBottom: '16px'
       }}>
         Fascia prezzo: {fasciaDefault}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '15px', marginBottom: '20px' }}>
-        <span style={{ color: '#2563eb', fontSize: '18px' }}>📍</span>
+        <span style={{ color: '#2563eb' }}>📍</span>
         <span>{v.indirizzo}, Roma ({v.zona})</span>
       </div>
 
@@ -367,44 +368,14 @@ if (!mounted) return null;
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
         <div style={{ 
-          width: '100px', 
-          height: '75px', 
-          borderRadius: '10px', 
-          overflow: 'hidden', 
-          border: '1px solid #e2e8f0',
-          flexShrink: 0 
+          width: '100px', height: '75px', borderRadius: '10px', 
+          backgroundColor: '#f1f5f9', display: 'flex', 
+          alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          border: '1px solid #e2e8f0'
         }}>
-          <div style={{ 
-  width: '100px', 
-  height: '75px', 
-  borderRadius: '10px', 
-  overflow: 'hidden', 
-  border: '1px solid #e2e8f0',
-  flexShrink: 0,
-  backgroundColor: '#f1f5f9', // Grigio chiaro di sfondo
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative'
-}}>
-  {/* Un'icona mappa semplice che non richiede API key */}
-  <span style={{ fontSize: '30px' }}>🗺️</span>
-  
-  {/* Opzionale: un piccolo overlay che ricorda una mappa vera */}
-  <div style={{ 
-    position: 'absolute', 
-    bottom: 0, 
-    width: '100%', 
-    height: '20px', 
-    backgroundColor: 'rgba(255,255,255,0.5)', 
-    fontSize: '9px', 
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#475569'
-  }}>
-    MAPPA GPS
-  </div>
-</div>
+          <span style={{ fontSize: '30px' }}>🗺️</span>
+        </div>
+
         <div style={{ flex: 1, minWidth: '200px' }}>
           <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#475569', fontWeight: '500' }}>
             Prenota subito per telefono o WhatsApp
@@ -412,31 +383,17 @@ if (!mounted) return null;
           
           <div style={{ display: 'flex', gap: '10px' }}>
             <a href={`tel:${v.telefono}`} style={{
-              flex: 1,
-              backgroundColor: '#2563eb',
-              color: 'white',
-              textAlign: 'center',
-              padding: '12px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontWeight: '700',
-              fontSize: '14px',
-              boxShadow: '0 4px 6px rgba(37, 99, 235, 0.2)'
+              flex: 1, backgroundColor: '#2563eb', color: 'white', textAlign: 'center',
+              padding: '12px', borderRadius: '8px', textDecoration: 'none',
+              fontWeight: '700', fontSize: '14px'
             }}>
               Chiama ora
             </a>
 
-            <a href={v.whatsapp ? `https://wa.me/39${String(v.whatsapp).replace(/\D/g, '')}` : '#'} style={{
-              flex: 1,
-              backgroundColor: '#22c55e',
-              color: 'white',
-              textAlign: 'center',
-              padding: '12px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontWeight: '700',
-              fontSize: '14px',
-              boxShadow: '0 4px 6px rgba(34, 197, 94, 0.2)'
+            <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} style={{
+              flex: 1, backgroundColor: '#22c55e', color: 'white', textAlign: 'center',
+              padding: '12px', borderRadius: '8px', textDecoration: 'none',
+              fontWeight: '700', fontSize: '14px'
             }}>
               WhatsApp
             </a>
