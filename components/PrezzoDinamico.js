@@ -68,23 +68,27 @@ const prezziIndicativi = {
 };
 
 export default function PrezzoDinamico({ categoria, index }) {
-  // 1. Pulizia aggressiva della chiave
-  let key = categoria ? categoria.toLowerCase()
-    .replace('visite-specialistiche-', '')
-    .replace('-roma', '')
-    .trim() : 'specialisti';
-
-  // 2. Correzione manuale per far combaciare i plurali/singolari del database
-  // Se la chiave finisce in 'o' o 'a', proviamo a mandarla al plurale 'i'
-  if (key.endsWith('o') || key.endsWith('a')) {
-     const pluralKey = key.slice(0, -1) + 'i';
-     if (prezziIndicativi[pluralKey]) key = pluralKey;
-  }
+  const catParam = categoria ? categoria.toLowerCase() : '';
   
-  // 3. Recupero lista (con fallback su specialisti se non trova nulla)
+  // 1. Identificazione intelligente della categoria
+  let key = 'specialisti'; // Default
+
+  if (catParam.includes('cardio')) key = 'cardiologi';
+  else if (catParam.includes('dentista') || catParam.includes('odonto')) key = 'dentisti';
+  else if (catParam.includes('dermato')) key = 'dermatologi';
+  else if (catParam.includes('psicolo')) key = 'psicologi';
+  else if (catParam.includes('gineco')) key = 'ginecologi';
+  else if (catParam.includes('oculi')) key = 'oculisti';
+  else if (catParam.includes('ortope')) key = 'ortopedici';
+  else if (catParam.includes('nutrizion')) key = 'nutrizionisti';
+  else if (catParam.includes('farmac')) key = 'farmacie';
+  else if (catParam.includes('diagnost')) key = 'diagnostica';
+  else if (catParam.includes('domicilio')) key = 'servizi-domicilio';
+
+  // 2. Recupero lista
   const lista = prezziIndicativi[key] || prezziIndicativi['specialisti'];
   
-  // 4. Selezione servizio
+  // 3. Selezione servizio (Rotazione su base index i)
   const s = lista[index % lista.length];
 
   return (
