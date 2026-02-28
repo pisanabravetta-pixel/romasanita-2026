@@ -327,28 +327,79 @@ if (!mounted) return null;
     const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
     const fasciaPrezzo = "50€ – 70€";
     
-    // Logica Genere/Tipo per il badge
-    let labelSpecialista = v.categoria ? v.categoria.replace(/-/g, ' ').toUpperCase() : meta.nomeSemplice;
+    // Logica Badge: Pulizia "visite-specialistiche" e declinazione genere
+    let labelSpecialista = v.categoria 
+      ? v.categoria.replace('visite-specialistiche-', '').replace(/-/g, ' ').toUpperCase() 
+      : meta.nomeSemplice;
+    
     if (v.approvato === 'f') labelSpecialista = labelSpecialista.replace(/I$/, 'A');
     if (v.approvato === 'm') labelSpecialista = labelSpecialista.replace(/I$/, 'O');
 
     return (
-      <div key={v.id} style={{maxWidth:'600px',margin:'15px auto',backgroundColor:'#fff',borderRadius:'16px',padding:'20px',boxShadow:'0 4px 12px rgba(0,0,0,0.05)',fontFamily:'Arial, sans-serif',border:'1px solid #e2e8f0'}}>
-        <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#2c3e50',fontWeight:'bold'}}>{v.nome}</h2>
-        <div style={{borderBottom:'1px solid #f1f5f9',marginBottom:'12px'}}></div>
+      <div key={v.id} style={{
+        maxWidth: '600px',
+        margin: '15px auto',
+        backgroundColor: '#fff',
+        borderRadius: '16px',
+        padding: '20px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+        fontFamily: 'Arial, sans-serif',
+        border: '2px solid #cbd5e1' // Contorno più marcato
+      }}>
+        <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#1e293b',fontWeight:'900'}}>{v.nome}</h2>
+        
+        <div style={{borderBottom:'1px solid #e2e8f0',marginBottom:'12px'}}></div>
+        
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}}>
-          <span style={{fontSize:'11px',fontWeight:'800',backgroundColor:'#f1f5f9',color:'#475569',padding:'4px 10px',borderRadius:'6px',textTransform:'uppercase'}}>{labelSpecialista}</span>
-          <span style={{fontSize:'14px',color:'#64748b'}}>A {v.zona}</span>
+          <span style={{
+            fontSize:'12px',
+            fontWeight:'800',
+            backgroundColor:'#dbeafe', // Blu chiaro per risaltare
+            color:'#1e40af', 
+            padding:'5px 12px',
+            borderRadius:'8px',
+            textTransform:'uppercase',
+            border: '1px solid #bfdbfe'
+          }}>
+            {labelSpecialista}
+          </span>
+          <span style={{fontSize:'14px',color:'#64748b', fontWeight:'600'}}>A {v.zona}</span>
         </div>
-        <div style={{display:'inline-block',padding:'6px 14px',background:'linear-gradient(90deg, #ff7a00, #ffa733)',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'14px',marginBottom:'15px'}}>Fascia prezzo: {fasciaPrezzo}</div>
-        <div style={{color:'#444',fontSize:'14px',marginBottom:'15px'}}>📍 {v.indirizzo}, Roma</div>
+
+        <div style={{display:'inline-block',padding:'6px 14px',background:'linear-gradient(90deg, #f97316, #fb923c)',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'14px',marginBottom:'15px'}}>
+          Fascia prezzo: {fasciaPrezzo}
+        </div>
+
+        <div style={{color:'#475569',fontSize:'14px',marginBottom:'15px', fontWeight:'500'}}>
+          📍 {v.indirizzo}, Roma
+        </div>
+
+        {/* RIGA 1: TELEFONO E WHATSAPP */}
         <div style={{display:'flex',gap:'10px',marginBottom:'10px'}}>
-          <a href={`tel:${v.telefono}`} style={{flex:'1',textAlign:'center',padding:'12px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#2d7ff9',fontSize:'14px'}}>📞 CHIAMA</a>
-          <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{flex:'1',textAlign:'center',padding:'12px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#25D366',fontSize:'14px'}}>💬 WHATSAPP</a>
+          <a href={`tel:${v.telefono}`} style={{flex:'1',textAlign:'center',padding:'14px',borderRadius:'10px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#2563eb',fontSize:'14px'}}>📞 CHIAMA</a>
+          <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{flex:'1',textAlign:'center',padding:'14px',borderRadius:'10px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#22c55e',fontSize:'14px'}}>💬 WHATSAPP</a>
         </div>
+
+        {/* RIGA 2: MAPPA E SCHEDA */}
         <div style={{display:'flex',gap:'10px'}}>
-          <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{flex:'1',textAlign:'center',padding:'10px',borderRadius:'8px',color:'#475569',fontWeight:'bold',textDecoration:'none',backgroundColor:'#f1f5f9',fontSize:'13px',border:'1px solid #e2e8f0'}}>🗺️ MAPPA</a>
-          {v.slug && <a href={linkScheda} style={{flex:'1',textAlign:'center',padding:'10px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#1e293b',fontSize:'13px'}}>📄 SCHEDA</a>}
+          <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{
+            flex:'1',
+            textAlign:'center',
+            padding:'10px',
+            borderRadius:'8px',
+            color:'#fff', // Testo bianco per risaltare
+            fontWeight:'bold',
+            textDecoration:'none',
+            backgroundColor:'#64748b', // Colore grigio/blu scuro per la mappa
+            fontSize:'13px'
+          }}>
+            🗺️ MAPPA
+          </a>
+          {v.slug && (
+            <a href={linkScheda} style={{flex:'1',textAlign:'center',padding:'10px',borderRadius:'8px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#1e293b',fontSize:'13px'}}>
+              📄 SCHEDA
+            </a>
+          )}
         </div>
       </div>
     );
