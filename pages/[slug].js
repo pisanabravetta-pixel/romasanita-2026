@@ -322,95 +322,95 @@ if (!mounted) return null;
   </div>
 )}
 <div style={{ display: 'block' }}>
-{listaDaMostrare.map((v) => {
-  const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
-  const fasciaDefault = "50€ – 70€";
-  // Pulizia sicura del numero WhatsApp
-  const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
+  {listaDaMostrare.map((v) => {
+    const linkScheda = v.slug ? `/scheda/${v.slug}` : '#';
+    const fasciaDefault = "50€ – 70€";
+    const waNumber = v.whatsapp ? String(v.whatsapp).replace(/\D/g, '') : '';
 
-  return (
-    <div key={v.id} style={{ 
-      backgroundColor: 'white', 
-      borderRadius: '16px', 
-      padding: '24px', 
-      marginBottom: '20px', 
-      border: '1px solid #e2e8f0', 
-      boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)'
-    }}>
-      <h3 style={{ color: '#1e3a8a', fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0' }}>
-        {v.nome}
-      </h3>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '16px', marginBottom: '12px' }}>
-        <span>🩺</span> 
-        <span>{v.categoria ? v.categoria.replace(/-/g, ' ') : meta.nomeSemplice} a <strong>{v.zona}</strong></span>
-      </div>
-
-      <div style={{
-        display: 'inline-block',
-        background: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
-        color: 'white',
-        padding: '8px 20px',
-        borderRadius: '50px',
-        fontWeight: '700',
-        fontSize: '16px',
-        marginBottom: '16px'
+    return (
+      <div key={v.id} style={{ 
+        backgroundColor: 'white', 
+        borderRadius: '16px', 
+        padding: '24px', 
+        marginBottom: '20px', 
+        border: '1px solid #e2e8f0', 
+        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)'
       }}>
-        Fascia prezzo: {fasciaDefault}
-      </div>
+        <h3 style={{ color: '#1e3a8a', fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0' }}>
+          {v.nome}
+        </h3>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '15px', marginBottom: '20px' }}>
-        <span style={{ color: '#2563eb' }}>📍</span>
-        <span>{v.indirizzo}, Roma ({v.zona})</span>
-      </div>
-
-      <div style={{ borderTop: '1px dashed #e2e8f0', margin: '0 -24px 20px -24px' }}></div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
-        <div style={{ 
-          width: '100px', height: '75px', borderRadius: '10px', 
-          backgroundColor: '#f1f5f9', display: 'flex', 
-          alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          border: '1px solid #e2e8f0'
-        }}>
-          <span style={{ fontSize: '30px' }}>🗺️</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '16px', marginBottom: '12px' }}>
+          <span>🩺</span> 
+          <span>{v.categoria ? v.categoria.replace(/-/g, ' ').toUpperCase() : meta.nomeSemplice} a <strong>{v.zona}</strong></span>
         </div>
 
-        <div style={{ flex: 1, minWidth: '200px' }}>
-          <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#475569', fontWeight: '500' }}>
-            Prenota subito per telefono o WhatsApp
-          </p>
-          
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <a href={`tel:${v.telefono}`} style={{
-              flex: 1, backgroundColor: '#2563eb', color: 'white', textAlign: 'center',
-              padding: '12px', borderRadius: '8px', textDecoration: 'none',
-              fontWeight: '700', fontSize: '14px'
-            }}>
-              Chiama ora
-            </a>
+        <div style={{
+          display: 'inline-block',
+          background: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
+          color: 'white',
+          padding: '8px 20px',
+          borderRadius: '50px',
+          fontWeight: '700',
+          fontSize: '16px',
+          marginBottom: '16px'
+        }}>
+          Fascia prezzo: {fasciaDefault}
+        </div>
 
-            <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} style={{
-              flex: 1, backgroundColor: '#22c55e', color: 'white', textAlign: 'center',
-              padding: '12px', borderRadius: '8px', textDecoration: 'none',
-              fontWeight: '700', fontSize: '14px'
-            }}>
-              WhatsApp
-            </a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1e3a8a', fontSize: '15px', marginBottom: '20px' }}>
+          <span style={{ color: '#2563eb' }}>📍</span>
+          <span>{v.indirizzo}, Roma ({v.zona})</span>
+        </div>
+
+        <div style={{ borderTop: '1px dashed #e2e8f0', margin: '0 -24px 20px -24px' }}></div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flexWrap: 'wrap' }}>
+          <div style={{ 
+            width: '100px', height: '75px', borderRadius: '10px', 
+            backgroundColor: '#f1f5f9', display: 'flex', 
+            alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            border: '1px solid #e2e8f0'
+          }}>
+            <span style={{ fontSize: '30px' }}>🗺️</span>
+          </div>
+
+          <div style={{ flex: 1, minWidth: '200px' }}>
+            <p style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#475569', fontWeight: '500' }}>
+              Prenota subito per telefono o WhatsApp
+            </p>
+            
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <a href={`tel:${v.telefono}`} style={{
+                flex: 1, backgroundColor: '#2563eb', color: 'white', textAlign: 'center',
+                padding: '12px', borderRadius: '8px', textDecoration: 'none',
+                fontWeight: '700', fontSize: '14px'
+              }}>
+                Chiama ora
+              </a>
+
+              <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{
+                flex: 1, backgroundColor: '#22c55e', color: 'white', textAlign: 'center',
+                padding: '12px', borderRadius: '8px', textDecoration: 'none',
+                fontWeight: '700', fontSize: '14px'
+              }}>
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      {v.slug && (
-        <div style={{ marginTop: '15px', textAlign: 'right' }}>
-          <a href={linkScheda} style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: '600' }}>
-            Visualizza scheda dettagliata ›
-          </a>
-        </div>
-      )}
-    </div>
-  );
-})}
+        {v.slug && (
+          <div style={{ marginTop: '15px', textAlign: 'right' }}>
+            <a href={linkScheda} style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', fontWeight: '600' }}>
+              Visualizza scheda dettagliata ›
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  })}
+</div>
 
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
