@@ -4,7 +4,7 @@ const prezziIndicativi = {
   farmacie: [
     { servizio: "Misurazione pressione", min: 2, max: 5 },
     { servizio: "Test glicemia", min: 3, max: 6 },
-    { servicio: "Tampone Covid", min: 8, max: 15 },
+    { servizio: "Tampone Covid", min: 8, max: 15 },
   ],
   dentisti: [
     { servizio: "Visita odontoiatrica", min: 50, max: 100 },
