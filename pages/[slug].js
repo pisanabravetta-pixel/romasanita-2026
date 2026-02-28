@@ -372,24 +372,30 @@ if (!mounted) return null;
         <div style={{display:'flex',gap:'10px',alignItems:'stretch'}}>
           {/* Tasto Mappa con Immagine Statica di sfondo (OpenStreetMap - Gratuito e Sicuro) */}
           <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{
-            flex:'1',
-            height:'50px',
-            borderRadius:'10px',
-            textDecoration:'none',
-            display:'flex',
-            alignItems:'center',
-            justifyContent:'center',
-            fontSize:'13px',
-            fontWeight:'bold',
-            color:'#fff',
-            overflow:'hidden',
-            position:'relative',
-            border:'1px solid #94a3b8',
-            background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=200,50&z=14&l=map&lang=it_IT)` 
-          }}>
-            <span style={{position:'relative', zIndex:1}}>🗺️ VEDI MAPPA</span>
-          </a>
-
+  flex: '1',
+  height: '50px',
+  borderRadius: '10px',
+  textDecoration: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '13px',
+  fontWeight: '900', // Grassetto massimo
+  color: '#fff',
+  overflow: 'hidden',
+  position: 'relative',
+  border: '2px solid #1e293b',
+  background: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=300,70&z=14&l=map&lang=it_IT)`,
+  backgroundSize: 'cover'
+}}>
+  <span style={{ 
+    position: 'relative', 
+    zIndex: 1, 
+    textShadow: '2px 2px 3px #000, -1px -1px 3px #000, 1px -1px 3px #000, -1px 1px 3px #000' 
+  }}>
+    🗺️ VEDI MAPPA
+  </span>
+</a>
           {v.slug && (
             <a href={linkScheda} style={{flex:'1',textAlign:'center',padding:'14px',borderRadius:'10px',color:'#fff',fontWeight:'bold',textDecoration:'none',backgroundColor:'#1e293b',fontSize:'13px',display:'flex',alignItems:'center',justifyContent:'center'}}>
               📄 SCHEDA
