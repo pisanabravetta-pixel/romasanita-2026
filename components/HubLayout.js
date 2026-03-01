@@ -262,7 +262,7 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
          
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
 {totaleAnnunci > 0 && (
-  <div className="contatore-centrato" style={{ 
+  <div style={{ 
     marginBottom: '20px', 
     padding: '0 5px', 
     fontSize: '15px', 
@@ -271,16 +271,11 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
     display: 'flex', 
     alignItems: 'center', 
     gap: '8px',
-    justifyContent: 'center', 
-    textAlign: 'center',
-    flexWrap: 'wrap' 
+    justifyContent: 'center', // <--- CENTRATO SU PC
+    textAlign: 'center',      // <--- CENTRATO SU PC
+    flexWrap: 'wrap',
+    width: '100%'             // Forza l'allineamento su tutta la larghezza
   }}>
-    <style jsx>{`
-      @media (min-width: 768px) {
-        .contatore-centrato { justify-content: flex-start !important; text-align: left !important; }
-      }
-    `}</style>
-
     <span style={{ backgroundColor: colore, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
       {totaleAnnunci}
     </span>
