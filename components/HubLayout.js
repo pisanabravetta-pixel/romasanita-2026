@@ -262,24 +262,26 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
          
 {/* BLOCCO ANNUNCI DETTAGLIATI */}
 {totaleAnnunci > 0 && (
-  <div style={{ 
+  <div className="contatore-centrato" style={{ 
     marginBottom: '20px', 
     padding: '0 5px', 
     fontSize: '15px', 
     fontWeight: '700', 
-    color: '#475569',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
+    color: '#475569', 
+    display: 'flex', 
+    alignItems: 'center', 
+    gap: '8px',
+    justifyContent: 'center', 
+    textAlign: 'center',
+    flexWrap: 'wrap' 
   }}>
-    <span style={{ 
-      backgroundColor: colore, 
-      color: 'white', 
-      padding: '3px 10px', 
-      borderRadius: '6px',
-      fontSize: '13px',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-    }}>
+    <style jsx>{`
+      @media (min-width: 768px) {
+        .contatore-centrato { justify-content: flex-start !important; text-align: left !important; }
+      }
+    `}</style>
+
+    <span style={{ backgroundColor: colore, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
       {totaleAnnunci}
     </span>
     <span>
