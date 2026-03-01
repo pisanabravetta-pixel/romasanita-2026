@@ -67,8 +67,9 @@ const listaFiltrata = datiGrezzi.filter(item => {
 
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
 
-// 3. LA RIGA CHIAVE: Forziamo l'uso della lunghezza della lista FILTRATA
-// Abbiamo rimosso "totaleDalServer ||" per evitare che il 315 sovrascriva il calcolo
+// --- FORZA IL CONTEGGIO LOCALE ---
+// Usiamo solo la lunghezza della lista filtrata. 
+// Ignoriamo totalmente totaleDalServer che è quello che ti segna 315.
 const totaleAnnunci = listaUnica.length; 
 
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
