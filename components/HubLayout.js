@@ -83,7 +83,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
     }
 
     // 2. Altrimenti, scarichiamo i dati una volta sola per categoria
-    async function fetchNuoviMedici() {
+ async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
         const { data, error } = await supabase
@@ -95,9 +95,23 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
 
         if (error) throw error;
 
-        const radice = (categoria || "").toLowerCase().substring(0, 4);
+        // --- FILTRO POTENZIATO ---
+        const catBassa = (categoria || "").toLowerCase();
+        const radice = catBassa.substring(0, 4);
+
         const filtrati = data ? data.filter(item => {
-          return item.categoria?.toLowerCase().includes(radice);
+          const itemCat = item.categoria?.toLowerCase() || "";
+          
+          // Se siamo nella categoria specialisti, ESCLUDIAMO i "grandi gruppi"
+          if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
+            return itemCat.includes('specialistic') && 
+                   !itemCat.includes('farmac') && 
+                   !itemCat.includes('dentist') && 
+                   !itemCat.includes('diagnost');
+          }
+          
+          // Per le altre categorie (es. cardiologi), usa il filtro normale
+          return itemCat.includes(radice);
         }) : [];
 
         setServiziRealTime(filtrati);
