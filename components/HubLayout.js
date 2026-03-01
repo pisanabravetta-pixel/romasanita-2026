@@ -290,31 +290,14 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   </p>
 </div>
          
-{/* BLOCCO ANNUNCI DETTAGLIATI - FIX DEFINITIVO */}
+{/* BLOCCO TEST - SE NON VEDI IL ROSSO NON È IL FILE GIUSTO */}
 {listaUnica.length > 0 && (
-  <div style={{ 
-    marginBottom: '20px', 
-    padding: '0 5px', 
-    fontSize: '15px', 
-    fontWeight: '700', 
-    color: '#475569', 
-    display: 'flex', 
-    alignItems: 'center', 
-    gap: '8px',
-    justifyContent: 'center',
-    textAlign: 'center',
-    flexWrap: 'wrap',
-    width: '100%'
-  }}>
-    <span style={{ backgroundColor: colore, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
-      {listaUnica.length}
+  <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+    <span style={{ backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '6px' }}>
+      TEST: {listaUnica.length}
     </span>
-    <span>
-      {titoloPulito} {
-        (titoloPulito.toLowerCase().includes('farmaci') || titoloPulito.toLowerCase().includes('diagnosti'))
-        ? (listaUnica.length === 1 ? 'trovata' : 'trovate')
-        : (listaUnica.length === 1 ? 'trovato' : 'trovati')
-      } a Roma
+    <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>
+      Se vedi questo rosso, il 315 è morto.
     </span>
   </div>
 )}
