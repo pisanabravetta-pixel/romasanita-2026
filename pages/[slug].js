@@ -394,42 +394,133 @@ if (!mounted) return null;
   if (v.approvato === 'f') lb = lb.replace(/I$/, 'A');
   if (v.approvato === 'm') lb = lb.replace(/I$/, 'O');
 
-  return (
-      <div key={v.id} style={{maxWidth:'600px',margin:'15px auto',backgroundColor:'#fff',borderRadius:'16px',padding:'20px',boxShadow:'0 4px 12px rgba(0,0,0,0.08)',fontFamily:'Arial,sans-serif',border:'2px solid #cbd5e1'}}>
-        <h2 style={{margin:'0 0 8px 0',fontSize:'22px',color:'#1e293b',fontWeight:'900'}}>{v.nome}</h2>
-        <div style={{borderBottom:'1px solid #e2e8f0',marginBottom:'12px'}}></div>
-        
-        <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}}>
-          <span style={{fontSize:'12px',fontWeight:'800',backgroundColor:'#dbeafe',color:'#1e40af',padding:'5px 12px',borderRadius:'8px',textTransform:'uppercase',border:'1px solid #bfdbfe'}}>{lb}</span>
-          <span style={{fontSize:'14px',color:'#64748b',fontWeight:'600'}}>A {v.zona}</span>
+ return (
+      <div key={v.id} style={{
+        maxWidth:'600px', margin:'20px auto', backgroundColor:'#fff',
+        borderRadius:'18px', boxShadow:'0 2px 16px rgba(44,82,130,0.10)',
+        fontFamily:'Arial,sans-serif', border:'1.5px solid #dde6f0',
+        overflow:'hidden'
+      }}>
+        {/* HEADER CARD */}
+        <div style={{padding:'20px 20px 0 20px'}}>
+          <h2 style={{margin:'0 0 4px 0', fontSize:'22px', color:'#1a2b4a', fontWeight:'900', letterSpacing:'-0.3px'}}>
+            {v.nome}
+          </h2>
+          <div style={{borderBottom:'1px solid #edf2f7', margin:'12px 0'}}></div>
+
+          {/* BADGE CATEGORIA + ZONA */}
+          <div style={{display:'flex', alignItems:'center', gap:'8px', marginBottom:'12px', flexWrap:'wrap'}}>
+            <span style={{display:'inline-flex', alignItems:'center', gap:'5px', fontSize:'13px', color:'#374151', fontWeight:'700'}}>
+              <span style={{fontSize:'15px'}}>🩺</span>
+              <span>{lb.charAt(0) + lb.slice(1).toLowerCase()}</span>
+              <span style={{color:'#6b7280'}}>a</span>
+              <strong style={{color:'#1a2b4a'}}>{v.zona}</strong>
+            </span>
+          </div>
+
+          {/* BADGE PREZZO */}
+          <div style={{marginBottom:'12px'}}>
+            <PrezzoDinamico categoria={v.categoria} index={i} />
+          </div>
+
+          {/* BADGE PREVENTIVO */}
+          <div style={{marginBottom:'14px'}}>
+            <span style={{display:'inline-block', padding:'5px 14px', backgroundColor:'#6366f1', color:'#fff', borderRadius:'20px', fontWeight:'700', fontSize:'12px', border:'1px solid #4338ca'}}>
+              Richiedi preventivo esatto
+            </span>
+          </div>
+
+          {/* INDIRIZZO */}
+          <div style={{display:'flex', alignItems:'center', gap:'6px', color:'#4b5563', fontSize:'14px', marginBottom:'14px', fontWeight:'500'}}>
+            <span style={{fontSize:'16px', flexShrink:0}}>📍</span>
+            <span>{v.indirizzo}, Roma ({v.zona})</span>
+          </div>
         </div>
 
-        <div style={{display:'flex',flexWrap:'wrap',gap:'8px',marginBottom:'15px'}}>
-          <PrezzoDinamico categoria={v.categoria} index={i} />
-          <div style={{padding:'6px 14px',backgroundColor:'#6366f1',color:'#fff',borderRadius:'20px',fontWeight:'bold',fontSize:'13px',border:'1px solid #4338ca'}}>Richiedi preventivo esatto</div>
+        {/* SEZIONE MAPPA + CTA CONTATTO */}
+        <div style={{display:'flex', gap:'12px', padding:'0 20px 14px 20px', alignItems:'flex-start'}}>
+          {/* Miniatura mappa */}
+          <a
+            href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              flexShrink:0, width:'110px', height:'80px', borderRadius:'10px',
+              overflow:'hidden', display:'block', border:'1.5px solid #dde6f0',
+              background:`url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=220,160&z=15&l=map&lang=it_IT) center/cover no-repeat #e2e8f0`
+            }}
+            title="Vedi su Google Maps"
+          />
+          {/* Testo + pulsanti contatto */}
+          <div style={{flex:1}}>
+            <p style={{fontSize:'13px', color:'#4b5563', margin:'0 0 10px 0', fontWeight:'600', lineHeight:'1.4'}}>
+              Prenota subito per telefono o WhatsApp
+            </p>
+            <div style={{display:'flex', gap:'8px'}}>
+              <a href={`tel:${v.telefono}`} style={{
+                flex:1, padding:'10px 6px', backgroundColor:'#2563eb', color:'#fff',
+                borderRadius:'9px', textAlign:'center', fontWeight:'800',
+                textDecoration:'none', fontSize:'13px', display:'flex',
+                alignItems:'center', justifyContent:'center', gap:'5px'
+              }}>
+                📞 Chiama ora
+              </a>
+              <a
+                href={waNumber ? `https://wa.me/39${waNumber}?text=${encodeURIComponent('Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com')}` : '#'}
+                target="_blank" rel="noopener noreferrer"
+                onClick={(e) => { if(!waNumber){ e.preventDefault(); alert('WhatsApp non disponibile'); } }}
+                style={{
+                  flex:1, padding:'10px 6px', backgroundColor:'#25d366', color:'#fff',
+                  borderRadius:'9px', textAlign:'center', fontWeight:'800',
+                  textDecoration:'none', fontSize:'13px', display:'flex',
+                  alignItems:'center', justifyContent:'center', gap:'5px'
+                }}
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div style={{color:'#475569',fontSize:'14px',marginBottom:'15px',fontWeight:'500'}}>📍 {v.indirizzo}, Roma</div>
-        
-        <div style={{marginTop:'15px',marginBottom:'10px',fontSize:'11px',color:'#64748b',lineHeight:'1.4',backgroundColor:'#f8fafc',padding:'8px',borderRadius:'8px',borderLeft:'3px solid #cbd5e1'}}>
-          <strong>Nota informativa:</strong> I prezzi indicati rappresentano la media statistica della zona. Per conferme su tariffe, convenzioni e prenotazioni, contatta direttamente il professionista 👇
+        {/* DISCLAIMER */}
+        <div style={{
+          margin:'0 20px 14px 20px', fontSize:'11px', color:'#94a3b8', lineHeight:'1.5',
+          backgroundColor:'#f8fafc', padding:'8px 12px', borderRadius:'8px',
+          borderLeft:'3px solid #cbd5e1'
+        }}>
+          <strong>Nota informativa:</strong> I prezzi indicati rappresentano la media statistica della zona. Per conferme su tariffe, convenzioni e prenotazioni, contatta direttamente il professionista.
         </div>
 
-        <div style={{display:'flex',gap:'10px',marginBottom:'10px'}}>
-          <a href={`tel:${v.telefono}`} style={{flex:'1',height:'50px',display:'flex',alignItems:'center',justifyContent:'center',borderRadius:'10px',color:'#fff',fontWeight:'800',textDecoration:'none',backgroundColor:'#2563eb',fontSize:'13px'}}>📞 CHIAMA</a>
-          <a href={waNumber ? `https://wa.me/39${waNumber}` : '#'} target="_blank" rel="noopener noreferrer" style={{flex:'1',height:'50px',display:'flex',alignItems:'center',justifyContent:'center',borderRadius:'10px',color:'#fff',fontWeight:'800',textDecoration:'none',backgroundColor:'#22c55e',fontSize:'13px'}}>💬 WHATSAPP</a>
+        {/* PULSANTE SCHEDA FULL-WIDTH */}
+        <div style={{padding:'0 20px 20px 20px'}}>
+          {v.slug ? (
+            <a href={linkScheda} style={{
+              display:'flex', alignItems:'center', justifyContent:'center', gap:'8px',
+              width:'100%', padding:'14px', boxSizing:'border-box',
+              backgroundColor:'#f8fafc', color:'#1a2b4a', border:'1.5px solid #dde6f0',
+              borderRadius:'11px', fontWeight:'800', fontSize:'15px',
+              textDecoration:'none', transition:'background 0.15s',
+              letterSpacing:'0.1px'
+            }}>
+              Visualizza scheda <span style={{fontSize:'16px'}}>›</span>
+            </a>
+          ) : (
+            <div style={{height:'14px'}} />
+          )}
         </div>
 
-        <div style={{display:'flex',gap:'10px',alignItems:'stretch'}}>
-          <a href={`https://www.google.it/maps?q=${v.lat},${v.lng}`} target="_blank" rel="noopener noreferrer" style={{flex:'1',height:'50px',borderRadius:'10px',textDecoration:'none',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'13px',fontWeight:'900',color:'#fff',overflow:'hidden',position:'relative',border:'2px solid #1e293b',background:`linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(https://static-maps.yandex.ru/1.x/?ll=${v.lng},${v.lat}&size=300,70&z=14&l=map&lang=it_IT)`,backgroundSize:'cover'}}>
-            <span style={{position:'relative',zIndex:1,textShadow:'2px 2px 3px #000,-1px -1px 3px #000,1px -1px 3px #000,-1px 1px 3px #000'}}>🗺️ VEDI MAPPA</span>
-          </a>
-          {v.slug ? (<a href={linkScheda} style={{flex:'1',height:'50px',display:'flex',alignItems:'center',justifyContent:'center',borderRadius:'10px',color:'#fff',fontWeight:'800',textDecoration:'none',backgroundColor:'#1e293b',fontSize:'13px'}}>📄 SCHEDA</a>) : (<div style={{flex:'1',height:'50px'}}></div>)}
+        {/* BADGE SEO BOTTOM */}
+        <div style={{textAlign:'center', paddingBottom:'14px'}}>
+          <span style={{
+            fontSize:'10px', fontWeight:'800', backgroundColor:`${tema.primario}12`,
+            color:tema.primario, padding:'4px 12px', borderRadius:'20px',
+            border:`1px solid ${tema.primario}25`, display:'inline-block',
+            textTransform:'uppercase', letterSpacing:'0.5px'
+          }}>
+            {lb} a Roma {v.zona}
+          </span>
         </div>
       </div>
     );
-  })}
-</div>
  
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
