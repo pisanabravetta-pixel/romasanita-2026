@@ -75,11 +75,30 @@ const [mounted, setMounted] = useState(false);
   setMounted(true);
 }, []);
   const annunciPerPagina = 10;
-  // FIX: aggiunto (servizi || []) per evitare crash se i dati non sono ancora arrivati
-  const listaUnica = Array.from(new Map((servizi || []).map(item => [item.id, item])).values());
+ // --- NUOVA LOGICA DI FILTRAGGIO E CONTEGGIO ---
+  const catBassa = (catSlug || "").toLowerCase();
+  
+  // 1. Filtriamo i dati in base alla categoria reale
+  const listaFiltrata = (servizi || []).filter(item => {
+    const itemCat = item.categoria?.toLowerCase() || "";
+    // Se siamo in "specialistiche", escludiamo farmacie, dentisti e diagnostica
+    if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
+      return !itemCat.includes('farmac') && !itemCat.includes('dentist') && !itemCat.includes('diagnost');
+    }
+    // Altrimenti filtro standard per le altre categorie
+    return itemCat.includes(catBassa.substring(0, 4));
+  });
+
+  // 2. Creiamo la lista unica senza duplicati
+  const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
+
+  // 3. CALCOLO POSIZIONE PAGINA
   const inizio = (pagina - 1) * annunciPerPagina;
   const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-  const totaleAnnunci = totaleDalServer || listaUnica.length;
+
+  // 4. FIX DEL 315: Se siamo nell'HUB (Roma), ignoriamo il totaleDalServer
+  const totaleAnnunci = (zonaInSlug === 'roma') ? listaUnica.length : (totaleDalServer || listaUnica.length);
+  
   const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
   useEffect(() => {
@@ -161,21 +180,22 @@ if (!mounted) return null;
   
   
        
-  // --- SE SIAMO NELL'HUB (ROMA) ---
-  if (zonaInSlug === 'roma') {
-    return (
-      <HubLayout 
-        titolo={catSlug.replace(/-/g, ' ')}
-        categoria={catSlug}
-        colore="#2c5282"
-        datiIniziali={servizi}
-        totaleDalServer={totaleDalServer}
-        paginaIniziale={pagina}
-        testoTopBar={`${catSlug.toUpperCase()} ROMA`}
-        badgeSpec={catSlug}
-      />
-    );
-  }
+ // --- SE SIAMO NELL'HUB (ROMA) ---
+if (zonaInSlug === 'roma') {
+  return (
+    <HubLayout 
+      titolo={catSlug.replace(/-/g, ' ')}
+      categoria={catSlug}
+      colore="#2c5282"
+      // PASSIAMO I DATI FILTRATI E IL TOTALE CORRETTO
+      medici={listaUnica} 
+      totaleDalServer={totaleAnnunci}
+      paginaIniziale={pagina}
+      testoTopBar={`${catSlug.toUpperCase()} ROMA`}
+      badgeSpec={catSlug}
+    />
+  );
+}
 
 // --- SE SIAMO NEL QUARTIERE ---
   return (
