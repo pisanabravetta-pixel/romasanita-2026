@@ -50,29 +50,22 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-// ORA CALCOLA LE VARIABILI DERIVATE
-// --- SOSTITUISCI DA QUI ---
+// ORA CALCOLA LE VARIABILI DERIVATE (CON FILTRO DI SICUREZZA)
 const radiceFiltro = (categoria || "").toLowerCase().substring(0, 4);
-
-// 1. Prendiamo i dati (da real-time o da server)
 const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
 
-// 2. FORZIAMO IL FILTRO: mostriamo solo se la categoria include la radice (es. "farm")
-const listaFiltrata = datiGrezzi.filter(item => {
+// Filtriamo per essere sicuri di non mostrare tutto il database
+const sorgenteDati = datiGrezzi.filter(item => {
   if (!radiceFiltro) return true;
   return item.categoria?.toLowerCase().includes(radiceFiltro);
 });
 
-// 3. Creiamo la lista unica per evitare doppioni
-const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
-
-// 4. Calcoliamo i totali basandoci sulla lista realmente filtrata
-const totaleAnnunci = listaUnica.length; 
+const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
+const totaleAnnunci = listaUnica.length; // Usiamo la lunghezza della lista filtrata
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
 const inizio = (pagina - 1) * annunciPerPagina;
 const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-// --- A QUI ---
 
  useEffect(() => {
     // 1. Se abbiamo già i dati (da SSR o props statiche), usiamoli e fermiamoci.
