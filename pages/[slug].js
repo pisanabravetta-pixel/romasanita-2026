@@ -180,16 +180,18 @@ if (!mounted) return null;
   
   
        
- // --- SE SIAMO NELL'HUB (ROMA) ---
+// --- SE SIAMO NELL'HUB (ROMA) ---
 if (zonaInSlug === 'roma') {
+  // Calcoliamo qui il totale reale basandoci sulla lista già filtrata per categoria
+  const totaleRealeHub = listaUnica.length;
+
   return (
     <HubLayout 
       titolo={catSlug.replace(/-/g, ' ')}
       categoria={catSlug}
       colore="#2c5282"
-      // PASSIAMO I DATI FILTRATI E IL TOTALE CORRETTO
-      medici={listaUnica} 
-      totaleDalServer={totaleAnnunci}
+      medici={listaUnica} // Passiamo solo gli specialisti filtrati
+      totaleDalServer={totaleRealeHub} // Passiamo il numero corretto (es. 90) invece di 315
       paginaIniziale={pagina}
       testoTopBar={`${catSlug.toUpperCase()} ROMA`}
       badgeSpec={catSlug}
