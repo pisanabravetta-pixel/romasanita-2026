@@ -50,18 +50,30 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-// ORA CALCOLA LE VARIABILI DERIVATE (CON FILTRO DI SICUREZZA)
-const radiceFiltro = (categoria || "").toLowerCase().substring(0, 4);
+// --- LOGICA DI FILTRO COPIATA E ADATTATA DA SLUG ---
+const radiceFiltro = (categoria || "").toLowerCase();
 const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
 
-// Filtriamo per essere sicuri di non mostrare tutto il database
-const sorgenteDati = datiGrezzi.filter(item => {
-  if (!radiceFiltro) return true;
-  return item.categoria?.toLowerCase().includes(radiceFiltro);
+const listaFiltrata = datiGrezzi.filter(item => {
+  const itemCat = item.categoria?.toLowerCase() || "";
+  
+  // Se siamo in "viste-specialistiche", prendiamo tutti i medici 
+  // ESCLUDENDO farmacie, dentisti e diagnostica che hanno i loro hub dedicati
+  if (radiceFiltro.includes('specialistic')) {
+    return !itemCat.includes('farmac') && 
+           !itemCat.includes('dentist') && 
+           !itemCat.includes('diagnost');
+  } 
+  
+  // Altrimenti usiamo il filtro normale (es. "card" per cardiologi)
+  return itemCat.includes(radiceFiltro.substring(0, 4));
 });
 
-const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
-const totaleAnnunci = listaUnica.length; // Usiamo la lunghezza della lista filtrata
+// Creiamo la lista unica (rimuove i doppioni per ID)
+const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
+
+// Usiamo la lunghezza della lista FILTRATA invece del totaleDalServer
+const totaleAnnunci = listaUnica.length; 
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
 const inizio = (pagina - 1) * annunciPerPagina;
