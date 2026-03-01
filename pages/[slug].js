@@ -521,7 +521,8 @@ if (!mounted) return null;
         </div>
       </div>
     );
- 
+  })}
+</div>
 {/* TESTO TITOLARE - OBBLIGATORIO PER OGNI PAGINA */}
 <p style={{ 
   fontSize: '11px', 
