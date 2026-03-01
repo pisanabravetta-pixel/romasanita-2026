@@ -50,29 +50,31 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-// --- LOGICA DI FILTRO COPIATA E ADATTATA DA SLUG ---
-const radiceFiltro = (categoria || "").toLowerCase();
+// 1. Definiamo la categoria attuale
+const catPura = (categoria || "").toLowerCase();
+
+// 2. Prendiamo i dati disponibili
 const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
 
+// 3. FILTRO LOGICO: Se è "specialistiche", escludiamo farmacie, dentisti e diagnostica
 const listaFiltrata = datiGrezzi.filter(item => {
   const itemCat = item.categoria?.toLowerCase() || "";
   
-  // Se siamo in "viste-specialistiche", prendiamo tutti i medici 
-  // ESCLUDENDO farmacie, dentisti e diagnostica che hanno i loro hub dedicati
-  if (radiceFiltro.includes('specialistic')) {
+  if (catPura.includes('specialistic') || catPura === 'specialisti') {
+    // Escludiamo le macro-categorie che hanno i loro hub
     return !itemCat.includes('farmac') && 
            !itemCat.includes('dentist') && 
            !itemCat.includes('diagnost');
-  } 
+  }
   
-  // Altrimenti usiamo il filtro normale (es. "card" per cardiologi)
-  return itemCat.includes(radiceFiltro.substring(0, 4));
+  // Per tutte le altre (es. cardiologi), usiamo il filtro normale sulle prime 4 lettere
+  return itemCat.includes(catPura.substring(0, 4));
 });
 
-// Creiamo la lista unica (rimuove i doppioni per ID)
+// 4. Creiamo la lista finale senza duplicati
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
 
-// Usiamo la lunghezza della lista FILTRATA invece del totaleDalServer
+// 5. CALCOLIAMO IL TOTALE REALE (sovrascriviamo il 315 del server)
 const totaleAnnunci = listaUnica.length; 
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
