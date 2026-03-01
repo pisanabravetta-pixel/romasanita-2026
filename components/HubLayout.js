@@ -65,66 +65,56 @@ const listaFiltrata = datiGrezzi.filter(item => {
   return itemCat.includes(radiceFiltro);
 });
 
+// 1. Calcolo della lista filtrata (FUORI dagli useEffect)
+const listaFiltrata = (serviziRealTime.length > 0 ? serviziRealTime : (servizi || [])).filter(item => {
+  const cat = (item.categoria || "").toLowerCase();
+  const cURL = (categoria || "").toLowerCase();
+  
+  if (cURL.includes('specialistic') || cURL === 'specialisti') {
+    return cat.includes('specialistic') && 
+           !cat.includes('farmac') && 
+           !cat.includes('dentist') && 
+           !cat.includes('diagnost');
+  }
+  return cat.includes(cURL.substring(0, 4));
+});
+
+// 2. Creazione lista unica e conteggi
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
-
-// --- FORZA IL CONTEGGIO LOCALE ---
-// Usiamo solo la lunghezza della lista filtrata. 
-// Ignoriamo totalmente totaleDalServer che è quello che ti segna 315.
 const totaleAnnunci = listaUnica.length; 
-
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 const inizio = (pagina - 1) * annunciPerPagina;
 const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
- useEffect(() => {
-    // 1. Se abbiamo già i dati (da SSR o props statiche), usiamoli e fermiamoci.
-    // Non mettiamo 'pagina' nelle dipendenze per evitare il freeze della mappa.
-    if ((medici && medici.length > 0) || (datiIniziali && datiIniziali.length > 0)) {
+
+// 3. L'useEffect con le chiusure sistemate
+useEffect(() => {
+  // Se abbiamo già i dati e non sono quelli "sporchi" del server, possiamo fermarci
+  if ((medici && medici.length > 0 && medici.length < 300) || (datiIniziali && datiIniziali.length > 0 && datiIniziali.length < 300)) {
+    setLoadingRealTime(false);
+    return; 
+  }
+
+  async function fetchNuoviMedici() {
+    try {
+      setLoadingRealTime(true);
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('approvato', true)
+        .order('is_top', { ascending: false })
+        .range(0, 399); 
+
+      if (error) throw error;
+      setServiziRealTime(data || []);
+    } catch (err) {
+      console.error("Errore fetch Hub:", err);
+    } finally {
       setLoadingRealTime(false);
-      return; 
     }
+  }
 
-    // 2. Altrimenti, scarichiamo i dati una volta sola per categoria
- async function fetchNuoviMedici() {
-      try {
-        setLoadingRealTime(true);
-        const { data, error } = await supabase
-          .from('annunci')
-          .select('*')
-          .eq('approvato', true)
-          .order('is_top', { ascending: false })
-          .range(0, 399); 
-
-        if (error) throw error;
-
-        // --- FILTRO POTENZIATO ---
-        const catBassa = (categoria || "").toLowerCase();
-        const radice = catBassa.substring(0, 4);
-
-        const filtrati = data ? data.filter(item => {
-          const itemCat = item.categoria?.toLowerCase() || "";
-          
-          // Se siamo nella categoria specialisti, ESCLUDIAMO i "grandi gruppi"
-          if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
-            return itemCat.includes('specialistic') && 
-                   !itemCat.includes('farmac') && 
-                   !itemCat.includes('dentist') && 
-                   !itemCat.includes('diagnost');
-          }
-          
-          // Per le altre categorie (es. cardiologi), usa il filtro normale
-          return itemCat.includes(radice);
-        }) : [];
-
-        setServiziRealTime(filtrati);
-      } catch (err) {
-        console.error("Errore fetch Hub:", err);
-      } finally {
-        setLoadingRealTime(false);
-      }
-    }
-
-    fetchNuoviMedici();
-  }, [categoria]); // <--- LASCIAMO SOLO CATEGORIA: IL FREEZE SPARISCE
+  fetchNuoviMedici();
+}, [categoria]); // Chiude l'useEffect correttamente
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
