@@ -52,16 +52,18 @@ useEffect(() => {
 
 // 1. Usiamo useMemo per evitare crash in fase di Build/SSR
 const listaFiltrata = React.useMemo(() => {
-  // Se non ci sono dati, restituiamo array vuoto senza esplodere
-  const sorgente = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (servizi || []);
+  // CORREZIONE: Usiamo solo le variabili esistenti (serviziRealTime o medici)
+  const sorgente = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
+  
   if (!sorgente || sorgente.length === 0) return [];
 
   const catBassa = (categoria || "").toLowerCase();
   
   return sorgente.filter(item => {
+    if (!item) return false;
     const itemCat = (item.categoria || "").toLowerCase();
     
-    // Se siamo nella pagina specialisti, filtriamo via farmacie e dentisti
+    // Se siamo nella pagina specialisti, filtriamo via farmacie, dentisti e diagnostica
     if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
       return itemCat.includes('specialistic') && 
              !itemCat.includes('farmac') && 
@@ -69,11 +71,11 @@ const listaFiltrata = React.useMemo(() => {
              !itemCat.includes('diagnost');
     }
     
-    // Altrimenti usiamo la radice delle prime 4 lettere
+    // Altrimenti usiamo la radice delle prime 4 lettere (es. "card" per cardiologi)
     const radice = catBassa.substring(0, 4);
     return radice ? itemCat.includes(radice) : true;
   });
-}, [serviziRealTime, servizi, categoria]);
+}, [serviziRealTime, medici, categoria]); // Rimosso 'servizi' che non esiste
 
 // 2. Calcolo dei conteggi basato sulla lista filtrata (90 o 126, MAI 315)
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
