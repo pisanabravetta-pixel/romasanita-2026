@@ -24,12 +24,19 @@ export default function VisiteSpecialisticheRoma() {
 
         if (databaseData) {
           const filtrati = databaseData.filter(item => {
-            const cat = (item.categoria || "").toLowerCase().trim();
-            const haSpecialistica = cat.includes('specialistiche');
-            const eFarmacia = cat.includes('farmac');
-            const eDentista = cat.includes('dentist');
-            return haSpecialistica && !eFarmacia && !eDentista;
-          });
+  const cat = (item.categoria || "").toLowerCase().trim();
+  
+  // Condizione base: deve avere "specialistiche"
+  const haSpecialistica = cat.includes('specialistiche');
+  
+  // ESCLUSIONI CRITICHE (per evitare il numero 315)
+  const eFarmacia = cat.includes('farmac');
+  const eDentista = cat.includes('dentist');
+  const eDiagnostica = cat.includes('diagnost'); 
+  const eSanitari = cat.includes('sanitari'); // esclude servizi generici
+
+  return haSpecialistica && !eFarmacia && !eDentista && !eDiagnostica && !eSanitari;
+});
 
           // --- COPIALO DA QUI ---
           const ordinati = filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0));
