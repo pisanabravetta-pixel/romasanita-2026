@@ -290,8 +290,8 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
   </p>
 </div>
          
-{/* BLOCCO ANNUNCI DETTAGLIATI */}
-{totaleAnnunci > 0 && (
+{/* BLOCCO ANNUNCI DETTAGLIATI - FIX DEFINITIVO */}
+{listaUnica.length > 0 && (
   <div style={{ 
     marginBottom: '20px', 
     padding: '0 5px', 
@@ -301,24 +301,23 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
     display: 'flex', 
     alignItems: 'center', 
     gap: '8px',
-    justifyContent: 'center', // <--- CENTRATO SU PC
-    textAlign: 'center',      // <--- CENTRATO SU PC
+    justifyContent: 'center',
+    textAlign: 'center',
     flexWrap: 'wrap',
-    width: '100%'             // Forza l'allineamento su tutta la larghezza
+    width: '100%'
   }}>
     <span style={{ backgroundColor: colore, color: 'white', padding: '3px 10px', borderRadius: '6px', fontSize: '13px' }}>
-      {totaleAnnunci}
+      {listaUnica.length}
     </span>
     <span>
       {titoloPulito} {
         (titoloPulito.toLowerCase().includes('farmaci') || titoloPulito.toLowerCase().includes('diagnosti'))
-        ? (totaleAnnunci === 1 ? 'trovata' : 'trovate')
-        : (totaleAnnunci === 1 ? 'trovato' : 'trovati')
+        ? (listaUnica.length === 1 ? 'trovata' : 'trovate')
+        : (listaUnica.length === 1 ? 'trovato' : 'trovati')
       } a Roma
     </span>
   </div>
 )}
-
 <div style={{ display: 'block' }}>
   {loadingRealTime ? (
     <p>Caricamento...</p>
