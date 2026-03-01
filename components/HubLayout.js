@@ -65,26 +65,36 @@ const listaFiltrata = datiGrezzi.filter(item => {
   return itemCat.includes(radiceFiltro);
 });
 
-// 1. Calcolo della lista filtrata (FUORI dagli useEffect)
-const listaFiltrata = (serviziRealTime.length > 0 ? serviziRealTime : (servizi || [])).filter(item => {
-  const cat = (item.categoria || "").toLowerCase();
-  const cURL = (categoria || "").toLowerCase();
+// 1. Calcolo della lista filtrata (SAFE per SSR)
+const listaFiltrata = React.useMemo(() => {
+  const sorgente = serviziRealTime && serviziRealTime.length > 0 ? serviziRealTime : (servizi || []);
+  if (!sorgente) return [];
+
+  // Pulizia categoria per il filtro
+  const catBassa = (categoria || "").toLowerCase();
   
-  if (cURL.includes('specialistic') || cURL === 'specialisti') {
-    return cat.includes('specialistic') && 
-           !cat.includes('farmac') && 
-           !cat.includes('dentist') && 
-           !cat.includes('diagnost');
-  }
-  return cat.includes(cURL.substring(0, 4));
-});
+  return sorgente.filter(item => {
+    const itemCat = (item.categoria || "").toLowerCase();
+    
+    // Se siamo negli specialisti, escludiamo il resto
+    if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
+      return itemCat.includes('specialistic') && 
+             !itemCat.includes('farmac') && 
+             !itemCat.includes('dentist') && 
+             !itemCat.includes('diagnost');
+    }
+    
+    // Filtro standard per le altre categorie
+    return itemCat.includes(catBassa.substring(0, 4));
+  });
+}, [serviziRealTime, servizi, categoria]);
 
 // 2. Creazione lista unica e conteggi
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
 const totaleAnnunci = listaUnica.length; 
-const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
-const inizio = (pagina - 1) * annunciPerPagina;
-const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
+const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / (annunciPerPagina || 10)));
+const inizio = (pagina - 1) * (annunciPerPagina || 10);
+const listaDaMostrare = listaUnica.slice(inizio, inizio + (annunciPerPagina || 10));
 
 // 3. L'useEffect con le chiusure sistemate
 useEffect(() => {
