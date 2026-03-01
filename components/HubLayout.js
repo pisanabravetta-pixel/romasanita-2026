@@ -58,8 +58,10 @@ const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziReal
 const listaFiltrata = datiGrezzi.filter(item => {
   const itemCat = item.categoria?.toLowerCase() || "";
   if (categoria?.includes('specialistic')) {
+    // Se siamo in specialistiche, ESCLUDIAMO farmacie, dentisti e diagnostica
     return !itemCat.includes('farmac') && !itemCat.includes('dentist') && !itemCat.includes('diagnost');
   }
+  // Altrimenti usiamo il filtro normale (es. "card" per cardiologi)
   return itemCat.includes(radiceFiltro);
 });
 
