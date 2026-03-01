@@ -7,6 +7,7 @@ import { theme } from '../styles/theme';
 import { supabase } from '../lib/supabaseClient';
 import Script from 'next/script';
 import ListaPrezzi from '../components/ListaPrezzi';
+import PrezzoDinamico from '../components/PrezzoDinamico';
 export default function HubLayout({ 
   titolo, 
   categoria, 
@@ -337,32 +338,22 @@ const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
             </span>
           </div>
 
-          {/* BADGE PREZZO DINAMICO */}
-          <div style={{marginBottom:'12px', display:'flex', flexWrap:'wrap', gap:'8px'}}>
-            <span style={{
-              padding:'6px 14px', background:'linear-gradient(90deg,#f97316,#fb923c)',
-              color:'#fff', borderRadius:'20px', fontWeight:'bold', fontSize:'13px'
-            }}>
-              {/* Mostra range prezzo dalla categoria */}
-              {(() => {
-                const prezziHub = {
-                  cardiologi:'100€ – 150€', dentisti:'80€ – 180€', dermatologi:'90€ – 130€',
-                  psicologi:'60€ – 90€', ginecologi:'100€ – 140€', oculisti:'90€ – 130€',
-                  ortopedici:'100€ – 150€', nutrizionisti:'70€ – 110€',
-                  farmacie:'2€ – 90€', diagnostica:'15€ – 350€'
-                };
-                const ck = (v.categoria || '').toLowerCase();
-                for (const [k, val] of Object.entries(prezziHub)) {
-                  if (ck.includes(k.slice(0,-1))) return `Fascia prezzo: ${val}`;
-                }
-                return 'Fascia prezzo: 70€ – 150€';
-              })()}
-            </span>
-            <span style={{padding:'5px 14px', backgroundColor:'#6366f1', color:'#fff', borderRadius:'20px', fontWeight:'700', fontSize:'12px', border:'1px solid #4338ca'}}>
-              Richiedi preventivo esatto
-            </span>
-          </div>
-
+         {/* BADGE PREZZO DINAMICO - ORA REALE E VARIO */}
+<div style={{ marginBottom: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+  <PrezzoDinamico categoria={v.categoria} index={index} />
+  
+  <span style={{
+    padding: '5px 14px', 
+    backgroundColor: '#6366f1', 
+    color: '#fff', 
+    borderRadius: '20px', 
+    fontWeight: '700', 
+    fontSize: '12px', 
+    border: '1px solid #4338ca'
+  }}>
+    Richiedi preventivo esatto
+  </span>
+</div>
           {/* INDIRIZZO */}
           <div style={{display:'flex', alignItems:'center', gap:'6px', color:'#4b5563', fontSize:'14px', marginBottom:'14px', fontWeight:'500'}}>
             <span style={{fontSize:'16px', flexShrink:0}}>📍</span>
