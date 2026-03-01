@@ -51,7 +51,14 @@ useEffect(() => {
   const annunciPerPagina = 10;
 
 // ORA CALCOLA LE VARIABILI DERIVATE
-const sorgenteDati = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
+// FILTRO DI SICUREZZA: Anche se il server manda tutto, noi mostriamo solo la categoria corretta
+const radiceFiltro = (categoria || "").toLowerCase().substring(0, 4);
+const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
+
+const sorgenteDati = datiGrezzi.filter(item => {
+  if (!radiceFiltro) return true; // Se non c'è categoria, mostra tutto
+  return item.categoria?.toLowerCase().includes(radiceFiltro);
+});
 const listaUnica = Array.from(new Map(sorgenteDati.map(item => [item.id, item])).values());
 const totaleAnnunci = totaleDalServer || listaUnica.length;
 const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
