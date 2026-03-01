@@ -50,37 +50,28 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-// 1. Definiamo la categoria attuale
-const catPura = (categoria || "").toLowerCase();
-
-// 2. Prendiamo i dati disponibili
+// 1. Definiamo la categoria e puliamo i dati
+const radiceFiltro = (categoria || "").toLowerCase().substring(0, 4);
 const datiGrezzi = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
 
-// 3. FILTRO LOGICO: Se è "specialistiche", escludiamo farmacie, dentisti e diagnostica
+// 2. FILTRIAMO: se è "specialistiche", escludiamo farmacie e dentisti
 const listaFiltrata = datiGrezzi.filter(item => {
   const itemCat = item.categoria?.toLowerCase() || "";
-  
-  if (catPura.includes('specialistic') || catPura === 'specialisti') {
-    // Escludiamo le macro-categorie che hanno i loro hub
-    return !itemCat.includes('farmac') && 
-           !itemCat.includes('dentist') && 
-           !itemCat.includes('diagnost');
+  if (categoria?.includes('specialistic')) {
+    return !itemCat.includes('farmac') && !itemCat.includes('dentist') && !itemCat.includes('diagnost');
   }
-  
-  // Per tutte le altre (es. cardiologi), usiamo il filtro normale sulle prime 4 lettere
-  return itemCat.includes(catPura.substring(0, 4));
+  return itemCat.includes(radiceFiltro);
 });
 
-// 4. Creiamo la lista finale senza duplicati
 const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
 
-// 5. CALCOLIAMO IL TOTALE REALE (sovrascriviamo il 315 del server)
+// 3. LA RIGA CHIAVE: Forziamo l'uso della lunghezza della lista FILTRATA
+// Abbiamo rimosso "totaleDalServer ||" per evitare che il 315 sovrascriva il calcolo
 const totaleAnnunci = listaUnica.length; 
-const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 
+const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / annunciPerPagina));
 const inizio = (pagina - 1) * annunciPerPagina;
 const listaDaMostrare = listaUnica.slice(inizio, inizio + annunciPerPagina);
-
  useEffect(() => {
     // 1. Se abbiamo già i dati (da SSR o props statiche), usiamoli e fermiamoci.
     // Non mettiamo 'pagina' nelle dipendenze per evitare il freeze della mappa.
