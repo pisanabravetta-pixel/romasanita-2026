@@ -13,14 +13,13 @@ export default function GinecologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('ginecologi'); 
-      
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Cerca la radice 'gineco' sia in categoria che in specialista
-        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
-        .order('is_top', { ascending: false });
+        .or(`categoria.ilike.%${queryBusca.cat}%,nome.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+        .order('is_top', { ascending: false })
+        .range(0, 199);
       
       if (data) {
         setMedici(data);

@@ -13,15 +13,13 @@ export default function DermatologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('dermatologi'); 
-      
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // CERCA NELLA COLONNA SPECIALISTA (Infallibile)
-        .ilike('specialista', `%${queryBusca.spec}%`)
+        .or(`categoria.ilike.%${queryBusca.cat}%,nome.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
         .order('is_top', { ascending: false })
-      .range(0, 99); // <--- Aggiungi questo per caricarne 100 invece di fermarti al default
+        .range(0, 199);
       
       if (data) {
         setMedici(data);

@@ -13,14 +13,13 @@ export default function OrtopediciRoma() {
   useEffect(() => {
     async function fetchDocs() {
       const queryBusca = getDBQuery('ortopedici'); 
-      
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Cerca 'ortoped' ovunque per non perdere nessun annuncio
-        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
-        .order('is_top', { ascending: false });
+        .or(`categoria.ilike.%${queryBusca.cat}%,nome.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+        .order('is_top', { ascending: false })
+        .range(0, 199);
       
       if (data) {
         setMedici(data);

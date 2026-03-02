@@ -13,14 +13,14 @@ export default function CardiologiRoma() {
   useEffect(() => {
     async function fetchDocs() {
       // Query mirata: cerca esattamente 'cardiologo' nella colonna 'specialista'
-      const queryBusca = getDBQuery('cardiologi'); // Prende 'cardio' dal tuo seo-logic
+      const queryBusca = getDBQuery('cardiologi');
 const { data, error } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .ilike('specialista', `%${queryBusca.spec}%`) // Cerca 'cardio' ovunque
-  .order('is_top', { ascending: false })       // Metti i TOP in alto
-  .range(0, 99);                               // <--- Carica fino a 100 risultati
+  .or(`categoria.ilike.%${queryBusca.cat}%,nome.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+  .order('is_top', { ascending: false })
+  .range(0, 199);
       
       if (data) {
         setMedici(data);
