@@ -11,6 +11,7 @@ export default function GuidaCostoDenti() {
       <title>Quanto costa una pulizia dei denti a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Scopri i prezzi medi per l'igiene dentale professionale nei vari quartieri di Roma. Guida completa ai costi e alla scelta del dentista." />
         <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-pulizia-denti-roma" />
       </Head>
 
       <Navbar />

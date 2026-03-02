@@ -11,6 +11,7 @@ export default function GuidaRicercaSanitaria() {
        <title>Come trovare il servizio sanitario a Roma | Guida {dataCorrente}</title>
         <meta name="description" content="Guida pratica su come trovare farmacie, dentisti e specialisti nei quartieri di Roma. Scopri come semplificare la tua ricerca sanitaria locale." />
         <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/trovare-servizio-sanitario-roma" />
       </Head>
 
       {/* 2. PRIMA LA NAVBAR */}

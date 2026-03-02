@@ -11,6 +11,7 @@ export default function GuidaCostoOculistica() {
         <title>Quanto costa una visita oculistica a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Guida ai prezzi medi per una visita oculistica a Roma. Scopri i costi per il controllo della vista e del fondo oculare nei vari quartieri." />
         <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-visita-oculistica-roma" />
       </Head>
 
       <Navbar />

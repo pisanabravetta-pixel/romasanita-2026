@@ -11,6 +11,7 @@ export default function GuidaCostoRisonanza() {
         <title>Costo Risonanza Magnetica Roma | Prezzi {dataCorrente}</title>
         <meta name="description" content="Quanto costa una risonanza magnetica a Roma? Scoprilo nella guida ai prezzi per ginocchio, schiena e colonna nei centri privati." />
         <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-risonanza-magnetica-roma" />
       </Head>
 
       <Navbar />

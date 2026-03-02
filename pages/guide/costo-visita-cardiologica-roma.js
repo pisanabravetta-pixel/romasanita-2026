@@ -24,7 +24,8 @@ export default function GuidaCardiologia() {
       <Head>
         <title>Costo Visita Cardiologica Roma: Tariffe Private {dataCorrente}</title>
         <meta name="description" content={`Guida completa ai prezzi delle visite cardiologiche a Roma aggiornata a ${dataCorrente}. Trova cardiologi nei principali quartieri della città.`} />
-        <link rel="canonical" href="https://www.tuosito.com/guide/costo-visita-cardiologica-roma" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-visita-cardiologica-roma" />
+        <meta name="robots" content="max-image-preview:large" />
       </Head>
 
       <Navbar />

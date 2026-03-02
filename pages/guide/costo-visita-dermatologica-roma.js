@@ -10,6 +10,8 @@ export default function GuidaDermatologia() {
       <Head>
         <title>Quanto costa una visita dermatologica a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Guida completa ai prezzi della dermatologia a Roma. Scopri i costi medi per mappatura nei e visite specialistiche." />
+        <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-visita-dermatologica-roma" />
       </Head>
 
       <Navbar />

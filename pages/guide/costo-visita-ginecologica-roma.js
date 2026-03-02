@@ -11,6 +11,7 @@ export default function GuidaCostoGinecologia() {
         <title>Quanto costa una visita ginecologica a Roma? | Prezzi {dataCorrente}</title>
         <meta name="description" content="Guida ai prezzi medi per una visita ginecologica e pap-test a Roma. Scopri i costi nei vari quartieri e come scegliere lo specialista." />
         <meta name="robots" content="max-image-preview:large" />
+        <link rel="canonical" href="https://www.servizisalute.com/guide/costo-visita-ginecologica-roma" />
       </Head>
 
       <Navbar />
