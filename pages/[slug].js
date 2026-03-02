@@ -155,16 +155,18 @@ const [mounted, setMounted] = useState(false);
     const fetchData = async () => {
       try {
         setLoading(true);
-        // FIX: usa categoria completa, non troncata a 4 caratteri
-        const keyword = catEstratta.toLowerCase().trim();
+        // Usa getDBQuery per avere la radice corretta (es. 'cardiol' per cardiologi)
+        const { getDBQuery } = await import('../lib/seo-logic');
+        const qInfo = getDBQuery(catEstratta);
+        const radice = qInfo.cat || catEstratta.toLowerCase().trim();
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.ilike('categoria', `%${keyword}%`);
+        q = q.or(`categoria.ilike.%${radice}%,specialista.ilike.%${radice}%`);
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.ilike('zona', `%${zQuery}%`);
         }
-        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
-       setServizi(Array.isArray(data) ? data : []);
+        const { data, error } = await q.order('is_top', { ascending: false }).range(0, 199);
+        setServizi(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Errore fetch client:", err);
       } finally {
@@ -810,9 +812,12 @@ export async function getServerSideProps(context) {
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // 3. FILTRO CATEGORIA — usa la categoria pulita completa, senza troncamenti
-    const radice = catRicercata.toLowerCase().trim();
-    query = query.ilike('categoria', `%${radice}%`);
+    // 3. FILTRO CATEGORIA — usa getDBQuery per la radice corretta del DB
+    // es: "cardiologi" → radice "cardiol" che matcha "cardiologo" e "cardiologi"
+    const { getDBQuery } = require('../lib/seo-logic');
+    const qInfo = getDBQuery(catRicercata);
+    const radice = qInfo.cat || catRicercata.toLowerCase().trim();
+    query = query.or(`categoria.ilike.%${radice}%,specialista.ilike.%${radice}%`);
 
     // 4. FILTRO ZONA
     if (!isHub) {
