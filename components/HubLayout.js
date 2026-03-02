@@ -318,9 +318,12 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
       return (
 <div key={v.id} style={{
         maxWidth:'600px', margin:'20px auto', backgroundColor:'#fff',
-        borderRadius:'18px', boxShadow: v.is_top ? `0 4px 20px ${colore}33` : '0 2px 16px rgba(44,82,130,0.10)',
+        borderRadius:'18px',
+        boxShadow: v.is_top
+          ? `0 6px 28px ${colore}55, 0 2px 8px ${colore}22`
+          : `0 4px 18px ${colore}30, 0 1px 4px ${colore}15`,
         fontFamily:'Arial,sans-serif',
-        border: v.is_top ? `2px solid ${colore}` : '1.5px solid #dde6f0',
+        border: v.is_top ? `2.5px solid ${colore}` : `1.5px solid ${colore}60`,
         overflow:'hidden', width:'100%', boxSizing:'border-box'
       }}>
 
@@ -402,7 +405,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
               backgroundColor:'#fffbeb', padding:'7px 10px', borderRadius:'8px',
               border:'1px solid #fde68a'
             }}>
-              ⚠️ I prezzi sono indicativi. Per conferma e prenotazione contatta tramite 📞 o 💬
+              ⚠️ I prezzi sono indicativi. Per conferma e prenotazioni contatta tramite Telefono e WhatsApp 👇
             </p>
             <div style={{display:'flex', gap:'8px'}}>
               <a

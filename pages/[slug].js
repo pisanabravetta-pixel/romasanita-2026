@@ -427,8 +427,12 @@ if (zonaInSlug === 'roma') {
  return (
       <div key={v.id} style={{
         maxWidth:'600px', margin:'20px auto', backgroundColor:'#fff',
-        borderRadius:'18px', boxShadow:'0 2px 16px rgba(44,82,130,0.10)',
-        fontFamily:'Arial,sans-serif', border:'1.5px solid #dde6f0',
+        borderRadius:'18px',
+        boxShadow: v.is_top
+          ? `0 6px 28px ${tema.primario}55, 0 2px 8px ${tema.primario}22`
+          : `0 4px 18px ${tema.primario}30, 0 1px 4px ${tema.primario}15`,
+        fontFamily:'Arial,sans-serif',
+        border: v.is_top ? `2.5px solid ${tema.primario}` : `1.5px solid ${tema.primario}60`,
         overflow:'hidden'
       }}>
         {/* HEADER CARD */}
@@ -492,7 +496,7 @@ if (zonaInSlug === 'roma') {
               backgroundColor:'#fffbeb', padding:'7px 10px', borderRadius:'8px',
               border:'1px solid #fde68a'
             }}>
-              ⚠️ I prezzi sono indicativi. Per conferma e prenotazione contatta tramite 📞 o 💬
+              ⚠️ I prezzi sono indicativi. Per conferma e prenotazioni contatta tramite Telefono e WhatsApp 👇
             </p>
             <div style={{display:'flex', gap:'8px'}}>
               <a href={`tel:${v.telefono}`} style={{
