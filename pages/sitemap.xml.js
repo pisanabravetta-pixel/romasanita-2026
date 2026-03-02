@@ -3,21 +3,9 @@ import { specialisticheTop, quartieriTop, getDBQuery } from '../lib/seo-logic';
 
 const BASE_URL = 'https://www.servizisalute.com';
 
-// Pagine quartiere senza annunci — escluse dalla sitemap + noindex nel codice
-// Aggiornato al 2026-03 da analisi CSV reale
-export const PAGINE_VUOTE = new Set([
-  'cardiologi-roma-ostia',
-  'dermatologi-roma-ostia',
-  'dermatologi-roma-tiburtina',
-  'dermatologi-roma-montesacro',
-  'ginecologi-roma-tiburtina',
-  'nutrizionisti-roma-aurelio',
-  'nutrizionisti-roma-montesacro',
-  'oculisti-roma-ostia',
-  'oculisti-roma-montesacro',
-  'ortopedici-roma-montesacro',
-  'psicologi-roma-parioli',
-]);
+// Aggiornato al 2026-03 — tutte le pagine quartiere sono incluse nella sitemap
+// anche quelle attualmente con pochi annunci, così Google le indicizza subito
+// e quando aggiungi nuovi annunci vengono trovati automaticamente
 
 function generateSiteMap(pagine) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -99,16 +87,12 @@ export async function getServerSideProps({ res }) {
     }
   });
 
-  // 5. Pagine quartiere — ESCLUSE quelle vuote
+  // 5. Pagine quartiere — TUTTE incluse, anche quelle con 0 annunci
+  // così quando vengono aggiunti nuovi annunci Google le trova già indicizzate
   const pagineQuartieri = [];
   specialisticheTop.forEach(cat => {
     quartieriTop.forEach(q => {
       const slugQuartiere = `/${cat}-roma-${q.s}`;
-      const slugKey = `${cat}-roma-${q.s}`;
-
-      // Salta le pagine senza annunci
-      if (PAGINE_VUOTE.has(slugKey)) return;
-
       pagineQuartieri.push({ url: slugQuartiere, priority: 0.7, changefreq: 'weekly' });
 
       const countQ = annunciApprovati.filter(a =>

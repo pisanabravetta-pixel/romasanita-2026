@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
 import { getDBQuery, buildCategoriaOr, quartieriTop, seoData } from '../lib/seo-logic';
-import { PAGINE_VUOTE } from './sitemap.xml';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
@@ -222,10 +221,6 @@ if (zonaInSlug === 'roma') {
       {/* 3. POI IL HEAD (Che non si vede graficamente) */}
       <Head>
         <title>{meta.titolo ? `${meta.titolo} (${dataStringa})` : `${titoloPulito} Roma ${quartiereNome}`} | ServiziSalute</title>
-        {/* noindex su pagine quartiere senza annunci */}
-        {PAGINE_VUOTE.has(slugAttivo) && (
-          <meta name="robots" content="noindex, follow" />
-        )}
           <meta 
             name="description" 
             content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
