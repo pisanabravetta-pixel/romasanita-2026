@@ -10,6 +10,7 @@ import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
 import PrezzoDinamico from '../components/PrezzoDinamico';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { trackChiama, trackWhatsApp, trackMappa, trackScheda } from '../lib/analytics';
 const prezziIndicativi = {
   farmacie: [ { servizio: "Misurazione pressione", min: 2, max: 5 } ],
   dentisti: [ { servizio: "Visita odontoiatrica", min: 50, max: 100 } ],
@@ -225,7 +226,7 @@ if (zonaInSlug === 'roma') {
             name="description" 
             content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
           />
-          <link rel="canonical" href={`https://www.servizisalute.com/${slug}`} />
+          <link rel="canonical" href={`https://www.servizisalute.com/${slugAttivo}`} />
           
           <link rel="preconnect" href="https://basemaps.cartocdn.com" />
           <link 
@@ -277,41 +278,82 @@ if (zonaInSlug === 'roma') {
     I migliori professionisti a {quartiereNome || 'Roma'} aggiornati a <span style={{ color: colore }}>{dataStringa}</span>
   </p>
 </div>
-{/* TESTO SEO INTELLIGENTE POTENZIATO */}
+{/* TESTO SEO INTELLIGENTE POTENZIATO — unico per quartiere + categoria */}
       <div style={{ marginBottom: '25px', padding: '0 10px', color: '#475569', fontSize: '16px', lineHeight: '1.7' }}>
         {(() => {
-          const slugCorrente = slug?.toLowerCase() || '';
+          const slugCorrente = (slugAttivo || '').toLowerCase();
           const checkFarmacia = slugCorrente.includes('farmac') || (meta.cat && meta.cat.toLowerCase().includes('farmac'));
-          const nomePosto = checkFarmacia ? 'Il presidio farmaceutico' : 'L\'Hub sanitario';
-          const tipoServizio = checkFarmacia ? 'farmaci di turno' : 'uno specialista';
 
-          const testiUrgenza = {
-            'prati': `Cerchi ${checkFarmacia ? 'una farmacia di turno' : 'un\'urgenza medica'} a Prati? Il quartiere offre standard d'eccellenza: trovi qui i professionisti pronti a risponderti su WhatsApp per assistenza immediata.`,
-            'eur': `${nomePosto} dell'EUR è attivo anche per le emergenze. Se cerchi ${tipoServizio} o assistenza rapida nel quadrante Sud di Roma, consulta la nostra lista con contatti diretti.`,
-            'ostia': `Emergenza sanitaria sul litorale? Non serve arrivare a Roma centro. Trova subito i medici e le farmacie aperte ora a Ostia Lido con posizione GPS e WhatsApp.`
+          // ─── Testi di urgenza specifici per ogni quartiere ───────────────────
+          const testiQuartiere = {
+            'prati': {
+              urgenza: `Hai bisogno di assistenza sanitaria a Prati? Il quartiere è uno dei meglio serviti di Roma: trovi qui professionisti disponibili anche in giornata, raggiungibili direttamente su WhatsApp.`,
+              dettaglio: `Prati si trova a due passi dal centro storico e dal Vaticano. L'alta concentrazione di studi medici e ambulatori privati lo rende una delle zone più competitive per prezzi e qualità delle prestazioni sanitarie nella Capitale.`
+            },
+            'eur': {
+              urgenza: `Cerchi un professionista sanitario all'EUR? Il quadrante Sud di Roma ospita numerose strutture private di qualità, facilmente raggiungibili dalla Laurentina e dalla Cristoforo Colombo.`,
+              dettaglio: `L'EUR è un quartiere moderno con un'ottima dotazione di servizi privati. I centri medici presenti offrono prestazioni in tempi brevi rispetto alle strutture pubbliche, con parcheggi disponibili nelle vicinanze.`
+            },
+            'parioli': {
+              urgenza: `Nei Parioli la densità di specialisti privati è tra le più alte di Roma. Trova il professionista più adatto a te nella zona nord della Capitale, con contatti diretti e possibilità di prenotazione rapida.`,
+              dettaglio: `Il quartiere Parioli è storicamente noto per l'alta qualità dell'offerta sanitaria privata. Studi medici di livello elevato si concentrano lungo via Po, viale Parioli e le vie limitrofe.`
+            },
+            'centro-storico': {
+              urgenza: `Emergenza o visita urgente nel Centro Storico di Roma? Nonostante il traffico, molti ambulatori del centro sono facilmente raggiungibili e offrono appuntamenti in tempi rapidi.`,
+              dettaglio: `Il Centro Storico di Roma ospita strutture sanitarie private storicamente radicate nel tessuto urbano. Molte sono aperte anche il sabato mattina per rispondere alla domanda dei residenti e dei turisti.`
+            },
+            'san-giovanni': {
+              urgenza: `San Giovanni è uno dei quartieri più dinamici per i servizi sanitari privati a Roma. Trova subito il professionista più vicino alla stazione o lungo la Tuscolana.`,
+              dettaglio: `La zona di San Giovanni, facilmente raggiungibile con la metro A, concentra numerosi studi medici e centri diagnostici tra via Appia Nuova, via Tuscolana e le vie adiacenti alla Basilica.`
+            },
+            'monteverde': {
+              urgenza: `Abiti a Monteverde e cerchi assistenza sanitaria vicino a casa? Il quartiere dispone di una rete consolidata di medici specialisti e farmacie nei pressi di via Ozanam e Circonvallazione Gianicolense.`,
+              dettaglio: `Monteverde Vecchio e Nuovo sono quartieri residenziali con un'alta qualità della vita. I servizi sanitari privati sono ben distribuiti sul territorio, con buona copertura anche nei giorni festivi.`
+            },
+            'ostia': {
+              urgenza: `🏖️ Cerchi assistenza sanitaria a Ostia Lido? Non devi andare fino a Roma centro: il litorale dispone di ambulatori privati, farmacie H24 e specialisti direttamente sul posto.`,
+              dettaglio: `Ostia è il principale centro balneare di Roma e dispone di una rete sanitaria privata in crescita. Durante la stagione estiva i tempi di attesa aumentano: prenota in anticipo tramite WhatsApp per garantirti un appuntamento.`
+            },
+            'tiburtina': {
+              urgenza: `Zona Tiburtina: una delle aree più popolose di Roma Est. Trova rapidamente specialisti e farmacie lungo via Tiburtina, facilmente raggiungibili con la metro B e i principali bus.`,
+              dettaglio: `Il quadrante Tiburtino ospita sia strutture pubbliche come il policlinico che numerose cliniche e studi privati. I costi delle prestazioni sono generalmente competitivi rispetto al centro città.`
+            },
+            'aurelio': {
+              urgenza: `Quartiere Aurelio: tra Aurelia e Pineta Sacchetti trovi un'ottima offerta di servizi sanitari privati. Molti studi sono raggiungibili con i mezzi dalla stazione di Valle Aurelia (metro A).`,
+              dettaglio: `L'Aurelio è un quartiere residenziale ben strutturato, con studi medici distribuiti tra via Aurelia, via Gregorio VII e via Angelo Emo. Buona copertura per specialisti ambulatoriali e farmacie di zona.`
+            },
+            'montesacro': {
+              urgenza: `Montesacro e Talenti: la zona nord-est di Roma offre numerosi servizi sanitari privati comodi per i residenti della Nomentana e del Raccordo.`,
+              dettaglio: `Montesacro è un quartiere residenziale tranquillo con buona dotazione di studi medici. La vicinanza alla Nomentana e all'asse Jonio–Talenti rende facilmente accessibili i principali ambulatori privati della zona.`
+            }
           };
 
-          const chiaveQuartiere = Object.keys(testiUrgenza).find(q => slugCorrente.includes(q));
-          const introUrgenza = chiaveQuartiere ? testiUrgenza[chiaveQuartiere] : '';
+          const chiaveQuartiere = Object.keys(testiQuartiere).find(q => slugCorrente.includes(q));
+          const testoZona = chiaveQuartiere ? testiQuartiere[chiaveQuartiere] : null;
 
           return (
-            <p>
-              {introUrgenza && (
-                <span style={{ display: 'block', marginBottom: '12px', color: '#b91c1c', fontWeight: '700' }}>
-                  🚨 {introUrgenza}
-                </span>
+            <>
+              {testoZona && (
+                <p style={{ marginBottom: '12px' }}>
+                  <span style={{ display: 'block', marginBottom: '8px', color: '#0f172a', fontWeight: '700' }}>
+                    {testoZona.urgenza}
+                  </span>
+                  <span style={{ color: '#475569' }}>{testoZona.dettaglio}</span>
+                </p>
               )}
-              Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere. 
-              {checkFarmacia && (
-                <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
-              )}
-              {meta.cat.includes('psico') && (
-                <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
-              )}
-              {!checkFarmacia && !meta.cat.includes('psico') && (
-                <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
-              )}
-            </p>
+              <p>
+                Stai cercando <strong>{meta.nomeSemplice} a Roma {meta.zona}</strong>? In questa pagina trovi i contatti diretti e la posizione dei professionisti e delle strutture disponibili oggi nel quartiere.
+                {checkFarmacia && (
+                  <span> Ti consigliamo di contattare telefonicamente la struttura per verificare la disponibilità immediata di farmaci o l'eventuale turno notturno in corso a {meta.zona}.</span>
+                )}
+                {meta.cat && meta.cat.includes('psico') && (
+                  <span> Puoi contattare direttamente i professionisti tramite WhatsApp per richiedere un primo colloquio conoscitivo o verificare la disponibilità per una seduta a {meta.zona}.</span>
+                )}
+                {!checkFarmacia && !(meta.cat && meta.cat.includes('psico')) && (
+                  <span> Visualizza la mappa per trovare il centro più vicino a te e chiama per prenotare una visita o richiedere informazioni su costi e orari.</span>
+                )}
+              </p>
+            </>
           );
         })()}
       </div>
@@ -482,6 +524,7 @@ if (zonaInSlug === 'roma') {
           <a
             href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
             target="_blank" rel="noopener noreferrer"
+            onClick={() => trackMappa(v.nome || v.titolo, catSlug, v.zona)}
             style={{
               flexShrink:0, width:'110px', height:'80px', borderRadius:'10px',
               overflow:'hidden', display:'block', border:'1.5px solid #dde6f0',
@@ -498,7 +541,10 @@ if (zonaInSlug === 'roma') {
               ⚠️ I prezzi sono indicativi. Per conferma e prenotazioni contatta tramite Telefono e WhatsApp 👇
             </p>
             <div style={{display:'flex', gap:'8px'}}>
-              <a href={`tel:${v.telefono}`} style={{
+              <a
+                href={`tel:${v.telefono}`}
+                onClick={() => trackChiama(v.nome || v.titolo, catSlug, v.zona)}
+                style={{
                 flex:1, padding:'10px 6px', backgroundColor:'#2563eb', color:'#fff',
                 borderRadius:'9px', textAlign:'center', fontWeight:'800',
                 textDecoration:'none', fontSize:'13px', display:'flex',
@@ -509,7 +555,7 @@ if (zonaInSlug === 'roma') {
               <a
                 href={waNumber ? `https://wa.me/39${waNumber}?text=${encodeURIComponent('Salve, la contatto perché ho visto il suo annuncio su ServiziSalute.com')}` : '#'}
                 target="_blank" rel="noopener noreferrer"
-                onClick={(e) => { if(!waNumber){ e.preventDefault(); alert('WhatsApp non disponibile'); } }}
+                onClick={(e) => { if(!waNumber){ e.preventDefault(); alert('WhatsApp non disponibile'); } else { trackWhatsApp(v.nome || v.titolo, catSlug, v.zona); } }}
                 style={{
                   flex:1, padding:'10px 6px', backgroundColor:'#25d366', color:'#fff',
                   borderRadius:'9px', textAlign:'center', fontWeight:'800',
@@ -535,7 +581,10 @@ if (zonaInSlug === 'roma') {
         {/* PULSANTE SCHEDA FULL-WIDTH */}
         <div style={{padding:'0 20px 20px 20px'}}>
           {v.slug ? (
-            <a href={linkScheda} style={{
+            <a
+              href={linkScheda}
+              onClick={() => trackScheda(v.nome || v.titolo, catSlug, v.zona)}
+              style={{
               display:'flex', alignItems:'center', justifyContent:'center', gap:'8px',
               width:'100%', padding:'14px', boxSizing:'border-box',
               backgroundColor:'#f8fafc', color:'#1a2b4a', border:'1.5px solid #dde6f0',

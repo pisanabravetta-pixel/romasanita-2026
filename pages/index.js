@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import UltimiAnnunci from '../components/UltimiAnnunci';
 import ServiziRichiesti from '../components/ServiziRichiesti';
+import { trackCerca, trackCategoria } from '../lib/analytics';
 
 export default function Home() {
   const [ricerca, setRicerca] = useState(""); 
@@ -44,6 +45,9 @@ const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Lug
     alert("Per favore, scrivi cosa stai cercando o seleziona una categoria.");
     return;
   }
+
+  // Traccia l'evento di ricerca in GA4
+  trackCerca(termineDaCercare, zonaScelta);
 
   const cosa = termineDaCercare.toLowerCase();
   const zonaKebab = zonaScelta.toLowerCase().replace(/\s+/g, '-');
@@ -499,6 +503,7 @@ minHeight: isMobile ? '160px' : '80px'
   href={elencoCategorie[idCat].l} 
   className="cat-content"
   aria-label={`Sfoglia categoria ${elencoCategorie[idCat].n}`}
+  onClick={() => trackCategoria(elencoCategorie[idCat].n)}
 >
   <div className="cat-circle-big" style={{ backgroundColor: elencoCategorie[idCat].bg, border: `2px solid ${elencoCategorie[idCat].bc}` }}>
     {elencoCategorie[idCat].i}
@@ -519,6 +524,7 @@ minHeight: isMobile ? '160px' : '80px'
       href={item.l} 
       className="box-pc-original" 
       aria-label={`Sfoglia categoria ${item.n}`}
+      onClick={() => trackCategoria(item.n)}
     >
       <div className="icon-pc-circle" style={{ backgroundColor: item.bg, border: `1px solid ${item.bc}` }}>{item.i}</div>
       <span className="label-pc-text">{item.n}</span>

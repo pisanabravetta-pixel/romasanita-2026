@@ -8,6 +8,7 @@ import { supabase } from '../lib/supabaseClient';
 import Script from 'next/script';
 import ListaPrezzi from '../components/ListaPrezzi';
 import PrezzoDinamico from '../components/PrezzoDinamico';
+import { trackChiama, trackWhatsApp, trackMappa, trackScheda } from '../lib/analytics';
 export default function HubLayout({ 
   titolo, 
   categoria, 
@@ -392,6 +393,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
           <a
             href={`https://www.google.it/maps?q=${v.lat},${v.lng}`}
             target="_blank" rel="noopener noreferrer"
+            onClick={() => trackMappa(v.nome || v.titolo, categoria, v.zona)}
             style={{
               flexShrink:0, width:'110px', height:'80px', borderRadius:'10px',
               overflow:'hidden', display:'block', border:'1.5px solid #dde6f0',
@@ -410,7 +412,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
             <div style={{display:'flex', gap:'8px'}}>
               <a
                 href={`tel:${v.telefono}`}
-                onClick={() => window.gtag?.('event','click_telefono',{'event_label': v.nome})}
+                onClick={() => trackChiama(v.nome || v.titolo, categoria, v.zona)}
                 style={{
                   flex:1, padding:'10px 6px', backgroundColor:'#2563eb', color:'#fff',
                   borderRadius:'9px', textAlign:'center', fontWeight:'800',
@@ -426,7 +428,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
                 rel="noopener noreferrer"
                 onClick={(e) => {
                   if(!v.whatsapp){ e.preventDefault(); alert('WhatsApp non disponibile'); }
-                  else { window.gtag?.('event','click_whatsapp',{'event_label': v.nome}); }
+                  else { trackWhatsApp(v.nome || v.titolo, categoria, v.zona); }
                 }}
                 style={{
                   flex:1, padding:'10px 6px', backgroundColor:'#25d366', color:'#fff',
@@ -459,7 +461,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
           {v.slug ? (
             <a
               href={linkScheda}
-              onClick={() => window.gtag?.('event','click_scheda',{'event_label': v.nome})}
+              onClick={() => trackScheda(v.nome || v.titolo, categoria, v.zona)}
               style={{
                 display:'flex', alignItems:'center', justifyContent:'center', gap:'8px',
                 width:'100%', padding:'14px', boxSizing:'border-box',

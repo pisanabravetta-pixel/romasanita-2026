@@ -1,20 +1,28 @@
 import '../styles/globals.css';
 import Script from 'next/script';
 
-function MyApp({ Component, pageProps }) {
-  const googleCode = "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-2CNB67FYJG');";
+const GA_ID = 'G-2CNB67FYJG';
 
+function MyApp({ Component, pageProps }) {
   return (
     <>
-      {/* Script principale di Google Analytics */}
+      {/* ── Google Analytics 4 ── caricato su tutte le pagine */}
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-2CNB67FYJG"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
-      {/* Configurazione dello script */}
       <Script id="google-analytics" strategy="afterInteractive">
-        {googleCode}
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}', {
+            send_page_view: true,
+            cookie_flags: 'SameSite=None;Secure'
+          });
+        `}
       </Script>
+
       <Component {...pageProps} />
     </>
   );
