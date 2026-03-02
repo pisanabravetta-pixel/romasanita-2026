@@ -39,8 +39,10 @@ export default function HubLayout({
 const [serviziRealTime, setServiziRealTime] = useState([]);
   const [loadingRealTime, setLoadingRealTime] = useState(true);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
+  // useRef per evitare loop: traccia se abbiamo già caricato i dati
+  const datiCaricati = React.useRef(false);
 
-// Aggiungi questo subito sotto per leggere la pagina dall'URL
+// Leggi pagina dall'URL
 useEffect(() => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
@@ -48,48 +50,60 @@ useEffect(() => {
     setPagina(p);
   }
 }, []);
+
   const annunciPerPagina = 10;
 
-// ─── EFFETTO PRINCIPALE: dati da props o fetch filtrata per categoria ───────
+// ─── EFFETTO: quando medici arriva dal padre (async), aggiorna lo state ──────
 useEffect(() => {
-  // CASO 1: dati già pronti passati come props dal componente padre
-  if (datiIniziali && datiIniziali.length > 0) {
-    setServiziRealTime(datiIniziali);
-    setLoadingRealTime(false);
-    return;
-  }
-  if (medici && medici.length > 0) {
+  if (medici && medici.length > 0 && !datiCaricati.current) {
+    datiCaricati.current = true;
     setServiziRealTime(medici);
     setLoadingRealTime(false);
-    return;
   }
-  // CASO 2: nessun dato passato → fetch con filtro categoria COMPLETO (non troncato)
+}, [medici]); // dipende solo da medici, non ricrea loop
+
+// ─── EFFETTO: se non arrivano medici dal padre, fai fetch autonoma ───────────
+useEffect(() => {
   if (!categoria) {
     setLoadingRealTime(false);
     return;
   }
-  async function fetchNuoviMedici() {
-    try {
-      setLoadingRealTime(true);
-      const catFiltro = categoria.toLowerCase().replace('-roma', '').trim();
-      const { data, error } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('approvato', true)
-        .ilike('categoria', `%${catFiltro}%`)
-        .order('is_top', { ascending: false })
-        .range(0, 199);
-      if (error) throw error;
-      setServiziRealTime(data || []);
-    } catch (err) {
-      console.error('Errore fetch Hub:', err);
-      setServiziRealTime([]);
-    } finally {
+  // Se i dati arrivano già dal padre (medici), non fare fetch autonoma
+  // Aspettiamo 300ms: se medici è ancora vuoto allora fetch autonoma
+  const timer = setTimeout(() => {
+    if (datiCaricati.current) return; // già caricati da medici prop
+    if (datiIniziali && datiIniziali.length > 0) {
+      datiCaricati.current = true;
+      setServiziRealTime(datiIniziali);
       setLoadingRealTime(false);
+      return;
     }
-  }
-  fetchNuoviMedici();
-}, [categoria, medici, datiIniziali]);
+    // Fetch autonoma con filtro categoria completo
+    async function fetchNuoviMedici() {
+      try {
+        setLoadingRealTime(true);
+        const catFiltro = categoria.toLowerCase().replace('-roma', '').trim();
+        const { data, error } = await supabase
+          .from('annunci')
+          .select('*')
+          .eq('approvato', true)
+          .ilike('categoria', `%${catFiltro}%`)
+          .order('is_top', { ascending: false })
+          .range(0, 199);
+        if (error) throw error;
+        datiCaricati.current = true;
+        setServiziRealTime(data || []);
+      } catch (err) {
+        console.error('Errore fetch Hub:', err);
+        setServiziRealTime([]);
+      } finally {
+        setLoadingRealTime(false);
+      }
+    }
+    fetchNuoviMedici();
+  }, 300);
+  return () => clearTimeout(timer);
+}, [categoria]); // solo categoria: nessun loop
 
 // ─── LISTA UNICA + PAGINAZIONE ───────────────────────────────────────────────
 const listaUnica = Array.from(new Map(serviziRealTime.map(item => [item.id, item])).values());
