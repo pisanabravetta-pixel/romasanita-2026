@@ -66,6 +66,7 @@ return (
       medici={annunci}
       loading={loading}
       titolo="Visite Specialistiche"
+      categoria="visite-specialistiche"
       colore="#7c3aed" 
       testoCTA="Sei un Medico Specialista a Roma?"
       testoTopBar="👨‍⚕️ VISITE MEDICHE SPECIALISTICHE A ROMA — AGGIORNATE A GENNAIO 2026"

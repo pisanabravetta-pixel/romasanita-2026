@@ -155,12 +155,13 @@ const [mounted, setMounted] = useState(false);
     const fetchData = async () => {
       try {
         setLoading(true);
-        const keyword = catEstratta.toLowerCase().substring(0, 4);
+        // FIX: usa categoria completa, non troncata a 4 caratteri
+        const keyword = catEstratta.toLowerCase().trim();
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.or(`categoria.ilike.%${keyword}%,nome.ilike.%${keyword}%`);
+        q = q.ilike('categoria', `%${keyword}%`);
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
-          q = q.or(`zona.ilike.%${zQuery}%,slug.ilike.%${zonaEstratta}%`);
+          q = q.ilike('zona', `%${zQuery}%`);
         }
         const { data, error } = await q.order('is_top', { ascending: false }).range(0, 99);
        setServizi(Array.isArray(data) ? data : []);
@@ -809,11 +810,8 @@ export async function getServerSideProps(context) {
       .select('*', { count: 'exact' })
       .eq('approvato', true);
 
-    // 3. LOGICA RADICE
-    let radice = catRicercata.toLowerCase();
-    if (radice.endsWith('i')) radice = radice.slice(0, -1);
-    if (radice.length > 9) radice = radice.substring(0, 10); 
-
+    // 3. FILTRO CATEGORIA — usa la categoria pulita completa, senza troncamenti
+    const radice = catRicercata.toLowerCase().trim();
     query = query.ilike('categoria', `%${radice}%`);
 
     // 4. FILTRO ZONA

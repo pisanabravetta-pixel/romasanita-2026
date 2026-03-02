@@ -36,8 +36,8 @@ export default function HubLayout({
   const dataStringa = `${meseCorrente} ${annoCorrente}`;
   const titoloPulito = (titolo || "").split(" Roma")[0].split(" a Roma")[0].trim();
   // DEFINISCI SEMPRE QUESTI PER PRIMI
-const [serviziRealTime, setServiziRealTime] = useState(datiIniziali?.length > 0 ? datiIniziali : (medici || []));
-  const [loadingRealTime, setLoadingRealTime] = useState(datiIniziali?.length > 0 ? false : true);
+const [serviziRealTime, setServiziRealTime] = useState([]);
+  const [loadingRealTime, setLoadingRealTime] = useState(true);
   const [pagina, setPagina] = useState(paginaIniziale || 1);
 
 // Aggiungi questo subito sotto per leggere la pagina dall'URL
@@ -50,69 +50,54 @@ useEffect(() => {
 }, []);
   const annunciPerPagina = 10;
 
-// 1. Usiamo useMemo per evitare crash in fase di Build/SSR
-const listaFiltrata = React.useMemo(() => {
-  // CORREZIONE: Usiamo solo le variabili esistenti (serviziRealTime o medici)
-  const sorgente = (serviziRealTime && serviziRealTime.length > 0) ? serviziRealTime : (medici || []);
-  
-  if (!sorgente || sorgente.length === 0) return [];
-
-  const catBassa = (categoria || "").toLowerCase();
-  
-  return sorgente.filter(item => {
-    if (!item) return false;
-    const itemCat = (item.categoria || "").toLowerCase();
-    
-    // Se siamo nella pagina specialisti, filtriamo via farmacie, dentisti e diagnostica
-    if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
-      return itemCat.includes('specialistic') && 
-             !itemCat.includes('farmac') && 
-             !itemCat.includes('dentist') && 
-             !itemCat.includes('diagnost');
-    }
-    
-    // Altrimenti usiamo la radice delle prime 4 lettere (es. "card" per cardiologi)
-    const radice = catBassa.substring(0, 4);
-    return radice ? itemCat.includes(radice) : true;
-  });
-}, [serviziRealTime, medici, categoria]); // Rimosso 'servizi' che non esiste
-
-// 2. Calcolo dei conteggi basato sulla lista filtrata (90 o 126, MAI 315)
-const listaUnica = Array.from(new Map(listaFiltrata.map(item => [item.id, item])).values());
-const totaleAnnunci = listaUnica.length; 
-const perPagina = annunciPerPagina || 10;
-const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / perPagina));
-const inizio = (pagina - 1) * perPagina;
-const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
-// 3. L'useEffect con le chiusure sistemate
+// ─── EFFETTO PRINCIPALE: dati da props o fetch filtrata per categoria ───────
 useEffect(() => {
-  // Se abbiamo già i dati e non sono quelli "sporchi" del server, possiamo fermarci
-  if ((medici && medici.length > 0 && medici.length < 300) || (datiIniziali && datiIniziali.length > 0 && datiIniziali.length < 300)) {
+  // CASO 1: dati già pronti passati come props dal componente padre
+  if (datiIniziali && datiIniziali.length > 0) {
+    setServiziRealTime(datiIniziali);
     setLoadingRealTime(false);
-    return; 
+    return;
   }
-
+  if (medici && medici.length > 0) {
+    setServiziRealTime(medici);
+    setLoadingRealTime(false);
+    return;
+  }
+  // CASO 2: nessun dato passato → fetch con filtro categoria COMPLETO (non troncato)
+  if (!categoria) {
+    setLoadingRealTime(false);
+    return;
+  }
   async function fetchNuoviMedici() {
     try {
       setLoadingRealTime(true);
+      const catFiltro = categoria.toLowerCase().replace('-roma', '').trim();
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
+        .ilike('categoria', `%${catFiltro}%`)
         .order('is_top', { ascending: false })
-        .range(0, 399); 
-
+        .range(0, 199);
       if (error) throw error;
       setServiziRealTime(data || []);
     } catch (err) {
-      console.error("Errore fetch Hub:", err);
+      console.error('Errore fetch Hub:', err);
+      setServiziRealTime([]);
     } finally {
       setLoadingRealTime(false);
     }
   }
-
   fetchNuoviMedici();
-}, [categoria]); // Chiude l'useEffect correttamente
+}, [categoria, medici, datiIniziali]);
+
+// ─── LISTA UNICA + PAGINAZIONE ───────────────────────────────────────────────
+const listaUnica = Array.from(new Map(serviziRealTime.map(item => [item.id, item])).values());
+const totaleAnnunci = listaUnica.length;
+const perPagina = annunciPerPagina || 10;
+const totalePagine = Math.max(1, Math.ceil(totaleAnnunci / perPagina));
+const inizio = (pagina - 1) * perPagina;
+const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.L === 'undefined' || !listaDaMostrare || listaDaMostrare.length === 0) {
       return;
