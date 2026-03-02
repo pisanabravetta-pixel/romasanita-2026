@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { trackChiama, trackWhatsApp } from '../lib/analytics';
 
 export default function UltimiAnnunci() {
 const annunci = [
@@ -68,12 +69,13 @@ const annunci = [
               <small style={{ color: '#065f46', fontWeight: '900', display: 'block' }}>{annunci[idx].cat}</small>
               <h3 className="titolo-card-mobile">{annunci[idx].title}</h3>
               <div style={{ display: 'flex', gap: '10px' }}>
-<a href={'tel:' + annunci[idx].tel} className="btn-chiama-mobile" aria-label={'Chiama ' + annunci[idx].title}>Chiama</a>
+<a href={'tel:' + annunci[idx].tel} onClick={() => trackChiama(annunci[idx].title, '', 'homepage')} className="btn-chiama-mobile" aria-label={'Chiama ' + annunci[idx].title}>Chiama</a>
     <a 
   href={getWaLink(annunci[idx])} 
   target="_blank" 
   rel="noreferrer" 
   aria-label={`Contatta ${annunci[idx].title} su WhatsApp`}
+  onClick={() => trackWhatsApp(annunci[idx].title, '', 'homepage')}
   className="btn-wa-mobile"
 >
   <svg 
@@ -105,12 +107,13 @@ const annunci = [
                 <small style={{ color: '#065f46', fontWeight: '900', fontSize: '10px' }}>{ann.cat}</small>
                <h3 className="titolo-card-pc">{ann.title}</h3>
                 <div style={{ display: 'flex', gap: '5px', marginTop: 'auto' }}>
-<a href={'tel:' + ann.tel} className="btn-chiama-pc" aria-label={'Chiama ' + ann.title}>Chiama</a>
+<a href={'tel:' + ann.tel} onClick={() => trackChiama(ann.title, '', 'homepage')} className="btn-chiama-pc" aria-label={'Chiama ' + ann.title}>Chiama</a>
             <a 
   href={getWaLink(ann)} 
   target="_blank" 
   rel="noreferrer" 
   aria-label={`Contatta ${ann.title} su WhatsApp`}
+  onClick={() => trackWhatsApp(ann.title, '', 'homepage')}
   className="btn-wa-pc"
 >
   <svg 

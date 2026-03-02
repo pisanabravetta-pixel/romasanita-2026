@@ -5,6 +5,7 @@ import Script from "next/script";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { supabase } from "../../lib/supabaseClient";
+import { trackChiama, trackWhatsApp, trackMappa } from "../../lib/analytics";
 
 export default function SchedaProfessionale() {
   const router = useRouter();
@@ -281,9 +282,17 @@ Informazioni su {dato.nome} a Roma {nomeZona}
           </div>
 
           <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginBottom: '40px' }}>
-            <a href={`tel:${dato.telefono}`} style={{ flex: 1, minWidth: '160px', backgroundColor: '#0284c7', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>CHIAMA ORA</a>
+            <a
+              href={`tel:${dato.telefono}`}
+              onClick={() => trackChiama(dato.nome, dato.categoria, dato.zona)}
+              style={{ flex: 1, minWidth: '160px', backgroundColor: '#0284c7', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+            >CHIAMA ORA</a>
             {dato.whatsapp && (
-              <a href={`https://wa.me/39${dato.whatsapp}`} style={{ flex: 1, minWidth: '160px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}>WHATSAPP</a>
+              <a
+                href={`https://wa.me/39${dato.whatsapp}`}
+                onClick={() => trackWhatsApp(dato.nome, dato.categoria, dato.zona)}
+                style={{ flex: 1, minWidth: '160px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none' }}
+              >WHATSAPP</a>
             )}
           </div>
 
