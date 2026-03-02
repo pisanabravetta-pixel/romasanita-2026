@@ -440,11 +440,17 @@ if (zonaInSlug === 'roma') {
 
           {/* BADGE CATEGORIA + ZONA */}
           <div style={{display:'flex', alignItems:'center', gap:'8px', marginBottom:'12px', flexWrap:'wrap'}}>
-            <span style={{display:'inline-flex', alignItems:'center', gap:'5px', fontSize:'13px', color:'#374151', fontWeight:'700'}}>
-              <span style={{fontSize:'15px'}}>🩺</span>
+            <span style={{
+              display:'inline-flex', alignItems:'center', gap:'5px',
+              fontSize:'12px', fontWeight:'800',
+              backgroundColor:`${tema.primario}18`, color:tema.primario,
+              padding:'5px 12px', borderRadius:'20px',
+              border:`1px solid ${tema.primario}35`
+            }}>
+              <span style={{fontSize:'14px'}}>🩺</span>
               <span>{lb.charAt(0) + lb.slice(1).toLowerCase()}</span>
-              <span style={{color:'#6b7280'}}>a</span>
-              <strong style={{color:'#1a2b4a'}}>{v.zona}</strong>
+              <span style={{opacity:0.7}}>·</span>
+              <span>{v.zona}</span>
             </span>
           </div>
 
@@ -482,8 +488,11 @@ if (zonaInSlug === 'roma') {
           />
           {/* Testo + pulsanti contatto */}
           <div style={{flex:1}}>
-            <p style={{fontSize:'13px', color:'#4b5563', margin:'0 0 10px 0', fontWeight:'600', lineHeight:'1.4'}}>
-              Prenota subito per telefono o WhatsApp
+            <p style={{fontSize:'12px', color:'#64748b', margin:'0 0 10px 0', fontWeight:'500', lineHeight:'1.5',
+              backgroundColor:'#fffbeb', padding:'7px 10px', borderRadius:'8px',
+              border:'1px solid #fde68a'
+            }}>
+              ⚠️ I prezzi sono indicativi. Per conferma e prenotazione contatta tramite 📞 o 💬
             </p>
             <div style={{display:'flex', gap:'8px'}}>
               <a href={`tel:${v.telefono}`} style={{
@@ -538,17 +547,7 @@ if (zonaInSlug === 'roma') {
           )}
         </div>
 
-        {/* BADGE SEO BOTTOM */}
-        <div style={{textAlign:'center', paddingBottom:'14px'}}>
-          <span style={{
-            fontSize:'10px', fontWeight:'800', backgroundColor:`${tema.primario}12`,
-            color:tema.primario, padding:'4px 12px', borderRadius:'20px',
-            border:`1px solid ${tema.primario}25`, display:'inline-block',
-            textTransform:'uppercase', letterSpacing:'0.5px'
-          }}>
-            {lb} a Roma {v.zona}
-          </span>
-        </div>
+
       </div>
     );
   })}

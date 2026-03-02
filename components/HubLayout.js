@@ -342,15 +342,21 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
             {v.urgency_24h && (
               <span style={{fontSize:'11px', fontWeight:'800', backgroundColor:'#fee2e2', color:'#dc2626', padding:'4px 10px', borderRadius:'6px', border:'1px solid #fecaca'}}>🚨 URGENZE</span>
             )}
-            <span style={{display:'inline-flex', alignItems:'center', gap:'5px', fontSize:'13px', color:'#374151', fontWeight:'700'}}>
-              <span style={{fontSize:'15px'}}>🩺</span>
+            <span style={{
+              display:'inline-flex', alignItems:'center', gap:'5px',
+              fontSize:'12px', fontWeight:'800',
+              backgroundColor:`${colore}18`, color:colore,
+              padding:'5px 12px', borderRadius:'20px',
+              border:`1px solid ${colore}35`
+            }}>
+              <span style={{fontSize:'14px'}}>🩺</span>
               <span>
                 {v.categoria
-                  ? (v.categoria.toLowerCase().replace('visite-specialistiche','').replace(/-/g,' ').trim().charAt(0).toUpperCase() + v.categoria.toLowerCase().replace('visite-specialistiche','').replace(/-/g,' ').trim().slice(1))
+                  ? (v.categoria.toLowerCase().replace('visite-specialistiche','').replace(/-/g,' ').replace(/[()]/g,'').trim().charAt(0).toUpperCase() + v.categoria.toLowerCase().replace('visite-specialistiche','').replace(/-/g,' ').replace(/[()]/g,'').trim().slice(1))
                   : (badgeSpec || 'Specialista')}
               </span>
-              <span style={{color:'#6b7280'}}>a</span>
-              <strong style={{color:'#1a2b4a'}}>{v.zona || v.quartiere || 'Roma'}</strong>
+              <span style={{opacity:0.7}}>·</span>
+              <span>{v.zona || v.quartiere || 'Roma'}</span>
             </span>
           </div>
 
@@ -392,8 +398,11 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
           />
           {/* Testo + pulsanti contatto */}
           <div style={{flex:1}}>
-            <p style={{fontSize:'13px', color:'#4b5563', margin:'0 0 10px 0', fontWeight:'600', lineHeight:'1.4'}}>
-              Prenota subito per telefono o WhatsApp
+            <p style={{fontSize:'12px', color:'#64748b', margin:'0 0 10px 0', fontWeight:'500', lineHeight:'1.5',
+              backgroundColor:'#fffbeb', padding:'7px 10px', borderRadius:'8px',
+              border:'1px solid #fde68a'
+            }}>
+              ⚠️ I prezzi sono indicativi. Per conferma e prenotazione contatta tramite 📞 o 💬
             </p>
             <div style={{display:'flex', gap:'8px'}}>
               <a
@@ -463,17 +472,7 @@ const listaDaMostrare = listaUnica.slice(inizio, inizio + perPagina);
           )}
         </div>
 
-        {/* BADGE SEO BOTTOM */}
-        <div style={{textAlign:'center', paddingBottom:'14px'}}>
-          <span style={{
-            fontSize:'10px', fontWeight:'800', backgroundColor:`${colore}12`,
-            color:colore, padding:'4px 12px', borderRadius:'20px',
-            border:`1px solid ${colore}25`, display:'inline-block',
-            textTransform:'uppercase', letterSpacing:'0.5px'
-          }}>
-            {titoloPulito} A ROMA {v.zona || v.quartiere || ''}
-          </span>
-        </div>
+
       </div>
       );
     })
