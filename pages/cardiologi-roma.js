@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import { getDBQuery, getSchemas, buildCategoriaOr } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function CardiologiRoma() {
@@ -18,7 +18,7 @@ const { data, error } = await supabase
   .from('annunci')
   .select('*')
   .eq('approvato', true)
-  .or(`categoria.ilike.%${queryBusca.cat}%,nome.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
+  .or(buildCategoriaOr(queryBusca.termini))
   .order('is_top', { ascending: false })
   .range(0, 199);
       

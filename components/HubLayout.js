@@ -78,18 +78,19 @@ useEffect(() => {
       setLoadingRealTime(false);
       return;
     }
-    // Fetch autonoma — usa getDBQuery per avere la radice corretta del DB
+    // Fetch autonoma — usa getDBQuery + buildCategoriaOr per radici corrette del DB
     async function fetchNuoviMedici() {
       try {
         setLoadingRealTime(true);
-        const { getDBQuery } = await import('../lib/seo-logic');
+        const { getDBQuery, buildCategoriaOr } = await import('../lib/seo-logic');
         const q = getDBQuery(categoria);
-        const radice = q.cat || categoria.toLowerCase().replace('-roma','').trim();
+        const orString = buildCategoriaOr(q.termini);
+        if (!orString) { setLoadingRealTime(false); return; }
         const { data, error } = await supabase
           .from('annunci')
           .select('*')
           .eq('approvato', true)
-          .or(`categoria.ilike.%${radice}%,specialista.ilike.%${radice}%,nome.ilike.%${radice}%`)
+          .or(orString)
           .order('is_top', { ascending: false })
           .range(0, 199);
         if (error) throw error;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas, seoData } from '../lib/seo-logic';
+import { getDBQuery, getSchemas, seoData, buildCategoriaOr } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function VisiteSpecialisticheRoma() {
@@ -15,34 +15,27 @@ export default function VisiteSpecialisticheRoma() {
     async function fetchVisite() {
       try {
         setLoading(true);
+        const queryBusca = getDBQuery('visite-specialistiche');
+        // Matcha tutti i record con "visite-specialistiche", "specialisti", "specialistica"
+        // ESCLUDE farmacie, dentisti, diagnostica che hanno categoria propria
         const { data: databaseData, error } = await supabase
           .from('annunci')
           .select('*')
-          .eq('approvato', true);
+          .eq('approvato', true)
+          .or(buildCategoriaOr(queryBusca.termini))
+          .order('is_top', { ascending: false })
+          .range(0, 299);
 
         if (error) throw error;
 
         if (databaseData) {
+          // Esclude categorie non specialistiche che potrebbero matchare per errore
           const filtrati = databaseData.filter(item => {
-  const cat = (item.categoria || "").toLowerCase().trim();
-  
-  // Condizione base: deve avere "specialistiche"
-  const haSpecialistica = cat.includes('specialistiche');
-  
-  // ESCLUSIONI CRITICHE (per evitare il numero 315)
-  const eFarmacia = cat.includes('farmac');
-  const eDentista = cat.includes('dentist');
-  const eDiagnostica = cat.includes('diagnost'); 
-  const eSanitari = cat.includes('sanitari'); // esclude servizi generici
-
-  return haSpecialistica && !eFarmacia && !eDentista && !eDiagnostica && !eSanitari;
-});
-
-          // --- COPIALO DA QUI ---
+            const cat = (item.categoria || '').toLowerCase();
+            return !cat.includes('farmac') && !cat.includes('dentist') && !cat.includes('diagnost');
+          });
           const ordinati = filtrati.sort((a, b) => (b.is_top ? 1 : 0) - (a.is_top ? 1 : 0));
-          console.log("Sostituisco la lista in pagina con questi record:", ordinati.length);
-          setAnnunci([...ordinati]); 
-          // --- A QUI ---
+          setAnnunci([...ordinati]);
         }
       } catch (err) {
         console.error("Errore:", err);

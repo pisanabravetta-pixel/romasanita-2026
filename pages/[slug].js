@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, quartieriTop, seoData } from '../lib/seo-logic';
+import { getDBQuery, buildCategoriaOr, quartieriTop, seoData } from '../lib/seo-logic';
 import Script from 'next/script';
 import Mappa from '../components/Mappa';
 import ListaPrezzi from '../components/ListaPrezzi';
@@ -57,7 +57,9 @@ export default function PaginaQuartiereDinamica({
     'farmacie': 'FARMACIE', 'farmac': 'FARMACIE', 'diagnostica': 'DIAGNOSTICA',
     'diagnost': 'DIAGNOSTICA', 'dentisti': 'DENTISTI', 'dermatologi': 'DERMATOLOGI',
     'cardiologi': 'CARDIOLOGI', 'psicologi': 'PSICOLOGI', 'oculisti': 'OCULISTI',
-    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI'
+    'ortopedici': 'ORTOPEDICI', 'nutrizionisti': 'NUTRIZIONISTI', 'ginecologi': 'GINECOLOGI',
+    'servizi-domicilio': 'SERVIZI A DOMICILIO', 'servizi-sanitari': 'SERVIZI SANITARI',
+    'visite-specialistiche': 'VISITE SPECIALISTICHE'
   };
 
   const quartiereNome = zonaInSlug ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ') : '';
@@ -79,14 +81,16 @@ const [mounted, setMounted] = useState(false);
   const catBassa = (catSlug || "").toLowerCase();
   
   // 1. Filtriamo i dati in base alla categoria reale
+  const filtriClient = getDBQuery(catBassa);
+  const terminiClient = filtriClient.termini || [filtriClient.cat || catBassa];
   const listaFiltrata = (servizi || []).filter(item => {
     const itemCat = item.categoria?.toLowerCase() || "";
     // Se siamo in "specialistiche", escludiamo farmacie, dentisti e diagnostica
     if (catBassa.includes('specialistic') || catBassa === 'specialisti') {
       return !itemCat.includes('farmac') && !itemCat.includes('dentist') && !itemCat.includes('diagnost');
     }
-    // Altrimenti filtro standard per le altre categorie
-    return itemCat.includes(catBassa.substring(0, 4));
+    // Filtro con tutti i termini della categoria (OR)
+    return terminiClient.some(t => itemCat.includes(t.toLowerCase()));
   });
 
   // 2. Creiamo la lista unica senza duplicati
@@ -123,7 +127,7 @@ const [mounted, setMounted] = useState(false);
       'cardiologi': 'Cardiologi', 'dentisti': 'Dentisti', 'ginecologi': 'Ginecologi',
       'oculisti': 'Oculisti', 'ortopedici': 'Ortopedici', 'psicologi': 'Psicologi',
       'nutrizionisti': 'Nutrizionisti', 'servizi-sanitari': 'Servizi Sanitari',
-      'servizi-domicilio': 'Servizi a Domicilio'
+      'servizi-domicilio': 'Servizi a Domicilio', 'visite-specialistiche': 'Visite Specialistiche'
     };
     const nomeBase = nomiPuliti[catEstratta.toLowerCase()] || (catEstratta.charAt(0).toUpperCase() + catEstratta.slice(1));
     const zonaBella = (zonaEstratta === 'roma') ? 'Roma' : zonaEstratta.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -156,11 +160,11 @@ const [mounted, setMounted] = useState(false);
       try {
         setLoading(true);
         // Usa getDBQuery per avere la radice corretta (es. 'cardiol' per cardiologi)
-        const { getDBQuery } = await import('../lib/seo-logic');
+        const { getDBQuery, buildCategoriaOr } = await import('../lib/seo-logic');
         const qInfo = getDBQuery(catEstratta);
-        const radice = qInfo.cat || catEstratta.toLowerCase().trim();
+        const orString = buildCategoriaOr(qInfo.termini || [qInfo.cat || catEstratta]);
         let q = supabase.from('annunci').select('*').eq('approvato', true);
-        q = q.or(`categoria.ilike.%${radice}%,specialista.ilike.%${radice}%`);
+        q = q.or(orString);
         if (!isHub) {
           const zQuery = zonaEstratta.replace(/-/g, ' ');
           q = q.ilike('zona', `%${zQuery}%`);
@@ -814,10 +818,10 @@ export async function getServerSideProps(context) {
 
     // 3. FILTRO CATEGORIA — usa getDBQuery per la radice corretta del DB
     // es: "cardiologi" → radice "cardiol" che matcha "cardiologo" e "cardiologi"
-    const { getDBQuery } = require('../lib/seo-logic');
+    const { getDBQuery, buildCategoriaOr } = require('../lib/seo-logic');
     const qInfo = getDBQuery(catRicercata);
-    const radice = qInfo.cat || catRicercata.toLowerCase().trim();
-    query = query.or(`categoria.ilike.%${radice}%,specialista.ilike.%${radice}%`);
+    const orString = buildCategoriaOr(qInfo.termini || [qInfo.cat || catRicercata]);
+    query = query.or(orString);
 
     // 4. FILTRO ZONA
     if (!isHub) {

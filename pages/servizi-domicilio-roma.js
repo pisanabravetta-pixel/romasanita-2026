@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
-import { getDBQuery, getSchemas } from '../lib/seo-logic';
+import { getDBQuery, getSchemas, buildCategoriaOr } from '../lib/seo-logic';
 import HubLayout from '../components/HubLayout';
 
 export default function ServiziDomicilioRoma() {
@@ -12,15 +12,15 @@ export default function ServiziDomicilioRoma() {
 
   useEffect(() => {
     async function fetchDocs() {
-      const queryBusca = getDBQuery('servizi-domicilio'); 
-      
+      const queryBusca = getDBQuery('servizi-domicilio');
+      // Matcha: servizi-domicilio-roma / servizi-domicilio / Servizi a Domicilio
       const { data } = await supabase
         .from('annunci')
         .select('*')
         .eq('approvato', true)
-        // Cerca la radice 'domicilio' ovunque per non perdere nessun servizio
-        .or(`categoria.ilike.%${queryBusca.cat}%,specialista.ilike.%${queryBusca.spec}%`)
-        .order('is_top', { ascending: false });
+        .or(buildCategoriaOr(queryBusca.termini))
+        .order('is_top', { ascending: false })
+        .range(0, 199);
       
       if (data) setMedici(data);
       setLoading(false);
