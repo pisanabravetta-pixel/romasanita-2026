@@ -1,5 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
+// SVG inline — sostituisce Font Awesome (risparmio ~83 KiB CSS/JS)
+const IconChevronDown = () => (
+  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display:'inline',verticalAlign:'middle',marginLeft:'4px' }}>
+    <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const IconChevronUp = () => (
+  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display:'inline',verticalAlign:'middle',marginLeft:'4px' }}>
+    <path d="M2 6.5L5 3.5L8 6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const IconHeartbeat = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display:'inline',verticalAlign:'middle',color:'#2563eb' }}>
+    <path d="M3 12h3l3-8 4 16 3-10 2 4h3" stroke="#2563eb" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 export default function Navbar() {
   const [menuAperto, setMenuAperto] = useState(false);
   const [catAperto, setCatAperto] = useState(false);
@@ -28,7 +45,7 @@ export default function Navbar() {
             className="menu-wrapper desktop-left"
           >
             <div className="menu-trigger" onClick={() => { setMenuAperto(!menuAperto); setCatAperto(false); }}>
-              MENU <i className={`fas ${menuAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+              MENU {menuAperto ? <IconChevronUp /> : <IconChevronDown />}
             </div>
 
             {menuAperto && (
@@ -36,7 +53,7 @@ export default function Navbar() {
                 <div className="cat-section">
                   <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                     <span>🧩 Categorie</span>
-                    <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`} style={{ fontSize: '10px' }}></i>
+                    {catAperto ? <IconChevronUp /> : <IconChevronDown />}
                   </div>
 
                   {catAperto && (
@@ -59,7 +76,7 @@ export default function Navbar() {
 
           {/* ── CENTRO: LOGO ── */}
           <a href="/" className="logo-section" style={{ textDecoration: 'none' }}>
-            <i className="fas fa-heartbeat" style={{ color: '#2563eb', fontSize: '1.2em' }}></i>
+            <IconHeartbeat />
             <span style={{ color: '#065f46' }}>Servizi</span>
             <span style={{ color: '#2563eb' }}>Salute</span>
           </a>
@@ -76,7 +93,7 @@ export default function Navbar() {
               className="menu-wrapper"
             >
               <div className="menu-trigger" onClick={() => { setMenuAperto(!menuAperto); setCatAperto(false); }}>
-                MENU <i className={`fas ${menuAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                MENU {menuAperto ? <IconChevronUp /> : <IconChevronDown />}
               </div>
 
               {menuAperto && (
@@ -84,7 +101,7 @@ export default function Navbar() {
                   <div className="cat-section">
                     <div onClick={() => setCatAperto(!catAperto)} className="menu-link" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                       <span>🧩 Categorie</span>
-                      <i className={`fas ${catAperto ? 'fa-chevron-up' : 'fa-chevron-down'}`} style={{ fontSize: '10px' }}></i>
+                      {catAperto ? <IconChevronUp /> : <IconChevronDown />}
                     </div>
 
                     {catAperto && (
