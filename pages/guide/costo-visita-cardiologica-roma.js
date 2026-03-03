@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { createClient } from '@supabase/supabase-js';
 import { trackChiama, trackWhatsApp } from '../../lib/analytics';
+import GuideCorrelate from '../../components/GuideCorrelate';
 
 const supabase = createClient(
   'https://mkmyadztjcnebrhuzdka.supabase.co',
@@ -118,7 +119,7 @@ export default function GuidaCardiologia() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="/images/costo-visita-cardiologica-roma.png"
+            src="/images/costo-visita-cardiologica-roma.webp"
             alt="Tracciato elettrocardiografico ECG con panorama di Roma"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
           />
@@ -312,6 +313,13 @@ export default function GuidaCardiologia() {
             </a>
           </div>
         </article>
+
+        
+        {/* GUIDE CORRELATE */}
+        <GuideCorrelate
+          slugCorrente="costo-visita-cardiologica-roma"
+          slugCorrelati={["check-up-completo-roma", "analisi-sangue-private-roma", "costo-ecografia-privata-roma", "trovare-servizio-sanitario-roma"]}
+        />
 
         {/* DISCLAIMER LEGALE */}
         <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b', fontStyle: 'italic' }}>

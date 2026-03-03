@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { createClient } from '@supabase/supabase-js';
 import { trackChiama, trackWhatsApp } from '../../lib/analytics';
+import GuideCorrelate from '../../components/GuideCorrelate';
 
 const supabase = createClient(
   'https://mkmyadztjcnebrhuzdka.supabase.co',
@@ -119,10 +120,10 @@ export default function GuidaRisonanza() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="/images/costo-risonanza-magnetica-roma.png"
+            src="/images/costo-risonanza-magnetica-roma.webp"
             alt="Macchinario per risonanza magnetica a Roma - centro diagnostico privato"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.webp'; }}
           />
         </div>
       </div>
@@ -292,6 +293,13 @@ export default function GuidaRisonanza() {
             </a>
           </div>
         </article>
+
+        
+        {/* GUIDE CORRELATE */}
+        <GuideCorrelate
+          slugCorrente="costo-risonanza-magnetica-roma"
+          slugCorrelati={["costo-tac-privata-roma", "costo-ecografia-privata-roma", "costo-visita-ortopedica-roma", "costo-fisioterapia-roma"]}
+        />
 
         {/* DISCLAIMER LEGALE */}
         <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b', fontStyle: 'italic' }}>

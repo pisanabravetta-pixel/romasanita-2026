@@ -7,7 +7,8 @@ export default function Document() {
   {/* Preconnessioni centralizzate (UNA sola volta per tutto il sito) */}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-  <link rel="preconnect" href="https://images.unsplash.com" /> {/* Aggiungilo qui */}
+  <link rel="preconnect" href="https://mkmyadztjcnebrhuzdka.supabase.co" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
   <link 
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" 

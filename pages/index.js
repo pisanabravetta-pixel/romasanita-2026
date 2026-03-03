@@ -173,6 +173,32 @@ return (
           }
         },
         {
+          "@type": "MedicalOrganization",
+          "@id": "https://www.servizisalute.com/#medicalorg",
+          "name": "ServiziSalute Roma",
+          "url": "https://www.servizisalute.com",
+          "description": "Portale per trovare medici specialisti, dentisti, farmacie e centri diagnostici privati a Roma. Cerca per quartiere: Prati, EUR, Parioli, Centro Storico, San Giovanni, Monteverde.",
+          "medicalSpecialty": [
+            "Cardiologia", "Dermatologia", "Ginecologia", "Oculistica",
+            "Ortopedia", "Odontoiatria", "Psicologia", "Nutrizione", "Fisioterapia"
+          ],
+          "areaServed": {
+            "@type": "City",
+            "name": "Roma",
+            "sameAs": "https://www.wikidata.org/wiki/Q220"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Roma",
+            "addressRegion": "RM",
+            "addressCountry": "IT"
+          },
+          "sameAs": [
+            "https://www.facebook.com/servizisaluteroma",
+            "https://www.instagram.com/servizisaluteroma"
+          ]
+        },
+        {
           "@type": "WebSite",
           "@id": "https://www.servizisalute.com/#website",
           "url": "https://www.servizisalute.com",
