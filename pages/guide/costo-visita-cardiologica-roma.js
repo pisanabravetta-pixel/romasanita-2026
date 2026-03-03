@@ -39,8 +39,8 @@ function AnnuncioBox({ annuncio, colore = '#e53e3e' }) {
     <div style={{ border: `2px solid ${colore}`, borderRadius: '16px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', marginBottom: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
         <div>
-          <div style={{ fontWeight: '800', fontSize: '17px', color: '#1a202c' }}>{annuncio.nome || annuncio.titolo}</div>
-          {annuncio.indirizzo && <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>📍 {annuncio.indirizzo}{annuncio.citta ? `, ${annuncio.citta}` : ''}</div>}
+          <div style={{ fontWeight: '800', fontSize: '17px', color: '#1a202c' }}>{annuncio.nome}</div>
+          {annuncio.indirizzo && <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>📍 {annuncio.indirizzo}{annuncio.zona ? ` - ${annuncio.zona}` : ''}</div>}
         </div>
         <span style={{ backgroundColor: colore, color: '#fff', borderRadius: '20px', padding: '4px 12px', fontSize: '12px', fontWeight: '700', whiteSpace: 'nowrap' }}>Cardiologo</span>
       </div>
@@ -71,9 +71,9 @@ export default function GuidaCardiologia() {
   useEffect(() => {
     supabase
       .from('annunci')
-      .select('id,nome,titolo,telefono,whatsapp,indirizzo,citta,slug')
+      .select('id,nome,telefono,whatsapp,indirizzo,zona,slug')
       .eq('approvato', true)
-      .or('categoria.ilike.%cardiolog%,specializzazione.ilike.%cardiolog%,titolo.ilike.%cardiolog%')
+      .ilike('categoria', '%cardiolog%')
       .limit(3)
       .then(({ data }) => { if (data && data.length) setAnnunci(data); });
   }, []);
