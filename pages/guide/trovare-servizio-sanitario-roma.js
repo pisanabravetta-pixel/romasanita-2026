@@ -119,6 +119,7 @@ export default function GuidaTrovareSanitario() {
         <meta property="og:title" content={`Come Trovare Medici e Specialisti a Roma | Guida ${mese}`} />
         <meta property="og:description" content={`Trova medici, specialisti, farmacie e diagnostica a Roma vicino a te. Guida pratica aggiornata ${mese}.`} />
         <meta property="og:url" content="https://www.servizisalute.com/guide/trovare-servizio-sanitario-roma" />
+        <meta property="og:image" content="https://www.servizisalute.com/images/trovare-servizio-sanitario-roma.png" />
         <meta property="og:type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
@@ -130,9 +131,10 @@ export default function GuidaTrovareSanitario() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="https://images.unsplash.com/photo-1576669801775-ff43c5ab079d?w=1200"
+            src="/images/trovare-servizio-sanitario-roma.png"
             alt="Come trovare servizi sanitari a Roma - medici e specialisti per quartiere"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
           />
         </div>
       </div>

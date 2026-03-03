@@ -107,6 +107,7 @@ export default function GuidaGinecologia() {
         <meta property="og:title" content={`Visita Ginecologica Roma: Costi €90–€160 | Guida ${mese}`} />
         <meta property="og:description" content={`Prezzi aggiornati visite ginecologiche private Roma. Pap test, ecografia, colposcopia. Trova la tua specialista.`} />
         <meta property="og:url" content="https://www.servizisalute.com/guide/costo-visita-ginecologica-roma" />
+        <meta property="og:image" content="https://www.servizisalute.com/images/costo-visita-ginecologica-roma.png" />
         <meta property="og:type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
@@ -118,9 +119,10 @@ export default function GuidaGinecologia() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200"
+            src="/images/costo-visita-ginecologica-roma.png"
             alt="Visita ginecologica a Roma - ambulatorio specialistico"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
           />
         </div>
       </div>

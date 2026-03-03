@@ -107,6 +107,7 @@ export default function GuidaDermatologia() {
         <meta property="og:title" content={`Visita Dermatologica Roma: Costi €80–€150 | Guida ${mese}`} />
         <meta property="og:description" content={`Prezzi aggiornati delle visite dermatologiche private a Roma. Mappatura nei, crioterapia, dermatoscopia. Trova il tuo specialista.`} />
         <meta property="og:url" content="https://www.servizisalute.com/guide/costo-visita-dermatologica-roma" />
+        <meta property="og:image" content="https://www.servizisalute.com/images/costo-visita-dermatologica-roma.png" />
         <meta property="og:type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
@@ -118,9 +119,10 @@ export default function GuidaDermatologia() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200"
+            src="/images/costo-visita-dermatologica-roma.png"
             alt="Visita dermatologica a Roma - esame della pelle"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
           />
         </div>
       </div>
