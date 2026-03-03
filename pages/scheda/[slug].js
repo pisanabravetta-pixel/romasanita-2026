@@ -98,8 +98,46 @@ export default function SchedaProfessionale() {
 
   const cleanSlug = (text) => text.toString().toLowerCase().trim()
     .replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/--+/g, '-');
-  const catSlug = cleanSlug(categoria);
   const zonaSlug = cleanSlug(nomeZona);
+
+  // Mappa categoria DB → slug pagina reale
+  const categoriaToSlug = (cat) => {
+    const c = cat.toLowerCase();
+    if (c.includes('farmac'))                          return 'farmacie-roma';
+    if (c.includes('dentist') || c.includes('odont')) return 'dentisti-roma';
+    if (c.includes('cardiol'))                         return 'cardiologi-roma';
+    if (c.includes('psicol') || c.includes('psicoterap')) return 'psicologi-roma';
+    if (c.includes('dermatol'))                        return 'dermatologi-roma';
+    if (c.includes('ginecol') || c.includes('ostetr')) return 'ginecologi-roma';
+    if (c.includes('nutriz') || c.includes('dietol')) return 'nutrizionisti-roma';
+    if (c.includes('ortoped'))                         return 'ortopedici-roma';
+    if (c.includes('oculist') || c.includes('oftalm')) return 'oculisti-roma';
+    if (c.includes('diagnost') || c.includes('radiolog') || c.includes('ecograf')) return 'diagnostica-roma';
+    if (c.includes('domicilio') || c.includes('inferm')) return 'servizi-domicilio-roma';
+    return 'visite-specialistiche-roma';
+  };
+
+  const categoriaLabel = (cat) => {
+    const c = cat.toLowerCase();
+    if (c.includes('farmac'))    return 'Farmacie';
+    if (c.includes('dentist') || c.includes('odont')) return 'Dentisti';
+    if (c.includes('cardiol'))   return 'Cardiologi';
+    if (c.includes('psicol'))    return 'Psicologi';
+    if (c.includes('dermatol'))  return 'Dermatologi';
+    if (c.includes('ginecol'))   return 'Ginecologi';
+    if (c.includes('nutriz'))    return 'Nutrizionisti';
+    if (c.includes('ortoped'))   return 'Ortopedici';
+    if (c.includes('oculist'))   return 'Oculisti';
+    if (c.includes('diagnost'))  return 'Diagnostica';
+    if (c.includes('domicilio')) return 'Servizi a Domicilio';
+    return 'Visite Specialistiche';
+  };
+
+  const baseSlug = categoriaToSlug(categoria);
+  const labelCat = categoriaLabel(categoria);
+  // URL pagina lista: usa sempre la pagina base della categoria (es. /dermatologi-roma)
+  // Garantisce che il link funzioni sempre senza rischio di 404 su pagine di quartiere
+  const urlBack = `/${baseSlug}`;
 
   // Trova prezzi e servizi per questa categoria
   const catKey = Object.keys(prezziIndicativi).find(k => categoria.toLowerCase().includes(k.replace(/-/g, ' ').replace(/i$/, '').replace(/e$/, ''))) || 'specialisti';
@@ -189,7 +227,7 @@ export default function SchedaProfessionale() {
                 "@context": "https://schema.org", "@type": "BreadcrumbList",
                 "itemListElement": [
                   { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.servizisalute.com/" },
-                  { "@type": "ListItem", "position": 2, "name": `${categoria} Roma ${nomeZona}`, "item": `https://www.servizisalute.com/${catSlug}-roma-${zonaSlug}` },
+                  { "@type": "ListItem", "position": 2, "name": `${labelCat} Roma`, "item": `https://www.servizisalute.com${urlBack}` },
                   { "@type": "ListItem", "position": 3, "name": dato.nome, "item": `https://www.servizisalute.com/scheda/${dato.slug}` }
                 ]
               }
@@ -207,7 +245,7 @@ export default function SchedaProfessionale() {
         <div style={{ fontSize: '13px', marginBottom: '16px', color: '#64748b' }}>
           <a href="/" style={{ textDecoration: 'none', color: '#0284c7' }}>Home</a>
           {' > '}
-          <a href={`/${catSlug}-roma-${zonaSlug}`} style={{ textDecoration: 'none', color: '#0284c7' }}>{categoria} Roma {nomeZona}</a>
+          <a href={urlBack} style={{ textDecoration: 'none', color: '#0284c7' }}>{labelCat} Roma</a>
           {' > '}
           <span style={{ color: '#1e293b' }}>{dato.nome}</span>
         </div>
@@ -275,61 +313,52 @@ export default function SchedaProfessionale() {
             )}
           </div>
 
-          {/* ═══ SEZIONE ORARI — PREMIUM LOCK ═══ */}
-          <div style={sezioneLock}>
-            {/* Contenuto sfocato sotto */}
-            <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '14px' }}>🕐 Orari di Apertura</h2>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-              <tbody>
-                {ORARI_FITTIZI.map(({ g, o }) => (
-                  <tr key={g} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '8px 0', fontWeight: '600', color: '#334155', width: '110px' }}>{g}</td>
-                    <td style={{ padding: '8px 0', color: '#64748b' }}>{o}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Overlay lucchetto */}
+          {/* ═══ SEZIONE ORARI — PREMIUM LOCK (2 colonne compatta) ═══ */}
+          <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px' }}>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>🕐 Orari di Apertura</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px 12px' }}>
+              {ORARI_FITTIZI.map(({ g, o }) => (
+                <div key={g} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', padding: '2px 0', borderBottom: '1px solid #f1f5f9' }}>
+                  <span style={{ fontWeight: '700', color: '#334155', minWidth: '60px' }}>{g}</span>
+                  <span style={{ color: '#64748b' }}>{o}</span>
+                </div>
+              ))}
+            </div>
             <div style={overlayLock}>
-              <span style={{ fontSize: '32px' }}>🔒</span>
-              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '15px' }}>Orari non disponibili</span>
-              <span style={{ color: '#64748b', fontSize: '13px', textAlign: 'center', maxWidth: '260px' }}>
-                Il titolare non ha ancora aggiornato gli orari. Contatta direttamente la struttura.
-              </span>
+              <span style={{ fontSize: '16px' }}>🔒</span>
+              <div>
+                <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Orari non confermati</span>
+                <span style={{ color: '#64748b', fontSize: '11px', marginLeft: '4px' }}>— contatta la struttura</span>
+              </div>
             </div>
           </div>
 
           {/* ═══ SEZIONE SERVIZI — PREMIUM LOCK ═══ */}
-          <div style={sezioneLock}>
-            <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '14px' }}>🏥 Servizi Offerti</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {servizi.map((s, i) => (
-                <span key={i} style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '6px 14px', borderRadius: '20px', fontSize: '13px', fontWeight: '600' }}>{s}</span>
+          <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px' }}>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>🏥 Servizi Offerti</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              {servizi.slice(0, 5).map((s, i) => (
+                <span key={i} style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '3px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: '600' }}>{s}</span>
               ))}
+              {servizi.length > 5 && <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', padding: '3px 10px', borderRadius: '20px', fontSize: '11px' }}>+{servizi.length - 5} altri</span>}
             </div>
             <div style={overlayLock}>
-              <span style={{ fontSize: '32px' }}>🔒</span>
-              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '15px' }}>Servizi non confermati</span>
-              <span style={{ color: '#64748b', fontSize: '13px', textAlign: 'center', maxWidth: '260px' }}>
-                I servizi mostrati sono indicativi. Il titolare non ha ancora verificato questa scheda.
-              </span>
+              <span style={{ fontSize: '20px' }}>🔒</span>
+              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Servizi indicativi — scheda non verificata</span>
             </div>
           </div>
 
           {/* ═══ SEZIONE FOTO — PREMIUM LOCK ═══ */}
-          <div style={sezioneLock}>
-            <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '14px' }}>📷 Foto Studio / Struttura</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-              {[1, 2, 3].map(i => (
-                <div key={i} style={{ height: '90px', backgroundColor: '#e2e8f0', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px' }}>🏥</div>
+          <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '20px' }}>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>📷 Foto Struttura</h2>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} style={{ flex: 1, height: '52px', backgroundColor: '#e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🏥</div>
               ))}
             </div>
             <div style={overlayLock}>
-              <span style={{ fontSize: '32px' }}>🔒</span>
-              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '15px' }}>Foto non disponibili</span>
-              <span style={{ color: '#64748b', fontSize: '13px', textAlign: 'center', maxWidth: '260px' }}>
-                Il titolare non ha ancora caricato le foto della struttura.
-              </span>
+              <span style={{ fontSize: '16px' }}>🔒</span>
+              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Foto non ancora caricate</span>
             </div>
           </div>
 
@@ -368,8 +397,8 @@ export default function SchedaProfessionale() {
           <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #e2e8f0' }} />
 
           <p style={{ textAlign: 'center', margin: 0 }}>
-            ← <a href={`/${catSlug}-roma-${zonaSlug}`} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
-              Torna a {categoria} {nomeZona}
+            ← <a href={urlBack} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+              Torna a {labelCat} Roma
             </a>
           </p>
         </div>
