@@ -67,6 +67,7 @@ export async function getServerSideProps({ res }) {
 
   // 3. Guide
   const guidePages = [
+    // Guide storiche
     { url: '/guide/costo-pulizia-denti-roma',         priority: 0.8, changefreq: 'monthly' },
     { url: '/guide/costo-risonanza-magnetica-roma',   priority: 0.8, changefreq: 'monthly' },
     { url: '/guide/costo-visita-cardiologica-roma',   priority: 0.8, changefreq: 'monthly' },
@@ -74,6 +75,15 @@ export async function getServerSideProps({ res }) {
     { url: '/guide/costo-visita-ginecologica-roma',   priority: 0.8, changefreq: 'monthly' },
     { url: '/guide/costo-visita-oculistica-roma',     priority: 0.8, changefreq: 'monthly' },
     { url: '/guide/trovare-servizio-sanitario-roma',  priority: 0.8, changefreq: 'monthly' },
+    // 8 nuove guide (marzo 2026)
+    { url: '/guide/costo-visita-ortopedica-roma',     priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/costo-psicologo-roma',             priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/costo-nutrizionista-roma',         priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/costo-ecografia-privata-roma',     priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/analisi-sangue-private-roma',      priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/check-up-completo-roma',           priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/costo-tac-privata-roma',           priority: 0.8, changefreq: 'monthly' },
+    { url: '/guide/costo-fisioterapia-roma',          priority: 0.8, changefreq: 'monthly' },
   ];
 
   // 4. Hub categorie + paginazione
