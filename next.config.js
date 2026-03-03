@@ -29,6 +29,27 @@ module.exports = {
           { key: 'X-Frame-Options',        value: 'SAMEORIGIN' },
         ],
       },
+      {
+        // Cache lunga (1 anno) per immagini statiche — migliora Core Web Vitals
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Cache lunga per tutti gli asset statici Next.js (_next/static)
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Cache media per favicon e file pubblici vari
+        source: '/:file(.*\\.(?:ico|svg|png|webp|jpg|jpeg|woff2|woff))',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' },
+        ],
+      },
     ];
   },
 };
