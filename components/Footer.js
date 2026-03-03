@@ -60,6 +60,21 @@ export default function Footer() {
 <li><a href="/guide/trovare-servizio-sanitario-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Trovare Servizi Sanitari</a></li>
 </ul>
 
+{/* ALTRE GUIDE */}
+<p style={{ fontSize: '12px', color: '#90cdf4', fontWeight: 'bold', marginTop: '18px', marginBottom: '6px', letterSpacing: '0.5px' }}>
+  ALTRE GUIDE
+</p>
+<ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2.2' }}>
+<li><a href="/guide/costo-visita-ortopedica-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo Visita Ortopedica</a></li>
+<li><a href="/guide/costo-psicologo-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo Psicologo Roma</a></li>
+<li><a href="/guide/costo-nutrizionista-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo Nutrizionista</a></li>
+<li><a href="/guide/costo-ecografia-privata-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo Ecografia Privata</a></li>
+<li><a href="/guide/analisi-sangue-private-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Analisi del Sangue</a></li>
+<li><a href="/guide/check-up-completo-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Check-Up Completo</a></li>
+<li><a href="/guide/costo-tac-privata-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo TAC Privata</a></li>
+<li><a href="/guide/costo-fisioterapia-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guida: Costo Fisioterapia</a></li>
+</ul>
+
 {/* STATISTICA RICERCHE */}
             <p style={{ fontSize: '11px', color: '#cbd5e1', marginTop: '15px', fontStyle: 'italic', borderTop: '1px solid #2d3748', paddingTop: '10px' }}>
               🔍 Oltre 15.000 ricerche mensili di pazienti registrate a Roma.
