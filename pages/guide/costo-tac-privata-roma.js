@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { createClient } from '@supabase/supabase-js';
 import { trackChiama, trackWhatsApp } from '../../lib/analytics';
+import GuideCorrelate from '../../components/GuideCorrelate';
 
 const supabase = createClient(
   'https://mkmyadztjcnebrhuzdka.supabase.co',
@@ -118,10 +119,10 @@ export default function GuidaTAC() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="/images/costo-tac-privata-roma.png"
+            src="/images/costo-tac-privata-roma.webp"
             alt="TAC tomografia computerizzata privata a Roma - macchinario CT scanner"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.webp'; }}
           />
         </div>
       </div>
@@ -278,7 +279,14 @@ export default function GuidaTAC() {
         <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '15px', border: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b', fontStyle: 'italic' }}>
           <strong>Nota informativa e disclaimer:</strong> I prezzi indicati sono <em>medie di mercato</em> rilevate a Roma nel {mese} e hanno scopo esclusivamente informativo. La TAC comporta esposizione a radiazioni ionizzanti: va eseguita solo su indicazione medica. ServiziSalute.com non effettua prestazioni diagnostiche né mediche. Questo contenuto non costituisce parere medico, diagnosi o terapia.
         </div>
-      </main>
+
+        {/* GUIDE CORRELATE */}
+        <GuideCorrelate
+          slugCorrente="costo-tac-privata-roma"
+          slugCorrelati={["costo-risonanza-magnetica-roma", "costo-ecografia-privata-roma", "costo-visita-ortopedica-roma", "analisi-sangue-private-roma"]}
+        />
+
+              </main>
 
       <Footer />
     </div>

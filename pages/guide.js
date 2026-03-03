@@ -11,49 +11,56 @@ export default function GuideHub() {
       link: "/guide/costo-visita-cardiologica-roma",
       desc: "Prezzi medi (80–160 €) e cosa include una visita specialistica al cuore a Roma. ECG incluso o no.",
       colore: "#e53e3e",
-      icon: "❤️"
+      icon: "❤️",
+      img: "/images/costo-visita-cardiologica-roma.webp"
     },
     {
       title: "Costo Visita Ginecologica a Roma",
       link: "/guide/costo-visita-ginecologica-roma",
       desc: "Prezzi medi per un controllo ginecologico completo e pap-test nei vari quartieri di Roma.",
       colore: "#db2777",
-      icon: "🩺"
+      icon: "🩺",
+      img: "/images/costo-visita-ginecologica-roma.webp"
     },
     {
       title: "Costo Visita Oculistica a Roma",
       link: "/guide/costo-visita-oculistica-roma",
       desc: "Quanto costa un controllo della vista e del fondo oculare nei migliori centri romani?",
       colore: "#0891b2",
-      icon: "👁️"
+      icon: "👁️",
+      img: "/images/costo-visita-oculistica-roma.webp"
     },
     {
       title: "Costo Visita Dermatologica a Roma",
       link: "/guide/costo-visita-dermatologica-roma",
       desc: "Guida ai costi per il controllo dei nei, dermatiti e visite dermatologiche a Roma.",
       colore: "#d97706",
-      icon: "🔬"
+      icon: "🔬",
+      img: "/images/costo-visita-dermatologica-roma.webp"
     },
     {
       title: "Costo Risonanza Magnetica Roma",
       link: "/guide/costo-risonanza-magnetica-roma",
       desc: "Prezzi per risonanza a ginocchio, schiena e articolazioni nei centri privati a Roma.",
       colore: "#7c3aed",
-      icon: "🧲"
+      icon: "🧲",
+      img: "/images/costo-risonanza-magnetica-roma.webp"
     },
     {
       title: "Costo Pulizia Denti a Roma",
       link: "/guide/costo-pulizia-denti-roma",
       desc: "Quanto costa una seduta di igiene orale professionale nei vari quartieri di Roma?",
       colore: "#059669",
-      icon: "🦷"
+      icon: "🦷",
+      img: "/images/costo-pulizia-denti-roma.webp"
     },
     {
       title: "Come Trovare Servizi Sanitari a Roma",
       link: "/guide/trovare-servizio-sanitario-roma",
       desc: "Guida pratica all'uso del portale per i cittadini romani.",
       colore: "#0369a1",
-      icon: "🏥"
+      icon: "🏥",
+      img: "/images/trovare-servizio-sanitario-roma.webp"
     },
   ];
 
@@ -63,56 +70,64 @@ export default function GuideHub() {
       link: "/guide/costo-visita-ortopedica-roma",
       desc: "Prezzi (80–180 €) per schiena, ginocchio, spalla e tutte le articolazioni. Quando evitare di aspettare.",
       colore: "#2563eb",
-      icon: "🦴"
+      icon: "🦴",
+      img: "/images/costo-visita-ortopedica-roma.webp"
     },
     {
       title: "Costo Psicologo a Roma",
       link: "/guide/costo-psicologo-roma",
       desc: "Prezzi per seduta (60–120 €), Bonus Psicologo SSN e come trovare il professionista giusto.",
       colore: "#7c3aed",
-      icon: "🧠"
+      icon: "🧠",
+      img: "/images/costo-psicologo-roma.webp"
     },
     {
       title: "Costo Nutrizionista a Roma",
       link: "/guide/costo-nutrizionista-roma",
       desc: "Prima visita 80–120 €, controlli da 40 €. Differenza nutrizionista, dietologo e dietista.",
       colore: "#16a34a",
-      icon: "🥗"
+      icon: "🥗",
+      img: "/images/costo-nutrizionista-roma.webp"
     },
     {
       title: "Costo Ecografia Privata Roma",
       link: "/guide/costo-ecografia-privata-roma",
       desc: "Prezzi per distretto: addome 80–120 €, tiroide 60–80 €, pelvica 70–100 €. Senza ricetta.",
       colore: "#0891b2",
-      icon: "🔬"
+      icon: "🔬",
+      img: "/images/costo-ecografia-privata-roma.webp"
     },
     {
       title: "Analisi del Sangue Private Roma",
       link: "/guide/analisi-sangue-private-roma",
       desc: "Emocromo da 15 €, profilo metabolico 40–80 €. Senza ricetta, risultati in giornata.",
       colore: "#dc2626",
-      icon: "🧪"
+      icon: "🧪",
+      img: "/images/analisi-sangue-private-roma.webp"
     },
     {
       title: "Check-Up Completo Roma",
       link: "/guide/check-up-completo-roma",
       desc: "Pacchetto base da 150 €, completo fino a 400 €. Cosa include e con quale frequenza farlo.",
       colore: "#0369a1",
-      icon: "📋"
+      icon: "📋",
+      img: "/images/check-up-completo-roma.webp"
     },
     {
       title: "Costo TAC Privata Roma",
       link: "/guide/costo-tac-privata-roma",
       desc: "Prezzi per distretto: cranio 150–200 €, addome con contrasto 250–400 €. In 24–48 ore.",
       colore: "#6d28d9",
-      icon: "🏥"
+      icon: "🏥",
+      img: "/images/costo-tac-privata-roma.webp"
     },
     {
       title: "Costo Fisioterapia a Roma",
       link: "/guide/costo-fisioterapia-roma",
       desc: "Seduta standard 50–70 €, tecar e onde d'urto 60–90 €. Quante sedute servono per ogni problema.",
       colore: "#ea580c",
-      icon: "💪"
+      icon: "💪",
+      img: "/images/costo-fisioterapia-roma.webp"
     },
   ];
 
@@ -120,23 +135,40 @@ export default function GuideHub() {
     <a href={item.link} style={{ textDecoration: 'none' }}>
       <div style={{
         backgroundColor: '#ffffff',
-        padding: '28px',
         borderRadius: '20px',
         border: `2px solid #f1f5f9`,
         height: '100%',
         transition: 'all 0.3s ease',
         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
         borderTop: `4px solid ${item.colore}`,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       }}
         className="card-guida"
       >
-        <div style={{ fontSize: '28px', marginBottom: '10px' }}>{item.icon}</div>
-        <h3 style={{ color: '#1e3a8a', marginBottom: '10px', fontSize: '18px', fontWeight: '800', lineHeight: '1.3' }}>
-          {item.title} <span style={{ color: item.colore }}>→</span>
-        </h3>
-        <p style={{ color: '#64748b', fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
-          {item.desc}
-        </p>
+        {/* Immagine card */}
+        {item.img && (
+          <div style={{ width: '100%', height: '160px', overflow: 'hidden', flexShrink: 0 }}>
+            <img
+              src={item.img}
+              alt={item.title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+              onError={(e) => { e.target.style.display = 'none'; }}
+              loading="lazy"
+            />
+          </div>
+        )}
+        {/* Testo card */}
+        <div style={{ padding: '22px', flex: 1 }}>
+          <div style={{ fontSize: '24px', marginBottom: '8px' }}>{item.icon}</div>
+          <h3 style={{ color: '#1e3a8a', marginBottom: '8px', fontSize: '17px', fontWeight: '800', lineHeight: '1.3', marginTop: 0 }}>
+            {item.title} <span style={{ color: item.colore }}>→</span>
+          </h3>
+          <p style={{ color: '#64748b', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
+            {item.desc}
+          </p>
+        </div>
       </div>
     </a>
   );
