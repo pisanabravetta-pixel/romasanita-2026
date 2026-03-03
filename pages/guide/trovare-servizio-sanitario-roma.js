@@ -313,3 +313,7 @@ export default function GuidaTrovareSanitario() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 86400 };
+}

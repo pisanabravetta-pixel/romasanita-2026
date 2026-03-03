@@ -316,3 +316,7 @@ export default function GuidaDentista() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 86400 };
+}

@@ -317,3 +317,7 @@ export default function GuidaGinecologia() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 86400 };
+}
