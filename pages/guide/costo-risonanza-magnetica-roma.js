@@ -107,6 +107,7 @@ export default function GuidaRisonanza() {
         <meta property="og:title" content={`Risonanza Magnetica Roma: Costi €100–€250 | Guida ${mese}`} />
         <meta property="og:description" content={`Prezzi aggiornati risonanza magnetica privata Roma. Confronto SSN, tempi di attesa, dove prenotare.`} />
         <meta property="og:url" content="https://www.servizisalute.com/guide/costo-risonanza-magnetica-roma" />
+        <meta property="og:image" content="https://www.servizisalute.com/images/costo-risonanza-magnetica-roma.png" />
         <meta property="og:type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
@@ -118,9 +119,10 @@ export default function GuidaRisonanza() {
       <div style={{ width: '100%', maxWidth: '1100px', margin: '20px auto', padding: '0 20px' }}>
         <div style={{ width: '100%', height: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
           <img
-            src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200"
+            src="/images/costo-risonanza-magnetica-roma.png"
             alt="Macchinario per risonanza magnetica a Roma - centro diagnostico privato"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            onError={(e) => { e.target.src = '/images/guida-roma-salute.png'; }}
           />
         </div>
       </div>
