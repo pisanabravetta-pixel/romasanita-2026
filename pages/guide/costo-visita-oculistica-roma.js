@@ -320,3 +320,7 @@ export default function GuidaOculistica() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 86400 };
+}

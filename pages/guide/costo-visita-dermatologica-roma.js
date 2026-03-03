@@ -320,3 +320,7 @@ export default function GuidaDermatologia() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  return { props: {}, revalidate: 86400 };
+}
