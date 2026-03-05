@@ -239,18 +239,39 @@ if (zonaInSlug === 'roma') {
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": (seoData[filtri.cat]?.faq || []).map(f => ({
-                  "@type": "Question",
-                  "name": f.q.replace(/{{zona}}/g, quartiereNome),
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": f.a.replace(/{{zona}}/g, quartiereNome)
-                  }
-                }))
-              })
+              __html: JSON.stringify((() => {
+                // Mappa radice DB → chiave seoData
+                // filtri.cat restituisce es. 'farmac', ma seoData usa 'farmacie'
+                const catRootToSeoKey = {
+                  'farmac':    'farmacie',
+                  'dentist':   'dentisti',
+                  'cardiol':   'cardiologi',
+                  'psicol':    'psicologi',
+                  'dermatol':  'dermatologi',
+                  'ginecol':   'ginecologi',
+                  'nutriz':    'nutrizionisti',
+                  'oculist':   'oculisti',
+                  'ortoped':   'ortopedici',
+                  'diagnost':  'diagnostica',
+                  'domicilio': 'servizi-domicilio',
+                  'visite-specialistiche': 'visite-specialistiche',
+                  'specialisti': 'visite-specialistiche',
+                };
+                const seoKey = catRootToSeoKey[filtri.cat] || categoriaPulita || 'visite-specialistiche';
+                const faqList = (seoData[seoKey]?.faq || seoData['visite-specialistiche'].faq);
+                return {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": faqList.map(f => ({
+                    "@type": "Question",
+                    "name": f.q.replace(/{{zona}}/g, quartiereNome),
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": f.a.replace(/{{zona}}/g, quartiereNome)
+                    }
+                  }))
+                };
+              })())
             }}
           />
         </Head>
