@@ -32,7 +32,9 @@ export default function PaginaQuartiereDinamica({
   paginaIniziale, 
   slugSSR,
   categoriaSSR, 
-  zonaSSR        
+  zonaSSR,
+  canonicalSSR,
+  faqJsonLdSSR,
 }) {
   const router = useRouter();
   const { slug } = router.query;
@@ -226,7 +228,8 @@ if (zonaInSlug === 'roma') {
             name="description" 
             content={`Cerchi ${titoloPulito.toLowerCase()} a Roma in zona ${quartiereNome}? ✅ Elenco aggiornato a ${dataStringa}. Contatti diretti WhatsApp e telefono.`} 
           />
-          <link rel="canonical" href={`https://www.servizisalute.com/${slugAttivo}`} />
+          {/* Canonical SSR — visibile a Google nel primo HTML, non solo dopo JS */}
+          <link rel="canonical" href={canonicalSSR || `https://www.servizisalute.com/${slugAttivo}`} />
           
           <link rel="preconnect" href="https://basemaps.cartocdn.com" />
           <link 
@@ -236,43 +239,10 @@ if (zonaInSlug === 'roma') {
             crossOrigin=""
           />
 
+          {/* FAQPage JSON-LD SSR — generato server-side, Google lo vede nel primo HTML */}
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify((() => {
-                // Mappa radice DB → chiave seoData
-                // filtri.cat restituisce es. 'farmac', ma seoData usa 'farmacie'
-                const catRootToSeoKey = {
-                  'farmac':    'farmacie',
-                  'dentist':   'dentisti',
-                  'cardiol':   'cardiologi',
-                  'psicol':    'psicologi',
-                  'dermatol':  'dermatologi',
-                  'ginecol':   'ginecologi',
-                  'nutriz':    'nutrizionisti',
-                  'oculist':   'oculisti',
-                  'ortoped':   'ortopedici',
-                  'diagnost':  'diagnostica',
-                  'domicilio': 'servizi-domicilio',
-                  'visite-specialistiche': 'visite-specialistiche',
-                  'specialisti': 'visite-specialistiche',
-                };
-                const seoKey = catRootToSeoKey[filtri.cat] || categoriaPulita || 'visite-specialistiche';
-                const faqList = (seoData[seoKey]?.faq || seoData['visite-specialistiche'].faq);
-                return {
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  "mainEntity": faqList.map(f => ({
-                    "@type": "Question",
-                    "name": f.q.replace(/{{zona}}/g, quartiereNome),
-                    "acceptedAnswer": {
-                      "@type": "Answer",
-                      "text": f.a.replace(/{{zona}}/g, quartiereNome)
-                    }
-                  }))
-                };
-              })())
-            }}
+            dangerouslySetInnerHTML={{ __html: faqJsonLdSSR || '{}' }}
           />
         </Head>
 
@@ -890,7 +860,7 @@ export async function getServerSideProps(context) {
 
     // 3. FILTRO CATEGORIA — usa getDBQuery per la radice corretta del DB
     // es: "cardiologi" → radice "cardiol" che matcha "cardiologo" e "cardiologi"
-    const { getDBQuery, buildCategoriaOr } = require('../lib/seo-logic');
+    const { getDBQuery, buildCategoriaOr, seoData } = require('../lib/seo-logic');
     const qInfo = getDBQuery(catRicercata);
     const orString = buildCategoriaOr(qInfo.termini || [qInfo.cat || catRicercata]);
     query = query.or(orString);
@@ -911,6 +881,32 @@ export async function getServerSideProps(context) {
 
     if (error) throw error;
 
+    // ── SSR SEO: canonical e FAQ JSON-LD calcolati server-side ──
+    // Così Google li vede nel primo HTML, non dopo l'esecuzione JS client
+    const canonicalSSR = `https://www.servizisalute.com/${slug}`;
+
+    const catRootToSeoKey = {
+      'farmac':'farmacie','dentist':'dentisti','cardiol':'cardiologi',
+      'psicol':'psicologi','dermatol':'dermatologi','ginecol':'ginecologi',
+      'nutriz':'nutrizionisti','oculist':'oculisti','ortoped':'ortopedici',
+      'diagnost':'diagnostica','domicilio':'servizi-domicilio',
+      'visite-specialistiche':'visite-specialistiche','specialisti':'visite-specialistiche',
+    };
+    const seoKey = catRootToSeoKey[qInfo.cat] || catRicercata || 'visite-specialistiche';
+    const faqData = seoData[seoKey]?.faq || seoData['visite-specialistiche'].faq;
+    const zonaBella = zonaInSlug && zonaInSlug !== 'roma'
+      ? zonaInSlug.charAt(0).toUpperCase() + zonaInSlug.slice(1).replace(/-/g, ' ')
+      : 'Roma';
+    const faqJsonLdSSR = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': faqData.map(f => ({
+        '@type': 'Question',
+        'name': f.q.replace(/{{zona}}/g, zonaBella),
+        'acceptedAnswer': { '@type': 'Answer', 'text': f.a.replace(/{{zona}}/g, zonaBella) }
+      }))
+    });
+
     return {
       props: {
         datiIniziali: data || [],
@@ -918,7 +914,9 @@ export async function getServerSideProps(context) {
         paginaIniziale: page,
         slugSSR: slug || "",
         categoriaSSR: catRicercata,
-        zonaSSR: zonaInSlug
+        zonaSSR: zonaInSlug,
+        canonicalSSR,
+        faqJsonLdSSR,
       }
     };
 
@@ -932,7 +930,9 @@ export async function getServerSideProps(context) {
         paginaIniziale: 1, 
         slugSSR: slug || "",
         categoriaSSR: "",
-        zonaSSR: ""
+        zonaSSR: "",
+        canonicalSSR: `https://www.servizisalute.com/${slug || ''}`,
+        faqJsonLdSSR: '{}',
       } 
     };
   }
