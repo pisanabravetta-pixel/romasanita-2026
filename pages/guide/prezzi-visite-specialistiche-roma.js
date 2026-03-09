@@ -169,29 +169,35 @@ export default function PaginaHubPrezzi() {
           <p style={{ lineHeight: '1.8', color: '#334155', marginBottom: '20px' }}>
             Roma è una metropoli dove la posizione geografica dello studio medico incide fino al 30% sul costo finale della prestazione.
           </p>
-<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px', marginBottom: '40px' }}>
-  {QUARTIERI.map(q => (
-    <a 
-      key={q.slug} 
-      href={`/servizi-sanitari-roma-${q.slug}`} 
-      style={{ 
-        padding: '18px', 
-        backgroundColor: '#fff', 
-        border: '2px solid #e2e8f0', 
-        borderRadius: '15px', 
-        textDecoration: 'none', 
-        color: '#164e63', 
-        fontWeight: '800', 
-        fontSize: '15px', 
-        textAlign: 'center', 
-        boxShadow: '0 2px 4px rgba(0,0,0,0.04)' 
-      }}
-    >
-      Visite Specialistiche a Roma {q.nome} →
-    </a>
-  ))}
-</div>
-
+{/* SEZIONE QUARTIERI (Replica stile Guida Cardiologica) */}
+<section style={{ marginBottom: '40px' }}>
+  <h2 style={{ color: '#164e63', fontSize: '26px', fontWeight: '800', marginBottom: '16px' }}>
+    Visite specialistiche per quartiere a Roma
+  </h2>
+  <p style={{ color: '#334155', marginBottom: '16px' }}>
+    Seleziona il quartiere più vicino a te per vedere gli specialisti disponibili e confrontare le tariffe nella tua zona:
+  </p>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '20px' }}>
+    {QUARTIERI.map(q => (
+      <a
+        key={q.slug}
+        href={`/servizi-sanitari-roma-${q.slug}`}
+        style={{ 
+          padding: '10px 16px', 
+          backgroundColor: '#f0f9ff', 
+          color: '#0369a1', 
+          borderRadius: '10px', 
+          textDecoration: 'none', 
+          fontWeight: '700', 
+          fontSize: '14px', 
+          border: '1px solid #bae6fd' 
+        }}
+      >
+        Visite specialistiche {q.nome}
+      </a>
+    ))}
+  </div>
+</section>
           {/* FAQ MOLTO PIÙ CORPOSE */}
           <h2 style={{ color: '#164e63', fontSize: '28px', fontWeight: '800', marginTop: '50px', marginBottom: '25px' }}>Domande Frequenti sui Prezzi Medici</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
