@@ -51,11 +51,11 @@ export default function Footer() {
               <li><a href="/servizi-domicilio-roma" style={{ color: '#a0aec0', textDecoration: 'none' }}>Servizi a domicilio</a></li>
               
          {/* SEZIONE GUIDE */}
-             <li>
-  <a href="/guide/prezzi-visite-specialistiche-roma" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px' }}>
-    Prezzi Visite Roma
+           <li>
+  <a href="/guide/prezzi-visite-specialistiche-roma" style={{ color: '#63b3ed', textDecoration: 'none', fontSize: '14px' }}>
+    Guida: Prezzi Visite Roma
   </a>
-</li>
+</li> 
 <li><a href="/guide/costo-visita-ginecologica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Ginecologica</a></li>
 <li><a href="/guide/costo-visita-oculistica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Visita Oculistica</a></li>
 <li><a href="/guide/costo-risonanza-magnetica-roma" style={{ color: '#63b3ed', textDecoration: 'none' }}>Guida: Costo Risonanza Magnetica</a></li>
