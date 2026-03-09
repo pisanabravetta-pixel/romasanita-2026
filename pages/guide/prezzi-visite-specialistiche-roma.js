@@ -169,13 +169,28 @@ export default function PaginaHubPrezzi() {
           <p style={{ lineHeight: '1.8', color: '#334155', marginBottom: '20px' }}>
             Roma è una metropoli dove la posizione geografica dello studio medico incide fino al 30% sul costo finale della prestazione.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '40px' }}>
-            {QUARTIERI.map(q => (
-              <a key={q.slug} href={`/quartieri-roma/${q.slug}`} style={{ padding: '15px', backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '15px', textDecoration: 'none', color: '#164e63', fontWeight: '700', fontSize: '14px', textAlign: 'center', transition: 'all 0.2s' }}>
-                Medici a {q.nome}
-              </a>
-            ))}
-          </div>
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px', marginBottom: '40px' }}>
+  {QUARTIERI.map(q => (
+    <a 
+      key={q.slug} 
+      href={`/servizi-sanitari-roma/${q.slug}`} 
+      style={{ 
+        padding: '18px', 
+        backgroundColor: '#fff', 
+        border: '2px solid #e2e8f0', 
+        borderRadius: '15px', 
+        textDecoration: 'none', 
+        color: '#164e63', 
+        fontWeight: '800', 
+        fontSize: '15px', 
+        textAlign: 'center', 
+        boxShadow: '0 2px 4px rgba(0,0,0,0.04)' 
+      }}
+    >
+      Visite Specialistiche a {q.nome} →
+    </a>
+  ))}
+</div>
 
           {/* FAQ MOLTO PIÙ CORPOSE */}
           <h2 style={{ color: '#164e63', fontSize: '28px', fontWeight: '800', marginTop: '50px', marginBottom: '25px' }}>Domande Frequenti sui Prezzi Medici</h2>
