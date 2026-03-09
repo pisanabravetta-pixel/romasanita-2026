@@ -138,12 +138,17 @@ export default function GuidaCardiologia() {
         </nav>
 
         <article itemScope itemType="https://schema.org/Article">
-          <h1 itemProp="headline" style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '10px' }}>
-            Visita Cardiologica a Roma: Costi, Prezzi e Dove Prenotare ({mese})
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>
-            Aggiornato: {mese} · Lettura: 4 min
-          </p>
+  <h1 itemProp="headline" style={{ color: '#164e63', fontSize: '36px', fontWeight: '900', lineHeight: '1.2', marginBottom: '10px' }}>
+    Costo Visita Cardiologica Roma: Prezzi e Tariffe Private ({mese})
+  </h1>
+  <p style={{ color: '#334155', fontSize: '18px', lineHeight: '1.7', marginBottom: '24px' }}>
+    Sapere <strong>quanto costa una visita cardiologica a Roma</strong> è fondamentale per chi desidera monitorare la salute del cuore senza le lunghe attese del servizio pubblico. 
+    Nella Capitale, i prezzi variano sensibilmente tra il centro e la periferia, ma anche in base alla fama dello specialista e alla tecnologia diagnostica utilizzata. 
+    In questa guida aggiornata analizziamo le tariffe medie, i costi degli esami cardiologici correlati e come scegliere il miglior professionista nella tua zona.
+  </p>
+  <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>
+    Aggiornato: {mese} · Lettura: 6 min
+  </p>
 
           {/* BOX RIASSUNTO */}
           <div style={{ backgroundColor: '#ecfeff', padding: '25px', borderRadius: '20px', borderLeft: '6px solid #0891b2', marginBottom: '35px' }}>
@@ -169,11 +174,12 @@ export default function GuidaCardiologia() {
                 <tbody>
                   {[
                     ['Visita cardiologica base', '80–120 €', '36,15 €'],
-                    ['Visita + ECG', '100–140 €', '–'],
-                    ['Ecocardiogramma color-doppler', '120–200 €', '~50 € ticket'],
-                    ['Visita cardiologica + eco', '200–300 €', '–'],
-                    ['ECG da sforzo (stress test)', '150–250 €', '–'],
-                    ['Holter cardiaco 24h', '100–180 €', '–'],
+  ['Visita + ECG (Elettrocardiogramma)', '100–140 €', '–'],
+  ['Ecocardiogramma Color-Doppler', '120–180 €', '~50 € ticket'],
+  ['Visita + ECG + Ecocardiogramma', '200–280 €', '–'],
+  ['Holter Cardiaco (24/48 ore)', '90–160 €', '–'],
+  ['Holter Pressorio (MAP)', '80–120 €', '–'],
+  ['Test da Sforzo al Cicloergometro', '130–220 €', '–'],
                   ].map(([prest, priv, ssn], i) => (
                     <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f8fafc' : '#fff' }}>
                       <td style={{ padding: '10px 16px', color: '#334155', fontWeight: '600' }}>{prest}</td>
@@ -188,6 +194,19 @@ export default function GuidaCardiologia() {
               * Prezzi indicativi di mercato rilevati a Roma nel {mese}. Le tariffe variano per struttura e caso clinico.
             </p>
           </section>
+<section style={{ marginBottom: '40px' }}>
+  <h2 style={{ color: '#164e63', fontSize: '26px', fontWeight: '800', marginBottom: '16px' }}>
+    Quanto costa un cardiologo nei diversi quartieri di Roma?
+  </h2>
+  <p style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px' }}>
+    Non esiste una tariffa unica per tutta la città. In base ai dati raccolti dal nostro portale, abbiamo riscontrato differenze medie significative a seconda della zona:
+  </p>
+  <ul style={{ paddingLeft: '20px', lineHeight: '2', color: '#334155', fontSize: '17px' }}>
+    <li><strong>Roma Nord e Centro (Parioli, Prati, Centro):</strong> Le tariffe sono mediamente più alte, con prezzi che oscillano tra <strong>110 € e 160 €</strong> per una prima visita, spesso motivati da studi storici e specialisti di lunga carriera.</li>
+    <li><strong>Roma Sud e Ovest (EUR, Monteverde, Aurelio):</strong> In queste zone si trova un ottimo equilibrio, con prezzi medi tra <strong>90 € e 130 €</strong> e la presenza di molti centri diagnostici moderni.</li>
+    <li><strong>Roma Est (Tiburtina, San Giovanni, Montesacro):</strong> È l'area dove è più facile trovare soluzioni competitive senza rinunciare alla qualità, con visite a partire da <strong>80 €</strong>.</li>
+  </ul>
+</section>
 
           {/* AD BOX 1 */}
           {annunci[0] && (
@@ -257,6 +276,20 @@ export default function GuidaCardiologia() {
               ⚠️ In caso di dolore acuto al petto, chiama subito il 118. La visita cardiologica privata non sostituisce il Pronto Soccorso in emergenza.
             </p>
           </section>
+<section style={{ backgroundColor: '#f0f9ff', padding: '25px', borderRadius: '20px', marginBottom: '40px', border: '1px solid #bae6fd' }}>
+  <h2 style={{ color: '#0369a1', fontSize: '22px', fontWeight: '800', marginBottom: '12px' }}>
+    Preparazione alla visita cardiologica: cosa portare?
+  </h2>
+  <p style={{ color: '#334155', lineHeight: '1.7', fontSize: '16px' }}>
+    Per rendere la visita specialistica più efficace e permettere al cardiologo una diagnosi precisa, è consigliabile preparare una piccola documentazione da sottoporre durante il colloquio:
+  </p>
+  <ul style={{ color: '#334155', lineHeight: '1.8', fontSize: '16px', marginTop: '10px' }}>
+    <li><strong>Esami recenti:</strong> Porta con te gli ultimi esami del sangue (in particolare colesterolo, glicemia e creatinina).</li>
+    <li><strong>Referti precedenti:</strong> Vecchi elettrocardiogrammi (ECG), ecocardiogrammi o lettere di dimissione ospedaliera.</li>
+    <li><strong>Terapia farmacologica:</strong> Una lista precisa dei farmaci che assumi quotidianamente, inclusi dosaggi e orari.</li>
+    <li><strong>Diario della pressione:</strong> Se possibile, annota i valori della pressione arteriosa misurati a casa nei 3-4 giorni precedenti la visita.</li>
+  </ul>
+</section>
 
           {/* QUARTIERI */}
           <section style={{ marginBottom: '40px' }}>
