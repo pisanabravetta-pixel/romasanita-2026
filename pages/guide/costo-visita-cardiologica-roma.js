@@ -25,11 +25,26 @@ const QUARTIERI = [
 ];
 
 const faqItems = [
-  { q: 'Quanto costa una visita cardiologica privata a Roma?', a: 'Il costo medio di una visita cardiologica privata a Roma è compreso tra 80 € e 160 €. Il prezzo varia in base al quartiere, all\'esperienza dello specialista e agli esami inclusi (ECG, ecocardiogramma).' },
-  { q: 'L\'ECG è incluso nella visita cardiologica?', a: 'In molti studi privati romani l\'elettrocardiogramma (ECG) è incluso nel costo della visita. Verifica sempre prima della prenotazione: alcune strutture addebitano il tracciato separatamente (20–40 €).' },
-  { q: 'Quanto costa un ecocardiogramma privato a Roma?', a: 'Un ecocardiogramma privato a Roma costa in genere tra 120 € e 200 €, a seconda della struttura e del tipo (eco-color-doppler cardiaco, eco da sforzo).' },
-  { q: 'È necessaria l\'impegnativa del medico di base per una visita cardiologica privata?', a: 'Per una visita cardiologica in regime privato non è richiesta l\'impegnativa del medico di famiglia. Puoi prenotare direttamente contattando lo specialista.' },
-  { q: 'Quanto si aspetta per una visita cardiologica al SSN (pubblico) a Roma?', a: 'I tempi di attesa per una visita cardiologica tramite SSN a Roma possono superare i 60–90 giorni. In ambito privato si ottiene generalmente un appuntamento entro 24–72 ore.' },
+  { 
+    q: 'Quanto costa una visita cardiologica privata a Roma?', 
+    a: 'Il costo medio di una visita cardiologica privata a Roma oscilla tra 80 € e 160 €. Questa cifra può aumentare se vengono eseguiti contestualmente esami strumentali come l’ecocardiogramma o l’elettrocardiogramma da sforzo.' 
+  },
+  { 
+    q: 'Qual è il costo di un ECG (elettrocardiogramma) a Roma?', 
+    a: 'Il prezzo di un ECG isolato a Roma varia tra 30 € e 60 € in regime privato. Molti specialisti offrono però pacchetti "Visita + ECG" con tariffe agevolate che partono da circa 100 €.' 
+  },
+  { 
+    q: 'Dove costa meno una visita cardiologica a Roma?', 
+    a: 'Le tariffe più competitive si trovano solitamente nei centri diagnostici situati nelle zone periferiche o lungo le grandi arterie come la Via Tiburtina o la Via Casilina, dove i prezzi possono scendere fino a 70-80 €.' 
+  },
+  { 
+    q: 'Serve l\'impegnativa per una visita cardiologica privata?', 
+    a: 'No, per accedere alle prestazioni in regime privato a Roma non è necessaria l\'impegnativa del medico curante. È possibile prenotare direttamente contattando lo studio o il centro diagnostico scelto.' 
+  },
+  { 
+    q: 'Quanto dura mediamente una visita cardiologica specialistica?', 
+    a: 'Una visita cardiologica completa ha una durata media di 30-40 minuti. Questo tempo permette al medico di effettuare l’anamnesi, l’esame obiettivo e l’eventuale elettrocardiogramma di base.' 
+  },
 ];
 
 function AnnuncioBox({ annuncio, colore = '#e53e3e' }) {
