@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import { createClient } from '@supabase/supabase-js';
-import { trackChiama, trackWhatsApp } from '../lib/analytics';
+import { trackChiama, trackWhatsApp } from '../../lib/analytics';
 
 const supabase = createClient(
   'https://mkmyadztjcnebrhuzdka.supabase.co',
