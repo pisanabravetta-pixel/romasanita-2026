@@ -117,17 +117,49 @@ export default function PaginaHubPrezzi() {
 
           {annunci[0] && <AnnuncioBox annuncio={annunci[0]} />}
 
-          {/* ANALISI DETTAGLIATA SPECIALISTICHE */}
-          <h2 style={{ color: '#164e63', fontSize: '28px', fontWeight: '800', marginTop: '50px' }}>Dettaglio Costi per Specializzazione</h2>
+{/* ANALISI DETTAGLIATA SPECIALISTICHE - ESPANSA */}
+          <h2 style={{ color: '#164e63', fontSize: '28px', fontWeight: '800', marginTop: '50px' }}>Dettaglio Costi per Specializzazione a Roma</h2>
           
           <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Cardiologia</h3>
           <p style={{ lineHeight: '1.8', color: '#334155' }}>
-            A Roma, il costo di una <strong>visita cardiologica</strong> è fortemente influenzato dagli esami inclusi. Una visita di base con elettrocardiogramma (ECG) si attesta mediamente sui 110 €. Se si aggiunge l'ecocardiogramma color-doppler, la tariffa può salire fino a 200-220 €. I centri più economici si trovano spesso lungo la via Tiburtina e in zona San Giovanni.
+            A Roma, il costo di una <strong>visita cardiologica</strong> è fortemente influenzato dagli esami inclusi. Una visita di base con elettrocardiogramma (ECG) si attesta mediamente sui 110 €. Se si aggiunge l'ecocardiogramma color-doppler, la tariffa può salire fino a 200-220 €. I centri più economici si trovano spesso lungo la via Tiburtina e in zona San Giovanni, mentre le cliniche private in zona EUR tendono a offrire pacchetti completi di check-up cuore.
           </p>
 
           <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Dermatologia</h3>
           <p style={{ lineHeight: '1.8', color: '#334155' }}>
-            La mappatura dei nei è l'esame più richiesto. Una visita dermatologica standard a Roma costa circa 90-100 €. Studi rinomati in zona Parioli o Prati possono applicare tariffe fino a 150 € per una prima consulenza. È importante chiedere se la dermatoscopia è inclusa nel prezzo iniziale.
+            La mappatura dei nei è l'esame più richiesto tra i 21 dermatologi presenti nel nostro database. Una visita dermatologica standard a Roma costa circa 90-100 €. Studi rinomati in zona Parioli o Prati possono applicare tariffe fino a 150 € per una prima consulenza. È importante chiedere sempre se la <strong>dermatoscopia</strong> o la videodermatoscopia digitale è inclusa nel prezzo iniziale per evitare sorprese sul conto finale.
+          </p>
+
+          <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Ginecologia e Ostetricia</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            I prezzi per una visita ginecologica a Roma partono da 90 € e possono arrivare a 180 € se si include l'ecografia transvaginale e il pap-test. La prevenzione femminile è un settore molto competitivo nella Capitale, con numerosi centri specialistici in zona Montesacro e San Giovanni che offrono tariffe calmierate per le pazienti più giovani.
+          </p>
+
+          {annunci[1] && <AnnuncioBox annuncio={annunci[1]} colore="#0369a1" />}
+
+          <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Oculistica</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            Una visita oculistica completa a Roma (che include esame del fondo oculare, misurazione della pressione oculare e test della vista) ha un costo medio di 100-120 €. Molti studi privati offrono tariffe ridotte per le visite pediatriche. Se cerchi un oculista a basso costo, le zone di Roma Est come Tiburtina offrono centri moderni con tariffe a partire da 80 €.
+          </p>
+
+          <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Ortopedia</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            Per problemi alla colonna, alle ginocchia o alle articolazioni, una visita ortopedica privata a Roma costa tra i 90 € e i 160 €. Il prezzo aumenta se lo specialista esegue infiltrazioni o trattamenti fisioterapici immediati. La zona dell'Aurelio e di Monteverde ospita alcuni dei chirurghi ortopedici più richiesti, con tariffe leggermente sopra la media cittadina.
+          </p>
+
+          <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Psicologia e Psicoterapia</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            A differenza delle altre branche, le tariffe degli psicologi a Roma sono più stabili. Una seduta individuale costa mediamente tra 50 € e 80 €. Molti professionisti offrono il primo colloquio conoscitivo gratuito o a prezzo ridotto (intorno ai 40 €). Le zone con la più alta densità di studi di psicoterapia sono il Centro Storico e il quartiere San Giovanni.
+          </p>
+
+          <h3 style={{ color: '#0891b2', fontSize: '22px', fontWeight: '700', marginTop: '30px' }}>Nutrizione e Dietetica</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            La prima visita con un nutrizionista a Roma, comprensiva di piano alimentare personalizzato e impedenziometria, costa tra gli 80 € e i 130 €. I successivi controlli mensili hanno solitamente un costo ridotto, oscillando tra i 40 € e i 60 €. È un servizio molto richiesto specialmente nelle zone residenziali come l'EUR e i Parioli.
+          </p>
+
+          <h3 style={{ color: '#164e63', fontSize: '24px', fontWeight: '800', marginTop: '40px' }}>Servizi Diagnostici (TAC e Risonanza)</h3>
+          <p style={{ lineHeight: '1.8', color: '#334155' }}>
+            Oltre alle visite, Roma offre una vasta rete di centri diagnostici per <strong>Risonanza Magnetica e TAC</strong>. I prezzi per una RM senza contrasto partono da 120 € in regime privato "sociale" fino a 250 € in cliniche di alta fascia. La disponibilità di macchinari "aperti" per claustrofobici è concentrata soprattutto nei grandi centri di Roma Nord e zona Ostiense.
           </p>
 
           {annunci[1] && <AnnuncioBox annuncio={annunci[1]} colore="#0369a1" />}
