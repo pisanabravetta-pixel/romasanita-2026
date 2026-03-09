@@ -205,7 +205,9 @@ const guidaPillar = {
             Prezzi aggiornati a <strong>{mese}</strong> per visite specialistiche, esami diagnostici, fisioterapia e check-up. Confronto privato vs SSN, tempi di attesa e dove prenotare.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
-            <span style={{ backgroundColor: '#dcfce7', color: '#065f46', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>✅ {guideEsistenti.length + guideNuove.length} guide disponibili</span>
+<span style={{ backgroundColor: '#dcfce7', color: '#065f46', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>
+  ✅ {guideEsistenti.length + guideNuove.length + 1} guide disponibili
+</span>
             <span style={{ backgroundColor: '#dbeafe', color: '#1e3a8a', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>📅 Aggiornate a {mese}</span>
             <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>⚖️ Con disclaimer legale</span>
           </div>
