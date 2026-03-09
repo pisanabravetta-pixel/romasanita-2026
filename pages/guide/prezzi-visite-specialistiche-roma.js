@@ -169,7 +169,7 @@ export default function PaginaHubPrezzi() {
           <p style={{ lineHeight: '1.8', color: '#334155', marginBottom: '20px' }}>
             Roma è una metropoli dove la posizione geografica dello studio medico incide fino al 30% sul costo finale della prestazione.
           </p>
-{/* SEZIONE QUARTIERI (Replica stile Guida Cardiologica) */}
+{/* SEZIONE QUARTIERI CORRETTA */}
 <section style={{ marginBottom: '40px' }}>
   <h2 style={{ color: '#164e63', fontSize: '26px', fontWeight: '800', marginBottom: '16px' }}>
     Visite specialistiche per quartiere a Roma
@@ -181,7 +181,7 @@ export default function PaginaHubPrezzi() {
     {QUARTIERI.map(q => (
       <a
         key={q.slug}
-        href={`/servizi-sanitari-roma-${q.slug}`}
+        href={`/visite-specialistiche-roma-${q.slug}`}
         style={{ 
           padding: '10px 16px', 
           backgroundColor: '#f0f9ff', 
@@ -193,7 +193,7 @@ export default function PaginaHubPrezzi() {
           border: '1px solid #bae6fd' 
         }}
       >
-        Visite specialistiche {q.nome}
+        Visite specialistiche Roma {q.nome}
       </a>
     ))}
   </div>
