@@ -4,7 +4,14 @@ import Footer from '../components/Footer';
 
 export default function GuideHub() {
   const mese = new Date().toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
-
+const guidaPillar = {
+    title: "Prezzi Visite Specialistiche Roma",
+    link: "/guide/prezzi-visite-specialistiche-roma",
+    desc: "L'osservatorio completo sui costi della sanità privata a Roma. Tariffe medie e confronto tra i vari quartieri.",
+    colore: "#164e63",
+    icon: "📊",
+    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=600"
+  };
   const guideEsistenti = [
     {
       title: "Costo Visita Cardiologica a Roma",
@@ -212,7 +219,9 @@ export default function GuideHub() {
             </h2>
             <p style={{ color: '#64748b', marginBottom: '30px' }}>Costi delle principali visite mediche specialistiche private a Roma.</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '22px' }}>
-              {guideEsistenti.map((item, index) => (
+             {/* AGGIUNGI QUESTA RIGA QUI SOTTO */}
+              <CardGuida item={guidaPillar} />
+{guideEsistenti.map((item, index) => (
                 <CardGuida key={index} item={item} />
               ))}
             </div>
