@@ -173,7 +173,7 @@ export default function PaginaHubPrezzi() {
   {QUARTIERI.map(q => (
     <a 
       key={q.slug} 
-      href={`/servizi-sanitari-roma/${q.slug}`} 
+      href={`/servizi-sanitari-roma-${q.slug}`} 
       style={{ 
         padding: '18px', 
         backgroundColor: '#fff', 
@@ -187,7 +187,7 @@ export default function PaginaHubPrezzi() {
         boxShadow: '0 2px 4px rgba(0,0,0,0.04)' 
       }}
     >
-      Visite Specialistiche a {q.nome} →
+      Visite Specialistiche a Roma {q.nome} →
     </a>
   ))}
 </div>
