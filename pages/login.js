@@ -46,7 +46,7 @@ export default function Login() {
       <main style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 20px' }}>
         <div style={{ background: 'white', padding: '40px', borderRadius: '32px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05)', maxWidth: '450px', width: '100%', textAlign: 'center', border: '1px solid #e2e8f0' }}>
           
-          <div style={{ fontSize: '40px', marginBottom: '20px' }}>ðŸ”</div>
+          <div style={{ fontSize: '40px', marginBottom: '20px' }}>🔐</div>
           
           <h1 style={{ color: '#0f172a', marginBottom: '10px', fontSize: '28px', fontWeight: '900', letterSpacing: '-1px' }}>Area Professionisti</h1>
           <p style={{ color: '#64748b', marginBottom: '30px', fontWeight: '500', lineHeight: '1.5' }}>
