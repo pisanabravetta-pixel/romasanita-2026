@@ -2,7 +2,7 @@
 --
 -- PRIMA DI ESEGUIRE: esportare schema e dati del progetto Supabase.
 -- Questa migration presume che public.annunci.id sia bigint, come nella configurazione
--- Supabase piÃ¹ comune. Se `annunci.id` Ã¨ uuid, sostituire BIGINT con UUID nelle due FK.
+-- Supabase più comune. Se `annunci.id` è uuid, sostituire BIGINT con UUID nelle due FK.
 
 alter table public.annunci
   add column if not exists stato text,
@@ -88,14 +88,14 @@ create policy "Servizi pubblici delle schede pubblicate"
     )
   );
 
--- Proprietario: puÃ² leggere e gestire i servizi della propria scheda.
+-- Proprietario: può leggere e gestire i servizi della propria scheda.
 drop policy if exists "Proprietario gestisce i propri servizi" on public.servizi;
 create policy "Proprietario gestisce i propri servizi"
   on public.servizi for all to authenticated
   using (exists (select 1 from public.annunci a where a.id = servizi.annuncio_id and a.user_id = auth.uid()))
   with check (exists (select 1 from public.annunci a where a.id = servizi.annuncio_id and a.user_id = auth.uid()));
 
--- Un professionista puÃ² creare e consultare solo le proprie richieste.
+-- Un professionista può creare e consultare solo le proprie richieste.
 drop policy if exists "Utente crea le proprie richieste di rivendicazione" on public.richieste_rivendicazione;
 create policy "Utente crea le proprie richieste di rivendicazione"
   on public.richieste_rivendicazione for insert to authenticated
