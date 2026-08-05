@@ -52,7 +52,7 @@ export default function RivendicaScheda() {
     setEsito('Richiesta inviata. Controlleremo i dati e ti avviseremo via email.');
   };
 
-  if (loading) return <div style={{ padding: '100px', textAlign: 'center' }}>Caricamentoâ€¦</div>;
+  if (loading) return <div style={{ padding: '100px', textAlign: 'center' }}>Caricamento…</div>;
   if (!scheda) return <div style={{ padding: '100px', textAlign: 'center' }}>Scheda non trovata.</div>;
 
   const giaTua = scheda.user_id && sessione?.user?.id === scheda.user_id;
@@ -66,18 +66,18 @@ export default function RivendicaScheda() {
         <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '32px', boxShadow: '0 4px 20px rgba(0,0,0,.06)' }}>
           <p style={{ margin: 0, color: '#0284c7', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase' }}>Scheda professionale</p>
           <h1 style={{ color: '#0f172a', margin: '8px 0 12px', fontSize: '30px' }}>Rivendica {scheda.nome}</h1>
-          <p style={{ color: '#475569', lineHeight: 1.6 }}>I dati iniziali sono stati estratti da fonti pubbliche. Se gestisci questa struttura, richiedi gratuitamente lâ€™accesso per aggiornarli.</p>
+          <p style={{ color: '#475569', lineHeight: 1.6 }}>I dati iniziali sono stati estratti da fonti pubbliche. Se gestisci questa struttura, richiedi gratuitamente l’accesso per aggiornarli.</p>
 
-          {giaTua ? <a href="/dashboard" style={{ display: 'inline-block', background: '#065f46', color: 'white', padding: '14px 20px', borderRadius: '12px', fontWeight: 800, textDecoration: 'none' }}>Gestisci la tua scheda â†’</a> :
-           giaRivendicata ? <p style={{ background: '#fef3c7', color: '#92400e', padding: '14px', borderRadius: '12px' }}>Questa scheda Ã¨ giÃ  stata rivendicata. Se ritieni sia un errore, contattaci a info@servizisalute.com.</p> :
+          {giaTua ? <a href="/dashboard" style={{ display: 'inline-block', background: '#065f46', color: 'white', padding: '14px 20px', borderRadius: '12px', fontWeight: 800, textDecoration: 'none' }}>Gestisci la tua scheda →</a> :
+           giaRivendicata ? <p style={{ background: '#fef3c7', color: '#92400e', padding: '14px', borderRadius: '12px' }}>Questa scheda è già stata rivendicata. Se ritieni sia un errore, contattaci a info@servizisalute.com.</p> :
            esito ? <p style={{ background: '#f0fdf4', color: '#166534', padding: '14px', borderRadius: '12px', fontWeight: 700 }}>{esito}</p> :
            <form onSubmit={inviaRichiesta} style={{ display: 'grid', gap: '16px', marginTop: '24px' }}>
              {!sessione && <p style={{ background: '#eff6ff', color: '#1d4ed8', padding: '14px', borderRadius: '12px', margin: 0 }}>Per inviare la richiesta ti chiederemo di accedere con la tua email professionale.</p>}
              <label style={{ display: 'grid', gap: '8px', color: '#334155', fontWeight: 700 }}>
                Un breve messaggio per confermare il tuo ruolo <span style={{ color: '#64748b', fontWeight: 400 }}>(facoltativo)</span>
-               <textarea value={messaggio} onChange={(e) => setMessaggio(e.target.value)} placeholder="Es. Sono il responsabile della strutturaâ€¦" rows="4" style={{ padding: '12px', border: '1px solid #cbd5e1', borderRadius: '10px', font: 'inherit', resize: 'vertical' }} />
+               <textarea value={messaggio} onChange={(e) => setMessaggio(e.target.value)} placeholder="Es. Sono il responsabile della struttura…" rows="4" style={{ padding: '12px', border: '1px solid #cbd5e1', borderRadius: '10px', font: 'inherit', resize: 'vertical' }} />
              </label>
-             <button disabled={inviando} type="submit" style={{ background: '#0284c7', color: 'white', border: 0, padding: '15px', borderRadius: '12px', fontWeight: 900, cursor: 'pointer', fontSize: '16px' }}>{inviando ? 'Invio in corsoâ€¦' : sessione ? 'INVIA RICHIESTA' : 'ACCEDI E RIVENDICA'}</button>
+             <button disabled={inviando} type="submit" style={{ background: '#0284c7', color: 'white', border: 0, padding: '15px', borderRadius: '12px', fontWeight: 900, cursor: 'pointer', fontSize: '16px' }}>{inviando ? 'Invio in corso…' : sessione ? 'INVIA RICHIESTA' : 'ACCEDI E RIVENDICA'}</button>
            </form>}
         </div>
       </main>
