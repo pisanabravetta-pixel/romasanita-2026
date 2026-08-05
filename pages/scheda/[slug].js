@@ -39,14 +39,14 @@ const serviziPerCategoria = {
   oculisti:            ["Visita oculistica", "Fondo oculare", "Campo visivo", "Tonometria", "OCT retina", "Valutazione per occhiali/lenti"],
 };
 
-// Orari fittizi â€” mostrati con lucchetto
+// Orari fittizi — mostrati con lucchetto
 const ORARI_FITTIZI = [
-  { g: "LunedÃ¬",    o: "09:00 â€“ 13:00 / 15:00 â€“ 19:00" },
-  { g: "MartedÃ¬",   o: "09:00 â€“ 13:00 / 15:00 â€“ 19:00" },
-  { g: "MercoledÃ¬", o: "09:00 â€“ 13:00" },
-  { g: "GiovedÃ¬",   o: "09:00 â€“ 13:00 / 15:00 â€“ 19:00" },
-  { g: "VenerdÃ¬",   o: "09:00 â€“ 13:00 / 15:00 â€“ 19:00" },
-  { g: "Sabato",    o: "09:00 â€“ 12:30" },
+  { g: "Lunedì",    o: "09:00 – 13:00 / 15:00 – 19:00" },
+  { g: "Martedì",   o: "09:00 – 13:00 / 15:00 – 19:00" },
+  { g: "Mercoledì", o: "09:00 – 13:00" },
+  { g: "Giovedì",   o: "09:00 – 13:00 / 15:00 – 19:00" },
+  { g: "Venerdì",   o: "09:00 – 13:00 / 15:00 – 19:00" },
+  { g: "Sabato",    o: "09:00 – 12:30" },
   { g: "Domenica",  o: "Chiuso" },
 ];
 
@@ -96,7 +96,7 @@ export default function SchedaProfessionale() {
         const lng = parseFloat(dato.lng);
         const map = L.map('map-scheda', { scrollWheelZoom: false }).setView([lat, lng], 16);
         window.mapInstance = map;
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: 'Â© OSM' }).addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OSM' }).addTo(map);
         L.marker([lat, lng]).addTo(map).bindPopup(`<b>${dato.nome}</b>`).openPopup();
         setTimeout(() => { map.invalidateSize(); }, 400);
       } catch (e) { console.error("Errore mappa:", e); }
@@ -105,7 +105,7 @@ export default function SchedaProfessionale() {
     return () => { if (window.mapInstance) { window.mapInstance.remove(); window.mapInstance = null; } };
   }, [dato]);
 
-  if (loading) return <div style={{ padding: '100px', textAlign: 'center', fontSize: '18px' }}>â³ Caricamento scheda...</div>;
+  if (loading) return <div style={{ padding: '100px', textAlign: 'center', fontSize: '18px' }}>⏳ Caricamento scheda...</div>;
   if (!dato) return <div style={{ padding: '100px', textAlign: 'center' }}>Scheda non trovata.</div>;
 
   const nomeZona = dato.quartiere || dato.zona || "Roma";
@@ -115,7 +115,7 @@ export default function SchedaProfessionale() {
     .replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/--+/g, '-');
   const zonaSlug = cleanSlug(nomeZona);
 
-  // Mappa categoria DB â†’ slug pagina reale
+  // Mappa categoria DB → slug pagina reale
   const categoriaToSlug = (cat) => {
     const c = cat.toLowerCase();
     if (c.includes('farmac'))                          return 'farmacie-roma';
@@ -161,11 +161,11 @@ export default function SchedaProfessionale() {
   const schedaRivendicata = Boolean(dato.user_id);
   const utenteProprietario = Boolean(sessione?.user?.id && dato.user_id === sessione.user.id);
   const formatPrezzo = (servizio) => {
-    if (servizio.prezzo !== null && servizio.prezzo !== undefined) return `â‚¬ ${Number(servizio.prezzo).toFixed(0)}`;
+    if (servizio.prezzo !== null && servizio.prezzo !== undefined) return `€ ${Number(servizio.prezzo).toFixed(0)}`;
     if (servizio.prezzo_da !== null && servizio.prezzo_da !== undefined && servizio.prezzo_a !== null && servizio.prezzo_a !== undefined) {
-      return `â‚¬ ${Number(servizio.prezzo_da).toFixed(0)} â€“ ${Number(servizio.prezzo_a).toFixed(0)}`;
+      return `€ ${Number(servizio.prezzo_da).toFixed(0)} – ${Number(servizio.prezzo_a).toFixed(0)}`;
     }
-    if (servizio.prezzo_da !== null && servizio.prezzo_da !== undefined) return `Da â‚¬ ${Number(servizio.prezzo_da).toFixed(0)}`;
+    if (servizio.prezzo_da !== null && servizio.prezzo_da !== undefined) return `Da € ${Number(servizio.prezzo_da).toFixed(0)}`;
     return 'Su richiesta';
   };
 
@@ -182,28 +182,28 @@ export default function SchedaProfessionale() {
     const isDomicilio = cat.includes("domicilio");
 
     if (isFarmacia) {
-      if (v === 0) return `La ${nome} si trova in ${indirizzo}, nel quartiere ${zona} di Roma. Rappresenta un presidio sanitario territoriale a servizio dei residenti della zona. Per informazioni aggiornate su orari, turni o disponibilitÃ  di prodotti, Ã¨ consigliabile contattare direttamente la farmacia.`;
-      if (v === 1) return `Situata nel quartiere ${zona}, la ${nome} Ã¨ una farmacia con sede in ${indirizzo}. Questa pagina riporta indirizzo e posizione per facilitarne l'individuazione. Per dettagli operativi o chiarimenti sui servizi disponibili Ã¨ opportuno rivolgersi direttamente al punto vendita.`;
-      return `Nel territorio di Roma ${zona} Ã¨ presente la ${nome}, con sede in ${indirizzo}. La farmacia offre supporto sanitario di prossimitÃ  per i cittadini della zona. Per ricevere informazioni specifiche si invita a utilizzare i contatti ufficiali indicati in pagina.`;
+      if (v === 0) return `La ${nome} si trova in ${indirizzo}, nel quartiere ${zona} di Roma. Rappresenta un presidio sanitario territoriale a servizio dei residenti della zona. Per informazioni aggiornate su orari, turni o disponibilità di prodotti, è consigliabile contattare direttamente la farmacia.`;
+      if (v === 1) return `Situata nel quartiere ${zona}, la ${nome} è una farmacia con sede in ${indirizzo}. Questa pagina riporta indirizzo e posizione per facilitarne l'individuazione. Per dettagli operativi o chiarimenti sui servizi disponibili è opportuno rivolgersi direttamente al punto vendita.`;
+      return `Nel territorio di Roma ${zona} è presente la ${nome}, con sede in ${indirizzo}. La farmacia offre supporto sanitario di prossimità per i cittadini della zona. Per ricevere informazioni specifiche si invita a utilizzare i contatti ufficiali indicati in pagina.`;
     }
     if (isDentista) {
-      if (v === 0) return `${nome} opera come studio odontoiatrico nel quartiere ${zona} di Roma, in ${indirizzo}. La scheda consente di visualizzare la posizione e accedere ai recapiti ufficiali. Per informazioni su visite o trattamenti Ã¨ necessario contattare direttamente lo studio.`;
+      if (v === 0) return `${nome} opera come studio odontoiatrico nel quartiere ${zona} di Roma, in ${indirizzo}. La scheda consente di visualizzare la posizione e accedere ai recapiti ufficiali. Per informazioni su visite o trattamenti è necessario contattare direttamente lo studio.`;
       if (v === 1) return `Lo studio dentistico ${nome} si trova in ${indirizzo}, zona ${zona} a Roma. Questa pagina riporta le informazioni utili per individuare la sede e mettersi in contatto con il professionista.`;
-      return `Nel quartiere ${zona} di Roma Ã¨ presente ${nome}, realtÃ  odontoiatrica con sede in ${indirizzo}. La localizzazione precisa e i recapiti consentono un contatto diretto con lo studio.`;
+      return `Nel quartiere ${zona} di Roma è presente ${nome}, realtà odontoiatrica con sede in ${indirizzo}. La localizzazione precisa e i recapiti consentono un contatto diretto con lo studio.`;
     }
     if (isDiagnostica) {
-      if (v === 0) return `${nome} Ã¨ una struttura di diagnostica situata in ${indirizzo}, nel quartiere ${zona} di Roma. La scheda fornisce i riferimenti utili per individuare la sede e richiedere informazioni direttamente alla struttura.`;
-      if (v === 1) return `Situato a Roma ${zona}, in ${indirizzo}, ${nome} rientra tra i centri di diagnostica presenti sul territorio. Per conoscere modalitÃ  di accesso o informazioni operative Ã¨ consigliabile contattare direttamente la sede.`;
+      if (v === 0) return `${nome} è una struttura di diagnostica situata in ${indirizzo}, nel quartiere ${zona} di Roma. La scheda fornisce i riferimenti utili per individuare la sede e richiedere informazioni direttamente alla struttura.`;
+      if (v === 1) return `Situato a Roma ${zona}, in ${indirizzo}, ${nome} rientra tra i centri di diagnostica presenti sul territorio. Per conoscere modalità di accesso o informazioni operative è consigliabile contattare direttamente la sede.`;
       return `Nel quartiere ${zona} opera ${nome}, centro di diagnostica con sede in ${indirizzo}. La pagina consente di visualizzare la posizione e accedere ai recapiti ufficiali per ogni richiesta informativa.`;
     }
     if (isDomicilio) {
-      if (v === 0) return `${nome} fornisce servizi a domicilio nell'area di Roma ${zona}. La sede amministrativa risulta in ${indirizzo}. Per informazioni sulle modalitÃ  di intervento o disponibilitÃ  Ã¨ necessario contattare direttamente il servizio.`;
+      if (v === 0) return `${nome} fornisce servizi a domicilio nell'area di Roma ${zona}. La sede amministrativa risulta in ${indirizzo}. Per informazioni sulle modalità di intervento o disponibilità è necessario contattare direttamente il servizio.`;
       if (v === 1) return `Operativo nel quartiere ${zona} di Roma, ${nome} offre servizi sanitari a domicilio. La pagina riporta i recapiti utili per richiedere informazioni direttamente al referente del servizio.`;
-      return `${nome} Ã¨ attivo nell'area di Roma ${zona} per servizi a domicilio, con riferimento in ${indirizzo}. Per dettagli organizzativi o richieste specifiche si invita a contattare direttamente la struttura.`;
+      return `${nome} è attivo nell'area di Roma ${zona} per servizi a domicilio, con riferimento in ${indirizzo}. Per dettagli organizzativi o richieste specifiche si invita a contattare direttamente la struttura.`;
     }
     if (v === 0) return `${nome} opera come ${categoria} nel quartiere ${zona} di Roma, con studio in ${indirizzo}. La scheda riporta la localizzazione e i riferimenti utili per contattare direttamente il professionista.`;
     if (v === 1) return `Lo studio di ${nome}, specializzato in ${categoria}, si trova in ${indirizzo} a Roma ${zona}. Questa pagina consente di individuare facilmente la sede e accedere ai recapiti ufficiali.`;
-    return `Nel territorio di Roma ${zona} Ã¨ presente ${nome}, ${categoria}, con sede in ${indirizzo}. Per informazioni su attivitÃ  e disponibilitÃ  Ã¨ opportuno rivolgersi direttamente allo studio tramite i contatti indicati.`;
+    return `Nel territorio di Roma ${zona} è presente ${nome}, ${categoria}, con sede in ${indirizzo}. Per informazioni su attività e disponibilità è opportuno rivolgersi direttamente allo studio tramite i contatti indicati.`;
   };
 
   const schemaType = categoria.toLowerCase().includes('farmac') ? 'Pharmacy' :
@@ -232,7 +232,7 @@ export default function SchedaProfessionale() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
       <Head>
-        <title>{dato.nome} â€“ {categoria} a Roma {nomeZona} | ServiziSalute</title>
+        <title>{dato.nome} – {categoria} a Roma {nomeZona} | ServiziSalute</title>
         <meta name="description" content={`${dato.nome} a Roma ${nomeZona}. Indirizzo: ${dato.indirizzo}. Contatti diretti, mappa e prezzi indicativi per ${categoria} a Roma.`} />
         <link rel="canonical" href={`https://www.servizisalute.com/scheda/${dato.slug}`} />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -282,16 +282,16 @@ export default function SchedaProfessionale() {
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px', flexWrap: 'wrap' }}>
             {/* Avatar placeholder */}
             <div style={{ width: '70px', height: '70px', borderRadius: '16px', backgroundColor: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', flexShrink: 0 }}>
-              {categoria.toLowerCase().includes('farmac') ? 'ðŸ’Š' :
-               categoria.toLowerCase().includes('dent') ? 'ðŸ¦·' :
-               categoria.toLowerCase().includes('cardiol') ? 'â¤ï¸' :
-               categoria.toLowerCase().includes('psicol') ? 'ðŸ§ ' :
-               categoria.toLowerCase().includes('dermatol') ? 'ðŸ”¬' :
-               categoria.toLowerCase().includes('ginecol') ? 'ðŸ©º' :
-               categoria.toLowerCase().includes('nutriz') ? 'ðŸ¥—' :
-               categoria.toLowerCase().includes('ortoped') ? 'ðŸ¦´' :
-               categoria.toLowerCase().includes('oculist') ? 'ðŸ‘ï¸' :
-               categoria.toLowerCase().includes('diagnost') ? 'ðŸ¥' : 'ðŸ©º'}
+              {categoria.toLowerCase().includes('farmac') ? '💊' :
+               categoria.toLowerCase().includes('dent') ? '🦷' :
+               categoria.toLowerCase().includes('cardiol') ? '❤️' :
+               categoria.toLowerCase().includes('psicol') ? '🧠' :
+               categoria.toLowerCase().includes('dermatol') ? '🔬' :
+               categoria.toLowerCase().includes('ginecol') ? '🩺' :
+               categoria.toLowerCase().includes('nutriz') ? '🥗' :
+               categoria.toLowerCase().includes('ortoped') ? '🦴' :
+               categoria.toLowerCase().includes('oculist') ? '👁️' :
+               categoria.toLowerCase().includes('diagnost') ? '🏥' : '🩺'}
             </div>
             <div style={{ flex: 1 }}>
               <h1 style={{ color: '#1e293b', fontSize: '1.6rem', fontWeight: '900', margin: '0 0 6px 0', lineHeight: '1.2' }}>
@@ -301,7 +301,7 @@ export default function SchedaProfessionale() {
                 <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '4px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>
                   {categoria}
                 </span>
-                <span style={{ color: '#64748b', fontSize: '13px' }}>ðŸ“ {nomeZona}, Roma</span>
+                <span style={{ color: '#64748b', fontSize: '13px' }}>📍 {nomeZona}, Roma</span>
               </div>
             </div>
           </div>
@@ -313,12 +313,12 @@ export default function SchedaProfessionale() {
 
           {/* INFO PRINCIPALI */}
           <div style={{ backgroundColor: '#f1f5f9', padding: '20px', borderRadius: '14px', marginBottom: '24px' }}>
-            <h2 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '14px', color: '#1e293b', marginTop: 0 }}>ðŸ“‹ Informazioni Principali</h2>
+            <h2 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '14px', color: '#1e293b', marginTop: 0 }}>📋 Informazioni Principali</h2>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '10px' }}>
-              <li style={{ fontSize: '15px', color: '#334155' }}><strong>ðŸ“ Indirizzo:</strong> {dato.indirizzo}</li>
-              <li style={{ fontSize: '15px', color: '#334155' }}><strong>ðŸ  Zona:</strong> {nomeZona}, Roma</li>
-              <li style={{ fontSize: '15px', color: '#334155' }}><strong>ðŸ©º SpecialitÃ :</strong> {categoria}</li>
-              {dato.telefono && <li style={{ fontSize: '15px', color: '#334155' }}><strong>ðŸ“ž Telefono:</strong> {dato.telefono}</li>}
+              <li style={{ fontSize: '15px', color: '#334155' }}><strong>📍 Indirizzo:</strong> {dato.indirizzo}</li>
+              <li style={{ fontSize: '15px', color: '#334155' }}><strong>🏠 Zona:</strong> {nomeZona}, Roma</li>
+              <li style={{ fontSize: '15px', color: '#334155' }}><strong>🩺 Specialità:</strong> {categoria}</li>
+              {dato.telefono && <li style={{ fontSize: '15px', color: '#334155' }}><strong>📞 Telefono:</strong> {dato.telefono}</li>}
             </ul>
           </div>
 
@@ -328,19 +328,19 @@ export default function SchedaProfessionale() {
               href={`tel:${dato.telefono}`}
               onClick={() => trackChiama(dato.nome, dato.categoria, dato.zona)}
               style={{ flex: 1, minWidth: '150px', backgroundColor: '#0284c7', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}
-            >ðŸ“ž CHIAMA ORA</a>
+            >📞 CHIAMA ORA</a>
             {dato.whatsapp && (
               <a
                 href={`https://wa.me/39${dato.whatsapp}`}
                 onClick={() => trackWhatsApp(dato.nome, dato.categoria, dato.zona)}
                 style={{ flex: 1, minWidth: '150px', backgroundColor: '#22c55e', color: 'white', padding: '16px', borderRadius: '12px', textAlign: 'center', fontWeight: '800', textDecoration: 'none', fontSize: '15px' }}
-              >ðŸ’¬ WHATSAPP</a>
+              >💬 WHATSAPP</a>
             )}
           </div>
 
-          {/* â•â•â• SEZIONE ORARI â€” PREMIUM LOCK (2 colonne compatta) â•â•â• */}
+          {/* ═══ SEZIONE ORARI — PREMIUM LOCK (2 colonne compatta) ═══ */}
           <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px' }}>
-            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>ðŸ• Orari di Apertura</h2>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>🕐 Orari di Apertura</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px 12px' }}>
               {ORARI_FITTIZI.map(({ g, o }) => (
                 <div key={g} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', padding: '2px 0', borderBottom: '1px solid #f1f5f9' }}>
@@ -350,17 +350,17 @@ export default function SchedaProfessionale() {
               ))}
             </div>
             <div style={overlayLock}>
-              <span style={{ fontSize: '16px' }}>ðŸ”’</span>
+              <span style={{ fontSize: '16px' }}>🔒</span>
               <div>
                 <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Orari non confermati</span>
-                <span style={{ color: '#64748b', fontSize: '11px', marginLeft: '4px' }}>â€” contatta la struttura</span>
+                <span style={{ color: '#64748b', fontSize: '11px', marginLeft: '4px' }}>— contatta la struttura</span>
               </div>
             </div>
           </div>
 
-          {/* â•â•â• SEZIONE SERVIZI â•â•â• */}
+          {/* ═══ SEZIONE SERVIZI ═══ */}
           <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px', border: serviziReali.length > 0 ? '1px solid #bbf7d0' : sezioneLock.border, backgroundColor: serviziReali.length > 0 ? '#f0fdf4' : sezioneLock.backgroundColor }}>
-            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>ðŸ¥ Servizi Offerti</h2>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>🏥 Servizi Offerti</h2>
             {serviziReali.length > 0 ? (
               <div style={{ display: 'grid', gap: '8px' }}>
                 {serviziReali.map((servizio) => (
@@ -382,7 +382,7 @@ export default function SchedaProfessionale() {
                   {servizi.length > 5 && <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', padding: '3px 10px', borderRadius: '20px', fontSize: '11px' }}>+{servizi.length - 5} altri</span>}
                 </div>
                 <div style={overlayLock}>
-                  <span style={{ fontSize: '20px' }}>ðŸ”’</span>
+                  <span style={{ fontSize: '20px' }}>🔒</span>
                   <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>
                     {schedaRivendicata ? 'Servizi non ancora inseriti dal titolare' : 'Servizi da confermare dal titolare'}
                   </span>
@@ -391,27 +391,27 @@ export default function SchedaProfessionale() {
             )}
           </div>
 
-          {/* â•â•â• SEZIONE FOTO â€” PREMIUM LOCK â•â•â• */}
+          {/* ═══ SEZIONE FOTO — PREMIUM LOCK ═══ */}
           <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '20px' }}>
-            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>ðŸ“· Foto Struttura</h2>
+            <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>📷 Foto Struttura</h2>
             <div style={{ display: 'flex', gap: '8px' }}>
               {[1, 2, 3, 4].map(i => (
-                <div key={i} style={{ flex: 1, height: '52px', backgroundColor: '#e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>ðŸ¥</div>
+                <div key={i} style={{ flex: 1, height: '52px', backgroundColor: '#e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🏥</div>
               ))}
             </div>
             <div style={overlayLock}>
-              <span style={{ fontSize: '16px' }}>ðŸ”’</span>
+              <span style={{ fontSize: '16px' }}>🔒</span>
               <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Foto non ancora caricate</span>
             </div>
           </div>
 
-          {/* PREZZI INDICATIVI â€” visibili a tutti */}
+          {/* PREZZI INDICATIVI — visibili a tutti */}
           <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '14px', padding: '20px', marginBottom: '24px' }}>
             <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#065f46', marginTop: 0, marginBottom: '14px' }}>
-              ðŸ’¶ Prezzi Indicativi â€” {categoria} a Roma
+              💶 Prezzi Indicativi — {categoria} a Roma
             </h2>
             <p style={{ fontSize: '12px', color: '#64748b', marginTop: 0, marginBottom: '12px' }}>
-              âš ï¸ Tariffe medie di mercato a Roma. I prezzi reali dipendono dalla struttura e dal caso clinico.
+              ⚠️ Tariffe medie di mercato a Roma. I prezzi reali dipendono dalla struttura e dal caso clinico.
             </p>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
@@ -425,7 +425,7 @@ export default function SchedaProfessionale() {
                   <tr key={i} style={{ borderBottom: '1px solid #d1fae5' }}>
                     <td style={{ padding: '10px 0', fontSize: '14px', color: '#334155' }}>{p.servizio}</td>
                     <td style={{ padding: '10px 0', fontSize: '14px', fontWeight: '700', color: '#065f46', textAlign: 'right' }}>
-                      â‚¬ {p.min} â€“ {p.max}
+                      € {p.min} – {p.max}
                     </td>
                   </tr>
                 ))}
@@ -434,19 +434,19 @@ export default function SchedaProfessionale() {
           </div>
 
           {/* MAPPA */}
-          <h2 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '12px', color: '#1e293b' }}>ðŸ—ºï¸ Posizione sulla Mappa</h2>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '12px', color: '#1e293b' }}>🗺️ Posizione sulla Mappa</h2>
           <div id="map-scheda" style={{ height: '380px', width: '100%', borderRadius: '14px', border: '1px solid #cbd5e1', zIndex: 1 }}></div>
 
           <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #e2e8f0' }} />
 
           <p style={{ textAlign: 'center', margin: 0 }}>
-            â† <a href={urlBack} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
+            ← <a href={urlBack} style={{ color: '#0284c7', fontWeight: '700', textDecoration: 'none' }}>
               Torna a {labelCat} Roma
             </a>
           </p>
         </div>
 
-        {/* â•â•â• BANNER "SEI IL TITOLARE?" â•â•â• */}
+        {/* ═══ BANNER "SEI IL TITOLARE?" ═══ */}
         {(utenteProprietario || !schedaRivendicata) && <div style={{
           background: 'linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%)',
           borderRadius: '20px', padding: '30px', color: 'white',
@@ -456,16 +456,16 @@ export default function SchedaProfessionale() {
         }}>
           <div style={{ flex: 1, minWidth: '220px' }}>
             <div style={{ fontSize: '22px', fontWeight: '900', marginBottom: '8px' }}>
-              {utenteProprietario ? 'ðŸ¥ Questa Ã¨ la tua scheda' : 'ðŸ¥ Sei il titolare di questa struttura?'}
+              {utenteProprietario ? '🏥 Questa è la tua scheda' : '🏥 Sei il titolare di questa struttura?'}
             </div>
             <p style={{ margin: 0, opacity: 0.9, fontSize: '14px', lineHeight: '1.6' }}>
               {utenteProprietario ? <>Gestisci e aggiorna <strong>servizi, prezzi, orari e contatti</strong> dalla tua area professionista.</> : <>I dati di questa scheda provengono da fonti pubbliche. Rivendicala gratuitamente e aggiorna <strong>servizi, prezzi, orari e contatti</strong>.</>}
             </p>
             <div style={{ display: 'flex', gap: '16px', marginTop: '14px', flexWrap: 'wrap', fontSize: '13px', opacity: 0.85 }}>
-              <span>âœ… Orari aggiornati</span>
-              <span>âœ… Foto struttura</span>
-              <span>âœ… Servizi verificati</span>
-              <span>âœ… Posizione in cima</span>
+              <span>✅ Orari aggiornati</span>
+              <span>✅ Foto struttura</span>
+              <span>✅ Servizi verificati</span>
+              <span>✅ Posizione in cima</span>
             </div>
           </div>
           <a
@@ -478,7 +478,7 @@ export default function SchedaProfessionale() {
               boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
             }}
           >
-            {utenteProprietario ? 'Gestisci la scheda â†’' : 'Rivendica GRATIS â†’'}
+            {utenteProprietario ? 'Gestisci la scheda →' : 'Rivendica GRATIS →'}
           </a>
         </div>}
 
