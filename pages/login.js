@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabaseClient';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [messaggio, setMessaggio] = useState('');
@@ -13,10 +15,14 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     
+    const returnTo = typeof router.query.returnTo === 'string' && router.query.returnTo.startsWith('/')
+      ? router.query.returnTo
+      : '/dashboard';
+
     const { error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: typeof window !== 'undefined' ? window.location.origin + '/pubblica-annuncio' : '',
+        emailRedirectTo: typeof window !== 'undefined' ? window.location.origin + returnTo : '',
       },
     });
 
@@ -40,7 +46,7 @@ export default function Login() {
       <main style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 20px' }}>
         <div style={{ background: 'white', padding: '40px', borderRadius: '32px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05)', maxWidth: '450px', width: '100%', textAlign: 'center', border: '1px solid #e2e8f0' }}>
           
-          <div style={{ fontSize: '40px', marginBottom: '20px' }}>🔐</div>
+          <div style={{ fontSize: '40px', marginBottom: '20px' }}>ðŸ”</div>
           
           <h1 style={{ color: '#0f172a', marginBottom: '10px', fontSize: '28px', fontWeight: '900', letterSpacing: '-1px' }}>Area Professionisti</h1>
           <p style={{ color: '#64748b', marginBottom: '30px', fontWeight: '500', lineHeight: '1.5' }}>
@@ -103,3 +109,4 @@ export default function Login() {
     </div>
   );
 }
+
