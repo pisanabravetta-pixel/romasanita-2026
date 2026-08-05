@@ -55,18 +55,33 @@ export default function SchedaProfessionale() {
   const { slug } = router.query;
   const [dato, setDato] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sessione, setSessione] = useState(null);
+  const [serviziReali, setServiziReali] = useState([]);
 
   useEffect(() => {
     if (!slug) return;
     async function fetchDati() {
       try {
         const { data } = await supabase.from("annunci").select("*").eq("slug", slug).single();
-        if (data) setDato(data);
+        if (data) {
+          setDato(data);
+          const { data: servizi, error: serviziError } = await supabase
+            .from("servizi")
+            .select("id, nome, prezzo, prezzo_da, prezzo_a, note, categoria_servizio, ordinamento")
+            .eq("annuncio_id", data.id)
+            .eq("attivo", true)
+            .order("ordinamento", { ascending: true });
+          if (!serviziError) setServiziReali(servizi || []);
+        }
       } catch (err) { console.error(err); }
       finally { setLoading(false); }
     }
     fetchDati();
   }, [slug]);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => setSessione(session));
+  }, []);
 
   // Mappa Leaflet
   useEffect(() => {
@@ -143,6 +158,16 @@ export default function SchedaProfessionale() {
   const catKey = Object.keys(prezziIndicativi).find(k => categoria.toLowerCase().includes(k.replace(/-/g, ' ').replace(/i$/, '').replace(/e$/, ''))) || 'specialisti';
   const prezzi = prezziIndicativi[catKey] || prezziIndicativi['specialisti'];
   const servizi = serviziPerCategoria[catKey] || serviziPerCategoria['cardiologi'];
+  const schedaRivendicata = Boolean(dato.user_id);
+  const utenteProprietario = Boolean(sessione?.user?.id && dato.user_id === sessione.user.id);
+  const formatPrezzo = (servizio) => {
+    if (servizio.prezzo !== null && servizio.prezzo !== undefined) return `€ ${Number(servizio.prezzo).toFixed(0)}`;
+    if (servizio.prezzo_da !== null && servizio.prezzo_da !== undefined && servizio.prezzo_a !== null && servizio.prezzo_a !== undefined) {
+      return `€ ${Number(servizio.prezzo_da).toFixed(0)} – ${Number(servizio.prezzo_a).toFixed(0)}`;
+    }
+    if (servizio.prezzo_da !== null && servizio.prezzo_da !== undefined) return `Da € ${Number(servizio.prezzo_da).toFixed(0)}`;
+    return 'Su richiesta';
+  };
 
   // Testo SEO auto-generato
   const generaTestoSEO = () => {
@@ -333,19 +358,37 @@ export default function SchedaProfessionale() {
             </div>
           </div>
 
-          {/* ═══ SEZIONE SERVIZI — PREMIUM LOCK ═══ */}
-          <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px' }}>
+          {/* ═══ SEZIONE SERVIZI ═══ */}
+          <div style={{ ...sezioneLock, padding: '12px 16px', marginBottom: '16px', border: serviziReali.length > 0 ? '1px solid #bbf7d0' : sezioneLock.border, backgroundColor: serviziReali.length > 0 ? '#f0fdf4' : sezioneLock.backgroundColor }}>
             <h2 style={{ fontSize: '13px', fontWeight: '800', color: '#1e293b', marginTop: 0, marginBottom: '8px' }}>🏥 Servizi Offerti</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-              {servizi.slice(0, 5).map((s, i) => (
-                <span key={i} style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '3px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: '600' }}>{s}</span>
-              ))}
-              {servizi.length > 5 && <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', padding: '3px 10px', borderRadius: '20px', fontSize: '11px' }}>+{servizi.length - 5} altri</span>}
-            </div>
-            <div style={overlayLock}>
-              <span style={{ fontSize: '20px' }}>🔒</span>
-              <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>Servizi indicativi — scheda non verificata</span>
-            </div>
+            {serviziReali.length > 0 ? (
+              <div style={{ display: 'grid', gap: '8px' }}>
+                {serviziReali.map((servizio) => (
+                  <div key={servizio.id} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center', backgroundColor: 'white', borderRadius: '8px', padding: '10px 12px' }}>
+                    <div>
+                      <div style={{ color: '#14532d', fontSize: '13px', fontWeight: '800' }}>{servizio.nome}</div>
+                      {servizio.note && <div style={{ color: '#64748b', fontSize: '11px', marginTop: '2px' }}>{servizio.note}</div>}
+                    </div>
+                    <div style={{ color: '#065f46', fontSize: '13px', fontWeight: '900', whiteSpace: 'nowrap' }}>{formatPrezzo(servizio)}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {servizi.slice(0, 5).map((s, i) => (
+                    <span key={i} style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '3px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: '600' }}>{s}</span>
+                  ))}
+                  {servizi.length > 5 && <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', padding: '3px 10px', borderRadius: '20px', fontSize: '11px' }}>+{servizi.length - 5} altri</span>}
+                </div>
+                <div style={overlayLock}>
+                  <span style={{ fontSize: '20px' }}>🔒</span>
+                  <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '12px' }}>
+                    {schedaRivendicata ? 'Servizi non ancora inseriti dal titolare' : 'Servizi da confermare dal titolare'}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           {/* ═══ SEZIONE FOTO — PREMIUM LOCK ═══ */}
@@ -404,7 +447,7 @@ export default function SchedaProfessionale() {
         </div>
 
         {/* ═══ BANNER "SEI IL TITOLARE?" ═══ */}
-        <div style={{
+        {(utenteProprietario || !schedaRivendicata) && <div style={{
           background: 'linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%)',
           borderRadius: '20px', padding: '30px', color: 'white',
           display: 'flex', flexWrap: 'wrap', gap: '20px',
@@ -413,11 +456,10 @@ export default function SchedaProfessionale() {
         }}>
           <div style={{ flex: 1, minWidth: '220px' }}>
             <div style={{ fontSize: '22px', fontWeight: '900', marginBottom: '8px' }}>
-              🏥 Sei il titolare di questa struttura?
+              {utenteProprietario ? '🏥 Questa è la tua scheda' : '🏥 Sei il titolare di questa struttura?'}
             </div>
             <p style={{ margin: 0, opacity: 0.9, fontSize: '14px', lineHeight: '1.6' }}>
-              Rivendica la tua scheda e aggiorna <strong>orari, servizi, foto e descrizione</strong>.<br />
-              Più informazioni = più pazienti che ti contattano direttamente.
+              {utenteProprietario ? <>Gestisci e aggiorna <strong>servizi, prezzi, orari e contatti</strong> dalla tua area professionista.</> : <>I dati di questa scheda provengono da fonti pubbliche. Rivendicala gratuitamente e aggiorna <strong>servizi, prezzi, orari e contatti</strong>.</>}
             </p>
             <div style={{ display: 'flex', gap: '16px', marginTop: '14px', flexWrap: 'wrap', fontSize: '13px', opacity: 0.85 }}>
               <span>✅ Orari aggiornati</span>
@@ -427,7 +469,7 @@ export default function SchedaProfessionale() {
             </div>
           </div>
           <a
-            href="/pubblica-annuncio"
+            href={utenteProprietario ? '/dashboard' : `/rivendica/${dato.slug}`}
             style={{
               backgroundColor: 'white', color: '#1e3a8a',
               fontWeight: '900', textDecoration: 'none',
@@ -436,9 +478,9 @@ export default function SchedaProfessionale() {
               boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
             }}
           >
-            Rivendica GRATIS 🆓 →
+            {utenteProprietario ? 'Gestisci la scheda →' : 'Rivendica GRATIS →'}
           </a>
-        </div>
+        </div>}
 
       </main>
 
@@ -446,3 +488,4 @@ export default function SchedaProfessionale() {
     </div>
   );
 }
+

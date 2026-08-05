@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabaseClient';
 import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [messaggio, setMessaggio] = useState('');
@@ -13,10 +15,14 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     
+    const returnTo = typeof router.query.returnTo === 'string' && router.query.returnTo.startsWith('/')
+      ? router.query.returnTo
+      : '/dashboard';
+
     const { error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
-        emailRedirectTo: typeof window !== 'undefined' ? window.location.origin + '/pubblica-annuncio' : '',
+        emailRedirectTo: typeof window !== 'undefined' ? window.location.origin + returnTo : '',
       },
     });
 
@@ -103,3 +109,4 @@ export default function Login() {
     </div>
   );
 }
+
