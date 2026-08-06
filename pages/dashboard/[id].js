@@ -9,8 +9,10 @@ export default function GestisciScheda() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [annuncio, setAnnuncio] = useState(null);
-  const [loading, setLoading] = useState(true);
+ const [annuncio, setAnnuncio] = useState(null);
+const [loading, setLoading] = useState(true);
+const [nome, setNome] = useState('');
+const [telefono, setTelefono] = useState('');
 
   useEffect(() => {
     if (!id) return;
@@ -30,9 +32,11 @@ export default function GestisciScheda() {
         .eq('user_id', session.user.id)
         .single();
 
-      if (data) {
-        setAnnuncio(data);
-      }
+     if (data) {
+  setAnnuncio(data);
+  setNome(data.nome || '');
+  setTelefono(data.telefono || '');
+}
 
       setLoading(false);
     }
