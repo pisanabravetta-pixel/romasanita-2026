@@ -50,8 +50,7 @@ alert(JSON.stringify(form));
       const { data, error } = await supabase
         .from('annunci')
         .select('*')
-        .eq('id', id)
-        .eq('user_id', session.user.id)
+       .eq('id', id)
         .single();
 
 
