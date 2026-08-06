@@ -114,6 +114,7 @@ async function salvaModifiche(){
 
  const { data:{session} } = await supabase.auth.getSession();
 alert("TEST SALVATAGGIO");
+  alert(JSON.stringify(form));
  if(!session){
    router.push('/login');
    return;
