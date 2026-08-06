@@ -13,22 +13,33 @@ export default function GestisciScheda() {
   const [annuncio, setAnnuncio] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [nome, setNome] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [indirizzo, setIndirizzo] = useState('');
-  const [zona, setZona] = useState('');
-
+  const [form, setForm] = useState({
+    nome: '',
+    categoria: '',
+    indirizzo: '',
+    zona: '',
+    telefono: '',
+    whatsapp: '',
+    email_contatto: '',
+    sito_web: '',
+    descrizione: '',
+    urgenza_24h: false,
+    h24_aperto: false,
+    test_rapidi: false,
+    consegna_domicilio: false,
+    parcheggio_privato: false,
+    senza_barriere: false,
+    vicino_metro: false
+  });
 
 
   useEffect(() => {
 
     if (!id) return;
 
-
     async function caricaScheda() {
 
       const { data:{session} } = await supabase.auth.getSession();
-
 
       if (!session) {
         router.push('/login');
@@ -44,21 +55,33 @@ export default function GestisciScheda() {
         .single();
 
 
-
       if(error){
         console.error(error);
       }
-
 
 
       if(data){
 
         setAnnuncio(data);
 
-        setNome(data.nome || '');
-        setTelefono(data.telefono || '');
-        setIndirizzo(data.indirizzo || '');
-        setZona(data.zona || '');
+        setForm({
+          nome: data.nome || '',
+          categoria: data.categoria || '',
+          indirizzo: data.indirizzo || '',
+          zona: data.zona || '',
+          telefono: data.telefono || '',
+          whatsapp: data.whatsapp || '',
+          email_contatto: data.email_contatto || '',
+          sito_web: data.sito_web || '',
+          descrizione: data.descrizione || '',
+          urgenza_24h: data.urgenza_24h || false,
+          h24_aperto: data.h24_aperto || false,
+          test_rapidi: data.test_rapidi || false,
+          consegna_domicilio: data.consegna_domicilio || false,
+          parcheggio_privato: data.parcheggio_privato || false,
+          senza_barriere: data.senza_barriere || false,
+          vicino_metro: data.vicino_metro || false
+        });
 
       }
 
@@ -70,18 +93,26 @@ export default function GestisciScheda() {
 
     caricaScheda();
 
-
   },[id]);
 
 
+
+function cambiaCampo(e){
+
+  const {name,value,type,checked}=e.target;
+
+  setForm({
+    ...form,
+    [name]: type === 'checkbox' ? checked : value
+  });
+
+}
 
 
 
 async function salvaModifiche(){
 
-
  const { data:{session} } = await supabase.auth.getSession();
-
 
  if(!session){
    router.push('/login');
@@ -89,20 +120,11 @@ async function salvaModifiche(){
  }
 
 
-
  const {error}= await supabase
  .from('annunci')
- .update({
-
-   nome:nome,
-   telefono:telefono,
-   indirizzo:indirizzo,
-   zona:zona
-
- })
+ .update(form)
  .eq('id',id)
  .eq('user_id',session.user.id);
-
 
 
  if(error){
@@ -112,60 +134,94 @@ async function salvaModifiche(){
 
  }else{
 
-
    setAnnuncio({
-
      ...annuncio,
-     nome:nome,
-     telefono:telefono,
-     indirizzo:indirizzo,
-     zona:zona
-
+     ...form
    });
 
-
-   alert("Modifiche salvate correttamente");
+   alert("Scheda aggiornata correttamente");
 
  }
 
-
 }
-
-
 
 
 
 if(loading){
 
- return(
- <div style={{
- padding:'100px',
- textAlign:'center'
- }}>
+ return <div style={{padding:'100px',textAlign:'center'}}>
  Caricamento...
  </div>
- );
 
 }
 
 
 
-
-
 if(!annuncio){
 
+ return <div style={{padding:'100px',textAlign:'center'}}>
+ Scheda non trovata o non autorizzata.
+ </div>
+
+}
+
+
+
+function Campo({label,name}){
+
 return(
-<div style={{
-padding:'100px',
-textAlign:'center'
+<div style={{marginBottom:'20px'}}>
+
+<label style={{
+display:'block',
+fontWeight:'700',
+marginBottom:'8px'
 }}>
-Scheda non trovata o non autorizzata.
+{label}
+</label>
+
+<input
+name={name}
+value={form[name]}
+onChange={cambiaCampo}
+style={{
+width:'100%',
+padding:'12px',
+borderRadius:'10px',
+border:'1px solid #cbd5e1'
+}}
+/>
+
 </div>
 )
 
 }
 
 
+
+function Check({label,name}){
+
+return(
+<label style={{
+display:'block',
+marginBottom:'12px'
+}}>
+
+<input
+type="checkbox"
+name={name}
+checked={form[name]}
+onChange={cambiaCampo}
+/>
+
+<span style={{marginLeft:'10px'}}>
+{label}
+</span>
+
+</label>
+)
+
+}
 
 
 
@@ -176,18 +232,12 @@ minHeight:'100vh',
 background:'#f8fafc'
 }}>
 
-
 <Head>
-
-<title>
-Gestisci scheda | ServiziSalute
-</title>
-
+<title>Gestisci scheda | ServiziSalute</title>
 </Head>
 
 
 <Navbar />
-
 
 
 <main style={{
@@ -197,7 +247,6 @@ padding:'40px 20px'
 }}>
 
 
-
 <div style={{
 background:'white',
 padding:'30px',
@@ -205,147 +254,82 @@ borderRadius:'20px'
 }}>
 
 
-<h1>
-Gestisci scheda
-</h1>
+<h1>Gestisci scheda</h1>
+
+<h2>{form.nome}</h2>
 
 
-<h2>
-{nome}
-</h2>
-
-
-
-<p style={{
-color:'#64748b'
-}}>
+<p>
 Modifica le informazioni della tua struttura.
 </p>
 
 
 
+<Campo label="Nome struttura" name="nome"/>
 
-<div style={{
-marginTop:'30px'
+<Campo label="Categoria" name="categoria"/>
+
+<Campo label="Indirizzo" name="indirizzo"/>
+
+<Campo label="Zona" name="zona"/>
+
+<Campo label="Telefono" name="telefono"/>
+
+<Campo label="WhatsApp" name="whatsapp"/>
+
+<Campo label="Email contatto" name="email_contatto"/>
+
+<Campo label="Sito web" name="sito_web"/>
+
+
+<label style={{
+display:'block',
+fontWeight:'700',
+marginBottom:'8px'
 }}>
-
-
-
-<label>
-Nome struttura
+Descrizione
 </label>
 
-<input
-
-value={nome}
-
-onChange={(e)=>setNome(e.target.value)}
-
+<textarea
+name="descrizione"
+value={form.descrizione}
+onChange={cambiaCampo}
 style={{
-
 width:'100%',
+minHeight:'120px',
 padding:'12px',
-marginBottom:'20px',
 borderRadius:'10px',
-border:'1px solid #cbd5e1'
-
+border:'1px solid c-bd5e1'
 }}
-
 />
 
 
 
+<h3 style={{marginTop:'30px'}}>
+Servizi disponibili
+</h3>
 
 
-<label>
-Telefono
-</label>
+<Check label="Urgenza 24 ore" name="urgenza_24h"/>
 
+<Check label="Aperto H24" name="h24_aperto"/>
 
-<input
+<Check label="Test rapidi" name="test_rapidi"/>
 
-value={telefono}
+<Check label="Consegna domicilio" name="consegna_domicilio"/>
 
-onChange={(e)=>setTelefono(e.target.value)}
+<Check label="Parcheggio privato" name="parcheggio_privato"/>
 
-style={{
+<Check label="Senza barriere" name="senza_barriere"/>
 
-width:'100%',
-padding:'12px',
-marginBottom:'20px',
-borderRadius:'10px',
-border:'1px solid #cbd5e1'
-
-}}
-
-/>
-
-
-
-
-
-
-<label>
-Indirizzo
-</label>
-
-
-<input
-
-value={indirizzo}
-
-onChange={(e)=>setIndirizzo(e.target.value)}
-
-style={{
-
-width:'100%',
-padding:'12px',
-marginBottom:'20px',
-borderRadius:'10px',
-border:'1px solid #cbd5e1'
-
-}}
-
-/>
-
-
-
-
-
-
-<label>
-Zona
-</label>
-
-
-<input
-
-value={zona}
-
-onChange={(e)=>setZona(e.target.value)}
-
-style={{
-
-width:'100%',
-padding:'12px',
-marginBottom:'20px',
-borderRadius:'10px',
-border:'1px solid #cbd5e1'
-
-}}
-
-/>
-
-
+<Check label="Vicino metro" name="vicino_metro"/>
 
 
 
 <button
-
 onClick={salvaModifiche}
-
 style={{
-
+marginTop:'30px',
 background:'#0284c7',
 color:'white',
 border:'none',
@@ -353,73 +337,41 @@ padding:'14px 25px',
 borderRadius:'12px',
 fontWeight:'800',
 cursor:'pointer'
-
 }}
-
 >
-
 Salva modifiche
-
 </button>
 
 
 
-</div>
-
-
-
-
-
 <div style={{
-
 marginTop:'40px',
 paddingTop:'25px',
 borderTop:'1px solid #e2e8f0'
-
 }}>
 
+<h3>Anteprima</h3>
 
+<p>📍 {form.indirizzo}</p>
 
-<h3>
-Anteprima informazioni
-</h3>
+<p>📞 {form.telefono}</p>
 
+<p>💬 {form.whatsapp}</p>
 
-
-<p>
-📍 <b>Indirizzo:</b> {annuncio.indirizzo}
-</p>
-
-
-<p>
-📞 <b>Telefono:</b> {annuncio.telefono}
-</p>
-
-
-<p>
-📌 <b>Zona:</b> {annuncio.zona}
-</p>
-
-
+<p>{form.descrizione}</p>
 
 </div>
 
 
-
-
 </div>
-
 
 </main>
 
 
-
 <Footer />
-
 
 </div>
 
-);
-
+)
 
 }
