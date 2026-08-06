@@ -184,9 +184,10 @@ marginBottom:'8px'
 </label>
 
 <input
+key={name}
 name={name}
 type={name === "telefono" || name === "whatsapp" ? "tel" : "text"}
-value={form[name]}
+value={form[name] || ''}
 onChange={cambiaCampo}
 style={{
 width:'100%',
