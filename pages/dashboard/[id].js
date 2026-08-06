@@ -83,7 +83,41 @@ const [telefono, setTelefono] = useState('');
           <p>
             Qui potrai modificare servizi, prezzi, foto e informazioni della struttura.
           </p>
+<div style={{marginTop:'25px'}}>
 
+  <label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
+    Nome struttura
+  </label>
+
+  <input
+    value={nome}
+    onChange={(e)=>setNome(e.target.value)}
+    style={{
+      width:'100%',
+      padding:'12px',
+      borderRadius:'10px',
+      border:'1px solid #cbd5e1',
+      marginBottom:'20px'
+    }}
+  />
+
+
+  <label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
+    Telefono
+  </label>
+
+  <input
+    value={telefono}
+    onChange={(e)=>setTelefono(e.target.value)}
+    style={{
+      width:'100%',
+      padding:'12px',
+      borderRadius:'10px',
+      border:'1px solid #cbd5e1'
+    }}
+  />
+
+</div>
           <hr />
 
           <p><b>Indirizzo:</b> {annuncio.indirizzo}</p>
