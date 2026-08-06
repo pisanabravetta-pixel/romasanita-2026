@@ -45,7 +45,7 @@ export default function GestisciScheda() {
         router.push('/login');
         return;
       }
-
+alert(JSON.stringify(form));
 
       const { data, error } = await supabase
         .from('annunci')
