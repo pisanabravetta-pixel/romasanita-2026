@@ -13,7 +13,7 @@ export default function GestisciScheda() {
 const [loading, setLoading] = useState(true);
 const [nome, setNome] = useState('');
 const [telefono, setTelefono] = useState('');
-
+const [indirizzo, setIndirizzo] = useState('');
   useEffect(() => {
     if (!id) return;
 
@@ -129,22 +129,43 @@ async function salvaModifiche() {
   />
 
 
-  <label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
-    Telefono
-  </label>
+<label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
+  Telefono
+</label>
 
-  <input
-    value={telefono}
-    onChange={(e)=>setTelefono(e.target.value)}
-    style={{
-      width:'100%',
-      padding:'12px',
-      borderRadius:'10px',
-      border:'1px solid #cbd5e1'
-    }}
-  />
+<input
+  value={telefono}
+  onChange={(e)=>setTelefono(e.target.value)}
+  style={{
+    width:'100%',
+    padding:'12px',
+    borderRadius:'10px',
+    border:'1px solid #cbd5e1'
+  }}
+/>
 
-</div>
+<label
+  style={{
+    display:'block',
+    fontWeight:'700',
+    marginTop:'20px',
+    marginBottom:'8px'
+  }}
+>
+  Indirizzo
+</label>
+
+<input
+  value={indirizzo}
+  onChange={(e)=>setIndirizzo(e.target.value)}
+  style={{
+    width:'100%',
+    padding:'12px',
+    borderRadius:'10px',
+    border:'1px solid #cbd5e1'
+  }}
+/>
+
 <button
   onClick={salvaModifiche}
   style={{
