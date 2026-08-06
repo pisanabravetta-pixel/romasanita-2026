@@ -126,7 +126,6 @@ const { data, error } = await supabase
   .eq('id', id)
   .eq('user_id', session.user.id)
   .select();
-  alert(JSON.stringify(data));
 if(error){
 
    console.error(error);
