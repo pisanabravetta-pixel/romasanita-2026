@@ -44,7 +44,30 @@ const [telefono, setTelefono] = useState('');
     caricaScheda();
   }, [id]);
 
+async function salvaModifiche() {
+  const { data: { session } } = await supabase.auth.getSession();
 
+  if (!session) {
+    router.push('/login');
+    return;
+  }
+
+  const { error } = await supabase
+    .from('annunci')
+    .update({
+      nome: nome,
+      telefono: telefono
+    })
+    .eq('id', id)
+    .eq('user_id', session.user.id);
+
+  if (error) {
+    alert('Errore nel salvataggio');
+    console.error(error);
+  } else {
+    alert('Modifiche salvate correttamente!');
+  }
+}
   if (loading) {
     return <div style={{padding:'100px', textAlign:'center'}}>Caricamento...</div>;
   }
@@ -116,7 +139,21 @@ const [telefono, setTelefono] = useState('');
       border:'1px solid #cbd5e1'
     }}
   />
-
+<button
+  onClick={salvaModifiche}
+  style={{
+    marginTop:'25px',
+    background:'#0284c7',
+    color:'white',
+    border:'none',
+    padding:'14px 25px',
+    borderRadius:'12px',
+    fontWeight:'800',
+    cursor:'pointer'
+  }}
+>
+  Salva modifiche
+</button>
 </div>
           <hr />
 
