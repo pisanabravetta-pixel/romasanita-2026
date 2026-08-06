@@ -25,12 +25,16 @@ const [telefono, setTelefono] = useState('');
         return;
       }
 
-      const { data } = await supabase
-        .from('annunci')
-        .select('*')
-        .eq('id', id)
-        .eq('user_id', session.user.id)
-        .single();
+     const { data, error } = await supabase
+  .from('annunci')
+  .select('*')
+  .eq('id', id)
+  .eq('user_id', session.user.id)
+  .single();
+
+if (error) {
+  console.error("Errore caricamento scheda:", error);
+}
 
      if (data) {
   setAnnuncio(data);
