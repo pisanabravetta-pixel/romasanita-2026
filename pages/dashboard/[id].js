@@ -120,12 +120,12 @@ async function salvaModifiche(){
  }
 
 
- const {error}= await supabase
- .from('annunci')
- .update(form)
- .eq('id',id)
- .eq('user_id',session.user.id);
-
+const { data, error } = await supabase
+  .from('annunci')
+  .update(form)
+  .eq('id', id)
+  .eq('user_id', session.user.id)
+  .select();
 
  if(error){
 
