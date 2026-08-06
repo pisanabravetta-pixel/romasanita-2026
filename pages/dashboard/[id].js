@@ -126,13 +126,16 @@ const { data, error } = await supabase
   .eq('id', id)
   .eq('user_id', session.user.id)
   .select();
-
- if(error){
+if(error){
 
    console.error(error);
    alert("Errore nel salvataggio");
 
- }else{
+}else if(!data || data.length === 0){
+
+   alert("Nessun dato aggiornato dal database");
+
+}else{
 
    setAnnuncio({
      ...annuncio,
@@ -141,7 +144,7 @@ const { data, error } = await supabase
 
    alert("Scheda aggiornata correttamente");
 
- }
+}
 
 }
 
