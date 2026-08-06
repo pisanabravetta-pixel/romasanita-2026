@@ -145,13 +145,6 @@ async function salvaModifiche() {
   />
 
 </div>
-          <hr />
-
-          <p><b>Indirizzo:</b> {annuncio.indirizzo}</p>
-
-          <p><b>Telefono:</b> {annuncio.telefono}</p>
-
-          <p><b>Zona:</b> {annuncio.zona}</p>
 <button
   onClick={salvaModifiche}
   style={{
@@ -167,8 +160,29 @@ async function salvaModifiche() {
 >
   Salva modifiche
 </button>
-        </div>
 
+</div>
+
+<div style={{
+  marginTop:'35px',
+  paddingTop:'25px',
+  borderTop:'1px solid #e2e8f0'
+}}>
+
+  <h3 style={{
+    color:'#1e293b',
+    marginBottom:'20px'
+  }}>
+    Informazioni della struttura
+  </h3>
+
+  <p><b>📍 Indirizzo:</b> {annuncio.indirizzo}</p>
+
+  <p><b>📞 Telefono attuale:</b> {annuncio.telefono}</p>
+
+  <p><b>📌 Zona:</b> {annuncio.zona}</p>
+
+</div>
       </main>
 
       <Footer />
