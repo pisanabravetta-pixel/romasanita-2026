@@ -143,6 +143,15 @@ async function salvaModifiche() {
       border:'1px solid #cbd5e1'
     }}
   />
+
+</div>
+          <hr />
+
+          <p><b>Indirizzo:</b> {annuncio.indirizzo}</p>
+
+          <p><b>Telefono:</b> {annuncio.telefono}</p>
+
+          <p><b>Zona:</b> {annuncio.zona}</p>
 <button
   onClick={salvaModifiche}
   style={{
@@ -158,15 +167,6 @@ async function salvaModifiche() {
 >
   Salva modifiche
 </button>
-</div>
-          <hr />
-
-          <p><b>Indirizzo:</b> {annuncio.indirizzo}</p>
-
-          <p><b>Telefono:</b> {annuncio.telefono}</p>
-
-          <p><b>Zona:</b> {annuncio.zona}</p>
-
         </div>
 
       </main>
