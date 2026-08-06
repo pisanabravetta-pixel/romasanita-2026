@@ -6,208 +6,420 @@ import Footer from '../../components/Footer';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function GestisciScheda() {
+
   const router = useRouter();
   const { id } = router.query;
 
- const [annuncio, setAnnuncio] = useState(null);
-const [loading, setLoading] = useState(true);
-const [nome, setNome] = useState('');
-const [telefono, setTelefono] = useState('');
-const [indirizzo, setIndirizzo] = useState('');
+  const [annuncio, setAnnuncio] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [nome, setNome] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [indirizzo, setIndirizzo] = useState('');
+  const [zona, setZona] = useState('');
+
+
+
   useEffect(() => {
+
     if (!id) return;
 
+
     async function caricaScheda() {
-      const { data: { session } } = await supabase.auth.getSession();
+
+      const { data:{session} } = await supabase.auth.getSession();
+
 
       if (!session) {
         router.push('/login');
         return;
       }
 
-     const { data, error } = await supabase
-  .from('annunci')
-  .select('*')
-  .eq('id', id)
-  .eq('user_id', session.user.id)
-  .single();
 
-if (error) {
-  console.error("Errore caricamento scheda:", error);
-}
+      const { data, error } = await supabase
+        .from('annunci')
+        .select('*')
+        .eq('id', id)
+        .eq('user_id', session.user.id)
+        .single();
 
-     if (data) {
-  setAnnuncio(data);
-  setNome(data.nome || '');
-  setTelefono(data.telefono || '');
-}
+
+
+      if(error){
+        console.error(error);
+      }
+
+
+
+      if(data){
+
+        setAnnuncio(data);
+
+        setNome(data.nome || '');
+        setTelefono(data.telefono || '');
+        setIndirizzo(data.indirizzo || '');
+        setZona(data.zona || '');
+
+      }
+
 
       setLoading(false);
+
     }
 
+
     caricaScheda();
-  }, [id]);
 
-async function salvaModifiche() {
-  const { data: { session } } = await supabase.auth.getSession();
 
-  if (!session) {
-    router.push('/login');
-    return;
-  }
+  },[id]);
 
-  const { error } = await supabase
-    .from('annunci')
-    .update({
-      nome: nome,
-      telefono: telefono
-    })
-    .eq('id', id)
-    .eq('user_id', session.user.id);
 
-  if (error) {
-    alert('Errore nel salvataggio');
-    console.error(error);
-  } else {
-    alert('Modifiche salvate correttamente!');
-  }
+
+
+
+async function salvaModifiche(){
+
+
+ const { data:{session} } = await supabase.auth.getSession();
+
+
+ if(!session){
+   router.push('/login');
+   return;
+ }
+
+
+
+ const {error}= await supabase
+ .from('annunci')
+ .update({
+
+   nome:nome,
+   telefono:telefono,
+   indirizzo:indirizzo,
+   zona:zona
+
+ })
+ .eq('id',id)
+ .eq('user_id',session.user.id);
+
+
+
+ if(error){
+
+   console.error(error);
+   alert("Errore nel salvataggio");
+
+ }else{
+
+
+   setAnnuncio({
+
+     ...annuncio,
+     nome:nome,
+     telefono:telefono,
+     indirizzo:indirizzo,
+     zona:zona
+
+   });
+
+
+   alert("Modifiche salvate correttamente");
+
+ }
+
+
 }
-  if (loading) {
-    return <div style={{padding:'100px', textAlign:'center'}}>Caricamento...</div>;
-  }
-
-  if (!annuncio) {
-    return <div style={{padding:'100px', textAlign:'center'}}>
-      Scheda non trovata o non autorizzata.
-    </div>;
-  }
 
 
-  return (
-    <div style={{minHeight:'100vh', background:'#f8fafc'}}>
-      <Head>
-        <title>Gestisci scheda | ServiziSalute</title>
-      </Head>
-
-      <Navbar />
-
-      <main style={{
-        maxWidth:'900px',
-        margin:'0 auto',
-        padding:'40px 20px'
-      }}>
-
-        <div style={{
-          background:'white',
-          padding:'30px',
-          borderRadius:'20px'
-        }}>
-
-          <h1>Gestisci scheda</h1>
-
-          <h2>{annuncio.nome}</h2>
-
-          <p>
-            Qui potrai modificare servizi, prezzi, foto e informazioni della struttura.
-          </p>
-<div style={{marginTop:'25px'}}>
-
-  <label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
-    Nome struttura
-  </label>
-
-  <input
-    value={nome}
-    onChange={(e)=>setNome(e.target.value)}
-    style={{
-      width:'100%',
-      padding:'12px',
-      borderRadius:'10px',
-      border:'1px solid #cbd5e1',
-      marginBottom:'20px'
-    }}
-  />
 
 
-<label style={{display:'block', fontWeight:'700', marginBottom:'8px'}}>
-  Telefono
-</label>
 
-<input
-  value={telefono}
-  onChange={(e)=>setTelefono(e.target.value)}
-  style={{
-    width:'100%',
-    padding:'12px',
-    borderRadius:'10px',
-    border:'1px solid #cbd5e1'
-  }}
-/>
+if(loading){
 
-<label
-  style={{
-    display:'block',
-    fontWeight:'700',
-    marginTop:'20px',
-    marginBottom:'8px'
-  }}
->
-  Indirizzo
-</label>
+ return(
+ <div style={{
+ padding:'100px',
+ textAlign:'center'
+ }}>
+ Caricamento...
+ </div>
+ );
 
-<input
-  value={indirizzo}
-  onChange={(e)=>setIndirizzo(e.target.value)}
-  style={{
-    width:'100%',
-    padding:'12px',
-    borderRadius:'10px',
-    border:'1px solid #cbd5e1'
-  }}
-/>
+}
 
-<button
-  onClick={salvaModifiche}
-  style={{
-    marginTop:'25px',
-    background:'#0284c7',
-    color:'white',
-    border:'none',
-    padding:'14px 25px',
-    borderRadius:'12px',
-    fontWeight:'800',
-    cursor:'pointer'
-  }}
->
-  Salva modifiche
-</button>
 
+
+
+
+if(!annuncio){
+
+return(
+<div style={{
+padding:'100px',
+textAlign:'center'
+}}>
+Scheda non trovata o non autorizzata.
 </div>
+)
+
+}
+
+
+
+
+
+return (
 
 <div style={{
-  marginTop:'35px',
-  paddingTop:'25px',
-  borderTop:'1px solid #e2e8f0'
+minHeight:'100vh',
+background:'#f8fafc'
 }}>
 
-  <h3 style={{
-    color:'#1e293b',
-    marginBottom:'20px'
-  }}>
-    Informazioni della struttura
-  </h3>
 
-  <p><b>📍 Indirizzo:</b> {annuncio.indirizzo}</p>
+<Head>
 
-  <p><b>📞 Telefono attuale:</b> {annuncio.telefono}</p>
+<title>
+Gestisci scheda | ServiziSalute
+</title>
 
-  <p><b>📌 Zona:</b> {annuncio.zona}</p>
+</Head>
+
+
+<Navbar />
+
+
+
+<main style={{
+maxWidth:'900px',
+margin:'0 auto',
+padding:'40px 20px'
+}}>
+
+
+
+<div style={{
+background:'white',
+padding:'30px',
+borderRadius:'20px'
+}}>
+
+
+<h1>
+Gestisci scheda
+</h1>
+
+
+<h2>
+{nome}
+</h2>
+
+
+
+<p style={{
+color:'#64748b'
+}}>
+Modifica le informazioni della tua struttura.
+</p>
+
+
+
+
+<div style={{
+marginTop:'30px'
+}}>
+
+
+
+<label>
+Nome struttura
+</label>
+
+<input
+
+value={nome}
+
+onChange={(e)=>setNome(e.target.value)}
+
+style={{
+
+width:'100%',
+padding:'12px',
+marginBottom:'20px',
+borderRadius:'10px',
+border:'1px solid #cbd5e1'
+
+}}
+
+/>
+
+
+
+
+
+<label>
+Telefono
+</label>
+
+
+<input
+
+value={telefono}
+
+onChange={(e)=>setTelefono(e.target.value)}
+
+style={{
+
+width:'100%',
+padding:'12px',
+marginBottom:'20px',
+borderRadius:'10px',
+border:'1px solid #cbd5e1'
+
+}}
+
+/>
+
+
+
+
+
+
+<label>
+Indirizzo
+</label>
+
+
+<input
+
+value={indirizzo}
+
+onChange={(e)=>setIndirizzo(e.target.value)}
+
+style={{
+
+width:'100%',
+padding:'12px',
+marginBottom:'20px',
+borderRadius:'10px',
+border:'1px solid #cbd5e1'
+
+}}
+
+/>
+
+
+
+
+
+
+<label>
+Zona
+</label>
+
+
+<input
+
+value={zona}
+
+onChange={(e)=>setZona(e.target.value)}
+
+style={{
+
+width:'100%',
+padding:'12px',
+marginBottom:'20px',
+borderRadius:'10px',
+border:'1px solid #cbd5e1'
+
+}}
+
+/>
+
+
+
+
+
+<button
+
+onClick={salvaModifiche}
+
+style={{
+
+background:'#0284c7',
+color:'white',
+border:'none',
+padding:'14px 25px',
+borderRadius:'12px',
+fontWeight:'800',
+cursor:'pointer'
+
+}}
+
+>
+
+Salva modifiche
+
+</button>
+
+
 
 </div>
-      </main>
 
-      <Footer />
 
-    </div>
-  );
+
+
+
+<div style={{
+
+marginTop:'40px',
+paddingTop:'25px',
+borderTop:'1px solid #e2e8f0'
+
+}}>
+
+
+
+<h3>
+Anteprima informazioni
+</h3>
+
+
+
+<p>
+📍 <b>Indirizzo:</b> {annuncio.indirizzo}
+</p>
+
+
+<p>
+📞 <b>Telefono:</b> {annuncio.telefono}
+</p>
+
+
+<p>
+📌 <b>Zona:</b> {annuncio.zona}
+</p>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</main>
+
+
+
+<Footer />
+
+
+</div>
+
+);
+
+
 }
