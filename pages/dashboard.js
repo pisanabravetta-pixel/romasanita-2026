@@ -336,7 +336,7 @@ padding:'20px',
 borderRadius:'15px'
 }}>
 <h3>Richieste</h3>
-<p style={{fontSize:'30px',fontWeight:'900'}>
+<p style={{fontSize:'30px',fontWeight:'900'}}>
 {statistiche.richieste}
 </p>
 </div>
