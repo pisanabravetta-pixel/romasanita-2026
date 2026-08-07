@@ -7,55 +7,176 @@ import { supabase } from '../lib/supabaseClient';
 export default function Dashboard() {
 
   const [sessione, setSessione] = useState(null);
-  const [annunci, setAnnunci] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [annunci, setAnnunci] = useState([]);
+  const [richieste, setRichieste] = useState([]);
+  const [loading, setLoading] = useState(true);
 
 
-  useEffect(() => {
+  async function caricaDati() {
 
-    async function carica() {
+    const { data:{session} } = await supabase.auth.getSession();
 
-      const { data: { session } } = await supabase.auth.getSession();
-
-      setSessione(session);
+    setSessione(session);
 
 
-      if(session){
-
-        const { data: admin } = await supabase
-          .from('admin')
-          .select('email')
-          .eq('email', session.user.email)
-          .single();
-
-
-        if(admin){
-          setIsAdmin(true);
-        }
-
-
-
-        const { data } = await supabase
-          .from('annunci')
-          .select('id, nome, slug, stato, approvato')
-          .eq('user_id', session.user.id)
-          .order('id', { ascending:false });
-
-
-        setAnnunci(data || []);
-
-      }
-
-
+    if(!session){
       setLoading(false);
+      return;
+    }
+
+
+    // controllo amministratore
+
+    const { data:admin } = await supabase
+      .from('admin')
+      .select('email')
+      .eq('email', session.user.email)
+      .single();
+
+
+    if(admin){
+      setIsAdmin(true);
+    }
+
+
+
+    // schede professionista
+
+    const { data: mieSchede } = await supabase
+      .from('annunci')
+      .select('id,nome,slug,stato,approvato')
+      .eq('user_id', session.user.id)
+      .order('id',{ascending:false});
+
+
+    setAnnunci(mieSchede || []);
+
+
+
+
+    // richieste per amministratore
+
+    if(admin){
+
+      const { data: richiesteAdmin } = await supabase
+        .from('richieste_rivendicazione')
+        .select(`
+          id,
+          annuncio_id,
+          user_id,
+          email,
+          messaggio,
+          stato,
+          created_at,
+          annunci (
+            nome
+          )
+        `)
+        .order('created_at',{ascending:false});
+
+
+      setRichieste(richiesteAdmin || []);
 
     }
 
 
-    carica();
+    setLoading(false);
+
+  }
+
+
+
+  useEffect(()=>{
+
+    caricaDati();
 
   },[]);
+
+
+
+
+
+  async function approvaRichiesta(richiesta){
+
+
+    const {error:erroreAnnuncio}=await supabase
+      .from('annunci')
+      .update({
+        user_id: richiesta.user_id
+      })
+      .eq('id', richiesta.annuncio_id);
+
+
+
+    if(erroreAnnuncio){
+
+      alert("Errore assegnazione scheda");
+      console.log(erroreAnnuncio);
+      return;
+
+    }
+
+
+
+
+    const {error}=await supabase
+      .from('richieste_rivendicazione')
+      .update({
+        stato:'approvata',
+        reviewed_at:new Date()
+      })
+      .eq('id', richiesta.id);
+
+
+
+    if(error){
+
+      alert("Errore aggiornamento richiesta");
+      console.log(error);
+
+    }else{
+
+      alert("Richiesta approvata");
+
+      caricaDati();
+
+    }
+
+  }
+
+
+
+
+
+  async function rifiutaRichiesta(id){
+
+
+    const {error}=await supabase
+      .from('richieste_rivendicazione')
+      .update({
+        stato:'rifiutata',
+        reviewed_at:new Date()
+      })
+      .eq('id',id);
+
+
+
+    if(error){
+
+      alert("Errore rifiuto");
+
+    }else{
+
+      alert("Richiesta rifiutata");
+
+      caricaDati();
+
+    }
+
+
+  }
+
 
 
 
@@ -63,7 +184,7 @@ export default function Dashboard() {
 
     return (
       <div style={{padding:'100px',textAlign:'center'}}>
-        Caricamento…
+        Caricamento...
       </div>
     );
 
@@ -71,211 +192,236 @@ export default function Dashboard() {
 
 
 
-  return (
 
-    <div style={{
-      display:'flex',
-      flexDirection:'column',
-      minHeight:'100vh',
-      background:'#f8fafc'
-    }}>
 
+return (
 
-      <Head>
-        <title>Area professionista | ServiziSalute Roma</title>
-      </Head>
+<div style={{
+minHeight:'100vh',
+background:'#f8fafc'
+}}>
 
 
-      <Navbar />
+<Head>
+<title>Dashboard | ServiziSalute</title>
+</Head>
 
 
-      <main style={{
-        flex:1,
-        maxWidth:'900px',
-        width:'100%',
-        margin:'0 auto',
-        padding:'48px 20px'
-      }}>
+<Navbar />
 
 
+<main style={{
+maxWidth:'1000px',
+margin:'0 auto',
+padding:'40px 20px'
+}}>
 
-      {!sessione ? (
 
-        <div style={{
-          background:'white',
-          padding:'32px',
-          borderRadius:'20px',
-          textAlign:'center'
-        }}>
+{!sessione ? (
 
-          <h1>Accedi alla tua area professionista</h1>
+<div style={{
+background:'white',
+padding:'30px',
+borderRadius:'20px',
+textAlign:'center'
+}}>
 
-          <a
-          href="/login?returnTo=%2Fdashboard"
-          style={{
-            color:'white',
-            background:'#0284c7',
-            padding:'14px 20px',
-            borderRadius:'12px',
-            fontWeight:800,
-            textDecoration:'none'
-          }}>
-          Accedi con email
-          </a>
+<h1>Accedi area professionista</h1>
 
-        </div>
+<a href="/login">
+Accedi
+</a>
 
+</div>
 
-      ) : isAdmin ? (
 
+) : isAdmin ? (
 
-        <>
 
-        <div style={{
-          background:'#dcfce7',
-          padding:'20px',
-          borderRadius:'15px',
-          marginBottom:'25px'
-        }}>
+<>
 
-          <h2>👑 Amministratore</h2>
+<div style={{
+background:'#dcfce7',
+padding:'20px',
+borderRadius:'16px'
+}}>
 
-          <p>
-          Sei entrato come amministratore di ServiziSalute.
-          </p>
+<h1>👑 Pannello amministratore</h1>
 
-        </div>
+<p>
+Gestione ServiziSalute
+</p>
 
+</div>
 
-        <h1>
-          Pannello Amministratore
-        </h1>
 
 
-        <div style={{
-          background:'white',
-          padding:'25px',
-          borderRadius:'16px'
-        }}>
 
-          <h2>
-          Richieste rivendicazione
-          </h2>
+<h2 style={{marginTop:'35px'}}>
+Richieste rivendicazione
+</h2>
 
-          <p>
-          Qui gestirai le richieste dei professionisti.
-          </p>
 
 
-        </div>
+{richieste.length===0 ? (
 
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+Nessuna richiesta presente.
+</div>
 
-        </>
 
+) : (
 
-      ) : (
+richieste.map((r)=>(
 
 
-        <>
+<div key={r.id}
+style={{
+background:'white',
+padding:'20px',
+marginBottom:'15px',
+borderRadius:'15px',
+border:'1px solid #e2e8f0'
+}}>
 
-        <h1 style={{
-          color:'#0f172a'
-        }}>
-          Le tue schede
-        </h1>
 
+<h3>
+{r.annunci?.nome}
+</h3>
 
-        <p style={{
-          color:'#64748b'
-        }}>
-          Qui troverai le strutture che hai rivendicato.
-        </p>
 
+<p>
+Email: {r.email}
+</p>
 
 
-        {annunci.length === 0 ? (
+<p>
+Messaggio: {r.messaggio || 'Nessun messaggio'}
+</p>
 
-          <div style={{
-            background:'white',
-            padding:'28px',
-            borderRadius:'16px'
-          }}>
 
-            <p>
-            Non hai ancora schede assegnate.
-            </p>
+<p>
+Stato: {r.stato || 'in attesa'}
+</p>
 
-            <a href="/pubblica-annuncio">
-            Crea una nuova scheda
-            </a>
 
 
-          </div>
+<button
+onClick={()=>approvaRichiesta(r)}
+style={{
+background:'#16a34a',
+color:'white',
+padding:'10px 15px',
+border:0,
+borderRadius:'10px',
+marginRight:'10px'
+}}
+>
+Approva
+</button>
 
 
-        ) : (
+<button
+onClick={()=>rifiutaRichiesta(r.id)}
+style={{
+background:'#dc2626',
+color:'white',
+padding:'10px 15px',
+border:0,
+borderRadius:'10px'
+}}
+>
+Rifiuta
+</button>
 
 
-        <div style={{
-          display:'grid',
-          gap:'14px'
-        }}>
+</div>
 
 
-        {annunci.map((annuncio)=>(
+))
 
+)}
 
-        <div key={annuncio.id}
-        style={{
-          background:'white',
-          border:'1px solid #e2e8f0',
-          padding:'20px',
-          borderRadius:'16px'
-        }}>
 
+</>
 
-        <h2>
-        {annuncio.nome}
-        </h2>
 
 
-        <p>
-        Stato: {annuncio.stato || (annuncio.approvato ? 'pubblicato':'in revisione')}
-        </p>
+) : (
 
 
-        <a href={`/dashboard/${annuncio.id}`}>
-        Gestisci scheda →
-        </a>
+<>
 
+<h1>
+Le tue schede
+</h1>
 
-        </div>
 
+{annunci.length===0 ? (
 
-        ))}
+<div style={{
+background:'white',
+padding:'25px',
+borderRadius:'15px'
+}}>
 
+Non hai ancora schede assegnate.
 
-        </div>
+</div>
 
 
-        )}
+) : (
 
+annunci.map(a=>(
 
-        </>
+<div key={a.id}
+style={{
+background:'white',
+padding:'20px',
+marginBottom:'15px',
+borderRadius:'15px'
+}}>
 
+<h2>
+{a.nome}
+</h2>
 
-      )}
+<p>
+Stato: {a.stato || 'pubblicata'}
+</p>
 
 
+<a href={`/dashboard/${a.id}`}>
+Gestisci scheda →
+</a>
 
-      </main>
 
+</div>
 
-      <Footer />
 
+))
 
-    </div>
+)}
 
-  );
+
+</>
+
+)}
+
+
+
+</main>
+
+
+<Footer />
+
+
+</div>
+
+)
 
 }
