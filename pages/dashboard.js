@@ -8,12 +8,21 @@ export default function Dashboard() {
   const [sessione, setSessione] = useState(null);
   const [annunci, setAnnunci] = useState([]);
   const [loading, setLoading] = useState(true);
-
+const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     async function carica() {
       const { data: { session } } = await supabase.auth.getSession();
       setSessione(session);
       if (session) {
+        const { data: admin } = await supabase
+  .from('admin')
+  .select('email')
+  .eq('email', session.user.email)
+  .single();
+
+if (admin) {
+  setIsAdmin(true);
+}
         const { data } = await supabase.from('annunci').select('id, nome, slug, stato, approvato').eq('user_id', session.user.id).order('id', { ascending: false });
         setAnnunci(data || []);
       }
