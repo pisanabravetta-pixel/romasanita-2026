@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [annunci, setAnnunci] = useState([]);
   const [richieste, setRichieste] = useState([]);
+ const [tutteSchede, setTutteSchede] = useState([]); 
   const [loading, setLoading] = useState(true);
 
 
@@ -58,7 +59,12 @@ export default function Dashboard() {
     // richieste per amministratore
 
     if(admin){
+const { data: tutte } = await supabase
+  .from('annunci')
+  .select('id,nome,categoria,zona,stato,user_id')
+  .order('id',{ascending:false});
 
+setTutteSchede(tutte || []);
       const { data: richiesteAdmin } = await supabase
         .from('richieste_rivendicazione')
         .select(`
@@ -345,7 +351,73 @@ Rifiuta
 ))
 
 )}
+<h2 style={{marginTop:'40px'}}>
+🏥 Gestione schede
+</h2>
 
+
+{tutteSchede.length === 0 ? (
+
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+Nessuna scheda presente.
+</div>
+
+) : (
+
+tutteSchede.map((scheda)=>(
+
+<div
+key={scheda.id}
+style={{
+background:'white',
+padding:'20px',
+marginBottom:'15px',
+borderRadius:'15px',
+border:'1px solid #e2e8f0'
+}}
+>
+
+<h3>
+{scheda.nome}
+</h3>
+
+
+<p>
+Categoria: {scheda.categoria || '-'}
+</p>
+
+
+<p>
+Zona: {scheda.zona || '-'}
+</p>
+
+
+<p>
+Stato: {scheda.stato || 'nessuno'}
+</p>
+
+
+<p>
+{scheda.user_id 
+? '✅ Rivendicata'
+: '⚪ Non rivendicata'}
+</p>
+
+
+<a href={`/dashboard/${scheda.id}`}>
+Apri scheda →
+</a>
+
+
+</div>
+
+))
+
+)}
 
 </>
 
