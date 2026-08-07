@@ -12,7 +12,12 @@ export default function Dashboard() {
   const [richieste, setRichieste] = useState([]);
  const [tutteSchede, setTutteSchede] = useState([]); 
   const [loading, setLoading] = useState(true);
-
+const [statistiche, setStatistiche] = useState({
+  totaleSchede: 0,
+  rivendicate: 0,
+  libere: 0,
+  richieste: 0
+});
 
   async function caricaDati() {
 
@@ -83,7 +88,32 @@ setTutteSchede(tutte || []);
 
 
       setRichieste(richiesteAdmin || []);
+// statistiche amministratore
 
+const { data: tutteSchede } = await supabase
+  .from('annunci')
+  .select('id,user_id');
+
+
+const { data: tutteRichieste } = await supabase
+  .from('richieste_rivendicazione')
+  .select('id');
+
+
+
+const totale = tutteSchede?.length || 0;
+
+const rivendicate = tutteSchede?.filter(
+  s => s.user_id
+).length || 0;
+
+
+setStatistiche({
+  totaleSchede: totale,
+  rivendicate: rivendicate,
+  libere: totale - rivendicate,
+  richieste: tutteRichieste?.length || 0
+});
     }
 
 
@@ -253,7 +283,66 @@ borderRadius:'16px'
 }}>
 
 <h1>👑 Pannello amministratore</h1>
+<div style={{
+display:'grid',
+gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',
+gap:'15px',
+marginTop:'25px'
+}}>
 
+
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+<h3>Schede totali</h3>
+<p style={{fontSize:'30px',fontWeight:'900'}}>
+{statistiche.totaleSchede}
+</p>
+</div>
+
+
+
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+<h3>Rivendicate</h3>
+<p style={{fontSize:'30px',fontWeight:'900'}}>
+{statistiche.rivendicate}
+</p>
+</div>
+
+
+
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+<h3>Da rivendicare</h3>
+<p style={{fontSize:'30px',fontWeight:'900'}}>
+{statistiche.libere}
+</p>
+</div>
+
+
+
+<div style={{
+background:'white',
+padding:'20px',
+borderRadius:'15px'
+}}>
+<h3>Richieste</h3>
+<p style={{fontSize:'30px',fontWeight:'900'}>
+{statistiche.richieste}
+</p>
+</div>
+
+
+</div>
 <p>
 Gestione ServiziSalute
 </p>
