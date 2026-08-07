@@ -50,7 +50,7 @@ if (admin) {
     <p>Sei entrato come amministratore di ServiziSalute.</p>
   </div>
 )}
-<p>ADMIN: {isAdmin ? "SI" : "NO"}</p>
+
 <h1 style={{ color: '#0f172a', marginTop: 0 }}>Le tue schede</h1>
           <p style={{ color: '#64748b' }}>Qui troverai le strutture che hai rivendicato. L’editor di servizi e prezzi arriverà nel prossimo passo.</p>
           {annunci.length === 0 ? <div style={{ background: 'white', padding: '28px', borderRadius: '16px' }}><p>Non hai ancora schede assegnate.</p><a href="/pubblica-annuncio">Crea una nuova scheda</a></div> : <div style={{ display: 'grid', gap: '14px' }}>{annunci.map((annuncio) => <div key={annuncio.id} style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px', borderRadius: '16px', display: 'flex', justifyContent: 'space-between', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}><div><h2 style={{ margin: 0, fontSize: '18px', color: '#1e293b' }}>{annuncio.nome}</h2><p style={{ color: '#64748b', marginBottom: 0, fontSize: '14px' }}>Stato: {annuncio.stato || (annuncio.approvato ? 'pubblicato' : 'in revisione')}</p></div><a href={`/dashboard/${annuncio.id}`} style={{ color: '#0284c7', fontWeight: 800, textDecoration: 'none' }}>
